@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/steam_quick_access_widget_description"
+    android:initialLayout="@layout/steam_quick_access_widget"
+    android:minWidth="180dp"
+    android:minHeight="64dp"
+    android:previewLayout="@layout/steam_quick_access_widget"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen" />

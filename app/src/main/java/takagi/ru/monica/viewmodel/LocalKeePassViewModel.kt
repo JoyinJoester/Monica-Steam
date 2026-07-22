@@ -1,0 +1,3079 @@
+package takagi.ru.monica.viewmodel
+
+import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.SystemClock
+import android.util.Log
+import androidx.documentfile.provider.DocumentFile
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import app.keemobile.kotpass.models.Meta
+import app.keemobile.kotpass.cryptography.EncryptedValue
+import app.keemobile.kotpass.database.Credentials
+import app.keemobile.kotpass.database.KeePassDatabase
+import app.keemobile.kotpass.database.encode
+import app.keemobile.kotpass.database.header.KdfParameters
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import takagi.ru.monica.data.KeePassCipherAlgorithm
+import takagi.ru.monica.data.KeePassDatabaseCreationOptions
+import takagi.ru.monica.data.KeePassDatabaseSourceType
+import takagi.ru.monica.data.KeePassFormatVersion
+import takagi.ru.monica.data.KeePassKdfAlgorithm
+import takagi.ru.monica.data.KeePassOpenMode
+import takagi.ru.monica.data.KeePassRemoteProviderType
+import takagi.ru.monica.data.KeePassStorageLocation
+import takagi.ru.monica.data.KeePassSyncStatus
+import takagi.ru.monica.data.KeepassRemoteSource
+import takagi.ru.monica.data.KeepassRemoteSyncState
+import takagi.ru.monica.data.isRemoteSource
+import takagi.ru.monica.data.toSourceType
+import takagi.ru.monica.data.LocalKeePassDatabase
+import takagi.ru.monica.data.LocalKeePassDatabaseDao
+import takagi.ru.monica.data.OperationLogItemType
+import takagi.ru.monica.data.PasswordDatabase
+import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.attachments.AttachmentContainer
+import takagi.ru.monica.keepass.KeePassCrossDatabaseTransfer
+import takagi.ru.monica.repository.KeePassCompatibilityBridge
+import takagi.ru.monica.repository.KeePassWorkspaceRepository
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.sync.KEEPASS_REMOTE_SYNC_DEDUPE_KEY
+import takagi.ru.monica.sync.SyncDiagnostics
+import takagi.ru.monica.sync.SyncEnqueueResult
+import takagi.ru.monica.sync.SyncKey
+import takagi.ru.monica.sync.SyncMode
+import takagi.ru.monica.sync.SyncNetworkPolicy
+import takagi.ru.monica.sync.SyncPriority
+import takagi.ru.monica.sync.SyncRequest
+import takagi.ru.monica.sync.SyncTarget
+import takagi.ru.monica.sync.SyncTaskAwaitResult
+import takagi.ru.monica.sync.SyncTaskRunner
+import takagi.ru.monica.sync.SyncTrigger
+import takagi.ru.monica.utils.FieldChange
+import takagi.ru.monica.utils.FileSourceEntry
+import takagi.ru.monica.utils.GoogleDriveKeePassFileSource
+import takagi.ru.monica.utils.GoogleDriveKeePassSupport
+import takagi.ru.monica.utils.KeePassCodecSupport
+import takagi.ru.monica.utils.KeePassOperationException
+import takagi.ru.monica.utils.KeePassGroupInfo
+import takagi.ru.monica.utils.KeePassKdbxService
+import takagi.ru.monica.utils.OneDriveKeePassFileSource
+import takagi.ru.monica.utils.OneDriveKeePassSupport
+import takagi.ru.monica.utils.OperationLogger
+import takagi.ru.monica.utils.RemoteKeePassSyncService
+import takagi.ru.monica.utils.WebDavKeePassFileSource
+import takagi.ru.monica.utils.WebDavKeePassSupport
+import java.io.File
+import java.io.FileOutputStream
+
+/**
+ * 本地 KeePass 数据库管理 ViewModel
+ */
+class LocalKeePassViewModel(
+    application: Application,
+    private val dao: LocalKeePassDatabaseDao,
+    private val securityManager: SecurityManager
+) : AndroidViewModel(application) {
+    companion object {
+        private const val TAG = "LocalKeePassViewModel"
+        private const val VISIBLE_REMOTE_AUTO_SYNC_THROTTLE_MS = 60_000L
+        private const val VISIBLE_REMOTE_AUTO_SYNC_FAILURE_COOLDOWN_MS = 5 * 60_000L
+        private const val VISIBLE_REMOTE_AUTO_SYNC_FAILURE_MAX_ATTEMPTS = 3
+        private const val VISIBLE_REMOTE_AUTO_SYNC_DEDUPE_KEY = KEEPASS_REMOTE_SYNC_DEDUPE_KEY
+    }
+
+    private data class VisibleRemoteAutoSyncFailure(
+        val count: Int,
+        val nextAllowedAtMillis: Long
+    )
+    
+    private val context: Context get() = getApplication()
+    private val visibleRemoteAutoSyncFailures = mutableMapOf<Long, VisibleRemoteAutoSyncFailure>()
+    private val visibleRemoteAutoSyncFailureMutex = Mutex()
+    
+    /** 所有数据库列表 */
+    val allDatabases: StateFlow<List<LocalKeePassDatabase>> = dao.getAllDatabases()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    
+    /** 内部数据库列表 */
+    val internalDatabases: StateFlow<List<LocalKeePassDatabase>> = 
+        dao.getDatabasesByLocation(KeePassStorageLocation.INTERNAL)
+            .map { databases -> databases.filterNot { it.isRemoteSource() } }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    
+    /** 外部数据库列表 */
+    val externalDatabases: StateFlow<List<LocalKeePassDatabase>> = 
+        dao.getDatabasesByLocation(KeePassStorageLocation.EXTERNAL)
+            .map { databases -> databases.filterNot { it.isRemoteSource() } }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    /** 远端数据库列表 */
+    val remoteDatabases: StateFlow<List<LocalKeePassDatabase>> =
+        dao.getRemoteDatabases()
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    
+    /** 操作状态 */
+    private val _operationState = MutableStateFlow<OperationState>(OperationState.Idle)
+    val operationState: StateFlow<OperationState> = _operationState.asStateFlow()
+    
+    /** 当前选中的数据库 */
+    private val _selectedDatabase = MutableStateFlow<LocalKeePassDatabase?>(null)
+    val selectedDatabase: StateFlow<LocalKeePassDatabase?> = _selectedDatabase.asStateFlow()
+    
+    /** KeePass 分组缓存，按数据库 ID 组织 */
+    private val _groupsByDatabase = MutableStateFlow<Map<Long, List<KeePassGroupInfo>>>(emptyMap())
+    private val _verificationStates = MutableStateFlow<Map<Long, VerificationState>>(emptyMap())
+    val verificationStates: StateFlow<Map<Long, VerificationState>> = _verificationStates.asStateFlow()
+
+    private val kdbxService = KeePassKdbxService(context, dao, securityManager)
+    private val workspaceRepository = KeePassWorkspaceRepository(kdbxService)
+    private val compatibilityBridge = KeePassCompatibilityBridge(workspaceRepository)
+    private val verificationMutex = Mutex()
+    private val verificationJobs = mutableMapOf<Long, Job>()
+    private val appDatabase by lazy { PasswordDatabase.getDatabase(context) }
+    private val remoteSyncService by lazy {
+        RemoteKeePassSyncService(
+            databaseDao = dao,
+            remoteSourceDao = appDatabase.keepassRemoteSourceDao(),
+            syncStateDao = appDatabase.keepassRemoteSyncStateDao()
+        )
+    }
+
+    init {
+        AttachmentContainer.registerKeePassService(kdbxService)
+        autoResolveWebDavConflictDatabases()
+    }
+
+    data class WebDavDirectoryListing(
+        val currentPath: String,
+        val entries: List<FileSourceEntry>
+    )
+
+    data class OneDriveDirectoryListing(
+        val currentPath: String,
+        val entries: List<FileSourceEntry>
+    )
+
+    data class GoogleDriveDirectoryListing(
+        val currentPath: String,
+        val currentFolderId: String?,
+        val entries: List<FileSourceEntry>
+    )
+
+    private data class WebDavAttachResult(
+        val databaseId: Long,
+        val databaseName: String,
+        val entryCount: Int
+    )
+
+    private data class OneDriveAttachResult(
+        val databaseId: Long,
+        val databaseName: String,
+        val entryCount: Int
+    )
+
+    private data class GoogleDriveAttachResult(
+        val databaseId: Long,
+        val databaseName: String,
+        val entryCount: Int
+    )
+
+    private data class RemoteSyncResult(
+        val databaseName: String,
+        val message: String
+    )
+
+    fun getGroups(databaseId: Long): Flow<List<KeePassGroupInfo>> {
+        return _groupsByDatabase
+            .map { cache -> cache[databaseId].orEmpty() }
+            .onStart { refreshGroups(databaseId) }
+    }
+
+    fun getRemoteSyncState(databaseId: Long): Flow<KeepassRemoteSyncState?> {
+        return appDatabase.keepassRemoteSyncStateDao().getStateFlow(databaseId)
+    }
+
+    fun refreshGroups(databaseId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val groups = workspaceRepository.listGroups(databaseId).getOrDefault(emptyList())
+            _groupsByDatabase.update { current -> current + (databaseId to groups) }
+        }
+    }
+
+    fun pruneVerificationStates(databaseIds: List<Long>) {
+        val idSet = databaseIds.toSet()
+        _verificationStates.update { current -> current.filterKeys { it in idSet } }
+    }
+
+    fun verifyDatabaseCredentials(databaseId: Long, force: Boolean = true) {
+        synchronized(verificationJobs) {
+            val activeJob = verificationJobs[databaseId]
+            if (activeJob?.isActive == true) {
+                return
+            }
+            if (activeJob != null) {
+                verificationJobs.remove(databaseId)
+            }
+        }
+
+        val job = viewModelScope.launch(Dispatchers.IO, start = CoroutineStart.LAZY) {
+            try {
+                val existing = _verificationStates.value[databaseId]
+                if (!force && existing != null && existing !is VerificationState.Unknown) {
+                    return@launch
+                }
+
+                _verificationStates.update { current ->
+                    current + (databaseId to VerificationState.Verifying)
+                }
+
+                val (verifyResult, elapsedMs) = verificationMutex.withLock {
+                    val startedAt = SystemClock.elapsedRealtime()
+                    val result = workspaceRepository.verifyDatabase(databaseId)
+                    result to (SystemClock.elapsedRealtime() - startedAt)
+                }
+                _verificationStates.update { current ->
+                    current + (
+                        databaseId to if (verifyResult.isSuccess) {
+                            VerificationState.Verified(
+                                entryCount = verifyResult.getOrDefault(0),
+                                decryptTimeMs = elapsedMs
+                            )
+                        } else {
+                            VerificationState.Failed(verifyResult.exceptionOrNull()?.message ?: "验证失败")
+                        }
+                    )
+                }
+                if (verifyResult.isSuccess) {
+                    Log.d(TAG, "KeePass verify success db=$databaseId elapsed=${elapsedMs}ms")
+                } else {
+                    Log.w(TAG, "KeePass verify failed db=$databaseId elapsed=${elapsedMs}ms")
+                }
+            } finally {
+                synchronized(verificationJobs) {
+                    verificationJobs.remove(databaseId)
+                }
+            }
+        }
+        synchronized(verificationJobs) {
+            verificationJobs[databaseId] = job
+        }
+        job.start()
+    }
+
+    fun reverifyDatabasePassword(databaseId: Long, password: String, keyFileUri: Uri? = null) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在验证数据库密码...")
+            _verificationStates.update { current ->
+                current + (databaseId to VerificationState.Verifying)
+            }
+            try {
+                var verifyElapsedMs = 0L
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId) ?: throw Exception("数据库不存在")
+                    val passwordToUse = if (password.isNotBlank()) {
+                        password
+                    } else {
+                        database.encryptedPassword?.let { securityManager.decryptData(it) } ?: ""
+                    }
+                    val verifyStart = SystemClock.elapsedRealtime()
+                    val verifyResult = workspaceRepository.inspectDatabase(
+                        databaseId = databaseId,
+                        passwordOverride = passwordToUse,
+                        keyFileUriOverride = keyFileUri
+                    )
+                    verifyElapsedMs = SystemClock.elapsedRealtime() - verifyStart
+                    val diagnostics = verifyResult.getOrElse { throw it }
+                    val count = diagnostics.entryCount
+                    val options = diagnostics.creationOptions
+                    val encryptedPassword = securityManager.encryptData(passwordToUse)
+                    if (keyFileUri != null) {
+                        runCatching {
+                            context.contentResolver.takePersistableUriPermission(
+                                keyFileUri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                            )
+                        }
+                    }
+                    dao.updateDatabase(
+                        database.copy(
+                            encryptedPassword = encryptedPassword,
+                            keyFileUri = keyFileUri?.toString() ?: database.keyFileUri,
+                            entryCount = count,
+                            kdbxMajorVersion = options.formatVersion.majorVersion,
+                            cipherAlgorithm = options.cipherAlgorithm.name,
+                            kdfAlgorithm = options.kdfAlgorithm.name,
+                            kdfTransformRounds = options.transformRounds,
+                            kdfMemoryBytes = options.memoryBytes,
+                            kdfParallelism = options.parallelism,
+                            lastAccessedAt = System.currentTimeMillis()
+                        )
+                    )
+                    _verificationStates.update { current ->
+                        current + (
+                            databaseId to VerificationState.Verified(
+                                entryCount = count,
+                                decryptTimeMs = verifyElapsedMs
+                            )
+                        )
+                    }
+                }
+                _operationState.value = OperationState.Success("密码验证成功（${verifyElapsedMs}ms）")
+            } catch (e: Exception) {
+                _verificationStates.update { current ->
+                    current + (databaseId to VerificationState.Failed(e.message ?: "验证失败"))
+                }
+                _operationState.value = OperationState.Error("验证失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun createGroup(
+        databaseId: Long,
+        groupName: String,
+        parentPath: String? = null,
+        onResult: (Result<KeePassGroupInfo>) -> Unit = {}
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = workspaceRepository.createGroup(
+                databaseId = databaseId,
+                groupName = groupName,
+                parentPath = parentPath
+            )
+            if (result.isSuccess) {
+                refreshGroups(databaseId)
+                val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
+                result.getOrNull()?.let { groupInfo ->
+                    logKeepassGroupCreate(
+                        databaseId = databaseId,
+                        databaseName = databaseName,
+                        group = groupInfo,
+                        parentPath = parentPath
+                    )
+                }
+            }
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
+        }
+    }
+
+    fun renameGroup(
+        databaseId: Long,
+        groupPath: String,
+        newName: String,
+        onResult: (Result<KeePassGroupInfo>) -> Unit = {}
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = workspaceRepository.renameGroup(
+                databaseId = databaseId,
+                groupPath = groupPath,
+                newName = newName
+            )
+            if (result.isSuccess) {
+                refreshGroups(databaseId)
+                val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
+                result.getOrNull()?.let { groupInfo ->
+                    logKeepassGroupRename(
+                        databaseId = databaseId,
+                        databaseName = databaseName,
+                        oldPath = groupPath,
+                        newGroup = groupInfo
+                    )
+                }
+            }
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
+        }
+    }
+
+    fun deleteGroup(
+        databaseId: Long,
+        groupPath: String,
+        onResult: (Result<Unit>) -> Unit = {}
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = workspaceRepository.deleteGroup(
+                databaseId = databaseId,
+                groupPath = groupPath
+            )
+            if (result.isSuccess) {
+                refreshGroups(databaseId)
+                val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
+                logKeepassGroupDelete(
+                    databaseId = databaseId,
+                    databaseName = databaseName,
+                    groupPath = groupPath
+                )
+            }
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
+        }
+    }
+
+    fun moveGroup(
+        sourceDatabaseId: Long,
+        groupPath: String,
+        targetDatabaseId: Long,
+        targetParentPath: String? = null,
+        onResult: (Result<KeePassGroupInfo>) -> Unit = {}
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = workspaceRepository.moveGroup(
+                sourceDatabaseId = sourceDatabaseId,
+                groupPath = groupPath,
+                targetDatabaseId = targetDatabaseId,
+                targetParentPath = targetParentPath
+            )
+            if (result.isSuccess) {
+                refreshGroups(sourceDatabaseId)
+                if (targetDatabaseId != sourceDatabaseId) {
+                    refreshGroups(targetDatabaseId)
+                }
+                val sourceDatabaseName = dao.getDatabaseById(sourceDatabaseId)?.name ?: "KeePass DB #$sourceDatabaseId"
+                val targetDatabaseName = dao.getDatabaseById(targetDatabaseId)?.name ?: "KeePass DB #$targetDatabaseId"
+                result.getOrNull()?.let { groupInfo ->
+                    logKeepassGroupMove(
+                        sourceDatabaseId = sourceDatabaseId,
+                        sourceDatabaseName = sourceDatabaseName,
+                        sourcePath = groupPath,
+                        targetDatabaseId = targetDatabaseId,
+                        targetDatabaseName = targetDatabaseName,
+                        movedGroup = groupInfo
+                    )
+                }
+            }
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
+        }
+    }
+    
+    /**
+     * 创建新的 KeePass 数据库
+     */
+    fun createDatabase(
+        name: String,
+        password: String,
+        storageLocation: KeePassStorageLocation,
+        externalUri: Uri? = null,
+        keyFileUri: Uri? = null,
+        creationOptions: KeePassDatabaseCreationOptions = KeePassDatabaseCreationOptions(),
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在创建数据库...")
+            
+            try {
+                var createdDatabaseId: Long? = null
+                var createLogDetails: List<FieldChange> = emptyList()
+                withContext(Dispatchers.IO) {
+                    val encryptedPassword = if (password.isNotBlank()) securityManager.encryptData(password) else null
+                    
+                    // 读取密钥文件
+                    val keyFileBytes = keyFileUri?.let { uri ->
+                        context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                            ?: throw Exception("无法读取密钥文件")
+                    }
+                    
+                    if (keyFileUri != null) {
+                        runCatching {
+                            context.contentResolver.takePersistableUriPermission(
+                                keyFileUri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                            )
+                        }
+                    }
+                    
+                    // 生成文件名
+                    val fileName = "${name.replace(Regex("[^a-zA-Z0-9\\u4e00-\\u9fa5]"), "_")}.kdbx"
+                    
+                    val filePath: String
+                    
+                    if (storageLocation == KeePassStorageLocation.INTERNAL) {
+                        // 创建内部存储目录
+                        val keepassDir = File(context.filesDir, "keepass")
+                        if (!keepassDir.exists()) {
+                            keepassDir.mkdirs()
+                        }
+                        
+                        // 创建空的 kdbx 文件（实际应该用 KeePass 库创建）
+                        val dbFile = File(keepassDir, fileName)
+                        createEmptyKdbxFile(
+                            file = dbFile,
+                            password = password,
+                            keyFileBytes = keyFileBytes,
+                            options = creationOptions,
+                            databaseName = name
+                        )
+                        
+                        filePath = "keepass/$fileName"
+                    } else {
+                        // 外部存储
+                        if (externalUri == null) {
+                            throw IllegalArgumentException("外部存储需要指定保存位置")
+                        }
+                        
+                        // 使用 DocumentFile 创建文件
+                        val docFile = DocumentFile.fromTreeUri(context, externalUri)
+                        val newFile = docFile?.createFile("application/octet-stream", fileName)
+                        
+                        if (newFile?.uri != null) {
+                            context.contentResolver.openOutputStream(newFile.uri)?.use { output ->
+                                createEmptyKdbxContent(
+                                    password = password,
+                                    keyFileBytes = keyFileBytes,
+                                    options = creationOptions,
+                                    databaseName = name
+                                ).let { content ->
+                                    output.write(content)
+                                }
+                            }
+                            filePath = newFile.uri.toString()
+                        } else {
+                            throw Exception("无法在指定位置创建文件")
+                        }
+                    }
+
+                    val normalizedOptions = creationOptions.normalized()
+                    // 保存数据库信息
+                    val database = LocalKeePassDatabase(
+                        name = name,
+                        filePath = filePath,
+                        keyFileUri = keyFileUri?.toString(),
+                        storageLocation = storageLocation,
+                        encryptedPassword = encryptedPassword,
+                        description = description,
+                        isDefault = allDatabases.value.isEmpty(),
+                        kdbxMajorVersion = normalizedOptions.formatVersion.majorVersion,
+                        cipherAlgorithm = normalizedOptions.cipherAlgorithm.name,
+                        kdfAlgorithm = normalizedOptions.kdfAlgorithm.name,
+                        kdfTransformRounds = normalizedOptions.transformRounds,
+                        kdfMemoryBytes = normalizedOptions.memoryBytes,
+                        kdfParallelism = normalizedOptions.parallelism
+                    )
+                    
+                    createdDatabaseId = dao.insertDatabase(database)
+                    createLogDetails = listOf(
+                        FieldChange("存储位置", "", storageLocationLabel(storageLocation)),
+                        FieldChange("格式版本", "", normalizedOptions.formatVersion.name),
+                        FieldChange("加密算法", "", normalizedOptions.cipherAlgorithm.name),
+                        FieldChange("KDF", "", normalizedOptions.kdfAlgorithm.name)
+                    )
+                }
+                
+                _operationState.value = OperationState.Success("数据库创建成功")
+                createdDatabaseId?.let { databaseId ->
+                    logKeepassDatabaseCreate(
+                        databaseId = databaseId,
+                        databaseName = name,
+                        details = createLogDetails
+                    )
+                }
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("创建失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 生成新的密钥文件 (XML 格式)
+     */
+    fun generateKeyFile(uri: Uri) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在生成密钥文件...")
+            
+            try {
+                withContext(Dispatchers.IO) {
+                    // 1. 生成 32 字节随机数据
+                    val randomBytes = ByteArray(32)
+                    java.security.SecureRandom().nextBytes(randomBytes)
+                    
+                    // 2. Base64 编码
+                    val base64Key = android.util.Base64.encodeToString(randomBytes, android.util.Base64.NO_WRAP)
+                    
+                    // 3. 构建 XML 内容 (KeePass 2.x 格式)
+                    val xmlContent = """
+                        <?xml version="1.0" encoding="utf-8"?>
+                        <KeyFile>
+                        	<Meta>
+                        		<Version>1.00</Version>
+                        	</Meta>
+                        	<Key>
+                        		<Data>$base64Key</Data>
+                        	</Key>
+                        </KeyFile>
+                    """.trimIndent()
+                    
+                    // 4. 写入文件
+                    context.contentResolver.openOutputStream(uri)?.use { output ->
+                        output.write(xmlContent.toByteArray())
+                    } ?: throw Exception("无法写入文件")
+                    
+                    runCatching {
+                        context.contentResolver.takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+                    }
+                }
+                
+                _operationState.value = OperationState.Success("密钥文件生成成功")
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("生成密钥文件失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    /**
+     * 导入外部 KeePass 数据库（添加引用，不复制文件）
+     */
+    fun importExternalDatabase(
+        name: String,
+        uri: Uri,
+        password: String,
+        keyFileUri: Uri? = null,
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在添加数据库...")
+            
+            try {
+                var verifyElapsedMs = 0L
+                var importLogAction: String? = null
+                var importLogDatabaseId = 0L
+                var importLogDatabaseName = name
+                var importLogChanges: List<FieldChange> = emptyList()
+                withContext(Dispatchers.IO) {
+                    // 验证文件是否可访问
+                    context.contentResolver.openInputStream(uri)?.close()
+                        ?: throw Exception("无法访问文件")
+
+                    val verifyStart = SystemClock.elapsedRealtime()
+                    val verifyResult = workspaceRepository.inspectExternalDatabase(
+                        fileUri = uri,
+                        password = password,
+                        keyFileUri = keyFileUri
+                    )
+                    verifyElapsedMs = SystemClock.elapsedRealtime() - verifyStart
+                    val diagnostics = verifyResult.getOrElse { throw it }
+                    val entryCount = diagnostics.entryCount
+                    val options = diagnostics.creationOptions
+                    
+                    val encryptedPassword = if (password.isNotBlank()) securityManager.encryptData(password) else null
+                    
+                    // 获取持久化 URI 权限
+                    runCatching {
+                        context.contentResolver.takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+                    }.onFailure { error ->
+                        Log.w(TAG, "Persistable READ permission not granted for imported DB", error)
+                    }
+                    
+                    if (keyFileUri != null) {
+                        runCatching {
+                            context.contentResolver.takePersistableUriPermission(
+                                keyFileUri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            )
+                        }
+                        context.contentResolver.openInputStream(keyFileUri)?.close()
+                            ?: throw Exception("无法访问密钥文件")
+                    }
+                    
+                    val uriPath = uri.toString()
+                    val existing = dao.getAllDatabasesSync().firstOrNull { it.filePath == uriPath }
+                    if (existing != null) {
+                        val updated = existing.copy(
+                            name = name,
+                            keyFileUri = keyFileUri?.toString() ?: existing.keyFileUri,
+                            storageLocation = KeePassStorageLocation.EXTERNAL,
+                            encryptedPassword = encryptedPassword,
+                            description = description ?: existing.description,
+                            entryCount = entryCount,
+                            kdbxMajorVersion = options.formatVersion.majorVersion,
+                            cipherAlgorithm = options.cipherAlgorithm.name,
+                            kdfAlgorithm = options.kdfAlgorithm.name,
+                            kdfTransformRounds = options.transformRounds,
+                            kdfMemoryBytes = options.memoryBytes,
+                            kdfParallelism = options.parallelism,
+                            lastAccessedAt = System.currentTimeMillis()
+                        )
+                        dao.updateDatabase(updated)
+                        KeePassKdbxService.invalidateProcessCache(existing.id)
+
+                        importLogAction = "update"
+                        importLogDatabaseId = updated.id
+                        importLogDatabaseName = updated.name
+                        importLogChanges = buildList {
+                            if (existing.name != updated.name) {
+                                add(FieldChange("名称", existing.name, updated.name))
+                            }
+                            if (existing.description.orEmpty() != updated.description.orEmpty()) {
+                                add(FieldChange("描述", existing.description.orEmpty(), updated.description.orEmpty()))
+                            }
+                            if (existing.entryCount != updated.entryCount) {
+                                add(FieldChange("条目数量", existing.entryCount.toString(), updated.entryCount.toString()))
+                            }
+                            if (existing.keyFileUri != updated.keyFileUri) {
+                                add(
+                                    FieldChange(
+                                        "密钥文件",
+                                        if (existing.keyFileUri.isNullOrBlank()) "未设置" else "已设置",
+                                        if (updated.keyFileUri.isNullOrBlank()) "未设置" else "已设置"
+                                    )
+                                )
+                            }
+                        }
+                    } else {
+                        val database = LocalKeePassDatabase(
+                            name = name,
+                            filePath = uriPath,
+                            keyFileUri = keyFileUri?.toString(),
+                            storageLocation = KeePassStorageLocation.EXTERNAL,
+                            encryptedPassword = encryptedPassword,
+                            description = description,
+                            entryCount = entryCount,
+                            kdbxMajorVersion = options.formatVersion.majorVersion,
+                            cipherAlgorithm = options.cipherAlgorithm.name,
+                            kdfAlgorithm = options.kdfAlgorithm.name,
+                            kdfTransformRounds = options.transformRounds,
+                            kdfMemoryBytes = options.memoryBytes,
+                            kdfParallelism = options.parallelism,
+                            isDefault = allDatabases.value.isEmpty()
+                        )
+                        val newId = dao.insertDatabase(database)
+                        KeePassKdbxService.invalidateProcessCache(newId)
+
+                        importLogAction = "create"
+                        importLogDatabaseId = newId
+                        importLogDatabaseName = database.name
+                        importLogChanges = listOf(
+                            FieldChange("来源", "", "外部导入"),
+                            FieldChange("存储位置", "", storageLocationLabel(KeePassStorageLocation.EXTERNAL)),
+                            FieldChange("条目数量", "", entryCount.toString())
+                        )
+                    }
+                }
+                
+                _operationState.value = OperationState.Success("数据库添加成功（验证${verifyElapsedMs}ms）")
+                when (importLogAction) {
+                    "create" -> {
+                        logKeepassDatabaseCreate(
+                            databaseId = importLogDatabaseId,
+                            databaseName = importLogDatabaseName,
+                            details = importLogChanges
+                        )
+                    }
+                    "update" -> {
+                        logKeepassDatabaseUpdate(
+                            databaseId = importLogDatabaseId,
+                            databaseName = importLogDatabaseName,
+                            changes = importLogChanges.ifEmpty {
+                                listOf(FieldChange("外部引用", "已存在", "已刷新"))
+                            }
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("添加失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun addWebDavDatabase(
+        name: String,
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        remotePath: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在接入 WebDAV 数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    attachWebDavDatabaseBlocking(
+                        name = name,
+                        serverUrl = serverUrl,
+                        username = username,
+                        webDavPassword = webDavPassword,
+                        remotePath = remotePath,
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("WebDAV 数据库接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "WebDAV"),
+                        FieldChange("打开方式", "", "工作副本"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("接入失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun createWebDavDatabase(
+        directoryPath: String?,
+        name: String,
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        creationOptions: KeePassDatabaseCreationOptions = KeePassDatabaseCreationOptions(),
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在创建远端数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    val normalizedDirectoryPath = WebDavKeePassFileSource.normalizeOptionalRemotePath(directoryPath)
+                    val fileSource = buildWebDavFileSource(
+                        serverUrl = serverUrl,
+                        username = username,
+                        webDavPassword = webDavPassword
+                    )
+                    fileSource.testConnection().getOrThrow()
+
+                    val displayName = name.trim()
+                        .removeSuffix(".kdbx")
+                        .ifBlank { throw IllegalArgumentException("数据库名称不能为空") }
+                    val remoteFileName = if (name.trim().endsWith(".kdbx", ignoreCase = true)) {
+                        name.trim()
+                    } else {
+                        "$displayName.kdbx"
+                    }
+                    val keyFileBytes = readKeyFileBytes(keyFileUri)
+                    val bytes = createEmptyKdbxContent(
+                        password = databasePassword,
+                        keyFileBytes = keyFileBytes,
+                        options = creationOptions,
+                        databaseName = displayName
+                    )
+                    val createdFile = fileSource.createFileInDirectory(
+                        parentPath = normalizedDirectoryPath,
+                        name = remoteFileName,
+                        bytes = bytes
+                    )
+                    attachWebDavDatabaseBlocking(
+                        name = displayName,
+                        serverUrl = serverUrl,
+                        username = username,
+                        webDavPassword = webDavPassword,
+                        remotePath = createdFile.path,
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("远端数据库创建并接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "WebDAV"),
+                        FieldChange("创建方式", "", "远端新建"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("创建失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun addOneDriveDatabase(
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        remotePath: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在接入 OneDrive 数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    attachOneDriveDatabaseBlocking(
+                        name = name,
+                        accountId = accountId,
+                        accountLabel = accountLabel,
+                        remotePath = remotePath,
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("OneDrive 数据库接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "OneDrive"),
+                        FieldChange("打开方式", "", "工作副本"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("接入失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun createOneDriveDatabase(
+        directoryPath: String?,
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        creationOptions: KeePassDatabaseCreationOptions = KeePassDatabaseCreationOptions(),
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在创建 OneDrive 远端数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    val normalizedDirectoryPath = OneDriveKeePassFileSource.normalizeOptionalRemotePath(directoryPath)
+                    val fileSource = OneDriveKeePassFileSource(
+                        context = context,
+                        accountIdentifier = accountId
+                    )
+                    fileSource.testConnection().getOrThrow()
+
+                    val displayName = name.trim()
+                        .removeSuffix(".kdbx")
+                        .ifBlank { throw IllegalArgumentException("数据库名称不能为空") }
+                    val remoteFileName = if (name.trim().endsWith(".kdbx", ignoreCase = true)) {
+                        name.trim()
+                    } else {
+                        "$displayName.kdbx"
+                    }
+                    val keyFileBytes = readKeyFileBytes(keyFileUri)
+                    val bytes = createEmptyKdbxContent(
+                        password = databasePassword,
+                        keyFileBytes = keyFileBytes,
+                        options = creationOptions,
+                        databaseName = displayName
+                    )
+                    val createdFile = fileSource.createFileInDirectory(
+                        parentPath = normalizedDirectoryPath,
+                        name = remoteFileName,
+                        bytes = bytes
+                    )
+                    attachOneDriveDatabaseBlocking(
+                        name = displayName,
+                        accountId = accountId,
+                        accountLabel = accountLabel,
+                        remotePath = createdFile.path,
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("OneDrive 远端数据库创建并接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "OneDrive"),
+                        FieldChange("创建方式", "", "远端新建"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("创建失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun addGoogleDriveDatabase(
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        remotePath: String,
+        fileId: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在接入 Google Drive 数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    attachGoogleDriveDatabaseBlocking(
+                        name = name,
+                        accountId = accountId,
+                        accountLabel = accountLabel,
+                        remotePath = remotePath,
+                        fileId = fileId,
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("Google Drive 数据库接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "Google Drive"),
+                        FieldChange("打开方式", "", "工作副本"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("接入失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    fun createGoogleDriveDatabase(
+        directoryPath: String?,
+        folderId: String?,
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        databasePassword: String,
+        keyFileUri: Uri? = null,
+        creationOptions: KeePassDatabaseCreationOptions = KeePassDatabaseCreationOptions(),
+        description: String? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在创建 Google Drive 远端数据库...")
+
+            try {
+                val attachResult = withContext(Dispatchers.IO) {
+                    val normalizedDirectoryPath = GoogleDriveKeePassFileSource.normalizeOptionalRemotePath(directoryPath)
+                    val fileSource = GoogleDriveKeePassFileSource(
+                        context = context,
+                        accountIdentifier = accountId
+                    )
+                    fileSource.testConnection().getOrThrow()
+
+                    val displayName = name.trim()
+                        .removeSuffix(".kdbx")
+                        .ifBlank { throw IllegalArgumentException("数据库名称不能为空") }
+                    val remoteFileName = if (name.trim().endsWith(".kdbx", ignoreCase = true)) {
+                        name.trim()
+                    } else {
+                        "$displayName.kdbx"
+                    }
+                    val keyFileBytes = readKeyFileBytes(keyFileUri)
+                    val bytes = createEmptyKdbxContent(
+                        password = databasePassword,
+                        keyFileBytes = keyFileBytes,
+                        options = creationOptions,
+                        databaseName = displayName
+                    )
+                    val createdFile = fileSource.createFileInDirectory(
+                        parentPath = normalizedDirectoryPath,
+                        parentId = folderId,
+                        name = remoteFileName,
+                        bytes = bytes
+                    )
+                    attachGoogleDriveDatabaseBlocking(
+                        name = displayName,
+                        accountId = accountId,
+                        accountLabel = accountLabel,
+                        remotePath = createdFile.path,
+                        fileId = createdFile.id ?: throw IllegalStateException("Google Drive 文件标识为空"),
+                        databasePassword = databasePassword,
+                        keyFileUri = keyFileUri,
+                        description = description
+                    )
+                }
+
+                _operationState.value = OperationState.Success("Google Drive 远端数据库创建并接入成功")
+                logKeepassDatabaseCreate(
+                    databaseId = attachResult.databaseId,
+                    databaseName = attachResult.databaseName,
+                    details = listOf(
+                        FieldChange("来源", "", "Google Drive"),
+                        FieldChange("创建方式", "", "远端新建"),
+                        FieldChange("条目数量", "", attachResult.entryCount.toString())
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("创建失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+
+    suspend fun testWebDavConnection(
+        serverUrl: String,
+        username: String,
+        webDavPassword: String
+    ): Result<Unit> = withContext(Dispatchers.IO) {
+        runCatching {
+            buildWebDavFileSource(
+                serverUrl = serverUrl,
+                username = username,
+                webDavPassword = webDavPassword
+            ).testConnection().getOrThrow()
+        }
+    }
+
+    suspend fun listWebDavDirectory(
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        currentPath: String?
+    ): Result<WebDavDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = WebDavKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val entries = buildWebDavFileSource(
+                serverUrl = serverUrl,
+                username = username,
+                webDavPassword = webDavPassword
+            ).listDirectory(normalizedPath)
+                .filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            WebDavDirectoryListing(
+                currentPath = normalizedPath,
+                entries = entries
+            )
+        }
+    }
+
+    suspend fun listOneDriveDirectory(
+        accountId: String,
+        currentPath: String?
+    ): Result<OneDriveDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = OneDriveKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val entries = OneDriveKeePassFileSource(
+                context = context,
+                accountIdentifier = accountId
+            ).listDirectory(normalizedPath)
+                .filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            OneDriveDirectoryListing(
+                currentPath = normalizedPath,
+                entries = entries
+            )
+        }
+    }
+
+    suspend fun listGoogleDriveDirectory(
+        accountId: String,
+        currentPath: String?,
+        currentFolderId: String?
+    ): Result<GoogleDriveDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = GoogleDriveKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val entries = GoogleDriveKeePassFileSource(
+                context = context,
+                accountIdentifier = accountId
+            ).listDirectory(
+                directoryPath = normalizedPath,
+                directoryId = currentFolderId
+            ).filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            GoogleDriveDirectoryListing(
+                currentPath = normalizedPath,
+                currentFolderId = currentFolderId,
+                entries = entries
+            )
+        }
+    }
+
+    suspend fun createWebDavFolder(
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        currentPath: String?,
+        folderName: String
+    ): Result<WebDavDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = WebDavKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val fileSource = buildWebDavFileSource(
+                serverUrl = serverUrl,
+                username = username,
+                webDavPassword = webDavPassword
+            )
+            fileSource.createDirectory(normalizedPath, folderName)
+            val entries = fileSource.listDirectory(normalizedPath)
+                .filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            WebDavDirectoryListing(
+                currentPath = normalizedPath,
+                entries = entries
+            )
+        }
+    }
+
+    suspend fun createOneDriveFolder(
+        accountId: String,
+        currentPath: String?,
+        folderName: String
+    ): Result<OneDriveDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = OneDriveKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val fileSource = OneDriveKeePassFileSource(
+                context = context,
+                accountIdentifier = accountId
+            )
+            fileSource.createDirectory(normalizedPath, folderName)
+            val entries = fileSource.listDirectory(normalizedPath)
+                .filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            OneDriveDirectoryListing(
+                currentPath = normalizedPath,
+                entries = entries
+            )
+        }
+    }
+
+    suspend fun createGoogleDriveFolder(
+        accountId: String,
+        currentPath: String?,
+        currentFolderId: String?,
+        folderName: String
+    ): Result<GoogleDriveDirectoryListing> = withContext(Dispatchers.IO) {
+        runCatching {
+            val normalizedPath = GoogleDriveKeePassFileSource.normalizeOptionalRemotePath(currentPath)
+            val fileSource = GoogleDriveKeePassFileSource(
+                context = context,
+                accountIdentifier = accountId
+            )
+            val createdFolder = fileSource.createDirectory(
+                parentPath = normalizedPath,
+                parentId = currentFolderId,
+                name = folderName
+            )
+            val entries = fileSource.listDirectory(
+                directoryPath = normalizedPath,
+                directoryId = currentFolderId
+            ).filter { it.isDirectory || it.name.endsWith(".kdbx", ignoreCase = true) }
+            GoogleDriveDirectoryListing(
+                currentPath = normalizedPath,
+                currentFolderId = currentFolderId,
+                entries = entries
+            )
+        }
+    }
+
+    private fun autoResolveWebDavConflictDatabases() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val conflictDatabaseIds = dao.getAllDatabasesSync()
+                .asSequence()
+                .filter { it.sourceType == KeePassDatabaseSourceType.REMOTE_WEBDAV }
+                .filter { it.lastSyncStatus == KeePassSyncStatus.CONFLICT }
+                .map { it.id }
+                .toList()
+
+            if (conflictDatabaseIds.isEmpty()) {
+                return@launch
+            }
+
+            Log.i(TAG, "Detected ${conflictDatabaseIds.size} WebDAV conflict database(s), start silent auto-resolve")
+            conflictDatabaseIds.forEach { databaseId ->
+                syncRemoteDatabase(databaseId, silent = true)
+            }
+        }
+    }
+
+    fun syncRemoteDatabase(databaseId: Long, silent: Boolean = false) {
+        val taskId = SyncDiagnostics.nextTaskId("kp-sync")
+        val targetLog = "keepass:$databaseId"
+        val triggerLog = if (silent) "REMOTE_SYNC_SILENT" else "REMOTE_SYNC_MANUAL"
+        SyncDiagnostics.queued(taskId, targetLog, triggerLog, detail = "silent=$silent")
+        viewModelScope.launch {
+            if (!silent) {
+                clearVisibleRemoteAutoSyncFailure(databaseId)
+            }
+            if (!silent) {
+                _operationState.value = OperationState.Loading("正在同步远端数据库...")
+            }
+
+            val syncTarget = SyncTarget.KeePassDatabase(databaseId)
+            val result = SyncTaskRunner.requestAndAwait(
+                request = SyncRequest(
+                    requestId = taskId,
+                    target = syncTarget,
+                    trigger = if (silent) SyncTrigger.RETRY else SyncTrigger.MANUAL,
+                    createdAtMillis = System.currentTimeMillis(),
+                    priority = if (silent) SyncPriority.REPAIR else SyncPriority.MANUAL,
+                    mode = if (silent) SyncMode.SILENT else SyncMode.FOREGROUND,
+                    dedupeKey = SyncKey(VISIBLE_REMOTE_AUTO_SYNC_DEDUPE_KEY),
+                    throttleKey = syncTarget.stableKey,
+                    networkPolicy = SyncNetworkPolicy.REQUIRED
+                )
+            ) {
+                val startedAt = SyncDiagnostics.start(taskId, targetLog, triggerLog, detail = "silent=$silent")
+                try {
+                    val syncResult = withContext(Dispatchers.IO) {
+                        syncRemoteDatabaseInternal(databaseId)
+                    }
+                    SyncDiagnostics.success(taskId, targetLog, triggerLog, startedAt)
+                    syncResult
+                } catch (error: Exception) {
+                    withContext(Dispatchers.IO) {
+                        handleSyncRemoteFailure(databaseId, error)
+                    }
+                    SyncDiagnostics.failed(taskId, targetLog, triggerLog, startedAt, error)
+                    throw error
+                }
+            }
+
+            when (result) {
+                is SyncTaskAwaitResult.Completed -> {
+                    val syncResult = result.value
+                    clearVisibleRemoteAutoSyncFailure(databaseId)
+                    if (!silent) {
+                        _operationState.value = OperationState.Success(syncResult.message)
+                        logKeepassDatabaseUpdate(
+                            databaseId = databaseId,
+                            databaseName = syncResult.databaseName,
+                            changes = listOf(
+                                FieldChange("远端同步", "待同步", syncResult.message)
+                            )
+                        )
+                    } else {
+                        Log.i(TAG, "Silent remote sync success: databaseId=$databaseId, message=${syncResult.message}")
+                    }
+                }
+                is SyncTaskAwaitResult.Merged -> {
+                    SyncDiagnostics.skipped(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = "merged",
+                        detail = "running=${result.status.runningRequestId.orEmpty()}"
+                    )
+                    if (!silent) {
+                        _operationState.value = OperationState.Success("已有远端同步正在运行")
+                    }
+                }
+                is SyncTaskAwaitResult.Skipped -> {
+                    SyncDiagnostics.skipped(taskId, targetLog, triggerLog, result.reason)
+                    if (!silent) {
+                        _operationState.value = OperationState.Success("远端同步已跳过: ${result.reason}")
+                    }
+                }
+                is SyncTaskAwaitResult.Blocked -> {
+                    SyncDiagnostics.blocked(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = result.error.redactedMessage ?: result.error.kind.name
+                    )
+                    val message = result.error.redactedMessage ?: result.error.kind.name
+                    if (!silent) {
+                        _operationState.value = OperationState.Error("同步失败: $message")
+                    } else {
+                        Log.w(TAG, "Silent remote sync blocked: databaseId=$databaseId, reason=$message")
+                    }
+                }
+                is SyncTaskAwaitResult.Canceled -> {
+                    val message = result.reason ?: "sync canceled"
+                    SyncDiagnostics.skipped(taskId, targetLog, triggerLog, message)
+                    if (!silent) {
+                        _operationState.value = OperationState.Error("同步失败: $message")
+                    } else {
+                        Log.w(TAG, "Silent remote sync canceled: databaseId=$databaseId, reason=$message")
+                    }
+                }
+                is SyncTaskAwaitResult.Failed -> {
+                    if (!silent) {
+                        _operationState.value = OperationState.Error("同步失败: ${formatOperationError(result.error)}")
+                    } else {
+                        Log.w(TAG, "Silent remote sync failed: databaseId=$databaseId, reason=${result.error.message}")
+                    }
+                }
+            }
+        }
+    }
+
+    fun autoSyncVisibleRemoteDatabase(databaseId: Long) {
+        val taskId = SyncDiagnostics.nextTaskId("kp-visible")
+        val targetLog = "keepass:$databaseId"
+        val triggerLog = "VISIBLE_REMOTE_AUTO_SYNC"
+        SyncDiagnostics.queued(taskId, targetLog, triggerLog)
+        viewModelScope.launch(Dispatchers.IO) {
+            val database = dao.getDatabaseById(databaseId)
+            if (database == null || !database.isRemoteSource()) {
+                SyncDiagnostics.skipped(taskId, targetLog, triggerLog, "not_remote_or_missing")
+                return@launch
+            }
+            if (database.lastSyncStatus == KeePassSyncStatus.CONFLICT) {
+                SyncDiagnostics.blocked(taskId, targetLog, triggerLog, "conflict")
+                return@launch
+            }
+            val now = System.currentTimeMillis()
+            val failureGate = visibleRemoteAutoSyncFailureMutex.withLock {
+                visibleRemoteAutoSyncFailures[databaseId]
+            }
+            if (failureGate != null) {
+                val remainingMs = failureGate.nextAllowedAtMillis - now
+                if (failureGate.count >= VISIBLE_REMOTE_AUTO_SYNC_FAILURE_MAX_ATTEMPTS) {
+                    SyncDiagnostics.skipped(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = "failure_limit",
+                        detail = "count=${failureGate.count} remainingMs=$remainingMs"
+                    )
+                    return@launch
+                }
+                if (remainingMs > 0L && database.lastSyncStatus == KeePassSyncStatus.FAILED) {
+                    SyncDiagnostics.skipped(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = "failed_status_cooldown",
+                        detail = "count=${failureGate.count} remainingMs=$remainingMs"
+                    )
+                    return@launch
+                }
+            }
+
+            val syncTarget = SyncTarget.KeePassDatabase(databaseId)
+            val shouldBypassThrottle = database.lastSyncStatus == KeePassSyncStatus.PENDING_UPLOAD ||
+                database.lastSyncStatus == KeePassSyncStatus.REMOTE_CHANGED
+            val throttleMs = if (shouldBypassThrottle) 0L else VISIBLE_REMOTE_AUTO_SYNC_THROTTLE_MS
+            val result = SyncTaskRunner.request(
+                request = SyncRequest(
+                    requestId = taskId,
+                    target = syncTarget,
+                    trigger = SyncTrigger.PAGE_VISIBLE,
+                    createdAtMillis = System.currentTimeMillis(),
+                    priority = SyncPriority.PAGE_VISIBLE,
+                    mode = SyncMode.SILENT,
+                    dedupeKey = SyncKey(VISIBLE_REMOTE_AUTO_SYNC_DEDUPE_KEY),
+                    throttleKey = syncTarget.stableKey,
+                    networkPolicy = SyncNetworkPolicy.REQUIRED,
+                    throttleMs = throttleMs
+                )
+            ) {
+                val startedAt = SyncDiagnostics.start(
+                    taskId = taskId,
+                    target = targetLog,
+                    trigger = triggerLog,
+                    detail = "status=${database.lastSyncStatus} throttleMs=$throttleMs"
+                )
+                try {
+                    val latestDatabase = dao.getDatabaseById(databaseId)
+                    if (latestDatabase == null || !latestDatabase.isRemoteSource()) {
+                        SyncDiagnostics.skipped(taskId, targetLog, triggerLog, "not_remote_or_missing", startedAt)
+                        return@request
+                    }
+                    if (latestDatabase.lastSyncStatus == KeePassSyncStatus.CONFLICT) {
+                        SyncDiagnostics.blocked(taskId, targetLog, triggerLog, "conflict", startedAt)
+                        throw IllegalStateException("KeePass remote sync blocked by conflict")
+                    }
+                    withContext(Dispatchers.IO) {
+                        syncRemoteDatabaseInternal(databaseId)
+                    }
+                    clearVisibleRemoteAutoSyncFailure(databaseId)
+                    SyncDiagnostics.success(taskId, targetLog, triggerLog, startedAt)
+                } catch (error: Exception) {
+                    handleSyncRemoteFailure(databaseId, error)
+                    recordVisibleRemoteAutoSyncFailure(databaseId)
+                    Log.w(TAG, "Visible KeePass remote auto-sync failed: databaseId=$databaseId", error)
+                    SyncDiagnostics.failed(taskId, targetLog, triggerLog, startedAt, error)
+                    throw error
+                }
+            }
+            when (result) {
+                is SyncEnqueueResult.Accepted -> Unit
+                is SyncEnqueueResult.Merged -> {
+                    SyncDiagnostics.skipped(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = "merged",
+                        detail = "running=${result.existingStatus.runningRequestId.orEmpty()}"
+                    )
+                }
+                is SyncEnqueueResult.Skipped -> {
+                    SyncDiagnostics.skipped(taskId, targetLog, triggerLog, result.reason)
+                }
+                is SyncEnqueueResult.Blocked -> {
+                    SyncDiagnostics.blocked(
+                        taskId = taskId,
+                        target = targetLog,
+                        trigger = triggerLog,
+                        reason = result.error.kind.name.lowercase()
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun clearVisibleRemoteAutoSyncFailure(databaseId: Long) {
+        visibleRemoteAutoSyncFailureMutex.withLock {
+            visibleRemoteAutoSyncFailures.remove(databaseId)
+        }
+    }
+
+    private suspend fun recordVisibleRemoteAutoSyncFailure(databaseId: Long) {
+        val nextAllowedAtMillis = System.currentTimeMillis() + VISIBLE_REMOTE_AUTO_SYNC_FAILURE_COOLDOWN_MS
+        visibleRemoteAutoSyncFailureMutex.withLock {
+            val previous = visibleRemoteAutoSyncFailures[databaseId]
+            visibleRemoteAutoSyncFailures[databaseId] = VisibleRemoteAutoSyncFailure(
+                count = ((previous?.count ?: 0) + 1).coerceAtMost(Int.MAX_VALUE),
+                nextAllowedAtMillis = nextAllowedAtMillis
+            )
+        }
+    }
+
+    private suspend fun syncRemoteDatabaseInternal(databaseId: Long): RemoteSyncResult {
+        val result = kdbxService.syncRemoteDatabase(databaseId).getOrElse { throw it }
+        return RemoteSyncResult(result.databaseName, result.message)
+    }
+    private suspend fun handleSyncRemoteFailure(databaseId: Long, error: Exception) {
+        val database = dao.getDatabaseById(databaseId)
+        if (database != null && database.isRemoteSource()) {
+            val workingHash = database.workingCopyPath
+                ?.let { path -> File(context.filesDir, path) }
+                ?.takeIf { it.exists() }
+                ?.readBytes()
+                ?.let(GoogleDriveKeePassSupport::sha256Hex)
+            val syncState = appDatabase.keepassRemoteSyncStateDao().getState(databaseId)
+            val hasLocalChanges = syncState?.hasLocalChanges == true ||
+                database.lastSyncStatus == KeePassSyncStatus.PENDING_UPLOAD ||
+                (workingHash != null && syncState?.baseHash != null && syncState.baseHash != workingHash)
+            if (hasLocalChanges && workingHash != null && database.lastSyncStatus != KeePassSyncStatus.CONFLICT) {
+                remoteSyncService.markLocalChanges(databaseId, workingHash)
+            }
+            if (database.lastSyncStatus != KeePassSyncStatus.CONFLICT) {
+                remoteSyncService.markSyncFailure(
+                    databaseId = databaseId,
+                    failureCode = when (database.sourceType) {
+                        KeePassDatabaseSourceType.REMOTE_GOOGLE_DRIVE -> "GDRIVE_MANUAL_SYNC_FAILED"
+                        KeePassDatabaseSourceType.REMOTE_ONEDRIVE -> "ONEDRIVE_MANUAL_SYNC_FAILED"
+                        else -> "WEBDAV_MANUAL_SYNC_FAILED"
+                    },
+                    failureMessage = error.message ?: "远端同步失败"
+                )
+            }
+        }
+    }
+    
+    /**
+     * 复制外部数据库到内部存储
+     */
+    fun copyToInternal(databaseId: Long) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在复制到内部存储...")
+            
+            try {
+                var copiedDatabaseId: Long? = null
+                var copiedDatabaseName = ""
+                var sourceDatabaseName = ""
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId)
+                        ?: throw Exception("数据库不存在")
+                    sourceDatabaseName = database.name
+                    
+                    if (database.storageLocation == KeePassStorageLocation.INTERNAL) {
+                        throw Exception("数据库已在内部存储")
+                    }
+                    
+                    val externalUri = Uri.parse(database.filePath)
+                    
+                    // 创建内部目录
+                    val keepassDir = File(context.filesDir, "keepass")
+                    if (!keepassDir.exists()) {
+                        keepassDir.mkdirs()
+                    }
+                    
+                    // 复制文件
+                    val fileName = "${database.name.replace(Regex("[^a-zA-Z0-9\\u4e00-\\u9fa5]"), "_")}.kdbx"
+                    val internalFile = File(keepassDir, fileName)
+                    
+                    context.contentResolver.openInputStream(externalUri)?.use { input ->
+                        FileOutputStream(internalFile).use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    
+                    // 创建新的内部数据库记录
+                    val newDatabase = database.copy(
+                        id = 0,
+                        name = "${database.name} (内部)",
+                        filePath = "keepass/$fileName",
+                        storageLocation = KeePassStorageLocation.INTERNAL,
+                        createdAt = System.currentTimeMillis()
+                    )
+                    
+                    copiedDatabaseId = dao.insertDatabase(newDatabase)
+                    copiedDatabaseName = newDatabase.name
+                }
+                
+                _operationState.value = OperationState.Success("已复制到内部存储")
+                copiedDatabaseId?.let { newDatabaseId ->
+                    logKeepassDatabaseCreate(
+                        databaseId = newDatabaseId,
+                        databaseName = copiedDatabaseName,
+                        details = listOf(
+                            FieldChange("来源", "", sourceDatabaseName),
+                            FieldChange("存储位置", "", storageLocationLabel(KeePassStorageLocation.INTERNAL))
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("复制失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 导出内部数据库到外部存储
+     */
+    fun exportToExternal(databaseId: Long, destinationUri: Uri) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在导出...")
+            
+            try {
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId)
+                        ?: throw Exception("数据库不存在")
+                    
+                    if (database.storageLocation != KeePassStorageLocation.INTERNAL) {
+                        throw Exception("只能导出内部数据库")
+                    }
+                    
+                    val internalFile = File(context.filesDir, database.filePath)
+                    if (!internalFile.exists()) {
+                        throw Exception("数据库文件不存在")
+                    }
+                    
+                    // 导出到目标位置
+                    context.contentResolver.openOutputStream(destinationUri)?.use { output ->
+                        internalFile.inputStream().use { input ->
+                            input.copyTo(output)
+                        }
+                    }
+                }
+                
+                _operationState.value = OperationState.Success("导出成功")
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("导出失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 转移数据库位置（内部 <-> 外部）
+     * 与导入/导出不同，这会改变数据库的实际存储位置
+     */
+    fun transferDatabase(
+        databaseId: Long,
+        targetLocation: KeePassStorageLocation,
+        targetUri: Uri? = null
+    ) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading(
+                if (targetLocation == KeePassStorageLocation.EXTERNAL) 
+                    "正在转移到外部存储..." 
+                else 
+                    "正在转移到内部存储..."
+            )
+            
+            try {
+                var transferDatabaseName = ""
+                var transferChanges: List<FieldChange> = emptyList()
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId)
+                        ?: throw Exception("数据库不存在")
+                    transferDatabaseName = database.name
+                    
+                    if (database.storageLocation == targetLocation) {
+                        throw Exception("数据库已在目标位置")
+                    }
+                    
+                    val newPath: String
+                    
+                    if (targetLocation == KeePassStorageLocation.EXTERNAL) {
+                        // 内部 -> 外部
+                        if (targetUri == null) {
+                            throw Exception("需要指定目标位置")
+                        }
+                        
+                        val internalFile = File(context.filesDir, database.filePath)
+                        if (!internalFile.exists()) {
+                            throw Exception("源文件不存在")
+                        }
+                        
+                        // 复制到外部
+                        context.contentResolver.openOutputStream(targetUri)?.use { output ->
+                            internalFile.inputStream().use { input ->
+                                input.copyTo(output)
+                            }
+                        }
+                        
+                        // 获取持久化权限
+                        context.contentResolver.takePersistableUriPermission(
+                            targetUri,
+                            android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                            android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+                        
+                        // 删除内部文件
+                        internalFile.delete()
+                        
+                        newPath = targetUri.toString()
+                    } else {
+                        // 外部 -> 内部
+                        val externalUri = Uri.parse(database.filePath)
+                        
+                        // 创建内部目录
+                        val keepassDir = File(context.filesDir, "keepass")
+                        if (!keepassDir.exists()) {
+                            keepassDir.mkdirs()
+                        }
+                        
+                        val fileName = "${database.name.replace(Regex("[^a-zA-Z0-9\\u4e00-\\u9fa5]"), "_")}.kdbx"
+                        val internalFile = File(keepassDir, fileName)
+                        
+                        // 复制到内部
+                        context.contentResolver.openInputStream(externalUri)?.use { input ->
+                            FileOutputStream(internalFile).use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        
+                        newPath = "keepass/$fileName"
+                    }
+                    
+                    // 更新数据库记录
+                    dao.updateStorageLocation(
+                        databaseId,
+                        targetLocation,
+                        targetLocation.toSourceType(),
+                        newPath
+                    )
+                    transferChanges = listOf(
+                        FieldChange(
+                            "存储位置",
+                            storageLocationLabel(database.storageLocation),
+                            storageLocationLabel(targetLocation)
+                        ),
+                        FieldChange(
+                            "存储路径",
+                            storagePathLabel(database.filePath),
+                            storagePathLabel(newPath)
+                        )
+                    )
+                }
+                
+                _operationState.value = OperationState.Success("转移成功")
+                logKeepassDatabaseUpdate(
+                    databaseId = databaseId,
+                    databaseName = transferDatabaseName,
+                    changes = transferChanges
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("转移失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 删除数据库
+     */
+    fun deleteDatabase(databaseId: Long, deleteFile: Boolean = false) {
+        viewModelScope.launch {
+            _operationState.value = OperationState.Loading("正在删除...")
+            
+            try {
+                var deletedDatabaseName = ""
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId)
+                        ?: throw Exception("数据库不存在")
+                    deletedDatabaseName = database.name
+                    
+                    if (deleteFile) {
+                        if (!database.isRemoteSource() && database.storageLocation == KeePassStorageLocation.INTERNAL) {
+                            val file = File(context.filesDir, database.filePath)
+                            if (file.exists()) {
+                                file.delete()
+                            }
+                        }
+                        // 外部文件不删除，只移除引用
+                    }
+
+                    appDatabase.passwordEntryDao().deleteByKeePassDatabaseId(databaseId)
+                    appDatabase.secureItemDao().deleteByKeePassDatabaseId(databaseId)
+                    appDatabase.passkeyDao().deleteByKeePassDatabaseId(databaseId)
+                    appDatabase.keepassGroupSyncConfigDao().deleteByDatabaseId(databaseId)
+                    if (database.sourceType == KeePassDatabaseSourceType.REMOTE_WEBDAV) {
+                        cleanupRemoteLocalCopies(database.workingCopyPath, database.cacheCopyPath)
+                        appDatabase.keepassRemoteSyncStateDao().deleteState(databaseId)
+                        database.sourceId?.let { sourceId ->
+                            appDatabase.keepassRemoteSourceDao().deleteSourceById(sourceId)
+                        }
+                    }
+                    KeePassKdbxService.invalidateProcessCache(databaseId)
+                    
+                    dao.deleteDatabaseById(databaseId)
+                }
+
+                _groupsByDatabase.update { current -> current - databaseId }
+                _verificationStates.update { current -> current - databaseId }
+                _selectedDatabase.update { current -> current?.takeUnless { it.id == databaseId } }
+                
+                _operationState.value = OperationState.Success("已删除")
+                logKeepassDatabaseDelete(
+                    databaseId = databaseId,
+                    databaseName = deletedDatabaseName,
+                    detail = if (deleteFile) "删除记录与本地文件" else "删除记录"
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("删除失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 更新数据库密码
+     */
+    fun updatePassword(databaseId: Long, newPassword: String) {
+        viewModelScope.launch {
+            try {
+                var verifyElapsedMs = 0L
+                var databaseName = "KeePass DB #$databaseId"
+                withContext(Dispatchers.IO) {
+                    val database = dao.getDatabaseById(databaseId)
+                        ?: throw Exception("数据库不存在")
+                    databaseName = database.name
+                    val verifyStart = SystemClock.elapsedRealtime()
+                    val verifyResult = workspaceRepository.inspectDatabase(
+                        databaseId = databaseId,
+                        passwordOverride = newPassword
+                    )
+                    verifyElapsedMs = SystemClock.elapsedRealtime() - verifyStart
+                    val diagnostics = verifyResult.getOrElse { throw it }
+                    val entryCount = diagnostics.entryCount
+                    val options = diagnostics.creationOptions
+                    val encryptedPassword = securityManager.encryptData(newPassword)
+                    dao.updateDatabase(
+                        database.copy(
+                            encryptedPassword = encryptedPassword,
+                            entryCount = entryCount,
+                            kdbxMajorVersion = options.formatVersion.majorVersion,
+                            cipherAlgorithm = options.cipherAlgorithm.name,
+                            kdfAlgorithm = options.kdfAlgorithm.name,
+                            kdfTransformRounds = options.transformRounds,
+                            kdfMemoryBytes = options.memoryBytes,
+                            kdfParallelism = options.parallelism,
+                            lastAccessedAt = System.currentTimeMillis()
+                        )
+                    )
+                    _verificationStates.update { current ->
+                        current + (
+                            databaseId to VerificationState.Verified(
+                                entryCount = entryCount,
+                                decryptTimeMs = verifyElapsedMs
+                            )
+                        )
+                    }
+                }
+                
+                _operationState.value = OperationState.Success("密码已更新（验证${verifyElapsedMs}ms）")
+                logKeepassDatabaseUpdate(
+                    databaseId = databaseId,
+                    databaseName = databaseName,
+                    changes = listOf(
+                        FieldChange("主密码", "已设置", "已更新")
+                    )
+                )
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("更新失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 设为默认数据库
+     */
+    fun setAsDefault(databaseId: Long) {
+        viewModelScope.launch {
+            try {
+                var defaultDatabaseName: String? = null
+                withContext(Dispatchers.IO) {
+                    defaultDatabaseName = dao.getDatabaseById(databaseId)?.name
+                    dao.clearDefaultDatabase()
+                    dao.setDefaultDatabase(databaseId)
+                }
+                defaultDatabaseName?.let { databaseName ->
+                    logKeepassDatabaseUpdate(
+                        databaseId = databaseId,
+                        databaseName = databaseName,
+                        changes = listOf(
+                            FieldChange("默认数据库", "否", "是")
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _operationState.value = OperationState.Error("设置失败: ${formatOperationError(e)}")
+            }
+        }
+    }
+    
+    /**
+     * 将密码条目添加到 KeePass 数据库的 .kdbx 文件中
+     * @param databaseId 目标 KeePass 数据库 ID
+     * @param entries 要添加的密码条目列表（已解密的密码）
+     * @return Result 表示操作结果
+     */
+    suspend fun addPasswordEntriesToKdbx(
+        databaseId: Long,
+        entries: List<PasswordEntry>,
+        decryptPassword: (String) -> String,
+        sourceEntries: List<PasswordEntry>? = null,
+        onItemProcessed: ((Int, Int) -> Unit)? = null
+    ): Result<Int> = withContext(Dispatchers.IO) {
+        try {
+            val total = entries.size
+            if (total <= 0) {
+                onItemProcessed?.invoke(0, 0)
+                return@withContext Result.success(0)
+            }
+
+            onItemProcessed?.invoke(0, total)
+            if (total > 1) {
+                onItemProcessed?.invoke(1, total)
+            }
+
+            val targetEntries = entries.map { entry ->
+                KeePassCrossDatabaseTransfer.bindPasswordToTarget(
+                    entry = entry,
+                    databaseId = databaseId,
+                    groupPath = entry.keepassGroupPath,
+                    forceNewEntryUuid = entry.id <= 0
+                )
+            }
+            val result = compatibilityBridge.upsertLegacyPasswordEntries(
+                databaseId = databaseId,
+                entries = targetEntries,
+                resolvePassword = { entry ->
+                    try {
+                        decryptPassword(entry.password)
+                    } catch (e: Exception) {
+                        entry.password
+                    }
+                }
+            )
+
+            if (result.isSuccess) {
+                try {
+                    copyPasswordAttachmentsToKdbx(
+                        sources = sourceEntries ?: entries,
+                        targets = targetEntries,
+                        targetDatabaseId = databaseId,
+                        targetParentId = null
+                    )
+                } catch (e: Exception) {
+                    rollbackKeePassTargets(databaseId, targetEntries)
+                    throw e
+                }
+                onItemProcessed?.invoke(total, total)
+            }
+            result
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun movePasswordEntriesToKdbx(
+        databaseId: Long,
+        groupPath: String?,
+        entries: List<PasswordEntry>,
+        decryptPassword: (String) -> String,
+        onItemProcessed: ((Int, Int) -> Unit)? = null
+    ): Result<Int> = withContext(Dispatchers.IO) {
+        try {
+            val total = entries.size
+            if (total <= 0) {
+                onItemProcessed?.invoke(0, 0)
+                return@withContext Result.success(0)
+            }
+
+            var processed = 0
+            onItemProcessed?.invoke(0, total)
+
+            val resolvePassword: (PasswordEntry) -> String = { item ->
+                try {
+                    decryptPassword(item.password)
+                } catch (_: Exception) {
+                    item.password
+                }
+            }
+
+            fun normalizeForTarget(entry: PasswordEntry, forceNewEntryUuid: Boolean = false): PasswordEntry {
+                return KeePassCrossDatabaseTransfer.bindPasswordToTarget(
+                    entry = entry,
+                    databaseId = databaseId,
+                    groupPath = groupPath,
+                    forceNewEntryUuid = forceNewEntryUuid
+                )
+            }
+
+            fun reportProcessed(delta: Int) {
+                if (delta <= 0) return
+                processed = (processed + delta).coerceAtMost(total)
+                onItemProcessed?.invoke(processed, total)
+            }
+
+            val externalEntries = entries.filter { it.keepassDatabaseId == null }
+            if (externalEntries.isNotEmpty()) {
+                if (processed <= 0 && total > 1) {
+                    onItemProcessed?.invoke(1, total)
+                }
+                val targetEntries = externalEntries.map { normalizeForTarget(it) }
+                compatibilityBridge.upsertLegacyPasswordEntries(
+                    databaseId = databaseId,
+                    entries = targetEntries,
+                    resolvePassword = resolvePassword,
+                    forceSyncWrite = true
+                ).getOrThrow()
+                try {
+                    copyPasswordAttachmentsToKdbx(
+                        sources = externalEntries,
+                        targets = targetEntries,
+                        targetDatabaseId = databaseId,
+                        targetParentId = { source -> source.id }
+                    )
+                } catch (e: Exception) {
+                    rollbackKeePassTargets(databaseId, targetEntries)
+                    throw e
+                }
+                reportProcessed(externalEntries.size)
+            }
+
+            val sameDatabaseEntries = entries.filter { it.keepassDatabaseId == databaseId }
+            if (sameDatabaseEntries.isNotEmpty()) {
+                if (processed <= 0 && total > 1) {
+                    onItemProcessed?.invoke(1, total)
+                }
+                compatibilityBridge.upsertLegacyPasswordEntries(
+                    databaseId = databaseId,
+                    entries = sameDatabaseEntries.map { normalizeForTarget(it) },
+                    resolvePassword = resolvePassword
+                ).getOrThrow()
+                reportProcessed(sameDatabaseEntries.size)
+            }
+
+            val crossDatabaseEntriesBySource = entries
+                .filter { it.keepassDatabaseId != null && it.keepassDatabaseId != databaseId }
+                .groupBy { it.keepassDatabaseId!! }
+            if (crossDatabaseEntriesBySource.isNotEmpty()) {
+                if (processed <= 0 && total > 1) {
+                    onItemProcessed?.invoke(1, total)
+                }
+                val crossDatabaseSourceEntries = crossDatabaseEntriesBySource.values.flatten()
+                val targetEntries = crossDatabaseSourceEntries
+                    .map { entry -> normalizeForTarget(entry, forceNewEntryUuid = true) }
+
+                compatibilityBridge.upsertLegacyPasswordEntries(
+                    databaseId = databaseId,
+                    entries = targetEntries,
+                    resolvePassword = resolvePassword,
+                    forceSyncWrite = true
+                ).getOrThrow()
+
+                try {
+                    copyPasswordAttachmentsToKdbx(
+                        sources = crossDatabaseSourceEntries,
+                        targets = targetEntries,
+                        targetDatabaseId = databaseId,
+                        targetParentId = { source -> source.id }
+                    )
+                } catch (e: Exception) {
+                    rollbackKeePassTargets(databaseId, targetEntries)
+                    throw e
+                }
+
+                crossDatabaseEntriesBySource.forEach { (sourceDatabaseId, sourceEntries) ->
+                    compatibilityBridge.deleteLegacyPasswordEntries(
+                        databaseId = sourceDatabaseId,
+                        entries = sourceEntries
+                    ).getOrThrow()
+                    reportProcessed(sourceEntries.size)
+                }
+            }
+
+            Result.success(entries.size)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun movePasswordEntriesToMonicaLocal(
+        entries: List<PasswordEntry>
+    ): Result<Int> = withContext(Dispatchers.IO) {
+        try {
+            val keepassEntries = entries.filter { it.keepassDatabaseId != null }
+            if (keepassEntries.isEmpty()) {
+                return@withContext Result.success(0)
+            }
+
+            keepassEntries
+                .groupBy { it.keepassDatabaseId }
+                .forEach { (databaseId, databaseEntries) ->
+                    val resolvedDatabaseId = databaseId ?: return@forEach
+                    materializeKeePassAttachmentsForLocal(databaseEntries)
+                    compatibilityBridge.deleteLegacyPasswordEntries(
+                        databaseId = resolvedDatabaseId,
+                        entries = databaseEntries
+                    ).getOrThrow()
+                }
+
+            // 迁移附件：把 KEEPASS 附件改写为 LOCAL（kdbx 条目已删，池里的 binary 也会被释放；
+            // 但我们在 Monica 侧为每个 KEEPASS 附件保留了本地 GCM 密文缓存 + wrappedCek，
+            // 因此只需把 source 切到 LOCAL、清 keepass_binary_ref 即可继续访问）
+            val attachmentRepository = takagi.ru.monica.attachments.AttachmentContainer
+                .repository(context)
+            keepassEntries.forEach { entry ->
+                runCatching {
+                    attachmentRepository.convertSourceToLocal(
+                        passwordId = entry.id,
+                        fromSource = takagi.ru.monica.attachments.model.AttachmentSource.KEEPASS
+                    )
+                }.onFailure { e ->
+                    Log.w(TAG, "Attachment source rewrite failed for entry ${entry.id}: ${e.message}")
+                }
+            }
+
+            Result.success(keepassEntries.size)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    private suspend fun copyPasswordAttachmentsToKdbx(
+        sources: List<PasswordEntry>,
+        targets: List<PasswordEntry>,
+        targetDatabaseId: Long,
+        targetParentId: ((PasswordEntry) -> Long?)? = null
+    ) {
+        if (sources.isEmpty() || targets.isEmpty()) return
+        val facade = AttachmentContainer.facade(context)
+        sources.zip(targets).forEach { (source, target) ->
+            val targetUuid = target.keepassEntryUuid?.takeIf { it.isNotBlank() } ?: return@forEach
+            facade.copyAttachmentsToKeePassEntry(
+                sourcePasswordId = source.id,
+                targetPasswordId = targetParentId?.invoke(source),
+                targetDatabaseId = targetDatabaseId,
+                targetEntryUuid = targetUuid,
+                sourceKeepassDatabaseId = source.keepassDatabaseId,
+                sourceKeepassEntryUuid = source.keepassEntryUuid
+            )
+        }
+    }
+
+    private suspend fun materializeKeePassAttachmentsForLocal(entries: List<PasswordEntry>) {
+        if (entries.isEmpty()) return
+        val facade = AttachmentContainer.facade(context)
+        val repository = AttachmentContainer.repository(context)
+        entries.forEach { entry ->
+            val databaseId = entry.keepassDatabaseId ?: return@forEach
+            val entryUuid = entry.keepassEntryUuid
+            if (entryUuid.isNullOrBlank()) {
+                val hasKeePassAttachments = repository
+                    .listByParentAndSource(
+                        passwordId = entry.id,
+                        source = takagi.ru.monica.attachments.model.AttachmentSource.KEEPASS
+                    )
+                    .isNotEmpty()
+                if (hasKeePassAttachments) {
+                    throw IllegalStateException("KeePass attachment transfer requires entry uuid")
+                }
+                return@forEach
+            }
+            facade.materializeKeePassAttachmentsForLocal(
+                passwordId = entry.id,
+                databaseId = databaseId,
+                entryUuid = entryUuid
+            )
+        }
+    }
+
+    private suspend fun rollbackKeePassTargets(
+        databaseId: Long,
+        targets: List<PasswordEntry>
+    ) {
+        if (targets.isEmpty()) return
+        runCatching {
+            compatibilityBridge.deleteLegacyPasswordEntries(
+                databaseId = databaseId,
+                entries = targets
+            )
+        }.onFailure { error ->
+            Log.w(TAG, "Failed to rollback KeePass target after attachment transfer failure: ${error.message}")
+        }
+    }
+    
+    /**
+     * 清除操作状态
+     */
+    fun clearOperationState() {
+        _operationState.value = OperationState.Idle
+    }
+
+    private fun logKeepassDatabaseCreate(
+        databaseId: Long,
+        databaseName: String,
+        details: List<FieldChange> = emptyList()
+    ) {
+        OperationLogger.logCreate(
+            itemType = OperationLogItemType.KEEPASS_DATABASE,
+            itemId = databaseId,
+            itemTitle = databaseName,
+            details = details
+        )
+    }
+
+    private fun logKeepassDatabaseUpdate(
+        databaseId: Long,
+        databaseName: String,
+        changes: List<FieldChange>
+    ) {
+        OperationLogger.logUpdate(
+            itemType = OperationLogItemType.KEEPASS_DATABASE,
+            itemId = databaseId,
+            itemTitle = databaseName,
+            changes = changes
+        )
+    }
+
+    private fun logKeepassDatabaseDelete(
+        databaseId: Long,
+        databaseName: String,
+        detail: String? = null
+    ) {
+        OperationLogger.logDelete(
+            itemType = OperationLogItemType.KEEPASS_DATABASE,
+            itemId = databaseId,
+            itemTitle = databaseName,
+            detail = detail
+        )
+    }
+
+    private fun logKeepassGroupCreate(
+        databaseId: Long,
+        databaseName: String,
+        group: KeePassGroupInfo,
+        parentPath: String?
+    ) {
+        OperationLogger.logCreate(
+            itemType = OperationLogItemType.KEEPASS_GROUP,
+            itemId = buildKeepassGroupItemId(databaseId, group.path),
+            itemTitle = "$databaseName · ${group.displayPath}",
+            details = listOf(
+                FieldChange("数据库", "", databaseName),
+                FieldChange("父级分组", "", parentPath?.takeIf { it.isNotBlank() } ?: "根目录")
+            )
+        )
+    }
+
+    private fun logKeepassGroupRename(
+        databaseId: Long,
+        databaseName: String,
+        oldPath: String,
+        newGroup: KeePassGroupInfo
+    ) {
+        val oldName = oldPath.substringAfterLast('/')
+        OperationLogger.logUpdate(
+            itemType = OperationLogItemType.KEEPASS_GROUP,
+            itemId = buildKeepassGroupItemId(databaseId, newGroup.path),
+            itemTitle = "$databaseName · ${newGroup.displayPath}",
+            changes = buildList {
+                add(FieldChange("名称", oldName, newGroup.name))
+                if (oldPath != newGroup.path) {
+                    add(FieldChange("路径", oldPath, newGroup.path))
+                }
+            }
+        )
+    }
+
+    private fun logKeepassGroupDelete(
+        databaseId: Long,
+        databaseName: String,
+        groupPath: String
+    ) {
+        OperationLogger.logDelete(
+            itemType = OperationLogItemType.KEEPASS_GROUP,
+            itemId = buildKeepassGroupItemId(databaseId, groupPath),
+            itemTitle = "$databaseName · $groupPath",
+            detail = "删除分组"
+        )
+    }
+
+    private fun logKeepassGroupMove(
+        sourceDatabaseId: Long,
+        sourceDatabaseName: String,
+        sourcePath: String,
+        targetDatabaseId: Long,
+        targetDatabaseName: String,
+        movedGroup: KeePassGroupInfo
+    ) {
+        OperationLogger.logUpdate(
+            itemType = OperationLogItemType.KEEPASS_GROUP,
+            itemId = buildKeepassGroupItemId(targetDatabaseId, movedGroup.path),
+            itemTitle = "$targetDatabaseName · ${movedGroup.displayPath}",
+            changes = buildList {
+                if (sourceDatabaseId != targetDatabaseId) {
+                    add(FieldChange("数据库", sourceDatabaseName, targetDatabaseName))
+                }
+                add(FieldChange("路径", sourcePath, movedGroup.path))
+            }
+        )
+    }
+
+    private fun buildKeepassGroupItemId(databaseId: Long, groupPath: String): Long {
+        return "${databaseId}:$groupPath".hashCode().toLong() and 0x7FFFFFFFL
+    }
+
+    private fun storageLocationLabel(location: KeePassStorageLocation): String {
+        return when (location) {
+            KeePassStorageLocation.INTERNAL -> "内部"
+            KeePassStorageLocation.EXTERNAL -> "外部"
+        }
+    }
+
+    private fun storagePathLabel(path: String): String {
+        return if (path.startsWith("content://")) {
+            "外部 URI"
+        } else {
+            path
+        }
+    }
+
+    private fun buildWebDavFileSource(
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        remotePath: String? = null
+    ): WebDavKeePassFileSource {
+        return WebDavKeePassFileSource(
+            serverUrl = serverUrl.trim().trimEnd('/'),
+            username = username.trim(),
+            password = webDavPassword,
+            remotePath = remotePath
+        )
+    }
+
+    private suspend fun readKeyFileBytes(keyFileUri: Uri?): ByteArray? {
+        if (keyFileUri == null) {
+            return null
+        }
+        runCatching {
+            context.contentResolver.takePersistableUriPermission(
+                keyFileUri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        }
+        return context.contentResolver.openInputStream(keyFileUri)?.use { input ->
+            input.readBytes()
+        } ?: throw Exception("无法访问密钥文件")
+    }
+
+    private suspend fun attachOneDriveDatabaseBlocking(
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        remotePath: String,
+        databasePassword: String,
+        keyFileUri: Uri?,
+        description: String?
+    ): OneDriveAttachResult {
+        val normalizedRemotePath = OneDriveKeePassFileSource.normalizeRemotePath(remotePath)
+        val displayName = name.ifBlank {
+            OneDriveKeePassSupport.displayNameFromRemotePath(normalizedRemotePath)
+                .removeSuffix(".kdbx")
+        }
+        val remoteSourceDao = appDatabase.keepassRemoteSourceDao()
+        val syncStateDao = appDatabase.keepassRemoteSyncStateDao()
+
+        readKeyFileBytes(keyFileUri)
+
+        val existingSource = remoteSourceDao
+            .getAllSourcesSync()
+            .firstOrNull {
+                it.providerType == KeePassRemoteProviderType.ONEDRIVE &&
+                    it.tokenRef == accountId &&
+                    it.remotePath == normalizedRemotePath
+            }
+        if (existingSource != null) {
+            val duplicate = dao.getAllDatabasesSync().firstOrNull { it.sourceId == existingSource.id }
+            if (duplicate != null) {
+                throw IllegalArgumentException("该 OneDrive 数据库已接入")
+            }
+        }
+
+        var createdRemoteSourceId: Long? = null
+        var createdWorkingCopyPath: String? = null
+        var createdCacheCopyPath: String? = null
+
+        try {
+            val sourceToSave = (existingSource ?: KeepassRemoteSource(
+                providerType = KeePassRemoteProviderType.ONEDRIVE,
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = OneDriveKeePassFileSource.parentPathOf(normalizedRemotePath),
+                accountId = accountLabel,
+                tokenRef = accountId,
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true
+            )).copy(
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = OneDriveKeePassFileSource.parentPathOf(normalizedRemotePath),
+                accountId = accountLabel,
+                tokenRef = accountId,
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true,
+                updatedAt = System.currentTimeMillis()
+            )
+
+            val remoteSourceId = if (existingSource == null) {
+                remoteSourceDao.insertSource(sourceToSave).also { createdRemoteSourceId = it }
+            } else {
+                remoteSourceDao.updateSource(sourceToSave)
+                existingSource.id
+            }
+
+            val remoteSource = remoteSourceDao.getSourceById(remoteSourceId)
+                ?: throw IllegalStateException("远端来源创建失败")
+            val fileSource = OneDriveKeePassSupport.createFileSource(context, remoteSource)
+            fileSource.testConnection().getOrThrow()
+
+            val remoteBytes = fileSource.read()
+            val remoteStat = runCatching { fileSource.stat() }.getOrDefault(takagi.ru.monica.utils.FileSourceStat())
+            if ((remoteSource.itemId.isNullOrBlank() || remoteSource.driveId.isNullOrBlank()) &&
+                (!remoteStat.remoteId.isNullOrBlank() || !remoteStat.driveId.isNullOrBlank())
+            ) {
+                remoteSourceDao.updateSource(
+                    remoteSource.copy(
+                        itemId = remoteStat.remoteId ?: remoteSource.itemId,
+                        driveId = remoteStat.driveId ?: remoteSource.driveId,
+                        updatedAt = System.currentTimeMillis()
+                    )
+                )
+            }
+            val mirrorPaths = OneDriveKeePassSupport.buildLocalMirrorPaths(
+                sourceId = remoteSourceId,
+                remotePath = normalizedRemotePath
+            )
+            createdWorkingCopyPath = mirrorPaths.workingCopyPath
+            createdCacheCopyPath = mirrorPaths.cacheCopyPath
+            OneDriveKeePassSupport.writeRelativeFile(context, mirrorPaths.workingCopyPath, remoteBytes)
+            OneDriveKeePassSupport.writeRelativeFile(context, mirrorPaths.cacheCopyPath, remoteBytes)
+
+            val encryptedPassword = if (databasePassword.isNotBlank()) {
+                securityManager.encryptData(databasePassword)
+            } else {
+                null
+            }
+
+            val localDatabase = LocalKeePassDatabase(
+                name = displayName,
+                filePath = normalizedRemotePath,
+                keyFileUri = keyFileUri?.toString(),
+                storageLocation = KeePassStorageLocation.INTERNAL,
+                sourceType = KeePassDatabaseSourceType.REMOTE_ONEDRIVE,
+                sourceId = remoteSourceId,
+                openMode = KeePassOpenMode.WORKING_COPY,
+                workingCopyPath = mirrorPaths.workingCopyPath,
+                cacheCopyPath = mirrorPaths.cacheCopyPath,
+                isOfflineAvailable = true,
+                encryptedPassword = encryptedPassword,
+                description = description,
+                isDefault = allDatabases.value.isEmpty(),
+                lastSyncStatus = KeePassSyncStatus.SYNCING
+            )
+            val databaseId = dao.insertDatabase(localDatabase)
+
+            try {
+                val diagnostics = workspaceRepository.inspectDatabase(
+                    databaseId = databaseId,
+                    passwordOverride = databasePassword,
+                    keyFileUriOverride = keyFileUri
+                ).getOrElse { throw it }
+                val now = System.currentTimeMillis()
+                dao.updateDatabase(
+                    localDatabase.copy(
+                        id = databaseId,
+                        entryCount = diagnostics.entryCount,
+                        kdbxMajorVersion = diagnostics.creationOptions.formatVersion.majorVersion,
+                        cipherAlgorithm = diagnostics.creationOptions.cipherAlgorithm.name,
+                        kdfAlgorithm = diagnostics.creationOptions.kdfAlgorithm.name,
+                        kdfTransformRounds = diagnostics.creationOptions.transformRounds,
+                        kdfMemoryBytes = diagnostics.creationOptions.memoryBytes,
+                        kdfParallelism = diagnostics.creationOptions.parallelism,
+                        lastAccessedAt = now,
+                        lastSyncedAt = now,
+                        lastSyncStatus = KeePassSyncStatus.IN_SYNC,
+                        lastSyncError = null
+                    )
+                )
+                remoteSyncService.markSynchronized(
+                    databaseId = databaseId,
+                    versionToken = remoteStat.versionToken,
+                    etag = remoteStat.etag,
+                    baseHash = OneDriveKeePassSupport.sha256Hex(remoteBytes),
+                    workingHash = OneDriveKeePassSupport.sha256Hex(remoteBytes)
+                )
+                KeePassKdbxService.invalidateProcessCache(databaseId)
+                return OneDriveAttachResult(
+                    databaseId = databaseId,
+                    databaseName = displayName,
+                    entryCount = diagnostics.entryCount
+                )
+            } catch (error: Exception) {
+                dao.deleteDatabaseById(databaseId)
+                syncStateDao.deleteState(databaseId)
+                if (createdRemoteSourceId != null) {
+                    remoteSourceDao.deleteSourceById(remoteSourceId)
+                }
+                cleanupRemoteLocalCopies(mirrorPaths.workingCopyPath, mirrorPaths.cacheCopyPath)
+                throw error
+            }
+        } catch (error: Exception) {
+            if (createdRemoteSourceId != null) {
+                remoteSourceDao.deleteSourceById(createdRemoteSourceId!!)
+            }
+            cleanupRemoteLocalCopies(createdWorkingCopyPath, createdCacheCopyPath)
+            throw error
+        }
+    }
+
+    private suspend fun attachGoogleDriveDatabaseBlocking(
+        name: String,
+        accountId: String,
+        accountLabel: String,
+        remotePath: String,
+        fileId: String,
+        databasePassword: String,
+        keyFileUri: Uri?,
+        description: String?
+    ): GoogleDriveAttachResult {
+        val normalizedRemotePath = GoogleDriveKeePassFileSource.normalizeRemotePath(remotePath)
+        val normalizedFileId = fileId.trim().ifBlank {
+            throw IllegalArgumentException("Google Drive 文件标识不能为空")
+        }
+        val displayName = name.ifBlank {
+            GoogleDriveKeePassSupport.displayNameFromRemotePath(normalizedRemotePath)
+                .removeSuffix(".kdbx")
+        }
+        val remoteSourceDao = appDatabase.keepassRemoteSourceDao()
+        val syncStateDao = appDatabase.keepassRemoteSyncStateDao()
+
+        readKeyFileBytes(keyFileUri)
+
+        val existingSource = remoteSourceDao
+            .getAllSourcesSync()
+            .firstOrNull {
+                it.providerType == KeePassRemoteProviderType.GOOGLE_DRIVE &&
+                    it.tokenRef == accountId &&
+                    (it.itemId == normalizedFileId || it.remotePath == normalizedRemotePath)
+            }
+        if (existingSource != null) {
+            val duplicate = dao.getAllDatabasesSync().firstOrNull { it.sourceId == existingSource.id }
+            if (duplicate != null) {
+                throw IllegalArgumentException("该 Google Drive 数据库已接入")
+            }
+        }
+
+        var createdRemoteSourceId: Long? = null
+        var createdWorkingCopyPath: String? = null
+        var createdCacheCopyPath: String? = null
+
+        try {
+            val sourceToSave = (existingSource ?: KeepassRemoteSource(
+                providerType = KeePassRemoteProviderType.GOOGLE_DRIVE,
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = GoogleDriveKeePassFileSource.parentPathOf(normalizedRemotePath),
+                accountId = accountLabel,
+                itemId = normalizedFileId,
+                tokenRef = accountId,
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true
+            )).copy(
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = GoogleDriveKeePassFileSource.parentPathOf(normalizedRemotePath),
+                accountId = accountLabel,
+                itemId = normalizedFileId,
+                tokenRef = accountId,
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true,
+                updatedAt = System.currentTimeMillis()
+            )
+
+            val remoteSourceId = if (existingSource == null) {
+                remoteSourceDao.insertSource(sourceToSave).also { createdRemoteSourceId = it }
+            } else {
+                remoteSourceDao.updateSource(sourceToSave)
+                existingSource.id
+            }
+
+            val remoteSource = remoteSourceDao.getSourceById(remoteSourceId)
+                ?: throw IllegalStateException("远端来源创建失败")
+            val fileSource = GoogleDriveKeePassSupport.createFileSource(context, remoteSource)
+            fileSource.testConnection().getOrThrow()
+
+            val remoteBytes = fileSource.read()
+            val remoteStat = runCatching { fileSource.stat() }.getOrDefault(takagi.ru.monica.utils.FileSourceStat())
+            val mirrorPaths = GoogleDriveKeePassSupport.buildLocalMirrorPaths(
+                sourceId = remoteSourceId,
+                remotePath = normalizedRemotePath
+            )
+            createdWorkingCopyPath = mirrorPaths.workingCopyPath
+            createdCacheCopyPath = mirrorPaths.cacheCopyPath
+            GoogleDriveKeePassSupport.writeRelativeFile(context, mirrorPaths.workingCopyPath, remoteBytes)
+            GoogleDriveKeePassSupport.writeRelativeFile(context, mirrorPaths.cacheCopyPath, remoteBytes)
+
+            val encryptedPassword = if (databasePassword.isNotBlank()) {
+                securityManager.encryptData(databasePassword)
+            } else {
+                null
+            }
+
+            val localDatabase = LocalKeePassDatabase(
+                name = displayName,
+                filePath = normalizedRemotePath,
+                keyFileUri = keyFileUri?.toString(),
+                storageLocation = KeePassStorageLocation.INTERNAL,
+                sourceType = KeePassDatabaseSourceType.REMOTE_GOOGLE_DRIVE,
+                sourceId = remoteSourceId,
+                openMode = KeePassOpenMode.WORKING_COPY,
+                workingCopyPath = mirrorPaths.workingCopyPath,
+                cacheCopyPath = mirrorPaths.cacheCopyPath,
+                isOfflineAvailable = true,
+                encryptedPassword = encryptedPassword,
+                description = description,
+                isDefault = allDatabases.value.isEmpty(),
+                lastSyncStatus = KeePassSyncStatus.SYNCING
+            )
+            val databaseId = dao.insertDatabase(localDatabase)
+
+            try {
+                val diagnostics = workspaceRepository.inspectDatabase(
+                    databaseId = databaseId,
+                    passwordOverride = databasePassword,
+                    keyFileUriOverride = keyFileUri
+                ).getOrElse { throw it }
+                val now = System.currentTimeMillis()
+                dao.updateDatabase(
+                    localDatabase.copy(
+                        id = databaseId,
+                        entryCount = diagnostics.entryCount,
+                        kdbxMajorVersion = diagnostics.creationOptions.formatVersion.majorVersion,
+                        cipherAlgorithm = diagnostics.creationOptions.cipherAlgorithm.name,
+                        kdfAlgorithm = diagnostics.creationOptions.kdfAlgorithm.name,
+                        kdfTransformRounds = diagnostics.creationOptions.transformRounds,
+                        kdfMemoryBytes = diagnostics.creationOptions.memoryBytes,
+                        kdfParallelism = diagnostics.creationOptions.parallelism,
+                        lastAccessedAt = now,
+                        lastSyncedAt = now,
+                        lastSyncStatus = KeePassSyncStatus.IN_SYNC,
+                        lastSyncError = null
+                    )
+                )
+                remoteSyncService.markSynchronized(
+                    databaseId = databaseId,
+                    versionToken = remoteStat.versionToken,
+                    etag = remoteStat.etag,
+                    baseHash = GoogleDriveKeePassSupport.sha256Hex(remoteBytes),
+                    workingHash = GoogleDriveKeePassSupport.sha256Hex(remoteBytes)
+                )
+                KeePassKdbxService.invalidateProcessCache(databaseId)
+                return GoogleDriveAttachResult(
+                    databaseId = databaseId,
+                    databaseName = displayName,
+                    entryCount = diagnostics.entryCount
+                )
+            } catch (error: Exception) {
+                dao.deleteDatabaseById(databaseId)
+                syncStateDao.deleteState(databaseId)
+                if (createdRemoteSourceId != null) {
+                    remoteSourceDao.deleteSourceById(remoteSourceId)
+                }
+                cleanupRemoteLocalCopies(mirrorPaths.workingCopyPath, mirrorPaths.cacheCopyPath)
+                throw error
+            }
+        } catch (error: Exception) {
+            if (createdRemoteSourceId != null) {
+                remoteSourceDao.deleteSourceById(createdRemoteSourceId!!)
+            }
+            cleanupRemoteLocalCopies(createdWorkingCopyPath, createdCacheCopyPath)
+            throw error
+        }
+    }
+
+    private suspend fun attachWebDavDatabaseBlocking(
+        name: String,
+        serverUrl: String,
+        username: String,
+        webDavPassword: String,
+        remotePath: String,
+        databasePassword: String,
+        keyFileUri: Uri?,
+        description: String?
+    ): WebDavAttachResult {
+        val normalizedBaseUrl = serverUrl.trim().trimEnd('/')
+        val normalizedRemotePath = WebDavKeePassFileSource.normalizeRemotePath(remotePath)
+        val displayName = name.ifBlank {
+            WebDavKeePassSupport.displayNameFromRemotePath(normalizedRemotePath)
+                .removeSuffix(".kdbx")
+        }
+        val remoteSourceDao = appDatabase.keepassRemoteSourceDao()
+        val syncStateDao = appDatabase.keepassRemoteSyncStateDao()
+
+        readKeyFileBytes(keyFileUri)
+
+        val existingSource = remoteSourceDao
+            .getAllSourcesSync()
+            .firstOrNull {
+                it.providerType == KeePassRemoteProviderType.WEBDAV &&
+                    it.baseUrl == normalizedBaseUrl &&
+                    it.remotePath == normalizedRemotePath
+            }
+        if (existingSource != null) {
+            val duplicate = dao.getAllDatabasesSync().firstOrNull { it.sourceId == existingSource.id }
+            if (duplicate != null) {
+                throw IllegalArgumentException("该 WebDAV 数据库已接入")
+            }
+        }
+
+        var createdRemoteSourceId: Long? = null
+        var createdWorkingCopyPath: String? = null
+        var createdCacheCopyPath: String? = null
+
+        try {
+            val sourceToSave = (existingSource ?: KeepassRemoteSource(
+                providerType = KeePassRemoteProviderType.WEBDAV,
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = WebDavKeePassFileSource.parentPathOf(normalizedRemotePath),
+                baseUrl = normalizedBaseUrl,
+                usernameEncrypted = securityManager.encryptData(username.trim()),
+                passwordEncrypted = securityManager.encryptData(webDavPassword),
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true
+            )).copy(
+                displayName = displayName,
+                remotePath = normalizedRemotePath,
+                remoteParentPath = WebDavKeePassFileSource.parentPathOf(normalizedRemotePath),
+                baseUrl = normalizedBaseUrl,
+                usernameEncrypted = securityManager.encryptData(username.trim()),
+                passwordEncrypted = securityManager.encryptData(webDavPassword),
+                autoSyncEnabled = true,
+                allowMeteredNetwork = true,
+                updatedAt = System.currentTimeMillis()
+            )
+
+            val remoteSourceId = if (existingSource == null) {
+                remoteSourceDao.insertSource(sourceToSave).also { createdRemoteSourceId = it }
+            } else {
+                remoteSourceDao.updateSource(sourceToSave)
+                existingSource.id
+            }
+
+            val remoteSource = remoteSourceDao.getSourceById(remoteSourceId)
+                ?: throw IllegalStateException("远端来源创建失败")
+            val fileSource = WebDavKeePassSupport.createFileSource(remoteSource, securityManager)
+            fileSource.testConnection().getOrThrow()
+
+            val remoteBytes = fileSource.read()
+            val remoteStat = runCatching { fileSource.stat() }.getOrDefault(takagi.ru.monica.utils.FileSourceStat())
+            val mirrorPaths = WebDavKeePassSupport.buildLocalMirrorPaths(
+                sourceId = remoteSourceId,
+                remotePath = normalizedRemotePath
+            )
+            createdWorkingCopyPath = mirrorPaths.workingCopyPath
+            createdCacheCopyPath = mirrorPaths.cacheCopyPath
+            WebDavKeePassSupport.writeRelativeFile(context, mirrorPaths.workingCopyPath, remoteBytes)
+            WebDavKeePassSupport.writeRelativeFile(context, mirrorPaths.cacheCopyPath, remoteBytes)
+
+            val encryptedPassword = if (databasePassword.isNotBlank()) {
+                securityManager.encryptData(databasePassword)
+            } else {
+                null
+            }
+
+            val localDatabase = LocalKeePassDatabase(
+                name = displayName,
+                filePath = normalizedRemotePath,
+                keyFileUri = keyFileUri?.toString(),
+                storageLocation = KeePassStorageLocation.INTERNAL,
+                sourceType = KeePassDatabaseSourceType.REMOTE_WEBDAV,
+                sourceId = remoteSourceId,
+                openMode = KeePassOpenMode.WORKING_COPY,
+                workingCopyPath = mirrorPaths.workingCopyPath,
+                cacheCopyPath = mirrorPaths.cacheCopyPath,
+                isOfflineAvailable = true,
+                encryptedPassword = encryptedPassword,
+                description = description,
+                isDefault = allDatabases.value.isEmpty(),
+                lastSyncStatus = KeePassSyncStatus.SYNCING
+            )
+            val databaseId = dao.insertDatabase(localDatabase)
+
+            try {
+                val diagnostics = workspaceRepository.inspectDatabase(
+                    databaseId = databaseId,
+                    passwordOverride = databasePassword,
+                    keyFileUriOverride = keyFileUri
+                ).getOrElse { throw it }
+                val now = System.currentTimeMillis()
+                dao.updateDatabase(
+                    localDatabase.copy(
+                        id = databaseId,
+                        entryCount = diagnostics.entryCount,
+                        kdbxMajorVersion = diagnostics.creationOptions.formatVersion.majorVersion,
+                        cipherAlgorithm = diagnostics.creationOptions.cipherAlgorithm.name,
+                        kdfAlgorithm = diagnostics.creationOptions.kdfAlgorithm.name,
+                        kdfTransformRounds = diagnostics.creationOptions.transformRounds,
+                        kdfMemoryBytes = diagnostics.creationOptions.memoryBytes,
+                        kdfParallelism = diagnostics.creationOptions.parallelism,
+                        lastAccessedAt = now,
+                        lastSyncedAt = now,
+                        lastSyncStatus = KeePassSyncStatus.IN_SYNC,
+                        lastSyncError = null
+                    )
+                )
+                remoteSyncService.markSynchronized(
+                    databaseId = databaseId,
+                    versionToken = remoteStat.versionToken,
+                    etag = remoteStat.etag,
+                    baseHash = WebDavKeePassSupport.sha256Hex(remoteBytes),
+                    workingHash = WebDavKeePassSupport.sha256Hex(remoteBytes)
+                )
+                KeePassKdbxService.invalidateProcessCache(databaseId)
+                return WebDavAttachResult(
+                    databaseId = databaseId,
+                    databaseName = displayName,
+                    entryCount = diagnostics.entryCount
+                )
+            } catch (error: Exception) {
+                dao.deleteDatabaseById(databaseId)
+                syncStateDao.deleteState(databaseId)
+                if (createdRemoteSourceId != null) {
+                    remoteSourceDao.deleteSourceById(remoteSourceId)
+                }
+                cleanupRemoteLocalCopies(mirrorPaths.workingCopyPath, mirrorPaths.cacheCopyPath)
+                throw error
+            }
+        } catch (error: Exception) {
+            if (createdRemoteSourceId != null) {
+                remoteSourceDao.deleteSourceById(createdRemoteSourceId!!)
+            }
+            cleanupRemoteLocalCopies(createdWorkingCopyPath, createdCacheCopyPath)
+            throw error
+        }
+    }
+
+    private fun cleanupRemoteLocalCopies(
+        workingCopyPath: String?,
+        cacheCopyPath: String?
+    ) {
+        OneDriveKeePassSupport.deleteRelativeFile(context, workingCopyPath)
+        OneDriveKeePassSupport.deleteRelativeFile(context, cacheCopyPath)
+    }
+
+    private fun formatOperationError(error: Throwable): String {
+        return if (error is KeePassOperationException) {
+            "[${error.code.name}] ${error.message}"
+        } else {
+            error.message ?: "未知错误"
+        }
+    }
+    
+    // === 私有辅助方法 ===
+    
+    /**
+     * 使用 kotpass 库创建真正的 KDBX 格式数据库文件
+     */
+    private fun createEmptyKdbxFile(
+        file: File,
+        password: String,
+        keyFileBytes: ByteArray? = null,
+        options: KeePassDatabaseCreationOptions,
+        databaseName: String
+    ) {
+        // 创建凭据：空密码 + 密钥文件时优先使用 key-only，兼容 KeePassXC 习惯
+        val credentials = buildKdbxCredentials(password, keyFileBytes)
+
+        // 创建元数据
+        val meta = Meta(
+            generator = "Monica Password Manager",
+            name = databaseName.ifBlank { file.nameWithoutExtension }
+        )
+
+        val database = createConfiguredDatabase(
+            credentials = credentials,
+            meta = meta,
+            options = options
+        )
+
+        // 写入文件
+        FileOutputStream(file).use { output ->
+            database.encode(output, cipherProviders = KeePassCodecSupport.cipherProviders)
+        }
+    }
+    
+    /**
+     * 使用 kotpass 库创建真正的 KDBX 格式数据库内容
+     */
+    private fun createEmptyKdbxContent(
+        password: String,
+        keyFileBytes: ByteArray? = null,
+        options: KeePassDatabaseCreationOptions,
+        databaseName: String
+    ): ByteArray {
+        // 创建凭据：空密码 + 密钥文件时优先使用 key-only，兼容 KeePassXC 习惯
+        val credentials = buildKdbxCredentials(password, keyFileBytes)
+
+        // 创建元数据
+        val meta = Meta(
+            generator = "Monica Password Manager",
+            name = databaseName.ifBlank { "Monica Database" }
+        )
+
+        val database = createConfiguredDatabase(
+            credentials = credentials,
+            meta = meta,
+            options = options
+        )
+
+        // 返回字节数组
+        return java.io.ByteArrayOutputStream().use { output ->
+            database.encode(output, cipherProviders = KeePassCodecSupport.cipherProviders)
+            output.toByteArray()
+        }
+    }
+
+    private fun createConfiguredDatabase(
+        credentials: Credentials,
+        meta: Meta,
+        options: KeePassDatabaseCreationOptions
+    ): KeePassDatabase {
+        val normalized = options.normalized()
+        return when (normalized.formatVersion) {
+            KeePassFormatVersion.KDBX3 -> {
+                val base = KeePassDatabase.Ver3x.create(
+                    rootName = "Root",
+                    meta = meta,
+                    credentials = credentials
+                )
+                base.copy(
+                    header = base.header.copy(
+                        cipherId = KeePassCodecSupport.resolveCipherUuid(normalized.cipherAlgorithm),
+                        transformRounds = normalized.transformRounds.toULong()
+                    )
+                )
+            }
+            KeePassFormatVersion.KDBX4 -> {
+                val base = KeePassDatabase.Ver4x.create(
+                    rootName = "Root",
+                    meta = meta,
+                    credentials = credentials
+                )
+                val saltOrSeed = when (val existing = base.header.kdfParameters) {
+                    is KdfParameters.Aes -> existing.seed
+                    is KdfParameters.Argon2 -> existing.salt
+                }
+                val kdfParameters = when (normalized.kdfAlgorithm) {
+                    KeePassKdfAlgorithm.AES_KDF -> KdfParameters.Aes(
+                        rounds = normalized.transformRounds.toULong(),
+                        seed = saltOrSeed
+                    )
+                    KeePassKdfAlgorithm.ARGON2D -> KdfParameters.Argon2(
+                        variant = KdfParameters.Argon2.Variant.Argon2d,
+                        salt = saltOrSeed,
+                        parallelism = normalized.parallelism.toUInt(),
+                        memory = normalized.memoryBytes.toULong(),
+                        iterations = normalized.transformRounds.toULong(),
+                        version = 0x13U,
+                        secretKey = null,
+                        associatedData = null
+                    )
+                    KeePassKdfAlgorithm.ARGON2ID -> KdfParameters.Argon2(
+                        variant = KdfParameters.Argon2.Variant.Argon2id,
+                        salt = saltOrSeed,
+                        parallelism = normalized.parallelism.toUInt(),
+                        memory = normalized.memoryBytes.toULong(),
+                        iterations = normalized.transformRounds.toULong(),
+                        version = 0x13U,
+                        secretKey = null,
+                        associatedData = null
+                    )
+                }
+                base.copy(
+                    header = base.header.copy(
+                        cipherId = KeePassCodecSupport.resolveCipherUuid(normalized.cipherAlgorithm),
+                        kdfParameters = kdfParameters
+                    )
+                )
+            }
+        }
+    }
+
+    private fun buildKdbxCredentials(password: String, keyFileBytes: ByteArray?): Credentials {
+        if (keyFileBytes == null) {
+            return Credentials.from(EncryptedValue.fromString(password))
+        }
+        return if (password.isBlank()) {
+            Credentials.from(keyFileBytes)
+        } else {
+            Credentials.from(EncryptedValue.fromString(password), keyFileBytes)
+        }
+    }
+    
+    /**
+     * 操作状态
+     */
+    sealed class OperationState {
+        object Idle : OperationState()
+        data class Loading(val message: String) : OperationState()
+        data class Success(val message: String) : OperationState()
+        data class Error(val message: String) : OperationState()
+    }
+
+    sealed class VerificationState {
+        object Unknown : VerificationState()
+        object Verifying : VerificationState()
+        data class Verified(
+            val entryCount: Int,
+            val decryptTimeMs: Long
+        ) : VerificationState()
+        data class Failed(val message: String) : VerificationState()
+    }
+}

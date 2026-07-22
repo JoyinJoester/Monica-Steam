@@ -1,0 +1,170 @@
+package takagi.ru.monica.ui.password
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Update
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.vector.ImageVector
+import java.text.SimpleDateFormat
+import java.util.Locale
+import takagi.ru.monica.data.model.OtpType
+import takagi.ru.monica.data.model.TotpData
+import takagi.ru.monica.data.PasswordCardDisplayField
+import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.ui.rememberTotpTickerMillis
+import takagi.ru.monica.util.TotpDataResolver
+import takagi.ru.monica.util.TotpGenerator
+
+data class PasswordCardDisplayLine(
+    val field: PasswordCardDisplayField,
+    val icon: ImageVector,
+    val text: String
+)
+
+data class PasswordAuthenticatorDisplayState(
+    val code: String,
+    val remainingSeconds: Int?,
+    val progress: Float?
+)
+
+fun resolvePasswordCardDisplayLines(
+    entry: PasswordEntry,
+    fields: List<PasswordCardDisplayField>
+): List<PasswordCardDisplayLine> {
+    var formatter: SimpleDateFormat? = null
+    return fields.mapNotNull { field ->
+        when (field) {
+            PasswordCardDisplayField.USERNAME -> entry.username
+                .takeIf { it.isNotBlank() }
+                ?.let { PasswordCardDisplayLine(field, Icons.Default.Person, it) }
+
+            PasswordCardDisplayField.WEBSITE -> entry.website
+                .takeIf { it.isNotBlank() }
+                ?.let { PasswordCardDisplayLine(field, Icons.Default.Language, it) }
+
+            PasswordCardDisplayField.APP_NAME -> null
+
+            PasswordCardDisplayField.NOTE_PREVIEW -> entry.notes
+                .lineSequence()
+                .firstOrNull { it.isNotBlank() }
+                ?.trim()
+                ?.let { PasswordCardDisplayLine(field, Icons.Default.Description, it) }
+
+            PasswordCardDisplayField.UPDATED_AT -> {
+                val dateFormatter = formatter ?: SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).also {
+                    formatter = it
+                }
+                PasswordCardDisplayLine(
+                    field = field,
+                    icon = Icons.Default.Update,
+                    text = dateFormatter.format(entry.updatedAt)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun rememberPasswordAuthenticatorDisplayState(
+    authenticatorKey: String,
+    fallbackIssuer: String = "",
+    fallbackAccountName: String = "",
+    timeOffsetSeconds: Int,
+    smoothProgress: Boolean,
+    decryptAuthenticatorKey: ((String) -> String)? = null
+): PasswordAuthenticatorDisplayState? {
+    val totpData = remember(authenticatorKey, fallbackIssuer, fallbackAccountName, decryptAuthenticatorKey) {
+        val resolvedAuthenticatorKey = decryptAuthenticatorKey?.let { decrypt ->
+            runCatching { decrypt(authenticatorKey) }.getOrDefault(authenticatorKey)
+        } ?: authenticatorKey
+        parsePasswordAuthenticatorTotpData(
+            authenticatorKey = resolvedAuthenticatorKey,
+            fallbackIssuer = fallbackIssuer,
+            fallbackAccountName = fallbackAccountName
+        )
+    } ?: return null
+
+    val currentTimeMillis = rememberTotpTickerMillis(smoothProgress)
+    val currentSeconds = currentTimeMillis / 1000
+
+    val rawCode = remember(totpData, currentSeconds, timeOffsetSeconds) {
+        TotpGenerator.generateOtp(
+            totpData = totpData,
+            timeOffset = timeOffsetSeconds,
+            currentSeconds = currentSeconds
+        )
+    }
+    val formattedCode = remember(rawCode, totpData.otpType) {
+        formatAuthenticatorCode(rawCode, totpData.otpType)
+    }
+
+    return if (totpData.otpType == OtpType.HOTP) {
+        PasswordAuthenticatorDisplayState(
+            code = formattedCode,
+            remainingSeconds = null,
+            progress = null
+        )
+    } else {
+        val remaining = remember(totpData, currentSeconds, timeOffsetSeconds) {
+            TotpGenerator.getRemainingSeconds(
+                period = totpData.period,
+                timeOffset = timeOffsetSeconds,
+                currentSeconds = currentSeconds
+            )
+        }
+        val progress = remember(
+            totpData,
+            currentTimeMillis,
+            currentSeconds,
+            timeOffsetSeconds,
+            smoothProgress
+        ) {
+            if (smoothProgress) {
+                val periodMillis = (totpData.period * 1000L).coerceAtLeast(1000L)
+                val correctedMillis = currentTimeMillis + (timeOffsetSeconds * 1000L)
+                val elapsedInPeriod = ((correctedMillis % periodMillis) + periodMillis) % periodMillis
+                (elapsedInPeriod.toFloat() / periodMillis.toFloat()).coerceIn(0f, 1f)
+            } else {
+                TotpGenerator.getProgress(
+                    period = totpData.period,
+                    timeOffset = timeOffsetSeconds,
+                    currentSeconds = currentSeconds
+                ).coerceIn(0f, 1f)
+            }
+        }
+        PasswordAuthenticatorDisplayState(
+            code = formattedCode,
+            remainingSeconds = remaining,
+            progress = progress
+        )
+    }
+}
+
+private fun parsePasswordAuthenticatorTotpData(
+    authenticatorKey: String,
+    fallbackIssuer: String,
+    fallbackAccountName: String
+): TotpData? {
+    return TotpDataResolver.fromAuthenticatorKey(
+        rawKey = authenticatorKey,
+        fallbackIssuer = fallbackIssuer,
+        fallbackAccountName = fallbackAccountName
+    )
+}
+
+private fun formatAuthenticatorCode(code: String, otpType: OtpType): String {
+    val compact = code.replace(" ", "")
+    if (compact.length <= 4) return compact
+
+    if (otpType == OtpType.STEAM && compact.length == 5) {
+        return "${compact.substring(0, 2)} ${compact.substring(2)}"
+    }
+
+    if (compact.length % 2 == 0) {
+        return compact.chunked(compact.length / 2).joinToString(" ")
+    }
+    return compact.chunked(3).joinToString(" ")
+}

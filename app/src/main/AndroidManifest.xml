@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        android:minSdkVersion="33" />
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.NFC"
+        tools:node="remove" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Monica"
+        android:usesCleartextTraffic="false">
+
+        <activity
+            android:name=".MonicaSteamActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Monica">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".steam.quickaccess.SteamAccountStatsWidgetProvider"
+            android:exported="false"
+            android:label="@string/steam_widget_account_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/steam_account_stats_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".steam.quickaccess.SteamRecentGamesWidgetProvider"
+            android:exported="false"
+            android:label="@string/steam_widget_recent_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/steam_recent_games_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".steam.quickaccess.SteamWidgetConfigureActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/steam_widget_choose_account"
+            android:theme="@style/Theme.Monica" />
+
+        <receiver
+            android:name=".steam.alerts.SteamAlertReceiver"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                tools:node="remove" />
+        </provider>
+
+        <!-- Share generated support logs and other cache attachments safely. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name="com.microsoft.identity.common.internal.providers.oauth2.AuthorizationActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.common.internal.providers.oauth2.CurrentTaskAuthorizationActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.client.helper.BrokerHelperActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.client.CurrentTaskBrowserTabActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.common.internal.providers.oauth2.SilentAuthorizationActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.common.internal.broker.BrokerActivity" tools:node="remove" />
+        <activity android:name="com.microsoft.identity.common.internal.broker.InstallCertActivityLauncher" tools:node="remove" />
+        <service android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder" tools:node="remove" />
+        <activity android:name="androidx.credentials.playservices.HiddenActivity" tools:node="remove" />
+        <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" tools:node="remove" />
+        <service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" tools:node="remove" />
+        <activity android:name="androidx.slice.compat.SlicePermissionActivity" tools:node="remove" />
+        <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" tools:node="remove" />
+        <service android:name="androidx.work.impl.background.systemjob.SystemJobService" tools:node="remove" />
+        <service android:name="androidx.work.impl.foreground.SystemForegroundService" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" tools:node="remove" />
+        <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" tools:node="remove" />
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity" tools:node="remove" />
+        <activity android:name="com.yubico.yubikit.android.ui.OtpActivity" tools:node="remove" />
+        <activity android:name="com.yubico.yubikit.android.ui.YubiKeyPromptActivity" tools:node="remove" />
+        <receiver android:name="androidx.profileinstaller.ProfileInstallReceiver" tools:node="remove" />
+    </application>
+
+</manifest>

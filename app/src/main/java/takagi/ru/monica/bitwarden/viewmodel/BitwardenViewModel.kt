@@ -1,0 +1,1749 @@
+package takagi.ru.monica.bitwarden.viewmodel
+
+import android.app.Application
+import android.net.ConnectivityManager
+import android.net.Uri
+import android.net.NetworkCapabilities
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import takagi.ru.monica.R
+import takagi.ru.monica.bitwarden.api.BitwardenTlsConfig
+import takagi.ru.monica.bitwarden.cache.BitwardenOfflineSecretCache
+import takagi.ru.monica.bitwarden.repository.BitwardenRepository
+import takagi.ru.monica.bitwarden.service.LoginResult
+import takagi.ru.monica.bitwarden.sync.BitwardenCoordinatedSyncResult
+import takagi.ru.monica.bitwarden.sync.BitwardenMutationSyncBridge
+import takagi.ru.monica.bitwarden.sync.BitwardenSyncOrchestrator
+import takagi.ru.monica.bitwarden.sync.BitwardenSyncNotificationHelper
+import takagi.ru.monica.bitwarden.sync.BitwardenSyncSummary
+import takagi.ru.monica.bitwarden.sync.NetworkGateResult
+import takagi.ru.monica.bitwarden.sync.SyncBlockReason
+import takagi.ru.monica.bitwarden.sync.SyncExecutionOutcome
+import takagi.ru.monica.bitwarden.sync.SyncTriggerReason
+import takagi.ru.monica.bitwarden.sync.VaultSyncStatus
+import takagi.ru.monica.bitwarden.sync.mergeBitwardenSyncStatuses
+import takagi.ru.monica.bitwarden.sync.syncViaCoordinator
+import takagi.ru.monica.bitwarden.sync.toBitwardenBlockReason
+import takagi.ru.monica.data.OperationLogItemType
+import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.bitwarden.BitwardenConflictBackup
+import takagi.ru.monica.data.bitwarden.BitwardenFolder
+import takagi.ru.monica.data.bitwarden.BitwardenSend
+import takagi.ru.monica.data.bitwarden.BitwardenVault
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.sync.SyncMode
+import takagi.ru.monica.sync.SyncNetworkPolicy
+import takagi.ru.monica.sync.SyncPriority
+import takagi.ru.monica.sync.SyncTaskRunner
+import takagi.ru.monica.sync.SyncTrigger
+import takagi.ru.monica.utils.FieldChange
+import takagi.ru.monica.utils.OperationLogger
+
+/**
+ * Bitwarden ViewModel
+ * 
+ * 管理 Bitwarden 相关的 UI 状态和用户操作
+ * 
+ * 主要功能：
+ * 1. 登录/登出流程
+ * 2. Vault 解锁/锁定
+ * 3. 同步状态管理
+ * 4. 密码条目和文件夹的访问
+ * 5. 冲突解决
+ */
+class BitwardenViewModel(application: Application) : AndroidViewModel(application) {
+    
+    companion object {
+        private const val TAG = "BitwardenViewModel"
+        private const val COLD_START_AUTO_SYNC_GRACE_MS = 8_000L
+        private const val SILENT_SYNC_UI_REFRESH_DELAY_MS = 1_500L
+        private const val SILENT_SYNC_CACHE_WARM_DELAY_MS = 12_000L
+    }
+    
+    // 仓库
+    private val repository = BitwardenRepository.getInstance(application)
+    private val securityManager = SecurityManager(application.applicationContext)
+    private val bitwardenOfflineSecretCache = BitwardenOfflineSecretCache(
+        application.applicationContext,
+        securityManager
+    )
+    private val decryptLock = Any()
+    
+    // 两步验证临时状态
+    private var twoFactorState: LoginResult.TwoFactorRequired? = null
+    private var pendingServerUrl: String? = null
+    private var pendingTlsConfig: BitwardenTlsConfig? = null
+    private val processStartMs = System.currentTimeMillis()
+    private var silentPostSyncRefreshJob: Job? = null
+    private val silentCacheWarmJobs = mutableMapOf<Long, Job>()
+    
+    // ==================== UI 状态 ====================
+    
+    // 登录状态
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
+    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+    
+    // Vault 列表
+    private val _vaults = MutableStateFlow<List<BitwardenVault>>(emptyList())
+    val vaults: StateFlow<List<BitwardenVault>> = _vaults.asStateFlow()
+    
+    // 当前活跃 Vault
+    private val _activeVault = MutableStateFlow<BitwardenVault?>(null)
+    val activeVault: StateFlow<BitwardenVault?> = _activeVault.asStateFlow()
+    
+    // 当前活跃 Vault 的解锁状态
+    private val _unlockState = MutableStateFlow<UnlockState>(UnlockState.Locked)
+    val unlockState: StateFlow<UnlockState> = _unlockState.asStateFlow()
+
+    // 每个 Vault 的解锁状态
+    private val _unlockStateByVault = MutableStateFlow<Map<Long, UnlockState>>(emptyMap())
+    val unlockStateByVault: StateFlow<Map<Long, UnlockState>> = _unlockStateByVault.asStateFlow()
+    
+    // 同步状态
+    private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
+    val syncState: StateFlow<SyncState> = _syncState.asStateFlow()
+    
+    // 密码条目列表
+    private val _entries = MutableStateFlow<List<PasswordEntry>>(emptyList())
+    val entries: StateFlow<List<PasswordEntry>> = _entries.asStateFlow()
+    
+    // 文件夹列表
+    private val _folders = MutableStateFlow<List<BitwardenFolder>>(emptyList())
+    val folders: StateFlow<List<BitwardenFolder>> = _folders.asStateFlow()
+
+    // Send 列表（仅当前活跃 Vault；保留以兼容旧调用方，新代码请使用 sendsAcrossVaults）
+    private val _sends = MutableStateFlow<List<BitwardenSend>>(emptyList())
+    val sends: StateFlow<List<BitwardenSend>> = _sends.asStateFlow()
+
+    // Send 跨 Vault 列表（合并所有已解锁账号下的 Send）
+    private val _sendsAcrossVaults = MutableStateFlow<List<BitwardenSend>>(emptyList())
+    val sendsAcrossVaults: StateFlow<List<BitwardenSend>> = _sendsAcrossVaults.asStateFlow()
+
+    // Send 页面状态
+    private val _sendState = MutableStateFlow<SendState>(SendState.Idle)
+    val sendState: StateFlow<SendState> = _sendState.asStateFlow()
+
+    private val _sendCreateSuccessVersion = MutableStateFlow(0)
+    val sendCreateSuccessVersion: StateFlow<Int> = _sendCreateSuccessVersion.asStateFlow()
+    
+    // 冲突列表
+    private val _conflicts = MutableStateFlow<List<BitwardenConflictBackup>>(emptyList())
+    val conflicts: StateFlow<List<BitwardenConflictBackup>> = _conflicts.asStateFlow()
+    
+    // 搜索结果
+    private val _searchResults = MutableStateFlow<List<PasswordEntry>>(emptyList())
+    val searchResults: StateFlow<List<PasswordEntry>> = _searchResults.asStateFlow()
+    
+    // 当前选中的文件夹
+    private val _selectedFolder = MutableStateFlow<BitwardenFolder?>(null)
+    val selectedFolder: StateFlow<BitwardenFolder?> = _selectedFolder.asStateFlow()
+    
+    // 永不锁定设置状态
+    private val _isNeverLockEnabled = MutableStateFlow(false)
+    val isNeverLockEnabledFlow: StateFlow<Boolean> = _isNeverLockEnabled.asStateFlow()
+
+    // 同步设置状态（用于界面实时更新）
+    private val _isAutoSyncEnabled = MutableStateFlow(false)
+    val isAutoSyncEnabledFlow: StateFlow<Boolean> = _isAutoSyncEnabled.asStateFlow()
+
+    private val _isSyncOnWifiOnly = MutableStateFlow(false)
+    val isSyncOnWifiOnlyFlow: StateFlow<Boolean> = _isSyncOnWifiOnly.asStateFlow()
+    
+    // 一次性事件
+    private val _events = MutableSharedFlow<BitwardenEvent>()
+    val events = _events.asSharedFlow()
+    
+    private val syncOrchestrator = BitwardenSyncOrchestrator(
+        scope = viewModelScope,
+        isAutoSyncEnabled = { _isAutoSyncEnabled.value },
+        checkNetwork = { evaluateNetworkGate() },
+        isVaultUnlocked = { vaultId -> repository.isVaultUnlocked(vaultId) },
+        executeSync = { vaultId, silent -> runSync(vaultId = vaultId, silent = silent) }
+    )
+    val syncStatusByVault: StateFlow<Map<Long, VaultSyncStatus>> = combine(
+        syncOrchestrator.statusByVault,
+        SyncTaskRunner.statuses
+    ) { orchestratorStatuses, coordinatorStatuses ->
+        mergeBitwardenSyncStatuses(orchestratorStatuses, coordinatorStatuses.values)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyMap()
+    )
+    
+    init {
+        // 加载永不锁定设置
+        _isNeverLockEnabled.value = repository.isNeverLockEnabled
+        _isAutoSyncEnabled.value = repository.isAutoSyncEnabled
+        _isSyncOnWifiOnly.value = repository.isSyncOnWifiOnly
+        BitwardenMutationSyncBridge.register(this) { vaultId ->
+            syncOrchestrator.requestSync(
+                vaultId = vaultId,
+                reason = SyncTriggerReason.LOCAL_MUTATION
+            )
+            true
+        }
+        observeVaultSnapshots()
+        loadVaults(
+            triggerStartupAutoSync = false,
+            triggerActiveVaultAutoSync = false
+        )
+    }
+
+    override fun onCleared() {
+        BitwardenMutationSyncBridge.unregister(this)
+        super.onCleared()
+    }
+    
+    // ==================== 公开方法 ====================
+    
+    /**
+     * 加载 Vault 列表
+     */
+    fun loadVaults(
+        triggerStartupAutoSync: Boolean = false,
+        triggerActiveVaultAutoSync: Boolean = true
+    ) {
+        viewModelScope.launch {
+            try {
+                val restoredVaultIds = if (_isNeverLockEnabled.value) {
+                    repository.restoreUnlockedVaults()
+                } else {
+                    emptySet()
+                }
+                val vaultList = repository.getAllVaults()
+                _vaults.value = vaultList
+                replaceUnlockStates(vaultList)
+                
+                // 加载活跃 Vault
+                val active = repository.getActiveVault()
+                _activeVault.value = active
+
+                val activeUnlockState = active?.let { currentUnlockState(it.id) } ?: UnlockState.Locked
+                _unlockState.value = activeUnlockState
+
+                if (active != null && activeUnlockState == UnlockState.Unlocked) {
+                    _sendState.value = SendState.Idle
+                    loadVaultData(active.id)
+                    if (active.id in restoredVaultIds) {
+                        Log.d(TAG, "成功恢复 Vault 解锁状态")
+                    }
+                } else {
+                    clearActiveVaultContent(
+                        sendState = if (active == null) SendState.Idle else SendState.Locked
+                    )
+                }
+
+                if (triggerStartupAutoSync) {
+                    val reason = if (restoredVaultIds.isNotEmpty()) {
+                        SyncTriggerReason.APP_RESUME
+                    } else {
+                        SyncTriggerReason.PAGE_ENTER
+                    }
+                    requestAutoSyncForUnlockedVaults(vaultList, reason)
+                } else if (triggerActiveVaultAutoSync && active != null && activeUnlockState == UnlockState.Unlocked) {
+                    val trigger = if (active.id in restoredVaultIds) {
+                        "loadVaults:restoredUnlock"
+                    } else {
+                        "loadVaults:activeUnlocked"
+                    }
+                    maybeTriggerSilentAutoSync(active, trigger = trigger)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "加载 Vault 失败", e)
+                _events.emit(BitwardenEvent.ShowError("加载 Vault 失败: ${e.message}"))
+            }
+        }
+    }
+    
+    /**
+     * 登录 Bitwarden
+     */
+    fun login(
+        serverUrl: String?,
+        email: String,
+        masterPassword: String,
+        captchaResponse: String? = null,
+        tlsConfig: BitwardenTlsConfig? = null
+    ) {
+        if (email.isBlank() || masterPassword.isBlank()) {
+            viewModelScope.launch {
+                _events.emit(BitwardenEvent.ShowError("请填写邮箱和主密码"))
+            }
+            return
+        }
+        
+        viewModelScope.launch {
+            _loginState.value = LoginState.Loading
+            
+            val result = repository.login(
+                serverUrl = serverUrl?.takeIf { it.isNotBlank() },
+                email = email,
+                masterPassword = masterPassword,
+                captchaResponse = captchaResponse,
+                tlsConfig = tlsConfig
+            )
+            
+            when (result) {
+                is BitwardenRepository.RepositoryLoginResult.Success -> {
+                    _loginState.value = LoginState.Success(result.vault)
+                    _activeVault.value = result.vault
+                    setUnlockState(result.vault.id, UnlockState.Unlocked)
+                    _unlockState.value = UnlockState.Unlocked
+                    _events.emit(BitwardenEvent.ShowSuccess("登录成功"))
+                    _events.emit(BitwardenEvent.NavigateToVault(result.vault.id))
+                    // 延迟加载以避免并发问题
+                    kotlinx.coroutines.delay(100)
+                    loadVaults()
+                    loadVaultData(result.vault.id)
+                }
+                
+                is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired -> {
+                    twoFactorState = result.state
+                    pendingServerUrl = serverUrl
+                    pendingTlsConfig = tlsConfig
+                    _loginState.value = LoginState.TwoFactorRequired(result.providers)
+                    _events.emit(BitwardenEvent.ShowTwoFactorDialog(result.providers))
+                }
+
+                is BitwardenRepository.RepositoryLoginResult.CaptchaRequired -> {
+                    if (!result.siteKey.isNullOrBlank()) {
+                        _loginState.value = LoginState.Error(result.message)
+                        _events.emit(
+                            BitwardenEvent.ShowCaptchaDialog(
+                                message = result.message,
+                                forTwoFactor = false,
+                                siteKey = result.siteKey
+                            )
+                        )
+                    } else {
+                        val message = "登录被风控拦截，请稍后重试或使用官方客户端完成一次验证后再试。"
+                        _loginState.value = LoginState.Error(message)
+                        _events.emit(BitwardenEvent.ShowError(message))
+                    }
+                }
+                
+                is BitwardenRepository.RepositoryLoginResult.Error -> {
+                    _loginState.value = LoginState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+            }
+        }
+    }
+    
+    /**
+     * 使用两步验证登录
+     */
+    fun loginWithTwoFactor(
+        twoFactorCode: String,
+        twoFactorMethod: Int,
+        captchaResponse: String? = null
+    ) {
+        val state = twoFactorState ?: run {
+            viewModelScope.launch {
+                _events.emit(BitwardenEvent.ShowError("两步验证状态丢失，请重新登录"))
+            }
+            return
+        }
+        
+        viewModelScope.launch {
+            _loginState.value = LoginState.Loading
+            
+            val result = repository.loginWithTwoFactor(
+                twoFactorState = state,
+                twoFactorCode = twoFactorCode,
+                twoFactorProvider = twoFactorMethod,
+                serverUrl = pendingServerUrl,
+                captchaResponse = captchaResponse,
+                tlsConfig = pendingTlsConfig
+            )
+            
+            when (result) {
+                is BitwardenRepository.RepositoryLoginResult.Success -> {
+                    twoFactorState = null
+                    pendingServerUrl = null
+                    pendingTlsConfig = null
+                    _loginState.value = LoginState.Success(result.vault)
+                    _activeVault.value = result.vault
+                    setUnlockState(result.vault.id, UnlockState.Unlocked)
+                    _unlockState.value = UnlockState.Unlocked
+                    loadVaults()
+                    loadVaultData(result.vault.id)
+                    _events.emit(BitwardenEvent.ShowSuccess("登录成功"))
+                    _events.emit(BitwardenEvent.NavigateToVault(result.vault.id))
+                }
+                
+                is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired -> {
+                    _loginState.value = LoginState.TwoFactorRequired(result.providers)
+                    twoFactorState = result.state
+                    _events.emit(BitwardenEvent.ShowTwoFactorDialog(result.providers))
+                    _events.emit(BitwardenEvent.ShowError("验证码错误，请重试"))
+                }
+
+                is BitwardenRepository.RepositoryLoginResult.CaptchaRequired -> {
+                    if (!result.siteKey.isNullOrBlank()) {
+                        _loginState.value = LoginState.Error(result.message)
+                        _events.emit(
+                            BitwardenEvent.ShowCaptchaDialog(
+                                message = result.message,
+                                forTwoFactor = true,
+                                siteKey = result.siteKey
+                            )
+                        )
+                    } else {
+                        val message = "两步验证被风控拦截，请稍后重试或使用官方客户端完成一次验证后再试。"
+                        _loginState.value = LoginState.Error(message)
+                        _events.emit(BitwardenEvent.ShowError(message))
+                    }
+                }
+                
+                is BitwardenRepository.RepositoryLoginResult.Error -> {
+                    _loginState.value = LoginState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+            }
+        }
+    }
+
+    fun sendTwoFactorEmailLogin() {
+        val state = twoFactorState ?: run {
+            viewModelScope.launch {
+                _events.emit(BitwardenEvent.ShowError("两步验证状态丢失，请重新登录"))
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            val result = repository.sendTwoFactorEmailLogin(
+                twoFactorState = state,
+                serverUrl = pendingServerUrl,
+                tlsConfig = pendingTlsConfig
+            )
+            result.fold(
+                onSuccess = {
+                    _events.emit(BitwardenEvent.ShowSuccess("邮箱验证码已发送，请检查收件箱和垃圾邮件"))
+                },
+                onFailure = { error ->
+                    _events.emit(BitwardenEvent.ShowError("发送邮箱验证码失败：${error.message ?: "未知错误"}"))
+                }
+            )
+        }
+    }
+    
+    /**
+     * 解锁 Vault
+     */
+    fun unlock(masterPassword: String) {
+        val vaultId = _activeVault.value?.id ?: return
+        unlock(vaultId, masterPassword)
+    }
+
+    fun unlock(vaultId: Long, masterPassword: String) {
+        val vault = resolveVault(vaultId) ?: return
+        val isActiveVault = _activeVault.value?.id == vaultId
+        
+        viewModelScope.launch {
+            setUnlockState(vaultId, UnlockState.Unlocking)
+            if (isActiveVault) {
+                _unlockState.value = UnlockState.Unlocking
+            }
+            
+            when (val result = repository.unlock(vault.id, masterPassword)) {
+                is BitwardenRepository.UnlockResult.Success -> {
+                    setUnlockState(vaultId, UnlockState.Unlocked)
+                    if (isActiveVault) {
+                        _unlockState.value = UnlockState.Unlocked
+                        _sendState.value = SendState.Idle
+                        loadVaultData(vault.id)
+                        maybeTriggerSilentAutoSync(vault, trigger = "unlock")
+                    }
+                    _events.emit(BitwardenEvent.ShowSuccess("Vault 已解锁"))
+                }
+                
+                is BitwardenRepository.UnlockResult.Error -> {
+                    setUnlockState(vaultId, UnlockState.Locked)
+                    if (isActiveVault) {
+                        _unlockState.value = UnlockState.Locked
+                        clearActiveVaultContent(sendState = SendState.Locked)
+                    }
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+            }
+        }
+    }
+    
+    /**
+     * 锁定 Vault
+     */
+    fun lock() {
+        val vaultId = _activeVault.value?.id ?: return
+        lock(vaultId)
+    }
+
+    fun lock(vaultId: Long) {
+        val isActiveVault = _activeVault.value?.id == vaultId
+        
+        viewModelScope.launch {
+            repository.lock(vaultId)
+            syncOrchestrator.clearVault(vaultId)
+            setUnlockState(vaultId, currentRepositoryUnlockState(vaultId))
+            if (isActiveVault) {
+                _unlockState.value = currentUnlockState(vaultId)
+                clearActiveVaultContent(
+                    sendState = if (currentUnlockState(vaultId) == UnlockState.Unlocked) {
+                        SendState.Idle
+                    } else {
+                        SendState.Locked
+                    }
+                )
+                if (currentUnlockState(vaultId) == UnlockState.Unlocked) {
+                    resolveVault(vaultId)?.let { loadVaultData(it.id) }
+                }
+            }
+            _events.emit(BitwardenEvent.ShowSuccess("Vault 已锁定"))
+        }
+    }
+    
+    /**
+     * 锁定所有 Vault
+     */
+    fun lockAll() {
+        viewModelScope.launch {
+            repository.lockAll()
+            val currentVaults = repository.getAllVaults()
+            _vaults.value = currentVaults
+            currentVaults.forEach { syncOrchestrator.clearVault(it.id) }
+            replaceUnlockStates(currentVaults)
+            val active = _activeVault.value
+            val activeUnlockState = active?.let { currentUnlockState(it.id) } ?: UnlockState.Locked
+            _unlockState.value = activeUnlockState
+            if (active != null && activeUnlockState == UnlockState.Unlocked) {
+                _sendState.value = SendState.Idle
+                loadVaultData(active.id)
+            } else {
+                clearActiveVaultContent(
+                    sendState = if (active == null) SendState.Idle else SendState.Locked
+                )
+            }
+        }
+    }
+    
+    /**
+     * 登出
+     */
+    fun logout(vaultId: Long? = null) {
+        val targetVaultId = vaultId ?: _activeVault.value?.id ?: return
+        
+        viewModelScope.launch {
+            val success = repository.logout(targetVaultId)
+            if (success) {
+                syncOrchestrator.clearVault(targetVaultId)
+                loadVaults()
+                removeUnlockState(targetVaultId)
+                _loginState.value = LoginState.Idle
+                _events.emit(BitwardenEvent.ShowSuccess("已登出"))
+                _events.emit(BitwardenEvent.NavigateToLogin)
+            } else {
+                _events.emit(BitwardenEvent.ShowError("登出失败"))
+            }
+        }
+    }
+    
+    /**
+     * 切换活跃 Vault
+     */
+    fun setActiveVault(vault: BitwardenVault) {
+        repository.setActiveVault(vault.id)
+        _activeVault.value = vault
+        val activeUnlockState = currentUnlockState(vault.id)
+        _unlockState.value = activeUnlockState
+
+        if (activeUnlockState == UnlockState.Unlocked) {
+            viewModelScope.launch {
+                _sendState.value = SendState.Idle
+                loadVaultData(vault.id)
+                maybeTriggerSilentAutoSync(vault, trigger = "setActiveVault")
+            }
+        } else {
+            clearActiveVaultContent(sendState = SendState.Locked)
+        }
+    }
+
+    fun isVaultUnlocked(vaultId: Long): Boolean {
+        return repository.isVaultUnlocked(vaultId)
+    }
+    
+    /**
+     * 同步
+     */
+    fun sync() {
+        val vault = _activeVault.value ?: return
+        
+        if (!repository.isVaultUnlocked(vault.id)) {
+            viewModelScope.launch {
+                _events.emit(BitwardenEvent.ShowError("请先解锁 Vault"))
+            }
+            return
+        }
+
+        requestSyncWithStartupGrace(
+            vaultId = vault.id,
+            reason = SyncTriggerReason.MANUAL,
+            force = true
+        )
+    }
+
+    fun syncUnlockedVaults() {
+        val unlockedVaultIds = collectUnlockedVaultIds()
+        if (unlockedVaultIds.isEmpty()) {
+            viewModelScope.launch {
+                _events.emit(BitwardenEvent.ShowError("请先解锁至少一个 Vault"))
+            }
+            return
+        }
+
+        val visibleVaultId = _activeVault.value?.id?.takeIf { it in unlockedVaultIds } ?: unlockedVaultIds.first()
+        unlockedVaultIds.forEach { vaultId ->
+            requestSyncWithStartupGrace(
+                vaultId = vaultId,
+                reason = if (vaultId == visibleVaultId) {
+                    SyncTriggerReason.MANUAL
+                } else {
+                    SyncTriggerReason.PAGE_ENTER
+                },
+                force = true
+            )
+        }
+    }
+
+    /**
+     * 页面进入时触发自动同步（节流+门控由 Orchestrator 负责）。
+     */
+    fun requestPageEnterAutoSync(vaultId: Long? = null) {
+        val targetVaultId = vaultId ?: _activeVault.value?.id ?: return
+        requestAutoSyncWithStartupGrace(targetVaultId, SyncTriggerReason.PAGE_ENTER)
+    }
+
+    /**
+     * 本地数据增删改后触发自动同步（带防抖）。
+     */
+    fun requestLocalMutationSync(vaultId: Long? = null) {
+        val targetVaultId = vaultId ?: _activeVault.value?.id ?: return
+        syncOrchestrator.requestSync(
+            vaultId = targetVaultId,
+            reason = SyncTriggerReason.LOCAL_MUTATION
+        )
+    }
+
+    /**
+     * 指定 vault 的手动同步请求（用于页面顶部“一键同步”按钮）。
+     */
+    fun requestManualSync(vaultId: Long) {
+        requestSyncWithStartupGrace(
+            vaultId = vaultId,
+            reason = SyncTriggerReason.MANUAL,
+            force = true
+        )
+    }
+
+    /**
+     * 加载 Send 列表。
+     *
+     * 多账号视图改造后：本方法默认刷新当前活跃 Vault 的 Send；与此同时也会刷新跨账号
+     * 视图（[sendsAcrossVaults]）以保持两侧一致。如果当前没有活跃 Vault，跨账号视图
+     * 仍会从所有已解锁账号读取，以满足"用户切走当前活跃 vault 但仍要看到所有 send"的
+     * 需求。
+     */
+    fun loadSends(forceRemoteSync: Boolean = false) {
+        val vault = _activeVault.value
+        viewModelScope.launch {
+            // 跨账号视图先刷新一次（即便没有活跃 Vault 也能展示其它已解锁账号下的 Send）
+            refreshSendsAcrossVaults()
+
+            if (vault == null) {
+                _sends.value = emptyList()
+                if (_sendsAcrossVaults.value.isEmpty()) {
+                    _sendState.value = SendState.Error("请先连接 Bitwarden Vault")
+                } else {
+                    _sendState.value = SendState.Idle
+                }
+                return@launch
+            }
+            if (!repository.isVaultUnlocked(vault.id)) {
+                _sendState.value = SendState.Locked
+                return@launch
+            }
+
+            if (!forceRemoteSync) {
+                _sendState.value = SendState.Loading
+                _sends.value = repository.getSends(vault.id)
+                refreshSendsAcrossVaults()
+                _sendState.value = SendState.Idle
+                return@launch
+            }
+
+            _sendState.value = SendState.Syncing
+            when (val result = refreshSendsViaCoordinator(vault.id)) {
+                is BitwardenRepository.SendSyncResult.Success -> {
+                    _sends.value = result.sends
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Idle
+                }
+                is BitwardenRepository.SendSyncResult.Warning -> {
+                    _sends.value = result.sends
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Warning(result.message)
+                }
+                is BitwardenRepository.SendSyncResult.Error -> {
+                    _sends.value = repository.getSends(vault.id)
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Error(result.message)
+                }
+            }
+        }
+    }
+
+    /**
+     * 强制刷新所有已解锁 Vault 的 Send。供 Send 标签页"全量下拉同步"使用。
+     */
+    fun refreshAllUnlockedSends() {
+        val vaults = _vaults.value
+        val unlockedVaultIds = _unlockStateByVault.value
+            .filterValues { it == UnlockState.Unlocked }
+            .keys
+        if (unlockedVaultIds.isEmpty()) {
+            return
+        }
+        viewModelScope.launch {
+            _sendState.value = SendState.Syncing
+            var anyError: String? = null
+            var anyWarning: String? = null
+            unlockedVaultIds.forEach { vaultId ->
+                val vault = vaults.firstOrNull { it.id == vaultId } ?: return@forEach
+                when (val result = refreshSendsViaCoordinator(vault.id)) {
+                    is BitwardenRepository.SendSyncResult.Success -> Unit
+                    is BitwardenRepository.SendSyncResult.Warning -> {
+                        if (anyWarning == null) anyWarning = result.message
+                    }
+                    is BitwardenRepository.SendSyncResult.Error -> {
+                        if (anyError == null) anyError = result.message
+                    }
+                }
+            }
+            // 同步后刷新本地状态
+            _activeVault.value?.let { active ->
+                if (repository.isVaultUnlocked(active.id)) {
+                    _sends.value = repository.getSends(active.id)
+                }
+            }
+            refreshSendsAcrossVaults()
+            _sendState.value = when {
+                anyError != null -> SendState.Error(anyError!!)
+                anyWarning != null -> SendState.Warning(anyWarning!!)
+                else -> SendState.Idle
+            }
+        }
+    }
+
+    private suspend fun refreshSendsViaCoordinator(vaultId: Long): BitwardenRepository.SendSyncResult {
+        return when (val coordinatedResult = repository.syncViaCoordinator(
+            vaultId = vaultId,
+            requestIdPrefix = "bw-send-vault",
+            trigger = SyncTrigger.MANUAL,
+            priority = SyncPriority.MANUAL,
+            mode = SyncMode.FOREGROUND,
+            networkPolicy = if (_isSyncOnWifiOnly.value) {
+                SyncNetworkPolicy.WIFI_ONLY
+            } else {
+                SyncNetworkPolicy.REQUIRED
+            }
+        )) {
+            is BitwardenCoordinatedSyncResult.Completed -> when (val result = coordinatedResult.result) {
+                is BitwardenRepository.SyncResult.Success -> {
+                    BitwardenRepository.SendSyncResult.Success(repository.getSends(vaultId))
+                }
+                is BitwardenRepository.SyncResult.EmptyVaultBlocked -> {
+                    BitwardenRepository.SendSyncResult.Warning(
+                        sends = repository.getSends(vaultId),
+                        message = result.reason
+                    )
+                }
+                is BitwardenRepository.SyncResult.Error -> {
+                    BitwardenRepository.SendSyncResult.Error(result.message)
+                }
+            }
+            BitwardenCoordinatedSyncResult.Merged,
+            is BitwardenCoordinatedSyncResult.Skipped -> {
+                BitwardenRepository.SendSyncResult.Success(repository.getSends(vaultId))
+            }
+            is BitwardenCoordinatedSyncResult.Blocked -> {
+                BitwardenRepository.SendSyncResult.Error(
+                    coordinatedResult.error.redactedMessage ?: coordinatedResult.error.kind.name
+                )
+            }
+            is BitwardenCoordinatedSyncResult.Canceled -> {
+                BitwardenRepository.SendSyncResult.Error(coordinatedResult.reason ?: "同步被取消")
+            }
+            is BitwardenCoordinatedSyncResult.Failed -> {
+                BitwardenRepository.SendSyncResult.Error(coordinatedResult.error.message ?: "同步失败")
+            }
+        }
+    }
+
+    /**
+     * 创建文本 Send
+     */
+    fun createTextSend(
+        vaultId: Long? = null,
+        title: String,
+        text: String,
+        notes: String?,
+        password: String?,
+        maxAccessCount: Int?,
+        hideEmail: Boolean,
+        hiddenText: Boolean,
+        expireInDays: Int
+    ) {
+        val vault = vaultId?.let(::resolveVault) ?: _activeVault.value ?: return
+        if (!repository.isVaultUnlocked(vault.id)) {
+            _sendState.value = SendState.Locked
+            return
+        }
+
+        viewModelScope.launch {
+            _sendState.value = SendState.Creating
+            val now = System.currentTimeMillis()
+            val days = expireInDays.coerceIn(1, 30)
+            val expirationMillis = now + days * 24L * 60L * 60L * 1000L
+            val deletionMillis = now + (days + 1).coerceAtMost(31) * 24L * 60L * 60L * 1000L
+
+            when (
+                val result = repository.createTextSend(
+                    vaultId = vault.id,
+                    title = title.trim(),
+                    text = text.trim(),
+                    notes = notes?.trim(),
+                    password = password?.trim(),
+                    maxAccessCount = maxAccessCount,
+                    hideEmail = hideEmail,
+                    hiddenText = hiddenText,
+                    deletionMillis = deletionMillis,
+                    expirationMillis = expirationMillis
+                )
+            ) {
+                is BitwardenRepository.SendMutationResult.Success -> {
+                    if (_activeVault.value?.id == vault.id) {
+                        _sends.value = listOf(result.send) + _sends.value.filterNot {
+                            it.bitwardenSendId == result.send.bitwardenSendId
+                        }
+                    }
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Idle
+                    _sendCreateSuccessVersion.value = _sendCreateSuccessVersion.value + 1
+                    logBitwardenSendCreate(vault.id, result.send)
+                    requestLocalMutationSync(vault.id)
+                    _events.emit(BitwardenEvent.SendCreated("Send 已创建"))
+                }
+                is BitwardenRepository.SendMutationResult.Error -> {
+                    _sendState.value = SendState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+                is BitwardenRepository.SendMutationResult.Deleted -> {
+                    _sendState.value = SendState.Idle
+                }
+            }
+        }
+    }
+
+    fun createFileSend(
+        vaultId: Long? = null,
+        title: String,
+        fileUri: Uri,
+        fileName: String,
+        notes: String?,
+        password: String?,
+        maxAccessCount: Int?,
+        hideEmail: Boolean,
+        expireInDays: Int
+    ) {
+        val vault = vaultId?.let(::resolveVault) ?: _activeVault.value ?: return
+        if (!repository.isVaultUnlocked(vault.id)) {
+            _sendState.value = SendState.Locked
+            return
+        }
+
+        viewModelScope.launch {
+            _sendState.value = SendState.Creating
+            val now = System.currentTimeMillis()
+            val days = expireInDays.coerceIn(1, 30)
+            val expirationMillis = now + days * 24L * 60L * 60L * 1000L
+            val deletionMillis = now + (days + 1).coerceAtMost(31) * 24L * 60L * 60L * 1000L
+
+            when (
+                val result = repository.createFileSend(
+                    vaultId = vault.id,
+                    title = title.trim(),
+                    fileUri = fileUri,
+                    fileName = fileName.trim(),
+                    notes = notes?.trim(),
+                    password = password?.trim(),
+                    maxAccessCount = maxAccessCount,
+                    hideEmail = hideEmail,
+                    deletionMillis = deletionMillis,
+                    expirationMillis = expirationMillis
+                )
+            ) {
+                is BitwardenRepository.SendMutationResult.Success -> {
+                    if (_activeVault.value?.id == vault.id) {
+                        _sends.value = listOf(result.send) + _sends.value.filterNot {
+                            it.bitwardenSendId == result.send.bitwardenSendId
+                        }
+                    }
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Idle
+                    _sendCreateSuccessVersion.value = _sendCreateSuccessVersion.value + 1
+                    logBitwardenSendCreate(vault.id, result.send)
+                    requestLocalMutationSync(vault.id)
+                    _events.emit(BitwardenEvent.SendCreated("文件 Send 已创建"))
+                }
+                is BitwardenRepository.SendMutationResult.Error -> {
+                    _sendState.value = SendState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+                is BitwardenRepository.SendMutationResult.Deleted -> {
+                    _sendState.value = SendState.Idle
+                }
+            }
+        }
+    }
+
+    /**
+     * 删除 Send。
+     *
+     * 支持跨 Vault 场景：[vaultId] 不传时回退到 [_activeVault]，但跨 vault 删除时
+     * 调用方应显式传入 send 所属的 vault id（来自 [BitwardenSend.vaultId]），否则
+     * 在多账号视图里对非活跃 Vault 的 Send 调用 deleteSend 会落到错误的 vault。
+     */
+    fun deleteSend(sendId: String, vaultId: Long? = null) {
+        val vault = vaultId?.let(::resolveVault) ?: _activeVault.value ?: return
+        if (!repository.isVaultUnlocked(vault.id)) {
+            _sendState.value = SendState.Locked
+            return
+        }
+
+        viewModelScope.launch {
+            val deletingSend = _sendsAcrossVaults.value.firstOrNull {
+                it.vaultId == vault.id && it.bitwardenSendId == sendId
+            } ?: _sends.value.firstOrNull { it.bitwardenSendId == sendId }
+            _sendState.value = SendState.Deleting
+            when (val result = repository.deleteSend(vault.id, sendId)) {
+                is BitwardenRepository.SendMutationResult.Deleted -> {
+                    if (_activeVault.value?.id == vault.id) {
+                        _sends.value = _sends.value.filterNot { it.bitwardenSendId == result.sendId }
+                    }
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Idle
+                    logBitwardenSendDelete(
+                        vaultId = vault.id,
+                        sendId = result.sendId,
+                        sendName = deletingSend?.name
+                    )
+                    requestLocalMutationSync(vault.id)
+                    _events.emit(BitwardenEvent.SendDeleted("Send 已删除"))
+                }
+                is BitwardenRepository.SendMutationResult.Error -> {
+                    _sendState.value = SendState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+                is BitwardenRepository.SendMutationResult.Success -> {
+                    _sendState.value = SendState.Idle
+                }
+            }
+        }
+    }
+    
+    /**
+     * 搜索
+     */
+    fun search(query: String) {
+        val vault = _activeVault.value ?: return
+        
+        viewModelScope.launch {
+            if (query.isBlank()) {
+                _searchResults.value = emptyList()
+            } else {
+                _searchResults.value = repository.searchEntries(vault.id, query)
+            }
+        }
+    }
+    
+    /**
+     * 清除搜索
+     */
+    fun clearSearch() {
+        _searchResults.value = emptyList()
+    }
+    
+    /**
+     * 选择文件夹
+     */
+    fun selectFolder(folder: BitwardenFolder?) {
+        _selectedFolder.value = folder
+        
+        viewModelScope.launch {
+            if (folder == null) {
+                val vault = _activeVault.value ?: return@launch
+                _entries.value = repository.getPasswordEntries(vault.id)
+            } else {
+                _entries.value = repository.getPasswordEntriesByFolder(folder.vaultId, folder.bitwardenFolderId)
+            }
+        }
+    }
+    
+    /**
+     * 解决冲突：使用本地版本
+     */
+    fun resolveConflictWithLocal(conflictId: Long) {
+        viewModelScope.launch {
+            val conflictSnapshot = _conflicts.value.firstOrNull { it.id == conflictId }
+            val success = repository.resolveConflictWithLocal(conflictId)
+            if (success) {
+                logBitwardenConflictResolved(conflictSnapshot, "保留本地版本")
+                loadConflicts()
+                _events.emit(BitwardenEvent.ShowSuccess("冲突已解决（保留本地版本）"))
+            } else {
+                _events.emit(BitwardenEvent.ShowError("解决冲突失败"))
+            }
+        }
+    }
+    
+    /**
+     * 解决冲突：使用服务器版本
+     */
+    fun resolveConflictWithServer(conflictId: Long) {
+        viewModelScope.launch {
+            val conflictSnapshot = _conflicts.value.firstOrNull { it.id == conflictId }
+            val success = repository.resolveConflictWithServer(conflictId)
+            if (success) {
+                logBitwardenConflictResolved(conflictSnapshot, "使用服务器版本")
+                loadConflicts()
+                sync() // 重新同步以获取服务器版本
+                _events.emit(BitwardenEvent.ShowSuccess("冲突已解决（使用服务器版本）"))
+            } else {
+                _events.emit(BitwardenEvent.ShowError("解决冲突失败"))
+            }
+        }
+    }
+    
+    /**
+     * 重置登录状态
+     */
+    fun resetLoginState() {
+        _loginState.value = LoginState.Idle
+    }
+    
+    // ==================== 设置相关 ====================
+    
+    var isAutoSyncEnabled: Boolean
+        get() = _isAutoSyncEnabled.value
+        set(value) {
+            repository.isAutoSyncEnabled = value
+            _isAutoSyncEnabled.value = value
+            if (!value) {
+                repository.isSyncOnWifiOnly = false
+                _isSyncOnWifiOnly.value = false
+            }
+        }
+    
+    var isSyncOnWifiOnly: Boolean
+        get() = _isSyncOnWifiOnly.value
+        set(value) {
+            repository.isSyncOnWifiOnly = value
+            _isSyncOnWifiOnly.value = value
+        }
+    
+    /**
+     * 是否永不锁定 Bitwarden
+     */
+    var isNeverLockEnabled: Boolean
+        get() = _isNeverLockEnabled.value
+        set(value) { 
+            repository.isNeverLockEnabled = value
+            _isNeverLockEnabled.value = value
+        }
+    
+    val lastSyncTime: Long
+        get() = repository.lastSyncTime
+    
+    // 同步队列计数（实时）
+    val pendingSyncCount: StateFlow<Int> = repository.getPendingSyncCountFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    val failedSyncCount: StateFlow<Int> = repository.getFailedSyncCountFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    
+    // ==================== 私有方法 ====================
+
+    private fun resolveVault(vaultId: Long): BitwardenVault? {
+        return _vaults.value.firstOrNull { it.id == vaultId }
+            ?: _activeVault.value?.takeIf { it.id == vaultId }
+    }
+
+    private fun currentRepositoryUnlockState(vaultId: Long): UnlockState {
+        return if (repository.isVaultUnlocked(vaultId)) {
+            UnlockState.Unlocked
+        } else {
+            UnlockState.Locked
+        }
+    }
+
+    private fun currentUnlockState(vaultId: Long): UnlockState {
+        return _unlockStateByVault.value[vaultId] ?: currentRepositoryUnlockState(vaultId)
+    }
+
+    private fun setUnlockState(vaultId: Long, state: UnlockState) {
+        val updated = _unlockStateByVault.value.toMutableMap()
+        val previous = updated[vaultId]
+        updated[vaultId] = state
+        _unlockStateByVault.value = updated
+        // 解锁状态变化（解锁 / 锁定）会改变跨账号 Send 视图能看到的范围
+        if (previous != state && (state == UnlockState.Unlocked || previous == UnlockState.Unlocked)) {
+            viewModelScope.launch { refreshSendsAcrossVaults() }
+        }
+    }
+
+    private fun removeUnlockState(vaultId: Long) {
+        val updated = _unlockStateByVault.value.toMutableMap()
+        val previous = updated.remove(vaultId)
+        _unlockStateByVault.value = updated
+        if (previous == UnlockState.Unlocked) {
+            viewModelScope.launch { refreshSendsAcrossVaults() }
+        }
+    }
+
+    private fun replaceUnlockStates(vaults: List<BitwardenVault>) {
+        _unlockStateByVault.value = vaults.associate { vault ->
+            vault.id to currentRepositoryUnlockState(vault.id)
+        }
+        viewModelScope.launch { refreshSendsAcrossVaults() }
+    }
+
+    private fun collectUnlockedVaultIds(vaults: List<BitwardenVault> = _vaults.value): List<Long> {
+        return vaults
+            .asSequence()
+            .map { it.id }
+            .filter(repository::isVaultUnlocked)
+            .toList()
+    }
+
+    private fun observeVaultSnapshots() {
+        viewModelScope.launch {
+            repository.getAllVaultsFlow().collect { vaultList ->
+                val previousActiveVaultId = _activeVault.value?.id
+                _vaults.value = vaultList
+                replaceUnlockStates(vaultList)
+
+                val refreshedActive = when {
+                    previousActiveVaultId != null -> {
+                        vaultList.firstOrNull { it.id == previousActiveVaultId }
+                            ?: repository.getActiveVault()
+                    }
+                    else -> repository.getActiveVault()
+                }
+
+                _activeVault.value = refreshedActive
+                val activeUnlockState = refreshedActive?.let { currentUnlockState(it.id) } ?: UnlockState.Locked
+                _unlockState.value = activeUnlockState
+
+                if (previousActiveVaultId != null &&
+                    vaultList.none { it.id == previousActiveVaultId } &&
+                    (refreshedActive == null || activeUnlockState != UnlockState.Unlocked)
+                ) {
+                    clearActiveVaultContent(
+                        sendState = if (refreshedActive == null) SendState.Idle else SendState.Locked
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun refreshVaultListSnapshot(preferredActiveVaultId: Long? = _activeVault.value?.id) {
+        val vaultList = repository.getAllVaults()
+        _vaults.value = vaultList
+        replaceUnlockStates(vaultList)
+
+        val refreshedActive = preferredActiveVaultId
+            ?.let { activeVaultId -> vaultList.firstOrNull { it.id == activeVaultId } }
+            ?: repository.getActiveVault()
+        _activeVault.value = refreshedActive
+        _unlockState.value = refreshedActive?.let { currentUnlockState(it.id) } ?: UnlockState.Locked
+    }
+
+    private fun clearActiveVaultContent(sendState: SendState) {
+        _entries.value = emptyList()
+        _folders.value = emptyList()
+        _sends.value = emptyList()
+        _sendState.value = sendState
+        // 当前 Vault 的内容被清空时，跨账号 Send 视图仍可能含有其它已解锁账号的 Send，
+        // 因此刷新而非清空。
+        viewModelScope.launch { refreshSendsAcrossVaults() }
+    }
+
+    private fun logBitwardenSendCreate(vaultId: Long, send: BitwardenSend) {
+        OperationLogger.logCreate(
+            itemType = OperationLogItemType.BITWARDEN_SEND,
+            itemId = buildBitwardenItemId(vaultId, "send:${send.bitwardenSendId}"),
+            itemTitle = send.name.ifBlank { "Send" },
+            details = listOf(
+                FieldChange("Vault", "", "Bitwarden #$vaultId"),
+                FieldChange("类型", "", if (send.isTextType) "文本 Send" else "文件 Send")
+            )
+        )
+    }
+
+    private fun logBitwardenSendDelete(vaultId: Long, sendId: String, sendName: String?) {
+        OperationLogger.logDelete(
+            itemType = OperationLogItemType.BITWARDEN_SEND,
+            itemId = buildBitwardenItemId(vaultId, "send:$sendId"),
+            itemTitle = sendName?.ifBlank { "Send" } ?: "Send",
+            detail = "从 Vault #$vaultId 删除"
+        )
+    }
+
+    private fun logBitwardenSyncSummary(
+        vaultId: Long,
+        appliedChangeCount: Int,
+        availableOfflineCount: Int,
+        remoteAddedCount: Int,
+        remoteUpdatedCount: Int,
+        uploadedCount: Int,
+        deletedCount: Int,
+        conflictCount: Int,
+        uploadFailedCount: Int,
+        skippedDueToLocalDirtyCount: Int,
+        silent: Boolean
+    ) {
+        OperationLogger.logSync(
+            itemType = OperationLogItemType.BITWARDEN_SYNC,
+            itemId = System.currentTimeMillis(),
+            itemTitle = "Bitwarden Vault #$vaultId",
+            details = listOf(
+                FieldChange("模式", "", if (silent) "静默同步" else "手动同步"),
+                FieldChange("本次变更", "", appliedChangeCount.toString()),
+                FieldChange("离线可查看总数", "", availableOfflineCount.toString()),
+                FieldChange("远端新增", "", remoteAddedCount.toString()),
+                FieldChange("远端更新", "", remoteUpdatedCount.toString()),
+                FieldChange("本地上传", "", uploadedCount.toString()),
+                FieldChange("删除处理", "", deletedCount.toString()),
+                FieldChange("冲突数", "", conflictCount.toString()),
+                FieldChange("上传失败", "", uploadFailedCount.toString()),
+                FieldChange("本地待上传阻塞", "", skippedDueToLocalDirtyCount.toString())
+            )
+        )
+    }
+
+    private fun logBitwardenConflictDetected(vaultId: Long, conflictCount: Int) {
+        OperationLogger.logCreate(
+            itemType = OperationLogItemType.BITWARDEN_CONFLICT,
+            itemId = System.currentTimeMillis(),
+            itemTitle = "Bitwarden Vault #$vaultId",
+            details = listOf(
+                FieldChange("状态", "", "检测到同步冲突"),
+                FieldChange("冲突数", "", conflictCount.toString())
+            )
+        )
+    }
+
+    private fun logBitwardenConflictResolved(
+        conflict: BitwardenConflictBackup?,
+        resolutionLabel: String
+    ) {
+        val vaultId = conflict?.vaultId ?: (_activeVault.value?.id ?: 0L)
+        val conflictKey = conflict?.bitwardenCipherId
+            ?: "conflict-${conflict?.id ?: System.currentTimeMillis()}"
+        OperationLogger.logUpdate(
+            itemType = OperationLogItemType.BITWARDEN_CONFLICT,
+            itemId = buildBitwardenItemId(vaultId, conflictKey),
+            itemTitle = conflict?.entryTitle?.ifBlank { "Bitwarden 冲突" } ?: "Bitwarden 冲突",
+            changes = listOf(
+                FieldChange("处理状态", "待处理", "已解决"),
+                FieldChange("解决策略", "", resolutionLabel)
+            )
+        )
+    }
+
+    private fun buildBitwardenItemId(vaultId: Long, key: String): Long {
+        return "${vaultId}:$key".hashCode().toLong() and 0x7FFFFFFFL
+    }
+    
+    private suspend fun loadVaultData(vaultId: Long) {
+        try {
+            _entries.value = repository.getPasswordEntries(vaultId)
+            _folders.value = repository.getFolders(vaultId)
+            _sends.value = repository.getSends(vaultId)
+            refreshSendsAcrossVaults()
+            loadConflicts()
+        } catch (e: Exception) {
+            Log.e(TAG, "加载 Vault 数据失败", e)
+            _events.emit(BitwardenEvent.ShowError("加载数据失败: ${e.message}"))
+        }
+    }
+
+    /**
+     * 重新拉取所有已解锁 Vault 下的 Send，合并到 [sendsAcrossVaults]。
+     *
+     * 多账号场景下，Send 标签页展示来自任意已解锁账号的 Send，因此这个集合
+     * 不受 [activeVault] 限制。任何会改变本地 Send 库的入口（创建 / 删除 /
+     * sync 完成 / 解锁 / 锁定）都需要触发一次刷新。
+     */
+    private suspend fun refreshSendsAcrossVaults() {
+        val unlockedVaultIds = _unlockStateByVault.value
+            .filterValues { it == UnlockState.Unlocked }
+            .keys
+            .toList()
+        _sendsAcrossVaults.value = if (unlockedVaultIds.isEmpty()) {
+            emptyList()
+        } else {
+            repository.getSendsForVaults(unlockedVaultIds)
+                .sortedByDescending { it.updatedAt }
+        }
+    }
+    
+    private suspend fun loadConflicts() {
+        val vault = _activeVault.value ?: return
+        _conflicts.value = repository.getConflictBackups(vault.id)
+    }
+
+    private fun maybeTriggerSilentAutoSync(vault: BitwardenVault, trigger: String) {
+        val reason = when (trigger) {
+            "unlock" -> SyncTriggerReason.APP_RESUME
+            else -> SyncTriggerReason.PAGE_ENTER
+        }
+        Log.d(TAG, "Trigger auto sync: vault=${vault.id}, reason=$trigger")
+        requestAutoSyncWithStartupGrace(vault.id, reason)
+    }
+
+    private fun requestAutoSyncForUnlockedVaults(vaults: List<BitwardenVault>, reason: SyncTriggerReason) {
+        collectUnlockedVaultIds(vaults).forEach { vaultId ->
+            requestSyncWithStartupGrace(vaultId, reason)
+        }
+    }
+
+    private fun requestAutoSyncWithStartupGrace(vaultId: Long, reason: SyncTriggerReason) {
+        requestSyncWithStartupGrace(vaultId = vaultId, reason = reason)
+    }
+
+    private fun requestSyncWithStartupGrace(
+        vaultId: Long,
+        reason: SyncTriggerReason,
+        force: Boolean = false
+    ) {
+        if (force || reason == SyncTriggerReason.MANUAL) {
+            syncOrchestrator.requestSync(vaultId, reason, force = true)
+            return
+        }
+        val elapsed = System.currentTimeMillis() - processStartMs
+        val remaining = COLD_START_AUTO_SYNC_GRACE_MS - elapsed
+        if (remaining <= 0L) {
+            syncOrchestrator.requestSync(vaultId, reason, force = force)
+            return
+        }
+        syncOrchestrator.requestSyncWithDelay(
+            vaultId = vaultId,
+            reason = reason,
+            delayMs = remaining,
+            force = force
+        )
+    }
+
+    private fun evaluateNetworkGate(): NetworkGateResult {
+        val connectivityManager = getApplication<Application>()
+            .getSystemService(ConnectivityManager::class.java) ?: return NetworkGateResult.NETWORK_UNAVAILABLE
+        val activeNetwork = connectivityManager.activeNetwork ?: return NetworkGateResult.NETWORK_UNAVAILABLE
+        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+            ?: return NetworkGateResult.NETWORK_UNAVAILABLE
+        if (!capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+            return NetworkGateResult.NETWORK_UNAVAILABLE
+        }
+        if (_isSyncOnWifiOnly.value &&
+            !capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        ) {
+            return NetworkGateResult.WIFI_REQUIRED
+        }
+        return NetworkGateResult.ALLOWED
+    }
+
+    private suspend fun runSync(vaultId: Long, silent: Boolean): SyncExecutionOutcome {
+        val vault = _vaults.value.firstOrNull { it.id == vaultId }
+            ?: repository.getAllVaults().firstOrNull { it.id == vaultId }
+            ?: return SyncExecutionOutcome.FatalError("Vault 不存在")
+
+        if (!silent) {
+            _syncState.value = SyncState.Syncing
+        }
+
+        return when (val coordinatedResult = runRepositorySyncThroughCoordinator(vault.id, silent)) {
+            BitwardenCoordinatedSyncResult.Merged,
+            is BitwardenCoordinatedSyncResult.Skipped -> {
+                if (!silent) {
+                    _syncState.value = SyncState.Success(
+                        appliedChangeCount = 0,
+                        availableOfflineCount = 0,
+                        conflictCount = 0,
+                        uploadFailedCount = 0,
+                        skippedDueToLocalDirtyCount = 0
+                    )
+                }
+                SyncExecutionOutcome.Success(
+                    appliedChangeCount = 0,
+                    availableOfflineCount = 0,
+                    conflictCount = 0,
+                    uploadFailedCount = 0,
+                    skippedDueToLocalDirtyCount = 0
+                )
+            }
+
+            is BitwardenCoordinatedSyncResult.Blocked -> {
+                val message = coordinatedResult.error.redactedMessage ?: coordinatedResult.error.kind.name
+                if (!silent) {
+                    _syncState.value = SyncState.Error(message)
+                    _events.emit(BitwardenEvent.ShowError("同步受阻: $message"))
+                } else {
+                    Log.w(TAG, "Silent auto sync blocked: $message")
+                }
+                SyncExecutionOutcome.Blocked(coordinatedResult.error.toBitwardenBlockReason(), message)
+            }
+
+            is BitwardenCoordinatedSyncResult.Canceled -> {
+                val message = coordinatedResult.reason ?: "同步被取消"
+                if (!silent) {
+                    _syncState.value = SyncState.Error(message)
+                    _events.emit(BitwardenEvent.ShowError("同步失败: $message"))
+                } else {
+                    Log.w(TAG, "Silent auto sync canceled: $message")
+                }
+                classifyError(message)
+            }
+
+            is BitwardenCoordinatedSyncResult.Failed -> {
+                val message = coordinatedResult.error.message ?: "同步失败"
+                if (!silent) {
+                    _syncState.value = SyncState.Error(message)
+                    _events.emit(BitwardenEvent.ShowError("同步失败: $message"))
+                } else {
+                    Log.w(TAG, "Silent auto sync failed: $message")
+                }
+                classifyError(message)
+            }
+
+            is BitwardenCoordinatedSyncResult.Completed -> when (val result = coordinatedResult.result) {
+            is BitwardenRepository.SyncResult.Success -> {
+                val warmedCount = if (silent) {
+                    0
+                } else {
+                    warmBitwardenOfflineSecretCacheForVault(vault.id)
+                }
+                val offlineReadyCount = maxOf(result.availableOfflineCount, warmedCount)
+                val syncSummary = BitwardenSyncSummary(
+                    vaultId = vault.id,
+                    vaultLabel = vault.displayName?.takeIf { it.isNotBlank() } ?: vault.email,
+                    appliedChangeCount = result.appliedChangeCount,
+                    offlineReadyCount = offlineReadyCount,
+                    conflictCount = result.conflictCount,
+                    uploadFailedCount = result.uploadFailedCount,
+                    skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount
+                )
+                logBitwardenSyncSummary(
+                    vaultId = vault.id,
+                    appliedChangeCount = result.appliedChangeCount,
+                    availableOfflineCount = offlineReadyCount,
+                    remoteAddedCount = result.remoteAddedCount,
+                    remoteUpdatedCount = result.remoteUpdatedCount,
+                    uploadedCount = result.uploadedCount,
+                    deletedCount = result.deletedCount,
+                    conflictCount = result.conflictCount,
+                    uploadFailedCount = result.uploadFailedCount,
+                    skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount,
+                    silent = silent
+                )
+                if (result.conflictCount > 0) {
+                    logBitwardenConflictDetected(vault.id, result.conflictCount)
+                }
+                if (!silent) {
+                    _syncState.value = SyncState.Success(
+                        appliedChangeCount = result.appliedChangeCount,
+                        availableOfflineCount = offlineReadyCount,
+                        conflictCount = result.conflictCount,
+                        uploadFailedCount = result.uploadFailedCount,
+                        skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount
+                    )
+                }
+                if (silent) {
+                    scheduleSilentPostSyncRefresh(vault.id)
+                    scheduleSilentOfflineCacheWarm(vault.id)
+                } else {
+                    refreshVaultListSnapshot()
+                    if (_activeVault.value?.id == vault.id) {
+                        loadVaultData(vault.id)
+                    } else {
+                        // 即使同步的不是当前活跃 Vault，跨账号 Send 视图也要随之刷新。
+                        refreshSendsAcrossVaults()
+                    }
+                }
+
+                if (!silent) {
+                    _events.emit(BitwardenEvent.SyncFinished(syncSummary))
+                    BitwardenSyncNotificationHelper.showSyncSummary(
+                        context = getApplication<Application>().applicationContext,
+                        summary = syncSummary
+                    )
+                    if (result.conflictCount > 0 || result.uploadFailedCount > 0 || result.skippedDueToLocalDirtyCount > 0) {
+                        val warningParts = buildList {
+                            if (result.conflictCount > 0) add("${result.conflictCount} 个冲突")
+                            if (result.uploadFailedCount > 0) add("${result.uploadFailedCount} 个上传失败")
+                            if (result.skippedDueToLocalDirtyCount > 0) add("${result.skippedDueToLocalDirtyCount} 个条目因本地待上传被跳过")
+                        }
+                        _events.emit(
+                            BitwardenEvent.ShowWarning(
+                                "同步完成，但存在 ${warningParts.joinToString("，")}"
+                            )
+                        )
+                    } else {
+                        _events.emit(
+                            BitwardenEvent.ShowSuccess(
+                                getApplication<Application>().getString(
+                                    R.string.bitwarden_sync_success_with_offline_ready,
+                                    result.appliedChangeCount,
+                                    syncSummary.offlineReadyCount
+                                )
+                            )
+                        )
+                    }
+                }
+                SyncExecutionOutcome.Success(
+                    appliedChangeCount = result.appliedChangeCount,
+                    availableOfflineCount = syncSummary.offlineReadyCount,
+                    conflictCount = result.conflictCount,
+                    uploadFailedCount = result.uploadFailedCount,
+                    skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount
+                )
+            }
+
+            is BitwardenRepository.SyncResult.Error -> {
+                if (!silent) {
+                    _syncState.value = SyncState.Error(result.message)
+                }
+                if (!silent) {
+                    _events.emit(BitwardenEvent.ShowError("同步失败: ${result.message}"))
+                } else {
+                    Log.w(TAG, "Silent auto sync failed: ${result.message}")
+                }
+                classifyError(result.message)
+            }
+
+            is BitwardenRepository.SyncResult.EmptyVaultBlocked -> {
+                if (!silent) {
+                    _syncState.value = SyncState.Error("空 Vault 保护已触发")
+                }
+                if (!silent) {
+                    _events.emit(BitwardenEvent.ShowWarning(
+                        "服务器返回空数据，本地有 ${result.localCount} 条记录。" +
+                            "请使用 V2 界面处理此情况。"
+                    ))
+                } else {
+                    Log.w(
+                        TAG,
+                        "Silent auto sync blocked by empty-vault protection: local=${result.localCount}, server=${result.serverCount}"
+                    )
+                }
+                SyncExecutionOutcome.FatalError("空 Vault 保护已触发")
+            }
+        }
+        }
+    }
+
+    private fun scheduleSilentPostSyncRefresh(vaultId: Long) {
+        viewModelScope.launch {
+            silentPostSyncRefreshJob?.cancel()
+            silentPostSyncRefreshJob = launch {
+                delay(SILENT_SYNC_UI_REFRESH_DELAY_MS)
+                refreshVaultListSnapshot()
+                if (_activeVault.value?.id == vaultId) {
+                    loadVaultData(vaultId)
+                } else {
+                    refreshSendsAcrossVaults()
+                }
+            }
+        }
+    }
+
+    private fun scheduleSilentOfflineCacheWarm(vaultId: Long) {
+        viewModelScope.launch {
+            silentCacheWarmJobs.remove(vaultId)?.cancel()
+            val job = launch {
+                delay(SILENT_SYNC_CACHE_WARM_DELAY_MS)
+                withContext(Dispatchers.IO) {
+                    warmBitwardenOfflineSecretCacheForVault(vaultId)
+                }
+                silentCacheWarmJobs.remove(vaultId)
+            }
+            silentCacheWarmJobs[vaultId] = job
+        }
+    }
+
+    private suspend fun runRepositorySyncThroughCoordinator(
+        vaultId: Long,
+        silent: Boolean
+    ): BitwardenCoordinatedSyncResult {
+        return repository.syncViaCoordinator(
+            vaultId = vaultId,
+            requestIdPrefix = "bw-vm-vault",
+            trigger = if (silent) SyncTrigger.PAGE_VISIBLE else SyncTrigger.MANUAL,
+            priority = if (silent) SyncPriority.PAGE_VISIBLE else SyncPriority.MANUAL,
+            mode = if (silent) SyncMode.SILENT else SyncMode.FOREGROUND,
+            networkPolicy = if (_isSyncOnWifiOnly.value) {
+                SyncNetworkPolicy.WIFI_ONLY
+            } else {
+                SyncNetworkPolicy.REQUIRED
+            }
+        )
+    }
+
+    private suspend fun warmBitwardenOfflineSecretCacheForVault(vaultId: Long): Int {
+        return runCatching {
+            repository.getPasswordEntries(vaultId).fold(0) { warmedCount: Int, entry: PasswordEntry ->
+                if (!entry.hasBitwardenCipherBinding() || entry.password.isBlank()) {
+                    warmedCount
+                } else {
+                    val decoded = decodePasswordOrNull(entry.password)
+                    if (decoded.isNullOrBlank()) {
+                        warmedCount
+                    } else {
+                        bitwardenOfflineSecretCache.remember(entry, decoded)
+                        warmedCount + 1
+                    }
+                }
+            }
+        }.getOrElse { error ->
+            Log.w(TAG, "Warm Bitwarden offline cache skipped: ${error.message}")
+            0
+        }
+    }
+
+    private fun decodePasswordOrNull(rawPassword: String): String? {
+        if (rawPassword.isEmpty()) return ""
+        return runCatching {
+            var current = rawPassword
+            repeat(3) {
+                val decrypted = synchronized(decryptLock) {
+                    securityManager.decryptData(current)
+                }
+                if (decrypted == current) return@runCatching current
+                current = decrypted
+            }
+            current
+        }.getOrNull()
+    }
+
+    private fun classifyError(message: String): SyncExecutionOutcome {
+        val msg = message.lowercase()
+        return when {
+            msg.contains("mdk not available") ||
+                msg.contains("vault 未解锁") ||
+                msg.contains("密钥不可用") -> {
+                SyncExecutionOutcome.Blocked(SyncBlockReason.VAULT_LOCKED, message)
+            }
+
+            msg.contains("token 刷新失败") ||
+                msg.contains("重新登录") ||
+                msg.contains("401") ||
+                msg.contains("403") ||
+                msg.contains("unauthorized") ||
+                msg.contains("forbidden") -> {
+                SyncExecutionOutcome.Blocked(SyncBlockReason.AUTH_REQUIRED, message)
+            }
+
+            msg.contains("timeout") ||
+                msg.contains("connect") ||
+                msg.contains("network") ||
+                msg.contains("ioexception") -> {
+                SyncExecutionOutcome.RetryableError(message)
+            }
+
+            else -> SyncExecutionOutcome.FatalError(message)
+        }
+    }
+    
+    // ==================== 状态类型 ====================
+    
+    sealed class LoginState {
+        object Idle : LoginState()
+        object Loading : LoginState()
+        data class Success(val vault: BitwardenVault) : LoginState()
+        data class TwoFactorRequired(val methods: List<Int>) : LoginState()
+        data class Error(val message: String) : LoginState()
+    }
+    
+    sealed class UnlockState {
+        object Locked : UnlockState()
+        object Unlocking : UnlockState()
+        object Unlocked : UnlockState()
+    }
+    
+    sealed class SyncState {
+        object Idle : SyncState()
+        object Syncing : SyncState()
+        data class Success(
+            val appliedChangeCount: Int,
+            val availableOfflineCount: Int,
+            val conflictCount: Int,
+            val uploadFailedCount: Int,
+            val skippedDueToLocalDirtyCount: Int
+        ) : SyncState()
+        data class Error(val message: String) : SyncState()
+    }
+
+    sealed class SendState {
+        object Idle : SendState()
+        object Loading : SendState()
+        object Syncing : SendState()
+        object Creating : SendState()
+        object Deleting : SendState()
+        object Locked : SendState()
+        data class Warning(val message: String) : SendState()
+        data class Error(val message: String) : SendState()
+    }
+    
+    // ==================== 事件类型 ====================
+    
+    sealed class BitwardenEvent {
+        data class ShowSuccess(val message: String) : BitwardenEvent()
+        data class ShowError(val message: String) : BitwardenEvent()
+        data class ShowWarning(val message: String) : BitwardenEvent()
+        data class SyncFinished(val summary: BitwardenSyncSummary) : BitwardenEvent()
+        data class SendCreated(val message: String) : BitwardenEvent()
+        data class SendDeleted(val message: String) : BitwardenEvent()
+        data class ShowTwoFactorDialog(val methods: List<Int>) : BitwardenEvent()
+        data class ShowCaptchaDialog(
+            val message: String,
+            val forTwoFactor: Boolean,
+            val siteKey: String? = null
+        ) : BitwardenEvent()
+        data class NavigateToVault(val vaultId: Long) : BitwardenEvent()
+        object NavigateToLogin : BitwardenEvent()
+    }
+}

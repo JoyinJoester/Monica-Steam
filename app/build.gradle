@@ -1,0 +1,419 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'takagi.ru.monica'
+    compileSdk 35
+
+    def previewVersionSuffix = project.findProperty('previewVersionSuffix')?.toString()?.trim()
+    def appVersionCode = 17
+    def baseVersionName = previewVersionSuffix ? "1.0.303-${previewVersionSuffix}" : "1.0.303"
+    def normalizeTwoDigits = { raw ->
+        def value = raw?.toString()?.trim()?.replaceAll('\\D', '')
+        if (!value) {
+            return '01'
+        }
+        value = value.padLeft(2, '0')
+        value.length() > 2 ? value[-2..-1] : value
+    }
+
+    def sanitizeTag = { raw, fallback ->
+        def value = raw?.toString()?.trim()
+        if (!value) {
+            return fallback
+        }
+        def cleaned = value.replaceAll('[^0-9A-Za-z._+-]', '_')
+        cleaned ?: fallback
+    }
+
+    def escapeForBuildConfig = { raw ->
+        def value = raw?.toString() ?: ''
+        value.replace('\\', '\\\\').replace('"', '\\"')
+    }
+
+    def resolveArchTag = { output ->
+        def manualArch = project.findProperty('apkArch')
+        if (manualArch?.toString()?.trim()) {
+            return sanitizeTag(manualArch, 'universal')
+        }
+
+        if (output?.metaClass?.respondsTo(output, 'getFilters')) {
+            def abiFilter = output.filters?.find {
+                def typeText = it?.filterType?.toString()
+                typeText?.equalsIgnoreCase('ABI') || typeText?.toUpperCase()?.endsWith('.ABI')
+            }
+            if (abiFilter?.identifier?.toString()?.trim()) {
+                return sanitizeTag(abiFilter.identifier, 'universal')
+            }
+        }
+
+        def configuredAbis = defaultConfig.ndk?.abiFilters
+        if (configuredAbis && !configuredAbis.isEmpty()) {
+            return sanitizeTag(configuredAbis.toList().sort().join('+'), 'universal')
+        }
+
+        'universal'
+    }
+
+    def findNextDailySeqForVersion = { String versionNameTag, String dateTag, String versionTag ->
+        def versionPrefix = "${versionNameTag}-${dateTag}${versionTag}"
+        def apkNamePattern = java.util.regex.Pattern.compile('^Monica-Steam-Android-.+-' + java.util.regex.Pattern.quote(versionPrefix) + '-(\\d{2})\\.[aA][pP][kK]$')
+        def maxSeq = 0
+
+        def outputsDir = file("$buildDir/outputs/apk")
+        if (outputsDir.exists()) {
+            outputsDir.eachFileRecurse { outputFile ->
+                if (!outputFile.isFile()) {
+                    return
+                }
+                def matcher = apkNamePattern.matcher(outputFile.name)
+                if (matcher.matches()) {
+                    def seq = matcher.group(1).toInteger()
+                    if (seq > maxSeq) {
+                        maxSeq = seq
+                    }
+                }
+            }
+        }
+
+        maxSeq + 1
+    }
+
+    def buildDateTag = new Date().format('yyMMdd', java.util.TimeZone.getTimeZone('Asia/Shanghai'))
+    def buildVersionTag = normalizeTwoDigits(project.findProperty('apkVersionTag') ?: appVersionCode)
+    def manualDailySeq = project.findProperty('dailySeq')
+    def buildDailySeq = manualDailySeq != null
+            ? normalizeTwoDigits(manualDailySeq)
+            : normalizeTwoDigits(findNextDailySeqForVersion(baseVersionName, buildDateTag, buildVersionTag))
+    def fullVersionName = "${baseVersionName}-${buildDateTag}${buildVersionTag}-${buildDailySeq}"
+
+    defaultConfig {
+        applicationId "takagi.ru.monica.steamapp"
+        minSdk 26
+        targetSdk 34
+        versionCode appVersionCode
+        versionName baseVersionName
+
+        // Default resources contain English. Keep only the additional locales
+        // exposed by Monica Steam instead of every translation from libraries.
+        resourceConfigurations += ['en', 'zh', 'ja', 'ru', 'vi']
+
+        def cfLicenseBaseUrl = project.findProperty('cfLicenseBaseUrl')?.toString()?.trim() ?: 'https://license.609780.xyz'
+        def cfLicenseVerifyIntervalSeconds =
+                project.findProperty('cfLicenseVerifyIntervalSeconds')?.toString()?.trim() ?: '21600'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        def gitSha = 'unknown'
+        try {
+            gitSha = ['git', 'rev-parse', '--short', 'HEAD'].execute([], rootDir).text.trim()
+        } catch (ignored) {}
+        buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
+        buildConfigField 'String', 'BUILD_TIME', "\"${new Date().format('yyyy-MM-dd HH:mm:ss z')}\""
+        buildConfigField 'String', 'FULL_VERSION_NAME', "\"${fullVersionName}\""
+        buildConfigField 'String', 'BUILD_DETAIL_TAG', "\"${buildDateTag}${buildVersionTag}-${buildDailySeq}\""
+        buildConfigField 'int', 'BW_DIAG_SCHEMA', '1'
+        buildConfigField 'String', 'CF_LICENSE_BASE_URL', "\"${escapeForBuildConfig(cfLicenseBaseUrl)}\""
+        buildConfigField 'long', 'CF_LICENSE_VERIFY_INTERVAL_SECONDS', "${cfLicenseVerifyIntervalSeconds}L"
+        
+    }
+
+    splits {
+        abi {
+            // 仅输出 ARM 32/64 位两个 APK，不生成 universal 包。
+            enable true
+            reset()
+            include 'arm64-v8a', 'armeabi-v7a'
+            universalApk false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Keep locally generated release APKs directly installable. Replace this
+            // with a private production keystore before publishing to any store.
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            // Delivery builds stay debug-signed for direct installation, but disabling
+            // JDWP allows R8 to apply the same code optimizations as release builds.
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            // 目标格式: Monica-Steam-Android-[架构]-[版本号]-yyMMddVV-SS.APK
+            def apkPrefix = 'Monica-Steam'
+            def archTag = resolveArchTag(output)
+            def versionNameTag = sanitizeTag(project.findProperty('apkVersionName') ?: variant.versionName ?: defaultConfig.versionName, '0.0.0')
+            def namePrefix = "${apkPrefix}-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}"
+            outputFileName = "${namePrefix}-${buildDailySeq}.APK"
+        }
+    }
+
+    sourceSets {
+        main {
+            java {
+                exclude 'takagi/ru/monica/MainActivity.kt'
+                exclude 'takagi/ru/monica/MonicaApplication.kt'
+                exclude 'takagi/ru/monica/ui/SimpleMainScreen.kt'
+            }
+            kotlin {
+                exclude 'takagi/ru/monica/MainActivity.kt'
+                exclude 'takagi/ru/monica/MonicaApplication.kt'
+                exclude 'takagi/ru/monica/ui/SimpleMainScreen.kt'
+            }
+        }
+    }
+    lint {
+        baseline = file('lint-baseline.xml')
+        // Workaround: lint/lifecycle detector crashes with Kotlin 2.x analysis API in current toolchain.
+        disable 'NullSafeMutableLiveData',
+                'FrequentlyChangingValue',
+                'RememberInComposition',
+                'FlowOperatorInvokedInComposition',
+                'UnrememberedMutableState',
+                'AutoboxingStateCreation',
+                'CoroutineCreationDuringComposition',
+                'StateFlowValueCalledInComposition',
+                'ProduceStateDoesNotAssignValue',
+                'MissingTranslation'
+        // Avoid scanning dependency-provided lint registries; one of them intermittently
+        // crashes ASM migration with NegativeArraySizeException in lintVitalAnalyzeRelease.
+        checkDependencies false
+        // lintVital still loads dependency registries even when checkDependencies is false.
+        // Disable the broken release gate so Android Studio's normal assembleRelease works.
+        checkReleaseBuilds false
+    }
+    packaging {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += 'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+            // These data tables support password analysis and Picnic signatures,
+            // neither of which is reachable from the standalone Steam experience.
+            excludes += 'com/nulabinc/zxcvbn/matchers/dictionaries/**'
+            excludes += 'org/bouncycastle/pqc/crypto/picnic/**'
+        }
+    }
+}
+
+// The standalone Steam product does not ship these Monica feature surfaces.
+// Their tests remain in the copied source tree for reference, but the default
+// test task covers only code that can be reached from MonicaSteamActivity.
+tasks.withType(Test).configureEach {
+    exclude '**/attachments/**'
+    exclude '**/autofill/**'
+    exclude '**/autofill_ng/**'
+    exclude '**/keepass/**'
+    exclude '**/ui/cardwallet/**'
+    exclude '**/util/Aegis*'
+    exclude '**/util/KeePass*'
+    exclude '**/data/KeePassOperationAvailabilityTest*'
+    exclude '**/repository/MdbxAndroidIntegrationGuardTest*'
+    exclude '**/security/BiometricUnlockRegressionGuardTest*'
+    exclude '**/security/SecondarySessionImmediateLockRegressionGuardTest*'
+    exclude '**/viewmodel/MultiPasswordSaveRegressionGuardTest*'
+    exclude '**/viewmodel/TotpPasswordBindingRegressionGuardTest*'
+}
+
+configurations.configureEach {
+    resolutionStrategy.force(
+        "org.jetbrains.kotlin:kotlin-bom:2.1.20",
+        "org.jetbrains.kotlin:kotlin-stdlib:2.1.20",
+        "org.jetbrains.kotlin:kotlin-stdlib-common:2.1.20",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.20",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.20",
+        "org.jetbrains.kotlinx:kotlinx-serialization-bom:1.6.0",
+        "org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0",
+        "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.0",
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0",
+        "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0"
+    )
+}
+
+// Legacy tests are compiled as one source set even when only Steam tests run.
+// Make removed feature APIs visible to the test compiler without packaging them.
+configurations.named('testCompileOnly') {
+    extendsFrom configurations.compileOnly
+}
+
+dependencies {
+    constraints {
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    }
+
+    // Core Android libraries
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.core.splashscreen  // 添加splashscreen依赖
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation "androidx.lifecycle:lifecycle-process:2.8.7"
+    implementation libs.androidx.activity.compose
+    // Pin profileinstaller to the latest stable patch and avoid older transitive copies.
+    implementation "androidx.profileinstaller:profileinstaller:1.4.1"
+    
+    // Compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.graphics
+    implementation libs.androidx.ui.tooling.preview
+    implementation libs.androidx.material3
+    implementation libs.androidx.material3.window.size
+    implementation "androidx.compose.animation:animation"
+    implementation "androidx.compose.animation:animation-graphics"
+    
+    // Navigation
+    implementation libs.androidx.navigation.compose
+    
+    // Room Database
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    ksp libs.androidx.room.compiler
+    
+    // Biometric
+    implementation libs.androidx.biometric
+    
+    // Security
+    implementation libs.androidx.security.crypto
+    
+    // ViewModel
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    
+    // Coroutines
+    implementation libs.kotlin.coroutines.android
+    
+    // Material Icons Extended
+    implementation libs.androidx.material.icons.extended
+    
+    // Fragment and Material Components (for BottomSheet)
+    implementation libs.androidx.fragment.ktx
+    implementation libs.material
+    
+    // Legacy non-Steam sources still compile, but these features are not shipped.
+    implementation libs.androidx.autofill
+    compileOnly libs.androidx.slice.core
+    compileOnly libs.androidx.slice.builders
+    
+    // Credentials API (for Passkey support, Android 14+)
+    compileOnly "androidx.credentials:credentials:1.3.0"
+    compileOnly "androidx.credentials:credentials-play-services-auth:1.3.0"
+    
+    // Google Play Services Auth (for SMS Retriever API - OTP auto-read)
+    compileOnly libs.play.services.auth
+    
+    // DataStore
+    implementation libs.androidx.datastore.preferences
+    
+    // TOTP and QR Code
+    implementation libs.zxing.core
+    implementation libs.zxing.android.embedded
+    implementation 'com.google.mlkit:barcode-scanning:17.3.0'
+    
+    // Camera
+    implementation libs.androidx.camera.core
+    implementation libs.androidx.camera.camera2
+    implementation libs.androidx.camera.lifecycle
+    implementation libs.androidx.camera.view
+    
+    // Permissions
+    implementation libs.accompanist.permissions
+    implementation libs.accompanist.drawablepainter
+    
+    // Kotlinx Serialization
+    implementation libs.kotlinx.serialization.json
+    
+    // WebDAV for cloud backup
+    compileOnly 'com.github.thegrizzlylabs:sardine-android:0.8'
+    
+    // KeePass KDBX library for KeePass compatibility
+    // 0.10.0 is the newest release compatible with the project's Kotlin 1.9 toolchain.
+    compileOnly 'app.keemobile:kotpass:0.10.0'
+    
+    // WorkManager for auto backup
+    compileOnly libs.androidx.work.runtime.ktx
+
+    // Reorderable for drag-and-drop sorting
+    implementation libs.reorderable
+
+    // Koin Dependency Injection (for autofill modularization)
+
+    // Markdown rendering
+    compileOnly libs.commonmark
+    compileOnly 'org.commonmark:commonmark-ext-gfm-tables:0.22.0'
+    compileOnly 'org.commonmark:commonmark-ext-gfm-strikethrough:0.22.0'
+    compileOnly 'org.commonmark:commonmark-ext-task-list-items:0.22.0'
+    
+    // Charts for ledger analytics
+    // TODO: Re-enable after resolving Kotlin version compatibility
+    // implementation libs.vico.compose.m3
+    
+    // Scrypt for Aegis decryption
+    compileOnly libs.scrypt
+
+    // Password strength analysis, same engine used by Keyguard
+    compileOnly 'com.nulab-inc:zxcvbn:1.9.0'
+    
+    // ==== Bitwarden Integration ====
+    // Retrofit for API calls
+    compileOnly 'com.squareup.retrofit2:retrofit:2.11.0'
+    compileOnly 'com.squareup.retrofit2:converter-kotlinx-serialization:2.11.0'
+    
+    // OkHttp for networking
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    compileOnly 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    implementation 'com.squareup.okhttp3:okhttp-dnsoverhttps:4.12.0'
+
+    // Microsoft identity platform / OneDrive auth
+    compileOnly 'com.microsoft.identity.client:msal:8.3.2'
+    compileOnly 'com.squareup.moshi:moshi-adapters:1.15.1'
+    
+    // BouncyCastle for Argon2 (Bitwarden KDF support)
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
+    // Native Argon2 backend for Bitwarden Argon2id KDF. This keeps high-memory
+    // KDF work off the Android JVM heap.
+    implementation('com.lambdapioneer.argon2kt:argon2kt:1.6.0') {
+        exclude group: 'androidx.appcompat', module: 'appcompat'
+        exclude group: 'androidx.core', module: 'core-ktx'
+    }
+
+    // Brand icon loading now uses remote PNG assets from Stratum Auth app
+    
+    // Testing
+    testImplementation libs.junit
+    testImplementation libs.kotlin.coroutines.test
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation platform(libs.androidx.compose.bom)
+    androidTestImplementation libs.androidx.ui.test.junit4
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.test.manifest
+}
+

@@ -1,0 +1,494 @@
+package takagi.ru.monica.steam.library
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.data.SteamAccountRepository
+import takagi.ru.monica.steam.data.SteamDatabase
+import takagi.ru.monica.steam.data.SteamLibraryCacheRepository
+import takagi.ru.monica.steam.market.SteamInventoryService
+import takagi.ru.monica.steam.network.SteamApiException
+import takagi.ru.monica.steam.network.SteamSessionRefreshService
+import takagi.ru.monica.steam.quickaccess.SteamWidgetUpdater
+
+data class SteamLibraryUiState(
+    val accounts: List<SteamAccount> = emptyList(),
+    val selectedAccountId: Long? = null,
+    val snapshot: SteamLibrarySnapshot? = null,
+    val snapshotFromCache: Boolean = false,
+    val loadingLibrary: Boolean = false,
+    val libraryFailure: SteamLibraryFailureReason? = null,
+    val selectedGame: SteamGame? = null,
+    val achievements: SteamGameAchievements? = null,
+    val achievementsFromCache: Boolean = false,
+    val loadingAchievements: Boolean = false,
+    val achievementFailure: SteamLibraryFailureReason? = null,
+    val loadingRegionalPrices: Boolean = false,
+    val regionalPriceFailure: SteamLibraryFailureReason? = null
+)
+
+class SteamLibraryViewModel(
+    private val accountRepository: SteamAccountRepository,
+    private val cacheRepository: SteamLibraryCacheRepository,
+    private val service: SteamGameLibraryService = SteamGameLibraryService(),
+    private val inventoryService: SteamInventoryService = SteamInventoryService(),
+    private val sessionRefreshService: SteamSessionRefreshService = SteamSessionRefreshService(),
+    private val currencyExchangeService: SteamCurrencyExchangeService =
+        SteamCurrencyExchangeService(),
+    private val appContext: Context? = null
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(SteamLibraryUiState())
+    val uiState: StateFlow<SteamLibraryUiState> = _uiState.asStateFlow()
+    private var initializedAccountIds = mutableSetOf<Long>()
+    private var libraryLoadGeneration: Long = 0L
+
+    init {
+        viewModelScope.launch {
+            accountRepository.observeAccounts().collect { accounts ->
+                val selected = accounts.firstOrNull { it.id == _uiState.value.selectedAccountId }
+                    ?: accounts.firstOrNull { it.selected }
+                    ?: accounts.firstOrNull()
+                val accountChanged = selected?.id != _uiState.value.selectedAccountId
+                _uiState.value = _uiState.value.copy(
+                    accounts = accounts,
+                    selectedAccountId = selected?.id
+                )
+                if (accountChanged && selected != null) loadAccount(selected)
+            }
+        }
+    }
+
+    fun selectAccount(accountId: Long) {
+        val account = _uiState.value.accounts.firstOrNull { it.id == accountId } ?: return
+        if (_uiState.value.selectedAccountId == accountId) return
+        _uiState.value = _uiState.value.copy(
+            selectedAccountId = accountId,
+            snapshot = null,
+            snapshotFromCache = false,
+            selectedGame = null,
+            achievements = null,
+            loadingLibrary = false,
+            libraryFailure = null,
+            achievementFailure = null,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null
+        )
+        viewModelScope.launch { loadAccount(account) }
+    }
+
+    fun refreshLibrary() {
+        val account = selectedAccount() ?: return
+        if (_uiState.value.loadingLibrary) return
+        val generation = ++libraryLoadGeneration
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(loadingLibrary = true, libraryFailure = null)
+            val cachedBeforeRefresh = _uiState.value.snapshot
+            val result = withContext(Dispatchers.IO) {
+                fetchLibraryWithSessionRetry(account)
+            }
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    val inventoryResult = withContext(Dispatchers.IO) {
+                        fetchInventorySummaryWithSessionRetry(account)
+                    }
+                    val merged = mergeLibraryDashboardSnapshot(
+                        fresh = result.value,
+                        cached = cachedBeforeRefresh,
+                        inventoryResult = inventoryResult
+                    )
+                    withContext(Dispatchers.IO) { cacheRepository.saveLibrary(merged) }
+                    appContext?.let(SteamWidgetUpdater::refreshAll)
+                    if (generation != libraryLoadGeneration ||
+                        _uiState.value.selectedAccountId != account.id
+                    ) return@launch
+                    _uiState.value = _uiState.value.copy(
+                        snapshot = merged,
+                        snapshotFromCache = false,
+                        loadingLibrary = false,
+                        libraryFailure = null
+                    )
+                }
+                is SteamLibraryResult.Failure -> {
+                    if (generation != libraryLoadGeneration ||
+                        _uiState.value.selectedAccountId != account.id
+                    ) return@launch
+                    _uiState.value = _uiState.value.copy(
+                        loadingLibrary = false,
+                        libraryFailure = result.reason
+                    )
+                }
+            }
+        }
+    }
+
+    fun openGame(game: SteamGame) {
+        val account = selectedAccount() ?: return
+        _uiState.value = _uiState.value.copy(
+            selectedGame = game,
+            achievements = null,
+            achievementsFromCache = false,
+            loadingAchievements = true,
+            achievementFailure = null,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null
+        )
+        viewModelScope.launch {
+            val cached = withContext(Dispatchers.IO) {
+                cacheRepository.getAchievements(account.id, game.appId)
+            }
+            if (cached != null && _uiState.value.selectedGame?.appId == game.appId) {
+                _uiState.value = _uiState.value.copy(
+                    achievements = cached,
+                    achievementsFromCache = true
+                )
+            }
+            val result = withContext(Dispatchers.IO) {
+                fetchAchievementsWithSessionRetry(account, game)
+            }
+            if (_uiState.value.selectedGame?.appId != game.appId) return@launch
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    withContext(Dispatchers.IO) { cacheRepository.saveAchievements(result.value) }
+                    _uiState.value = _uiState.value.copy(
+                        achievements = result.value,
+                        achievementsFromCache = false,
+                        loadingAchievements = false,
+                        achievementFailure = null
+                    )
+                }
+                is SteamLibraryResult.Failure -> {
+                    _uiState.value = _uiState.value.copy(
+                        loadingAchievements = false,
+                        achievementFailure = result.reason
+                    )
+                }
+            }
+        }
+    }
+
+    fun closeGame() {
+        _uiState.value = _uiState.value.copy(
+            selectedGame = null,
+            achievements = null,
+            achievementsFromCache = false,
+            loadingAchievements = false,
+            achievementFailure = null,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null
+        )
+    }
+
+    fun loadRegionalPrices(game: SteamGame, force: Boolean = false) {
+        val account = selectedAccount() ?: return
+        val current = _uiState.value
+        if (current.selectedGame?.appId != game.appId || current.loadingRegionalPrices) return
+        val cachedPrices = current.selectedGame.regionalPrices
+        val cacheIsFresh = cachedPrices.isNotEmpty() && cachedPrices.all { price ->
+            System.currentTimeMillis() - price.fetchedAt < REGIONAL_PRICE_CACHE_TTL_MILLIS
+        }
+        val conversionsReady = cachedPrices
+            .filter(SteamRegionalPrice::isAvailable)
+            .all { it.cnyFinalPriceMinor != null && it.cnyOriginalPriceMinor != null }
+        if (!force && cacheIsFresh && conversionsReady) return
+        _uiState.value = current.copy(
+            loadingRegionalPrices = true,
+            regionalPriceFailure = null
+        )
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                when (val prices = fetchRegionalPricesWithSessionRetry(account, game)) {
+                    is SteamLibraryResult.Success -> {
+                        val rates = runCatching {
+                            currencyExchangeService.fetchCnyRates()
+                        }.getOrNull()
+                        SteamLibraryResult.Success(
+                            applyCnyConversions(
+                                prices = prices.value,
+                                unitsPerCny = rates?.unitsPerCny.orEmpty(),
+                                exchangeRateFetchedAt = rates?.fetchedAt
+                                    ?: System.currentTimeMillis()
+                            )
+                        )
+                    }
+                    is SteamLibraryResult.Failure -> prices
+                }
+            }
+            if (_uiState.value.selectedGame?.appId != game.appId) return@launch
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    val currentState = _uiState.value
+                    val currentGame = requireNotNull(currentState.selectedGame)
+                    val regionalPrices = mergeCachedRegionalPriceConversions(
+                        fresh = result.value,
+                        cached = currentGame.regionalPrices
+                    )
+                    val updatedGame = currentGame.copy(
+                        regionalPrices = regionalPrices
+                    )
+                    val updatedSnapshot = currentState.snapshot?.let { snapshot ->
+                        snapshot.copy(
+                            games = snapshot.games.map { existing ->
+                                if (existing.appId == game.appId) updatedGame else existing
+                            }
+                        )
+                    }
+                    if (updatedSnapshot != null) {
+                        withContext(Dispatchers.IO) {
+                            cacheRepository.saveLibrary(updatedSnapshot)
+                        }
+                        appContext?.let(SteamWidgetUpdater::refreshAll)
+                    }
+                    _uiState.value = currentState.copy(
+                        snapshot = updatedSnapshot,
+                        selectedGame = updatedGame,
+                        loadingRegionalPrices = false,
+                        regionalPriceFailure = null
+                    )
+                }
+                is SteamLibraryResult.Failure -> {
+                    _uiState.value = _uiState.value.copy(
+                        loadingRegionalPrices = false,
+                        regionalPriceFailure = result.reason
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun loadAccount(account: SteamAccount) {
+        libraryLoadGeneration++
+        val cached = withContext(Dispatchers.IO) { cacheRepository.getLibrary(account.id) }
+        if (_uiState.value.selectedAccountId != account.id) return
+        _uiState.value = _uiState.value.copy(
+            snapshot = cached,
+            snapshotFromCache = cached != null,
+            selectedGame = null,
+            achievements = null,
+            loadingLibrary = false,
+            libraryFailure = null,
+            achievementFailure = null,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null
+        )
+        if (initializedAccountIds.add(account.id)) refreshLibrary()
+    }
+
+    private fun selectedAccount(): SteamAccount? {
+        return _uiState.value.accounts.firstOrNull { it.id == _uiState.value.selectedAccountId }
+    }
+
+    private suspend fun fetchLibraryWithSessionRetry(
+        account: SteamAccount
+    ): SteamLibraryResult<SteamLibrarySnapshot> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = service.fetchLibrary(prepared, countryCode = "CN", language = "schinese")
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            service.fetchLibrary(refreshed, countryCode = "CN", language = "schinese")
+        } else {
+            first
+        }
+    }
+
+    private suspend fun fetchAchievementsWithSessionRetry(
+        account: SteamAccount,
+        game: SteamGame
+    ): SteamLibraryResult<SteamGameAchievements> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = service.fetchAchievements(prepared, game, language = "schinese")
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            service.fetchAchievements(refreshed, game, language = "schinese")
+        } else {
+            first
+        }
+    }
+
+    private suspend fun fetchRegionalPricesWithSessionRetry(
+        account: SteamAccount,
+        game: SteamGame
+    ): SteamLibraryResult<List<SteamRegionalPrice>> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = service.fetchRegionalPrices(
+            prepared,
+            appId = game.appId,
+            countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+            language = "schinese"
+        )
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            service.fetchRegionalPrices(
+                refreshed,
+                appId = game.appId,
+                countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+                language = "schinese"
+            )
+        } else {
+            first
+        }
+    }
+
+    private suspend fun fetchInventorySummaryWithSessionRetry(
+        account: SteamAccount
+    ): SteamLibraryResult<SteamInventorySummary> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = fetchInventorySummary(prepared)
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            fetchInventorySummary(refreshed)
+        } else {
+            first
+        }
+    }
+
+    private fun fetchInventorySummary(
+        account: SteamAccount
+    ): SteamLibraryResult<SteamInventorySummary> {
+        if (!account.hasRealSteamId) {
+            return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
+        }
+        return runCatching {
+            val overview = inventoryService.fetchOverview(account)
+            SteamInventorySummary(
+                itemCount = overview.games.sumOf { it.itemCount }.coerceAtLeast(0),
+                fetchedAt = System.currentTimeMillis()
+            )
+        }.fold(
+            onSuccess = { SteamLibraryResult.Success(it) },
+            onFailure = { error ->
+                SteamLibraryResult.Failure(inventoryFailureReason(error))
+            }
+        )
+    }
+
+    private fun inventoryFailureReason(error: Throwable): SteamLibraryFailureReason {
+        val message = error.message.orEmpty()
+        return when {
+            error is IllegalArgumentException -> SteamLibraryFailureReason.SESSION_REQUIRED
+            error is SteamApiException && (
+                error.eResult == 5 || error.eResult == 15 ||
+                    error.eResult == 401 || error.eResult == 403 ||
+                    message.contains("session expired", ignoreCase = true) ||
+                    message.contains("/login/", ignoreCase = true)
+                ) -> SteamLibraryFailureReason.SESSION_REQUIRED
+            error is SteamApiException && (
+                error.eResult == 429 || message.contains("429")
+                ) -> SteamLibraryFailureReason.RATE_LIMITED
+            else -> SteamLibraryFailureReason.NETWORK
+        }
+    }
+
+    private suspend fun refreshAccountSession(
+        account: SteamAccount,
+        force: Boolean
+    ): SteamAccount {
+        val refreshResult = if (force) {
+            val refreshToken = account.refreshToken?.takeIf { it.isNotBlank() } ?: return account
+            sessionRefreshService.refresh(account.steamId, refreshToken)
+        } else {
+            sessionRefreshService.refreshIfNeeded(account)
+        } ?: return account
+        val refreshed = account.copy(
+            accessToken = refreshResult.accessToken,
+            refreshToken = refreshResult.refreshToken ?: account.refreshToken,
+            steamLoginSecure = "${account.steamId}||${refreshResult.accessToken}"
+        )
+        accountRepository.updateSessionTokens(
+            id = account.id,
+            accessToken = refreshResult.accessToken,
+            refreshToken = refreshed.refreshToken,
+            steamLoginSecure = refreshed.steamLoginSecure
+        )
+        return refreshed
+    }
+
+    companion object {
+        internal val REGIONAL_PRICE_COUNTRY_CODES =
+            listOf("CN", "US", "JP", "KR", "HK", "TW", "UA", "IN", "ID")
+        private const val REGIONAL_PRICE_CACHE_TTL_MILLIS = 6L * 60L * 60L * 1_000L
+
+        fun factory(context: Context): ViewModelProvider.Factory {
+            val appContext = context.applicationContext
+            return object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    val database = SteamDatabase.getDatabase(appContext)
+                    val securityManager = SecurityManager(appContext)
+                    return SteamLibraryViewModel(
+                        accountRepository = SteamAccountRepository(
+                            database.steamAccountDao(),
+                            securityManager
+                        ),
+                        cacheRepository = SteamLibraryCacheRepository(
+                            database.steamLibraryCacheDao(),
+                            securityManager
+                        ),
+                        appContext = appContext
+                    ) as T
+                }
+            }
+        }
+    }
+}
+
+internal fun mergeLibraryDashboardSnapshot(
+    fresh: SteamLibrarySnapshot,
+    cached: SteamLibrarySnapshot?,
+    inventoryResult: SteamLibraryResult<SteamInventorySummary>
+): SteamLibrarySnapshot {
+    val cachedGames = cached?.games.orEmpty().associateBy(SteamGame::appId)
+    val gamesWithCachedStoreFallback = fresh.games.map { game ->
+        val previous = cachedGames[game.appId]
+        game.copy(
+            headerImageUrl = if (fresh.priceFailure != null) {
+                game.headerImageUrl.ifBlank { previous?.headerImageUrl.orEmpty() }
+            } else {
+                game.headerImageUrl
+            },
+            price = if (fresh.priceFailure != null) game.price ?: previous?.price else game.price,
+            regionalPrices = game.regionalPrices.ifEmpty { previous?.regionalPrices.orEmpty() }
+        )
+    }
+    val library = fresh.copy(games = gamesWithCachedStoreFallback)
+    return when (inventoryResult) {
+        is SteamLibraryResult.Success -> library.copy(
+            inventoryItemCount = inventoryResult.value.itemCount,
+            inventoryFetchedAt = inventoryResult.value.fetchedAt,
+            inventoryFailure = null
+        )
+        is SteamLibraryResult.Failure -> library.copy(
+            inventoryItemCount = cached?.inventoryItemCount,
+            inventoryFetchedAt = cached?.inventoryFetchedAt,
+            inventoryFailure = inventoryResult.reason
+        )
+    }
+}

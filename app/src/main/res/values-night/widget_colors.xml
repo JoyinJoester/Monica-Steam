@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="steam_widget_surface">#111318</color>
+    <color name="steam_widget_outline">#45FFFFFF</color>
+    <color name="steam_widget_image_surface">#202733</color>
+    <color name="steam_widget_on_surface">#FFFFFFFF</color>
+    <color name="steam_widget_on_surface_variant">#C1C8D2</color>
+    <color name="steam_widget_primary">#8FD5FF</color>
+    <color name="steam_widget_live">#8AE6A2</color>
+</resources>

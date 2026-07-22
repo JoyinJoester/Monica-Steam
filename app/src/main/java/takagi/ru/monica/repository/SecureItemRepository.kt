@@ -1,0 +1,576 @@
+package takagi.ru.monica.repository
+
+import android.util.Log
+import takagi.ru.monica.bitwarden.BitwardenMutationStateHelper
+import takagi.ru.monica.data.ItemType
+import takagi.ru.monica.data.SecureItem
+import takagi.ru.monica.data.SecureItemDao
+import takagi.ru.monica.data.SecureItemOwnership
+import takagi.ru.monica.data.resolveOwnership
+import takagi.ru.monica.data.model.CardWalletDataCodec
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import takagi.ru.monica.util.TotpDataResolver
+import java.net.URLDecoder
+import java.util.Date
+import java.util.Locale
+
+/**
+ * Repository for secure items (TOTP, Bank Cards, Documents)
+ */
+class SecureItemRepository(
+    private val secureItemDao: SecureItemDao,
+    private val mdbxRepository: MdbxRepository? = null,
+    private val decryptSensitiveValue: ((String) -> String)? = null
+) {
+    companion object {
+        private const val TAG = "SecureItemRepository"
+    }
+
+    private val json = Json { ignoreUnknownKeys = true }
+
+    private data class TotpFingerprint(
+        val issuer: String,
+        val accountName: String,
+        val secret: String
+    )
+
+    private fun SecureItem.mdbxReplicaPrefix(): String = when (itemType) {
+        ItemType.NOTE -> "note"
+        ItemType.TOTP -> "totp"
+        ItemType.BANK_CARD -> "card"
+        ItemType.DOCUMENT -> "document-ref"
+        ItemType.BILLING_ADDRESS -> "billing-address"
+        ItemType.PAYMENT_ACCOUNT -> "payment-account"
+        ItemType.PASSWORD -> "password"
+    }
+
+    private fun SecureItem.mdbxObjectId(id: Long = this.id): String? {
+        val stableId = id.takeIf { it > 0 } ?: this.id.takeIf { it > 0 } ?: return replicaGroupId
+        return replicaGroupId
+            ?.takeIf { it.startsWith("${mdbxReplicaPrefix()}:") }
+            ?: "${mdbxReplicaPrefix()}:$stableId"
+    }
+
+    
+    fun getAllItems(): Flow<List<SecureItem>> {
+        return secureItemDao.getAllItems()
+    }
+
+    suspend fun getAllLocalItems(): List<SecureItem> {
+        return ItemType.entries.flatMap { type ->
+            if (type == ItemType.PASSWORD) {
+                emptyList()
+            } else {
+                secureItemDao.getActiveLocalItemsByTypeSync(type)
+            }
+        }
+    }
+    
+    fun getItemsByType(type: ItemType): Flow<List<SecureItem>> {
+        return secureItemDao.getItemsByType(type)
+    }
+    
+    fun searchItems(query: String): Flow<List<SecureItem>> {
+        return secureItemDao.searchItems(query)
+    }
+    
+    fun searchItemsByType(type: ItemType, query: String): Flow<List<SecureItem>> {
+        return secureItemDao.searchItemsByType(type, query)
+    }
+    
+    fun getFavoriteItems(): Flow<List<SecureItem>> {
+        return secureItemDao.getFavoriteItems()
+    }
+    
+    suspend fun getItemById(id: Long): SecureItem? {
+        return secureItemDao.getItemById(id)
+    }
+
+    suspend fun ensureMdbxCopyForBinding(
+        source: SecureItem,
+        databaseId: Long,
+        title: String = source.title,
+        notes: String = source.notes,
+        itemData: String = source.itemData,
+        imagePaths: String = source.imagePaths,
+        isFavorite: Boolean = source.isFavorite,
+        categoryId: Long? = source.categoryId,
+        mdbxFolderId: String? = source.mdbxFolderId
+    ): SecureItem {
+        if (source.mdbxDatabaseId == databaseId) {
+            val updated = source.copy(
+                title = title,
+                notes = notes,
+                itemData = itemData,
+                imagePaths = imagePaths,
+                isFavorite = isFavorite,
+                categoryId = categoryId,
+                mdbxFolderId = mdbxFolderId,
+                updatedAt = Date()
+            )
+            updateItem(updated)
+            return secureItemDao.getItemById(source.id) ?: updated
+        }
+
+        val prefix = source.mdbxReplicaPrefix()
+        val replicaId = source.replicaGroupId
+            ?.takeIf { it.startsWith("$prefix:") }
+            ?: "$prefix:local:${source.id}"
+        val existingCopy = secureItemDao.getActiveItemsByTypeSync(source.itemType)
+            .firstOrNull { item ->
+                item.mdbxDatabaseId == databaseId &&
+                    item.replicaGroupId == replicaId &&
+                    !item.isDeleted
+            }
+
+        val now = Date()
+        val copy = (existingCopy ?: source).copy(
+            id = existingCopy?.id ?: 0L,
+            title = title,
+            notes = notes,
+            itemData = itemData,
+            imagePaths = imagePaths,
+            isFavorite = isFavorite,
+            categoryId = categoryId,
+            keepassDatabaseId = null,
+            keepassGroupPath = null,
+            keepassEntryUuid = null,
+            keepassGroupUuid = null,
+            mdbxDatabaseId = databaseId,
+            mdbxFolderId = mdbxFolderId,
+            bitwardenVaultId = null,
+            bitwardenCipherId = null,
+            bitwardenFolderId = null,
+            bitwardenRevisionDate = null,
+            bitwardenLocalModified = false,
+            syncStatus = "NONE",
+            replicaGroupId = replicaId,
+            isDeleted = false,
+            deletedAt = null,
+            createdAt = existingCopy?.createdAt ?: now,
+            updatedAt = now
+        )
+
+        val copyId = if (existingCopy != null) {
+            updateItem(copy)
+            existingCopy.id
+        } else {
+            insertItem(copy)
+        }
+        return secureItemDao.getItemById(copyId) ?: copy.copy(id = copyId)
+    }
+
+    suspend fun normalizeLegacyDetachedKeePassItem(
+        item: SecureItem,
+        databaseExists: suspend (Long) -> Boolean = { false }
+    ): SecureItem {
+        if (!isLegacyDetachedKeePassItem(item, databaseExists)) return item
+        secureItemDao.clearKeePassBindingForIds(listOf(item.id))
+        return secureItemDao.getItemById(item.id) ?: item.copy(
+            keepassDatabaseId = null,
+            keepassGroupPath = null,
+            keepassEntryUuid = null,
+            keepassGroupUuid = null
+        )
+    }
+
+    suspend fun getItemByKeePassUuid(databaseId: Long, entryUuid: String): SecureItem? {
+        return secureItemDao.findByKeePassEntryUuid(databaseId, entryUuid)
+    }
+
+    fun observeItemById(id: Long): Flow<SecureItem?> {
+        return secureItemDao.observeItemById(id)
+    }
+    
+    suspend fun insertItem(item: SecureItem): Long {
+        val id = secureItemDao.insertItem(item)
+        try {
+            val persistedItem = item.copy(
+                id = id,
+                replicaGroupId = if (item.mdbxDatabaseId != null) item.mdbxObjectId(id) else item.replicaGroupId
+            )
+            if (persistedItem.replicaGroupId != item.replicaGroupId) {
+                secureItemDao.updateItem(persistedItem)
+            }
+            mdbxRepository?.upsertSecureItem(persistedItem)
+        } catch (e: Exception) {
+            secureItemDao.deleteItemById(id)
+            throw e
+        }
+        return id
+    }
+    
+    suspend fun updateItem(item: SecureItem) {
+        val existingItem = if (item.id != 0L) secureItemDao.getItemById(item.id) else null
+        val normalizedItem = BitwardenMutationStateHelper.normalizeSecureItemUpdate(existingItem, item)
+        if (
+            normalizedItem.mdbxDatabaseId != null
+        ) {
+            mdbxRepository?.upsertSecureItem(normalizedItem)
+        }
+        if (
+            existingItem?.mdbxDatabaseId != null &&
+            existingItem.mdbxDatabaseId != normalizedItem.mdbxDatabaseId
+        ) {
+            mdbxRepository?.deleteSecureItem(existingItem)
+        }
+        secureItemDao.updateItem(normalizedItem)
+    }
+    
+    suspend fun deleteItem(item: SecureItem) {
+        mdbxRepository?.deleteSecureItem(item)
+        secureItemDao.deleteItem(item)
+    }
+    
+    suspend fun deleteItemById(id: Long) {
+        secureItemDao.getItemById(id)?.let { mdbxRepository?.deleteSecureItem(it) }
+        secureItemDao.deleteItemById(id)
+    }
+    
+    suspend fun updateFavoriteStatus(id: Long, isFavorite: Boolean) {
+        val existingItem = secureItemDao.getItemById(id) ?: return
+        updateItem(
+            existingItem.copy(
+                isFavorite = isFavorite,
+                updatedAt = java.util.Date()
+            )
+        )
+    }
+    
+    suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
+        updateFavoriteStatus(id, isFavorite)
+    }
+    
+    suspend fun updateSortOrder(id: Long, sortOrder: Int) {
+        secureItemDao.updateSortOrder(id, sortOrder)
+    }
+    
+    suspend fun updateSortOrders(items: List<Pair<Long, Int>>) {
+        secureItemDao.updateSortOrders(items)
+    }
+    
+    /**
+     * 检查是否存在重复的安全项（基于 title 匹配，旧方法保留兼容）
+     */
+    suspend fun isDuplicateItem(itemType: ItemType, title: String): Boolean {
+        return secureItemDao.findDuplicateItem(itemType, title) != null
+    }
+    
+    /**
+     * 智能检测重复项（根据类型使用不同的比较策略）
+     * - DOCUMENT: 比较 documentNumber
+     * - BANK_CARD: 比较 cardNumber  
+     * - TOTP: 比较 issuer + accountName
+     * - NOTE/PASSWORD: 比较 title
+     * @return 找到的重复项，或 null
+     */
+    suspend fun findDuplicateSecureItem(
+        itemType: ItemType,
+        itemData: String,
+        title: String,
+        localOnly: Boolean = false
+    ): takagi.ru.monica.data.SecureItem? {
+        val existingItems = if (localOnly) {
+            secureItemDao.getActiveLocalItemsByTypeSync(itemType)
+        } else {
+            secureItemDao.getActiveItemsByTypeSync(itemType)
+        }
+        
+        return when (itemType) {
+            ItemType.DOCUMENT -> {
+                // 解析新项目的证件号码
+                val newDocNumber = parseDocumentNumber(itemData)
+                
+                if (newDocNumber.isNullOrBlank()) {
+                    // 无法解析证件号，退回到 title 匹配
+                    existingItems.find { it.title == title }
+                } else {
+                    existingItems.find { existing ->
+                        parseDocumentNumber(existing.itemData) == newDocNumber
+                    }
+                }
+            }
+            ItemType.BANK_CARD -> {
+                // 解析新项目的卡号
+                val newCardNumber = parseBankCardNumber(itemData)
+                
+                if (newCardNumber.isNullOrBlank()) {
+                    existingItems.find { it.title == title }
+                } else {
+                    existingItems.find { existing ->
+                        parseBankCardNumber(existing.itemData) == newCardNumber
+                    }
+                }
+            }
+            ItemType.TOTP -> {
+                val normalizedTitle = normalizeText(title)
+                val incoming = parseTotpFingerprint(itemData)
+
+                if (incoming == null) {
+                    existingItems.find { normalizeText(it.title) == normalizedTitle }
+                } else {
+                    existingItems.find { existing ->
+                        val candidate = parseTotpFingerprint(existing.itemData)
+                        if (candidate == null) {
+                            normalizeText(existing.title) == normalizedTitle
+                        } else {
+                            val issuerAccountMatch =
+                                incoming.issuer.isNotBlank() &&
+                                    incoming.accountName.isNotBlank() &&
+                                    candidate.issuer.isNotBlank() &&
+                                    candidate.accountName.isNotBlank() &&
+                                    incoming.issuer == candidate.issuer &&
+                                    incoming.accountName == candidate.accountName
+
+                            val secretMatch =
+                                incoming.secret.isNotBlank() &&
+                                    candidate.secret.isNotBlank() &&
+                                    incoming.secret == candidate.secret
+
+                            issuerAccountMatch || secretMatch
+                        }
+                    }
+                }
+            }
+            else -> {
+                // NOTE 和其他类型：只比较 title
+                existingItems.find { it.title == title }
+            }
+        }
+    }
+    
+    /**
+     * 删除指定类型的所有项目
+     */
+    suspend fun deleteAllItemsByType(type: ItemType) {
+        secureItemDao.deleteAllItemsByType(type)
+    }
+    
+    /**
+     * 删除所有TOTP认证器
+     */
+    suspend fun deleteAllTotpEntries() {
+        secureItemDao.deleteAllItemsByType(ItemType.TOTP)
+    }
+    
+    /**
+     * 删除所有文档
+     */
+    suspend fun deleteAllDocuments() {
+        secureItemDao.deleteAllItemsByType(ItemType.DOCUMENT)
+    }
+    
+    /**
+     * 删除所有银行卡
+     */
+    suspend fun deleteAllBankCards() {
+        secureItemDao.deleteAllItemsByType(ItemType.BANK_CARD)
+    }
+    
+    // =============== 回收站相关方法 ===============
+    
+    /**
+     * 软删除项目（移动到回收站）
+     */
+    suspend fun softDeleteItem(item: SecureItem): SecureItem {
+        val deletedItem = item.copy(
+            isDeleted = true,
+            deletedAt = java.util.Date(),
+            updatedAt = java.util.Date()
+        )
+        secureItemDao.updateItem(deletedItem)
+        mdbxRepository?.upsertSecureItem(deletedItem)
+        return deletedItem
+    }
+    
+    /**
+     * 恢复已删除的项目
+     */
+    suspend fun restoreItem(item: SecureItem): SecureItem {
+        val restoredItem = item.copy(
+            isDeleted = false,
+            deletedAt = null,
+            updatedAt = java.util.Date()
+        )
+        secureItemDao.updateItem(restoredItem)
+        mdbxRepository?.upsertSecureItem(restoredItem)
+        return restoredItem
+    }
+    
+    /**
+     * 获取已删除的项目
+     */
+    fun getDeletedItems(): kotlinx.coroutines.flow.Flow<List<SecureItem>> {
+        return secureItemDao.getDeletedItems()
+    }
+    
+    /**
+     * 获取未删除的项目（按类型）
+     */
+    fun getActiveItemsByType(type: ItemType): kotlinx.coroutines.flow.Flow<List<SecureItem>> {
+        return secureItemDao.getActiveItemsByType(type)
+    }
+
+    /**
+     * 获取本地安全项数量（排除 Bitwarden 和 KeePass 的数据）
+     */
+    suspend fun getLocalItemCountByType(type: ItemType): Int {
+        return secureItemDao.getLocalItemCountByType(type)
+    }
+
+    /**
+     * 获取本地已删除项目数量（排除 Bitwarden 和 KeePass 的数据）
+     */
+    suspend fun getLocalDeletedItemCount(): Int {
+        return secureItemDao.getLocalDeletedItemCount()
+    }
+
+    suspend fun repairLegacyDetachedKeePassItems(
+        databaseExists: suspend (Long) -> Boolean = { false }
+    ): Int {
+        val items = secureItemDao.getAllItems().first()
+        val staleIds = items
+            .filter { isLegacyDetachedKeePassItem(it, databaseExists) }
+            .map { it.id }
+        if (staleIds.isEmpty()) return 0
+
+        secureItemDao.clearKeePassBindingForIds(staleIds)
+        Log.i(TAG, "Detached legacy KeePass-local secure item bindings: count=${staleIds.size}")
+        return staleIds.size
+    }
+
+    private suspend fun isLegacyDetachedKeePassItem(
+        item: SecureItem,
+        databaseExists: suspend (Long) -> Boolean
+    ): Boolean {
+        val ownership = item.resolveOwnership()
+        if (ownership !is SecureItemOwnership.KeePass) return false
+        if (item.categoryId != null) return true
+
+        val keepassDatabaseStillExists = databaseExists(ownership.databaseId)
+        if (keepassDatabaseStillExists) return false
+
+        return item.keepassEntryUuid.isNullOrBlank() && item.keepassGroupUuid.isNullOrBlank()
+    }
+
+    private fun parseTotpFingerprint(itemData: String): TotpFingerprint? {
+        val resolvedItemData = decryptSensitiveValue
+            ?.let { decrypt -> runCatching { decrypt(itemData) }.getOrDefault(itemData) }
+            ?: itemData
+
+        TotpDataResolver.parseStoredItemData(resolvedItemData)?.let { data ->
+            return TotpFingerprint(
+                issuer = normalizeText(data.issuer),
+                accountName = normalizeText(data.accountName),
+                secret = normalizeSecret(data.secret)
+            )
+        }
+
+        runCatching {
+            json.parseToJsonElement(resolvedItemData).jsonObject
+        }.getOrNull()?.let { obj ->
+            val issuer = obj["issuer"]?.jsonPrimitive?.contentOrNull.orEmpty()
+            val account = obj["accountName"]?.jsonPrimitive?.contentOrNull
+                ?: obj["account"]?.jsonPrimitive?.contentOrNull
+                ?: obj["name"]?.jsonPrimitive?.contentOrNull
+                ?: ""
+            val secret = obj["secret"]?.jsonPrimitive?.contentOrNull.orEmpty()
+            if (issuer.isNotBlank() || account.isNotBlank() || secret.isNotBlank()) {
+                return TotpFingerprint(
+                    issuer = normalizeText(issuer),
+                    accountName = normalizeText(account),
+                    secret = normalizeSecret(secret)
+                )
+            }
+        }
+
+        parseOtpUriFingerprint(resolvedItemData)?.let { return it }
+
+        return null
+    }
+
+    private fun parseBankCardNumber(itemData: String): String? {
+        return CardWalletDataCodec.parseBankCardData(
+            raw = itemData,
+            decryptIfNeeded = decryptSensitiveValue
+        )?.cardNumber
+    }
+
+    private fun parseDocumentNumber(itemData: String): String? {
+        return CardWalletDataCodec.parseDocumentData(
+            raw = itemData,
+            decryptIfNeeded = decryptSensitiveValue
+        )?.documentNumber
+    }
+
+    private fun parseOtpUriFingerprint(itemData: String): TotpFingerprint? {
+        val raw = itemData.trim()
+        val lower = raw.lowercase(Locale.ROOT)
+        if (!lower.startsWith("otpauth://") && !lower.startsWith("motp://")) {
+            return null
+        }
+
+        return runCatching {
+            val uri = java.net.URI(raw)
+            val queryParams = parseQueryParams(uri.rawQuery)
+            val secret = queryParams["secret"].orEmpty()
+            if (secret.isBlank()) return null
+
+            val issuerFromQuery = queryParams["issuer"].orEmpty()
+            val label = uri.rawPath?.removePrefix("/").orEmpty()
+            val decodedLabel = urlDecode(label)
+            val issuerFromLabel = decodedLabel.substringBefore(":", missingDelimiterValue = "").trim()
+            val accountFromLabel = decodedLabel.substringAfter(":", missingDelimiterValue = decodedLabel).trim()
+            val accountFromQuery = queryParams["accountName"].orEmpty()
+
+            val issuer = issuerFromQuery.ifBlank { issuerFromLabel }
+            val account = accountFromQuery.ifBlank {
+                if (decodedLabel.contains(":")) accountFromLabel else decodedLabel
+            }
+
+            TotpFingerprint(
+                issuer = normalizeText(issuer),
+                accountName = normalizeText(account),
+                secret = normalizeSecret(secret)
+            )
+        }.getOrNull()
+    }
+
+    private fun parseQueryParams(rawQuery: String?): Map<String, String> {
+        if (rawQuery.isNullOrBlank()) return emptyMap()
+        return rawQuery
+            .split("&")
+            .mapNotNull { segment ->
+                if (segment.isBlank()) return@mapNotNull null
+                val key = segment.substringBefore("=")
+                if (key.isBlank()) return@mapNotNull null
+                val value = segment.substringAfter("=", "")
+                urlDecode(key) to urlDecode(value)
+            }
+            .toMap()
+    }
+
+    private fun urlDecode(value: String): String {
+        return runCatching { URLDecoder.decode(value, Charsets.UTF_8.name()) }
+            .getOrElse { value }
+    }
+
+    private fun normalizeText(value: String?): String {
+        return value?.trim()?.lowercase(Locale.ROOT).orEmpty()
+    }
+
+    private fun normalizeSecret(value: String?): String {
+        return value
+            ?.trim()
+            ?.replace(" ", "")
+            ?.replace("-", "")
+            ?.uppercase(Locale.ROOT)
+            .orEmpty()
+    }
+}

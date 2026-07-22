@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Data extraction is intentionally disabled in AndroidManifest.xml.
+
+   Android 12+ cloud restore / device transfer can copy encrypted vault data
+   without the original hardware-backed keys. That leaves entries present but
+   unreadable, which is worse than an explicit re-login / re-sync flow.
+-->
+<data-extraction-rules>
+    <cloud-backup />
+    <device-transfer />
+</data-extraction-rules>

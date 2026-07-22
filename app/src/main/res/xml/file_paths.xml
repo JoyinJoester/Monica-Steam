@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 缓存目录,用于临时拍照与日志分享 -->
+    <cache-path name="shared_temp" path="temp_share/" />
+
+    <!-- 附件预览临时明文文件（短生命周期，10 分钟后由 AttachmentPreviewCache 清理） -->
+    <cache-path name="attachment_preview" path="attachment_preview/" />
+
+    <!-- 更新引导下载的 APK，供系统安装器读取 -->
+    <cache-path name="update_apk" path="update_apk/" />
+
+    <!-- 内部存储,用于加密图片 -->
+    <files-path name="secure_images" path="secure_images/" />
+</paths>

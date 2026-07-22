@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手动选择卡片背景 - 简洁无描边 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/autofill_card_background" />
+    <corners android:radius="16dp" />
+</shape>

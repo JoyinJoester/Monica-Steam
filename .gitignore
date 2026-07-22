@@ -1,0 +1,45 @@
+*.iml
+.gradle
+.gradle-user-home/
+.idea/
+.kotlin/
+/.codex-temp/
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build/
+/Build/
+**/build/
+/releases/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# 签名文件 - 绝对不要提交到 Git!
+keystore/
+*.jks
+*.keystore
+keystore.properties
+
+# APK 文件
+*.apk
+*.aab
+*.apks
+*.idsig
+installed-monica.apk
+
+# Kiro files
+*.kiro
+.kiro
+
+# Local scratch files
+gradle_props.txt
+fix_webdav.py
+quick-fix.ps1
+test_crypto.kt

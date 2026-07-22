@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   System backup is intentionally disabled in AndroidManifest.xml.
+
+   Monica stores vault data that may be encrypted with Android Keystore /
+   device-bound secrets. Restoring app data onto another device can leave
+   the database present but the secrets undecryptable, which then surfaces
+   as "password disappeared" style failures.
+
+   Keep this file so the rationale stays close to the Android backup config.
+-->
+<full-backup-content />

@@ -1,0 +1,109 @@
+package takagi.ru.monica.ui
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.ui.common.layout.DetailPane
+import takagi.ru.monica.ui.common.layout.ListPane
+import takagi.ru.monica.ui.screens.AddEditNoteScreen
+import takagi.ru.monica.ui.screens.NoteListScreen
+import takagi.ru.monica.viewmodel.NoteViewModel
+import takagi.ru.monica.viewmodel.SettingsViewModel
+
+@Composable
+internal fun NotePane(
+    isCompactWidth: Boolean,
+    wideListPaneWidth: Dp,
+    noteViewModel: NoteViewModel,
+    settingsViewModel: SettingsViewModel,
+    securityManager: SecurityManager,
+    passwordViewModel: takagi.ru.monica.viewmodel.PasswordViewModel,
+    onNavigateToAddNote: (Long?) -> Unit,
+    onNavigateToSearchedNote: (Long, String) -> Unit = { noteId, _ -> onNavigateToAddNote(noteId) },
+    onSelectionModeChange: (Boolean) -> Unit,
+    isAddingNoteInline: Boolean,
+    inlineNoteEditorId: Long?,
+    onInlineNoteEditorBack: () -> Unit,
+    initialCategoryId: Long? = null,
+    initialKeePassDatabaseId: Long? = null,
+    initialKeePassGroupPath: String? = null,
+    initialMdbxDatabaseId: Long? = null,
+    initialBitwardenVaultId: Long? = null,
+    initialBitwardenFolderId: String? = null,
+    showStandaloneSettingsEntry: Boolean = false,
+    onOpenStandaloneSettings: () -> Unit = {}
+) {
+    if (isCompactWidth) {
+        NoteListScreen(
+            viewModel = noteViewModel,
+            settingsViewModel = settingsViewModel,
+            onNavigateToAddNote = onNavigateToAddNote,
+            onNavigateToSearchedNote = onNavigateToSearchedNote,
+            securityManager = securityManager,
+            passwordViewModel = passwordViewModel,
+            onSelectionModeChange = onSelectionModeChange,
+            showStandaloneSettingsEntry = showStandaloneSettingsEntry,
+            onOpenStandaloneSettings = onOpenStandaloneSettings
+        )
+    } else {
+        Row(modifier = Modifier.fillMaxSize()) {
+            ListPane(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(wideListPaneWidth)
+            ) {
+                NoteListScreen(
+                    viewModel = noteViewModel,
+                    settingsViewModel = settingsViewModel,
+                    onNavigateToAddNote = onNavigateToAddNote,
+                    onNavigateToSearchedNote = onNavigateToSearchedNote,
+                    securityManager = securityManager,
+                    passwordViewModel = passwordViewModel,
+                    onSelectionModeChange = onSelectionModeChange,
+                    showStandaloneSettingsEntry = showStandaloneSettingsEntry,
+                    onOpenStandaloneSettings = onOpenStandaloneSettings
+                )
+            }
+
+            DetailPane(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+            ) {
+                if (isAddingNoteInline || inlineNoteEditorId != null) {
+                    AddEditNoteScreen(
+                        noteId = inlineNoteEditorId ?: -1L,
+                        initialCategoryId = initialCategoryId,
+                        initialKeePassDatabaseId = initialKeePassDatabaseId,
+                        initialKeePassGroupPath = initialKeePassGroupPath,
+                        initialMdbxDatabaseId = initialMdbxDatabaseId,
+                        initialBitwardenVaultId = initialBitwardenVaultId,
+                        initialBitwardenFolderId = initialBitwardenFolderId,
+                        onNavigateBack = onInlineNoteEditorBack,
+                        viewModel = noteViewModel
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Select a note to view or edit",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Monica" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- 系统 Splash 根据日间资源绘制 -->
+        <item name="android:windowBackground">@color/monica_startup_background</item>
+        <item name="android:windowSplashScreenBackground">@color/monica_startup_background</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/monica_startup_background</item>
+        <item name="android:statusBarColor">@color/monica_startup_background</item>
+        <item name="android:navigationBarColor">@color/monica_startup_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:enforceStatusBarContrast">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>
