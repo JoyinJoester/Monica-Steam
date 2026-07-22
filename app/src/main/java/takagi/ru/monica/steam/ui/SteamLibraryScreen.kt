@@ -46,6 +46,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -55,6 +56,7 @@ import androidx.compose.material3.SplitButtonDefaults
 import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -71,6 +73,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -80,6 +83,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.text.DateFormat
 import java.util.Date
@@ -102,6 +106,7 @@ import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
 import takagi.ru.monica.utils.SettingsManager
 
 private sealed interface SteamLibraryDestination {
@@ -703,6 +708,7 @@ private fun SteamAccountHeroCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SteamAccountDetail(
     account: SteamAccount,
@@ -747,38 +753,26 @@ private fun SteamAccountDetail(
             ) {
                 Text(
                     text = stringResource(R.string.steam_library_account_overview),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontFamily = GoogleSansFlexFontFamily,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 26.sp,
+                        lineHeight = 32.sp,
+                        letterSpacing = 0.sp
+                    )
                 )
-                Surface(
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    shape = RoundedCornerShape(24.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.steam_library_estimated_value),
-                            style = MaterialTheme.typography.labelLarge
+                SteamAccountValueCard(
+                    label = stringResource(R.string.steam_library_estimated_value),
+                    value = if (snapshot.pricedGameCount > 0) {
+                        formatPrice(
+                            snapshot.currency,
+                            snapshot.estimatedReplacementValueMinor
                         )
-                        Text(
-                            text = if (snapshot.pricedGameCount > 0) {
-                                formatPrice(
-                                    snapshot.currency,
-                                    snapshot.estimatedReplacementValueMinor
-                                )
-                            } else {
-                                stringResource(R.string.steam_library_price_unavailable)
-                            },
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
+                    } else {
+                        stringResource(R.string.steam_library_price_unavailable)
+                    },
+                    shape = MaterialShapes.SoftBurst.toShape()
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -786,11 +780,13 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_game_count),
                         value = snapshot.gameCount.toString(),
+                        shape = MaterialShapes.Cookie6Sided.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_inventory_count),
                         value = snapshot.inventoryItemCount?.toString() ?: "—",
+                        shape = MaterialShapes.Gem.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -801,11 +797,13 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_total_playtime),
                         value = formatPlaytime(snapshot.totalPlaytimeMinutes),
+                        shape = MaterialShapes.Clover4Leaf.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_recent_playtime),
                         value = formatPlaytime(snapshot.recentPlaytimeMinutes),
+                        shape = MaterialShapes.PuffyDiamond.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -816,11 +814,13 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_played_games),
                         value = snapshot.games.count { it.playtimeForeverMinutes > 0 }.toString(),
+                        shape = MaterialShapes.Pill.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_unplayed_games),
                         value = snapshot.games.count { it.playtimeForeverMinutes == 0 }.toString(),
+                        shape = MaterialShapes.Diamond.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -954,8 +954,13 @@ private fun SteamAccountDetailHero(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = displayName.ifBlank { "Steam" },
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontFamily = GoogleSansFlexFontFamily,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 30.sp,
+                            lineHeight = 34.sp,
+                            letterSpacing = 0.sp
+                        ),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -987,27 +992,104 @@ private fun SteamAccountDetailHero(
 private fun SteamAccountDetailMetric(
     label: String,
     value: String,
+    shape: Shape,
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier.heightIn(min = 88.dp),
+        modifier = modifier.heightIn(min = 112.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
-        shape = RoundedCornerShape(18.dp)
+        shape = RoundedCornerShape(28.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+        Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(10.dp)
+                    .size(48.dp)
+                    .clip(shape)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.72f))
             )
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontFamily = GoogleSansFlexFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = if (value.length > 8) 22.sp else 30.sp,
+                        lineHeight = if (value.length > 8) 26.sp else 34.sp,
+                        letterSpacing = 0.sp,
+                        fontFeatureSettings = "tnum"
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontFamily = GoogleSansFlexFontFamily,
+                        letterSpacing = 0.sp
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SteamAccountValueCard(
+    label: String,
+    value: String,
+    shape: Shape
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 148.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        shape = RoundedCornerShape(32.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 14.dp, end = 14.dp)
+                    .size(136.dp)
+                    .clip(shape)
+                    .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.32f))
             )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 22.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontFamily = GoogleSansFlexFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.sp
+                    )
+                )
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontFamily = GoogleSansFlexFontFamily,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 36.sp,
+                        lineHeight = 40.sp,
+                        letterSpacing = 0.sp,
+                        fontFeatureSettings = "tnum"
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

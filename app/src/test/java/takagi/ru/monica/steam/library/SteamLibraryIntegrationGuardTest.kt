@@ -7,6 +7,30 @@ import org.junit.Test
 
 class SteamLibraryIntegrationGuardTest {
     @Test
+    fun accountDataUsesLatestMaterialShapesAndGoogleSansFlex() {
+        val catalog = projectFile("gradle/libs.versions.toml").readText()
+        val type = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/theme/Type.kt"
+        ).readText()
+        val screen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+        ).readText()
+        val accountDetail = screen
+            .substringAfter("private fun SteamAccountDetail(")
+            .substringBefore("private fun rememberSteamMiniProfileDecor(")
+
+        assertTrue(catalog.contains("material3Expressive = \"1.5.0-alpha18\""))
+        assertTrue(type.contains("GoogleSansFlexFontFamily"))
+        assertTrue(type.contains("R.font.google_sans_flex_regular"))
+        assertTrue(type.contains("R.font.google_sans_flex_metric"))
+        assertTrue(type.contains("R.font.google_sans_flex_display"))
+        assertTrue(accountDetail.contains("MaterialShapes.SoftBurst.toShape()"))
+        assertTrue(accountDetail.contains("MaterialShapes.Cookie6Sided.toShape()"))
+        assertTrue(accountDetail.contains("GoogleSansFlexFontFamily"))
+        assertTrue(projectFile("licenses/GoogleSansFlex-OFL.txt").isFile)
+    }
+
+    @Test
     fun dockProgressIsReportedOnlyFromLibraryOverview() {
         val screen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
