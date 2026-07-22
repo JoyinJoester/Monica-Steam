@@ -6,12 +6,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.quickaccess.SteamQuickAccessInstaller
+import takagi.ru.monica.steam.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.ui.SteamUiScalePreferences
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.viewmodel.SettingsViewModel
 
@@ -38,6 +47,13 @@ internal fun MonicaSteamSharedSettingsHost(
     modifier: Modifier,
     context: Context
 ) {
+    val uiScalePreferences = remember(context) { SteamUiScalePreferences(context) }
+    val currentUiScale by uiScalePreferences.scale.collectAsState(
+        initial = SteamUiScaleOption.DEFAULT
+    )
+    val coroutineScope = rememberCoroutineScope()
+    var showUiScaleSheet by remember { mutableStateOf(false) }
+
     SettingsScreen(
         viewModel = settingsViewModel,
         onNavigateBack = onNavigateBack,
@@ -77,9 +93,32 @@ internal fun MonicaSteamSharedSettingsHost(
             showPreviewFeatures = false,
             showDeveloperSettings = true
         ),
+        additionalAppearanceContent = {
+            SteamUiScaleSettingsItem(
+                currentScale = currentUiScale,
+                onClick = { showUiScaleSheet = true }
+            )
+        },
+        additionalAppearanceSearchTexts = listOf(
+            context.getString(R.string.steam_ui_scale_title),
+            context.getString(R.string.steam_ui_scale_description),
+            "DPI"
+        ),
         contentBottomPadding = 24.dp,
         modifier = modifier
     )
+
+    if (showUiScaleSheet) {
+        SteamUiScaleSelectionSheet(
+            currentScale = currentUiScale,
+            onScaleSelected = { scale ->
+                coroutineScope.launch {
+                    uiScalePreferences.updateScale(scale)
+                }
+            },
+            onDismiss = { showUiScaleSheet = false }
+        )
+    }
 }
 
 @Composable

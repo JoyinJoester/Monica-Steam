@@ -32,6 +32,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,7 +45,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -135,6 +138,9 @@ import takagi.ru.monica.ui.screens.KeePassKdbxViewModel
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.steam.ui.SteamQrScannerScreen
+import takagi.ru.monica.steam.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.ui.SteamUiScalePreferences
+import takagi.ru.monica.steam.ui.calculateSteamUiDensity
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel
@@ -653,6 +659,15 @@ fun MonicaApp(
     }
 
     val settings by settingsViewModel.settings.collectAsState()
+    val uiScalePreferences = remember(context) { SteamUiScalePreferences(context) }
+    val uiScale by uiScalePreferences.scale.collectAsState(initial = SteamUiScaleOption.DEFAULT)
+    val baseDensity = LocalDensity.current
+    val appDensity = remember(baseDensity.density, baseDensity.fontScale, uiScale) {
+        Density(
+            density = calculateSteamUiDensity(baseDensity.density, uiScale),
+            fontScale = baseDensity.fontScale
+        )
+    }
     val isSystemInDarkTheme = isSystemInDarkTheme()
 
     val darkTheme = when (settings.themeMode) {
@@ -661,59 +676,61 @@ fun MonicaApp(
         ThemeMode.DARK -> true
     }
 
-    MonicaTheme(
-        darkTheme = darkTheme,
-        oledPureBlackEnabled = settings.oledPureBlackEnabled,
-        colorScheme = settings.colorScheme,
-        customPrimaryColor = settings.customPrimaryColor,
-        customSecondaryColor = settings.customSecondaryColor,
-        customTertiaryColor = settings.customTertiaryColor,
-        customNeutralColor = settings.customNeutralColor,
-        customNeutralVariantColor = settings.customNeutralVariantColor
-    ) {
-        // 应用防截屏保护
-        ScreenshotProtection(enabled = settings.screenshotProtectionEnabled)
-
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+    CompositionLocalProvider(LocalDensity provides appDensity) {
+        MonicaTheme(
+            darkTheme = darkTheme,
+            oledPureBlackEnabled = settings.oledPureBlackEnabled,
+            colorScheme = settings.colorScheme,
+            customPrimaryColor = settings.customPrimaryColor,
+            customSecondaryColor = settings.customSecondaryColor,
+            customTertiaryColor = settings.customTertiaryColor,
+            customNeutralColor = settings.customNeutralColor,
+            customNeutralVariantColor = settings.customNeutralVariantColor
         ) {
-            val authState = startupAuthState
-            if (authState == null) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                MonicaContent(
-                    navController = navController,
-                    viewModel = viewModel,
-                    totpViewModel = totpViewModel,
-                    bankCardViewModel = bankCardViewModel,
-                    documentViewModel = documentViewModel,
-                    billingAddressViewModel = billingAddressViewModel,
-                    settingsViewModel = settingsViewModel,
-                    generatorViewModel = generatorViewModel,
-                    noteViewModel = noteViewModel,
-                    bitwardenViewModel = bitwardenViewModel,
-                    passkeyViewModel = passkeyViewModel,
-                    keePassViewModel = keePassViewModel,
-                    localKeePassViewModel = localKeePassViewModel,
-                    mdbxViewModel = mdbxViewModel,
-                    mdbxRepository = mdbxRepository,
-                    securityManager = securityManager,
-                    repository = repository,
-                    database = database,
-                    secureItemRepository = secureItemRepository,
-                    passwordHistoryManager = passwordHistoryManager,
-                    initialAuthState = authState,
-                    onPermissionRequested = { permission, callback ->
-                        pendingSupportPermissionCallback = callback
-                        sharedSupportPermissionLauncher.launch(permission)
+            // 应用防截屏保护
+            ScreenshotProtection(enabled = settings.screenshotProtectionEnabled)
+
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                val authState = startupAuthState
+                if (authState == null) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
-                )
+                } else {
+                    MonicaContent(
+                        navController = navController,
+                        viewModel = viewModel,
+                        totpViewModel = totpViewModel,
+                        bankCardViewModel = bankCardViewModel,
+                        documentViewModel = documentViewModel,
+                        billingAddressViewModel = billingAddressViewModel,
+                        settingsViewModel = settingsViewModel,
+                        generatorViewModel = generatorViewModel,
+                        noteViewModel = noteViewModel,
+                        bitwardenViewModel = bitwardenViewModel,
+                        passkeyViewModel = passkeyViewModel,
+                        keePassViewModel = keePassViewModel,
+                        localKeePassViewModel = localKeePassViewModel,
+                        mdbxViewModel = mdbxViewModel,
+                        mdbxRepository = mdbxRepository,
+                        securityManager = securityManager,
+                        repository = repository,
+                        database = database,
+                        secureItemRepository = secureItemRepository,
+                        passwordHistoryManager = passwordHistoryManager,
+                        initialAuthState = authState,
+                        onPermissionRequested = { permission, callback ->
+                            pendingSupportPermissionCallback = callback
+                            sharedSupportPermissionLauncher.launch(permission)
+                        }
+                    )
+                }
             }
         }
     }

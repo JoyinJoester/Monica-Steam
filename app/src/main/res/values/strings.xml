@@ -4442,6 +4442,15 @@
     <string name="steam_dock_order_title">Dock order</string>
     <string name="steam_dock_order_description">Drag to arrange Tokens, Game Library, Store, and Settings.</string>
     <string name="steam_dock_order_hint">Long press the handle, then drag an item to change the Dock order.</string>
+    <string name="steam_ui_scale_title">Interface scale</string>
+    <string name="steam_ui_scale_current">Current · %1$d%%</string>
+    <string name="steam_ui_scale_description">Adjust the size of Monica Steam without changing Android system display settings. System font scaling remains active.</string>
+    <string name="steam_ui_scale_option_percent">%1$d%% of default size</string>
+    <string name="steam_ui_scale_compact">Compact</string>
+    <string name="steam_ui_scale_small">Smaller</string>
+    <string name="steam_ui_scale_default">Default</string>
+    <string name="steam_ui_scale_large">Larger</string>
+    <string name="steam_ui_scale_reset">Reset</string>
     <string name="steam_store_title">Store</string>
     <string name="steam_store_search_hint">Search the Steam store</string>
     <string name="steam_store_search">Search</string>

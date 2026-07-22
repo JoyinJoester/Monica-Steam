@@ -4272,6 +4272,15 @@
     <string name="steam_dock_order_title">Dock 排序</string>
     <string name="steam_dock_order_description">调整令牌、游戏库、商店和设置在底栏中的顺序。</string>
     <string name="steam_dock_order_hint">长按拖动把手，即可调整 Dock 中的显示顺序。</string>
+    <string name="steam_ui_scale_title">界面缩放</string>
+    <string name="steam_ui_scale_current">当前 · %1$d%%</string>
+    <string name="steam_ui_scale_description">调整 Monica Steam 的界面大小，不修改 Android 系统显示设置；系统字体缩放仍然有效。</string>
+    <string name="steam_ui_scale_option_percent">默认大小的 %1$d%%</string>
+    <string name="steam_ui_scale_compact">紧凑</string>
+    <string name="steam_ui_scale_small">较小</string>
+    <string name="steam_ui_scale_default">默认</string>
+    <string name="steam_ui_scale_large">较大</string>
+    <string name="steam_ui_scale_reset">恢复默认</string>
     <string name="steam_store_title">商店</string>
     <string name="steam_store_search_hint">搜索 Steam 商店</string>
     <string name="steam_store_search">搜索</string>

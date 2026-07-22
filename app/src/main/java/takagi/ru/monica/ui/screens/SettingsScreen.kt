@@ -130,6 +130,8 @@ fun SettingsScreen(
     onNavigateToSteamBackup: (() -> Unit)? = null,
     surfacePolicy: SettingsSurfacePolicy = SettingsSurfacePolicy(),
     additionalSettingsContent: (@Composable () -> Unit)? = null,
+    additionalAppearanceContent: (@Composable () -> Unit)? = null,
+    additionalAppearanceSearchTexts: List<String> = emptyList(),
     contentBottomPadding: Dp = 0.dp,
     modifier: Modifier = Modifier
 ) {
@@ -730,13 +732,25 @@ fun SettingsScreen(
         context.getString(R.string.page_adjust_custom_subtitle),
         *pageCustomizationSubSettingsSearchTexts
     )
+    val additionalAppearanceTitle = additionalAppearanceSearchTexts.firstOrNull()
+        ?: appearanceTitle
+    val additionalAppearanceSubtitle = additionalAppearanceSearchTexts.getOrNull(1)
+    val additionalAppearanceAliases = additionalAppearanceSearchTexts.drop(2).toTypedArray()
+    val showAdditionalAppearanceContent = additionalAppearanceContent != null &&
+        matchesSettingsItem(
+            appearanceTitle,
+            additionalAppearanceTitle,
+            additionalAppearanceSubtitle,
+            *additionalAppearanceAliases
+        )
     val showAppearanceSection = listOf(
         showThemeItem,
         showColorSchemeItem,
         showLanguageItem,
         showBottomNavItem,
         showExtensionsItem,
-        showPageCustomizationItem
+        showPageCustomizationItem,
+        showAdditionalAppearanceContent
     ).any { it }
 
     val showVersionItem = matchesSettingsItem(
@@ -1028,6 +1042,10 @@ fun SettingsScreen(
                             onClick = { onNavigateToColorScheme() },
                             modifier = getSharedModifier("color_scheme_card")
                         )
+                    }
+
+                    if (showAdditionalAppearanceContent) {
+                        additionalAppearanceContent?.invoke()
                     }
 
                     if (showLanguageItem) {
