@@ -56,6 +56,7 @@ class SteamAlertIntegrationGuardTest {
 
         assertTrue(preferences.contains("preferencesDataStore"))
         assertTrue(settings.contains("alertPreferences.setEnabled"))
+        assertTrue(settings.contains("setNotificationsEnabled"))
         assertTrue(settings.contains("setConfirmationsEnabled"))
         assertTrue(settings.contains("setSessionEnabled"))
         assertTrue(settings.contains("setDevicesEnabled"))

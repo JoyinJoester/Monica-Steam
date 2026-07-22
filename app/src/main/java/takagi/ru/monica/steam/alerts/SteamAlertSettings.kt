@@ -2,6 +2,7 @@ package takagi.ru.monica.steam.alerts
 
 data class SteamAlertSettings(
     val enabled: Boolean = false,
+    val notificationsEnabled: Boolean = true,
     val confirmationsEnabled: Boolean = true,
     val sessionEnabled: Boolean = true,
     val devicesEnabled: Boolean = true,
@@ -20,6 +21,7 @@ data class SteamAlertSettings(
 }
 
 enum class SteamAlertKind {
+    NOTIFICATIONS,
     CONFIRMATIONS,
     SESSION,
     DEVICES,
@@ -27,6 +29,7 @@ enum class SteamAlertKind {
 }
 
 data class SteamAlertObservation(
+    val unreadNotifications: Int = 0,
     val pendingConfirmations: Int = 0,
     val sessionIssues: Int = 0,
     val authorizedDeviceCount: Int? = null,
@@ -51,6 +54,9 @@ object SteamAlertPolicy {
     ): SteamAlertDecision {
         if (!settings.enabled) return SteamAlertDecision(emptySet(), settings.lastDeviceCount)
         val kinds = buildSet {
+            if (settings.notificationsEnabled && observation.unreadNotifications > 0) {
+                add(SteamAlertKind.NOTIFICATIONS)
+            }
             if (settings.confirmationsEnabled && observation.pendingConfirmations > 0) {
                 add(SteamAlertKind.CONFIRMATIONS)
             }

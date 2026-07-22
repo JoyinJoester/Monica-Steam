@@ -72,6 +72,13 @@ import takagi.ru.monica.steam.network.SteamLoginApprovalService
 import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.network.SteamQrChallenge
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
+import takagi.ru.monica.steam.notifications.SteamGiftAction
+import takagi.ru.monica.steam.notifications.SteamGiftService
+import takagi.ru.monica.steam.notifications.SteamNotificationCache
+import takagi.ru.monica.steam.notifications.SteamNotificationPreferencesCache
+import takagi.ru.monica.steam.notifications.SteamNotificationService
+import takagi.ru.monica.steam.notifications.SteamNotificationsUiState
+import takagi.ru.monica.steam.notifications.SteamPendingGift
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationRules
 import takagi.ru.monica.steam.service.SteamLoginImportService
 import takagi.ru.monica.steam.trade.SteamTradeOffer
@@ -169,6 +176,7 @@ data class SteamUiState(
     val selectedConfirmationIds: Set<String> = emptySet(),
     val inventoryMarket: SteamInventoryMarketUiState = SteamInventoryMarketUiState(),
     val tradeOffers: SteamTradeOffersUiState = SteamTradeOffersUiState(),
+    val notifications: SteamNotificationsUiState = SteamNotificationsUiState(),
     val pendingLoginChallenge: SteamLoginChallengeUi? = null,
     val pendingQrLoginChallenge: SteamQrLoginChallengeUi? = null,
     val pendingMaFileSteamIdRequest: SteamMaFileSteamIdRequestUi? = null,
@@ -213,6 +221,9 @@ class SteamViewModel(
     private val inventoryService: SteamInventoryService = SteamInventoryService(),
     private val marketService: SteamMarketService = SteamMarketService(),
     private val tradeOfferService: SteamTradeOfferService = SteamTradeOfferService(),
+    private val notificationService: SteamNotificationService = SteamNotificationService(),
+    private val giftService: SteamGiftService = SteamGiftService(),
+    private val notificationCache: SteamNotificationCache = SteamNotificationPreferencesCache(appContext),
     private val securityEventRepository: SteamSecurityEventRepository? = null
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamUiState())
@@ -296,6 +307,7 @@ class SteamViewModel(
                         pendingLogins = emptyList(),
                         authorizedDevices = emptyList(),
                         selectedConfirmationIds = emptySet(),
+                        notifications = SteamNotificationsUiState(),
                         inventoryMarket = SteamInventoryMarketUiState(),
                         tradeOffers = SteamTradeOffersUiState()
                     )
@@ -883,6 +895,116 @@ class SteamViewModel(
                 }
             }
             if (!silent) setLoading(false)
+        }
+    }
+
+    fun refreshSteamNotifications(silent: Boolean = false) {
+        val account = selectedAccount() ?: return
+        viewModelScope.launch {
+            val cached = withContext(Dispatchers.IO) {
+                notificationCache.load(account.steamId)
+            }
+            if (
+                selectedAccount()?.id == account.id &&
+                _uiState.value.notifications.snapshot == null &&
+                cached != null
+            ) {
+                updateNotifications {
+                    it.copy(snapshot = cached, fromCache = true, error = null)
+                }
+            }
+            if (!silent) {
+                updateNotifications { it.copy(loading = true, error = null) }
+            }
+            runCatching {
+                val freshAccount = ensureSteamSession(account)
+                    ?: throw IllegalStateException(
+                        appContext.getString(R.string.steam_notifications_session_required)
+                    )
+                withContext(Dispatchers.IO) {
+                    val freshSnapshot = notificationService.fetch(freshAccount)
+                    val giftResult: Result<List<SteamPendingGift>> =
+                        if (freshSnapshot.pendingGiftCount > 0) {
+                            runCatching { giftService.fetchPending(freshAccount) }
+                        } else {
+                            Result.success(emptyList())
+                        }
+                    val merged = freshSnapshot.copy(
+                        pendingGifts = giftResult.getOrElse { cached?.pendingGifts.orEmpty() }
+                    )
+                    notificationCache.save(freshAccount.steamId, merged)
+                    merged to giftResult.exceptionOrNull()
+                }
+            }.onSuccess { (snapshot, giftError) ->
+                if (selectedAccount()?.id != account.id) return@onSuccess
+                updateNotifications {
+                    it.copy(
+                        snapshot = snapshot,
+                        loading = false,
+                        fromCache = false,
+                        error = giftError?.message
+                    )
+                }
+            }.onFailure { error ->
+                if (selectedAccount()?.id != account.id) return@onFailure
+                updateNotifications {
+                    it.copy(
+                        loading = false,
+                        error = error.message
+                            ?: appContext.getString(R.string.steam_notifications_load_failed)
+                    )
+                }
+            }
+        }
+    }
+
+    fun respondGift(
+        gift: SteamPendingGift,
+        action: SteamGiftAction,
+        note: String = ""
+    ) {
+        val account = selectedAccount() ?: return
+        if (_uiState.value.notifications.actionGiftId != null) return
+        updateNotifications { it.copy(actionGiftId = gift.id, error = null) }
+        viewModelScope.launch {
+            runCatching {
+                val freshAccount = ensureSteamSession(account)
+                    ?: throw IllegalStateException(
+                        appContext.getString(R.string.steam_notifications_session_required)
+                    )
+                withContext(Dispatchers.IO) {
+                    giftService.respond(freshAccount, gift, action, note)
+                }
+            }.onSuccess { result ->
+                if (selectedAccount()?.id != account.id) return@onSuccess
+                updateNotifications { it.copy(actionGiftId = null) }
+                if (result.success) {
+                    setMessage(
+                        when (action) {
+                            SteamGiftAction.ADD_TO_LIBRARY -> R.string.steam_gift_added_to_library
+                            SteamGiftAction.KEEP_IN_INVENTORY -> R.string.steam_gift_kept_in_inventory
+                            SteamGiftAction.DECLINE -> R.string.steam_gift_declined
+                        }
+                    )
+                    refreshSteamNotifications(silent = true)
+                } else {
+                    setMessage(
+                        result.message ?: appContext.getString(R.string.steam_gift_action_failed)
+                    )
+                }
+            }.onFailure { error ->
+                if (selectedAccount()?.id != account.id) return@onFailure
+                updateNotifications {
+                    it.copy(
+                        actionGiftId = null,
+                        error = error.message
+                            ?: appContext.getString(R.string.steam_gift_action_failed)
+                    )
+                }
+                setMessage(
+                    error.message ?: appContext.getString(R.string.steam_gift_action_failed)
+                )
+            }
         }
     }
 
@@ -2224,6 +2346,7 @@ class SteamViewModel(
             pendingLogins = emptyList(),
             authorizedDevices = emptyList(),
             selectedConfirmationIds = emptySet(),
+            notifications = SteamNotificationsUiState(),
             inventoryMarket = SteamInventoryMarketUiState(),
             tradeOffers = SteamTradeOffersUiState()
         )
@@ -2262,6 +2385,14 @@ class SteamViewModel(
     ) {
         _uiState.value = _uiState.value.copy(
             tradeOffers = transform(_uiState.value.tradeOffers)
+        )
+    }
+
+    private fun updateNotifications(
+        transform: (SteamNotificationsUiState) -> SteamNotificationsUiState
+    ) {
+        _uiState.value = _uiState.value.copy(
+            notifications = transform(_uiState.value.notifications)
         )
     }
 
@@ -2349,6 +2480,7 @@ class SteamViewModel(
                     pendingLogins = emptyList(),
                     authorizedDevices = emptyList(),
                     selectedConfirmationIds = emptySet(),
+                    notifications = SteamNotificationsUiState(),
                     inventoryMarket = SteamInventoryMarketUiState(),
                     tradeOffers = SteamTradeOffersUiState()
                 )
@@ -2480,6 +2612,11 @@ class SteamViewModel(
             pendingLogins = if (selectedChanged || clearAccountScopedState) emptyList() else previous.pendingLogins,
             authorizedDevices = if (selectedChanged || clearAccountScopedState) emptyList() else previous.authorizedDevices,
             selectedConfirmationIds = if (selectedChanged || clearAccountScopedState) emptySet() else previous.selectedConfirmationIds,
+            notifications = if (selectedChanged || clearAccountScopedState) {
+                SteamNotificationsUiState()
+            } else {
+                previous.notifications
+            },
             inventoryMarket = if (selectedChanged || clearAccountScopedState) {
                 SteamInventoryMarketUiState()
             } else {

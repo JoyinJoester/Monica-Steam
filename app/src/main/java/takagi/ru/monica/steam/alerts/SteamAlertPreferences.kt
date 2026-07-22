@@ -18,6 +18,7 @@ class SteamAlertPreferences(context: Context) {
     val settings: Flow<SteamAlertSettings> = appContext.steamAlertDataStore.data.map { values ->
         SteamAlertSettings(
             enabled = values[KEY_ENABLED] ?: false,
+            notificationsEnabled = values[KEY_NOTIFICATIONS] ?: true,
             confirmationsEnabled = values[KEY_CONFIRMATIONS] ?: true,
             sessionEnabled = values[KEY_SESSION] ?: true,
             devicesEnabled = values[KEY_DEVICES] ?: true,
@@ -30,6 +31,7 @@ class SteamAlertPreferences(context: Context) {
     }
 
     suspend fun setEnabled(enabled: Boolean) = update { this[KEY_ENABLED] = enabled }
+    suspend fun setNotificationsEnabled(enabled: Boolean) = update { this[KEY_NOTIFICATIONS] = enabled }
     suspend fun setConfirmationsEnabled(enabled: Boolean) = update { this[KEY_CONFIRMATIONS] = enabled }
     suspend fun setSessionEnabled(enabled: Boolean) = update { this[KEY_SESSION] = enabled }
     suspend fun setDevicesEnabled(enabled: Boolean) = update { this[KEY_DEVICES] = enabled }
@@ -57,6 +59,7 @@ class SteamAlertPreferences(context: Context) {
 
     private companion object {
         val KEY_ENABLED = booleanPreferencesKey("enabled")
+        val KEY_NOTIFICATIONS = booleanPreferencesKey("notifications_enabled")
         val KEY_CONFIRMATIONS = booleanPreferencesKey("confirmations_enabled")
         val KEY_SESSION = booleanPreferencesKey("session_enabled")
         val KEY_DEVICES = booleanPreferencesKey("devices_enabled")

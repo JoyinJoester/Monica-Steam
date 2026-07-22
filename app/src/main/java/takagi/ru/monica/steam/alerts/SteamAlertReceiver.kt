@@ -15,6 +15,7 @@ import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.network.SteamAuthorizedDeviceService
 import takagi.ru.monica.steam.network.SteamConfirmationService
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
+import takagi.ru.monica.steam.notifications.SteamNotificationService
 
 class SteamAlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -43,6 +44,7 @@ class SteamAlertReceiver : BroadcastReceiver() {
         val sessionService = SteamSessionRefreshService()
         val confirmationService = SteamConfirmationService()
         val deviceService = SteamAuthorizedDeviceService()
+        val notificationService = SteamNotificationService()
         val usableAccounts = mutableListOf<SteamAccount>()
         var sessionIssues = 0
 
@@ -75,6 +77,22 @@ class SteamAlertReceiver : BroadcastReceiver() {
             } else {
                 usableAccounts += refreshed
             }
+        }
+
+        var unreadNotifications = 0
+        if (settings.notificationsEnabled) {
+            usableAccounts.filter { it.hasRealSteamId && !it.accessToken.isNullOrBlank() }
+                .forEach { account ->
+                    runCatching { notificationService.fetch(account) }
+                        .onSuccess { snapshot ->
+                            unreadNotifications += maxOf(
+                                snapshot.unreadCount,
+                                snapshot.pendingGiftCount +
+                                    snapshot.pendingFriendCount +
+                                    snapshot.pendingFamilyInviteCount
+                            )
+                        }
+                }
         }
 
         var pendingConfirmations = 0
@@ -113,6 +131,7 @@ class SteamAlertReceiver : BroadcastReceiver() {
         val decision = SteamAlertPolicy.evaluate(
             settings = settings,
             observation = SteamAlertObservation(
+                unreadNotifications = unreadNotifications,
                 pendingConfirmations = pendingConfirmations,
                 sessionIssues = sessionIssues,
                 authorizedDeviceCount = deviceCount.takeIf {

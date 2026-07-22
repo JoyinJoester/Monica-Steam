@@ -115,14 +115,8 @@ fun SteamStoreWebScreen(
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { factoryContext ->
-                val cookies = CookieManager.getInstance().apply {
-                    setAcceptCookie(true)
-                    SteamStoreSessionPolicy.cookies(steamLoginSecure, sessionId).forEach { cookie ->
-                        setCookie("https://store.steampowered.com", cookie)
-                    }
-                    flush()
-                }
-                WebView(factoryContext).apply {
+                val cookies = CookieManager.getInstance().apply { setAcceptCookie(true) }
+                WebView(factoryContext).apply webView@{
                     webView = this
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true
@@ -170,8 +164,14 @@ fun SteamStoreWebScreen(
                             return true
                         }
                     }
-                    if (SteamStoreNavigationPolicy.isAllowed(url)) loadUrl(url)
-                    cookies.flush()
+                    val targetAllowed = SteamStoreNavigationPolicy.isAllowed(url)
+                    cookies.installSteamCookies(
+                        SteamStoreSessionPolicy.cookieWrites(steamLoginSecure, sessionId)
+                    ) {
+                        if (webView === this@webView && targetAllowed) {
+                            loadUrl(url)
+                        }
+                    }
                 }
             }
         )

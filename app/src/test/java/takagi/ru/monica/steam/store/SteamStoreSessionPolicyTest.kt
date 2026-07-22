@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.store
 
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -27,5 +28,34 @@ class SteamStoreSessionPolicyTest {
         assertTrue(secure.contains("HttpOnly"))
         assertFalse(secure.contains(" with spaces"))
         assertTrue(cookies.any { it.startsWith("sessionid=abcdef") })
+    }
+
+    @Test
+    fun writesSessionCookiesToStoreAndCommunityDomains() {
+        val writes = SteamStoreSessionPolicy.cookieWrites(
+            steamLoginSecure = "76561198000000000||token",
+            sessionId = "abcdef0123456789abcdef01"
+        )
+
+        assertTrue(writes.any { it.url == "https://store.steampowered.com" })
+        assertTrue(writes.any { it.url == "https://steamcommunity.com" })
+        assertTrue(writes.any {
+            it.url == "https://steamcommunity.com" &&
+                it.value.contains("Domain=.steamcommunity.com") &&
+                it.value.startsWith("steamLoginSecure=")
+        })
+    }
+
+    @Test
+    fun keepsPreviouslyEncodedSteamLoginSecureAtSingleEncodingLevel() {
+        val raw = SteamStoreSessionPolicy.cookies(
+            steamLoginSecure = "76561198000000000%7C%7Ctoken%2Fvalue",
+            sessionId = "abcdef0123456789abcdef01"
+        ).single { it.startsWith("steamLoginSecure=") }
+
+        assertTrue(raw.contains("%7C%7C"))
+        assertTrue(raw.contains("%2F"))
+        assertFalse(raw.contains("%257C%257C"))
+        assertEquals(1, "%7C%7C".toRegex().findAll(raw).count())
     }
 }

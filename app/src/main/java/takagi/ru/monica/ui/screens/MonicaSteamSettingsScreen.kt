@@ -502,6 +502,17 @@ private fun MonicaSteamLegacySettingsScreen(
             item {
                 SteamSettingsSection(title = stringResource(R.string.settings_security)) {
                     SteamSettingsSwitchItem(
+                        icon = Icons.Default.Notifications,
+                        title = stringResource(R.string.steam_alerts_notifications),
+                        subtitle = stringResource(R.string.steam_alerts_notifications_description),
+                        checked = alertSettings.notificationsEnabled,
+                        onCheckedChange = { enabled ->
+                            coroutineScope.launch {
+                                alertPreferences.setNotificationsEnabled(enabled)
+                            }
+                        }
+                    )
+                    SteamSettingsSwitchItem(
                         icon = Icons.Default.Security,
                         title = stringResource(R.string.screenshot_protection),
                         subtitle = if (settings.screenshotProtectionEnabled) {

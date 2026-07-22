@@ -10,6 +10,7 @@ class SteamAlertPolicyTest {
     fun enabledTypesProduceOnlyRequestedAlertKinds() {
         val settings = SteamAlertSettings(
             enabled = true,
+            notificationsEnabled = true,
             confirmationsEnabled = true,
             sessionEnabled = false,
             devicesEnabled = true,
@@ -19,6 +20,7 @@ class SteamAlertPolicyTest {
         val decision = SteamAlertPolicy.evaluate(
             settings,
             SteamAlertObservation(
+                unreadNotifications = 2,
                 pendingConfirmations = 1,
                 sessionIssues = 3,
                 authorizedDeviceCount = 3,
@@ -27,7 +29,12 @@ class SteamAlertPolicyTest {
         )
 
         assertEquals(
-            setOf(SteamAlertKind.CONFIRMATIONS, SteamAlertKind.DEVICES, SteamAlertKind.PRICES),
+            setOf(
+                SteamAlertKind.NOTIFICATIONS,
+                SteamAlertKind.CONFIRMATIONS,
+                SteamAlertKind.DEVICES,
+                SteamAlertKind.PRICES
+            ),
             decision.kinds
         )
         assertFalse(SteamAlertKind.SESSION in decision.kinds)
