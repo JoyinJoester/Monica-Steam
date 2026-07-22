@@ -26,6 +26,12 @@ class SteamStoreCache(context: Context) {
     fun writeCart(accountId: Long?, items: List<SteamCartItem>) =
         write("${scope(accountId)}_cart.json", items)
 
+    fun readWishlist(accountId: Long?): SteamWishlistSnapshot? =
+        read(steamWishlistCacheName(accountId))
+
+    fun writeWishlist(accountId: Long?, snapshot: SteamWishlistSnapshot) =
+        write(steamWishlistCacheName(accountId), snapshot)
+
     private fun scope(accountId: Long?): String = accountId?.let { "v2_account_$it" } ?: "v2_guest"
 
     private inline fun <reified T> read(name: String): T? = runCatching {
@@ -47,3 +53,6 @@ class SteamStoreCache(context: Context) {
         }
     }
 }
+
+internal fun steamWishlistCacheName(accountId: Long?): String =
+    accountId?.let { "v2_account_${it}_wishlist.json" } ?: "v2_guest_wishlist.json"

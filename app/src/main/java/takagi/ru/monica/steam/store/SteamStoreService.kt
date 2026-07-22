@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import okhttp3.OkHttpClient
+import okhttp3.FormBody
 import okhttp3.Request
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import takagi.ru.monica.steam.network.SteamApiClient
@@ -12,6 +13,7 @@ import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
+import java.util.UUID
 
 class SteamStoreService(
     private val client: OkHttpClient = OkHttpClient.Builder()
@@ -72,6 +74,66 @@ class SteamStoreService(
             ?: throw IllegalStateException("Steam 商店没有返回该商品详情")
     }
 
+    fun wishlist(
+        steamId: String,
+        steamLoginSecure: String?,
+        accessToken: String? = null,
+        language: String = "schinese"
+    ): List<SteamWishlistItem> {
+        val session = steamLoginSecure?.takeIf(String::isNotBlank)
+            ?: throw SteamStoreWishlistSessionException()
+        val country = accountCountryOrFail(session, accessToken)
+        val items = mutableListOf<SteamWishlistItem>()
+        val seen = mutableSetOf<Int>()
+        repeat(MAX_WISHLIST_PAGES) { page ->
+            val payload = executeText(
+                buildSteamWishlistRequest(
+                    steamId = steamId,
+                    page = page,
+                    steamLoginSecure = session,
+                    countryCode = country,
+                    language = language
+                )
+            )
+            if (isSteamWishlistLoginResponse(payload)) {
+                throw SteamStoreWishlistSessionException()
+            }
+            val pageItems = SteamStoreParser.parseWishlist(payload)
+            val newItems = pageItems.filter { seen.add(it.appId) }
+            if (newItems.isEmpty()) return items
+            items += newItems
+            if (pageItems.size < WISHLIST_PAGE_SIZE) return items
+        }
+        return items
+    }
+
+    fun setWishlist(
+        appId: Int,
+        add: Boolean,
+        steamLoginSecure: String?,
+        accessToken: String? = null
+    ) {
+        val session = steamLoginSecure?.takeIf(String::isNotBlank)
+            ?: throw SteamStoreWishlistSessionException()
+        val country = accountCountryOrFail(session, accessToken)
+        val sessionId = UUID.randomUUID().toString().replace("-", "").take(24)
+        val payload = executeText(
+            buildSteamWishlistMutationRequest(
+                appId = appId,
+                add = add,
+                steamLoginSecure = session,
+                sessionId = sessionId,
+                countryCode = country
+            )
+        )
+        if (isSteamWishlistLoginResponse(payload)) {
+            throw SteamStoreWishlistSessionException()
+        }
+        if (!SteamStoreParser.parseWishlistMutationSuccess(payload)) {
+            throw IllegalStateException("Steam 没有确认愿望单修改")
+        }
+    }
+
     private fun get(
         path: String,
         query: Map<String, String>,
@@ -85,6 +147,19 @@ class SteamStoreService(
             }
             return response.body?.string()?.takeIf { it.isNotBlank() }
                 ?: throw IllegalStateException("Steam 商店返回空数据")
+        }
+    }
+
+    private fun executeText(request: Request): String {
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) {
+                if (response.code == 401 || response.code == 403) {
+                    throw SteamStoreWishlistSessionException()
+                }
+                throw IllegalStateException("Steam 愿望单请求失败：${response.code}")
+            }
+            return response.body?.string()?.takeIf(String::isNotBlank)
+                ?: throw IllegalStateException("Steam 愿望单返回空数据")
         }
     }
 
@@ -153,6 +228,59 @@ class SteamStoreService(
         return resolveCountryCode(session, accountToken)
             ?: throw SteamStoreAccountRegionException()
     }
+
+    private companion object {
+        const val MAX_WISHLIST_PAGES = 20
+        const val WISHLIST_PAGE_SIZE = 100
+    }
+}
+
+internal fun buildSteamWishlistRequest(
+    steamId: String,
+    page: Int,
+    steamLoginSecure: String,
+    countryCode: String?,
+    language: String = "schinese"
+): Request = buildSteamStoreRequest(
+    path = "/wishlist/profiles/$steamId/wishlistdata/",
+    query = mapOf("p" to page.coerceAtLeast(0).toString(), "l" to language),
+    steamLoginSecure = steamLoginSecure,
+    countryCode = countryCode
+)
+
+internal fun buildSteamWishlistMutationRequest(
+    appId: Int,
+    add: Boolean,
+    steamLoginSecure: String,
+    sessionId: String,
+    countryCode: String?
+): Request {
+    val body = FormBody.Builder()
+        .add("sessionid", sessionId)
+        .add("appid", appId.toString())
+        .build()
+    val base = buildSteamStoreRequest(
+        path = if (add) "/api/addtowishlist" else "/api/removefromwishlist",
+        query = emptyMap(),
+        steamLoginSecure = null,
+        countryCode = countryCode
+    )
+    return base.newBuilder()
+        .header(
+            "Cookie",
+            "steamLoginSecure=${encodeSteamCookieValue(steamLoginSecure)}; " +
+                "sessionid=${encodeSteamCookieValue(sessionId)}"
+        )
+        .header("X-Requested-With", "XMLHttpRequest")
+        .post(body)
+        .build()
+}
+
+internal fun isSteamWishlistLoginResponse(payload: String): Boolean {
+    val trimmed = payload.trimStart()
+    return trimmed.startsWith("<") ||
+        payload.contains("Welcome to Steam", ignoreCase = true) ||
+        payload.contains("login.steampowered.com", ignoreCase = true)
 }
 
 internal fun effectiveSteamStoreAccessToken(

@@ -34,6 +34,13 @@ data class SteamStoreUiState(
     val webUrl: String? = null,
     val cart: List<SteamCartItem> = emptyList(),
     val cartOpen: Boolean = false,
+    val collectionTab: SteamStoreCollectionTab = SteamStoreCollectionTab.CART,
+    val wishlist: List<SteamWishlistItem> = emptyList(),
+    val wishlistLoaded: Boolean = false,
+    val wishlistFromCache: Boolean = false,
+    val loadingWishlist: Boolean = false,
+    val wishlistError: String? = null,
+    val wishlistMutatingAppIds: Set<Int> = emptySet(),
     val checkoutPackageIds: List<Int> = emptyList()
 )
 
@@ -62,6 +69,7 @@ class SteamStoreViewModel(
                 if (previousId != selected?.id || _uiState.value.home == null) {
                     resetStoreForAccount(selected?.id)
                     loadCart(selected?.id)
+                    loadWishlistCache(selected?.id)
                     loadHome(force = true)
                 }
             }
@@ -228,6 +236,107 @@ class SteamStoreViewModel(
     fun openCart() { _uiState.value = _uiState.value.copy(cartOpen = true, detail = null) }
     fun closeCart() { _uiState.value = _uiState.value.copy(cartOpen = false) }
     fun isInCart(appId: Int): Boolean = _uiState.value.cart.any { it.appId == appId }
+    fun isInWishlist(appId: Int): Boolean = _uiState.value.wishlist.any { it.appId == appId }
+
+    fun selectCollectionTab(tab: SteamStoreCollectionTab) {
+        _uiState.value = _uiState.value.copy(collectionTab = tab)
+        if (tab == SteamStoreCollectionTab.WISHLIST) loadWishlist()
+    }
+
+    fun loadWishlist(force: Boolean = false) {
+        val state = _uiState.value
+        if (state.loadingWishlist) return
+        if (!force && state.wishlistLoaded && !state.wishlistFromCache) return
+        val accountId = state.selectedAccountId
+        val account = selectedAccount()
+        if (account == null || !account.hasRealSteamId) {
+            _uiState.value = state.copy(
+                wishlistLoaded = true,
+                wishlistError = "请先选择有效的 Steam 账号"
+            )
+            return
+        }
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(loadingWishlist = true, wishlistError = null)
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    executeStoreRequest(account) { credentials ->
+                        service.wishlist(
+                            steamId = account.steamId,
+                            steamLoginSecure = credentials.steamLoginSecure,
+                            accessToken = credentials.accessToken
+                        )
+                    }
+                }
+            }.onSuccess { items ->
+                if (_uiState.value.selectedAccountId != accountId) return@onSuccess
+                val snapshot = SteamWishlistSnapshot(items)
+                withContext(Dispatchers.IO) { cache.writeWishlist(accountId, snapshot) }
+                _uiState.value = _uiState.value.copy(
+                    wishlist = items,
+                    wishlistLoaded = true,
+                    wishlistFromCache = false,
+                    loadingWishlist = false,
+                    wishlistError = null
+                )
+            }.onFailure { error ->
+                if (_uiState.value.selectedAccountId != accountId) return@onFailure
+                _uiState.value = _uiState.value.copy(
+                    wishlistLoaded = true,
+                    loadingWishlist = false,
+                    wishlistError = error.message ?: "Steam 愿望单同步失败"
+                )
+            }
+        }
+    }
+
+    fun toggleWishlist(detail: SteamStoreDetail) {
+        if (detail.appId in _uiState.value.wishlistMutatingAppIds) return
+        val accountId = _uiState.value.selectedAccountId
+        val account = selectedAccount() ?: return
+        val add = !isInWishlist(detail.appId)
+        _uiState.value = _uiState.value.copy(
+            wishlistMutatingAppIds = _uiState.value.wishlistMutatingAppIds + detail.appId,
+            wishlistError = null
+        )
+        viewModelScope.launch {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    executeStoreRequest(account) { credentials ->
+                        service.setWishlist(
+                            appId = detail.appId,
+                            add = add,
+                            steamLoginSecure = credentials.steamLoginSecure,
+                            accessToken = credentials.accessToken
+                        )
+                    }
+                }
+            }.onSuccess {
+                if (_uiState.value.selectedAccountId != accountId) return@onSuccess
+                val updated = if (add) {
+                    (_uiState.value.wishlist.filterNot { it.appId == detail.appId } +
+                        detail.toWishlistItem()).sortedByDescending { it.addedAtEpochSeconds }
+                } else {
+                    _uiState.value.wishlist.filterNot { it.appId == detail.appId }
+                }
+                _uiState.value = _uiState.value.copy(
+                    wishlist = updated,
+                    wishlistLoaded = true,
+                    wishlistFromCache = false,
+                    wishlistMutatingAppIds = _uiState.value.wishlistMutatingAppIds - detail.appId
+                )
+                withContext(Dispatchers.IO) {
+                    cache.writeWishlist(accountId, SteamWishlistSnapshot(updated))
+                }
+            }.onFailure { error ->
+                if (_uiState.value.selectedAccountId != accountId) return@onFailure
+                _uiState.value = _uiState.value.copy(
+                    wishlistMutatingAppIds = _uiState.value.wishlistMutatingAppIds - detail.appId,
+                    wishlistError = error.message ?: "Steam 愿望单修改失败"
+                )
+            }
+        }
+    }
 
     fun checkout() {
         val ids = steamCartCheckoutPackageIds(_uiState.value.cart)
@@ -246,6 +355,19 @@ class SteamStoreViewModel(
         viewModelScope.launch {
             val items = withContext(Dispatchers.IO) { cache.readCart(accountId) }
             if (_uiState.value.selectedAccountId == accountId) _uiState.value = _uiState.value.copy(cart = items)
+        }
+    }
+
+    private fun loadWishlistCache(accountId: Long?) {
+        viewModelScope.launch {
+            val snapshot = withContext(Dispatchers.IO) { cache.readWishlist(accountId) }
+            if (_uiState.value.selectedAccountId == accountId && snapshot != null) {
+                _uiState.value = _uiState.value.copy(
+                    wishlist = snapshot.items,
+                    wishlistLoaded = true,
+                    wishlistFromCache = true
+                )
+            }
         }
     }
 
@@ -280,6 +402,13 @@ class SteamStoreViewModel(
             error = null,
             cart = emptyList(),
             cartOpen = false,
+            collectionTab = SteamStoreCollectionTab.CART,
+            wishlist = emptyList(),
+            wishlistLoaded = false,
+            wishlistFromCache = false,
+            loadingWishlist = false,
+            wishlistError = null,
+            wishlistMutatingAppIds = emptySet(),
             checkoutPackageIds = emptyList()
         )
     }

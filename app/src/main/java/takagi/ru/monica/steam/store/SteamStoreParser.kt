@@ -6,6 +6,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -90,6 +91,47 @@ object SteamStoreParser {
         )
     }
 
+    fun parseWishlist(payload: String): List<SteamWishlistItem> {
+        val root = json.parseToJsonElement(payload) as? JsonObject ?: return emptyList()
+        return root.mapNotNull { (appIdKey, element) ->
+            val item = element as? JsonObject ?: return@mapNotNull null
+            val appId = item.int("appid") ?: appIdKey.toIntOrNull() ?: return@mapNotNull null
+            val sub = item.array("subs").firstOrNull() as? JsonObject
+            val discountBlock = sub?.string("discount_block").orEmpty()
+            SteamWishlistItem(
+                appId = appId,
+                name = item.string("name").orEmpty(),
+                imageUrl = item.string("capsule")
+                    ?: item.string("capsule_image")
+                    ?: item.string("header_image").orEmpty(),
+                packageId = sub?.int("id") ?: sub?.int("packageid"),
+                discountPercent = sub?.int("discount_pct")
+                    ?: item.int("discount_percent")
+                    ?: 0,
+                formattedInitialPrice = extractWishlistPrice(
+                    discountBlock,
+                    "discount_original_price"
+                ),
+                formattedFinalPrice = extractWishlistPrice(
+                    discountBlock,
+                    "discount_final_price"
+                ),
+                priority = item.int("priority") ?: 0,
+                addedAtEpochSeconds = item.long("added")
+                    ?: item.long("date_added")
+                    ?: 0L
+            )
+        }.sortedWith(
+            compareBy<SteamWishlistItem> { it.priority }
+                .thenByDescending { it.addedAtEpochSeconds }
+        )
+    }
+
+    fun parseWishlistMutationSuccess(payload: String): Boolean {
+        val root = json.parseToJsonElement(payload) as? JsonObject ?: return false
+        return root.bool("success") == true || root.int("success") == 1
+    }
+
     private fun categoryItems(element: JsonElement?): List<SteamStoreItem> {
         val category = element as? JsonObject ?: return emptyList()
         return category.array("items").mapNotNull { entry ->
@@ -129,10 +171,28 @@ object SteamStoreParser {
         return ((initial - final) * 100 / initial).coerceIn(0, 100)
     }
 
+    private fun extractWishlistPrice(block: String, className: String): String {
+        if (block.isBlank()) return ""
+        val match = Regex(
+            """class\s*=\s*[\"'][^\"']*\b${Regex.escape(className)}\b[^\"']*[\"'][^>]*>(.*?)</div>""",
+            setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
+        ).find(block) ?: return ""
+        return match.groupValues[1]
+            .replace(Regex("<[^>]+>"), "")
+            .replace("&nbsp;", " ")
+            .replace("&yen;", "¥")
+            .replace("&euro;", "€")
+            .replace("&pound;", "£")
+            .replace("&amp;", "&")
+            .trim()
+    }
+
     private fun JsonObject.string(key: String): String? =
         this[key]?.jsonPrimitive?.contentOrNull
 
     private fun JsonObject.int(key: String): Int? = this[key]?.jsonPrimitive?.intOrNull
+
+    private fun JsonObject.long(key: String): Long? = this[key]?.jsonPrimitive?.longOrNull
 
     private fun JsonObject.bool(key: String): Boolean? =
         this[key]?.jsonPrimitive?.contentOrNull?.toBooleanStrictOrNull()

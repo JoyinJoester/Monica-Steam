@@ -77,6 +77,42 @@ data class SteamCartItem(
     val formattedPrice: String get() = formatSteamPrice(finalPriceCents, currency)
 }
 
+@Serializable
+data class SteamWishlistItem(
+    val appId: Int,
+    val name: String,
+    val imageUrl: String = "",
+    val packageId: Int? = null,
+    val discountPercent: Int = 0,
+    val formattedInitialPrice: String = "",
+    val formattedFinalPrice: String = "",
+    val priority: Int = 0,
+    val addedAtEpochSeconds: Long = 0L
+)
+
+@Serializable
+data class SteamWishlistSnapshot(
+    val items: List<SteamWishlistItem> = emptyList(),
+    val fetchedAt: Long = System.currentTimeMillis()
+)
+
+enum class SteamStoreCollectionTab {
+    CART,
+    WISHLIST
+}
+
+internal fun SteamStoreDetail.toWishlistItem(nowEpochSeconds: Long = System.currentTimeMillis() / 1000L) =
+    SteamWishlistItem(
+        appId = appId,
+        name = name,
+        imageUrl = headerImageUrl,
+        packageId = packageId,
+        discountPercent = discountPercent,
+        formattedInitialPrice = formattedInitialPrice,
+        formattedFinalPrice = formattedFinalPrice,
+        addedAtEpochSeconds = nowEpochSeconds
+    )
+
 internal fun steamCartCheckoutPackageIds(items: List<SteamCartItem>): List<Int> =
     items.mapNotNull { it.packageId }.distinct()
 
