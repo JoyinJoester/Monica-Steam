@@ -17,6 +17,8 @@ class SteamGiftInboxIntegrationGuardTest {
         assertTrue(screen.contains("SteamNotificationCenter("))
         assertTrue(screen.contains("steamGiftInboxUrl("))
         assertTrue(screen.contains("onGiftAction"))
+        assertTrue(screen.contains("webSessionAvailable"))
+        assertTrue(screen.contains("enabled = webSessionAvailable"))
         assertTrue(screen.contains("steamLoginSecure = account?.steamLoginSecure"))
         assertTrue(screen.contains("SteamStoreWebScreen("))
         assertTrue(web.contains("title: String"))

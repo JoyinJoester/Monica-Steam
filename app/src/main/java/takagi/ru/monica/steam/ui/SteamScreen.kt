@@ -3870,6 +3870,9 @@ private fun SteamNotificationCenter(
     modifier: Modifier = Modifier
 ) {
     val snapshot = state.snapshot
+    val webSessionAvailable = account != null && (
+        !account.steamLoginSecure.isNullOrBlank() || !account.accessToken.isNullOrBlank()
+    )
     var showAllNotifications by rememberSaveable(account?.id) { mutableStateOf(false) }
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -3954,6 +3957,7 @@ private fun SteamNotificationCenter(
                     SteamPendingGiftRow(
                         gift = gift,
                         actionInProgress = state.actionGiftId == gift.id,
+                        webSessionAvailable = webSessionAvailable,
                         onAction = { action -> onGiftAction(gift, action) },
                         onOpenWeb = onOpenWeb
                     )
@@ -4011,7 +4015,7 @@ private fun SteamNotificationCenter(
 
             OutlinedButton(
                 onClick = onOpenWeb,
-                enabled = account != null,
+                enabled = webSessionAvailable,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null)
@@ -4041,6 +4045,7 @@ private fun SteamNotificationMetric(value: Int, label: String) {
 private fun SteamPendingGiftRow(
     gift: SteamPendingGift,
     actionInProgress: Boolean,
+    webSessionAvailable: Boolean,
     onAction: (SteamGiftAction) -> Unit,
     onOpenWeb: () -> Unit
 ) {
@@ -4081,7 +4086,10 @@ private fun SteamPendingGiftRow(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (gift.requiresWeb) {
-                    FilledTonalButton(onClick = onOpenWeb, enabled = !actionInProgress) {
+                    FilledTonalButton(
+                        onClick = onOpenWeb,
+                        enabled = !actionInProgress && webSessionAvailable
+                    ) {
                         Text(stringResource(R.string.steam_gift_handle_on_steam))
                     }
                 } else {
