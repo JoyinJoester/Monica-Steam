@@ -593,18 +593,24 @@ private fun SteamAccountHeroCard(
     val decor = rememberSteamMiniProfileDecor(account)
     val displayName = decor?.personaName?.takeIf(String::isNotBlank)
         ?: account.displayName.ifBlank { account.accountName.ifBlank { account.visibleSteamId } }
+    val levelLabel = decor?.level?.let { level ->
+        stringResource(R.string.steam_library_level, level)
+    }
+    val gamesLabel = snapshot?.let {
+        stringResource(R.string.steam_library_games_short, it.gameCount)
+    }
+    val identityFacts = listOfNotNull(levelLabel, gamesLabel).joinToString(" · ")
 
     Card(
         onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1.62f),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(28.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .heightIn(min = 208.dp)
                 .background(
                     Brush.linearGradient(
                         listOf(
@@ -628,81 +634,87 @@ private fun SteamAccountHeroCard(
                     .background(
                         Brush.verticalGradient(
                             listOf(
-                                Color.Black.copy(alpha = 0.12f),
-                                Color.Black.copy(alpha = 0.34f),
-                                Color.Black.copy(alpha = 0.78f)
+                                Color.Black.copy(alpha = 0.44f),
+                                Color.Black.copy(alpha = 0.28f),
+                                Color.Black.copy(alpha = 0.80f)
                             )
                         )
                     )
             )
-            Row(
+            Column(
                 modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(18.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    .fillMaxWidth()
+                    .heightIn(min = 208.dp)
+                    .padding(horizontal = 18.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                SteamFramedAvatar(account = account, decor = decor)
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = displayName.ifBlank { "Steam" },
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    SteamFramedAvatar(account = account, decor = decor)
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
-                        decor?.level?.let { level ->
+                        Text(
+                            text = displayName.ifBlank { "Steam" },
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontFamily = GoogleSansFlexFontFamily,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                                lineHeight = 23.sp,
+                                letterSpacing = 0.sp
+                            ),
+                            color = Color.White,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        if (identityFacts.isNotEmpty()) {
                             Text(
-                                text = stringResource(R.string.steam_library_level, level),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = Color.White.copy(alpha = 0.9f)
-                            )
-                        }
-                        snapshot?.let {
-                            Text(
-                                text = stringResource(R.string.steam_library_games_short, it.gameCount),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = Color.White.copy(alpha = 0.9f)
+                                text = identityFacts,
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    fontFamily = GoogleSansFlexFontFamily,
+                                    letterSpacing = 0.sp
+                                ),
+                                color = Color.White.copy(alpha = 0.88f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
+                    Icon(
+                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = stringResource(R.string.steam_library_open_account_details),
+                        tint = Color.White.copy(alpha = 0.88f),
+                        modifier = Modifier.size(20.dp)
+                    )
                 }
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = stringResource(R.string.steam_library_open_account_details),
-                    tint = Color.White.copy(alpha = 0.9f),
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                HeroMetric(
-                    label = stringResource(R.string.steam_library_total_playtime),
-                    value = snapshot?.let { formatHeroPlaytime(it.totalPlaytimeMinutes) } ?: "—",
-                    modifier = Modifier.weight(0.95f)
-                )
-                HeroMetric(
-                    label = stringResource(R.string.steam_library_inventory_count),
-                    value = snapshot?.inventoryItemCount?.toString() ?: "—",
-                    modifier = Modifier.weight(0.85f)
-                )
-                HeroMetric(
-                    label = stringResource(R.string.steam_library_estimated_value),
-                    value = snapshot?.takeIf { it.pricedGameCount > 0 }?.let {
-                        formatAccountHeroPrice(it.currency, it.estimatedReplacementValueMinor)
-                    } ?: "—",
-                    modifier = Modifier.weight(1.2f)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HeroMetric(
+                        label = stringResource(R.string.steam_library_total_playtime),
+                        value = snapshot?.let { formatHeroPlaytime(it.totalPlaytimeMinutes) } ?: "—",
+                        modifier = Modifier.weight(0.95f)
+                    )
+                    HeroMetric(
+                        label = stringResource(R.string.steam_library_inventory_count),
+                        value = snapshot?.inventoryItemCount?.toString() ?: "—",
+                        modifier = Modifier.weight(0.85f)
+                    )
+                    HeroMetric(
+                        label = stringResource(R.string.steam_library_estimated_value),
+                        value = snapshot?.takeIf { it.pricedGameCount > 0 }?.let {
+                            formatAccountHeroPrice(it.currency, it.estimatedReplacementValueMinor)
+                        } ?: "—",
+                        modifier = Modifier.weight(1.2f)
+                    )
+                }
             }
         }
     }
@@ -1141,18 +1153,25 @@ private fun HeroMetric(label: String, value: String, modifier: Modifier = Modifi
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Text(
             text = value,
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.titleSmall.copy(
+                fontFamily = GoogleSansFlexFontFamily,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.sp,
+                fontFeatureSettings = "tnum"
+            ),
             color = Color.White,
-            fontWeight = FontWeight.Bold,
             maxLines = 1,
             softWrap = false,
-            overflow = TextOverflow.Clip
+            overflow = TextOverflow.Ellipsis
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontFamily = GoogleSansFlexFontFamily,
+                letterSpacing = 0.sp
+            ),
             color = Color.White.copy(alpha = 0.82f),
-            maxLines = 1,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
     }
