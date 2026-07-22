@@ -50,6 +50,38 @@ class SteamStoreCollectionUiGuardTest {
         assertTrue(detail.contains("Icons.Default.Favorite"))
     }
 
+    @Test
+    fun storeDetailUsesOnePrimaryPurchaseActionAndSemanticErrorFeedback() {
+        val store = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+        ).readText()
+        val detail = store
+            .substringAfter("private fun SteamStoreDetailContent(")
+            .substringBefore("private fun SteamStorePurchaseActions(")
+
+        assertTrue(store.contains("private fun SteamStorePurchaseActions("))
+        assertTrue(detail.contains("SteamStorePurchaseActions("))
+
+        val actions = store
+            .substringAfter("private fun SteamStorePurchaseActions(")
+            .substringBefore("private fun SteamStoreRegionalPriceSheet(")
+
+        assertTrue(Regex("(?m)^\\s*Button\\(").containsMatchIn(actions))
+        assertTrue(Regex("(?m)^\\s*OutlinedButton\\(").containsMatchIn(actions))
+        assertTrue(actions.contains("FilledTonalIconButton("))
+        assertFalse(actions.contains("FilledTonalButton("))
+        assertTrue(actions.contains("Modifier.size(56.dp)"))
+        assertTrue(
+            Regex("heightIn\\(min = 56\\.dp\\)").findAll(actions).count() >= 2
+        )
+        assertTrue(
+            Regex("RoundedCornerShape\\(16\\.dp\\)").findAll(actions).count() >= 3
+        )
+        assertTrue(actions.contains("MaterialTheme.colorScheme.errorContainer"))
+        assertTrue(actions.contains("MaterialTheme.colorScheme.onErrorContainer"))
+        assertTrue(actions.contains("Icons.Default.ErrorOutline"))
+    }
+
     private fun projectFile(path: String): File {
         var directory = File(requireNotNull(System.getProperty("user.dir"))).canonicalFile
         while (

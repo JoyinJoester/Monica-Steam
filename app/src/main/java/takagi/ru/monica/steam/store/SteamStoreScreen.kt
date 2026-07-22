@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Lock
@@ -57,6 +58,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -715,71 +717,17 @@ private fun SteamStoreDetailContent(
                 Modifier.padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    FilledTonalButton(
-                        onClick = onToggleCart,
-                        modifier = Modifier.weight(1f).heightIn(min = 56.dp),
-                        shape = RoundedCornerShape(20.dp)
-                    ) {
-                        Icon(Icons.Default.ShoppingCart, null)
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            if (inCart) {
-                                stringResource(R.string.steam_store_cart_remove)
-                            } else {
-                                stringResource(R.string.steam_store_add_cart)
-                            },
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    FilledTonalIconButton(
-                        onClick = onToggleWishlist,
-                        enabled = wishlistAvailable && !wishlistMutating,
-                        modifier = Modifier.size(56.dp)
-                    ) {
-                        if (wishlistMutating) {
-                            CircularProgressIndicator(modifier = Modifier.size(22.dp))
-                        } else {
-                            Icon(
-                                imageVector = if (inWishlist) {
-                                    Icons.Default.Favorite
-                                } else {
-                                    Icons.Default.FavoriteBorder
-                                },
-                                contentDescription = stringResource(
-                                    if (inWishlist) {
-                                        R.string.steam_store_remove_wishlist
-                                    } else {
-                                        R.string.steam_store_add_wishlist
-                                    }
-                                )
-                            )
-                        }
-                    }
-                }
-                Button(
-                    onClick = onOpenOfficial,
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
-                    shape = RoundedCornerShape(20.dp)
-                ) {
-                    Icon(Icons.Default.Storefront, null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.steam_store_buy))
-                }
-                if (wishlistError != null) {
-                    Text(
-                        text = wishlistError,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
+                SteamStorePurchaseActions(
+                    inCart = inCart,
+                    inWishlist = inWishlist,
+                    wishlistAvailable = wishlistAvailable,
+                    wishlistMutating = wishlistMutating,
+                    wishlistError = wishlistError,
+                    onToggleCart = onToggleCart,
+                    onToggleWishlist = onToggleWishlist,
+                    onOpenOfficial = onOpenOfficial,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Surface(
                     color = MaterialTheme.colorScheme.surfaceContainerLow,
                     shape = RoundedCornerShape(18.dp),
@@ -872,6 +820,117 @@ private fun SteamStoreDetailContent(
             onRetry = onRetryRegionalPrices,
             onDismiss = onCloseRegionalPrices
         )
+    }
+}
+
+@Composable
+private fun SteamStorePurchaseActions(
+    inCart: Boolean,
+    inWishlist: Boolean,
+    wishlistAvailable: Boolean,
+    wishlistMutating: Boolean,
+    wishlistError: String?,
+    onToggleCart: () -> Unit,
+    onToggleWishlist: () -> Unit,
+    onOpenOfficial: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = onToggleCart,
+                modifier = Modifier
+                    .weight(1f)
+                    .heightIn(min = 56.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Icon(Icons.Default.ShoppingCart, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    if (inCart) {
+                        stringResource(R.string.steam_store_cart_remove)
+                    } else {
+                        stringResource(R.string.steam_store_add_cart)
+                    },
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            FilledTonalIconButton(
+                onClick = onToggleWishlist,
+                enabled = wishlistAvailable && !wishlistMutating,
+                modifier = Modifier.size(56.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                if (wishlistMutating) {
+                    CircularProgressIndicator(modifier = Modifier.size(22.dp))
+                } else {
+                    Icon(
+                        imageVector = if (inWishlist) {
+                            Icons.Default.Favorite
+                        } else {
+                            Icons.Default.FavoriteBorder
+                        },
+                        contentDescription = stringResource(
+                            if (inWishlist) {
+                                R.string.steam_store_remove_wishlist
+                            } else {
+                                R.string.steam_store_add_wishlist
+                            }
+                        )
+                    )
+                }
+            }
+        }
+        OutlinedButton(
+            onClick = onOpenOfficial,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 56.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Icon(Icons.Default.Storefront, contentDescription = null)
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = stringResource(R.string.steam_store_buy),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+        if (wishlistError != null) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
+                color = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ErrorOutline,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(
+                        text = wishlistError,
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
     }
 }
 
