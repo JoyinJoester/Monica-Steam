@@ -7,21 +7,31 @@ import org.junit.Test
 
 class SteamUiScaleSettingsTest {
     @Test
-    fun rootAppliesPersistedDensityWhilePreservingSystemFontScale() {
-        val main = projectFile(
-            "app/src/main/java/takagi/ru/monica/MainActivity.kt"
+    fun launcherAppliesPersistedDensityWhilePreservingSystemFontScale() {
+        val gradle = projectFile("app/build.gradle").readText()
+        val launcher = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
+        val providerFile = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamUiScaleProvider.kt"
+        )
         val preferences = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamUiScalePreferences.kt"
         ).readText()
 
+        assertTrue(gradle.contains("exclude 'takagi/ru/monica/MainActivity.kt'"))
         assertTrue(preferences.contains("preferencesDataStore("))
         assertTrue(preferences.contains("name = \"monica_steam_ui_scale\""))
         assertTrue(preferences.contains("85, 90, 100, 110"))
-        assertTrue(main.contains("SteamUiScalePreferences"))
-        assertTrue(main.contains("CompositionLocalProvider(LocalDensity provides appDensity)"))
-        assertTrue(main.contains("calculateSteamUiDensity("))
-        assertTrue(main.contains("fontScale = baseDensity.fontScale"))
+        assertTrue(launcher.contains("setSteamUiScaledContent {"))
+        assertTrue(providerFile.exists())
+        val provider = providerFile.readText()
+        assertTrue(provider.contains("ComponentActivity.setSteamUiScaledContent"))
+        assertTrue(provider.contains("ProvideSteamUiScale(content)"))
+        assertTrue(provider.contains("SteamUiScalePreferences"))
+        assertTrue(provider.contains("CompositionLocalProvider(LocalDensity provides appDensity)"))
+        assertTrue(provider.contains("calculateSteamUiDensity("))
+        assertTrue(provider.contains("fontScale = baseDensity.fontScale"))
     }
 
     @Test

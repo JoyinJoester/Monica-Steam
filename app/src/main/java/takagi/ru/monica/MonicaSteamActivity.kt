@@ -3,7 +3,6 @@ package takagi.ru.monica
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -58,6 +57,7 @@ import takagi.ru.monica.steam.ui.SteamBackupScreen
 import takagi.ru.monica.steam.ui.SteamHealthScreen
 import takagi.ru.monica.steam.ui.SteamLibraryScreen
 import takagi.ru.monica.steam.ui.SteamScreen
+import takagi.ru.monica.steam.ui.setSteamUiScaledContent
 import takagi.ru.monica.steam.store.SteamStoreScreen
 import takagi.ru.monica.steam.alerts.SteamAlertScheduler
 import takagi.ru.monica.ui.base.BaseMonicaActivity
@@ -101,7 +101,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
             SteamAlertScheduler.sync(this@MonicaSteamActivity)
         }
 
-        setContent {
+        setSteamUiScaledContent {
             val settings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
             val systemDarkTheme = isSystemInDarkTheme()
             val darkTheme = when (settings.themeMode) {
