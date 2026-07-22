@@ -38,16 +38,18 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -111,16 +113,16 @@ fun SteamStoreScreen(
     }
     val storeDestination = when {
         state.webUrl != null -> SteamStoreDestination.Web(state.webUrl!!)
-        state.cartOpen -> SteamStoreDestination.Cart
         state.detail != null -> SteamStoreDestination.Detail(state.detail!!.appId)
+        state.cartOpen -> SteamStoreDestination.Cart
         else -> SteamStoreDestination.Home
     }
 
     BackHandler(enabled = state.webUrl != null || state.cartOpen || state.detail != null) {
         when {
             state.webUrl != null -> viewModel.closeStoreWeb()
-            state.cartOpen -> viewModel.closeCart()
             state.detail != null -> viewModel.closeDetail()
+            state.cartOpen -> viewModel.closeCart()
         }
     }
 
@@ -141,11 +143,19 @@ fun SteamStoreScreen(
                 modifier = Modifier.fillMaxSize()
             )
             SteamStoreDestination.Cart -> SteamNativeCartScreen(
-                items = state.cart,
+                cartItems = state.cart,
+                wishlistItems = state.wishlist,
+                selectedTab = state.collectionTab,
+                loadingWishlist = state.loadingWishlist,
+                wishlistFromCache = state.wishlistFromCache,
+                wishlistError = state.wishlistError,
+                onTabSelected = viewModel::selectCollectionTab,
                 onBack = viewModel::closeCart,
                 onRemove = viewModel::removeFromCart,
                 onClear = viewModel::clearCart,
                 onCheckout = viewModel::checkout,
+                onRefreshWishlist = { viewModel.loadWishlist(force = true) },
+                onOpenWishlistItem = viewModel::openDetail,
                 modifier = Modifier.fillMaxSize()
             )
             is SteamStoreDestination.Detail -> {
@@ -162,10 +172,15 @@ fun SteamStoreScreen(
                         onBack = viewModel::closeDetail,
                         onOpenOfficial = { viewModel.openStoreWeb(detail.storeUrl) },
                         inCart = state.cart.any { it.appId == detail.appId },
+                        inWishlist = state.wishlist.any { it.appId == detail.appId },
+                        wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
+                        wishlistMutating = detail.appId in state.wishlistMutatingAppIds,
+                        wishlistError = state.wishlistError,
                         onToggleCart = {
                             if (state.cart.any { it.appId == detail.appId }) viewModel.removeFromCart(detail.appId)
                             else viewModel.addDetailToCart(detail)
                         },
+                        onToggleWishlist = { viewModel.toggleWishlist(detail) },
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -220,32 +235,32 @@ fun SteamStoreScreen(
                                     contentDescription = stringResource(R.string.refresh)
                                 )
                             }
-                            IconButton(onClick = viewModel::openCart) {
-                                BadgedBox(
-                                    badge = {
-                                        if (state.cart.isNotEmpty()) {
-                                            Badge(
-                                                containerColor = MaterialTheme.colorScheme.primary,
-                                                contentColor = MaterialTheme.colorScheme.onPrimary
-                                            ) {
-                                                Text(state.cart.size.coerceAtMost(99).toString())
-                                            }
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        Icons.Default.ShoppingCart,
-                                        contentDescription = stringResource(R.string.steam_store_cart)
-                                    )
-                                }
-                            }
+                        }
+                    )
+                },
+                floatingActionButton = {
+                    ExtendedFloatingActionButton(
+                        onClick = viewModel::openCart,
+                        icon = {
+                            Icon(
+                                Icons.Default.ShoppingCart,
+                                contentDescription = null
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    R.string.steam_store_cart_tab,
+                                    state.cart.size
+                                )
+                            )
                         }
                     )
                 }
             ) { padding ->
                 LazyColumn(
                     modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(bottom = 24.dp),
+                    contentPadding = PaddingValues(bottom = 104.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     if (state.searching) {
@@ -533,7 +548,21 @@ private fun AccountSheet(accounts: List<SteamAccount>, selectedId: Long?, onSele
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SteamStoreDetailContent(detail: SteamStoreDetail, loading: Boolean, cached: Boolean, onBack: () -> Unit, onOpenOfficial: () -> Unit, inCart: Boolean, onToggleCart: () -> Unit, modifier: Modifier) {
+private fun SteamStoreDetailContent(
+    detail: SteamStoreDetail,
+    loading: Boolean,
+    cached: Boolean,
+    onBack: () -> Unit,
+    onOpenOfficial: () -> Unit,
+    inCart: Boolean,
+    inWishlist: Boolean,
+    wishlistAvailable: Boolean,
+    wishlistMutating: Boolean,
+    wishlistError: String?,
+    onToggleCart: () -> Unit,
+    onToggleWishlist: () -> Unit,
+    modifier: Modifier
+) {
     LazyColumn(modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
             item {
                 Box(Modifier.fillMaxWidth().height(390.dp)) {
@@ -574,11 +603,64 @@ private fun SteamStoreDetailContent(detail: SteamStoreDetail, loading: Boolean, 
             if (cached) item { CachedNotice() }
             item {
                 Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    FilledTonalButton(onClick = onToggleCart, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(20.dp)) {
-                        Icon(Icons.Default.ShoppingCart, null); Spacer(Modifier.width(8.dp)); Text(if (inCart) "移出购物车" else "加入购物车")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        FilledTonalButton(
+                            onClick = onToggleCart,
+                            modifier = Modifier.weight(1f).heightIn(min = 56.dp),
+                            shape = RoundedCornerShape(20.dp)
+                        ) {
+                            Icon(Icons.Default.ShoppingCart, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                if (inCart) {
+                                    stringResource(R.string.steam_store_cart_remove)
+                                } else {
+                                    stringResource(R.string.steam_store_add_cart)
+                                },
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                        FilledTonalIconButton(
+                            onClick = onToggleWishlist,
+                            enabled = wishlistAvailable && !wishlistMutating,
+                            modifier = Modifier.size(56.dp)
+                        ) {
+                            if (wishlistMutating) {
+                                CircularProgressIndicator(modifier = Modifier.size(22.dp))
+                            } else {
+                                Icon(
+                                    imageVector = if (inWishlist) {
+                                        Icons.Default.Favorite
+                                    } else {
+                                        Icons.Default.FavoriteBorder
+                                    },
+                                    contentDescription = stringResource(
+                                        if (inWishlist) {
+                                            R.string.steam_store_remove_wishlist
+                                        } else {
+                                            R.string.steam_store_add_wishlist
+                                        }
+                                    )
+                                )
+                            }
+                        }
                     }
                     Button(onClick = onOpenOfficial, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(20.dp)) {
                         Icon(Icons.Default.Storefront, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.steam_store_buy))
+                    }
+                    if (wishlistError != null) {
+                        Text(
+                            text = wishlistError,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                     Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth()) {
                         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {

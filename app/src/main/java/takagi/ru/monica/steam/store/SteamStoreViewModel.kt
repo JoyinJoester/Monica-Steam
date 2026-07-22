@@ -175,6 +175,9 @@ class SteamStoreViewModel(
     fun openDetail(appId: Int) {
         val accountId = _uiState.value.selectedAccountId
         val account = selectedAccount()
+        if (account?.hasRealSteamId == true && !_uiState.value.wishlistLoaded) {
+            loadWishlist()
+        }
         viewModelScope.launch {
             val cached = withContext(Dispatchers.IO) { cache.readDetail(accountId, appId) }
             _uiState.value = _uiState.value.copy(
@@ -233,7 +236,13 @@ class SteamStoreViewModel(
 
     fun removeFromCart(appId: Int) = updateCart(_uiState.value.cart.filterNot { it.appId == appId })
     fun clearCart() = updateCart(emptyList())
-    fun openCart() { _uiState.value = _uiState.value.copy(cartOpen = true, detail = null) }
+    fun openCart() {
+        _uiState.value = _uiState.value.copy(
+            cartOpen = true,
+            collectionTab = SteamStoreCollectionTab.CART,
+            detail = null
+        )
+    }
     fun closeCart() { _uiState.value = _uiState.value.copy(cartOpen = false) }
     fun isInCart(appId: Int): Boolean = _uiState.value.cart.any { it.appId == appId }
     fun isInWishlist(appId: Int): Boolean = _uiState.value.wishlist.any { it.appId == appId }
