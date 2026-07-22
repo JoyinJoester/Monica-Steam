@@ -73,6 +73,14 @@ class SteamStandaloneDataBoundaryTest {
         assertFalse(steamScreen.contains("MdbxSourceType.REMOTE_ONEDRIVE"))
     }
 
+    @Test
+    fun standaloneMdbxShipsItsRuntimeParser() {
+        val buildScript = projectFile("app/build.gradle").readText()
+
+        assertTrue(buildScript.contains("implementation 'app.keemobile:kotpass:0.10.0'"))
+        assertFalse(buildScript.contains("compileOnly 'app.keemobile:kotpass:0.10.0'"))
+    }
+
     private fun projectFile(path: String): File {
         var dir = File(requireNotNull(System.getProperty("user.dir"))).canonicalFile
         while (
