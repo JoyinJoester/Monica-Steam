@@ -140,8 +140,10 @@ fun SteamLibraryScreen(
     BackHandler(enabled = selectedGame != null || accountDetailsVisible) {
         if (selectedGame != null) viewModel.closeGame() else showAccountDetails = false
     }
-    LaunchedEffect(state.loadingLibrary) {
-        onLoadingChange(state.loadingLibrary)
+    LaunchedEffect(state.loadingLibrary, libraryDestination) {
+        onLoadingChange(
+            state.loadingLibrary && libraryDestination == SteamLibraryDestination.Overview
+        )
     }
 
     AnimatedContent(

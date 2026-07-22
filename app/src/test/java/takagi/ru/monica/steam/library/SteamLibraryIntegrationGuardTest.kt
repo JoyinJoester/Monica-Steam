@@ -7,6 +7,23 @@ import org.junit.Test
 
 class SteamLibraryIntegrationGuardTest {
     @Test
+    fun dockProgressIsReportedOnlyFromLibraryOverview() {
+        val screen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+        ).readText()
+        val loadingEffect = screen
+            .substringAfter("LaunchedEffect(state.loadingLibrary, libraryDestination)")
+            .substringBefore("AnimatedContent(")
+
+        assertTrue(
+            loadingEffect.contains(
+                "state.loadingLibrary && libraryDestination == " +
+                    "SteamLibraryDestination.Overview"
+            )
+        )
+    }
+
+    @Test
     fun cacheIsEncryptedAndFailuresDoNotReplaceLastSuccess() {
         val repository = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/data/SteamLibraryCacheRepository.kt"
