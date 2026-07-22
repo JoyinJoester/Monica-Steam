@@ -46,7 +46,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -56,7 +55,6 @@ import androidx.compose.material3.SplitButtonDefaults
 import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -73,7 +71,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -782,8 +779,7 @@ private fun SteamAccountDetail(
                         )
                     } else {
                         stringResource(R.string.steam_library_price_unavailable)
-                    },
-                    shape = MaterialShapes.SoftBurst.toShape()
+                    }
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -792,13 +788,11 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_game_count),
                         value = snapshot.gameCount.toString(),
-                        shape = MaterialShapes.Cookie6Sided.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_inventory_count),
                         value = snapshot.inventoryItemCount?.toString() ?: "—",
-                        shape = MaterialShapes.Gem.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -809,13 +803,11 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_total_playtime),
                         value = formatPlaytime(snapshot.totalPlaytimeMinutes),
-                        shape = MaterialShapes.Clover4Leaf.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_recent_playtime),
                         value = formatPlaytime(snapshot.recentPlaytimeMinutes),
-                        shape = MaterialShapes.PuffyDiamond.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -826,13 +818,11 @@ private fun SteamAccountDetail(
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_played_games),
                         value = snapshot.games.count { it.playtimeForeverMinutes > 0 }.toString(),
-                        shape = MaterialShapes.Pill.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                     SteamAccountDetailMetric(
                         label = stringResource(R.string.steam_library_unplayed_games),
                         value = snapshot.games.count { it.playtimeForeverMinutes == 0 }.toString(),
-                        shape = MaterialShapes.Diamond.toShape(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -1004,51 +994,40 @@ private fun SteamAccountDetailHero(
 private fun SteamAccountDetailMetric(
     label: String,
     value: String,
-    shape: Shape,
     modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = modifier.heightIn(min = 112.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
-        shape = RoundedCornerShape(28.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(10.dp)
-                    .size(48.dp)
-                    .clip(shape)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.72f))
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontFamily = GoogleSansFlexFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = if (value.length > 8) 22.sp else 30.sp,
+                    lineHeight = if (value.length > 8) 26.sp else 34.sp,
+                    letterSpacing = 0.sp,
+                    fontFeatureSettings = "tnum"
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Text(
-                    text = value,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontFamily = GoogleSansFlexFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = if (value.length > 8) 22.sp else 30.sp,
-                        lineHeight = if (value.length > 8) 26.sp else 34.sp,
-                        letterSpacing = 0.sp,
-                        fontFeatureSettings = "tnum"
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontFamily = GoogleSansFlexFontFamily,
-                        letterSpacing = 0.sp
-                    ),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontFamily = GoogleSansFlexFontFamily,
+                    letterSpacing = 0.sp
+                ),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
@@ -1056,8 +1035,7 @@ private fun SteamAccountDetailMetric(
 @Composable
 private fun SteamAccountValueCard(
     label: String,
-    value: String,
-    shape: Shape
+    value: String
 ) {
     Surface(
         modifier = Modifier
@@ -1065,45 +1043,51 @@ private fun SteamAccountValueCard(
             .heightIn(min = 148.dp),
         color = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        shape = RoundedCornerShape(32.dp)
+        shape = RoundedCornerShape(18.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 14.dp, end = 14.dp)
-                    .size(136.dp)
-                    .clip(shape)
-                    .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.32f))
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelLarge.copy(
+                    fontFamily = GoogleSansFlexFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.sp
+                )
             )
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 22.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontFamily = GoogleSansFlexFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.sp
-                    )
-                )
-                Text(
-                    text = value,
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontFamily = GoogleSansFlexFontFamily,
-                        fontWeight = FontWeight.ExtraBold,
-                        fontSize = 36.sp,
-                        lineHeight = 40.sp,
-                        letterSpacing = 0.sp,
-                        fontFeatureSettings = "tnum"
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Text(
+                text = value,
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontFamily = GoogleSansFlexFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = accountValueTextSize(value),
+                    lineHeight = accountValueLineHeight(value),
+                    letterSpacing = 0.sp,
+                    fontFeatureSettings = "tnum"
+                ),
+                maxLines = 2,
+                softWrap = true,
+                overflow = TextOverflow.Clip
+            )
         }
     }
+}
+
+private fun accountValueTextSize(value: String) = when {
+    value.length > 18 -> 24.sp
+    value.length > 14 -> 28.sp
+    value.length > 10 -> 32.sp
+    else -> 36.sp
+}
+
+private fun accountValueLineHeight(value: String) = when {
+    value.length > 18 -> 29.sp
+    value.length > 14 -> 33.sp
+    value.length > 10 -> 37.sp
+    else -> 41.sp
 }
 
 @Composable

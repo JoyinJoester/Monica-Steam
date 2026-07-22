@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SteamLibraryIntegrationGuardTest {
     @Test
-    fun accountDataUsesLatestMaterialShapesAndGoogleSansFlex() {
+    fun accountDataUsesPlainCompactCardsAndGoogleSansFlex() {
         val catalog = projectFile("gradle/libs.versions.toml").readText()
         val type = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/theme/Type.kt"
@@ -24,8 +24,17 @@ class SteamLibraryIntegrationGuardTest {
         assertTrue(type.contains("R.font.google_sans_flex_regular"))
         assertTrue(type.contains("R.font.google_sans_flex_metric"))
         assertTrue(type.contains("R.font.google_sans_flex_display"))
-        assertTrue(accountDetail.contains("MaterialShapes.SoftBurst.toShape()"))
-        assertTrue(accountDetail.contains("MaterialShapes.Cookie6Sided.toShape()"))
+        assertFalse(accountDetail.contains("MaterialShapes."))
+        assertFalse(accountDetail.contains(".clip(shape)"))
+        assertTrue(accountDetail.contains("shape = RoundedCornerShape(18.dp)"))
+        assertTrue(accountDetail.contains("shape = RoundedCornerShape(16.dp)"))
+        val valueCard = accountDetail
+            .substringAfter("private fun SteamAccountValueCard(")
+            .substringBefore("private fun rememberSteamMiniProfileDecor(")
+        assertTrue(valueCard.contains("fontSize = accountValueTextSize(value)"))
+        assertTrue(valueCard.contains("maxLines = 2"))
+        assertTrue(valueCard.contains("softWrap = true"))
+        assertFalse(valueCard.contains("TextOverflow.Ellipsis"))
         assertTrue(accountDetail.contains("GoogleSansFlexFontFamily"))
         assertTrue(projectFile("licenses/GoogleSansFlex-OFL.txt").isFile)
     }
