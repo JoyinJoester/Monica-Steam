@@ -4465,6 +4465,9 @@
     <string name="steam_store_cart_mixed_currency">Mixed currencies</string>
     <string name="steam_store_checkout">Checkout</string>
     <string name="steam_store_price_unavailable">Price unavailable</string>
+    <string name="steam_store_regional_price_action">Compare</string>
+    <string name="steam_store_regional_price_description">View regional original prices and CNY conversions</string>
+    <string name="steam_store_regional_original_price">Original %1$s</string>
     <string name="steam_store_open_detail">Open game details</string>
     <string name="steam_store_add_wishlist">Add to wishlist</string>
     <string name="steam_store_remove_wishlist">Remove from wishlist</string>

@@ -4,6 +4,7 @@ import android.content.Context
 import java.io.File
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import takagi.ru.monica.steam.library.SteamRegionalPrice
 
 class SteamStoreCache(context: Context) {
     private val directory = File(context.applicationContext.filesDir, "steam_store_cache")
@@ -32,6 +33,15 @@ class SteamStoreCache(context: Context) {
     fun writeWishlist(accountId: Long?, snapshot: SteamWishlistSnapshot) =
         write(steamWishlistCacheName(accountId), snapshot)
 
+    fun readRegionalPrices(accountId: Long?, appId: Int): List<SteamRegionalPrice> =
+        read<List<SteamRegionalPrice>>(steamRegionalPriceCacheName(accountId, appId)).orEmpty()
+
+    fun writeRegionalPrices(
+        accountId: Long?,
+        appId: Int,
+        prices: List<SteamRegionalPrice>
+    ) = write(steamRegionalPriceCacheName(accountId, appId), prices)
+
     private fun scope(accountId: Long?): String = accountId?.let { "v2_account_$it" } ?: "v2_guest"
 
     private inline fun <reified T> read(name: String): T? = runCatching {
@@ -56,3 +66,8 @@ class SteamStoreCache(context: Context) {
 
 internal fun steamWishlistCacheName(accountId: Long?): String =
     accountId?.let { "v2_account_${it}_wishlist.json" } ?: "v2_guest_wishlist.json"
+
+internal fun steamRegionalPriceCacheName(accountId: Long?, appId: Int): String {
+    val scope = accountId?.let { "v2_account_$it" } ?: "v2_guest"
+    return "${scope}_regional_prices_$appId.json"
+}

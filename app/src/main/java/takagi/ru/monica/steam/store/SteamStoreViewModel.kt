@@ -16,6 +16,13 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
+import takagi.ru.monica.steam.library.SteamCurrencyExchangeService
+import takagi.ru.monica.steam.library.SteamGameLibraryService
+import takagi.ru.monica.steam.library.SteamLibraryFailureReason
+import takagi.ru.monica.steam.library.SteamLibraryResult
+import takagi.ru.monica.steam.library.SteamRegionalPrice
+import takagi.ru.monica.steam.library.applyCnyConversions
+import takagi.ru.monica.steam.library.mergeCachedRegionalPriceConversions
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
 
 data class SteamStoreUiState(
@@ -41,6 +48,12 @@ data class SteamStoreUiState(
     val loadingWishlist: Boolean = false,
     val wishlistError: String? = null,
     val wishlistMutatingAppIds: Set<Int> = emptySet(),
+    val regionalPrices: List<SteamRegionalPrice> = emptyList(),
+    val regionalPricesAppId: Int? = null,
+    val regionalPricesFromCache: Boolean = false,
+    val loadingRegionalPrices: Boolean = false,
+    val regionalPriceFailure: SteamLibraryFailureReason? = null,
+    val regionalPriceSheetOpen: Boolean = false,
     val checkoutPackageIds: List<Int> = emptyList()
 )
 
@@ -48,7 +61,10 @@ class SteamStoreViewModel(
     private val accountRepository: SteamAccountRepository,
     private val cache: SteamStoreCache,
     private val service: SteamStoreService = SteamStoreService(),
-    private val sessionRefreshService: SteamSessionRefreshService = SteamSessionRefreshService()
+    private val sessionRefreshService: SteamSessionRefreshService = SteamSessionRefreshService(),
+    private val libraryService: SteamGameLibraryService = SteamGameLibraryService(),
+    private val currencyExchangeService: SteamCurrencyExchangeService =
+        SteamCurrencyExchangeService()
 ) : ViewModel() {
     private var searchDebounceJob: Job? = null
     private var searchRequestJob: Job? = null
@@ -184,6 +200,12 @@ class SteamStoreViewModel(
                 detail = cached,
                 detailFromCache = cached != null,
                 loadingDetail = true,
+                regionalPrices = emptyList(),
+                regionalPricesAppId = appId,
+                regionalPricesFromCache = false,
+                loadingRegionalPrices = false,
+                regionalPriceFailure = null,
+                regionalPriceSheetOpen = false,
                 error = null
             )
             runCatching {
@@ -217,7 +239,117 @@ class SteamStoreViewModel(
     }
 
     fun closeDetail() {
-        _uiState.value = _uiState.value.copy(detail = null, loadingDetail = false, error = null)
+        _uiState.value = _uiState.value.copy(
+            detail = null,
+            loadingDetail = false,
+            regionalPrices = emptyList(),
+            regionalPricesAppId = null,
+            regionalPricesFromCache = false,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null,
+            regionalPriceSheetOpen = false,
+            error = null
+        )
+    }
+
+    fun openRegionalPrices(appId: Int) {
+        if (_uiState.value.detail?.appId != appId) return
+        _uiState.value = _uiState.value.copy(
+            regionalPricesAppId = appId,
+            regionalPriceSheetOpen = true
+        )
+        loadRegionalPrices(appId)
+    }
+
+    fun closeRegionalPrices() {
+        _uiState.value = _uiState.value.copy(regionalPriceSheetOpen = false)
+    }
+
+    fun loadRegionalPrices(appId: Int, force: Boolean = false) {
+        val initialState = _uiState.value
+        if (initialState.detail?.appId != appId) return
+        if (initialState.loadingRegionalPrices && initialState.regionalPricesAppId == appId) return
+        val accountId = initialState.selectedAccountId
+        val account = selectedAccount()
+        if (account == null || !account.hasRealSteamId) {
+            _uiState.value = initialState.copy(
+                regionalPricesAppId = appId,
+                loadingRegionalPrices = false,
+                regionalPriceFailure = SteamLibraryFailureReason.SESSION_REQUIRED
+            )
+            return
+        }
+        val memoryPrices = initialState.regionalPrices
+            .takeIf { initialState.regionalPricesAppId == appId }
+            .orEmpty()
+        if (!force && regionalPricesAreReady(memoryPrices)) return
+        _uiState.value = initialState.copy(
+            regionalPrices = memoryPrices,
+            regionalPricesAppId = appId,
+            loadingRegionalPrices = true,
+            regionalPriceFailure = null
+        )
+        viewModelScope.launch {
+            var availablePrices = memoryPrices
+            if (availablePrices.isEmpty()) {
+                availablePrices = withContext(Dispatchers.IO) {
+                    cache.readRegionalPrices(accountId, appId)
+                }
+                if (!regionalPriceRequestIsCurrent(accountId, appId)) return@launch
+                if (availablePrices.isNotEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        regionalPrices = availablePrices,
+                        regionalPricesFromCache = true
+                    )
+                }
+            }
+            if (!force && regionalPricesAreReady(availablePrices)) {
+                _uiState.value = _uiState.value.copy(loadingRegionalPrices = false)
+                return@launch
+            }
+            val result = withContext(Dispatchers.IO) {
+                when (val prices = fetchRegionalPricesWithSessionRetry(account, appId)) {
+                    is SteamLibraryResult.Success -> {
+                        val exchangeRates = runCatching {
+                            currencyExchangeService.fetchCnyRates()
+                        }.getOrNull()
+                        val converted = applyCnyConversions(
+                            prices = prices.value,
+                            unitsPerCny = exchangeRates?.unitsPerCny.orEmpty(),
+                            exchangeRateFetchedAt = exchangeRates?.fetchedAt
+                                ?: System.currentTimeMillis()
+                        )
+                        SteamLibraryResult.Success(
+                            mergeCachedRegionalPriceConversions(
+                                fresh = converted,
+                                cached = availablePrices
+                            )
+                        )
+                    }
+                    is SteamLibraryResult.Failure -> prices
+                }
+            }
+            if (!regionalPriceRequestIsCurrent(accountId, appId)) return@launch
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    withContext(Dispatchers.IO) {
+                        cache.writeRegionalPrices(accountId, appId, result.value)
+                    }
+                    _uiState.value = _uiState.value.copy(
+                        regionalPrices = result.value,
+                        regionalPricesFromCache = false,
+                        loadingRegionalPrices = false,
+                        regionalPriceFailure = null
+                    )
+                }
+                is SteamLibraryResult.Failure -> {
+                    _uiState.value = _uiState.value.copy(
+                        loadingRegionalPrices = false,
+                        regionalPriceFailure = result.reason
+                    )
+                }
+            }
+        }
     }
 
     fun addDetailToCart(detail: SteamStoreDetail) {
@@ -418,6 +550,12 @@ class SteamStoreViewModel(
             loadingWishlist = false,
             wishlistError = null,
             wishlistMutatingAppIds = emptySet(),
+            regionalPrices = emptyList(),
+            regionalPricesAppId = null,
+            regionalPricesFromCache = false,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null,
+            regionalPriceSheetOpen = false,
             checkoutPackageIds = emptyList()
         )
     }
@@ -434,6 +572,53 @@ class SteamStoreViewModel(
 
     fun selectedAccount(): SteamAccount? = _uiState.value.accounts
         .firstOrNull { it.id == _uiState.value.selectedAccountId }
+
+    private fun regionalPriceRequestIsCurrent(accountId: Long?, appId: Int): Boolean {
+        val state = _uiState.value
+        return state.selectedAccountId == accountId &&
+            state.detail?.appId == appId &&
+            state.regionalPricesAppId == appId
+    }
+
+    private fun regionalPricesAreReady(prices: List<SteamRegionalPrice>): Boolean {
+        if (prices.isEmpty()) return false
+        val cacheIsFresh = prices.all { price ->
+            System.currentTimeMillis() - price.fetchedAt < REGIONAL_PRICE_CACHE_TTL_MILLIS
+        }
+        val conversionsReady = prices
+            .filter(SteamRegionalPrice::isAvailable)
+            .all { it.cnyFinalPriceMinor != null && it.cnyOriginalPriceMinor != null }
+        return cacheIsFresh && conversionsReady
+    }
+
+    private suspend fun fetchRegionalPricesWithSessionRetry(
+        account: SteamAccount,
+        appId: Int
+    ): SteamLibraryResult<List<SteamRegionalPrice>> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = libraryService.fetchRegionalPrices(
+            account = prepared,
+            appId = appId,
+            countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+            language = "schinese"
+        )
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            libraryService.fetchRegionalPrices(
+                account = refreshed,
+                appId = appId,
+                countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+                language = "schinese"
+            )
+        } else {
+            first
+        }
+    }
 
     private suspend fun <T> executeStoreRequest(
         account: SteamAccount?,
@@ -486,6 +671,10 @@ class SteamStoreViewModel(
     }
 
     companion object {
+        internal val REGIONAL_PRICE_COUNTRY_CODES =
+            listOf("CN", "US", "JP", "KR", "HK", "TW", "UA", "IN", "ID")
+        private const val REGIONAL_PRICE_CACHE_TTL_MILLIS = 6L * 60L * 60L * 1_000L
+
         fun factory(context: Context): ViewModelProvider.Factory {
             val appContext = context.applicationContext
             return object : ViewModelProvider.Factory {

@@ -31,6 +31,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.CompareArrows
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.SwitchAccount
 import androidx.compose.material.icons.filled.Refresh
@@ -53,6 +54,7 @@ import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -84,10 +86,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.library.SteamLibraryFailureReason
+import takagi.ru.monica.steam.library.SteamRegionalPrice
+import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import java.util.Locale
 
 private sealed interface SteamStoreDestination {
     data object Home : SteamStoreDestination
@@ -118,8 +124,12 @@ fun SteamStoreScreen(
         else -> SteamStoreDestination.Home
     }
 
-    BackHandler(enabled = state.webUrl != null || state.cartOpen || state.detail != null) {
+    BackHandler(
+        enabled = state.regionalPriceSheetOpen ||
+            state.webUrl != null || state.cartOpen || state.detail != null
+    ) {
         when {
+            state.regionalPriceSheetOpen -> viewModel.closeRegionalPrices()
             state.webUrl != null -> viewModel.closeStoreWeb()
             state.detail != null -> viewModel.closeDetail()
             state.cartOpen -> viewModel.closeCart()
@@ -176,11 +186,21 @@ fun SteamStoreScreen(
                         wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
                         wishlistMutating = detail.appId in state.wishlistMutatingAppIds,
                         wishlistError = state.wishlistError,
+                        regionalPrices = state.regionalPrices,
+                        regionalPricesFromCache = state.regionalPricesFromCache,
+                        loadingRegionalPrices = state.loadingRegionalPrices,
+                        regionalPriceFailure = state.regionalPriceFailure,
+                        showRegionalPrices = state.regionalPriceSheetOpen,
                         onToggleCart = {
                             if (state.cart.any { it.appId == detail.appId }) viewModel.removeFromCart(detail.appId)
                             else viewModel.addDetailToCart(detail)
                         },
                         onToggleWishlist = { viewModel.toggleWishlist(detail) },
+                        onOpenRegionalPrices = { viewModel.openRegionalPrices(detail.appId) },
+                        onCloseRegionalPrices = viewModel::closeRegionalPrices,
+                        onRetryRegionalPrices = {
+                            viewModel.loadRegionalPrices(detail.appId, force = true)
+                        },
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -559,142 +579,557 @@ private fun SteamStoreDetailContent(
     wishlistAvailable: Boolean,
     wishlistMutating: Boolean,
     wishlistError: String?,
+    regionalPrices: List<SteamRegionalPrice>,
+    regionalPricesFromCache: Boolean,
+    loadingRegionalPrices: Boolean,
+    regionalPriceFailure: SteamLibraryFailureReason?,
+    showRegionalPrices: Boolean,
     onToggleCart: () -> Unit,
     onToggleWishlist: () -> Unit,
+    onOpenRegionalPrices: () -> Unit,
+    onCloseRegionalPrices: () -> Unit,
+    onRetryRegionalPrices: () -> Unit,
     modifier: Modifier
 ) {
-    LazyColumn(modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-            item {
-                Box(Modifier.fillMaxWidth().height(390.dp)) {
-                    SteamStoreImage(detail.headerImageUrl, Modifier.fillMaxSize())
-                    Box(
-                        Modifier.matchParentSize().background(
-                            Brush.verticalGradient(
-                                0f to MaterialTheme.colorScheme.background.copy(alpha = 0.35f),
-                                0.28f to Color.Transparent,
-                                0.68f to MaterialTheme.colorScheme.background.copy(alpha = 0.72f),
-                                1f to MaterialTheme.colorScheme.background
-                            )
+    val heroBackgroundUrl = detail.backgroundImageUrl.ifBlank { detail.headerImageUrl }
+    LazyColumn(
+        modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 32.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
+    ) {
+        item {
+            Box(Modifier.fillMaxWidth().height(390.dp)) {
+                SteamStoreImage(
+                    url = heroBackgroundUrl,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    alpha = 0.24f
+                )
+                SteamStoreImage(
+                    url = detail.headerImageUrl,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .fillMaxWidth()
+                        .aspectRatio(460f / 215f),
+                    contentScale = ContentScale.Fit
+                )
+                Box(
+                    Modifier.matchParentSize().background(
+                        Brush.verticalGradient(
+                            0f to Color.Transparent,
+                            0.43f to Color.Transparent,
+                            0.72f to MaterialTheme.colorScheme.background.copy(alpha = 0.88f),
+                            1f to MaterialTheme.colorScheme.background
                         )
                     )
-                    if (loading) CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    Surface(
-                        modifier = Modifier.statusBarsPadding().padding(start = 12.dp, top = 8.dp).size(48.dp),
-                        shape = CircleShape,
-                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
-                        tonalElevation = 3.dp
-                    ) {
-                        IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
-                    }
-                    Column(
-                        modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(horizontal = 18.dp, vertical = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Text(detail.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                        PriceRow(detail.discountPercent, detail.formattedInitialPrice, detail.formattedFinalPrice)
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            if (detail.windows) AssistChip(onClick = {}, label = { Text("Windows") })
-                            if (detail.mac) AssistChip(onClick = {}, label = { Text("macOS") })
-                            if (detail.linux) AssistChip(onClick = {}, label = { Text("Linux") })
-                        }
+                )
+                if (loading) CircularProgressIndicator(Modifier.align(Alignment.Center))
+                Surface(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .padding(start = 12.dp, top = 8.dp)
+                        .size(48.dp),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
+                    tonalElevation = 3.dp
+                ) {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            stringResource(R.string.back)
+                        )
                     }
                 }
-            }
-            if (cached) item { CachedNotice() }
-            item {
-                Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        detail.name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Surface(
+                        onClick = onOpenRegionalPrices,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp),
+                        shape = RoundedCornerShape(18.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
+                        tonalElevation = 2.dp
                     ) {
-                        FilledTonalButton(
-                            onClick = onToggleCart,
-                            modifier = Modifier.weight(1f).heightIn(min = 56.dp),
-                            shape = RoundedCornerShape(20.dp)
+                        Row(
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.ShoppingCart, null)
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                if (inCart) {
-                                    stringResource(R.string.steam_store_cart_remove)
-                                } else {
-                                    stringResource(R.string.steam_store_add_cart)
-                                },
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                        FilledTonalIconButton(
-                            onClick = onToggleWishlist,
-                            enabled = wishlistAvailable && !wishlistMutating,
-                            modifier = Modifier.size(56.dp)
-                        ) {
-                            if (wishlistMutating) {
-                                CircularProgressIndicator(modifier = Modifier.size(22.dp))
-                            } else {
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                verticalArrangement = Arrangement.spacedBy(2.dp)
+                            ) {
+                                PriceRow(
+                                    detail.discountPercent,
+                                    detail.formattedInitialPrice,
+                                    detail.formattedFinalPrice,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                Text(
+                                    text = stringResource(R.string.steam_store_regional_price_description),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(
-                                    imageVector = if (inWishlist) {
-                                        Icons.Default.Favorite
-                                    } else {
-                                        Icons.Default.FavoriteBorder
-                                    },
-                                    contentDescription = stringResource(
-                                        if (inWishlist) {
-                                            R.string.steam_store_remove_wishlist
-                                        } else {
-                                            R.string.steam_store_add_wishlist
-                                        }
-                                    )
+                                    Icons.AutoMirrored.Filled.CompareArrows,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = stringResource(R.string.steam_store_regional_price_action),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    maxLines = 1
                                 )
                             }
                         }
                     }
-                    Button(onClick = onOpenOfficial, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(20.dp)) {
-                        Icon(Icons.Default.Storefront, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.steam_store_buy))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        if (detail.windows) AssistChip(onClick = {}, label = { Text("Windows") })
+                        if (detail.mac) AssistChip(onClick = {}, label = { Text("macOS") })
+                        if (detail.linux) AssistChip(onClick = {}, label = { Text("Linux") })
                     }
-                    if (wishlistError != null) {
+                }
+            }
+        }
+        if (cached) item { CachedNotice() }
+        item {
+            Column(
+                Modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    FilledTonalButton(
+                        onClick = onToggleCart,
+                        modifier = Modifier.weight(1f).heightIn(min = 56.dp),
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
+                        Icon(Icons.Default.ShoppingCart, null)
+                        Spacer(Modifier.width(8.dp))
                         Text(
-                            text = wishlistError,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.error,
-                            maxLines = 3,
+                            if (inCart) {
+                                stringResource(R.string.steam_store_cart_remove)
+                            } else {
+                                stringResource(R.string.steam_store_add_cart)
+                            },
+                            maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
-                    Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth()) {
-                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                            Text(stringResource(R.string.steam_store_security_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    FilledTonalIconButton(
+                        onClick = onToggleWishlist,
+                        enabled = wishlistAvailable && !wishlistMutating,
+                        modifier = Modifier.size(56.dp)
+                    ) {
+                        if (wishlistMutating) {
+                            CircularProgressIndicator(modifier = Modifier.size(22.dp))
+                        } else {
+                            Icon(
+                                imageVector = if (inWishlist) {
+                                    Icons.Default.Favorite
+                                } else {
+                                    Icons.Default.FavoriteBorder
+                                },
+                                contentDescription = stringResource(
+                                    if (inWishlist) {
+                                        R.string.steam_store_remove_wishlist
+                                    } else {
+                                        R.string.steam_store_add_wishlist
+                                    }
+                                )
+                            )
+                        }
+                    }
+                }
+                Button(
+                    onClick = onOpenOfficial,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Icon(Icons.Default.Storefront, null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.steam_store_buy))
+                }
+                if (wishlistError != null) {
+                    Text(
+                        text = wishlistError,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    shape = RoundedCornerShape(18.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        Modifier.padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Lock,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            stringResource(R.string.steam_store_security_note),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+        }
+        if (detail.shortDescription.isNotBlank()) {
+            item {
+                DetailTextSection(
+                    stringResource(R.string.steam_store_about),
+                    detail.shortDescription
+                )
+            }
+        }
+        if (detail.screenshots.isNotEmpty()) {
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        stringResource(R.string.steam_store_screenshots),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        items(detail.screenshots) {
+                            SteamStoreImage(
+                                it,
+                                Modifier
+                                    .width(280.dp)
+                                    .aspectRatio(16f / 9f)
+                                    .clip(RoundedCornerShape(16.dp))
+                            )
                         }
                     }
                 }
             }
-            if (detail.shortDescription.isNotBlank()) item { DetailTextSection(stringResource(R.string.steam_store_about), detail.shortDescription) }
-            if (detail.screenshots.isNotEmpty()) item {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.steam_store_screenshots), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(horizontal = 16.dp))
-                    LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        items(detail.screenshots) { SteamStoreImage(it, Modifier.width(280.dp).aspectRatio(16f / 9f).clip(RoundedCornerShape(16.dp))) }
-                    }
-                }
-            }
-            item {
-                Surface(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainerLow
-                ) {
+        }
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                shape = RoundedCornerShape(24.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerLow
+            ) {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text(stringResource(R.string.steam_store_information), style = MaterialTheme.typography.titleLarge)
-                    DetailLine(stringResource(R.string.steam_store_developer), detail.developers.joinToString())
-                    DetailLine(stringResource(R.string.steam_store_publisher), detail.publishers.joinToString())
+                    Text(
+                        stringResource(R.string.steam_store_information),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    DetailLine(
+                        stringResource(R.string.steam_store_developer),
+                        detail.developers.joinToString()
+                    )
+                    DetailLine(
+                        stringResource(R.string.steam_store_publisher),
+                        detail.publishers.joinToString()
+                    )
                     DetailLine(stringResource(R.string.steam_store_release_date), detail.releaseDate)
                     if (detail.genres.isNotEmpty()) DetailLine("类型", detail.genres.joinToString())
                 }
-                }
             }
         }
+    }
+    if (showRegionalPrices) {
+        SteamStoreRegionalPriceSheet(
+            gameName = detail.name,
+            prices = regionalPrices,
+            loading = loadingRegionalPrices,
+            fromCache = regionalPricesFromCache,
+            failure = regionalPriceFailure,
+            onRetry = onRetryRegionalPrices,
+            onDismiss = onCloseRegionalPrices
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SteamStoreRegionalPriceSheet(
+    gameName: String,
+    prices: List<SteamRegionalPrice>,
+    loading: Boolean,
+    fromCache: Boolean,
+    failure: SteamLibraryFailureReason?,
+    onRetry: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    val sortedPrices = remember(prices) { sortedRegionalPricesForDisplay(prices) }
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.onBackground,
+        tonalElevation = 0.dp
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().heightIn(max = 680.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = stringResource(R.string.steam_library_regional_prices),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = gameName,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+            if (loading) {
+                item { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) }
+            }
+            if (fromCache && sortedPrices.isNotEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(R.string.steam_store_cached),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+            if (failure != null) {
+                item {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        color = MaterialTheme.colorScheme.errorContainer
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(14.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = storeRegionalPriceFailureLabel(failure),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onErrorContainer,
+                                modifier = Modifier.weight(1f)
+                            )
+                            FilledTonalButton(
+                                onClick = onRetry,
+                                enabled = !loading,
+                                modifier = Modifier.heightIn(min = 48.dp)
+                            ) {
+                                Text(stringResource(R.string.steam_library_retry))
+                            }
+                        }
+                    }
+                }
+            }
+            if (!loading && sortedPrices.isEmpty() && failure == null) {
+                item {
+                    Text(
+                        text = stringResource(R.string.steam_library_regional_prices_empty),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 18.dp)
+                    )
+                }
+            }
+            items(sortedPrices, key = { it.countryCode.uppercase(Locale.ROOT) }) { price ->
+                SteamStoreRegionalPriceCard(price)
+            }
+            item {
+                Text(
+                    text = stringResource(R.string.steam_library_regional_price_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SteamStoreRegionalPriceCard(price: SteamRegionalPrice) {
+    val discount = if (price.originalPriceMinor > price.finalPriceMinor &&
+        price.originalPriceMinor > 0L
+    ) {
+        ((price.originalPriceMinor - price.finalPriceMinor) * 100L /
+            price.originalPriceMinor).toInt()
+    } else {
+        0
+    }
+    val unavailable = stringResource(R.string.steam_library_price_unavailable)
+    val localFinal = when {
+        !price.isAvailable -> unavailable
+        price.finalPriceMinor == 0L -> stringResource(R.string.steam_library_free)
+        else -> formatStoreRegionalPrice(price.currency, price.finalPriceMinor)
+    }
+    val localOriginal = if (price.isAvailable) {
+        formatStoreRegionalPrice(price.currency, price.originalPriceMinor)
+    } else {
+        unavailable
+    }
+    val cnyFinal = price.cnyFinalPriceMinor?.let {
+        formatStoreRegionalPrice("CNY", it)
+    } ?: unavailable
+    val cnyOriginal = price.cnyOriginalPriceMinor?.let {
+        formatStoreRegionalPrice("CNY", it)
+    } ?: unavailable
+
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(22.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = regionalCountryName(price.countryCode),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = price.currency,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                if (discount > 0) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.tertiaryContainer,
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.steam_library_regional_discount,
+                                discount
+                            ),
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                SteamStoreRegionalPriceColumn(
+                    label = stringResource(R.string.steam_library_regional_local_price),
+                    finalPrice = localFinal,
+                    originalPrice = localOriginal,
+                    discounted = discount > 0,
+                    modifier = Modifier.weight(1f)
+                )
+                SteamStoreRegionalPriceColumn(
+                    label = stringResource(R.string.steam_library_regional_cny_price),
+                    finalPrice = cnyFinal,
+                    originalPrice = cnyOriginal,
+                    discounted = discount > 0,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SteamStoreRegionalPriceColumn(
+    label: String,
+    finalPrice: String,
+    originalPrice: String,
+    discounted: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = finalPrice,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            text = stringResource(R.string.steam_store_regional_original_price, originalPrice),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textDecoration = if (discounted) TextDecoration.LineThrough else null,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@Composable
+private fun storeRegionalPriceFailureLabel(failure: SteamLibraryFailureReason): String {
+    return stringResource(
+        when (failure) {
+            SteamLibraryFailureReason.SESSION_REQUIRED -> R.string.steam_library_session_required
+            SteamLibraryFailureReason.PRIVATE_PROFILE -> R.string.steam_library_private_profile
+            SteamLibraryFailureReason.RATE_LIMITED -> R.string.steam_library_rate_limited
+            SteamLibraryFailureReason.NETWORK -> R.string.steam_library_network_error
+            SteamLibraryFailureReason.INVALID_RESPONSE -> R.string.steam_library_unavailable
+        }
+    )
+}
+
+private fun regionalCountryName(countryCode: String): String {
+    return Locale("", countryCode).getDisplayCountry(Locale.getDefault())
+        .ifBlank { countryCode }
+}
+
+private fun formatStoreRegionalPrice(currency: String, minor: Long): String {
+    val cents = minor.coerceIn(0L, Int.MAX_VALUE.toLong()).toInt()
+    return formatSteamPrice(cents, currency)
 }
 
 @Composable private fun DetailTextSection(title: String, text: String) = Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Text(title, style = MaterialTheme.typography.titleLarge); Text(text, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant) }

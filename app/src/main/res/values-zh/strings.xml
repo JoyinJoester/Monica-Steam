@@ -4295,6 +4295,9 @@
     <string name="steam_store_cart_mixed_currency">包含多种货币</string>
     <string name="steam_store_checkout">结算</string>
     <string name="steam_store_price_unavailable">暂无价格</string>
+    <string name="steam_store_regional_price_action">多区比价</string>
+    <string name="steam_store_regional_price_description">查看各区原价、现价与人民币换算</string>
+    <string name="steam_store_regional_original_price">原价 %1$s</string>
     <string name="steam_store_open_detail">打开游戏详情</string>
     <string name="steam_store_add_wishlist">加入愿望单</string>
     <string name="steam_store_remove_wishlist">移出愿望单</string>
