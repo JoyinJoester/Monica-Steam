@@ -53,6 +53,8 @@ import takagi.ru.monica.R
 fun SteamStoreWebScreen(
     url: String,
     steamLoginSecure: String?,
+    title: String? = null,
+    securityNote: String? = null,
     checkoutPackageIds: List<Int> = emptyList(),
     onClose: () -> Unit,
     modifier: Modifier = Modifier
@@ -90,11 +92,14 @@ fun SteamStoreWebScreen(
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                 }
                 Column(Modifier.weight(1f).padding(horizontal = 6.dp)) {
-                    Text(stringResource(R.string.steam_store_web_title), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        text = title ?: stringResource(R.string.steam_store_web_title),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Text(
-                            text = stringResource(R.string.steam_store_security_note),
+                            text = securityNote ?: stringResource(R.string.steam_store_security_note),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 6.dp)

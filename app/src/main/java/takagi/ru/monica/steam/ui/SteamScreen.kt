@@ -47,10 +47,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
@@ -130,6 +132,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.fragment.app.FragmentActivity
 import com.google.zxing.BarcodeFormat
@@ -164,6 +168,7 @@ import takagi.ru.monica.steam.data.SteamSecurityEvent
 import takagi.ru.monica.steam.data.SteamSecurityEventSeverity
 import takagi.ru.monica.steam.data.SteamMaFileTransferAction
 import takagi.ru.monica.steam.data.SteamStorageSource
+import takagi.ru.monica.steam.gifts.STEAM_GIFT_INBOX_URL
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.SteamBatchSellEntry
 import takagi.ru.monica.steam.market.SteamMarketListing
@@ -173,6 +178,7 @@ import takagi.ru.monica.steam.network.SteamConfirmation
 import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
+import takagi.ru.monica.steam.store.SteamStoreWebScreen
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
 import takagi.ru.monica.ui.common.selection.SelectionActionBar
@@ -3429,6 +3435,7 @@ private fun SteamConfirmationsContent(
     var showBulkActionDialog by remember { mutableStateOf(false) }
     var showAccountPicker by remember { mutableStateOf(false) }
     var pendingAccountSwitchId by remember { mutableStateOf<Long?>(null) }
+    var showGiftInbox by rememberSaveable { mutableStateOf(false) }
     var selectedKindName by rememberSaveable { mutableStateOf("ALL") }
     var detailConfirmation by remember { mutableStateOf<SteamConfirmation?>(null) }
     val selectedKind = SteamConfirmationKind.entries
@@ -3439,6 +3446,32 @@ private fun SteamConfirmationsContent(
     }
     val selectedConfirmations = visibleConfirmations.filter { it.id in selectedIds }
     val selectionMode = selectedIds.isNotEmpty()
+
+    if (showGiftInbox) {
+        Dialog(
+            onDismissRequest = { showGiftInbox = false },
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                usePlatformDefaultWidth = false,
+                decorFitsSystemWindows = false
+            )
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                SteamStoreWebScreen(
+                    url = STEAM_GIFT_INBOX_URL,
+                    steamLoginSecure = account?.steamLoginSecure,
+                    title = stringResource(R.string.steam_gift_inbox_title),
+                    securityNote = stringResource(R.string.steam_gift_inbox_security_note),
+                    onClose = { showGiftInbox = false },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
 
     LaunchedEffect(showAccountPicker, pendingAccountSwitchId) {
         val accountId = pendingAccountSwitchId
@@ -3596,6 +3629,11 @@ private fun SteamConfirmationsContent(
                 onClick = { showAccountPicker = true },
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
             )
+            SteamGiftInboxCard(
+                account = account,
+                onOpen = { showGiftInbox = true },
+                modifier = Modifier.padding(start = 16.dp, top = 10.dp, end = 16.dp)
+            )
             if (history.isNotEmpty()) {
                 SteamConfirmationHistoryCard(
                     events = history.take(3),
@@ -3721,6 +3759,74 @@ private fun SteamConfirmationsContent(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun SteamGiftInboxCard(
+    account: SteamAccount?,
+    onOpen: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onOpen,
+        enabled = account != null,
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 88.dp)
+                .padding(horizontal = 18.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Surface(
+                shape = CircleShape,
+                color = MaterialTheme.colorScheme.secondary
+            ) {
+                Icon(
+                    imageVector = Icons.Default.CardGiftcard,
+                    contentDescription = null,
+                    modifier = Modifier.padding(12.dp),
+                    tint = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.steam_gift_inbox_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = stringResource(
+                        when {
+                            account == null -> R.string.steam_gift_inbox_no_account
+                            account.steamLoginSecure.isNullOrBlank() -> {
+                                R.string.steam_gift_inbox_sign_in
+                            }
+                            else -> R.string.steam_gift_inbox_description
+                        }
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+                contentDescription = stringResource(R.string.steam_gift_inbox_open),
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
     }
 }

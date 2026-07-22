@@ -4380,6 +4380,12 @@
     <string name="steam_confirmation_type_unknown">Unknown type</string>
     <string name="steam_confirmation_filter_all">All</string>
     <string name="steam_confirmation_kind_gift">Gift</string>
+    <string name="steam_gift_inbox_title">Received gifts</string>
+    <string name="steam_gift_inbox_description">View pending gifts and accept or decline them on Steam\'s official page.</string>
+    <string name="steam_gift_inbox_sign_in">Steam may ask this account to sign in again before showing its gifts.</string>
+    <string name="steam_gift_inbox_no_account">Select an account to open its gift inbox.</string>
+    <string name="steam_gift_inbox_security_note">Gift acceptance and rejection are handled only by Steam\'s official website.</string>
+    <string name="steam_gift_inbox_open">Open gift inbox</string>
     <string name="steam_confirmation_kind_trade">Trade</string>
     <string name="steam_confirmation_kind_market">Market</string>
     <string name="steam_confirmation_kind_security">Account security</string>

@@ -4210,6 +4210,12 @@
     <string name="steam_confirmation_type_unknown">未知类型</string>
     <string name="steam_confirmation_filter_all">全部</string>
     <string name="steam_confirmation_kind_gift">赠礼</string>
+    <string name="steam_gift_inbox_title">收到的礼物</string>
+    <string name="steam_gift_inbox_description">查看待处理礼物，并在 Steam 官方页面接受或拒绝。</string>
+    <string name="steam_gift_inbox_sign_in">显示礼物前，Steam 可能要求该账号重新登录。</string>
+    <string name="steam_gift_inbox_no_account">请先选择账号，再打开礼物收件箱。</string>
+    <string name="steam_gift_inbox_security_note">礼物的接受与拒绝仅由 Steam 官方网页处理。</string>
+    <string name="steam_gift_inbox_open">打开礼物收件箱</string>
     <string name="steam_confirmation_kind_trade">交易</string>
     <string name="steam_confirmation_kind_market">市场</string>
     <string name="steam_confirmation_kind_security">账号安全</string>
