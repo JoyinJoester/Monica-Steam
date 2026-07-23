@@ -6,24 +6,43 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,6 +57,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
@@ -251,7 +273,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         onSelected = { tab ->
                                             pageHistory = emptyList()
                                             currentPage = tab.toPage()
-                                        }
+                                        },
+                                        onScan = { navigateTo(MonicaSteamPage.SCANNER) }
                                     )
                                 }
                             }
@@ -450,35 +473,135 @@ internal fun initialSteamDockPage(order: List<SteamDockTab>): String =
         SteamDockTab.SETTINGS -> "SETTINGS"
     }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SteamStandaloneDock(
     order: List<SteamDockTab>,
     selected: SteamDockTab,
     showProgress: Boolean,
-    onSelected: (SteamDockTab) -> Unit
+    onSelected: (SteamDockTab) -> Unit,
+    onScan: () -> Unit
 ) {
-    Column {
+    // Interaction pattern adapted from EssentialsFloatingToolbar (MIT).
+    // See THIRD_PARTY_NOTICES.md for attribution and license text.
+    val configuration = LocalConfiguration.current
+    val fontScale = LocalDensity.current.fontScale
+    val shouldHideLabel = fontScale > 1.25f || configuration.screenWidthDp < 400
+    val tabs = SteamDockTab.sanitizeOrder(order)
+
+    Column(modifier = Modifier.fillMaxWidth()) {
         if (showProgress) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                .height(2.dp)
             )
         }
-        NavigationBar {
-            SteamDockTab.sanitizeOrder(order).forEach { tab ->
-                NavigationBarItem(
-                    selected = tab == selected,
-                    onClick = { onSelected(tab) },
-                    icon = {
-                        Icon(
-                            imageVector = tab.icon(),
-                            contentDescription = null
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(start = 16.dp, end = 16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            HorizontalFloatingToolbar(
+                expanded = true,
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = onScan,
+                        modifier = Modifier.size(56.dp),
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        shape = MaterialTheme.shapes.large,
+                        elevation = FloatingActionButtonDefaults.elevation(
+                            defaultElevation = 0.dp,
+                            pressedElevation = 0.dp,
+                            focusedElevation = 0.dp,
+                            hoveredElevation = 0.dp
                         )
-                    },
-                    label = { Text(tab.label()) },
-                    alwaysShowLabel = true
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.QrCodeScanner,
+                            contentDescription = stringResource(R.string.scan_qr_code)
+                        )
+                    }
+                },
+                colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(
+                    toolbarContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    toolbarContainerColor = MaterialTheme.colorScheme.primaryContainer
                 )
+            ) {
+                SteamDockTab.sanitizeOrder(order).forEachIndexed { index, tab ->
+                    val isSelected = tab == selected
+                    val itemWidth by animateDpAsState(
+                        targetValue = 48.dp,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
+                        ),
+                        label = "steam_dock_item_width_${tab.name}"
+                    )
+                    val labelWidth by animateDpAsState(
+                        targetValue = if (isSelected && !shouldHideLabel) 80.dp else 0.dp,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
+                        ),
+                        label = "steam_dock_label_width_${tab.name}"
+                    )
+                    val spacerWidth by animateDpAsState(
+                        targetValue = if (index < tabs.lastIndex) 8.dp else 0.dp,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
+                        ),
+                        label = "steam_dock_spacing_${tab.name}"
+                    )
+
+                    IconButton(
+                        onClick = { onSelected(tab) },
+                        modifier = Modifier
+                            .width(itemWidth + labelWidth)
+                            .height(48.dp),
+                        colors = if (isSelected) {
+                            IconButtonDefaults.filledIconButtonColors(
+                                contentColor = MaterialTheme.colorScheme.onSurface,
+                                containerColor = MaterialTheme.colorScheme.surface
+                            )
+                        } else {
+                            IconButtonDefaults.iconButtonColors(
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            )
+                        }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = tab.icon(),
+                                contentDescription = tab.label(),
+                                modifier = Modifier.size(24.dp)
+                            )
+                            if (isSelected && !shouldHideLabel) {
+                                Spacer(Modifier.width(8.dp))
+                                Text(
+                                    text = tab.label(),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    maxLines = 1,
+                                    modifier = Modifier.basicMarquee()
+                                )
+                            }
+                        }
+                    }
+
+                    if (index < tabs.lastIndex) {
+                        Spacer(Modifier.width(spacerWidth))
+                    }
+                }
             }
         }
     }

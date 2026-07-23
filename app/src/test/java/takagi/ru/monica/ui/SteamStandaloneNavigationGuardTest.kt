@@ -21,8 +21,10 @@ class SteamStandaloneNavigationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
 
-        assertTrue(activity.contains("NavigationBar"))
-        assertTrue(activity.contains("NavigationBarItem"))
+        assertTrue(activity.contains("HorizontalFloatingToolbar"))
+        assertTrue(activity.contains("FloatingActionButton"))
+        assertTrue(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
+        assertFalse(activity.contains("NavigationBarItem"))
         assertTrue(activity.contains("SteamDockPreferences"))
         assertTrue(activity.contains("LinearProgressIndicator"))
         assertTrue(activity.contains("showProgress = currentPage == MonicaSteamPage.LIBRARY"))
