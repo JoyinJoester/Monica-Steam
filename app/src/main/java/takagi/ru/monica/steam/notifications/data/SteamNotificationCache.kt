@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.notifications
+package takagi.ru.monica.steam.notifications.data
 
 import android.content.Context
 import java.security.MessageDigest
 import kotlinx.serialization.json.Json
+import takagi.ru.monica.steam.notifications.domain.*
 
 interface SteamNotificationCache {
     fun load(accountKey: String): SteamNotificationSnapshot?

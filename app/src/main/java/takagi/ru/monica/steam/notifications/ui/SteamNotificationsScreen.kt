@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.notifications
+package takagi.ru.monica.steam.notifications.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +63,8 @@ import java.text.DateFormat
 import java.util.Date
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.gifts.domain.*
+import takagi.ru.monica.steam.notifications.domain.*
 
 private enum class SteamNotificationFilter {
     ALL,

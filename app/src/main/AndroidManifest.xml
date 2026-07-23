@@ -87,7 +87,7 @@
             android:theme="@style/Theme.Monica" />
 
         <receiver
-            android:name=".steam.alerts.SteamAlertReceiver"
+            android:name=".steam.alerts.data.SteamAlertReceiver"
             android:exported="false" />
 
         <provider

@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.alerts
+package takagi.ru.monica.steam.alerts.domain
 
 data class SteamAlertSettings(
     val enabled: Boolean = false,

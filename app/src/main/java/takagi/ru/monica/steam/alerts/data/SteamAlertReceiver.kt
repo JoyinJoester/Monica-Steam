@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.alerts
+package takagi.ru.monica.steam.alerts.data
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,7 +16,8 @@ import takagi.ru.monica.steam.network.SteamAuthorizedDeviceService
 import takagi.ru.monica.steam.network.SteamConfirmationService
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
-import takagi.ru.monica.steam.notifications.SteamNotificationService
+import takagi.ru.monica.steam.alerts.domain.*
+import takagi.ru.monica.steam.notifications.data.SteamNotificationService
 
 class SteamAlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {

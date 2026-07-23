@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.notifications
+package takagi.ru.monica.steam.gifts.data
 
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -6,6 +6,7 @@ import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.intOrNull
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.gifts.domain.*
 import takagi.ru.monica.steam.market.SteamInventoryService
 import takagi.ru.monica.steam.network.SteamApiClient
 

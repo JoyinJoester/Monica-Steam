@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理通知、礼物与提醒模块
+当前：拆分令牌页与令牌状态模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：整理通知、礼物与后台提醒的 domain/data/presentation/ui 所有权，迁移 legacy 登录通知帮助实现。
+下一步：迁移 `SteamScreen.kt`、`SteamViewModel.kt` 与搜索/缩放兼容入口，清除 legacy `steam/ui` 中最后的功能实现。
 
 ## 已完成
 
@@ -76,3 +76,11 @@
 - ViewModel 位于 `store/presentation`，模型与价格/购物车规则位于 `store/domain`。
 - 验证：`:app:compileDebugKotlin`、全部 store 测试、礼物入口、稳定性/动效和架构守卫通过。
 - 独立提交：`18fa988`。
+
+### 子任务 8：通知、礼物与提醒模块
+
+- notifications 按 `domain/data/ui` 分层；通知缓存、解析和页面分别归属明确。
+- gift 模型、解析、响应操作与礼物入口迁移到 `gifts/domain`、`gifts/data`，不再藏在 notifications。
+- alerts 按 `domain/data` 分层，登录请求通知也归入 alerts/data；Manifest 使用新 Receiver 路径。
+- 验证：`:app:compileDebugKotlin`、通知/礼物/提醒、总边界和架构测试通过。
+- 独立提交：待提交后填写 commit id。

@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.notifications
+package takagi.ru.monica.steam.notifications.data
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import takagi.ru.monica.steam.notifications.domain.*
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull

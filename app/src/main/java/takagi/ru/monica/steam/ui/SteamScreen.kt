@@ -169,7 +169,8 @@ import takagi.ru.monica.steam.data.SteamSecurityEvent
 import takagi.ru.monica.steam.data.SteamSecurityEventSeverity
 import takagi.ru.monica.steam.data.SteamMaFileTransferAction
 import takagi.ru.monica.steam.data.SteamStorageSource
-import takagi.ru.monica.steam.gifts.steamGiftInboxUrl
+import takagi.ru.monica.steam.alerts.data.SteamLoginNotificationHelper
+import takagi.ru.monica.steam.gifts.domain.steamGiftInboxUrl
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
 import takagi.ru.monica.steam.foundation.ui.SteamEmptyState as EmptyState
@@ -185,11 +186,11 @@ import takagi.ru.monica.steam.market.ui.SteamBatchSellSheet
 import takagi.ru.monica.steam.network.SteamAuthorizedDevice
 import takagi.ru.monica.steam.network.SteamConfirmation
 import takagi.ru.monica.steam.network.SteamPendingLogin
-import takagi.ru.monica.steam.notifications.SteamGiftAction
-import takagi.ru.monica.steam.notifications.SteamNotification
-import takagi.ru.monica.steam.notifications.SteamNotificationsUiState
-import takagi.ru.monica.steam.notifications.SteamNotificationsScreen
-import takagi.ru.monica.steam.notifications.SteamPendingGift
+import takagi.ru.monica.steam.gifts.domain.SteamGiftAction
+import takagi.ru.monica.steam.gifts.domain.SteamPendingGift
+import takagi.ru.monica.steam.notifications.domain.SteamNotification
+import takagi.ru.monica.steam.notifications.domain.SteamNotificationsUiState
+import takagi.ru.monica.steam.notifications.ui.SteamNotificationsScreen
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog

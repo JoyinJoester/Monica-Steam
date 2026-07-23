@@ -72,9 +72,9 @@ import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.data.UnifiedProgressBarMode
 import takagi.ru.monica.plus.PlusActivationUiResult
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.steam.alerts.SteamAlertPreferences
-import takagi.ru.monica.steam.alerts.SteamAlertScheduler
-import takagi.ru.monica.steam.alerts.SteamAlertSettings
+import takagi.ru.monica.steam.alerts.data.SteamAlertPreferences
+import takagi.ru.monica.steam.alerts.data.SteamAlertScheduler
+import takagi.ru.monica.steam.alerts.domain.SteamAlertSettings
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.navigation.reorderDockOrder
 import takagi.ru.monica.steam.diagnostics.SteamSupportLogExporter

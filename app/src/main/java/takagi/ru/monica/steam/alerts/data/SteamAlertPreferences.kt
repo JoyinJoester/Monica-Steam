@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.alerts
+package takagi.ru.monica.steam.alerts.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import takagi.ru.monica.steam.alerts.domain.*
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey

@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.alerts.data
 
 import android.Manifest
 import android.app.NotificationChannel

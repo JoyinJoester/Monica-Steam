@@ -54,7 +54,6 @@ class SteamModuleArchitectureGuardTest {
     fun legacySteamUiCannotReceiveAdditionalFiles() {
         val legacyUi = projectFile("app/src/main/java/takagi/ru/monica/steam/ui")
         val temporaryAllowlist = setOf(
-            "SteamLoginNotificationHelper.kt",
             "SteamScreen.kt",
             "SteamSearchFilters.kt",
             "SteamUiScalePreferences.kt",
@@ -152,6 +151,40 @@ class SteamModuleArchitectureGuardTest {
         assertTrue(activity.contains(".store.ui.SteamStoreScreen"))
         assertFalse(activity.contains(".store.data."))
         assertFalse(activity.contains(".store.presentation."))
+    }
+
+    @Test
+    fun notificationsGiftsAndAlertsKeepSeparateLayeredRoots() {
+        val expectedLayers = mapOf(
+            "notifications" to setOf("data", "domain", "ui"),
+            "gifts" to setOf("data", "domain"),
+            "alerts" to setOf("data", "domain")
+        )
+
+        expectedLayers.forEach { (feature, layers) ->
+            val root = projectFile("app/src/main/java/takagi/ru/monica/steam/$feature")
+            assertTrue(root.listFiles().orEmpty().none { it.extension == "kt" })
+            assertEquals(
+                layers,
+                root.listFiles().orEmpty()
+                    .filter(File::isDirectory)
+                    .map(File::getName)
+                    .toSet()
+            )
+        }
+
+        val giftService = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/gifts/data/SteamGiftService.kt"
+        ).readText()
+        assertFalse(giftService.contains(".steam.notifications."))
+
+        val notificationModels = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/notifications/domain/SteamNotificationModels.kt"
+        ).readText()
+        assertFalse(notificationModels.contains("enum class SteamGiftAction"))
+
+        val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
+        assertTrue(manifest.contains(".steam.alerts.data.SteamAlertReceiver"))
     }
 
     @Test

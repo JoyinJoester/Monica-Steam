@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.notifications
 
+import takagi.ru.monica.steam.gifts.domain.*
+import takagi.ru.monica.steam.notifications.data.*
+import takagi.ru.monica.steam.notifications.domain.*
+
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

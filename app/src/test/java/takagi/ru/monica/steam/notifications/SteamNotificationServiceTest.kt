@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.notifications
 
+import takagi.ru.monica.steam.notifications.data.*
+import takagi.ru.monica.steam.notifications.domain.*
+
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Protocol

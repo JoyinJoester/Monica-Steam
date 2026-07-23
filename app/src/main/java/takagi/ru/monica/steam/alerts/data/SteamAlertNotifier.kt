@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.alerts
+package takagi.ru.monica.steam.alerts.data
 
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
+import takagi.ru.monica.steam.alerts.domain.*
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager

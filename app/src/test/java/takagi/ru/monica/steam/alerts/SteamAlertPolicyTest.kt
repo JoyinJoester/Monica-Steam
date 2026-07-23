@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.alerts
 
+import takagi.ru.monica.steam.alerts.domain.*
+
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

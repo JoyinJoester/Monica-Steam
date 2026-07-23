@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.alerts
+package takagi.ru.monica.steam.alerts.data
 
 import android.app.AlarmManager
 import android.app.PendingIntent

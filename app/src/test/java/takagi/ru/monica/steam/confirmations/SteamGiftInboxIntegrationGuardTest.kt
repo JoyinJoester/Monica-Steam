@@ -29,7 +29,7 @@ class SteamGiftInboxIntegrationGuardTest {
     @Test
     fun notificationsUseIndependentListDetailAndActionPage() {
         val page = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/notifications/SteamNotificationsScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationsScreen.kt"
         ).readText()
         val host = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
@@ -49,7 +49,7 @@ class SteamGiftInboxIntegrationGuardTest {
     @Test
     fun officialGiftInboxUrlUsesAccountCommunityInventory() {
         val giftInbox = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/gifts/SteamGiftInbox.kt"
+            "app/src/main/java/takagi/ru/monica/steam/gifts/domain/SteamGiftInbox.kt"
         ).readText()
 
         assertTrue(giftInbox.contains("https://steamcommunity.com/profiles/"))

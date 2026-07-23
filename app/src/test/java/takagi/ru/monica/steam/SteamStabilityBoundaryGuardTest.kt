@@ -14,7 +14,7 @@ class SteamStabilityBoundaryGuardTest {
     @Test
     fun backgroundEntryPointsContainProcessCrashBoundaries() {
         val receiver = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/alerts/SteamAlertReceiver.kt"
+            "app/src/main/java/takagi/ru/monica/steam/alerts/data/SteamAlertReceiver.kt"
         ).readText()
         val widgets = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/quickaccess/SteamWidgetProviders.kt"

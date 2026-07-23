@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.notifications
 
+import takagi.ru.monica.steam.gifts.data.*
+import takagi.ru.monica.steam.gifts.domain.*
+
 import java.net.URLDecoder
 import java.util.concurrent.CopyOnWriteArrayList
 import okhttp3.MediaType.Companion.toMediaType

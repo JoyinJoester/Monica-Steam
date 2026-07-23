@@ -9,7 +9,7 @@ class SteamAlertIntegrationGuardTest {
     @Test
     fun schedulerUsesInexactNonWakeupAlarmWithoutHeavyBackgroundFrameworks() {
         val scheduler = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/alerts/SteamAlertScheduler.kt"
+            "app/src/main/java/takagi/ru/monica/steam/alerts/data/SteamAlertScheduler.kt"
         ).readText()
         val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
 
@@ -18,14 +18,14 @@ class SteamAlertIntegrationGuardTest {
         assertFalse(scheduler.contains("setExact"))
         assertFalse(scheduler.contains("ELAPSED_REALTIME_WAKEUP"))
         assertFalse(scheduler.contains("WorkManager"))
-        assertTrue(manifest.contains(".steam.alerts.SteamAlertReceiver"))
+        assertTrue(manifest.contains(".steam.alerts.data.SteamAlertReceiver"))
         assertTrue(manifest.contains("android:exported=\"false\""))
     }
 
     @Test
     fun notificationSurfaceUsesFixedPrivateTextAndExplicitAppIntent() {
         val notifier = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/alerts/SteamAlertNotifier.kt"
+            "app/src/main/java/takagi/ru/monica/steam/alerts/data/SteamAlertNotifier.kt"
         ).readText()
 
         assertTrue(notifier.contains("VISIBILITY_PRIVATE"))
@@ -48,7 +48,7 @@ class SteamAlertIntegrationGuardTest {
     @Test
     fun settingsUseDataStoreAndExposeAllAlertControls() {
         val preferences = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/alerts/SteamAlertPreferences.kt"
+            "app/src/main/java/takagi/ru/monica/steam/alerts/data/SteamAlertPreferences.kt"
         ).readText()
         val settings = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
