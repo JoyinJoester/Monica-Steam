@@ -201,6 +201,7 @@ import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
 import takagi.ru.monica.steam.store.SteamStoreWebScreen
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
+import takagi.ru.monica.steam.trade.ui.SteamTradeOffersContent
 import takagi.ru.monica.ui.common.selection.SelectionActionBar
 import takagi.ru.monica.ui.common.state.rememberSaveableLazyListState
 import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle

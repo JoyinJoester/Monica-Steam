@@ -28,7 +28,7 @@ class SteamTradeOfferIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val content = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamTradeOffersContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/trade/ui/SteamTradeOffersContent.kt"
         ).readText()
 
         assertTrue(screen.contains("TRADE_OFFERS("))
@@ -56,4 +56,3 @@ class SteamTradeOfferIntegrationGuardTest {
         return File(dir, path)
     }
 }
-

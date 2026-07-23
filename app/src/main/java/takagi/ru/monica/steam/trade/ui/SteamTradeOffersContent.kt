@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.trade.ui
 
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
@@ -68,6 +68,7 @@ import takagi.ru.monica.steam.trade.SteamTradeOfferDirection
 import takagi.ru.monica.steam.trade.SteamTradeOfferItem
 import takagi.ru.monica.steam.trade.SteamTradeOfferState
 import takagi.ru.monica.steam.trade.steamTradeOfferLazyKey
+import takagi.ru.monica.steam.ui.SteamTradeOffersUiState
 import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet

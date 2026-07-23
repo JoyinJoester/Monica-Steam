@@ -92,7 +92,6 @@ SteamHealthScreen.kt
 SteamLoginNotificationHelper.kt
 SteamScreen.kt
 SteamSearchFilters.kt
-SteamTradeOffersContent.kt
 SteamUiScalePreferences.kt
 SteamUiScaleProvider.kt
 SteamViewModel.kt

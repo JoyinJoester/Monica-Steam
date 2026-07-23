@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理交易模块
+当前：整理备份与健康检查模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：将交易报价页面迁移到 `steam/trade/ui`，更新共享账号选择和图片入口，并保持接受/拒绝及保护操作不变。
+下一步：迁移备份与健康检查页面到 `steam/backup/ui`、`steam/health/ui`，保持 WebDAV、MDBX、maFile ZIP 和诊断行为不变。
 
 ## 已完成
 
@@ -54,3 +54,10 @@
 - `SteamScreen`、库存和交易页面通过共享 Interface 使用同一实现，没有复制扫码、账号切换或图片缓存逻辑。
 - 验证：`:app:compileDebugKotlin` 通过；库存、市场、批量定价、解析、分析、交易引用和架构聚焦测试通过。
 - 独立提交：`769ad62`。
+
+### 子任务 5：交易模块
+
+- 交易报价页面从 legacy `steam/ui` 迁移至 `steam/trade/ui`，交易模型与网络实现继续由 `steam/trade` 持有。
+- 账号切换、账号卡和报价图片复用 `steam/foundation/ui`，没有复制 UI 或缓存实现。
+- 验证：`:app:compileDebugKotlin`、交易模块测试和架构守卫通过。
+- 独立提交：待提交后填写 commit id。
