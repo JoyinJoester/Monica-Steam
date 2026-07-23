@@ -60,4 +60,4 @@
 - 交易报价页面从 legacy `steam/ui` 迁移至 `steam/trade/ui`，交易模型与网络实现继续由 `steam/trade` 持有。
 - 账号切换、账号卡和报价图片复用 `steam/foundation/ui`，没有复制 UI 或缓存实现。
 - 验证：`:app:compileDebugKotlin`、交易模块测试和架构守卫通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`bc76af7`。
