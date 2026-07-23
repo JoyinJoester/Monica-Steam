@@ -55,7 +55,10 @@ class SteamStoreDetailRegionalPriceGuardTest {
             steamRegionalPriceCacheName(accountId = null, appId = 570)
         )
         assertEquals(
-            listOf("CN", "US", "JP", "KR", "HK", "TW", "UA", "IN", "ID"),
+            listOf(
+                "CN", "US", "JP", "KR", "HK", "TW", "DE", "GB", "BR", "RU",
+                "UA", "IN", "ID"
+            ),
             SteamStoreViewModel.REGIONAL_PRICE_COUNTRY_CODES
         )
     }

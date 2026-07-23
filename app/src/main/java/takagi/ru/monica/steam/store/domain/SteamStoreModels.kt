@@ -16,7 +16,10 @@ data class SteamStoreItem(
     val windows: Boolean = false,
     val mac: Boolean = false,
     val linux: Boolean = false,
-    val metascore: Int? = null
+    val metascore: Int? = null,
+    val availableInAccountRegion: Boolean? = null,
+    val accountCountryCode: String? = null,
+    val priceCountryCode: String? = null
 ) {
     val isFree: Boolean get() = finalPriceCents == 0
     val formattedFinalPrice: String get() = formatSteamPrice(finalPriceCents, currency)
@@ -54,7 +57,10 @@ data class SteamStoreDetail(
     val windows: Boolean = false,
     val mac: Boolean = false,
     val linux: Boolean = false,
-    val packageId: Int? = null
+    val packageId: Int? = null,
+    val availableInAccountRegion: Boolean? = null,
+    val accountCountryCode: String? = null,
+    val priceCountryCode: String? = null
 ) {
     val formattedFinalPrice: String
         get() = if (isFree) "免费" else formatSteamPrice(finalPriceCents, currency)

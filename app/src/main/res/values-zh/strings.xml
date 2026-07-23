@@ -4304,6 +4304,9 @@
     <string name="steam_store_cart_mixed_currency">包含多种货币</string>
     <string name="steam_store_checkout">结算</string>
     <string name="steam_store_price_unavailable">暂无价格</string>
+    <string name="steam_store_unavailable_account_region">当前账号地区不售卖</string>
+    <string name="steam_store_reference_region_price">%1$s区参考价格</string>
+    <string name="steam_store_locked_purchase_disabled">当前账号地区无法购买此游戏，仍可查看多区价格或打开 Steam 官方页面。</string>
     <string name="steam_store_regional_price_action">多区比价</string>
     <string name="steam_store_regional_price_description">查看各区原价、现价与人民币换算</string>
     <string name="steam_store_regional_original_price">原价 %1$s</string>

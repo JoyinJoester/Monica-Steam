@@ -4,9 +4,17 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.ConcurrentHashMap
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.FormBody
 import okhttp3.Request
+import okhttp3.Response
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import takagi.ru.monica.steam.network.SteamApiClient
 import takagi.ru.monica.steam.network.SteamApiException
@@ -15,6 +23,22 @@ import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import java.util.UUID
+import java.io.IOException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+
+internal data class SteamStoreRegionSearchResult(
+    val countryCode: String?,
+    val items: List<SteamStoreItem>
+)
+
+private data class SteamStoreSearchTarget(
+    val countryCode: String?,
+    val steamLoginSecure: String?
+)
+
+internal val STEAM_STORE_DISCOVERY_COUNTRY_CODES =
+    listOf("US", "CN", "JP", "KR", "DE", "RU")
 
 class SteamStoreService(
     private val client: OkHttpClient = OkHttpClient.Builder()
@@ -42,28 +66,127 @@ class SteamStoreService(
         return SteamStoreParser.parseFeatured(body)
     }
 
-    fun search(
+    suspend fun search(
         queryText: String,
         steamLoginSecure: String? = null,
         accessToken: String? = null,
         language: String = "schinese"
     ): List<SteamStoreItem> {
         if (queryText.isBlank()) return emptyList()
-        val body = get(
-            path = "/api/storesearch/",
-            query = mapOf("term" to queryText.trim(), "l" to language),
-            steamLoginSecure = steamLoginSecure,
-            countryCode = accountCountryOrFail(steamLoginSecure, accessToken)
+        val query = queryText.trim()
+        val accountCountry = accountCountryOrFail(steamLoginSecure, accessToken)
+        val targets = buildList {
+            add(
+                SteamStoreSearchTarget(
+                    countryCode = accountCountry,
+                    steamLoginSecure = steamLoginSecure
+                )
+            )
+            STEAM_STORE_DISCOVERY_COUNTRY_CODES
+                .filterNot { it.equals(accountCountry, ignoreCase = true) }
+                .forEach { countryCode ->
+                    add(SteamStoreSearchTarget(countryCode = countryCode, steamLoginSecure = null))
+                }
+        }.distinctBy { it.countryCode?.uppercase().orEmpty() }
+        val attempts = coroutineScope {
+            targets.map { target ->
+                async {
+                    try {
+                        Result.success(
+                            SteamStoreRegionSearchResult(
+                                countryCode = target.countryCode,
+                                items = SteamStoreParser.parseSearch(
+                                    getAsync(
+                                        path = "/api/storesearch/",
+                                        query = mapOf("term" to query, "l" to language),
+                                        steamLoginSecure = target.steamLoginSecure,
+                                        countryCode = target.countryCode
+                                    )
+                                )
+                            )
+                        )
+                    } catch (cancelled: CancellationException) {
+                        throw cancelled
+                    } catch (error: Throwable) {
+                        SteamDiagLogger.append(
+                            "store_search catalog_failed country=${target.countryCode ?: "account_default"} " +
+                                "type=${error.javaClass.simpleName}"
+                        )
+                        Result.failure(error)
+                    }
+                }
+            }.awaitAll()
+        }
+        val regionalResults = attempts.mapNotNull(Result<SteamStoreRegionSearchResult>::getOrNull)
+        if (regionalResults.isEmpty()) {
+            throw attempts.firstNotNullOfOrNull(Result<SteamStoreRegionSearchResult>::exceptionOrNull)
+                ?: IllegalStateException("Steam 商店搜索没有返回数据")
+        }
+        val accountRegionResponded = accountCountry != null && regionalResults.any {
+            it.countryCode.equals(accountCountry, ignoreCase = true)
+        }
+        return mergeSteamStoreSearchResults(
+            query = query,
+            accountCountryCode = accountCountry,
+            accountRegionResponded = accountRegionResponded,
+            regionalResults = regionalResults
         )
-        return SteamStoreParser.parseSearch(body)
     }
 
     fun detail(
         appId: Int,
         steamLoginSecure: String? = null,
         accessToken: String? = null,
-        language: String = "schinese"
+        language: String = "schinese",
+        discoveryCountryCode: String? = null
     ): SteamStoreDetail {
+        val accountCountry = accountCountryOrFail(steamLoginSecure, accessToken)
+        requestDetail(
+            appId = appId,
+            language = language,
+            steamLoginSecure = steamLoginSecure,
+            countryCode = accountCountry
+        )?.let { detail ->
+            return detail.copy(
+                availableInAccountRegion = accountCountry?.let { true },
+                accountCountryCode = accountCountry,
+                priceCountryCode = accountCountry
+            )
+        }
+        steamStoreDetailFallbackCountries(
+            accountCountryCode = accountCountry,
+            discoveryCountryCode = discoveryCountryCode
+        ).forEach { countryCode ->
+            val detail = runCatching {
+                requestDetail(
+                    appId = appId,
+                    language = language,
+                    steamLoginSecure = null,
+                    countryCode = countryCode
+                )
+            }.onFailure { error ->
+                SteamDiagLogger.append(
+                    "store_detail fallback_failed app_id=$appId country=$countryCode " +
+                        "type=${error.javaClass.simpleName}"
+                )
+            }.getOrNull()
+            if (detail != null) {
+                return detail.copy(
+                    availableInAccountRegion = accountCountry?.let { false },
+                    accountCountryCode = accountCountry,
+                    priceCountryCode = countryCode
+                )
+            }
+        }
+        throw IllegalStateException("Steam 商店没有返回该商品详情")
+    }
+
+    private fun requestDetail(
+        appId: Int,
+        language: String,
+        steamLoginSecure: String?,
+        countryCode: String?
+    ): SteamStoreDetail? {
         val body = get(
             path = "/api/appdetails",
             query = mapOf(
@@ -71,10 +194,9 @@ class SteamStoreService(
                 "l" to language
             ),
             steamLoginSecure = steamLoginSecure,
-            countryCode = accountCountryOrFail(steamLoginSecure, accessToken)
+            countryCode = countryCode
         )
         return SteamStoreParser.parseDetail(appId, body)
-            ?: throw IllegalStateException("Steam 商店没有返回该商品详情")
     }
 
     fun wishlist(
@@ -154,6 +276,44 @@ class SteamStoreService(
             return response.body?.string()?.takeIf { it.isNotBlank() }
                 ?: throw IllegalStateException("Steam 商店返回空数据")
         }
+    }
+
+    private suspend fun getAsync(
+        path: String,
+        query: Map<String, String>,
+        steamLoginSecure: String?,
+        countryCode: String?
+    ): String = suspendCancellableCoroutine { continuation ->
+        val request = buildSteamStoreRequest(path, query, steamLoginSecure, countryCode)
+        val call = client.newCall(request)
+        continuation.invokeOnCancellation { call.cancel() }
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, error: IOException) {
+                if (continuation.isActive) continuation.resumeWithException(error)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    val result = runCatching {
+                        if (!response.isSuccessful) {
+                            if (response.isRedirect) {
+                                throw SteamStoreSessionException(
+                                    "Steam 商店会话被重定向，请刷新后重试"
+                                )
+                            }
+                            throw IllegalStateException("Steam 商店请求失败：${response.code}")
+                        }
+                        response.body?.string()?.takeIf(String::isNotBlank)
+                            ?: throw IllegalStateException("Steam 商店返回空数据")
+                    }
+                    result.onSuccess { body ->
+                        if (continuation.isActive) continuation.resume(body)
+                    }.onFailure { error ->
+                        if (continuation.isActive) continuation.resumeWithException(error)
+                    }
+                }
+            }
+        })
     }
 
     private fun executeText(request: Request): String {
@@ -240,6 +400,74 @@ class SteamStoreService(
         const val WISHLIST_PAGE_SIZE = 100
     }
 }
+
+internal fun mergeSteamStoreSearchResults(
+    query: String,
+    accountCountryCode: String?,
+    accountRegionResponded: Boolean,
+    regionalResults: List<SteamStoreRegionSearchResult>
+): List<SteamStoreItem> {
+    val accountCountry = accountCountryCode?.trim()?.uppercase()
+    val orderedResults = regionalResults.sortedBy { result ->
+        if (accountCountry != null && result.countryCode.equals(accountCountry, true)) 0 else 1
+    }
+    val accountAppIds = orderedResults
+        .firstOrNull { it.countryCode.equals(accountCountry, ignoreCase = true) }
+        ?.items
+        ?.mapTo(mutableSetOf(), SteamStoreItem::appId)
+        .orEmpty()
+    val merged = linkedMapOf<Int, SteamStoreItem>()
+    orderedResults.forEach { regionalResult ->
+        val priceCountry = regionalResult.countryCode?.trim()?.uppercase()
+        val accountResult = accountCountry != null && priceCountry == accountCountry
+        regionalResult.items.forEach { item ->
+            val annotated = item.copy(
+                availableInAccountRegion = when {
+                    accountCountry == null || !accountRegionResponded -> null
+                    item.appId in accountAppIds -> true
+                    else -> false
+                },
+                accountCountryCode = accountCountry,
+                priceCountryCode = priceCountry
+            )
+            if (accountResult) {
+                merged[item.appId] = annotated
+            } else {
+                merged.putIfAbsent(item.appId, annotated)
+            }
+        }
+    }
+    return merged.values.sortedWith(
+        compareBy<SteamStoreItem> { steamStoreSearchRelevance(query, it.name) }
+            .thenBy { if (it.availableInAccountRegion == false) 1 else 0 }
+            .thenBy { it.name.lowercase() }
+    ).take(MAX_GLOBAL_SEARCH_RESULTS)
+}
+
+internal fun steamStoreDetailFallbackCountries(
+    accountCountryCode: String?,
+    discoveryCountryCode: String?
+): List<String> {
+    val accountCountry = accountCountryCode?.trim()?.uppercase()
+    return buildList {
+        discoveryCountryCode?.trim()?.uppercase()?.takeIf { it.length == 2 }?.let(::add)
+        addAll(STEAM_STORE_DISCOVERY_COUNTRY_CODES)
+    }.filterNot { it == accountCountry }.distinct()
+}
+
+private fun steamStoreSearchRelevance(query: String, name: String): Int {
+    val normalizedQuery = query.trim().lowercase()
+    val normalizedName = name.trim().lowercase()
+    return when {
+        normalizedName == normalizedQuery -> 0
+        normalizedName.startsWith(normalizedQuery) -> 1
+        normalizedName.contains(normalizedQuery) -> 2
+        normalizedQuery.split(Regex("\\s+")).all(normalizedName::contains) -> 3
+        else -> 4
+    }
+}
+
+private const val MAX_GLOBAL_SEARCH_RESULTS = 48
 
 internal fun buildSteamWishlistRequest(
     steamId: String,

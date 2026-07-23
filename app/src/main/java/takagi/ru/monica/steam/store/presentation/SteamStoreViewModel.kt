@@ -39,6 +39,7 @@ data class SteamStoreUiState(
     val searchResults: List<SteamStoreItem> = emptyList(),
     val searching: Boolean = false,
     val detailAppId: Int? = null,
+    val detailDiscoveryCountryCode: String? = null,
     val detail: SteamStoreDetail? = null,
     val detailFromCache: Boolean = false,
     val loadingDetail: Boolean = false,
@@ -196,7 +197,24 @@ class SteamStoreViewModel(
         }
     }
 
+    fun openDetail(item: SteamStoreItem) {
+        openDetailInternal(
+            appId = item.appId,
+            discoveryCountryCode = item.priceCountryCode
+                .takeIf { item.availableInAccountRegion == false }
+        )
+    }
+
     fun openDetail(appId: Int) {
+        val state = _uiState.value
+        openDetailInternal(
+            appId = appId,
+            discoveryCountryCode = state.detailDiscoveryCountryCode
+                .takeIf { state.detailAppId == appId }
+        )
+    }
+
+    private fun openDetailInternal(appId: Int, discoveryCountryCode: String?) {
         if (appId <= 0) {
             _uiState.value = _uiState.value.copy(error = "Steam 商店没有返回有效的应用编号")
             return
@@ -210,6 +228,7 @@ class SteamStoreViewModel(
         }
         _uiState.value = _uiState.value.copy(
             detailAppId = appId,
+            detailDiscoveryCountryCode = discoveryCountryCode,
             detail = null,
             detailFromCache = false,
             loadingDetail = true,
@@ -240,7 +259,8 @@ class SteamStoreViewModel(
                         service.detail(
                             appId = appId,
                             steamLoginSecure = credentials.steamLoginSecure,
-                            accessToken = credentials.accessToken
+                            accessToken = credentials.accessToken,
+                            discoveryCountryCode = discoveryCountryCode
                         )
                     }
                 }
@@ -291,6 +311,7 @@ class SteamStoreViewModel(
         regionalPriceRequestGeneration++
         _uiState.value = _uiState.value.copy(
             detailAppId = null,
+            detailDiscoveryCountryCode = null,
             detail = null,
             loadingDetail = false,
             regionalPrices = emptyList(),
@@ -415,6 +436,10 @@ class SteamStoreViewModel(
     }
 
     fun addDetailToCart(detail: SteamStoreDetail) {
+        if (detail.availableInAccountRegion == false) {
+            _uiState.value = _uiState.value.copy(error = "当前账号地区不售卖该商品")
+            return
+        }
         val item = SteamCartItem(
             appId = detail.appId,
             packageId = detail.packageId,
@@ -437,6 +462,7 @@ class SteamStoreViewModel(
             cartOpen = true,
             collectionTab = SteamStoreCollectionTab.CART,
             detailAppId = null,
+            detailDiscoveryCountryCode = null,
             detail = null
         )
     }
@@ -502,6 +528,12 @@ class SteamStoreViewModel(
         val accountId = _uiState.value.selectedAccountId
         val account = selectedAccount() ?: return
         val add = !isInWishlist(detail.appId)
+        if (detail.availableInAccountRegion == false && add) {
+            _uiState.value = _uiState.value.copy(
+                wishlistError = "当前账号地区不售卖该商品，无法加入愿望单"
+            )
+            return
+        }
         _uiState.value = _uiState.value.copy(
             wishlistMutatingAppIds = _uiState.value.wishlistMutatingAppIds + detail.appId,
             wishlistError = null
@@ -606,6 +638,7 @@ class SteamStoreViewModel(
             searchResults = emptyList(),
             searching = false,
             detailAppId = null,
+            detailDiscoveryCountryCode = null,
             detail = null,
             detailFromCache = false,
             loadingDetail = false,
@@ -756,7 +789,10 @@ class SteamStoreViewModel(
 
     companion object {
         internal val REGIONAL_PRICE_COUNTRY_CODES =
-            listOf("CN", "US", "JP", "KR", "HK", "TW", "UA", "IN", "ID")
+            listOf(
+                "CN", "US", "JP", "KR", "HK", "TW", "DE", "GB", "BR", "RU",
+                "UA", "IN", "ID"
+            )
         private const val REGIONAL_PRICE_CACHE_TTL_MILLIS = 6L * 60L * 60L * 1_000L
 
         fun factory(context: Context): ViewModelProvider.Factory {

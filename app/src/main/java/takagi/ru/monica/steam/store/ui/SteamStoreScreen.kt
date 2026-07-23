@@ -320,7 +320,7 @@ fun SteamStoreScreen(
                             item { StoreMessage(stringResource(R.string.steam_store_empty)) }
                         } else {
                             itemsIndexed(state.searchResults, key = ::steamStoreLazyKey) { _, item ->
-                                SearchResultCard(item, onClick = { viewModel.openDetail(item.appId) })
+                                SearchResultCard(item, onClick = { viewModel.openDetail(item) })
                             }
                         }
                     } else {
@@ -613,6 +613,39 @@ private fun SearchResultCard(game: SteamStoreItem, onClick: () -> Unit) {
                     style = MaterialTheme.typography.titleMedium
                 )
             }
+            if (game.availableInAccountRegion == false) {
+                Surface(
+                    color = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
+                        horizontalArrangement = Arrangement.spacedBy(7.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = null,
+                            modifier = Modifier.size(17.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.steam_store_unavailable_account_region),
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                    }
+                }
+                game.priceCountryCode?.let { countryCode ->
+                    Text(
+                        text = stringResource(
+                            R.string.steam_store_reference_region_price,
+                            regionalCountryName(countryCode)
+                        ),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
             PriceRow(
                 game.discountPercent,
                 game.formattedInitialPrice,
@@ -774,6 +807,25 @@ private fun SteamStoreDetailContent(
                                 modifier = Modifier.weight(1f),
                                 verticalArrangement = Arrangement.spacedBy(2.dp)
                             ) {
+                                if (detail.availableInAccountRegion == false) {
+                                    Text(
+                                        text = stringResource(
+                                            R.string.steam_store_unavailable_account_region
+                                        ),
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = MaterialTheme.colorScheme.error
+                                    )
+                                    detail.priceCountryCode?.let { countryCode ->
+                                        Text(
+                                            text = stringResource(
+                                                R.string.steam_store_reference_region_price,
+                                                regionalCountryName(countryCode)
+                                            ),
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
                                 PriceRow(
                                     detail.discountPercent,
                                     detail.formattedInitialPrice,
@@ -820,6 +872,7 @@ private fun SteamStoreDetailContent(
                 SteamStorePurchaseActions(
                     inCart = inCart,
                     inWishlist = inWishlist,
+                    purchaseAvailable = detail.availableInAccountRegion != false,
                     wishlistAvailable = wishlistAvailable,
                     wishlistMutating = wishlistMutating,
                     wishlistError = wishlistError,
@@ -927,6 +980,7 @@ private fun SteamStoreDetailContent(
 private fun SteamStorePurchaseActions(
     inCart: Boolean,
     inWishlist: Boolean,
+    purchaseAvailable: Boolean,
     wishlistAvailable: Boolean,
     wishlistMutating: Boolean,
     wishlistError: String?,
@@ -939,8 +993,30 @@ private fun SteamStorePurchaseActions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        if (!purchaseAvailable) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
+                color = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.Lock, contentDescription = null)
+                    Text(
+                        text = stringResource(R.string.steam_store_locked_purchase_disabled),
+                        modifier = Modifier.weight(1f),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+        }
         Button(
             onClick = onToggleCart,
+            enabled = purchaseAvailable || inCart,
             modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
             shape = RoundedCornerShape(18.dp)
         ) {
@@ -956,7 +1032,7 @@ private fun SteamStorePurchaseActions(
         }
         FilledTonalButton(
             onClick = onToggleWishlist,
-            enabled = wishlistAvailable && !wishlistMutating,
+            enabled = (purchaseAvailable || inWishlist) && wishlistAvailable && !wishlistMutating,
             modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
             shape = RoundedCornerShape(18.dp)
         ) {

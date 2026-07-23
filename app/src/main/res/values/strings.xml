@@ -4474,6 +4474,9 @@
     <string name="steam_store_cart_mixed_currency">Mixed currencies</string>
     <string name="steam_store_checkout">Checkout</string>
     <string name="steam_store_price_unavailable">Price unavailable</string>
+    <string name="steam_store_unavailable_account_region">Not sold in the current account region</string>
+    <string name="steam_store_reference_region_price">%1$s reference price</string>
+    <string name="steam_store_locked_purchase_disabled">This game cannot be purchased in the current account region. Regional prices and the official Steam page remain available.</string>
     <string name="steam_store_regional_price_action">Compare</string>
     <string name="steam_store_regional_price_description">View regional original prices and CNY conversions</string>
     <string name="steam_store_regional_original_price">Original %1$s</string>
