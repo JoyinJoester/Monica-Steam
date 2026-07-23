@@ -170,10 +170,18 @@ import takagi.ru.monica.steam.data.SteamSecurityEventSeverity
 import takagi.ru.monica.steam.data.SteamMaFileTransferAction
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.gifts.steamGiftInboxUrl
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
+import takagi.ru.monica.steam.foundation.ui.SteamEmptyState as EmptyState
+import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage as loadSteamConfirmationImage
+import takagi.ru.monica.steam.inventory.ui.SteamInventoryContent
+import takagi.ru.monica.steam.inventory.ui.SteamMarketListingsContent
+import takagi.ru.monica.steam.inventory.ui.SteamSellItemSheet
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.SteamBatchSellEntry
 import takagi.ru.monica.steam.market.SteamMarketListing
 import takagi.ru.monica.steam.market.SteamWalletInfo
+import takagi.ru.monica.steam.market.ui.SteamBatchSellSheet
 import takagi.ru.monica.steam.network.SteamAuthorizedDevice
 import takagi.ru.monica.steam.network.SteamConfirmation
 import takagi.ru.monica.steam.network.SteamPendingLogin
@@ -186,7 +194,7 @@ import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationSummary
-import takagi.ru.monica.steam.profile.ui.SteamAvatarImage
+import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
@@ -220,8 +228,6 @@ import takagi.ru.monica.utils.SettingsManager
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
-private const val STEAM_CONFIRMATION_IMAGE_TIMEOUT_MS = 4_000
-private const val STEAM_CONFIRMATION_IMAGE_CACHE_TTL_MS = 3L * 24L * 60L * 60L * 1000L
 
 private data class LegacySteamAuthenticatorCodeSource(
     val item: SecureItem,
@@ -3222,69 +3228,6 @@ private fun copySteamText(
     Toast.makeText(context, label, Toast.LENGTH_SHORT).show()
 }
 
-internal suspend fun loadSteamConfirmationImage(context: Context, imageUrl: String): ImageBitmap? =
-    withContext(Dispatchers.IO) {
-        val normalizedUrl = normalizeSteamImageUrl(imageUrl)
-        if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
-            return@withContext null
-        }
-
-        val cacheFile = steamConfirmationImageCacheFile(context, normalizedUrl)
-        val cachedImage = readSteamConfirmationImageCache(cacheFile)
-        if (cachedImage != null && !isSteamConfirmationImageCacheExpired(cacheFile)) {
-            return@withContext cachedImage
-        }
-
-        val freshImage = runCatching {
-            downloadSteamConfirmationImageBytes(normalizedUrl)?.also { bytes ->
-                cacheFile.parentFile?.mkdirs()
-                cacheFile.writeBytes(bytes)
-            }?.let { bytes ->
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
-            }
-        }.getOrNull()
-
-        freshImage ?: cachedImage
-    }
-
-private fun normalizeSteamImageUrl(imageUrl: String): String {
-    val trimmed = imageUrl.trim()
-    return when {
-        trimmed.startsWith("//") -> "https:$trimmed"
-        trimmed.startsWith("/") -> "https://steamcommunity.com$trimmed"
-        else -> trimmed
-    }
-}
-
-private fun downloadSteamConfirmationImageBytes(imageUrl: String): ByteArray? {
-    val connection = (URL(imageUrl).openConnection() as HttpURLConnection).apply {
-        connectTimeout = STEAM_CONFIRMATION_IMAGE_TIMEOUT_MS
-        readTimeout = STEAM_CONFIRMATION_IMAGE_TIMEOUT_MS
-        requestMethod = "GET"
-    }
-    return try {
-        connection.inputStream.use { stream ->
-            stream.readBytes()
-        }
-    } finally {
-        connection.disconnect()
-    }
-}
-
-private fun steamConfirmationImageCacheFile(context: Context, imageUrl: String): File {
-    val safeName = imageUrl
-        .hashCode()
-        .toUInt()
-        .toString(16)
-    return File(File(context.cacheDir, "steam_confirmation_images"), "$safeName.png")
-}
-
-private fun isSteamConfirmationImageCacheExpired(cacheFile: File): Boolean {
-    if (!cacheFile.isFile) return true
-    val ageMs = System.currentTimeMillis() - cacheFile.lastModified()
-    return ageMs > STEAM_CONFIRMATION_IMAGE_CACHE_TTL_MS
-}
-
 @Composable
 private fun DetailLine(label: String, value: String) {
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -3745,13 +3688,6 @@ private fun SteamConfirmationsContent(
     }
 }
 
-private fun readSteamConfirmationImageCache(cacheFile: File): ImageBitmap? {
-    if (!cacheFile.isFile) return null
-    return runCatching {
-        BitmapFactory.decodeFile(cacheFile.absolutePath)?.asImageBitmap()
-    }.getOrNull()
-}
-
 @Composable
 private fun SteamNotificationCenter(
     account: SteamAccount?,
@@ -4103,84 +4039,6 @@ private fun SteamConfirmationHistoryCard(
 }
 
 @Composable
-internal fun SteamConfirmationAccountCard(
-    account: SteamAccount?,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val shape = RoundedCornerShape(12.dp)
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .clickable(onClick = onClick),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 14.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (account != null) {
-                SteamAvatarImage(account = account, size = 36.dp)
-            } else {
-                Surface(
-                    modifier = Modifier.size(36.dp),
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.VerifiedUser,
-                        contentDescription = null,
-                        modifier = Modifier.padding(8.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(R.string.steam_current_confirmation_account),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = account?.displayName
-                        ?.ifBlank { account.accountName }
-                        ?.ifBlank { account.visibleSteamId }
-                        ?: stringResource(R.string.steam_empty_field),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-            Text(
-                text = stringResource(
-                    if (account?.canUseConfirmations == true) {
-                        R.string.steam_status_ready
-                    } else if (account != null && !account.hasRealSteamId) {
-                        R.string.steam_status_code_only
-                    } else {
-                        R.string.steam_status_missing_session
-                    }
-                ),
-                style = MaterialTheme.typography.labelMedium,
-                color = if (account?.canUseConfirmations == true) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.error
-                }
-            )
-        }
-    }
-}
-
-@Composable
 private fun SteamAuthorizedDevicesSection(
     account: SteamAccount,
     devices: List<SteamAuthorizedDevice>,
@@ -4471,117 +4329,6 @@ private fun steamPlatformLabel(platformType: Int): String {
         2 -> stringResource(R.string.steam_platform_web)
         3 -> stringResource(R.string.steam_platform_mobile)
         else -> stringResource(R.string.steam_platform_unknown)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun SteamConfirmationAccountPickerSheet(
-    accounts: List<SteamAccount>,
-    selectedAccountId: Long?,
-    onSelectAccount: (SteamAccount) -> Unit,
-    onDismissRequest: () -> Unit
-) {
-    MonicaModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.steam_switch_account),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 4.dp)
-            )
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 360.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(accounts, key = { it.id }) { steamAccount ->
-                    SteamConfirmationAccountOptionRow(
-                        account = steamAccount,
-                        selected = steamAccount.id == selectedAccountId,
-                        onClick = { onSelectAccount(steamAccount) }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamConfirmationAccountOptionRow(
-    account: SteamAccount,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(58.dp)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(18.dp),
-        color = if (selected) {
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.72f)
-        } else {
-            MaterialTheme.colorScheme.surfaceContainer
-        },
-        contentColor = if (selected) {
-            MaterialTheme.colorScheme.onPrimaryContainer
-        } else {
-            MaterialTheme.colorScheme.onSurface
-        }
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            SteamAvatarImage(account = account, size = 34.dp)
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = account.displayName.ifBlank { account.accountName }.ifBlank { account.visibleSteamId }.ifBlank { "Steam" },
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = stringResource(
-                        if (account.canUseConfirmations) {
-                            R.string.steam_status_ready
-                        } else if (!account.hasRealSteamId) {
-                            R.string.steam_status_code_only
-                        } else {
-                            R.string.steam_status_missing_session
-                        }
-                    ),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = if (account.canUseConfirmations) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.error
-                    },
-                    maxLines = 1
-                )
-            }
-            if (selected) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = stringResource(R.string.steam_selected_account_marker),
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(22.dp)
-                )
-            }
-        }
     }
 }
 
@@ -6333,17 +6080,5 @@ private fun badgeCountText(count: Int): String {
         "99+"
     } else {
         count.toString()
-    }
-}
-
-@Composable
-internal fun EmptyState(text: String) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(160.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

@@ -24,7 +24,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun marketUiUsesNativeComponentsAndSafeAutoConfirmation() {
         val uiSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val stateSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
@@ -60,7 +60,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun inventoryCardsClipPressStateAndSupportBatchSelection() {
         val uiSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val screenSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
@@ -78,7 +78,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun marketListingsClipPressStateAndSupportBatchCancellation() {
         val uiSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val stateSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
@@ -102,7 +102,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun sharedSteamAccountSwitcherClipsItsPressStateToRoundedCorners() {
         val screenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountUi.kt"
         ).readText()
         val accountCard = screenSource
             .substringAfter("internal fun SteamConfirmationAccountCard(")
@@ -117,7 +117,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun priceChartSupportsTapAndHorizontalDragReadout() {
         val uiSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamInventoryMarketContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
 
         assertTrue(uiSource.contains("detectTapGestures"))
@@ -133,7 +133,7 @@ class SteamInventoryMarketUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
         ).readText()
         val sheetSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamBatchSellSheet.kt"
+            "app/src/main/java/takagi/ru/monica/steam/market/ui/SteamBatchSellSheet.kt"
         ).readText()
         val pricingSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/market/SteamBatchPricing.kt"

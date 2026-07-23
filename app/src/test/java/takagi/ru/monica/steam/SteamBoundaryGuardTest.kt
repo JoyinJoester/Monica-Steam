@@ -470,7 +470,10 @@ class SteamBoundaryGuardTest {
             .readText()
             .replace("\r\n", "\n")
         val avatarSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamAvatarImage.kt"
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAvatarImage.kt"
+        ).readText()
+        val accountUiSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountUi.kt"
         ).readText()
 
         assertTrue(source.contains("ExpressiveTopBar"))
@@ -705,8 +708,8 @@ class SteamBoundaryGuardTest {
         assertTrue(confirmationsContent.contains("SteamConfirmationAccountPickerSheet("))
         assertTrue(confirmationsContent.contains("SteamConfirmationAccountCard("))
         assertTrue(confirmationsContent.contains("onClick = { showAccountPicker = true }"))
-        assertTrue(confirmationsContent.contains("MonicaModalBottomSheet("))
-        assertTrue(confirmationsContent.contains("R.string.steam_switch_account"))
+        assertTrue(accountUiSource.contains("MonicaModalBottomSheet("))
+        assertTrue(accountUiSource.contains("R.string.steam_switch_account"))
 
         val selectAccountContent = viewModelSource
             .substringAfter("fun selectAccount(id: Long)")

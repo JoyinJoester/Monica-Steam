@@ -60,7 +60,7 @@ import takagi.ru.monica.steam.data.SteamMdbxAccountStore
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.network.SteamQrChallenge
-import takagi.ru.monica.steam.profile.ui.SteamAvatarImage
+import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.readSteamStorageSource
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId

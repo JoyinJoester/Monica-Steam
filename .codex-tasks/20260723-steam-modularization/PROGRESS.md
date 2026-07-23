@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理库存与市场模块
+当前：整理交易模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：迁移库存/市场页面、批量出售和市场状态到 `steam/inventory` 与 `steam/market`，保持 MDBX、缓存和确认流程不变。
+下一步：将交易报价页面迁移到 `steam/trade/ui`，更新共享账号选择和图片入口，并保持接受/拒绝及保护操作不变。
 
 ## 已完成
 
@@ -33,7 +33,7 @@
 
 ### 子任务 2：资料、账号组织与扫码模块
 
-- 资料 UI 位于 `steam/profile/ui`，包括动态背景、裁剪、头像渲染；头像网络加载与缓存不再由令牌页持有。
+- 资料 UI 位于 `steam/profile/ui`，包括动态背景与裁剪；通用账号头像在后续库存/市场迁移中提升至 `steam/foundation/ui`。
 - 账号组织 UI 位于 `steam/organization/ui`；组织规则仍由 `steam/organization` 提供。
 - 扫码页面位于 `steam/scanner/ui`，扫码偏好和 MDBX/本地存储选择位于 `steam/scanner/data`。
 - 更新 `MainActivity`、`MonicaSteamActivity`、令牌页、游戏库页和 ViewModel 的公开入口引用。
@@ -46,3 +46,11 @@
 - 更新 `MonicaSteamActivity`、库测试和稳定性/动效守卫的路径与包引用。
 - 验证：`:app:compileDebugKotlin` 通过；库、动效、稳定性和架构聚焦测试通过。
 - 独立提交：`f0f436b`。
+
+### 子任务 4：库存与市场模块
+
+- 库存/市场组合页面从 legacy `steam/ui` 迁移至 `steam/inventory/ui`；批量出售 Sheet 迁移至 `steam/market/ui`。
+- 抽离 `steam/foundation/ui`：共享账号卡、账号切换 Sheet、通用头像与远程图片缓存，消除库存页面反向依赖令牌页实现。
+- `SteamScreen`、库存和交易页面通过共享 Interface 使用同一实现，没有复制扫码、账号切换或图片缓存逻辑。
+- 验证：`:app:compileDebugKotlin` 通过；库存、市场、批量定价、解析、分析、交易引用和架构聚焦测试通过。
+- 独立提交：待提交后填写 commit id。

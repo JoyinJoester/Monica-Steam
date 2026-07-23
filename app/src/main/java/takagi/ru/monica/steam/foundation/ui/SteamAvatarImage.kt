@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.profile.ui
+package takagi.ru.monica.steam.foundation.ui
 
 import android.content.Context
 import android.graphics.BitmapFactory

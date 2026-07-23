@@ -88,9 +88,7 @@ The following files existed before the module rule and are the complete temporar
 
 ```text
 SteamBackupScreen.kt
-SteamBatchSellSheet.kt
 SteamHealthScreen.kt
-SteamInventoryMarketContent.kt
 SteamLoginNotificationHelper.kt
 SteamScreen.kt
 SteamSearchFilters.kt

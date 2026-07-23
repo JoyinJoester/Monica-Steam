@@ -24,8 +24,10 @@ class SteamModuleArchitectureGuardTest {
             "core",
             "data",
             "diagnostics",
+            "foundation",
             "friends",
             "health",
+            "inventory",
             "io",
             "library",
             "market",
@@ -53,9 +55,7 @@ class SteamModuleArchitectureGuardTest {
         val legacyUi = projectFile("app/src/main/java/takagi/ru/monica/steam/ui")
         val temporaryAllowlist = setOf(
             "SteamBackupScreen.kt",
-            "SteamBatchSellSheet.kt",
             "SteamHealthScreen.kt",
-            "SteamInventoryMarketContent.kt",
             "SteamLoginNotificationHelper.kt",
             "SteamScreen.kt",
             "SteamSearchFilters.kt",
@@ -86,9 +86,9 @@ class SteamModuleArchitectureGuardTest {
     }
 
     @Test
-    fun profileOrganizationAndScannerOwnTheirUiImplementations() {
+    fun migratedFeaturesOwnTheirImplementations() {
         val featureFiles = listOf(
-            "profile/ui/SteamAvatarImage.kt",
+            "foundation/ui/SteamAvatarImage.kt",
             "profile/ui/SteamMiniProfileBackgroundLayer.kt",
             "profile/ui/SteamMiniProfileCrop.kt",
             "organization/ui/SteamOrganizationComponents.kt",
@@ -103,6 +103,32 @@ class SteamModuleArchitectureGuardTest {
             assertTrue("Missing Steam feature file: $relativePath", source.isFile)
             assertFalse(source.readText().contains("takagi.ru.monica.steam.ui."))
         }
+    }
+
+    @Test
+    fun inventoryAndMarketOwnTheirUiEntries() {
+        assertTrue(projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
+        ).isFile)
+        assertTrue(projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/market/ui/SteamBatchSellSheet.kt"
+        ).isFile)
+    }
+
+    @Test
+    fun foundationUiDoesNotDependOnFeatureUi() {
+        val foundationUi = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui"
+        )
+        foundationUi.listFiles().orEmpty()
+            .filter { it.extension == "kt" }
+            .forEach { source ->
+                val text = source.readText()
+                assertFalse(text.contains(".steam.profile.ui."))
+                assertFalse(text.contains(".steam.inventory.ui."))
+                assertFalse(text.contains(".steam.market.ui."))
+                assertFalse(text.contains(".steam.token.ui."))
+            }
     }
 
     @Test

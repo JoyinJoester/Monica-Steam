@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
+import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage as loadSteamConfirmationImage
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

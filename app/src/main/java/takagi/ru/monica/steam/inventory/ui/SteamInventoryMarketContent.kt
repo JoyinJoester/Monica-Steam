@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.inventory.ui
 
 import android.content.Context
 import android.net.Uri
@@ -114,6 +114,12 @@ import takagi.ru.monica.steam.market.SteamMarketFees
 import takagi.ru.monica.steam.market.SteamMarketHistoryPoint
 import takagi.ru.monica.steam.market.SteamMarketListing
 import takagi.ru.monica.steam.market.SteamWalletInfo
+import takagi.ru.monica.steam.ui.SteamInventoryMarketUiState
+import takagi.ru.monica.steam.ui.SteamMarketActionType
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
+import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
+import takagi.ru.monica.steam.foundation.ui.SteamEmptyState as EmptyState
+import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage as loadSteamConfirmationImage
 import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 
