@@ -4364,6 +4364,10 @@
     <string name="steam_notifications_cached">Steam 暂时无法连接，正在显示上次同步的数据。</string>
     <string name="steam_notifications_unread_summary">%1$d 条未读通知</string>
     <string name="steam_notifications_unread">未读</string>
+    <string name="steam_notifications_filter_all">全部</string>
+    <string name="steam_notifications_filter_actions">待处理</string>
+    <string name="steam_notifications_action_summary">%1$d 份礼物 · %2$d 个好友请求</string>
+    <string name="steam_notifications_open_detail">查看通知详情</string>
     <string name="steam_notifications_gifts">礼物</string>
     <string name="steam_notifications_friends">好友</string>
     <string name="steam_notifications_family">家庭</string>

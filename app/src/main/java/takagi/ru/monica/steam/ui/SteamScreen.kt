@@ -52,6 +52,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
@@ -179,6 +180,7 @@ import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.notifications.SteamGiftAction
 import takagi.ru.monica.steam.notifications.SteamNotification
 import takagi.ru.monica.steam.notifications.SteamNotificationsUiState
+import takagi.ru.monica.steam.notifications.SteamNotificationsScreen
 import takagi.ru.monica.steam.notifications.SteamPendingGift
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
@@ -3457,6 +3459,7 @@ private fun SteamConfirmationsContent(
     var showAccountPicker by remember { mutableStateOf(false) }
     var pendingAccountSwitchId by remember { mutableStateOf<Long?>(null) }
     var showGiftInbox by rememberSaveable { mutableStateOf(false) }
+    var showNotificationsPage by rememberSaveable { mutableStateOf(false) }
     var selectedKindName by rememberSaveable { mutableStateOf("ALL") }
     var detailConfirmation by remember { mutableStateOf<SteamConfirmation?>(null) }
     var pendingGiftAction by remember { mutableStateOf<SteamGiftActionRequest?>(null) }
@@ -3706,6 +3709,21 @@ private fun SteamConfirmationsContent(
         )
     }
 
+    if (showNotificationsPage) {
+        SteamNotificationsScreen(
+            account = account,
+            state = notifications,
+            onBack = { showNotificationsPage = false },
+            onRefresh = onRefreshNotifications,
+            onGiftAction = { gift, action ->
+                pendingGiftAction = SteamGiftActionRequest(gift, action)
+            },
+            onOpenWeb = { showGiftInbox = true },
+            modifier = Modifier.fillMaxSize()
+        )
+        return
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -3730,6 +3748,7 @@ private fun SteamConfirmationsContent(
                         pendingGiftAction = SteamGiftActionRequest(gift, action)
                     },
                     onOpenWeb = { showGiftInbox = true },
+                    onOpenNotifications = { showNotificationsPage = true },
                     modifier = Modifier.padding(start = 16.dp, top = 10.dp, end = 16.dp)
                 )
             }
@@ -3867,13 +3886,13 @@ private fun SteamNotificationCenter(
     onRefresh: () -> Unit,
     onGiftAction: (SteamPendingGift, SteamGiftAction) -> Unit,
     onOpenWeb: () -> Unit,
+    onOpenNotifications: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val snapshot = state.snapshot
     val webSessionAvailable = account != null && (
         !account.steamLoginSecure.isNullOrBlank() || !account.accessToken.isNullOrBlank()
     )
-    var showAllNotifications by rememberSaveable(account?.id) { mutableStateOf(false) }
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
@@ -3971,28 +3990,18 @@ private fun SteamNotificationCenter(
                     )
                 }
 
-                val visibleNotifications = if (showAllNotifications) {
-                    snapshot.notifications
-                } else {
-                    snapshot.notifications.take(3)
-                }
+                val visibleNotifications = snapshot.notifications.take(3)
                 visibleNotifications.forEach { notification ->
                     SteamNotificationRow(notification)
                 }
-                if (snapshot.notifications.size > 3) {
+                if (snapshot.notifications.isNotEmpty() || snapshot.pendingGifts.isNotEmpty()) {
                     TextButton(
-                        onClick = { showAllNotifications = !showAllNotifications },
+                        onClick = onOpenNotifications,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(
-                            stringResource(
-                                if (showAllNotifications) {
-                                    R.string.steam_notifications_collapse
-                                } else {
-                                    R.string.steam_notifications_show_all
-                                }
-                            )
-                        )
+                        Text(stringResource(R.string.steam_notifications_show_all))
+                        Spacer(Modifier.width(6.dp))
+                        Icon(Icons.Default.ChevronRight, contentDescription = null)
                     }
                 }
 

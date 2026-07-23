@@ -89,15 +89,27 @@ object SteamGiftParser {
     }
 
     private fun parseGift(id: String, block: String): SteamPendingGift {
-        val actions = buildSet {
-            if (containsCall(block, "DoAcceptGift", id, "true")) add(SteamGiftAction.ADD_TO_LIBRARY)
-            if (containsCall(block, "DoAcceptGift", id, "false")) add(SteamGiftAction.KEEP_IN_INVENTORY)
-            if (block.contains("ShowDeclineGiftOptions", ignoreCase = true)) add(SteamGiftAction.DECLINE)
-        }
         val giftCardId = Regex(
             """AcceptRejectGiftCard\s*\(\s*['\"]?(\d+)""",
             RegexOption.IGNORE_CASE
         ).find(block)?.groupValues?.getOrNull(1)
+        val actions = buildSet {
+            if (giftCardId == null) {
+                // The current Steam inventory page sometimes renders the
+                // decline callback but wires accept through a delegated
+                // handler that is not present in the gift block. The native
+                // accept endpoints remain stable for ordinary game gifts.
+                add(SteamGiftAction.ADD_TO_LIBRARY)
+                add(SteamGiftAction.KEEP_IN_INVENTORY)
+            }
+            if (containsAcceptCall(block, id, unpack = true)) {
+                add(SteamGiftAction.ADD_TO_LIBRARY)
+            }
+            if (containsAcceptCall(block, id, unpack = false)) {
+                add(SteamGiftAction.KEEP_IN_INVENTORY)
+            }
+            if (block.contains("ShowDeclineGiftOptions", ignoreCase = true)) add(SteamGiftAction.DECLINE)
+        }
         val senderSteamId = Regex(
             """ShowDeclineGiftOptions\s*\(\s*['\"]?$id['\"]?\s*,\s*['\"]?(\d+)""",
             RegexOption.IGNORE_CASE
@@ -117,9 +129,10 @@ object SteamGiftParser {
         )
     }
 
-    private fun containsCall(block: String, function: String, id: String, argument: String): Boolean {
+    private fun containsAcceptCall(block: String, id: String, unpack: Boolean): Boolean {
+        val argument = if (unpack) "(?:true|1)" else "(?:false|0)"
         return Regex(
-            """${Regex.escape(function)}\s*\(\s*['\"]?$id['\"]?\s*,\s*$argument\s*\)""",
+            """DoAcceptGift\s*\(\s*['\"]?$id['\"]?\s*,\s*$argument\b""",
             setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
         ).containsMatchIn(block)
     }

@@ -9,12 +9,45 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.network.SteamApiClient
 
 class SteamGiftServiceTest {
+    @Test
+    fun pendingGameGiftKeepsAcceptActionsWhenMarkupOnlyExposesDecline() {
+        val html = """
+            <div id="pending_gift_445566">
+              <div class="gift_name">Half-Life</div>
+              <a onclick="ShowDeclineGiftOptions(445566, '76561198000000009')">Decline</a>
+            </div>
+        """.trimIndent()
+
+        val gift = SteamGiftParser.parsePending(html).single()
+
+        assertTrue(SteamGiftAction.ADD_TO_LIBRARY in gift.actions)
+        assertTrue(SteamGiftAction.KEEP_IN_INVENTORY in gift.actions)
+        assertTrue(SteamGiftAction.DECLINE in gift.actions)
+        assertFalse(gift.requiresWeb)
+    }
+
+    @Test
+    fun numericAcceptFlagsFromCurrentSteamMarkupAreRecognized() {
+        val html = """
+            <div id="pending_gift_445566">
+              <a onclick="DoAcceptGift('445566', 1)">Add to library</a>
+              <a onclick="DoAcceptGift('445566', 0)">Keep in inventory</a>
+            </div>
+        """.trimIndent()
+
+        val gift = SteamGiftParser.parsePending(html).single()
+
+        assertTrue(SteamGiftAction.ADD_TO_LIBRARY in gift.actions)
+        assertTrue(SteamGiftAction.KEEP_IN_INVENTORY in gift.actions)
+    }
+
     @Test
     fun parsesPendingGiftIdsSenderAndAvailableActions() {
         val html = """

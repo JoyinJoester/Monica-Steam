@@ -27,6 +27,26 @@ class SteamGiftInboxIntegrationGuardTest {
     }
 
     @Test
+    fun notificationsUseIndependentListDetailAndActionPage() {
+        val page = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/notifications/SteamNotificationsScreen.kt"
+        ).readText()
+        val host = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+        ).readText()
+
+        assertTrue(page.contains("fun SteamNotificationsScreen("))
+        assertTrue(page.contains("BackHandler("))
+        assertTrue(page.contains("ModalBottomSheet("))
+        assertTrue(page.contains("SteamGiftAction.ADD_TO_LIBRARY"))
+        assertTrue(page.contains("SteamGiftAction.DECLINE"))
+        assertTrue(page.contains("FilterChip("))
+        assertTrue(page.contains("heightIn(min = 48.dp)"))
+        assertTrue(host.contains("showNotificationsPage"))
+        assertTrue(host.contains("SteamNotificationsScreen("))
+    }
+
+    @Test
     fun officialGiftInboxUrlUsesAccountCommunityInventory() {
         val giftInbox = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/gifts/SteamGiftInbox.kt"

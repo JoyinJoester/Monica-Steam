@@ -4534,6 +4534,10 @@
     <string name="steam_notifications_cached">Showing the last successful sync while Steam is unavailable.</string>
     <string name="steam_notifications_unread_summary">%1$d unread notifications</string>
     <string name="steam_notifications_unread">unread</string>
+    <string name="steam_notifications_filter_all">All</string>
+    <string name="steam_notifications_filter_actions">Action required</string>
+    <string name="steam_notifications_action_summary">%1$d gifts · %2$d friend requests</string>
+    <string name="steam_notifications_open_detail">Open notification details</string>
     <string name="steam_notifications_gifts">gifts</string>
     <string name="steam_notifications_friends">friends</string>
     <string name="steam_notifications_family">family</string>
