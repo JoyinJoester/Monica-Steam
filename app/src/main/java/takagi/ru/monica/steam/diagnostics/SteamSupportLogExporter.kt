@@ -14,16 +14,20 @@ object SteamSupportLogExporter {
         runCatching { SteamDiagLogger.initialize(context.applicationContext) }
         val persistedCrash = SteamCrashDiagnostics.readLastCrash(context.applicationContext)
         val appLogs = readLogcat(
+            context,
             "logcat", "-d", "-v", "threadtime", "--pid",
             android.os.Process.myPid().toString(), "-t", "700", "*:V"
         )
         val mainBufferLogs = readLogcat(
+            context,
             "logcat", "-d", "-b", "main", "-v", "threadtime", "-t", "700", "*:V"
         )
         val crashLogs = readLogcat(
+            context,
             "logcat", "-d", "-b", "crash", "-v", "threadtime", "-t", "500", "*:V"
         )
         val systemLogs = readLogcat(
+            context,
             "logcat", "-d", "-b", "system", "-v", "threadtime", "-t", "500",
             "AndroidRuntime:E", "System.err:W", "libc:E", "*:S"
         )
@@ -60,15 +64,15 @@ object SteamSupportLogExporter {
         )
     }
 
-    private fun readLogcat(vararg command: String): String = runCatching {
-        ProcessBuilder(*command)
-            .redirectErrorStream(true)
-            .start()
-            .let { process ->
-                process.inputStream.bufferedReader().use { it.readText() }
-                    .also { process.waitFor() }
-            }
-    }.getOrDefault("")
+    private fun readLogcat(context: Context, vararg command: String): String {
+        val result = LogcatCommandRunner.read(context.cacheDir, command)
+        return when {
+            result.timedOut -> "Logcat timed out: ${result.error.orEmpty()}"
+            result.succeeded -> result.output
+            result.output.isNotBlank() -> result.output
+            else -> "Logcat unavailable: ${result.error ?: "exit=${result.exitCode}"}"
+        }
+    }
 
     private val DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 }

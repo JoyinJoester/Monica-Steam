@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.settings
 
 import java.io.File
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -28,6 +29,21 @@ class DeveloperLogShareGuardTest {
         assertTrue(source.contains("ClipboardManager"))
         assertTrue(source.contains("setPrimaryClip"))
         assertTrue(source.contains("R.string.developer_copy_logs"))
+    }
+
+    @Test
+    fun developerLogDialogUsesTimedCollectionAndActivityLifecycleForSharing() {
+        val source = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt"
+        ).readText()
+        val dialog = source
+            .substringAfter("fun DebugLogsDialog(")
+            .substringBefore("private fun DeveloperLogLineItem(")
+
+        assertTrue(source.contains("LogcatCommandRunner.read("))
+        assertTrue(source.contains("lifecycleScope.launch"))
+        assertTrue(source.contains("catch (cancelled: CancellationException)"))
+        assertFalse(dialog.contains("rememberCoroutineScope()"))
     }
 
     private fun projectFile(path: String): File {

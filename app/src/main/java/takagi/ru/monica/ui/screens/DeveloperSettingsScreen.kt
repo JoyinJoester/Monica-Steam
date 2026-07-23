@@ -3,10 +3,12 @@ package takagi.ru.monica.ui.screens
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -60,6 +62,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -73,11 +76,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.BuildConfig
@@ -91,6 +98,7 @@ import takagi.ru.monica.mdbx.MdbxDiagLogger
 import takagi.ru.monica.passkey.PasskeyValidationDiagnostics
 import takagi.ru.monica.security.SecurityDiagLogger
 import takagi.ru.monica.security.SessionManager
+import takagi.ru.monica.steam.diagnostics.LogcatCommandRunner
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.diagnostics.SteamCrashDiagnostics
 import takagi.ru.monica.viewmodel.SettingsViewModel
@@ -108,6 +116,7 @@ fun DeveloperSettingsScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val activity = remember(context) { context.findComponentActivity() }
     val settings by viewModel.settings.collectAsState()
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
@@ -245,26 +254,11 @@ fun DeveloperSettingsScreen(
                     title = stringResource(R.string.developer_share_logs),
                     subtitle = stringResource(R.string.developer_share_logs_desc),
                     onClick = {
-                        scope.launch {
-                            try {
-                                val snapshot = DeveloperLogDebugHelper.collectLogs(context)
-                                val shareIntent =
-                                    DeveloperLogDebugHelper.createShareIntent(context, snapshot.report)
-                                context.startActivity(
-                                    Intent.createChooser(
-                                        shareIntent,
-                                        context.getString(R.string.developer_share_title)
-                                    )
-                                )
-                            } catch (e: Exception) {
-                                Toast.makeText(
-                                    context,
-                                    context.getString(
-                                        R.string.developer_share_failed,
-                                        e.message ?: "unknown"
-                                    ),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                        if (activity == null) {
+                            showDeveloperLogShareFailure(context, "activity unavailable")
+                        } else {
+                            launchDeveloperLogShare(activity, context) {
+                                DeveloperLogDebugHelper.collectLogs(context).report
                             }
                         }
                     }
@@ -511,7 +505,7 @@ fun DebugLogsDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
+    val activity = remember(context) { context.findComponentActivity() }
     var snapshot by remember {
         mutableStateOf(
             DeveloperLogSnapshot(
@@ -522,11 +516,14 @@ fun DebugLogsDialog(
     }
     var isLoading by remember { mutableStateOf(true) }
     var filter by remember { mutableStateOf(DeveloperLogFilter.ALL) }
+    var refreshRequest by remember { mutableIntStateOf(0) }
 
     suspend fun refreshLogs() {
         isLoading = true
         snapshot = try {
             DeveloperLogDebugHelper.collectLogs(context)
+        } catch (cancelled: CancellationException) {
+            throw cancelled
         } catch (e: Exception) {
             DeveloperLogSnapshot(
                 report = context.getString(R.string.developer_load_failed, e.message ?: "unknown"),
@@ -536,7 +533,7 @@ fun DebugLogsDialog(
         isLoading = false
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(refreshRequest) {
         refreshLogs()
     }
 
@@ -599,28 +596,10 @@ fun DebugLogsDialog(
             ).show()
             return
         }
-        scope.launch {
-            try {
-                val shareIntent = DeveloperLogDebugHelper.createShareIntent(
-                    context,
-                    snapshot.report
-                )
-                context.startActivity(
-                    Intent.createChooser(
-                        shareIntent,
-                        context.getString(R.string.developer_share_title)
-                    )
-                )
-            } catch (error: Exception) {
-                Toast.makeText(
-                    context,
-                    context.getString(
-                        R.string.developer_share_failed,
-                        error.message ?: "unknown"
-                    ),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        if (activity == null) {
+            showDeveloperLogShareFailure(context, "activity unavailable")
+        } else {
+            launchDeveloperLogShare(activity, context) { snapshot.report }
         }
     }
 
@@ -644,7 +623,7 @@ fun DebugLogsDialog(
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(
-                    onClick = { scope.launch { refreshLogs() } },
+                    onClick = { refreshRequest++ },
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
@@ -797,6 +776,43 @@ fun DebugLogsDialog(
     )
 }
 
+private fun launchDeveloperLogShare(
+    activity: ComponentActivity,
+    context: Context,
+    reportProvider: suspend () -> String
+) {
+    activity.lifecycleScope.launch {
+        try {
+            val report = reportProvider()
+            val shareIntent = DeveloperLogDebugHelper.createShareIntent(context, report)
+            activity.startActivity(
+                Intent.createChooser(
+                    shareIntent,
+                    context.getString(R.string.developer_share_title)
+                )
+            )
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            showDeveloperLogShareFailure(context, error.message ?: "unknown")
+        }
+    }
+}
+
+private fun showDeveloperLogShareFailure(context: Context, reason: String) {
+    Toast.makeText(
+        context,
+        context.getString(R.string.developer_share_failed, reason),
+        Toast.LENGTH_SHORT
+    ).show()
+}
+
+private tailrec fun Context.findComponentActivity(): ComponentActivity? = when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.findComponentActivity()
+    else -> null
+}
+
 @Composable
 private fun DeveloperLogLineItem(line: DeveloperLogLine) {
     val textColor = when (line.level) {
@@ -842,6 +858,14 @@ private data class DeveloperLogSnapshot(
     val lines: List<DeveloperLogLine>
 )
 
+private data class DeveloperLogcatSnapshot(
+    val autofillTags: String,
+    val appProcess: String,
+    val crash: String,
+    val main: String,
+    val system: String
+)
+
 private data class ClearLogsResult(
     val logcatCleared: Boolean,
     val reason: String?
@@ -873,62 +897,57 @@ private object DeveloperLogDebugHelper {
         val persistedCrash = runCatching {
             SteamCrashDiagnostics.readLastCrash(context.applicationContext)
         }.getOrDefault("")
-        val autofillTagLogs = readAutofillTagLogs()
-        val appProcessLogs = readLogcat(
-            arrayOf(
-                "logcat",
-                "-d",
-                "-v",
-                "threadtime",
-                "--pid",
-                android.os.Process.myPid().toString(),
-                "-t",
-                "400",
-                "*:V"
+        val logcat = coroutineScope {
+            val autofillTags = async { readAutofillTagLogs(context) }
+            val appProcess = async {
+                readLogcat(
+                    context,
+                    arrayOf(
+                        "logcat", "-d", "-v", "threadtime", "--pid",
+                        android.os.Process.myPid().toString(), "-t", "400", "*:V"
+                    )
+                )
+            }
+            val crash = async {
+                readLogcat(
+                    context,
+                    arrayOf(
+                        "logcat", "-d", "-b", "crash", "-v", "threadtime",
+                        "-t", "300", "*:S"
+                    )
+                )
+            }
+            val main = async {
+                readLogcat(
+                    context,
+                    arrayOf(
+                        "logcat", "-d", "-b", "main", "-v", "threadtime",
+                        "-t", "300", "*:V"
+                    )
+                )
+            }
+            val system = async {
+                readLogcat(
+                    context,
+                    arrayOf(
+                        "logcat", "-d", "-b", "system", "-v", "threadtime",
+                        "-t", "300", "AndroidRuntime:E", "System.err:W", "libc:E", "*:S"
+                    )
+                )
+            }
+            DeveloperLogcatSnapshot(
+                autofillTags = autofillTags.await(),
+                appProcess = appProcess.await(),
+                crash = crash.await(),
+                main = main.await(),
+                system = system.await()
             )
-        )
-        val crashLogs = readLogcat(
-            arrayOf(
-                "logcat",
-                "-d",
-                "-b",
-                "crash",
-                "-v",
-                "threadtime",
-                "-t",
-                "300",
-                "*:S"
-            )
-        )
-        val mainBufferLogs = readLogcat(
-            arrayOf(
-                "logcat",
-                "-d",
-                "-b",
-                "main",
-                "-v",
-                "threadtime",
-                "-t",
-                "300",
-                "*:V"
-            )
-        )
-        val systemBufferLogs = readLogcat(
-            arrayOf(
-                "logcat",
-                "-d",
-                "-b",
-                "system",
-                "-v",
-                "threadtime",
-                "-t",
-                "300",
-                "AndroidRuntime:E",
-                "System.err:W",
-                "libc:E",
-                "*:S"
-            )
-        )
+        }
+        val autofillTagLogs = logcat.autofillTags
+        val appProcessLogs = logcat.appProcess
+        val crashLogs = logcat.crash
+        val mainBufferLogs = logcat.main
+        val systemBufferLogs = logcat.system
         val selectedLogs = buildString {
             if (persistedCrash.isNotBlank()) {
                 appendLine("---- persisted-crash ----")
@@ -1115,25 +1134,18 @@ private object DeveloperLogDebugHelper {
         }
         SteamCrashDiagnostics.clear(context.applicationContext)
 
-        val process = runCatching {
-            ProcessBuilder("logcat", "-c")
-                .redirectErrorStream(true)
-                .start()
-        }.getOrElse { error ->
-            return@withContext ClearLogsResult(
-                logcatCleared = false,
-                reason = error.message
-            )
-        }
-
-        val output = process.inputStream.bufferedReader().use { it.readText() }.trim()
-        val exitCode = runCatching { process.waitFor() }.getOrDefault(-1)
-        if (exitCode == 0) {
+        val result = LogcatCommandRunner.read(
+            cacheDir = context.cacheDir,
+            command = arrayOf("logcat", "-c")
+        )
+        if (result.succeeded) {
             ClearLogsResult(logcatCleared = true, reason = null)
         } else {
             ClearLogsResult(
                 logcatCleared = false,
-                reason = if (output.isNotBlank()) output else "exit=$exitCode"
+                reason = result.error
+                    ?: result.output.takeIf(String::isNotBlank)
+                    ?: "exit=${result.exitCode ?: "unknown"}"
             )
         }
     }
@@ -1178,22 +1190,17 @@ private object DeveloperLogDebugHelper {
             }
     }
 
-    private fun readLogcat(command: Array<String>): String {
-        val process = runCatching {
-            ProcessBuilder(*command)
-                .redirectErrorStream(true)
-                .start()
-        }.getOrNull() ?: return ""
-
-        val output = runCatching {
-            process.inputStream.bufferedReader().use { it.readText() }
-        }.getOrDefault("")
-
-        runCatching { process.waitFor() }
-        return output.trim()
+    private fun readLogcat(context: Context, command: Array<String>): String {
+        val result = LogcatCommandRunner.read(context.cacheDir, command)
+        return when {
+            result.timedOut -> "[WARN] logcat timed out: ${result.error.orEmpty()}"
+            result.succeeded -> result.output
+            result.output.isNotBlank() -> result.output
+            else -> "[WARN] logcat unavailable: ${result.error ?: "exit=${result.exitCode}"}"
+        }
     }
 
-    private fun readAutofillTagLogs(): String {
+    private fun readAutofillTagLogs(context: Context): String {
         val command = mutableListOf(
             "logcat",
             "-d",
@@ -1204,7 +1211,7 @@ private object DeveloperLogDebugHelper {
         ).apply {
             addAll(AUTOFILL_LOG_TAGS)
         }.toTypedArray()
-        return readLogcat(command)
+        return readLogcat(context, command)
     }
 
     private fun parseLines(raw: String): List<DeveloperLogLine> {
