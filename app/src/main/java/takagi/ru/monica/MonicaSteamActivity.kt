@@ -6,17 +6,10 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,26 +17,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FloatingToolbarDefaults
-import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,11 +43,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -68,7 +52,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 import takagi.ru.monica.steam.navigation.SteamDockPreferences
 import takagi.ru.monica.steam.navigation.SteamDockTab
-import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.navigation.ui.SteamEssentialsFloatingToolbar
+import takagi.ru.monica.steam.navigation.ui.SteamToolbarItem
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.ThemeMode
@@ -82,9 +67,6 @@ import takagi.ru.monica.steam.health.ui.SteamHealthScreen
 import takagi.ru.monica.steam.library.ui.SteamLibraryScreen
 import takagi.ru.monica.steam.token.ui.SteamScreen
 import takagi.ru.monica.steam.foundation.ui.setSteamUiScaledContent
-import takagi.ru.monica.steam.foundation.ui.SteamAccountPickerSheet
-import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
-import takagi.ru.monica.steam.organization.presentation.SteamGlobalAccountViewModel
 import takagi.ru.monica.steam.store.ui.SteamStoreScreen
 import takagi.ru.monica.steam.alerts.data.SteamAlertScheduler
 import takagi.ru.monica.steam.diagnostics.SteamCrashDiagnostics
@@ -153,12 +135,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val steamSettingsViewModel: SettingsViewModel = viewModel {
                     SettingsViewModel(settingsManager)
                 }
-                val globalAccountViewModel: SteamGlobalAccountViewModel = viewModel(
-                    factory = SteamGlobalAccountViewModel.factory(
-                        this@MonicaSteamActivity.applicationContext
-                    )
-                )
-                val globalAccountState by globalAccountViewModel.uiState.collectAsState()
                 val passwordDatabase = remember {
                     PasswordDatabase.getDatabase(this@MonicaSteamActivity.applicationContext)
                 }
@@ -445,14 +421,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     order = dockOrder,
                                     selected = currentPage.toDockTab(),
                                     showProgress = currentPage == MonicaSteamPage.LIBRARY && libraryRefreshing,
-                                    accounts = globalAccountState.accounts,
-                                    selectedAccount = globalAccountState.selectedAccount,
                                     onSelected = { tab ->
                                         pageHistory = emptyList()
                                         currentPage = tab.toPage()
-                                    },
-                                    onSelectAccount = { account ->
-                                        globalAccountViewModel.selectAccount(account.id)
                                     }
                                 )
                             }
@@ -511,20 +482,9 @@ private fun SteamStandaloneDock(
     order: List<SteamDockTab>,
     selected: SteamDockTab,
     showProgress: Boolean,
-    accounts: List<SteamAccount>,
-    selectedAccount: SteamAccount?,
-    onSelected: (SteamDockTab) -> Unit,
-    onSelectAccount: (SteamAccount) -> Unit
+    onSelected: (SteamDockTab) -> Unit
 ) {
-    // Interaction pattern adapted from EssentialsFloatingToolbar (MIT).
-    // See THIRD_PARTY_NOTICES.md for attribution and license text.
-    val configuration = LocalConfiguration.current
-    val fontScale = LocalDensity.current.fontScale
-    val shouldHideLabel = fontScale > 1.25f || configuration.screenWidthDp < 400
     val tabs = SteamDockTab.sanitizeOrder(order)
-    var showAccountPicker by rememberSaveable { mutableStateOf(false) }
-    val onAccountClick = { showAccountPicker = true }
-    val accountActionDescription = stringResource(R.string.steam_switch_account)
 
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -541,121 +501,18 @@ private fun SteamStandaloneDock(
             )
         }
 
-        HorizontalFloatingToolbar(
+        SteamEssentialsFloatingToolbar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(start = 16.dp, end = 16.dp, bottom = 0.dp),
-            expanded = true,
-            floatingActionButton = {
-                IconButton(
-                    onClick = onAccountClick,
-                    modifier = Modifier
-                        .size(56.dp)
-                        .semantics { contentDescription = accountActionDescription },
-                    colors = IconButtonDefaults.iconButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onSurface
-                    )
-                ) {
-                    if (selectedAccount != null) {
-                        SteamAvatarImage(account = selectedAccount, size = 48.dp)
-                    } else {
-                        Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = null,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
-                }
-            },
-            colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(
-                toolbarContentColor = MaterialTheme.colorScheme.background,
-                toolbarContainerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            SteamDockTab.sanitizeOrder(order).forEachIndexed { index, tab ->
-                val isSelected = tab == selected
-                val itemWidth by animateDpAsState(
-                    targetValue = 48.dp,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    ),
-                    label = "steam_dock_item_width_${tab.name}"
+                .zIndex(1f),
+            selectedIndex = tabs.indexOf(selected),
+            items = tabs.map { tab ->
+                SteamToolbarItem(
+                    icon = tab.icon(),
+                    label = tab.label(),
+                    onClick = { onSelected(tab) }
                 )
-                val labelWidth by animateDpAsState(
-                    targetValue = if (isSelected && !shouldHideLabel) 80.dp else 0.dp,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    ),
-                    label = "steam_dock_label_width_${tab.name}"
-                )
-                val spacerWidth by animateDpAsState(
-                    targetValue = if (index < tabs.lastIndex) 8.dp else 0.dp,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    ),
-                    label = "steam_dock_spacing_${tab.name}"
-                )
-
-                IconButton(
-                    onClick = { onSelected(tab) },
-                    modifier = Modifier
-                        .width(itemWidth + labelWidth)
-                        .height(48.dp),
-                    colors = if (isSelected) {
-                        IconButtonDefaults.filledIconButtonColors(
-                            contentColor = MaterialTheme.colorScheme.primary,
-                            containerColor = MaterialTheme.colorScheme.background
-                        )
-                    } else {
-                        IconButtonDefaults.iconButtonColors(
-                            contentColor = MaterialTheme.colorScheme.background,
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = tab.icon(),
-                            contentDescription = tab.label(),
-                            modifier = Modifier.size(24.dp)
-                        )
-                        if (isSelected && !shouldHideLabel) {
-                            Spacer(Modifier.width(8.dp))
-                            Text(
-                                text = tab.label(),
-                                style = MaterialTheme.typography.labelLarge,
-                                maxLines = 1,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.basicMarquee()
-                            )
-                        }
-                    }
-                }
-
-                if (index < tabs.lastIndex) {
-                    Spacer(Modifier.width(spacerWidth))
-                }
             }
-        }
-    }
-
-    if (showAccountPicker) {
-        SteamAccountPickerSheet(
-            accounts = accounts,
-            selectedAccountId = selectedAccount?.id,
-            onSelectAccount = { account ->
-                onSelectAccount(account)
-                showAccountPicker = false
-            },
-            onDismissRequest = { showAccountPicker = false }
         )
     }
 }

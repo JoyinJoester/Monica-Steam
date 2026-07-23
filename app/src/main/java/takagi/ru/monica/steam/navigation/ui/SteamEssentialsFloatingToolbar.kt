@@ -1,0 +1,146 @@
+package takagi.ru.monica.steam.navigation.ui
+
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.FloatingToolbarScrollBehavior
+import androidx.compose.material3.HorizontalFloatingToolbar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+
+internal data class SteamToolbarItem(
+    val icon: ImageVector,
+    val label: String,
+    val onClick: () -> Unit,
+    val hasBadge: Boolean = false
+)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+internal fun SteamEssentialsFloatingToolbar(
+    modifier: Modifier = Modifier,
+    items: List<SteamToolbarItem>,
+    selectedIndex: Int = -1,
+    floatingActionButton: (@Composable () -> Unit)? = null,
+    scrollBehavior: FloatingToolbarScrollBehavior? = null,
+    expanded: Boolean = true
+) {
+    val fontScale = LocalDensity.current.fontScale
+    val shouldHideLabel = fontScale > 1.25f
+
+    HorizontalFloatingToolbar(
+        modifier = modifier
+            .windowInsetsPadding(WindowInsets.navigationBars)
+            .padding(start = 16.dp, end = 16.dp, bottom = 0.dp),
+        expanded = expanded,
+        floatingActionButton = floatingActionButton ?: {},
+        scrollBehavior = scrollBehavior,
+        colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(
+            toolbarContentColor = MaterialTheme.colorScheme.onSurface,
+            toolbarContainerColor = MaterialTheme.colorScheme.primary
+        )
+    ) {
+        items.forEachIndexed { index, item ->
+            val isSelected = selectedIndex == index
+            val itemWidth by animateDpAsState(
+                targetValue = if (expanded || isSelected) 48.dp else 0.dp,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                ),
+                label = "steam_toolbar_item_width_$index"
+            )
+            val labelWidth by animateDpAsState(
+                targetValue = if (isSelected && !shouldHideLabel) 80.dp else 0.dp,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                ),
+                label = "steam_toolbar_label_width_$index"
+            )
+            val spacerWidth by animateDpAsState(
+                targetValue = if (index < items.lastIndex) 8.dp else 0.dp,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                ),
+                label = "steam_toolbar_spacer_width_$index"
+            )
+
+            if (itemWidth > 0.dp || isSelected) {
+                IconButton(
+                    onClick = item.onClick,
+                    modifier = Modifier
+                        .width(itemWidth + labelWidth)
+                        .height(48.dp),
+                    colors = if (isSelected) {
+                        IconButtonDefaults.filledIconButtonColors(
+                            contentColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.background
+                        )
+                    } else {
+                        IconButtonDefaults.iconButtonColors(
+                            contentColor = MaterialTheme.colorScheme.background,
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    ) {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.label,
+                            tint = if (isSelected) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.background
+                            },
+                            modifier = Modifier.size(24.dp)
+                        )
+                        if (isSelected && !shouldHideLabel) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = item.label,
+                                style = MaterialTheme.typography.labelLarge,
+                                maxLines = 1,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.basicMarquee()
+                            )
+                        }
+                    }
+                }
+
+                if (index < items.lastIndex) {
+                    Spacer(modifier = Modifier.width(spacerWidth))
+                }
+            }
+        }
+    }
+}
