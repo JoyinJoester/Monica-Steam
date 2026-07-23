@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-好友数据层、缓存、筛选状态、M3 页面和二级导航已经实现，正在执行全量验证。
+好友数据层、缓存、筛选状态、M3 页面和二级导航均已完成，并已推送 main。
 
 ## 设计约束
 
@@ -14,10 +14,14 @@
 
 形态：single-full
 
-进度：5/6
+进度：6/6
 
-当前：全量单元测试、Kotlin 编译、提交与推送
+当前：完成
 
 文件：`.codex-tasks/20260723-steam-friends/TODO.csv`
 
-下一步：执行全量测试和 Kotlin 编译，检查改动后提交并推送 main。
+下一步：等待真机验证 Steam 账号的好友隐私设置与会话状态。
+
+## 验证结果
+
+151 个测试套件，558 项测试，0 failures，0 errors，1 skipped。`:app:compileDebugKotlin` 通过。功能提交 `6cf5ca6` 已推送至 `origin/main`。
