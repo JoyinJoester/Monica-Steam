@@ -24,22 +24,21 @@ class SteamFriendsIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
 
-        assertTrue(activity.contains("MonicaSteamPage.FRIENDS"))
-        assertTrue(activity.contains("navigateTo(MonicaSteamPage.FRIENDS)"))
-        assertTrue(activity.contains("SteamFriendsScreen("))
+        assertFalse(activity.contains("MonicaSteamPage.FRIENDS"))
+        assertFalse(activity.contains("SteamFriendsScreen("))
         val dockPages = activity
             .substringAfter("private fun MonicaSteamPage.isDockPage()")
             .substringBefore("private fun MonicaSteamPage.toDockTab()")
-        assertTrue(dockPages.contains("MonicaSteamPage.FRIENDS"))
-        assertTrue(dockPages.substringAfter("MonicaSteamPage.FRIENDS").contains("false"))
+        assertFalse(dockPages.contains("MonicaSteamPage.FRIENDS"))
         assertFalse(
             dock.substringAfter("enum class SteamDockTab").substringBefore(";")
                 .contains("FRIENDS")
         )
-        assertTrue(tokenScreen.contains("onOpenFriends"))
-        assertTrue(tokenScreen.contains("Icons.Default.Groups"))
-        assertTrue(friendsScreen.contains("ExpressiveTopBar("))
-        assertTrue(friendsScreen.contains("Modifier.statusBarsPadding()"))
+        assertTrue(tokenScreen.contains("SteamSection.FRIENDS"))
+        assertTrue(tokenScreen.contains("SteamFriendsScreen("))
+        assertFalse(friendsScreen.contains("ExpressiveTopBar("))
+        assertFalse(friendsScreen.contains("Scaffold("))
+        assertFalse(friendsScreen.contains("onNavigateBack: () -> Unit"))
         assertTrue(friendsScreen.contains("BackHandler"))
         assertTrue(friendsScreen.contains("easyNotesScreenEnter()"))
         assertTrue(friendsList.contains("FlowRow("))
@@ -91,7 +90,7 @@ class SteamFriendsIntegrationGuardTest {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
-        assertTrue(activity.contains("steam.friends.ui.SteamFriendsScreen"))
+        assertFalse(activity.contains("steam.friends.ui.SteamFriendsScreen"))
         assertFalse(activity.contains("steam.friends.data"))
         assertFalse(activity.contains("steam.friends.presentation"))
     }

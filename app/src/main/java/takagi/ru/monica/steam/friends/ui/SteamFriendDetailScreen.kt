@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -29,9 +28,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,51 +40,44 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.domain.SteamFriend
-import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
 
 @Composable
 internal fun SteamFriendDetailScreen(
     friend: SteamFriend,
-    onNavigateBack: () -> Unit,
-    snackbarHostState: SnackbarHostState
+    onNavigateBack: () -> Unit
 ) {
     val context = LocalContext.current
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = {
-            ExpressiveTopBar(
-                modifier = Modifier.statusBarsPadding(),
-                title = stringResource(R.string.steam_friend_details_title),
-                searchQuery = "",
-                onSearchQueryChange = {},
-                isSearchExpanded = false,
-                onSearchExpandedChange = {},
-                collapsedTitleEndPadding = 76.dp,
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { openSteamProfile(context, friend) }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.OpenInNew,
-                            contentDescription = stringResource(R.string.steam_friend_open_profile)
-                        )
-                    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
+    ) {
+        item(key = "friend-detail-actions") {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back)
+                    )
                 }
-            )
+                Text(
+                    text = stringResource(R.string.steam_friend_details_title),
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = { openSteamProfile(context, friend) }) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.OpenInNew,
+                        contentDescription = stringResource(R.string.steam_friend_open_profile)
+                    )
+                }
+            }
         }
-    ) { contentPadding ->
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(contentPadding),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
             item(key = "friend-detail-hero") { FriendDetailHero(friend) }
             if (friend.isPlaying) {
                 item(key = "friend-detail-game") {
@@ -154,7 +143,6 @@ internal fun SteamFriendDetailScreen(
                     Text(stringResource(R.string.steam_friend_open_profile))
                 }
             }
-        }
     }
 }
 

@@ -60,7 +60,6 @@ import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.security.SteamAppLockGate
-import takagi.ru.monica.steam.friends.ui.SteamFriendsScreen
 import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
 import takagi.ru.monica.steam.backup.ui.SteamBackupScreen
 import takagi.ru.monica.steam.health.ui.SteamHealthScreen
@@ -88,7 +87,6 @@ private enum class MonicaSteamPage {
     STEAM,
     SCANNER,
     HEALTH,
-    FRIENDS,
     LIBRARY,
     STORE,
     BACKUP,
@@ -311,13 +309,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                             )
                         }
 
-                        MonicaSteamPage.FRIENDS -> {
-                            SteamFriendsScreen(
-                                onNavigateBack = { navigateBack() },
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-
                         MonicaSteamPage.LIBRARY -> {
                             SteamLibraryScreen(
                                 onNavigateBack = { navigateBack() },
@@ -390,9 +381,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
 
                         MonicaSteamPage.STEAM -> {
                             SteamScreen(
-                                onOpenFriends = {
-                                    navigateTo(MonicaSteamPage.FRIENDS)
-                                },
                                 onOpenHealth = {
                                     navigateTo(MonicaSteamPage.HEALTH)
                                 },
@@ -444,7 +432,6 @@ private fun MonicaSteamPage.isDockPage(): Boolean = when (this) {
     MonicaSteamPage.SETTINGS -> true
     MonicaSteamPage.SCANNER,
     MonicaSteamPage.HEALTH,
-    MonicaSteamPage.FRIENDS,
     MonicaSteamPage.BACKUP -> false
     MonicaSteamPage.MDBX,
     MonicaSteamPage.MDBX_CREATE,

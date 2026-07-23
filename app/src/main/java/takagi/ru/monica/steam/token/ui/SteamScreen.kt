@@ -194,6 +194,7 @@ import takagi.ru.monica.steam.organization.SteamAccountOrganizer
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationSummary
 import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
+import takagi.ru.monica.steam.friends.ui.SteamFriendsScreen
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
@@ -253,6 +254,12 @@ private enum class SteamSection(
         labelRes = R.string.steam_section_confirmations,
         icon = Icons.Default.VerifiedUser,
         searchHintRes = R.string.steam_search_confirmations_hint,
+        supportsRefresh = true
+    ),
+    FRIENDS(
+        labelRes = R.string.steam_friends_title,
+        icon = Icons.Default.Groups,
+        searchHintRes = R.string.steam_friends_search_hint,
         supportsRefresh = true
     ),
     NOTIFICATIONS(
@@ -342,7 +349,6 @@ fun SteamScreen(
     showStandaloneSettingsEntry: Boolean = false,
     onOpenStandaloneSettings: () -> Unit = {},
     onOpenHealth: () -> Unit = {},
-    onOpenFriends: () -> Unit = {},
     onOpenLibrary: () -> Unit = {},
     onOpenBackup: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -427,6 +433,7 @@ fun SteamScreen(
     var pendingGiftAction by remember { mutableStateOf<SteamGiftActionRequest?>(null) }
     var giftDeclineNote by rememberSaveable { mutableStateOf("") }
     var showGiftInbox by rememberSaveable { mutableStateOf(false) }
+    var friendsRefreshRequest by rememberSaveable { mutableStateOf(0L) }
     var autoPromptedLoginClientIds by remember(selectedAccount?.id) { mutableStateOf<Set<Long>>(emptySet()) }
     val pendingConfirmationCount = maxOf(
         if (selectedAccount?.canUseConfirmations == true) uiState.confirmations.size else 0,
@@ -632,7 +639,7 @@ fun SteamScreen(
                 SteamSection.INVENTORY -> viewModel.refreshInventory(steamLanguage)
                 SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
                 SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
-                SteamSection.CODE, SteamSection.CONFIRMATIONS -> Unit
+                SteamSection.CODE, SteamSection.CONFIRMATIONS, SteamSection.FRIENDS -> Unit
                 SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
             }
         }
@@ -1674,7 +1681,6 @@ fun SteamScreen(
                         },
                         searchHint = stringResource(selectedSection.searchHintRes),
                         pendingConfirmationCount = pendingConfirmationCount,
-                        onOpenFriends = onOpenFriends,
                         onOpenSearch = { isSteamSearchExpanded = true },
                         storageSourceMenu = {
                             SteamStorageSourceMenu(
@@ -1718,6 +1724,7 @@ fun SteamScreen(
                                             viewModel.refreshSteamNotifications()
                                         }
                                         SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
+                                        SteamSection.FRIENDS -> friendsRefreshRequest++
                                         SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
                                         SteamSection.INVENTORY -> viewModel.refreshInventory(steamLanguage)
                                         SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
@@ -1910,6 +1917,11 @@ fun SteamScreen(
                                 onClearSelection = viewModel::clearSelectedConfirmations,
                                 onRequestResponse = ::requestProtectedConfirmationAction
                             )
+                            SteamSection.FRIENDS -> SteamFriendsScreen(
+                                searchQuery = steamSearchQuery,
+                                refreshRequest = friendsRefreshRequest,
+                                modifier = Modifier.fillMaxSize()
+                            )
                             SteamSection.NOTIFICATIONS -> SteamNotificationsScreen(
                                 account = selectedAccount,
                                 state = uiState.notifications,
@@ -2035,7 +2047,6 @@ private fun SteamRootTopBar(
     onSearchExpandedChange: (Boolean) -> Unit,
     searchHint: String,
     pendingConfirmationCount: Int,
-    onOpenFriends: () -> Unit,
     onOpenSearch: () -> Unit,
     onOpenStorageSourceMenu: () -> Unit,
     storageSourceMenu: @Composable () -> Unit,
@@ -2050,15 +2061,8 @@ private fun SteamRootTopBar(
         isSearchExpanded = isSearchExpanded,
         onSearchExpandedChange = onSearchExpandedChange,
         searchHint = searchHint,
-        collapsedTitleEndPadding = 228.dp,
+        collapsedTitleEndPadding = 180.dp,
         actions = {
-            IconButton(onClick = onOpenFriends) {
-                Icon(
-                    imageVector = Icons.Default.Groups,
-                    contentDescription = stringResource(R.string.steam_friends_title),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
             Box {
                 IconButton(onClick = onOpenStorageSourceMenu) {
                     Icon(
