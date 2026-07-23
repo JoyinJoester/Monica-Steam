@@ -1,0 +1,4 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,运行全量单元测试,DONE,全部测试无失败,Gradle testDebugUnitTest,2026-07-23T23:43:09+08:00,0,576 个测试；575 通过；1 跳过；0 失败
+2,运行 Kotlin 编译与静态检查,DONE,编译和 diff 检查通过,Gradle compileDebugKotlin,2026-07-23T23:44:08+08:00,0,compileDebugKotlin 与 git diff --check 通过
+3,关闭 Epic 并推送任务记录,DONE,SUBTASKS 全部 DONE,Git status and push,2026-07-23T23:44:08+08:00,0,代码提交 c443187 与 a18a35e 已推送；任务记录待本次提交

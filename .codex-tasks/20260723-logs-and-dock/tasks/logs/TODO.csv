@@ -1,0 +1,5 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,建立日志进程超时与分享生命周期回归测试,DONE,测试覆盖超时销毁与 Activity 生命周期分享,Gradle targeted diagnostics tests,2026-07-23T23:12:29+08:00,0,红灯验证完成；缺失限时命令读取器和 Activity 生命周期分享
+2,实现限时日志命令读取与并行采集,DONE,日志读取不会无限等待,Gradle targeted diagnostics tests,2026-07-23T23:20:55+08:00,1,五类 logcat 并行采集；每个进程 3 秒超时；输出重定向到临时文件
+3,迁移分享协程到 Activity 生命周期,DONE,分享附件创建和 chooser 调用不依赖 dialog scope,Gradle targeted diagnostics tests,2026-07-23T23:20:55+08:00,0,Dialog 不再持有 rememberCoroutineScope；分享由 ComponentActivity.lifecycleScope 执行
+4,验证并提交日志模块,DONE,测试编译静态检查通过并推送,Gradle test compileDebugKotlin,2026-07-23T23:22:11+08:00,0,日志专项测试 Kotlin 编译和静态检查通过；提交 c443187 已推送 main

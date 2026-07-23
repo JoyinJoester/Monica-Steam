@@ -1,0 +1,4 @@
+id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,修复日志采集与文件分享,single-full,DONE,,tasks/logs,日志加载可结束且分享使用附件文件,Gradle targeted diagnostics tests,2026-07-23T23:22:11+08:00,1,限时进程读取并行采集 Activity 生命周期分享；提交 c443187
+2,重制悬浮 Dock 与全局账号切换,single-full,DONE,,tasks/dock,Dock 采用悬浮五项结构且账号切换全局生效,Gradle targeted dock tests,2026-07-23T23:41:15+08:00,1,Essentials 风格悬浮工具栏与全局账号头像；提交 a18a35e
+3,整体验证与任务归档,single-full,DONE,1;2,tasks/validation,全量测试编译静态检查及推送完成,Gradle test compileDebugKotlin,2026-07-23T23:44:08+08:00,0,576 个测试 0 失败；Kotlin 编译和静态检查通过
