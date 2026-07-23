@@ -91,4 +91,4 @@
 - 全局 UI 缩放偏好和 CompositionLocal Provider 迁移至 `steam/foundation/ui`。
 - 所有生产代码和回归测试切换到新路径；legacy `steam/ui` 不再包含 Kotlin 实现。
 - 验证：`:app:compileDebugKotlin` 通过；令牌、导入、搜索、缩放、市场保护、动效及架构共 90 个相关测试通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`7145a1d`。
