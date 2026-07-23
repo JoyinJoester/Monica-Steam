@@ -75,4 +75,4 @@
 - 商店首页/详情、原生购物车、愿望单和官方结算 WebView 位于 `store/ui`；缓存、解析、账号地区与会话策略位于 `store/data`。
 - ViewModel 位于 `store/presentation`，模型与价格/购物车规则位于 `store/domain`。
 - 验证：`:app:compileDebugKotlin`、全部 store 测试、礼物入口、稳定性/动效和架构守卫通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`18fa988`。
