@@ -239,9 +239,24 @@ class SteamViewModel(
     private var inventoryLoadGeneration: Long = 0L
     private var marketQuoteGeneration: Long = 0L
     private var batchQuoteGeneration: Long = 0L
+    private var listingsLoadGeneration: Long = 0L
+    private var accountRequestGeneration: Long = 0L
+    private var authorizedDevicesLoadGeneration: Long = 0L
+    private var storageSourceLoadGeneration: Long = 0L
 
     init {
         SteamDiagLogger.initialize(appContext.applicationContext)
+        securityEventRepository?.let { eventRepository ->
+            viewModelScope.launch {
+                eventRepository.observeRecent().collect { events ->
+                    _uiState.value = _uiState.value.copy(
+                        confirmationHistory = events
+                            .filter { it.type == SteamSecurityEventType.CONFIRMATION_ACTION }
+                            .take(CONFIRMATION_HISTORY_LIMIT)
+                    )
+                }
+            }
+        }
         viewModelScope.launch {
             repository.observeAccounts().collect { accounts ->
                 localAccounts = accounts
@@ -281,6 +296,7 @@ class SteamViewModel(
         forceRefresh: Boolean = false
     ) {
         if (!forceRefresh && source == _uiState.value.storageSource) return
+        val generation = ++storageSourceLoadGeneration
         if (persist) saveSteamStorageSource(appContext, source)
         when (source) {
             SteamStorageSource.Local -> {
@@ -291,14 +307,17 @@ class SteamViewModel(
                     storageSource = SteamStorageSource.Local,
                     clearAccountScopedState = true
                 )
+                setLoading(false)
             }
             is SteamStorageSource.Mdbx -> {
                 viewModelScope.launch {
+                    if (generation != storageSourceLoadGeneration) return@launch
                     val store = mdbxAccountStore
                     if (store == null) {
                         setMessage(R.string.steam_cannot_load_mdbx_accounts)
                         return@launch
                     }
+                    invalidateAccountScopedRequests()
                     _uiState.value = _uiState.value.copy(
                         storageSource = source,
                         accounts = emptyList(),
@@ -315,6 +334,7 @@ class SteamViewModel(
                     runCatching {
                         withContext(Dispatchers.IO) { store.loadAccounts(source.databaseId) }
                     }.onSuccess { records ->
+                        if (!storageSourceRequestIsCurrent(source, generation)) return@onSuccess
                         mdbxAccountRecords = records
                         updateForAccounts(
                             accounts = records.map { it.account },
@@ -323,11 +343,12 @@ class SteamViewModel(
                             clearAccountScopedState = true
                         )
                     }.onFailure { error ->
+                        if (!storageSourceRequestIsCurrent(source, generation)) return@onFailure
                         mdbxAccountRecords = emptyList()
                         _uiState.value = _uiState.value.copy(accounts = emptyList())
                         setMessage(error.message ?: appContext.getString(R.string.steam_cannot_load_mdbx_accounts))
                     }
-                    setLoading(false)
+                    if (storageSourceRequestIsCurrent(source, generation)) setLoading(false)
                 }
             }
         }
@@ -438,17 +459,6 @@ class SteamViewModel(
                 setMessage(R.string.steam_organization_updated)
             }.onFailure { error ->
                 setMessage(error.message ?: appContext.getString(R.string.steam_import_failed))
-            }
-        }
-        securityEventRepository?.let { eventRepository ->
-            viewModelScope.launch {
-                eventRepository.observeRecent().collect { events ->
-                    _uiState.value = _uiState.value.copy(
-                        confirmationHistory = events
-                            .filter { it.type == SteamSecurityEventType.CONFIRMATION_ACTION }
-                            .take(CONFIRMATION_HISTORY_LIMIT)
-                    )
-                }
             }
         }
     }
@@ -858,6 +868,7 @@ class SteamViewModel(
 
     fun refreshConfirmations(silent: Boolean = false) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         viewModelScope.launch {
             if (!silent) setLoading(true)
             runCatching {
@@ -868,6 +879,7 @@ class SteamViewModel(
                     ?: throw IllegalStateException(account.confirmationUnavailableMessage())
                 withContext(Dispatchers.IO) { confirmationService.fetch(freshAccount) }
             }.onSuccess { confirmations ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 _uiState.value = _uiState.value.copy(
                     confirmations = confirmations,
                     selectedConfirmationIds = _uiState.value.selectedConfirmationIds.intersect(confirmations.map { it.id }.toSet())
@@ -883,6 +895,7 @@ class SteamViewModel(
                     )
                 }
             }.onFailure { error ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 if (!silent) setMessage(
                     error.message ?: appContext.getString(R.string.steam_cannot_refresh_confirmations)
                 )
@@ -894,18 +907,19 @@ class SteamViewModel(
                     )
                 }
             }
-            if (!silent) setLoading(false)
+            if (!silent && accountRequestIsCurrent(account.id, generation)) setLoading(false)
         }
     }
 
     fun refreshSteamNotifications(silent: Boolean = false) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         viewModelScope.launch {
             val cached = withContext(Dispatchers.IO) {
                 notificationCache.load(account.steamId)
             }
             if (
-                selectedAccount()?.id == account.id &&
+                accountRequestIsCurrent(account.id, generation) &&
                 _uiState.value.notifications.snapshot == null &&
                 cached != null
             ) {
@@ -913,6 +927,7 @@ class SteamViewModel(
                     it.copy(snapshot = cached, fromCache = true, error = null)
                 }
             }
+            if (!accountRequestIsCurrent(account.id, generation)) return@launch
             if (!silent) {
                 updateNotifications { it.copy(loading = true, error = null) }
             }
@@ -936,7 +951,7 @@ class SteamViewModel(
                     merged to giftResult.exceptionOrNull()
                 }
             }.onSuccess { (snapshot, giftError) ->
-                if (selectedAccount()?.id != account.id) return@onSuccess
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 updateNotifications {
                     it.copy(
                         snapshot = snapshot,
@@ -946,7 +961,7 @@ class SteamViewModel(
                     )
                 }
             }.onFailure { error ->
-                if (selectedAccount()?.id != account.id) return@onFailure
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateNotifications {
                     it.copy(
                         loading = false,
@@ -964,6 +979,7 @@ class SteamViewModel(
         note: String = ""
     ) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         if (_uiState.value.notifications.actionGiftId != null) return
         updateNotifications { it.copy(actionGiftId = gift.id, error = null) }
         viewModelScope.launch {
@@ -976,7 +992,7 @@ class SteamViewModel(
                     giftService.respond(freshAccount, gift, action, note)
                 }
             }.onSuccess { result ->
-                if (selectedAccount()?.id != account.id) return@onSuccess
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 updateNotifications { it.copy(actionGiftId = null) }
                 if (result.success) {
                     setMessage(
@@ -993,7 +1009,7 @@ class SteamViewModel(
                     )
                 }
             }.onFailure { error ->
-                if (selectedAccount()?.id != account.id) return@onFailure
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateNotifications {
                     it.copy(
                         actionGiftId = null,
@@ -1039,6 +1055,7 @@ class SteamViewModel(
 
     fun respondConfirmations(confirmations: List<SteamConfirmation>, accept: Boolean) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         if (confirmations.isEmpty()) return
         viewModelScope.launch {
             setLoading(true)
@@ -1052,6 +1069,7 @@ class SteamViewModel(
                     confirmationService.respondMultiple(freshAccount, confirmations, accept)
                 }
             }.getOrElse { SteamBatchResult(ok = 0, failed = confirmations.size) }
+            if (!accountRequestIsCurrent(account.id, generation)) return@launch
             val highestRisk = confirmations
                 .map { SteamConfirmationRiskEvaluator.evaluate(it).level }
                 .maxByOrNull { it.ordinal }
@@ -1081,6 +1099,7 @@ class SteamViewModel(
 
     fun respondConfirmation(confirmation: SteamConfirmation, accept: Boolean) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         viewModelScope.launch {
             setLoading(true)
             val failureReason = account.confirmationUnavailableMessage()
@@ -1090,6 +1109,7 @@ class SteamViewModel(
                 val freshAccount = ensureSteamSession(account) ?: return@runCatching false
                 withContext(Dispatchers.IO) { confirmationService.respond(freshAccount, confirmation, accept) }
             }.getOrDefault(false)
+            if (!accountRequestIsCurrent(account.id, generation)) return@launch
             val risk = SteamConfirmationRiskEvaluator.evaluate(confirmation)
             recordConfirmationEvent(
                 account = account,
@@ -1112,6 +1132,7 @@ class SteamViewModel(
 
     fun refreshTradeOffers(language: String = "english", silent: Boolean = false) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         if (!silent) {
             updateTradeOffers {
                 it.copy(loading = true, error = null, lastActionResult = null)
@@ -1127,12 +1148,12 @@ class SteamViewModel(
                     tradeOfferService.fetch(freshAccount, language = language)
                 }
             }.onSuccess { snapshot ->
-                if (selectedAccount()?.id != account.id) return@onSuccess
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 updateTradeOffers {
                     it.copy(snapshot = snapshot, loading = false, error = null)
                 }
             }.onFailure { error ->
-                if (selectedAccount()?.id != account.id) return@onFailure
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateTradeOffers {
                     it.copy(
                         loading = false,
@@ -1150,6 +1171,7 @@ class SteamViewModel(
         language: String = "english"
     ) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         if (_uiState.value.tradeOffers.actionLoadingOfferId != null) return
         updateTradeOffers {
             it.copy(
@@ -1168,7 +1190,7 @@ class SteamViewModel(
                     tradeOfferService.respond(freshAccount, offer, action)
                 }
             }.onSuccess { result ->
-                if (selectedAccount()?.id != account.id) return@onSuccess
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 updateTradeOffers {
                     it.copy(
                         actionLoadingOfferId = null,
@@ -1193,7 +1215,7 @@ class SteamViewModel(
                     refreshTradeOffers(language = language, silent = true)
                 }
             }.onFailure { error ->
-                if (selectedAccount()?.id != account.id) return@onFailure
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateTradeOffers {
                     it.copy(
                         actionLoadingOfferId = null,
@@ -1380,6 +1402,7 @@ class SteamViewModel(
         val stacks = state.inventoryStacks.filter { it.item.marketable }
         if (stacks.isEmpty() || state.inventoryValuationLoading) return
         val wallet = state.overview?.wallet ?: SteamWalletInfo.Fallback
+        val generation = inventoryLoadGeneration
         updateInventoryMarket {
             it.copy(
                 inventoryValuationLoading = true,
@@ -1402,6 +1425,7 @@ class SteamViewModel(
                     }
                 }
             }
+            if (generation != inventoryLoadGeneration) return@launch
             val latestStacks = _uiState.value.inventoryMarket.inventoryStacks
             val valuation = SteamMarketAnalytics.inventoryValuation(
                 stacks = latestStacks,
@@ -1426,6 +1450,8 @@ class SteamViewModel(
 
     fun refreshMarketListings(language: String) {
         val account = selectedAccount() ?: return
+        val accountGeneration = accountRequestGeneration
+        val generation = ++listingsLoadGeneration
         updateInventoryMarket {
             it.copy(
                 language = language,
@@ -1447,9 +1473,15 @@ class SteamViewModel(
                     )
                 }
             }.onSuccess { (overview, page) ->
+                if (generation != listingsLoadGeneration ||
+                    !accountRequestIsCurrent(account.id, accountGeneration)
+                ) return@onSuccess
                 updateInventoryMarket { it.copy(overview = overview) }
                 applyListingsPage(page, append = false)
             }.onFailure { error ->
+                if (generation != listingsLoadGeneration ||
+                    !accountRequestIsCurrent(account.id, accountGeneration)
+                ) return@onFailure
                 updateInventoryMarket {
                     it.copy(
                         listingsLoading = false,
@@ -1465,6 +1497,8 @@ class SteamViewModel(
         val state = _uiState.value.inventoryMarket
         val account = selectedAccount() ?: return
         if (!state.listingsHasMore || state.listingsLoading || state.listingsLoadingMore) return
+        val accountGeneration = accountRequestGeneration
+        val generation = listingsLoadGeneration
         updateInventoryMarket { it.copy(listingsLoadingMore = true, listingsError = null) }
         viewModelScope.launch {
             runCatching {
@@ -1478,8 +1512,14 @@ class SteamViewModel(
                     )
                 }
             }.onSuccess { page ->
+                if (generation != listingsLoadGeneration ||
+                    !accountRequestIsCurrent(account.id, accountGeneration)
+                ) return@onSuccess
                 applyListingsPage(page, append = true)
             }.onFailure { error ->
+                if (generation != listingsLoadGeneration ||
+                    !accountRequestIsCurrent(account.id, accountGeneration)
+                ) return@onFailure
                 updateInventoryMarket {
                     it.copy(listingsLoadingMore = false, listingsError = error.message)
                 }
@@ -1642,6 +1682,7 @@ class SteamViewModel(
         autoConfirm: Boolean
     ) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         val validEntries = entries.filter {
             it.stack.item.marketable &&
                 it.priceReceive > 0 &&
@@ -1735,6 +1776,7 @@ class SteamViewModel(
                 }
             }
             outcome.onSuccess { sellOutcome ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 val succeeded = sellOutcome.listedCount > 0
                 updateInventoryMarket { marketState ->
                     val updatedStacks = if (succeeded) {
@@ -1769,6 +1811,7 @@ class SteamViewModel(
                     refreshConfirmations(silent = true)
                 }
             }.onFailure { error ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateInventoryMarket {
                     it.copy(
                         actionLoading = false,
@@ -1789,6 +1832,7 @@ class SteamViewModel(
 
     fun cancelMarketListings(listings: List<SteamMarketListing>) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         val targets = listings
             .filter { it.listingId.isNotBlank() }
             .distinctBy { it.listingId }
@@ -1824,6 +1868,7 @@ class SteamViewModel(
                 }
             }
             result.onSuccess { outcome ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 updateInventoryMarket {
                     it.copy(
                         listings = removeCancelledSteamMarketListings(
@@ -1845,6 +1890,7 @@ class SteamViewModel(
                     )
                 }
             }.onFailure { error ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 updateInventoryMarket {
                     it.copy(
                         actionLoading = false,
@@ -1866,6 +1912,7 @@ class SteamViewModel(
 
     fun refreshPendingLogins(silent: Boolean = false) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         viewModelScope.launch {
             if (!silent) setLoading(true)
             runCatching {
@@ -1876,6 +1923,7 @@ class SteamViewModel(
                     ?: throw IllegalStateException(account.loginApprovalUnavailableMessage())
                 withContext(Dispatchers.IO) { loginApprovalService.pendingLogins(freshAccount) }
             }.onSuccess { pending ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onSuccess
                 val previousSeenTimes = _uiState.value.pendingLogins.associate {
                     it.clientId to it.detectedAtMillis
                 }
@@ -1885,18 +1933,21 @@ class SteamViewModel(
                 }
                 _uiState.value = _uiState.value.copy(pendingLogins = pendingWithSeenTimes)
             }.onFailure { error ->
+                if (!accountRequestIsCurrent(account.id, generation)) return@onFailure
                 if (!silent) setMessage(
                     error.message ?: appContext.getString(R.string.steam_cannot_refresh_logins)
                 )
             }
-            if (!silent) setLoading(false)
+            if (!silent && accountRequestIsCurrent(account.id, generation)) setLoading(false)
         }
     }
 
     fun refreshAuthorizedDevices(accountId: Long, silent: Boolean = false) {
+        val generation = ++authorizedDevicesLoadGeneration
         viewModelScope.launch {
             val storedAccount = accountById(accountId) ?: return@launch
             val account = ensureSteamSession(storedAccount)
+            if (generation != authorizedDevicesLoadGeneration) return@launch
             if (account == null || account.accessToken.isNullOrBlank()) {
                 _uiState.value = _uiState.value.copy(authorizedDevices = emptyList())
                 return@launch
@@ -1905,16 +1956,19 @@ class SteamViewModel(
             runCatching {
                 withContext(Dispatchers.IO) { authorizedDeviceService.fetch(account) }
             }.onSuccess { devices ->
-                if (_uiState.value.accounts.any { it.id == accountId }) {
+                if (generation == authorizedDevicesLoadGeneration &&
+                    _uiState.value.accounts.any { it.id == accountId }
+                ) {
                     _uiState.value = _uiState.value.copy(authorizedDevices = devices)
                 }
             }.onFailure { error ->
+                if (generation != authorizedDevicesLoadGeneration) return@onFailure
                 _uiState.value = _uiState.value.copy(authorizedDevices = emptyList())
                 if (!silent) setMessage(
                     error.message ?: appContext.getString(R.string.steam_cannot_refresh_authorized_devices)
                 )
             }
-            if (!silent) setLoading(false)
+            if (!silent && generation == authorizedDevicesLoadGeneration) setLoading(false)
         }
     }
 
@@ -1961,6 +2015,7 @@ class SteamViewModel(
 
     fun respondPendingLogin(login: SteamPendingLogin, approve: Boolean) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         viewModelScope.launch {
             setLoading(true)
             val failureReason = account.loginApprovalUnavailableMessage()
@@ -1977,6 +2032,7 @@ class SteamViewModel(
                     )
                 }
             }.getOrDefault(false)
+            if (!accountRequestIsCurrent(account.id, generation)) return@launch
             setMessage(if (ok) appContext.getString(R.string.steam_done) else failureReason ?: appContext.getString(R.string.steam_login_response_failed))
             refreshPendingLogins(silent = true)
             setLoading(false)
@@ -1985,6 +2041,7 @@ class SteamViewModel(
 
     fun respondQr(rawQr: String, approve: Boolean) {
         val account = selectedAccount() ?: return
+        val generation = accountRequestGeneration
         val challenge = SteamQrChallenge.parse(rawQr)
         if (challenge == null) {
             setMessage(R.string.steam_invalid_qr_link)
@@ -1999,6 +2056,7 @@ class SteamViewModel(
                 val freshAccount = ensureSteamSession(account) ?: return@runCatching false
                 withContext(Dispatchers.IO) { loginApprovalService.respondToQr(freshAccount, challenge, approve) }
             }.getOrDefault(false)
+            if (!accountRequestIsCurrent(account.id, generation)) return@launch
             setMessage(if (ok) appContext.getString(R.string.steam_done) else failureReason ?: appContext.getString(R.string.steam_qr_response_failed))
             setLoading(false)
         }
@@ -2333,6 +2391,7 @@ class SteamViewModel(
 
     private fun selectRuntimeAccount(id: Long) {
         val state = _uiState.value
+        if (state.selectedAccountId != id) invalidateAccountScopedRequests()
         val accounts = state.accounts.map { account ->
             account.copy(selected = account.id == id)
         }
@@ -2501,11 +2560,13 @@ class SteamViewModel(
         source: SteamStorageSource.Mdbx,
         clearAccountScopedState: Boolean = false
     ) {
+        val generation = storageSourceLoadGeneration
         val store = mdbxAccountStore
             ?: throw IllegalStateException(appContext.getString(R.string.steam_cannot_load_mdbx_accounts))
         val records = withContext(Dispatchers.IO) {
             store.loadAccounts(source.databaseId)
         }
+        if (!storageSourceRequestIsCurrent(source, generation)) return
         mdbxAccountRecords = records
         updateForAccounts(
             accounts = records.map { it.account },
@@ -2517,9 +2578,10 @@ class SteamViewModel(
 
     private suspend fun persistRefreshedSession(
         originalAccount: SteamAccount,
-        refreshedAccount: SteamAccount
+        refreshedAccount: SteamAccount,
+        source: SteamStorageSource
     ) {
-        when (val source = _uiState.value.storageSource) {
+        when (source) {
             SteamStorageSource.Local -> {
                 repository.updateSessionTokens(
                     id = originalAccount.id,
@@ -2555,7 +2617,39 @@ class SteamViewModel(
             ?: state.accounts.firstOrNull()
     }
 
+    private fun invalidateAccountScopedRequests() {
+        accountRequestGeneration++
+        inventoryLoadGeneration++
+        marketQuoteGeneration++
+        batchQuoteGeneration++
+        listingsLoadGeneration++
+        authorizedDevicesLoadGeneration++
+    }
+
+    private fun accountRequestIsCurrent(accountId: Long, generation: Long): Boolean {
+        return steamAccountRequestIsCurrent(
+            state = _uiState.value,
+            accountId = accountId,
+            generation = generation,
+            currentGeneration = accountRequestGeneration
+        )
+    }
+
+    private fun storageSourceRequestIsCurrent(
+        source: SteamStorageSource,
+        generation: Long
+    ): Boolean {
+        return steamStorageSourceRequestIsCurrent(
+            state = _uiState.value,
+            source = source,
+            generation = generation,
+            currentGeneration = storageSourceLoadGeneration
+        )
+    }
+
     private suspend fun ensureSteamSession(account: SteamAccount): SteamAccount? = withContext(Dispatchers.IO) {
+        val source = _uiState.value.storageSource
+        val sourceGeneration = storageSourceLoadGeneration
         if (!account.hasRealSteamId) {
             SteamDiagLogger.append("session_refresh skipped missing_steamid")
             return@withContext null
@@ -2577,12 +2671,14 @@ class SteamViewModel(
                 refreshToken = refreshResult.refreshToken ?: account.refreshToken,
                 steamLoginSecure = "${account.steamId}||${refreshResult.accessToken}"
             )
-            persistRefreshedSession(account, refreshedAccount)
-            _uiState.value = _uiState.value.copy(
-                accounts = _uiState.value.accounts.map { existing ->
-                    if (existing.id == refreshedAccount.id) refreshedAccount else existing
-                }
-            )
+            persistRefreshedSession(account, refreshedAccount, source)
+            if (storageSourceRequestIsCurrent(source, sourceGeneration)) {
+                _uiState.value = _uiState.value.copy(
+                    accounts = _uiState.value.accounts.map { existing ->
+                        if (existing.id == refreshedAccount.id) refreshedAccount else existing
+                    }
+                )
+            }
             SteamDiagLogger.append("session_refresh success refresh_rotated=${!refreshResult.refreshToken.isNullOrBlank()}")
             refreshedAccount
         }
@@ -2600,6 +2696,9 @@ class SteamViewModel(
             ?: accounts.firstOrNull { it.selected }
             ?: accounts.firstOrNull()
         val selectedChanged = previous.selectedAccountId != selected?.id
+        if (selectedChanged || clearAccountScopedState || previous.storageSource != storageSource) {
+            invalidateAccountScopedRequests()
+        }
         val nowSeconds = nowMillis / 1000L
         _uiState.value = previous.copy(
             storageSource = storageSource,
@@ -2753,4 +2852,22 @@ class SteamViewModel(
             }
         }
     }
+}
+
+internal fun steamAccountRequestIsCurrent(
+    state: SteamUiState,
+    accountId: Long,
+    generation: Long,
+    currentGeneration: Long
+): Boolean {
+    return generation == currentGeneration && state.selectedAccountId == accountId
+}
+
+internal fun steamStorageSourceRequestIsCurrent(
+    state: SteamUiState,
+    source: SteamStorageSource,
+    generation: Long,
+    currentGeneration: Long
+): Boolean {
+    return generation == currentGeneration && state.storageSource == source
 }

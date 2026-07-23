@@ -68,6 +68,8 @@ class SteamStoreViewModel(
 ) : ViewModel() {
     private var searchDebounceJob: Job? = null
     private var searchRequestJob: Job? = null
+    private var detailRequestGeneration: Long = 0L
+    private var regionalPriceRequestGeneration: Long = 0L
     private val _uiState = MutableStateFlow(SteamStoreUiState())
     val uiState: StateFlow<SteamStoreUiState> = _uiState.asStateFlow()
 
@@ -99,6 +101,7 @@ class SteamStoreViewModel(
         viewModelScope.launch {
             if (_uiState.value.home == null) {
                 val cached = withContext(Dispatchers.IO) { cache.readHome(accountId) }
+                if (_uiState.value.selectedAccountId != accountId) return@launch
                 if (cached != null) {
                     _uiState.value = _uiState.value.copy(home = cached, homeFromCache = true)
                 }
@@ -191,11 +194,16 @@ class SteamStoreViewModel(
     fun openDetail(appId: Int) {
         val accountId = _uiState.value.selectedAccountId
         val account = selectedAccount()
+        val generation = ++detailRequestGeneration
+        regionalPriceRequestGeneration++
         if (account?.hasRealSteamId == true && !_uiState.value.wishlistLoaded) {
             loadWishlist()
         }
         viewModelScope.launch {
             val cached = withContext(Dispatchers.IO) { cache.readDetail(accountId, appId) }
+            if (generation != detailRequestGeneration ||
+                _uiState.value.selectedAccountId != accountId
+            ) return@launch
             _uiState.value = _uiState.value.copy(
                 detail = cached,
                 detailFromCache = cached != null,
@@ -220,8 +228,23 @@ class SteamStoreViewModel(
                 }
             }
                 .onSuccess { detail ->
-                    if (_uiState.value.selectedAccountId != accountId) return@onSuccess
+                    if (!steamStoreDetailRequestIsCurrent(
+                            state = _uiState.value,
+                            accountId = accountId,
+                            appId = appId,
+                            generation = generation,
+                            currentGeneration = detailRequestGeneration
+                        )
+                    ) return@onSuccess
                     withContext(Dispatchers.IO) { cache.writeDetail(accountId, detail) }
+                    if (!steamStoreDetailRequestIsCurrent(
+                            state = _uiState.value,
+                            accountId = accountId,
+                            appId = appId,
+                            generation = generation,
+                            currentGeneration = detailRequestGeneration
+                        )
+                    ) return@onSuccess
                     _uiState.value = _uiState.value.copy(
                         detail = detail,
                         detailFromCache = false,
@@ -229,7 +252,14 @@ class SteamStoreViewModel(
                     )
                 }
                 .onFailure { error ->
-                    if (_uiState.value.selectedAccountId != accountId) return@onFailure
+                    if (!steamStoreDetailRequestIsCurrent(
+                            state = _uiState.value,
+                            accountId = accountId,
+                            appId = appId,
+                            generation = generation,
+                            currentGeneration = detailRequestGeneration
+                        )
+                    ) return@onFailure
                     _uiState.value = _uiState.value.copy(
                         loadingDetail = false,
                         error = error.message ?: "商品详情加载失败"
@@ -239,6 +269,8 @@ class SteamStoreViewModel(
     }
 
     fun closeDetail() {
+        detailRequestGeneration++
+        regionalPriceRequestGeneration++
         _uiState.value = _uiState.value.copy(
             detail = null,
             loadingDetail = false,
@@ -283,6 +315,7 @@ class SteamStoreViewModel(
             .takeIf { initialState.regionalPricesAppId == appId }
             .orEmpty()
         if (!force && regionalPricesAreReady(memoryPrices)) return
+        val generation = ++regionalPriceRequestGeneration
         _uiState.value = initialState.copy(
             regionalPrices = memoryPrices,
             regionalPricesAppId = appId,
@@ -295,7 +328,7 @@ class SteamStoreViewModel(
                 availablePrices = withContext(Dispatchers.IO) {
                     cache.readRegionalPrices(accountId, appId)
                 }
-                if (!regionalPriceRequestIsCurrent(accountId, appId)) return@launch
+                if (!regionalPriceRequestIsCurrent(accountId, appId, generation)) return@launch
                 if (availablePrices.isNotEmpty()) {
                     _uiState.value = _uiState.value.copy(
                         regionalPrices = availablePrices,
@@ -329,12 +362,13 @@ class SteamStoreViewModel(
                     is SteamLibraryResult.Failure -> prices
                 }
             }
-            if (!regionalPriceRequestIsCurrent(accountId, appId)) return@launch
+            if (!regionalPriceRequestIsCurrent(accountId, appId, generation)) return@launch
             when (result) {
                 is SteamLibraryResult.Success -> {
                     withContext(Dispatchers.IO) {
                         cache.writeRegionalPrices(accountId, appId, result.value)
                     }
+                    if (!regionalPriceRequestIsCurrent(accountId, appId, generation)) return@launch
                     _uiState.value = _uiState.value.copy(
                         regionalPrices = result.value,
                         regionalPricesFromCache = false,
@@ -398,6 +432,7 @@ class SteamStoreViewModel(
             return
         }
         viewModelScope.launch {
+            if (_uiState.value.selectedAccountId != accountId) return@launch
             _uiState.value = _uiState.value.copy(loadingWishlist = true, wishlistError = null)
             runCatching {
                 withContext(Dispatchers.IO) {
@@ -529,6 +564,8 @@ class SteamStoreViewModel(
     private fun resetStoreForAccount(accountId: Long?) {
         searchDebounceJob?.cancel()
         searchRequestJob?.cancel()
+        detailRequestGeneration++
+        regionalPriceRequestGeneration++
         _uiState.value = _uiState.value.copy(
             selectedAccountId = accountId,
             home = null,
@@ -573,9 +610,14 @@ class SteamStoreViewModel(
     fun selectedAccount(): SteamAccount? = _uiState.value.accounts
         .firstOrNull { it.id == _uiState.value.selectedAccountId }
 
-    private fun regionalPriceRequestIsCurrent(accountId: Long?, appId: Int): Boolean {
+    private fun regionalPriceRequestIsCurrent(
+        accountId: Long?,
+        appId: Int,
+        generation: Long
+    ): Boolean {
         val state = _uiState.value
-        return state.selectedAccountId == accountId &&
+        return generation == regionalPriceRequestGeneration &&
+            state.selectedAccountId == accountId &&
             state.detail?.appId == appId &&
             state.regionalPricesAppId == appId
     }
@@ -692,4 +734,17 @@ class SteamStoreViewModel(
             }
         }
     }
+}
+
+internal fun steamStoreDetailRequestIsCurrent(
+    state: SteamStoreUiState,
+    accountId: Long?,
+    appId: Int,
+    generation: Long,
+    currentGeneration: Long
+): Boolean {
+    return generation == currentGeneration &&
+        state.selectedAccountId == accountId &&
+        (state.detail?.appId == appId ||
+            (state.loadingDetail && state.regionalPricesAppId == appId))
 }
