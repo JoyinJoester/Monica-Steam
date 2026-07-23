@@ -29,8 +29,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+
+internal val SteamDockFabClearance = 80.dp
 
 internal data class SteamToolbarItem(
     val icon: ImageVector,
@@ -49,8 +52,12 @@ internal fun SteamEssentialsFloatingToolbar(
     scrollBehavior: FloatingToolbarScrollBehavior? = null,
     expanded: Boolean = true
 ) {
+    val configuration = LocalConfiguration.current
     val fontScale = LocalDensity.current.fontScale
-    val shouldHideLabel = fontScale > 1.25f
+    val screenWidth = configuration.screenWidthDp
+    val isLargeFont = fontScale > 1.25f
+    val isCompactScreen = screenWidth < 400
+    val shouldHideLabel = isLargeFont || (isCompactScreen && items.size > 3)
 
     HorizontalFloatingToolbar(
         modifier = modifier

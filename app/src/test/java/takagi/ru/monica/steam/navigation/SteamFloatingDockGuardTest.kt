@@ -31,12 +31,30 @@ class SteamFloatingDockGuardTest {
         assertFalse(dock.contains("SteamAccountPickerSheet"))
         assertFalse(dock.contains("Icons.Default.QrCodeScanner"))
         assertTrue(dock.contains("WindowInsets.navigationBars"))
+        assertTrue(dock.contains("offset(x = 8.dp)"))
         assertTrue(dock.contains("showProgress"))
         assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(dock.contains("Column(modifier = Modifier.fillMaxWidth())"))
         assertFalse(settings.substringAfter("enum class SteamDockTab").substringBefore(";").contains("SCANNER"))
         assertTrue(notices.contains("Essentials"))
         assertTrue(notices.contains("Copyright (c) 2025 Sameera Sandakelum"))
+    }
+
+    @Test
+    fun dockPagesKeepFloatingActionsAboveTheToolbar() {
+        val toolbar = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamEssentialsFloatingToolbar.kt"
+        ).readText()
+        val token = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
+        ).readText()
+        val store = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+        ).readText()
+
+        assertTrue(toolbar.contains("SteamDockFabClearance"))
+        assertTrue(token.contains("padding(bottom = SteamDockFabClearance)"))
+        assertTrue(store.contains("padding(bottom = SteamDockFabClearance)"))
     }
 
     private fun projectFile(path: String): File {

@@ -189,6 +189,7 @@ import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.gifts.domain.SteamGiftAction
 import takagi.ru.monica.steam.gifts.domain.SteamPendingGift
 import takagi.ru.monica.steam.notifications.ui.SteamNotificationsScreen
+import takagi.ru.monica.steam.navigation.ui.SteamDockFabClearance
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
@@ -1757,6 +1758,7 @@ fun SteamScreen(
             val detailQrAccount = detailAccount?.takeIf { it.canApproveLogins }
             val account = detailQrAccount ?: tokenQrAccount
             AnimatedVisibility(
+                modifier = Modifier.padding(bottom = SteamDockFabClearance),
                 visible = scanQr != null && account != null,
                 enter = fadeIn(animationSpec = tween(160)) +
                     scaleIn(initialScale = 0.9f, animationSpec = tween(180)),
@@ -3652,7 +3654,8 @@ private fun SteamConfirmationsContent(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 24.dp, bottom = 24.dp),
+                    .padding(start = 16.dp, end = 24.dp, bottom = 24.dp)
+                    .padding(bottom = SteamDockFabClearance),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SelectionActionBar(
