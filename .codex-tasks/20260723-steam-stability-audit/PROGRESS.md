@@ -11,13 +11,13 @@
 
 ## Context Recovery Block
 
-- **Current milestone**: #4 — ViewModel 协程与生命周期竞态
+- **Current milestone**: #5 — 完成度审查与最终验证
 - **Current status**: IN_PROGRESS
-- **Last completed**: #3 — Compose 列表 key 与数据边界
+- **Last completed**: #4 — ViewModel 协程与生命周期竞态
 - **Current artifact**: `SUBTASKS.csv`
 - **Key context**: 当前基线测试为 528 通过、1 跳过；用户报告多次随机闪退，优先审查 `requireNotNull(selectedGame)` 和生命周期竞态。
 - **Known issues**: 尚未建立设备级复现环；将先用最小单元回归测试锁定状态竞态。
-- **Next action**: 审查 `SteamViewModel` 和 `SteamStoreViewModel` 的长期 collector、请求取消和过期结果覆盖。
+- **Next action**: 扩大全量测试，执行 `:app:compileDebugKotlin`，并完成独立版依赖/架构审查。
 
 ---
 
@@ -69,3 +69,19 @@
   - `app/src/main/java/takagi/ru/monica/steam/ui/SteamBatchSellSheet.kt` — 库存批量出售 key。
   - `app/src/test/java/...` — 重复数据回归测试。
 - **Next step**: Milestone 4 — ViewModel 协程与生命周期竞态
+
+---
+
+## Milestone 4: ViewModel 协程与生命周期竞态
+
+- **Status**: DONE
+- **What was done**: 将安全事件 Flow collector 固定到 ViewModel `init`，避免组织排序等状态更新重复创建永久 collector；为账号、详情、区域价格、库存市场、交易报价、登录审批和 MDBX 存储源请求增加 generation/账号校验，旧响应不再覆盖当前状态；会话刷新绑定请求开始时的存储源。
+- **Validation**: `./gradlew :app:testDebugUnitTest --tests 'takagi.ru.monica.steam.ui.*' --tests 'takagi.ru.monica.steam.store.*' --tests 'takagi.ru.monica.steam.trade.*' --no-daemon --max-workers=1 --console=plain` → exit 0；22 suites / 51 tests / 0 failures / 0 errors。
+- **Files changed**:
+  - `app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt` — 账号与存储源 generation、collector 生命周期保护。
+  - `app/src/main/java/takagi/ru/monica/steam/store/SteamStoreViewModel.kt` — 详情与区域价格过期响应保护。
+  - `app/src/test/java/takagi/ru/monica/steam/ui/SteamAccountRequestGuardTest.kt` — 账号/存储源 guard 回归测试。
+  - `app/src/test/java/takagi/ru/monica/steam/ui/SteamViewModelCollectorGuardTest.kt` — collector 数量回归测试。
+  - `app/src/test/java/takagi/ru/monica/steam/store/SteamStoreViewModelRaceTest.kt` — 商店详情竞态回归测试。
+- **Commit**: `1c73dbc fix: isolate stale Steam account requests`（已推送 `origin/main`）。
+- **Next step**: Milestone 5 — 完成度审查与最终验证
