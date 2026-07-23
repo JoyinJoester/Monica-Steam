@@ -23,7 +23,9 @@ class SteamStandaloneNavigationGuardTest {
 
         assertTrue(activity.contains("HorizontalFloatingToolbar"))
         assertTrue(activity.contains("FloatingActionButton"))
-        assertTrue(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
+        assertTrue(activity.contains("SteamAccountPickerSheet("))
+        assertTrue(activity.contains("SteamAvatarImage("))
+        assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(activity.contains("NavigationBarItem"))
         assertTrue(activity.contains("SteamDockPreferences"))
         assertTrue(activity.contains("LinearProgressIndicator"))

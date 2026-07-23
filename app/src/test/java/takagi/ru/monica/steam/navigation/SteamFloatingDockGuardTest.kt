@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SteamFloatingDockGuardTest {
     @Test
-    fun dockReusesEssentialsFloatingToolbarWithFixedScannerFab() {
+    fun dockReusesEssentialsFloatingToolbarWithGlobalAccountAvatar() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -18,6 +18,9 @@ class SteamFloatingDockGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
         val notices = projectFile("THIRD_PARTY_NOTICES.md").readText()
+        val accountState = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/organization/presentation/SteamGlobalAccountViewModel.kt"
+        ).readText()
 
         assertTrue(activity.contains("HorizontalFloatingToolbar"))
         assertTrue(activity.contains("ExperimentalMaterial3ExpressiveApi"))
@@ -25,11 +28,22 @@ class SteamFloatingDockGuardTest {
         assertTrue(dock.contains("SteamDockTab.sanitizeOrder(order).forEachIndexed"))
         assertTrue(dock.contains("floatingActionButton ="))
         assertTrue(dock.contains("FloatingActionButton("))
-        assertTrue(dock.contains("Icons.Default.QrCodeScanner"))
+        assertTrue(dock.contains("SteamAvatarImage("))
+        assertTrue(dock.contains("selectedAccount"))
+        assertTrue(dock.contains("onAccountClick"))
+        assertFalse(dock.contains("Icons.Default.QrCodeScanner"))
         assertTrue(dock.contains("WindowInsets.navigationBars"))
         assertTrue(dock.contains("isSelected && !shouldHideLabel"))
         assertTrue(dock.contains("showProgress"))
-        assertTrue(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
+        assertTrue(activity.contains("SteamAccountPickerSheet("))
+        assertTrue(activity.contains("globalAccountViewModel.selectAccount(account.id)"))
+        assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
+        assertFalse(dock.contains("Column(modifier = Modifier.fillMaxWidth())"))
+        assertTrue(dock.contains("toolbarContainerColor = MaterialTheme.colorScheme.primary"))
+        assertTrue(dock.contains("contentColor = MaterialTheme.colorScheme.primary"))
+        assertTrue(dock.contains("containerColor = MaterialTheme.colorScheme.background"))
+        assertTrue(accountState.contains("accountRepository.observeAccounts()"))
+        assertTrue(accountState.contains("accountRepository.select(accountId)"))
         assertFalse(settings.substringAfter("enum class SteamDockTab").substringBefore(";").contains("SCANNER"))
         assertTrue(notices.contains("Essentials"))
         assertTrue(notices.contains("Copyright (c) 2025 Sameera Sandakelum"))

@@ -4332,6 +4332,7 @@
     <string name="steam_store_publisher">发行商</string>
     <string name="steam_store_release_date">发行日期</string>
     <string name="steam_store_no_account">暂无 Steam 账号</string>
+    <string name="steam_account_picker_empty">请先在 Steam 令牌页添加账号，再进行全局切换。</string>
     <string name="steam_store_no_session">此账号没有可复用的 Steam 登录会话，官方页面可能要求重新登录。</string>
     <string name="steam_store_web_title">Steam 官方商店</string>
     <string name="steam_store_close">关闭商店</string>

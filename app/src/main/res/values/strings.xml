@@ -4502,6 +4502,7 @@
     <string name="steam_store_publisher">Publisher</string>
     <string name="steam_store_release_date">Release date</string>
     <string name="steam_store_no_account">No Steam account</string>
+    <string name="steam_account_picker_empty">Add a Steam account from the Steam Guard page before switching accounts.</string>
     <string name="steam_store_no_session">This account has no reusable Steam login session. The official page may ask you to sign in.</string>
     <string name="steam_store_web_title">Steam official store</string>
     <string name="steam_store_close">Close store</string>

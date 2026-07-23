@@ -115,6 +115,20 @@ internal fun SteamConfirmationAccountPickerSheet(
     selectedAccountId: Long?,
     onSelectAccount: (SteamAccount) -> Unit,
     onDismissRequest: () -> Unit
+) = SteamAccountPickerSheet(
+    accounts = accounts,
+    selectedAccountId = selectedAccountId,
+    onSelectAccount = onSelectAccount,
+    onDismissRequest = onDismissRequest
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun SteamAccountPickerSheet(
+    accounts: List<SteamAccount>,
+    selectedAccountId: Long?,
+    onSelectAccount: (SteamAccount) -> Unit,
+    onDismissRequest: () -> Unit
 ) {
     MonicaModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -139,6 +153,11 @@ internal fun SteamConfirmationAccountPickerSheet(
                     .heightIn(max = 360.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                if (accounts.isEmpty()) {
+                    item {
+                        SteamEmptyState(stringResource(R.string.steam_account_picker_empty))
+                    }
+                }
                 items(accounts, key = { it.id }) { steamAccount ->
                     SteamConfirmationAccountOptionRow(
                         account = steamAccount,
