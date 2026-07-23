@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.store
 
+import takagi.ru.monica.steam.store.data.*
+import takagi.ru.monica.steam.store.domain.*
+
 import okio.Buffer
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient

@@ -1,10 +1,11 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.data
 
 import android.content.Context
 import java.io.File
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.steam.library.SteamRegionalPrice
+import takagi.ru.monica.steam.store.domain.*
 
 class SteamStoreCache(context: Context) {
     private val directory = File(context.applicationContext.filesDir, "steam_store_cache")

@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store
 
+import takagi.ru.monica.steam.store.ui.*
+
 import java.io.File
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -9,7 +11,7 @@ class SteamStoreWebSecurityGuardTest {
     @Test
     fun officialStoreWebViewKeepsCheckoutInsideSecurityBoundary() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreWebScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreWebScreen.kt"
         ).readText()
 
         assertTrue(source.contains("settings.allowFileAccess = false"))

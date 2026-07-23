@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +51,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.steam.store.domain.*
 import java.text.DateFormat
 import java.util.Date
 import takagi.ru.monica.R

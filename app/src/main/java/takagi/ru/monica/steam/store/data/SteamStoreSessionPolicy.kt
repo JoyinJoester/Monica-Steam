@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.data
 
 import java.net.URI
 import java.net.URLDecoder

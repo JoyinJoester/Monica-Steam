@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.data
 
 internal open class SteamStoreSessionException(message: String) : IllegalStateException(message)
 

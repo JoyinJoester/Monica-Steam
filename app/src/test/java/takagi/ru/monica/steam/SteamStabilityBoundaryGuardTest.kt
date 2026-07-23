@@ -63,7 +63,7 @@ class SteamStabilityBoundaryGuardTest {
     @Test
     fun nullableUiAssertionsAreNotUsedAtImageBoundaries() {
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val library = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"

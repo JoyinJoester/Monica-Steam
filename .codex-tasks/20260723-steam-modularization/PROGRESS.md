@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理商店与购物车模块
+当前：整理通知、礼物与提醒模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：审查商店、愿望单、购物车和官方结算的目录边界，迁移仍在共享/legacy 目录中的实现并更新架构守卫。
+下一步：整理通知、礼物与后台提醒的 domain/data/presentation/ui 所有权，迁移 legacy 登录通知帮助实现。
 
 ## 已完成
 
@@ -68,3 +68,11 @@
 - 健康检查页面迁移至 `steam/health/ui`，保留账号报告、服务器时间和诊断文本导出。
 - 验证：`:app:compileDebugKotlin`、备份/健康模块测试和架构守卫通过。
 - 独立提交：`45e7d58`。
+
+### 子任务 7：商店与购物车模块
+
+- `steam/store` 按 `domain`、`data`、`presentation`、`ui` 分层；根目录不再直接放 Kotlin 实现。
+- 商店首页/详情、原生购物车、愿望单和官方结算 WebView 位于 `store/ui`；缓存、解析、账号地区与会话策略位于 `store/data`。
+- ViewModel 位于 `store/presentation`，模型与价格/购物车规则位于 `store/domain`。
+- 验证：`:app:compileDebugKotlin`、全部 store 测试、礼物入口、稳定性/动效和架构守卫通过。
+- 独立提交：待提交后填写 commit id。

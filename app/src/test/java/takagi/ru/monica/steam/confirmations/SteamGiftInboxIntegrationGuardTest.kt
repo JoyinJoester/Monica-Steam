@@ -11,7 +11,7 @@ class SteamGiftInboxIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val web = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreWebScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreWebScreen.kt"
         ).readText()
 
         assertTrue(screen.contains("SteamNotificationCenter("))

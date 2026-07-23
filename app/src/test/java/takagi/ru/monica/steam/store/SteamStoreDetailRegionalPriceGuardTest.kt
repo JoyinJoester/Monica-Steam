@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.store
 
+import takagi.ru.monica.steam.store.data.*
+import takagi.ru.monica.steam.store.presentation.*
+
 import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -9,7 +12,7 @@ class SteamStoreDetailRegionalPriceGuardTest {
     @Test
     fun detailUsesCompleteHeaderAndAccessibleRegionalPriceEntry() {
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val detail = store
             .substringAfter("private fun SteamStoreDetailContent(")
@@ -25,10 +28,10 @@ class SteamStoreDetailRegionalPriceGuardTest {
     @Test
     fun viewModelReusesRegionalPriceServicesAndAccountCache() {
         val viewModel = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/presentation/SteamStoreViewModel.kt"
         ).readText()
         val cache = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreCache.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/data/SteamStoreCache.kt"
         ).readText()
 
         assertTrue(viewModel.contains("SteamGameLibraryService"))

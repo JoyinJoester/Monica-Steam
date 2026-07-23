@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -89,6 +89,8 @@ import takagi.ru.monica.R
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.library.SteamLibraryFailureReason
 import takagi.ru.monica.steam.library.SteamRegionalPrice
+import takagi.ru.monica.steam.store.domain.*
+import takagi.ru.monica.steam.store.presentation.SteamStoreViewModel
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.ui.components.ExpressiveTopBar

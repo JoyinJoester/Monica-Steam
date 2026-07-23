@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.data
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -10,6 +10,7 @@ import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import takagi.ru.monica.steam.store.domain.*
 
 object SteamStoreParser {
     private val json = Json { ignoreUnknownKeys = true }

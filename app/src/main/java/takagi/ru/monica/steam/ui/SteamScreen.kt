@@ -198,7 +198,7 @@ import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
-import takagi.ru.monica.steam.store.SteamStoreWebScreen
+import takagi.ru.monica.steam.store.ui.SteamStoreWebScreen
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
 import takagi.ru.monica.steam.trade.ui.SteamTradeOffersContent

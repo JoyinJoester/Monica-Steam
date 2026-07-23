@@ -9,7 +9,7 @@ class SteamStoreCollectionUiGuardTest {
     @Test
     fun collectionScreenUsesM3TabsWishlistAndConditionalCheckoutBar() {
         val collection = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamNativeCartScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamNativeCartScreen.kt"
         ).readText()
 
         assertTrue(collection.contains("SingleChoiceSegmentedButtonRow("))
@@ -30,7 +30,7 @@ class SteamStoreCollectionUiGuardTest {
     @Test
     fun storeMovesCartFromTopPillToFabAndAddsWishlistDetailAction() {
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val home = store
             .substringAfter("SteamStoreDestination.Home -> Scaffold(")
@@ -53,7 +53,7 @@ class SteamStoreCollectionUiGuardTest {
     @Test
     fun storeDetailUsesOnePrimaryPurchaseActionAndSemanticErrorFeedback() {
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val detail = store
             .substringAfter("private fun SteamStoreDetailContent(")

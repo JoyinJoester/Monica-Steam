@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.data
 
 import android.webkit.CookieManager
 import java.util.concurrent.atomic.AtomicInteger

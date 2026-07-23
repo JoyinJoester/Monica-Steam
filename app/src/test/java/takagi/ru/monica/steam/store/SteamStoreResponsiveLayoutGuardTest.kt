@@ -42,7 +42,7 @@ class SteamStoreResponsiveLayoutGuardTest {
     }
 
     private fun storeSource(): String = projectFile(
-        "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
     ).readText()
 
     private fun projectFile(path: String): File {

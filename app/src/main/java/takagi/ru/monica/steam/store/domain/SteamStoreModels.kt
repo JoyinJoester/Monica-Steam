@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.store
+package takagi.ru.monica.steam.store.domain
 
 import java.util.Locale
 import kotlinx.serialization.Serializable

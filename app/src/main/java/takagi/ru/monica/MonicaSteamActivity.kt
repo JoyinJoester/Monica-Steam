@@ -81,7 +81,7 @@ import takagi.ru.monica.steam.health.ui.SteamHealthScreen
 import takagi.ru.monica.steam.library.ui.SteamLibraryScreen
 import takagi.ru.monica.steam.ui.SteamScreen
 import takagi.ru.monica.steam.ui.setSteamUiScaledContent
-import takagi.ru.monica.steam.store.SteamStoreScreen
+import takagi.ru.monica.steam.store.ui.SteamStoreScreen
 import takagi.ru.monica.steam.alerts.SteamAlertScheduler
 import takagi.ru.monica.steam.diagnostics.SteamCrashDiagnostics
 import takagi.ru.monica.ui.base.BaseMonicaActivity

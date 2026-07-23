@@ -125,7 +125,33 @@ class SteamModuleArchitectureGuardTest {
                 assertFalse(text.contains(".steam.inventory.ui."))
                 assertFalse(text.contains(".steam.market.ui."))
                 assertFalse(text.contains(".steam.token.ui."))
-            }
+        }
+    }
+
+    @Test
+    fun storeUsesLayeredPackagesWithoutRootImplementations() {
+        val store = projectFile("app/src/main/java/takagi/ru/monica/steam/store")
+        val layers = store.listFiles().orEmpty()
+            .filter(File::isDirectory)
+            .map(File::getName)
+            .toSet()
+
+        assertEquals(setOf("data", "domain", "presentation", "ui"), layers)
+        assertTrue(store.listFiles().orEmpty().none { it.extension == "kt" })
+
+        val domainSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/domain/SteamStoreModels.kt"
+        ).readText()
+        assertFalse(domainSource.contains(".store.data."))
+        assertFalse(domainSource.contains(".store.presentation."))
+        assertFalse(domainSource.contains(".store.ui."))
+
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+        assertTrue(activity.contains(".store.ui.SteamStoreScreen"))
+        assertFalse(activity.contains(".store.data."))
+        assertFalse(activity.contains(".store.presentation."))
     }
 
     @Test

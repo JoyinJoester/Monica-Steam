@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.store
 
+import takagi.ru.monica.steam.store.presentation.*
+import takagi.ru.monica.steam.store.domain.*
+
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
