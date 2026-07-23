@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.profile.ui
 
 internal data class SteamMiniProfileCropTransform(
     val scaleX: Float,

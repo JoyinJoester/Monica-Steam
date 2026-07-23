@@ -26,7 +26,7 @@ class SteamOrganizationIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val components = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamOrganizationComponents.kt"
+            "app/src/main/java/takagi/ru/monica/steam/organization/ui/SteamOrganizationComponents.kt"
         ).readText()
         val viewModel = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"

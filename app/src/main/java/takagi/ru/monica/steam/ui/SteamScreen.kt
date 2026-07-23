@@ -146,7 +146,6 @@ import java.util.Date
 import java.util.Locale
 import java.net.HttpURLConnection
 import java.net.URL
-import javax.xml.parsers.DocumentBuilderFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
@@ -185,6 +184,12 @@ import takagi.ru.monica.steam.notifications.SteamNotificationsScreen
 import takagi.ru.monica.steam.notifications.SteamPendingGift
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
+import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
+import takagi.ru.monica.steam.organization.ui.SteamOrganizationSummary
+import takagi.ru.monica.steam.profile.ui.SteamAvatarImage
+import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
+import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
+import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
 import takagi.ru.monica.steam.store.SteamStoreWebScreen
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
@@ -215,8 +220,6 @@ import takagi.ru.monica.utils.SettingsManager
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
-private const val STEAM_AVATAR_TIMEOUT_MS = 4_000
-private const val STEAM_AVATAR_CACHE_TTL_MS = 3L * 24L * 60L * 60L * 1000L
 private const val STEAM_CONFIRMATION_IMAGE_TIMEOUT_MS = 4_000
 private const val STEAM_CONFIRMATION_IMAGE_CACHE_TTL_MS = 3L * 24L * 60L * 60L * 1000L
 
@@ -3170,61 +3173,6 @@ private fun SteamRemarkEditDialog(
     )
 }
 
-@Composable
-internal fun SteamAvatarImage(
-    account: SteamAccount,
-    size: Dp,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    var avatar by remember(account.steamId) { mutableStateOf<ImageBitmap?>(null) }
-    val fallbackText = remember(account.displayName, account.accountName, account.steamId) {
-        account.displayName
-            .ifBlank { account.accountName }
-            .ifBlank { account.visibleSteamId }
-            .ifBlank { "S" }
-            .take(1)
-            .uppercase()
-    }
-
-    LaunchedEffect(account.steamId) {
-        avatar = if (account.hasRealSteamId) {
-            loadSteamAvatar(context, account.steamId)
-        } else {
-            null
-        }
-    }
-
-    Surface(
-        modifier = modifier.size(size),
-        shape = CircleShape,
-        color = MaterialTheme.colorScheme.primary,
-        tonalElevation = 2.dp
-    ) {
-        val snapshot = avatar
-        if (snapshot != null) {
-            Image(
-                bitmap = snapshot,
-                contentDescription = stringResource(R.string.steam_account_avatar_description),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = fallbackText,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        }
-    }
-}
-
 private fun SteamAccount.toSteamTotpUiItem(): SecureItem {
     return SecureItem(
         id = id,
@@ -3274,100 +3222,6 @@ private fun copySteamText(
     Toast.makeText(context, label, Toast.LENGTH_SHORT).show()
 }
 
-private suspend fun loadSteamAvatar(context: Context, steamId: String): ImageBitmap? = withContext(Dispatchers.IO) {
-    val cacheFile = steamAvatarCacheFile(context, steamId)
-    val cachedAvatar = readSteamAvatarCache(cacheFile)
-    if (cachedAvatar != null && !isSteamAvatarCacheExpired(cacheFile)) {
-        return@withContext cachedAvatar
-    }
-
-    val freshAvatar = runCatching {
-        val avatarUrl = fetchSteamAvatarUrl(steamId) ?: return@runCatching null
-        downloadSteamAvatarBytes(avatarUrl)?.also { bytes ->
-            cacheFile.parentFile?.mkdirs()
-            cacheFile.writeBytes(bytes)
-        }?.let { bytes ->
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
-        }
-    }.getOrNull()
-
-    freshAvatar ?: cachedAvatar
-}
-
-private fun fetchSteamAvatarUrl(steamId: String): String? {
-    val normalizedSteamId = steamId.trim()
-    if (normalizedSteamId.isBlank() || normalizedSteamId.any { !it.isDigit() }) {
-        return null
-    }
-
-    val connection = (URL("https://steamcommunity.com/profiles/$normalizedSteamId/?xml=1")
-        .openConnection() as HttpURLConnection).apply {
-        connectTimeout = STEAM_AVATAR_TIMEOUT_MS
-        readTimeout = STEAM_AVATAR_TIMEOUT_MS
-        requestMethod = "GET"
-    }
-    return try {
-        connection.inputStream.use { stream ->
-            val factory = DocumentBuilderFactory.newInstance().apply {
-                isNamespaceAware = false
-                runCatching {
-                    setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
-                }
-                runCatching {
-                    setFeature("http://xml.org/sax/features/external-general-entities", false)
-                }
-                runCatching {
-                    setFeature("http://xml.org/sax/features/external-parameter-entities", false)
-                }
-            }
-            val document = factory.newDocumentBuilder().parse(stream)
-            document.documentElement.normalize()
-            listOf("avatarFull", "avatarMedium", "avatarIcon").firstNotNullOfOrNull { tag ->
-                document.getElementsByTagName(tag)
-                    ?.item(0)
-                    ?.textContent
-                    ?.trim()
-                    ?.takeIf { it.startsWith("https://") }
-            }
-        }
-    } finally {
-        connection.disconnect()
-    }
-}
-
-private fun downloadSteamAvatarBytes(avatarUrl: String): ByteArray? {
-    val connection = (URL(avatarUrl).openConnection() as HttpURLConnection).apply {
-        connectTimeout = STEAM_AVATAR_TIMEOUT_MS
-        readTimeout = STEAM_AVATAR_TIMEOUT_MS
-        requestMethod = "GET"
-    }
-    return try {
-        connection.inputStream.use { stream ->
-            stream.readBytes()
-        }
-    } finally {
-        connection.disconnect()
-    }
-}
-
-private fun steamAvatarCacheFile(context: Context, steamId: String): File {
-    val safeSteamId = steamId.filter { it.isLetterOrDigit() }.ifBlank { "unknown" }
-    return File(File(context.cacheDir, "steam_avatars"), "$safeSteamId.png")
-}
-
-private fun readSteamAvatarCache(cacheFile: File): ImageBitmap? {
-    if (!cacheFile.isFile) return null
-    return runCatching {
-        BitmapFactory.decodeFile(cacheFile.absolutePath)?.asImageBitmap()
-    }.getOrNull()
-}
-
-private fun isSteamAvatarCacheExpired(cacheFile: File): Boolean {
-    if (!cacheFile.isFile) return true
-    val ageMs = System.currentTimeMillis() - cacheFile.lastModified()
-    return ageMs > STEAM_AVATAR_CACHE_TTL_MS
-}
-
 internal suspend fun loadSteamConfirmationImage(context: Context, imageUrl: String): ImageBitmap? =
     withContext(Dispatchers.IO) {
         val normalizedUrl = normalizeSteamImageUrl(imageUrl)
@@ -3376,7 +3230,7 @@ internal suspend fun loadSteamConfirmationImage(context: Context, imageUrl: Stri
         }
 
         val cacheFile = steamConfirmationImageCacheFile(context, normalizedUrl)
-        val cachedImage = readSteamAvatarCache(cacheFile)
+        val cachedImage = readSteamConfirmationImageCache(cacheFile)
         if (cachedImage != null && !isSteamConfirmationImageCacheExpired(cacheFile)) {
             return@withContext cachedImage
         }
@@ -3889,6 +3743,13 @@ private fun SteamConfirmationsContent(
             }
         }
     }
+}
+
+private fun readSteamConfirmationImageCache(cacheFile: File): ImageBitmap? {
+    if (!cacheFile.isFile) return null
+    return runCatching {
+        BitmapFactory.decodeFile(cacheFile.absolutePath)?.asImageBitmap()
+    }.getOrNull()
 }
 
 @Composable

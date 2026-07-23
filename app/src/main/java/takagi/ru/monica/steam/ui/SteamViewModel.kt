@@ -81,6 +81,8 @@ import takagi.ru.monica.steam.notifications.SteamNotificationService
 import takagi.ru.monica.steam.notifications.SteamNotificationsUiState
 import takagi.ru.monica.steam.notifications.SteamPendingGift
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationRules
+import takagi.ru.monica.steam.scanner.data.readSteamStorageSource
+import takagi.ru.monica.steam.scanner.data.saveSteamStorageSource
 import takagi.ru.monica.steam.service.SteamLoginImportService
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction

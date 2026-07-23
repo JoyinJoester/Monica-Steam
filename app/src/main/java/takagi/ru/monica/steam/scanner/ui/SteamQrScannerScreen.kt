@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.scanner.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -60,6 +60,10 @@ import takagi.ru.monica.steam.data.SteamMdbxAccountStore
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.network.SteamQrChallenge
+import takagi.ru.monica.steam.profile.ui.SteamAvatarImage
+import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
+import takagi.ru.monica.steam.scanner.data.readSteamStorageSource
+import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 import takagi.ru.monica.ui.screens.QrScannerScreen
 

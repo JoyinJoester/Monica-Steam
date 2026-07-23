@@ -15,7 +15,7 @@ class SteamMiniProfileRenderingRegressionTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val layer = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamMiniProfileBackgroundLayer.kt"
+            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
         ).readText()
 
         assertTrue(card.contains("immersiveBackgroundVisible: Boolean"))
@@ -44,7 +44,7 @@ class SteamMiniProfileRenderingRegressionTest {
     @Test
     fun videoAndPosterUseTheSameNormalizedCenterCropModel() {
         val layer = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamMiniProfileBackgroundLayer.kt"
+            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
         ).readText()
 
         assertTrue(layer.contains("calculateSteamMiniProfileCenterCrop("))
@@ -59,7 +59,7 @@ class SteamMiniProfileRenderingRegressionTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val layer = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamMiniProfileBackgroundLayer.kt"
+            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
         ).readText()
 
         assertFalse(screen.contains("!lazyListState.isScrollInProgress"))

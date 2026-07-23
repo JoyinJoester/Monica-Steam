@@ -1,7 +1,7 @@
 id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_command,completed_at,retry_count,notes
 1,建立功能目录规范与架构守卫,single-full,DONE,,tasks/architecture,目录规范文档和守卫测试通过,Gradle targeted architecture tests,2026-07-23T14:35:00+08:00,0,守卫测试与 compileDebugKotlin 已通过；提交 2026-07-23
-2,整理资料账号组织与扫码模块,single-full,IN_PROGRESS,1,tasks/profile-organization-scanner,功能代码分别位于 profile organization scanner,Gradle targeted tests,,0,
-3,整理游戏库模块,single-full,TODO,1,tasks/library,库页面与库数据位于 library 模块,Gradle targeted tests,,0,
+2,整理资料账号组织与扫码模块,single-full,DONE,1,tasks/profile-organization-scanner,功能代码分别位于 profile organization scanner,Gradle targeted tests,2026-07-23T15:05:00+08:00,0,迁移 6 个 legacy UI/偏好文件并抽离 SteamAvatarImage；compileDebugKotlin 与聚焦测试通过；提交待填写
+3,整理游戏库模块,single-full,IN_PROGRESS,1,tasks/library,库页面与库数据位于 library 模块,Gradle targeted tests,,0,
 4,整理库存与市场模块,single-full,TODO,1,tasks/inventory-market,库存市场批量操作位于 inventory market 模块,Gradle targeted tests,,0,
 5,整理交易模块,single-full,TODO,1,tasks/trade,交易数据与 UI 位于 trade 模块,Gradle targeted tests,,0,
 6,整理备份与健康检查模块,single-full,TODO,1,tasks/backup-health,备份和健康页面分别位于对应模块,Gradle targeted tests,,0,

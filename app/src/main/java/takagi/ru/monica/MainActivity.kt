@@ -137,7 +137,7 @@ import takagi.ru.monica.ui.screens.MdbxWebDavOpenScreen
 import takagi.ru.monica.ui.screens.KeePassKdbxViewModel
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
-import takagi.ru.monica.steam.ui.SteamQrScannerScreen
+import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
 import takagi.ru.monica.steam.ui.SteamUiScaleOption
 import takagi.ru.monica.steam.ui.SteamUiScalePreferences
 import takagi.ru.monica.steam.ui.calculateSteamUiDensity

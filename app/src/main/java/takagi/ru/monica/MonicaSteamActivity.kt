@@ -75,7 +75,7 @@ import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.security.SteamAppLockGate
 import takagi.ru.monica.steam.friends.ui.SteamFriendsScreen
-import takagi.ru.monica.steam.ui.SteamQrScannerScreen
+import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
 import takagi.ru.monica.steam.ui.SteamBackupScreen
 import takagi.ru.monica.steam.ui.SteamHealthScreen
 import takagi.ru.monica.steam.ui.SteamLibraryScreen

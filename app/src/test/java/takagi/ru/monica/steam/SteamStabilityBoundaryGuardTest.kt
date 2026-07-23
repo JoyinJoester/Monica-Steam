@@ -20,7 +20,7 @@ class SteamStabilityBoundaryGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/quickaccess/SteamWidgetProviders.kt"
         ).readText()
         val scanner = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamQrScannerScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/scanner/ui/SteamQrScannerScreen.kt"
         ).readText()
 
         assertTrue(receiver.contains("catch (error: Throwable)"))

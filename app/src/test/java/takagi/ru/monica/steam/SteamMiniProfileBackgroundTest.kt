@@ -10,7 +10,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.profile.SteamMiniProfileBackgroundService
 import takagi.ru.monica.steam.profile.pruneSteamMiniProfileCache
-import takagi.ru.monica.steam.ui.calculateSteamMiniProfileCenterCrop
+import takagi.ru.monica.steam.profile.ui.calculateSteamMiniProfileCenterCrop
 
 class SteamMiniProfileBackgroundTest {
     @Test

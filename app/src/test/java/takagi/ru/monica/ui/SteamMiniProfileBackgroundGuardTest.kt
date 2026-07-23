@@ -55,7 +55,7 @@ class SteamMiniProfileBackgroundGuardTest {
     @Test
     fun dynamicPlaybackIsBoundedSilentAndLifecycleAware() {
         val layer = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamMiniProfileBackgroundLayer.kt"
+            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
         ).readText()
 
         assertTrue(layer.contains("Semaphore(2)"))

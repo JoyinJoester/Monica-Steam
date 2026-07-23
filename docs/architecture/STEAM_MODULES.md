@@ -93,11 +93,6 @@ SteamHealthScreen.kt
 SteamInventoryMarketContent.kt
 SteamLibraryScreen.kt
 SteamLoginNotificationHelper.kt
-SteamMiniProfileBackgroundLayer.kt
-SteamMiniProfileCrop.kt
-SteamOrganizationComponents.kt
-SteamQrAccountPreference.kt
-SteamQrScannerScreen.kt
 SteamScreen.kt
 SteamSearchFilters.kt
 SteamTradeOffersContent.kt

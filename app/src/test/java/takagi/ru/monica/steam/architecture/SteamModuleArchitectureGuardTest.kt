@@ -35,6 +35,7 @@ class SteamModuleArchitectureGuardTest {
             "organization",
             "profile",
             "quickaccess",
+            "scanner",
             "security",
             "store",
             "trade"
@@ -57,11 +58,6 @@ class SteamModuleArchitectureGuardTest {
             "SteamInventoryMarketContent.kt",
             "SteamLibraryScreen.kt",
             "SteamLoginNotificationHelper.kt",
-            "SteamMiniProfileBackgroundLayer.kt",
-            "SteamMiniProfileCrop.kt",
-            "SteamOrganizationComponents.kt",
-            "SteamQrAccountPreference.kt",
-            "SteamQrScannerScreen.kt",
             "SteamScreen.kt",
             "SteamSearchFilters.kt",
             "SteamTradeOffersContent.kt",
@@ -87,6 +83,27 @@ class SteamModuleArchitectureGuardTest {
         assertFalse(activity.contains(".friends.domain."))
         assertFalse(activity.contains(".friends.presentation."))
         assertTrue(activity.contains(".friends.ui.SteamFriendsScreen"))
+        assertTrue(activity.contains(".scanner.ui.SteamQrScannerScreen"))
+    }
+
+    @Test
+    fun profileOrganizationAndScannerOwnTheirUiImplementations() {
+        val featureFiles = listOf(
+            "profile/ui/SteamAvatarImage.kt",
+            "profile/ui/SteamMiniProfileBackgroundLayer.kt",
+            "profile/ui/SteamMiniProfileCrop.kt",
+            "organization/ui/SteamOrganizationComponents.kt",
+            "scanner/data/SteamQrAccountPreference.kt",
+            "scanner/ui/SteamQrScannerScreen.kt"
+        )
+
+        featureFiles.forEach { relativePath ->
+            val source = projectFile(
+                "app/src/main/java/takagi/ru/monica/steam/$relativePath"
+            )
+            assertTrue("Missing Steam feature file: $relativePath", source.isFile)
+            assertFalse(source.readText().contains("takagi.ru.monica.steam.ui."))
+        }
     }
 
     @Test

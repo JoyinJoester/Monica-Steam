@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.organization.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

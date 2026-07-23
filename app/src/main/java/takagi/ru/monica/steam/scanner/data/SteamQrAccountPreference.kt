@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.scanner.data
 
 import android.content.Context
 import takagi.ru.monica.steam.data.SteamStorageSource
