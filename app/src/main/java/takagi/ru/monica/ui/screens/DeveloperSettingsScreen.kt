@@ -92,6 +92,7 @@ import takagi.ru.monica.passkey.PasskeyValidationDiagnostics
 import takagi.ru.monica.security.SecurityDiagLogger
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
+import takagi.ru.monica.steam.diagnostics.SteamCrashDiagnostics
 import takagi.ru.monica.viewmodel.SettingsViewModel
 
 /**
@@ -869,6 +870,9 @@ private object DeveloperLogDebugHelper {
         runCatching { MdbxDiagLogger.initialize(context.applicationContext) }
         runCatching { SecurityDiagLogger.initialize(context.applicationContext) }
         runCatching { SteamDiagLogger.initialize(context.applicationContext) }
+        val persistedCrash = runCatching {
+            SteamCrashDiagnostics.readLastCrash(context.applicationContext)
+        }.getOrDefault("")
         val autofillTagLogs = readAutofillTagLogs()
         val appProcessLogs = readLogcat(
             arrayOf(
@@ -887,6 +891,34 @@ private object DeveloperLogDebugHelper {
             arrayOf(
                 "logcat",
                 "-d",
+                "-b",
+                "crash",
+                "-v",
+                "threadtime",
+                "-t",
+                "300",
+                "*:S"
+            )
+        )
+        val mainBufferLogs = readLogcat(
+            arrayOf(
+                "logcat",
+                "-d",
+                "-b",
+                "main",
+                "-v",
+                "threadtime",
+                "-t",
+                "300",
+                "*:V"
+            )
+        )
+        val systemBufferLogs = readLogcat(
+            arrayOf(
+                "logcat",
+                "-d",
+                "-b",
+                "system",
                 "-v",
                 "threadtime",
                 "-t",
@@ -898,6 +930,10 @@ private object DeveloperLogDebugHelper {
             )
         )
         val selectedLogs = buildString {
+            if (persistedCrash.isNotBlank()) {
+                appendLine("---- persisted-crash ----")
+                appendLine(persistedCrash.trim())
+            }
             if (autofillTagLogs.isNotBlank()) {
                 appendLine("---- autofill-tags ----")
                 appendLine(autofillTagLogs.trim())
@@ -909,8 +945,18 @@ private object DeveloperLogDebugHelper {
             }
             if (crashLogs.isNotBlank()) {
                 if (isNotBlank()) appendLine()
-                appendLine("---- crash/system ----")
+                appendLine("---- crash-buffer ----")
                 appendLine(crashLogs.trim())
+            }
+            if (mainBufferLogs.isNotBlank()) {
+                if (isNotBlank()) appendLine()
+                appendLine("---- main-buffer ----")
+                appendLine(mainBufferLogs.trim())
+            }
+            if (systemBufferLogs.isNotBlank()) {
+                if (isNotBlank()) appendLine()
+                appendLine("---- system-buffer ----")
+                appendLine(systemBufferLogs.trim())
             }
         }.trim()
 
@@ -969,6 +1015,11 @@ private object DeveloperLogDebugHelper {
             } else {
                 appendLine(selectedLogs.trim())
             }
+            appendLine()
+            appendLine("=== Last Persisted Crash ===")
+            appendLine(
+                persistedCrash.ifBlank { context.getString(R.string.developer_no_logs) }
+            )
             appendLine()
             appendLine("=== Autofill Structured Logs ===")
             appendLine(autofillLogs.trim())
@@ -1062,6 +1113,7 @@ private object DeveloperLogDebugHelper {
         runCatching {
             SteamDiagLogger.clear()
         }
+        SteamCrashDiagnostics.clear(context.applicationContext)
 
         val process = runCatching {
             ProcessBuilder("logcat", "-c")

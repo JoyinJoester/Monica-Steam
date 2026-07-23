@@ -12,13 +12,20 @@ import takagi.ru.monica.BuildConfig
 object SteamSupportLogExporter {
     suspend fun collect(context: Context): String = withContext(Dispatchers.IO) {
         runCatching { SteamDiagLogger.initialize(context.applicationContext) }
+        val persistedCrash = SteamCrashDiagnostics.readLastCrash(context.applicationContext)
         val appLogs = readLogcat(
             "logcat", "-d", "-v", "threadtime", "--pid",
             android.os.Process.myPid().toString(), "-t", "700", "*:V"
         )
+        val mainBufferLogs = readLogcat(
+            "logcat", "-d", "-b", "main", "-v", "threadtime", "-t", "700", "*:V"
+        )
         val crashLogs = readLogcat(
-            "logcat", "-d", "-v", "threadtime", "-t", "500",
-            "AndroidRuntime:E", "System.err:W", "*:S"
+            "logcat", "-d", "-b", "crash", "-v", "threadtime", "-t", "500", "*:V"
+        )
+        val systemLogs = readLogcat(
+            "logcat", "-d", "-b", "system", "-v", "threadtime", "-t", "500",
+            "AndroidRuntime:E", "System.err:W", "libc:E", "*:S"
         )
         val steamLogs = runCatching { SteamDiagLogger.exportPersistedLogs(2000) }
             .getOrElse { "Steam diagnostics unavailable: ${it.message}" }
@@ -37,6 +44,15 @@ object SteamSupportLogExporter {
                 appendLine()
                 appendLine("=== Crash Logcat ===")
                 appendLine(crashLogs.ifBlank { "No crash logs available." })
+                appendLine()
+                appendLine("=== Main Buffer Logcat ===")
+                appendLine(mainBufferLogs.ifBlank { "No main-buffer logs available." })
+                appendLine()
+                appendLine("=== System Buffer Logcat ===")
+                appendLine(systemLogs.ifBlank { "No system-buffer logs available." })
+                appendLine()
+                appendLine("=== Last Persisted Crash ===")
+                appendLine(persistedCrash.ifBlank { "No persisted crash available." })
                 appendLine()
                 appendLine("=== Steam Structured Logs ===")
                 appendLine(steamLogs.ifBlank { "No Steam structured logs available." })
