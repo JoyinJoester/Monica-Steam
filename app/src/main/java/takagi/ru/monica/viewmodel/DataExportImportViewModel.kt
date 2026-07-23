@@ -39,7 +39,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.importer.SteamMaFileBackupCodec
-import takagi.ru.monica.steam.service.SteamLoginImportService
+import takagi.ru.monica.steam.token.data.SteamLoginImportService
 import java.io.File
 import java.io.IOException
 import java.io.InputStream

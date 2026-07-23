@@ -83,7 +83,7 @@ import takagi.ru.monica.steam.notifications.domain.SteamNotificationsUiState
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationRules
 import takagi.ru.monica.steam.scanner.data.readSteamStorageSource
 import takagi.ru.monica.steam.scanner.data.saveSteamStorageSource
-import takagi.ru.monica.steam.service.SteamLoginImportService
+import takagi.ru.monica.steam.token.data.SteamLoginImportService
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
 import takagi.ru.monica.steam.trade.SteamTradeOfferActionResult

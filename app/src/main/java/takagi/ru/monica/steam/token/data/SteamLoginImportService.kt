@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.service
+package takagi.ru.monica.steam.token.data
 
 import android.util.Base64
 import kotlinx.coroutines.Dispatchers

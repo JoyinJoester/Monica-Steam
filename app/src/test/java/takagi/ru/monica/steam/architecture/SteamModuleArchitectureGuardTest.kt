@@ -20,14 +20,18 @@ class SteamModuleArchitectureGuardTest {
         val root = projectFile("app/src/main/java/takagi/ru/monica/steam")
         val expectedExistingModules = setOf(
             "alerts",
+            "analytics",
             "backup",
+            "confirmations",
             "core",
             "data",
             "diagnostics",
             "foundation",
             "friends",
+            "gifts",
             "health",
             "inventory",
+            "importer",
             "io",
             "library",
             "market",
@@ -44,11 +48,15 @@ class SteamModuleArchitectureGuardTest {
             "trade"
         )
         val actual = root.listFiles().orEmpty()
-            .filter(File::isDirectory)
+            .filter { directory ->
+                directory.isDirectory && directory.walkTopDown().any { file ->
+                    file.isFile && file.extension == "kt"
+                }
+            }
             .map(File::getName)
             .toSet()
 
-        assertTrue(actual.containsAll(expectedExistingModules))
+        assertEquals(expectedExistingModules, actual)
     }
 
     @Test

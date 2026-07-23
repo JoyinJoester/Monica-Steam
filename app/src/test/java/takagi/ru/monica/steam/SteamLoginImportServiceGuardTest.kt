@@ -8,7 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
-import takagi.ru.monica.steam.service.SteamLoginImportService
+import takagi.ru.monica.steam.token.data.SteamLoginImportService
 
 class SteamLoginImportServiceGuardTest {
     @Test
@@ -32,7 +32,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginImportKeepsMobileApprovalPollingPath() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
@@ -118,7 +118,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamIdCompletionLoginDoesNotStartAuthenticatorTransfer() {
         val serviceSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
@@ -170,7 +170,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginGuardCodeAndPollingUseAuthApiProtobufShape() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
 
         assertTrue(source.contains("beginAuthSessionViaCredentialsWithProtobuf"))
@@ -213,7 +213,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginImportSupportsMonicaGeneratedQrLogin() {
         val serviceSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
@@ -254,7 +254,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginImportUsesModernAuthenticatorTransferProtobufShape() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
 
         assertTrue(source.contains("method = \"RemoveAuthenticatorViaChallengeStart\""))
@@ -272,7 +272,7 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginImportDoesNotReportTransferStartFailureAsLoginFailure() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
 
         assertTrue(source.contains("mapReplaceStartEresultToMessage(error.eResult)"))

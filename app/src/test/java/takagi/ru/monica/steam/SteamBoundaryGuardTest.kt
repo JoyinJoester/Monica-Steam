@@ -254,7 +254,7 @@ class SteamBoundaryGuardTest {
     @Test
     fun steamLoginImportLogsDoNotPersistRawAccountData() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
 
         assertFalse(source.contains("payload=${'$'}beginPayload"))
@@ -274,7 +274,7 @@ class SteamBoundaryGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val loginServiceSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt"
         ).readText()
 
         assertTrue(screenSource.contains("steam_authorized_device_revoke_password_warning"))
@@ -932,7 +932,7 @@ class SteamBoundaryGuardTest {
             .replace("\r\n", "\n")
         val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
-        val loginServiceSource = projectFile("app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt")
+        val loginServiceSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/data/SteamLoginImportService.kt")
             .readText()
         val defaultStrings = projectFile("app/src/main/res/values/strings.xml").readText()
         val zhStrings = projectFile("app/src/main/res/values-zh/strings.xml").readText()

@@ -22,6 +22,7 @@ Each user-facing Steam capability owns one feature root:
 | `inventory` | Inventory loading, grouping, selection and item details |
 | `market` | Market listings, quotes, pricing, selling and batch actions |
 | `trade` | Incoming and outgoing trade offers and protected actions |
+| `confirmations` | Confirmation classification, risk evaluation and confirmation rules |
 | `notifications` | Steam account notifications and notification details |
 | `gifts` | Pending gifts and gift response operations |
 | `friends` | Friends, presence, current games, requests and friend details |
@@ -60,7 +61,9 @@ The following roots provide shared Steam infrastructure and may be imported by f
 | `diagnostics` | Crash and support diagnostics |
 | `navigation` | Standalone Dock order and navigation preferences |
 | `io` | Storage Access Framework helpers |
-| `foundation` | Small cross-feature value types only |
+| `foundation` | Cross-feature visual primitives, image loading and UI scale preferences |
+| `analytics` | Inventory and market valuation/analysis rules shared by related features |
+| `importer` | maFile parsing and transfer codecs shared by token and backup flows |
 
 Shared modules cannot contain user-facing feature screens.
 
