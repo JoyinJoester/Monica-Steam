@@ -83,4 +83,4 @@
 - gift 模型、解析、响应操作与礼物入口迁移到 `gifts/domain`、`gifts/data`，不再藏在 notifications。
 - alerts 按 `domain/data` 分层，登录请求通知也归入 alerts/data；Manifest 使用新 Receiver 路径。
 - 验证：`:app:compileDebugKotlin`、通知/礼物/提醒、总边界和架构测试通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`3ebbbe5`。

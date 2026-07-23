@@ -6,6 +6,6 @@ id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_comm
 5,整理交易模块,single-full,DONE,1,tasks/trade,交易数据与 UI 位于 trade 模块,Gradle targeted tests,2026-07-23T18:55:00+08:00,0,交易页面迁移到 trade/ui 并复用 foundation UI；编译与交易/架构测试通过；提交 bc76af7
 6,整理备份与健康检查模块,single-full,DONE,1,tasks/backup-health,备份和健康页面分别位于对应模块,Gradle targeted tests,2026-07-23T19:10:00+08:00,0,页面迁移到 backup/ui 与 health/ui；编译和模块/架构测试通过；提交 45e7d58
 7,整理商店与购物车模块,single-full,DONE,1,tasks/store,商店购物车页面和数据分别位于 store 模块,Gradle targeted tests,2026-07-23T19:40:00+08:00,0,store 按 domain/data/presentation/ui 分层；商店、购物车、愿望单、结算安全测试与架构守卫通过；提交 18fa988
-8,整理通知礼物与提醒模块,single-full,DONE,1,tasks/notifications-alerts,通知礼物提醒分别位于对应模块,Gradle targeted tests,2026-07-23T20:15:00+08:00,0,notifications/gifts/alerts 分层且礼物从通知实现中分离；登录通知归 alerts/data；编译和聚焦/架构测试通过；提交待填写
+8,整理通知礼物与提醒模块,single-full,DONE,1,tasks/notifications-alerts,通知礼物提醒分别位于对应模块,Gradle targeted tests,2026-07-23T20:15:00+08:00,0,notifications/gifts/alerts 分层且礼物从通知实现中分离；登录通知归 alerts/data；编译和聚焦/架构测试通过；提交 3ebbbe5
 9,拆分令牌页与令牌状态模块,single-full,IN_PROGRESS,2;3;4;5;6;7;8,tasks/token,令牌页面和状态管理不再承载其他功能实现,Gradle targeted tests,,0,
 10,整理共享基础设施并最终审查,single-full,TODO,1;2;3;4;5;6;7;8;9,tasks/final-audit,架构守卫全量测试编译通过并推送,Gradle test compileDebugKotlin,,0,
