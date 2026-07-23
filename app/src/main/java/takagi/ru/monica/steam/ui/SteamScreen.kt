@@ -58,6 +58,7 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.HealthAndSafety
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Login
@@ -324,6 +325,7 @@ fun SteamScreen(
     showStandaloneSettingsEntry: Boolean = false,
     onOpenStandaloneSettings: () -> Unit = {},
     onOpenHealth: () -> Unit = {},
+    onOpenFriends: () -> Unit = {},
     onOpenLibrary: () -> Unit = {},
     onOpenBackup: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -1558,6 +1560,7 @@ fun SteamScreen(
                         },
                         searchHint = stringResource(selectedSection.searchHintRes),
                         pendingConfirmationCount = pendingConfirmationCount,
+                        onOpenFriends = onOpenFriends,
                         onOpenSearch = { isSteamSearchExpanded = true },
                         storageSourceMenu = {
                             SteamStorageSourceMenu(
@@ -1910,6 +1913,7 @@ private fun SteamRootTopBar(
     onSearchExpandedChange: (Boolean) -> Unit,
     searchHint: String,
     pendingConfirmationCount: Int,
+    onOpenFriends: () -> Unit,
     onOpenSearch: () -> Unit,
     onOpenStorageSourceMenu: () -> Unit,
     storageSourceMenu: @Composable () -> Unit,
@@ -1924,7 +1928,15 @@ private fun SteamRootTopBar(
         isSearchExpanded = isSearchExpanded,
         onSearchExpandedChange = onSearchExpandedChange,
         searchHint = searchHint,
+        collapsedTitleEndPadding = 228.dp,
         actions = {
+            IconButton(onClick = onOpenFriends) {
+                Icon(
+                    imageVector = Icons.Default.Groups,
+                    contentDescription = stringResource(R.string.steam_friends_title),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             Box {
                 IconButton(onClick = onOpenStorageSourceMenu) {
                     Icon(
