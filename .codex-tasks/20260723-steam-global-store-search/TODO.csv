@@ -1,0 +1,5 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,建立全地区搜索与地区可用性测试,DONE,测试覆盖结果合并地区标记和锁区详情回退,Gradle targeted tests,2026-07-23T20:22:45+08:00,0,红灯验证完成；编译错误均来自尚未实现的全地区搜索模型与函数
+2,实现多地区目录搜索与账号地区可用性判定,DONE,锁区候选可被发现且价格来源明确,Gradle targeted tests,2026-07-23T20:35:16+08:00,0,账号地区与六个代表性目录并行搜索；账号地区优先；锁区详情按发现地区回退
+3,实现锁区列表和详情页状态设计,DONE,状态标签多区价格入口和购买限制完整,Gradle targeted UI guard tests,2026-07-23T20:35:16+08:00,0,商店专项测试通过；列表和详情显示停售状态及参考地区价格；购买操作受地区状态保护
+4,执行全量验证并提交推送,DONE,全量测试编译静态检查通过且远程同步,Gradle test compileDebugKotlin,2026-07-23T20:40:06+08:00,0,573 个测试 0 失败；compileDebugKotlin 与 git diff --check 通过；提交 cb39cca 已推送 main
