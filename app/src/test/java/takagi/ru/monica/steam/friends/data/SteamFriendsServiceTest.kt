@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.friends
+package takagi.ru.monica.steam.friends.data
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.friends.domain.SteamFriendRelationship
 import takagi.ru.monica.steam.network.SteamApiClient
 
 class SteamFriendsServiceTest {

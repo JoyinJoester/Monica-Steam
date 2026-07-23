@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.friends
+package takagi.ru.monica.steam.friends.data
 
 import android.content.Context
 import java.security.MessageDigest
 import kotlinx.serialization.json.Json
+import takagi.ru.monica.steam.friends.domain.SteamFriendsSnapshot
 
 interface SteamFriendsCache {
     fun load(accountKey: String): SteamFriendsSnapshot?

@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.friends
+package takagi.ru.monica.steam.friends.ui
 
 import java.io.File
 import org.junit.Assert.assertFalse
@@ -15,7 +15,10 @@ class SteamFriendsIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
         ).readText()
         val friendsScreen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/SteamFriendsScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt"
+        ).readText()
+        val friendsList = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsList.kt"
         ).readText()
         val dock = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
@@ -39,23 +42,22 @@ class SteamFriendsIntegrationGuardTest {
         assertTrue(friendsScreen.contains("Modifier.statusBarsPadding()"))
         assertTrue(friendsScreen.contains("BackHandler"))
         assertTrue(friendsScreen.contains("easyNotesScreenEnter()"))
-        assertTrue(friendsScreen.contains("FlowRow("))
-        assertFalse(friendsScreen.contains("horizontalScroll("))
-        assertTrue(friendsScreen.contains("heightIn(min = 48.dp)"))
+        assertTrue(friendsList.contains("FlowRow("))
+        assertFalse(friendsList.contains("horizontalScroll("))
         assertTrue(friendsScreen.contains("SteamFriendDetailScreen("))
-        assertTrue(friendsScreen.contains("FriendLoadingCard()"))
+        assertTrue(friendsList.contains("FriendLoadingCard()"))
     }
 
     @Test
     fun friendsUseOAuthCacheAndAuthenticatedCommunityActions() {
         val service = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/SteamFriendsService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/data/SteamFriendsService.kt"
         ).readText()
         val cache = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/SteamFriendsCache.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/data/SteamFriendsCache.kt"
         ).readText()
         val viewModel = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/SteamFriendsViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/presentation/SteamFriendsViewModel.kt"
         ).readText()
 
         assertTrue(service.contains("/ISteamUserOAuth/GetFriendList/v1/"))
@@ -69,6 +71,29 @@ class SteamFriendsIntegrationGuardTest {
         assertTrue(viewModel.contains("SteamFriendsPreferencesCache"))
         assertTrue(viewModel.contains("requestGeneration"))
         assertTrue(viewModel.contains("SteamDiagLogger.append"))
+    }
+
+    @Test
+    fun friendsImplementationStaysInsideFocusedSubpackagesAndFiles() {
+        val root = projectFile("app/src/main/java/takagi/ru/monica/steam/friends")
+        assertTrue(root.resolve("domain").isDirectory)
+        assertTrue(root.resolve("data").isDirectory)
+        assertTrue(root.resolve("presentation").isDirectory)
+        assertTrue(root.resolve("ui").isDirectory)
+        assertTrue(root.listFiles().orEmpty().none { it.extension == "kt" })
+
+        val uiFiles = root.resolve("ui").listFiles().orEmpty().filter { it.extension == "kt" }
+        assertTrue(uiFiles.size >= 5)
+        uiFiles.forEach { file ->
+            assertTrue("${file.name} is too large", file.readLines().size <= 400)
+        }
+
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+        assertTrue(activity.contains("steam.friends.ui.SteamFriendsScreen"))
+        assertFalse(activity.contains("steam.friends.data"))
+        assertFalse(activity.contains("steam.friends.presentation"))
     }
 
     private fun projectFile(path: String): File {

@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.friends
+package takagi.ru.monica.steam.friends.presentation
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -13,6 +13,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
+import takagi.ru.monica.steam.friends.data.SteamFriendsCache
+import takagi.ru.monica.steam.friends.data.SteamFriendsPreferencesCache
+import takagi.ru.monica.steam.friends.data.SteamFriendsService
+import takagi.ru.monica.steam.friends.domain.SteamFriend
+import takagi.ru.monica.steam.friends.domain.SteamFriendRelationship
+import takagi.ru.monica.steam.friends.domain.SteamFriendsGateway
 import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
 

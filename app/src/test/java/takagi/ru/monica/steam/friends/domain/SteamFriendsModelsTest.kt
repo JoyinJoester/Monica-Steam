@@ -1,8 +1,9 @@
-package takagi.ru.monica.steam.friends
+package takagi.ru.monica.steam.friends.domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import takagi.ru.monica.steam.friends.data.SteamFriendsCacheCodec
 
 class SteamFriendsModelsTest {
     @Test
