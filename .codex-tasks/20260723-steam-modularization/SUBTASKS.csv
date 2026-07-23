@@ -4,7 +4,7 @@ id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_comm
 3,整理游戏库模块,single-full,DONE,1,tasks/library,库页面与库数据位于 library 模块,Gradle targeted tests,2026-07-23T16:25:00+08:00,0,页面入口迁移到 library/ui；compileDebugKotlin 与库、动效、稳定性、架构聚焦测试通过；提交 f0f436b
 4,整理库存与市场模块,single-full,DONE,1,tasks/inventory-market,库存市场批量操作位于 inventory market 模块,Gradle targeted tests,2026-07-23T18:35:00+08:00,0,库存 UI 位于 inventory/ui；批量出售位于 market/ui；共享账号卡与远程图片提升到 foundation/ui；编译与聚焦测试通过；提交 769ad62
 5,整理交易模块,single-full,DONE,1,tasks/trade,交易数据与 UI 位于 trade 模块,Gradle targeted tests,2026-07-23T18:55:00+08:00,0,交易页面迁移到 trade/ui 并复用 foundation UI；编译与交易/架构测试通过；提交 bc76af7
-6,整理备份与健康检查模块,single-full,DONE,1,tasks/backup-health,备份和健康页面分别位于对应模块,Gradle targeted tests,2026-07-23T19:10:00+08:00,0,页面迁移到 backup/ui 与 health/ui；编译和模块/架构测试通过；提交待填写
+6,整理备份与健康检查模块,single-full,DONE,1,tasks/backup-health,备份和健康页面分别位于对应模块,Gradle targeted tests,2026-07-23T19:10:00+08:00,0,页面迁移到 backup/ui 与 health/ui；编译和模块/架构测试通过；提交 45e7d58
 7,整理商店与购物车模块,single-full,IN_PROGRESS,1,tasks/store,商店购物车页面和数据分别位于 store 模块,Gradle targeted tests,,0,
 8,整理通知礼物与提醒模块,single-full,TODO,1,tasks/notifications-alerts,通知礼物提醒分别位于对应模块,Gradle targeted tests,,0,
 9,拆分令牌页与令牌状态模块,single-full,TODO,2;3;4;5;6;7;8,tasks/token,令牌页面和状态管理不再承载其他功能实现,Gradle targeted tests,,0,
