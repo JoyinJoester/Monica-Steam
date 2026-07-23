@@ -54,8 +54,6 @@ class SteamModuleArchitectureGuardTest {
     fun legacySteamUiCannotReceiveAdditionalFiles() {
         val legacyUi = projectFile("app/src/main/java/takagi/ru/monica/steam/ui")
         val temporaryAllowlist = setOf(
-            "SteamBackupScreen.kt",
-            "SteamHealthScreen.kt",
             "SteamLoginNotificationHelper.kt",
             "SteamScreen.kt",
             "SteamSearchFilters.kt",

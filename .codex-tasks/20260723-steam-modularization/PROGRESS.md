@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理备份与健康检查模块
+当前：整理商店与购物车模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：迁移备份与健康检查页面到 `steam/backup/ui`、`steam/health/ui`，保持 WebDAV、MDBX、maFile ZIP 和诊断行为不变。
+下一步：审查商店、愿望单、购物车和官方结算的目录边界，迁移仍在共享/legacy 目录中的实现并更新架构守卫。
 
 ## 已完成
 
@@ -61,3 +61,10 @@
 - 账号切换、账号卡和报价图片复用 `steam/foundation/ui`，没有复制 UI 或缓存实现。
 - 验证：`:app:compileDebugKotlin`、交易模块测试和架构守卫通过。
 - 独立提交：`bc76af7`。
+
+### 子任务 6：备份与健康检查模块
+
+- 备份页面迁移至 `steam/backup/ui`，保留 WebDAV、MDBX、maFile ZIP、SAF 导入导出和身份验证。
+- 健康检查页面迁移至 `steam/health/ui`，保留账号报告、服务器时间和诊断文本导出。
+- 验证：`:app:compileDebugKotlin`、备份/健康模块测试和架构守卫通过。
+- 独立提交：待提交后填写 commit id。

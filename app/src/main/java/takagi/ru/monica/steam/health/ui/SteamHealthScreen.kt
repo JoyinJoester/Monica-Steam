@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.health.ui
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler

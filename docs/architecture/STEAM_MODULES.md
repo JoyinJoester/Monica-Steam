@@ -87,8 +87,6 @@ Shared modules cannot contain user-facing feature screens.
 The following files existed before the module rule and are the complete temporary allowlist:
 
 ```text
-SteamBackupScreen.kt
-SteamHealthScreen.kt
 SteamLoginNotificationHelper.kt
 SteamScreen.kt
 SteamSearchFilters.kt

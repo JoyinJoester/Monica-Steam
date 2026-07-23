@@ -27,7 +27,7 @@ class SteamStandaloneDataBoundaryTest {
     @Test
     fun standaloneWebDavOnlyHandlesMaFileZip() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamBackupScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/backup/ui/SteamBackupScreen.kt"
         ).readText()
         val service = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/backup/SteamMaFileWebDavService.kt"
