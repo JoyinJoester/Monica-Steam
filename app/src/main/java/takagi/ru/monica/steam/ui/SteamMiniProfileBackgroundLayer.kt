@@ -36,6 +36,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.io.File
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withContext
@@ -60,14 +61,30 @@ internal fun SteamMiniProfileBackgroundLayer(
         key1 = steamId,
         key2 = enabled
     ) {
-        value = if (enabled) repository.load(steamId) else null
+        value = if (!enabled) {
+            null
+        } else {
+            try {
+                repository.load(steamId)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (_: Throwable) {
+                null
+            }
+        }
     }
     val poster by produceState<Bitmap?>(
         initialValue = null,
         key1 = media?.posterFile?.absolutePath
     ) {
-        value = media?.posterFile?.let { file ->
-            withContext(Dispatchers.IO) { SteamMiniProfilePosterMemoryCache.load(file) }
+        value = try {
+            media?.posterFile?.let { file ->
+                withContext(Dispatchers.IO) { SteamMiniProfilePosterMemoryCache.load(file) }
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (_: Throwable) {
+            null
         }
     }
     val motionAllowed = rememberSteamMiniProfileMotionAllowed(allowMotion)
@@ -121,10 +138,12 @@ private fun rememberSteamMiniProfileMotionAllowed(requested: Boolean): Boolean {
             }
         }
         lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
-        context.registerReceiver(
-            powerReceiver,
-            IntentFilter(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
-        )
+        runCatching {
+            context.registerReceiver(
+                powerReceiver,
+                IntentFilter(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
+            )
+        }
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
             runCatching { context.unregisterReceiver(powerReceiver) }

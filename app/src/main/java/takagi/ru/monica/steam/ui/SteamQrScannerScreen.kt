@@ -46,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.google.zxing.BarcodeFormat
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
@@ -101,15 +102,27 @@ fun SteamQrScannerScreen(
     var showAccountPicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(repository, mdbxAccountStore, storageSource) {
-        accounts = withContext(Dispatchers.IO) {
-            when (storageSource) {
-                SteamStorageSource.Local -> repository.getAccounts()
-                is SteamStorageSource.Mdbx -> runCatching {
-                    mdbxAccountStore
-                        .loadAccounts(storageSource.databaseId)
-                        .map { it.account }
-                }.getOrDefault(emptyList())
+        accounts = try {
+            withContext(Dispatchers.IO) {
+                when (storageSource) {
+                    SteamStorageSource.Local -> repository.getAccounts()
+                    is SteamStorageSource.Mdbx -> runCatching {
+                        mdbxAccountStore
+                            .loadAccounts(storageSource.databaseId)
+                            .map { it.account }
+                    }.getOrDefault(emptyList())
+                }
             }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            // The scanner remains usable even when the selected storage
+            // provider is temporarily unavailable or its encrypted database
+            // cannot be opened.
+            SteamDiagLogger.append(
+                "qr_scan account_load failed type=${error::class.java.simpleName}"
+            )
+            emptyList()
         }
     }
 

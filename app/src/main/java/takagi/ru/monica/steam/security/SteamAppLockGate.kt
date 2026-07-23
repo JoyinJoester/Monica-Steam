@@ -87,7 +87,7 @@ fun SteamAppLockGate(
     ) {
         SessionManager.updateAutoLockTimeout(settings.autoLockMinutes)
         val loadedState = withContext(Dispatchers.IO) {
-            SteamAppLockPolicy.resolveAccessState(
+            SteamAppLockPolicy.resolveAccessStateOrLocked(
                 securityManager = securityManager,
                 context = context.applicationContext,
                 autoLockMinutes = settings.autoLockMinutes,
@@ -104,7 +104,7 @@ fun SteamAppLockGate(
             if (event != Lifecycle.Event.ON_START) return@LifecycleEventObserver
 
             SessionManager.updateAutoLockTimeout(currentSettings.autoLockMinutes)
-            val resumedState = SteamAppLockPolicy.resolveAccessState(
+            val resumedState = SteamAppLockPolicy.resolveAccessStateOrLocked(
                 securityManager = securityManager,
                 context = context.applicationContext,
                 autoLockMinutes = currentSettings.autoLockMinutes,

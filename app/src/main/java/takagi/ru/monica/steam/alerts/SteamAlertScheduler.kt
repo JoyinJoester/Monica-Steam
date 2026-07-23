@@ -5,23 +5,33 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 object SteamAlertScheduler {
     suspend fun sync(context: Context) {
-        val appContext = context.applicationContext
-        val settings = SteamAlertPreferences(appContext).settings.first()
-        val alarmManager = appContext.getSystemService(AlarmManager::class.java) ?: return
-        val pendingIntent = pendingIntent(appContext)
-        alarmManager.cancel(pendingIntent)
-        if (!settings.enabled) return
-        val interval = settings.normalizedIntervalHours * 60L * 60L * 1000L
-        alarmManager.setInexactRepeating(
-            AlarmManager.ELAPSED_REALTIME,
-            SystemClock.elapsedRealtime() + FIRST_CHECK_DELAY_MS,
-            interval,
-            pendingIntent
-        )
+        try {
+            val appContext = context.applicationContext
+            val settings = SteamAlertPreferences(appContext).settings.first()
+            val alarmManager = appContext.getSystemService(AlarmManager::class.java) ?: return
+            val pendingIntent = pendingIntent(appContext)
+            alarmManager.cancel(pendingIntent)
+            if (!settings.enabled) return
+            val interval = settings.normalizedIntervalHours * 60L * 60L * 1000L
+            alarmManager.setInexactRepeating(
+                AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + FIRST_CHECK_DELAY_MS,
+                interval,
+                pendingIntent
+            )
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            SteamDiagLogger.append(
+                "alert_scheduler_sync failed type=${error::class.java.simpleName}"
+            )
+        }
     }
 
     private fun pendingIntent(context: Context): PendingIntent {

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.data.SteamLibraryCacheRepository
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.market.SteamInventoryService
 import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
@@ -50,6 +52,7 @@ class SteamLibraryViewModel(
     val uiState: StateFlow<SteamLibraryUiState> = _uiState.asStateFlow()
     private var initializedAccountIds = mutableSetOf<Long>()
     private var libraryLoadGeneration: Long = 0L
+    private var achievementLoadGeneration: Long = 0L
     private var regionalPriceLoadGeneration: Long = 0L
 
     init {
@@ -71,6 +74,7 @@ class SteamLibraryViewModel(
     fun selectAccount(accountId: Long) {
         val account = _uiState.value.accounts.firstOrNull { it.id == accountId } ?: return
         if (_uiState.value.selectedAccountId == accountId) return
+        achievementLoadGeneration++
         regionalPriceLoadGeneration++
         _uiState.value = _uiState.value.copy(
             selectedAccountId = accountId,
@@ -94,21 +98,38 @@ class SteamLibraryViewModel(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(loadingLibrary = true, libraryFailure = null)
             val cachedBeforeRefresh = _uiState.value.snapshot
-            val result = withContext(Dispatchers.IO) {
-                fetchLibraryWithSessionRetry(account)
+            val result = runSteamLibraryCatching {
+                withContext(Dispatchers.IO) {
+                    fetchLibraryWithSessionRetry(account)
+                }
+            }.getOrElse { error ->
+                SteamLibraryResult.Failure(steamLibraryFailureReason(error))
             }
             when (result) {
                 is SteamLibraryResult.Success -> {
-                    val inventoryResult = withContext(Dispatchers.IO) {
-                        fetchInventorySummaryWithSessionRetry(account)
+                    val inventoryResult = runSteamLibraryCatching {
+                        withContext(Dispatchers.IO) {
+                            fetchInventorySummaryWithSessionRetry(account)
+                        }
+                    }.getOrElse { error ->
+                        SteamLibraryResult.Failure(steamLibraryFailureReason(error))
                     }
                     val merged = mergeLibraryDashboardSnapshot(
                         fresh = result.value,
                         cached = cachedBeforeRefresh,
                         inventoryResult = inventoryResult
                     )
-                    withContext(Dispatchers.IO) { cacheRepository.saveLibrary(merged) }
-                    appContext?.let(SteamWidgetUpdater::refreshAll)
+                    runSteamLibraryCatching {
+                        withContext(Dispatchers.IO) { cacheRepository.saveLibrary(merged) }
+                    }
+                    appContext?.let { context ->
+                        runCatching { SteamWidgetUpdater.refreshAll(context) }
+                            .onFailure { error ->
+                                SteamDiagLogger.append(
+                                    "library_widget_refresh failed type=${error::class.java.simpleName}"
+                                )
+                            }
+                    }
                     if (generation != libraryLoadGeneration ||
                         _uiState.value.selectedAccountId != account.id
                     ) return@launch
@@ -135,6 +156,7 @@ class SteamLibraryViewModel(
     fun openGame(game: SteamGame) {
         val account = selectedAccount() ?: return
         regionalPriceLoadGeneration++
+        val generation = ++achievementLoadGeneration
         _uiState.value = _uiState.value.copy(
             selectedGame = game,
             achievements = null,
@@ -145,22 +167,36 @@ class SteamLibraryViewModel(
             regionalPriceFailure = null
         )
         viewModelScope.launch {
-            val cached = withContext(Dispatchers.IO) {
-                cacheRepository.getAchievements(account.id, game.appId)
-            }
-            if (cached != null && _uiState.value.selectedGame?.appId == game.appId) {
+            val cached = runSteamLibraryCatching {
+                withContext(Dispatchers.IO) {
+                    cacheRepository.getAchievements(account.id, game.appId)
+                }
+            }.getOrNull()
+            if (!achievementRequestIsCurrent(account.id, game.appId, generation)) return@launch
+            if (cached != null) {
                 _uiState.value = _uiState.value.copy(
                     achievements = cached,
                     achievementsFromCache = true
                 )
             }
-            val result = withContext(Dispatchers.IO) {
-                fetchAchievementsWithSessionRetry(account, game)
+            val result = runSteamLibraryCatching {
+                withContext(Dispatchers.IO) {
+                    fetchAchievementsWithSessionRetry(account, game)
+                }
+            }.getOrElse { error ->
+                SteamLibraryResult.Failure(steamLibraryFailureReason(error))
             }
-            if (_uiState.value.selectedGame?.appId != game.appId) return@launch
+            if (!achievementRequestIsCurrent(account.id, game.appId, generation)) return@launch
             when (result) {
                 is SteamLibraryResult.Success -> {
-                    withContext(Dispatchers.IO) { cacheRepository.saveAchievements(result.value) }
+                    runSteamLibraryCatching {
+                        withContext(Dispatchers.IO) {
+                            cacheRepository.saveAchievements(result.value)
+                        }
+                    }
+                    if (!achievementRequestIsCurrent(account.id, game.appId, generation)) {
+                        return@launch
+                    }
                     _uiState.value = _uiState.value.copy(
                         achievements = result.value,
                         achievementsFromCache = false,
@@ -179,6 +215,7 @@ class SteamLibraryViewModel(
     }
 
     fun closeGame() {
+        achievementLoadGeneration++
         regionalPriceLoadGeneration++
         _uiState.value = _uiState.value.copy(
             selectedGame = null,
@@ -209,23 +246,27 @@ class SteamLibraryViewModel(
             regionalPriceFailure = null
         )
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                when (val prices = fetchRegionalPricesWithSessionRetry(account, game)) {
-                    is SteamLibraryResult.Success -> {
-                        val rates = runCatching {
-                            currencyExchangeService.fetchCnyRates()
-                        }.getOrNull()
-                        SteamLibraryResult.Success(
-                            applyCnyConversions(
-                                prices = prices.value,
-                                unitsPerCny = rates?.unitsPerCny.orEmpty(),
-                                exchangeRateFetchedAt = rates?.fetchedAt
-                                    ?: System.currentTimeMillis()
+            val result = runSteamLibraryCatching {
+                withContext(Dispatchers.IO) {
+                    when (val prices = fetchRegionalPricesWithSessionRetry(account, game)) {
+                        is SteamLibraryResult.Success -> {
+                            val rates = runCatching {
+                                currencyExchangeService.fetchCnyRates()
+                            }.getOrNull()
+                            SteamLibraryResult.Success(
+                                applyCnyConversions(
+                                    prices = prices.value,
+                                    unitsPerCny = rates?.unitsPerCny.orEmpty(),
+                                    exchangeRateFetchedAt = rates?.fetchedAt
+                                        ?: System.currentTimeMillis()
+                                )
                             )
-                        )
+                        }
+                        is SteamLibraryResult.Failure -> prices
                     }
-                    is SteamLibraryResult.Failure -> prices
                 }
+            }.getOrElse { error ->
+                SteamLibraryResult.Failure(steamLibraryFailureReason(error))
             }
             if (generation != regionalPriceLoadGeneration ||
                 _uiState.value.selectedAccountId != account.id ||
@@ -240,10 +281,19 @@ class SteamLibraryViewModel(
                     ) ?: return@launch
                     val updatedSnapshot = updatedState.snapshot
                     if (updatedSnapshot != null) {
-                        withContext(Dispatchers.IO) {
-                            cacheRepository.saveLibrary(updatedSnapshot)
+                        runSteamLibraryCatching {
+                            withContext(Dispatchers.IO) {
+                                cacheRepository.saveLibrary(updatedSnapshot)
+                            }
                         }
-                        appContext?.let(SteamWidgetUpdater::refreshAll)
+                        appContext?.let { context ->
+                            runCatching { SteamWidgetUpdater.refreshAll(context) }
+                                .onFailure { error ->
+                                    SteamDiagLogger.append(
+                                        "regional_widget_refresh failed type=${error::class.java.simpleName}"
+                                    )
+                                }
+                        }
                     }
                     if (generation != regionalPriceLoadGeneration ||
                         _uiState.value.selectedAccountId != account.id ||
@@ -267,8 +317,11 @@ class SteamLibraryViewModel(
 
     private suspend fun loadAccount(account: SteamAccount) {
         libraryLoadGeneration++
+        achievementLoadGeneration++
         regionalPriceLoadGeneration++
-        val cached = withContext(Dispatchers.IO) { cacheRepository.getLibrary(account.id) }
+        val cached = runSteamLibraryCatching {
+            withContext(Dispatchers.IO) { cacheRepository.getLibrary(account.id) }
+        }.getOrNull()
         if (_uiState.value.selectedAccountId != account.id) return
         _uiState.value = _uiState.value.copy(
             snapshot = cached,
@@ -286,6 +339,20 @@ class SteamLibraryViewModel(
 
     private fun selectedAccount(): SteamAccount? {
         return _uiState.value.accounts.firstOrNull { it.id == _uiState.value.selectedAccountId }
+    }
+
+    private fun achievementRequestIsCurrent(
+        accountId: Long,
+        appId: Int,
+        generation: Long
+    ): Boolean {
+        return steamLibraryAchievementRequestIsCurrent(
+            state = _uiState.value,
+            accountId = accountId,
+            appId = appId,
+            generation = generation,
+            currentGeneration = achievementLoadGeneration
+        )
     }
 
     private suspend fun fetchLibraryWithSessionRetry(
@@ -424,12 +491,18 @@ class SteamLibraryViewModel(
             refreshToken = refreshResult.refreshToken ?: account.refreshToken,
             steamLoginSecure = "${account.steamId}||${refreshResult.accessToken}"
         )
-        accountRepository.updateSessionTokens(
-            id = account.id,
-            accessToken = refreshResult.accessToken,
-            refreshToken = refreshed.refreshToken,
-            steamLoginSecure = refreshed.steamLoginSecure
-        )
+        runSteamLibraryCatching {
+            accountRepository.updateSessionTokens(
+                id = account.id,
+                accessToken = refreshResult.accessToken,
+                refreshToken = refreshed.refreshToken,
+                steamLoginSecure = refreshed.steamLoginSecure
+            )
+        }.onFailure { error ->
+            SteamDiagLogger.append(
+                "library_session_persist failed type=${error::class.java.simpleName}"
+            )
+        }
         return refreshed
     }
 
@@ -460,6 +533,49 @@ class SteamLibraryViewModel(
             }
         }
     }
+}
+
+/**
+ * Converts unexpected storage/session/network exceptions into a normal
+ * library failure while preserving coroutine cancellation semantics.
+ */
+internal suspend fun <T> runSteamLibraryCatching(block: suspend () -> T): Result<T> {
+    return try {
+        Result.success(block())
+    } catch (cancelled: CancellationException) {
+        throw cancelled
+    } catch (error: Throwable) {
+        SteamDiagLogger.append(
+            "library_request failed type=${error::class.java.simpleName}"
+        )
+        Result.failure(error)
+    }
+}
+
+internal fun steamLibraryFailureReason(error: Throwable): SteamLibraryFailureReason {
+    return when {
+        error is SteamApiException && (
+            error.eResult == 5 || error.eResult == 15 ||
+                error.eResult == 401 || error.eResult == 403
+            ) -> SteamLibraryFailureReason.SESSION_REQUIRED
+        error is SteamApiException && (
+            error.eResult == 429 || error.message?.contains("429") == true
+            ) -> SteamLibraryFailureReason.RATE_LIMITED
+        error is IllegalArgumentException -> SteamLibraryFailureReason.SESSION_REQUIRED
+        else -> SteamLibraryFailureReason.NETWORK
+    }
+}
+
+internal fun steamLibraryAchievementRequestIsCurrent(
+    state: SteamLibraryUiState,
+    accountId: Long,
+    appId: Int,
+    generation: Long,
+    currentGeneration: Long
+): Boolean {
+    return generation == currentGeneration &&
+        state.selectedAccountId == accountId &&
+        state.selectedGame?.appId == appId
 }
 
 /**

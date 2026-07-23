@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 abstract class SteamBaseWidgetProvider : AppWidgetProvider() {
     final override fun onUpdate(
@@ -42,12 +43,28 @@ abstract class SteamBaseWidgetProvider : AppWidgetProvider() {
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             try {
                 ids.forEach { widgetId ->
-                    val accountId = SteamWidgetPreferences.accountId(context, widgetId)
-                    val snapshot = accountId?.let {
-                        runCatching { SteamWidgetDataLoader.load(context, it) }.getOrNull()
+                    runCatching {
+                        val accountId = SteamWidgetPreferences.accountId(context, widgetId)
+                        val snapshot = accountId?.let {
+                            runCatching { SteamWidgetDataLoader.load(context, it) }.getOrNull()
+                        }
+                        manager.updateAppWidget(widgetId, render(context, manager, widgetId, snapshot))
+                    }.onFailure { error ->
+                        SteamDiagLogger.append(
+                            "widget_refresh failed id=$widgetId type=${error::class.java.simpleName}"
+                        )
+                        android.util.Log.e(
+                            "MonicaSteamWidget",
+                            "Steam widget refresh failed for $widgetId",
+                            error
+                        )
                     }
-                    manager.updateAppWidget(widgetId, render(context, manager, widgetId, snapshot))
                 }
+            } catch (error: Throwable) {
+                SteamDiagLogger.append(
+                    "widget_refresh_batch failed type=${error::class.java.simpleName}"
+                )
+                android.util.Log.e("MonicaSteamWidget", "Steam widget batch failed", error)
             } finally {
                 pendingResult?.finish()
             }

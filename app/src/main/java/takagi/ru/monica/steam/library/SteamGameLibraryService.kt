@@ -158,7 +158,9 @@ class SteamGameLibraryService(
         }
         return when {
             prices.isNotEmpty() -> SteamLibraryResult.Success(prices)
-            firstFailure != null -> SteamLibraryResult.Failure(requireNotNull(firstFailure))
+            firstFailure != null -> SteamLibraryResult.Failure(
+                firstFailure ?: SteamLibraryFailureReason.NETWORK
+            )
             else -> SteamLibraryResult.Failure(SteamLibraryFailureReason.INVALID_RESPONSE)
         }
     }
@@ -266,7 +268,9 @@ class SteamGameLibraryService(
             }
             return gameFields
                 .mapNotNull { field ->
-                    val game = SteamProtoReader(field.bytes!!).parse()
+                    val game = runCatching {
+                        SteamProtoReader(field.bytes ?: return@mapNotNull null).parse()
+                    }.getOrNull() ?: return@mapNotNull null
                     val appId = game[1]?.asLong?.toInt() ?: return@mapNotNull null
                     SteamGame(
                         appId = appId,
@@ -322,7 +326,9 @@ class SteamGameLibraryService(
                 .asSequence()
                 .filter { it.number == 1 && it.bytes != null }
                 .mapNotNull { itemField ->
-                    val item = SteamProtoReader(itemField.bytes!!).parse()
+                    val item = runCatching {
+                        SteamProtoReader(itemField.bytes ?: return@mapNotNull null).parse()
+                    }.getOrNull() ?: return@mapNotNull null
                     val appId = item[9]?.asLong?.toInt()?.takeIf { it > 0 }
                         ?: return@mapNotNull null
                     val assets = item[30]?.bytes?.let { SteamProtoReader(it).parse() }
@@ -371,7 +377,9 @@ class SteamGameLibraryService(
                 .asSequence()
                 .filter { it.number == 1 && it.bytes != null }
                 .mapNotNull { field ->
-                    val status = SteamProtoReader(field.bytes!!).parse()
+                    val status = runCatching {
+                        SteamProtoReader(field.bytes ?: return@mapNotNull null).parse()
+                    }.getOrNull() ?: return@mapNotNull null
                     val key = status[1]?.asLong ?: return@mapNotNull null
                     val unlockTime = status[3]?.let { unlockField ->
                         when (unlockField.wireType) {
@@ -386,7 +394,9 @@ class SteamGameLibraryService(
                 .asSequence()
                 .filter { it.number == 1 && it.bytes != null }
                 .mapNotNull { field ->
-                    val definition = SteamProtoReader(field.bytes!!).parse()
+                    val definition = runCatching {
+                        SteamProtoReader(field.bytes ?: return@mapNotNull null).parse()
+                    }.getOrNull() ?: return@mapNotNull null
                     val key = definition[8]?.asLong ?: return@mapNotNull null
                     val apiName = definition[1]?.asString.orEmpty()
                     val status = statuses[key]

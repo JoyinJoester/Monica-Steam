@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -24,6 +25,7 @@ import takagi.ru.monica.steam.library.SteamRegionalPrice
 import takagi.ru.monica.steam.library.applyCnyConversions
 import takagi.ru.monica.steam.library.mergeCachedRegionalPriceConversions
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 data class SteamStoreUiState(
     val accounts: List<SteamAccount> = emptyList(),
@@ -340,27 +342,36 @@ class SteamStoreViewModel(
                 _uiState.value = _uiState.value.copy(loadingRegionalPrices = false)
                 return@launch
             }
-            val result = withContext(Dispatchers.IO) {
-                when (val prices = fetchRegionalPricesWithSessionRetry(account, appId)) {
-                    is SteamLibraryResult.Success -> {
-                        val exchangeRates = runCatching {
-                            currencyExchangeService.fetchCnyRates()
-                        }.getOrNull()
-                        val converted = applyCnyConversions(
-                            prices = prices.value,
-                            unitsPerCny = exchangeRates?.unitsPerCny.orEmpty(),
-                            exchangeRateFetchedAt = exchangeRates?.fetchedAt
-                                ?: System.currentTimeMillis()
-                        )
-                        SteamLibraryResult.Success(
-                            mergeCachedRegionalPriceConversions(
-                                fresh = converted,
-                                cached = availablePrices
+            val result = try {
+                withContext(Dispatchers.IO) {
+                    when (val prices = fetchRegionalPricesWithSessionRetry(account, appId)) {
+                        is SteamLibraryResult.Success -> {
+                            val exchangeRates = runCatching {
+                                currencyExchangeService.fetchCnyRates()
+                            }.getOrNull()
+                            val converted = applyCnyConversions(
+                                prices = prices.value,
+                                unitsPerCny = exchangeRates?.unitsPerCny.orEmpty(),
+                                exchangeRateFetchedAt = exchangeRates?.fetchedAt
+                                    ?: System.currentTimeMillis()
                             )
-                        )
+                            SteamLibraryResult.Success(
+                                mergeCachedRegionalPriceConversions(
+                                    fresh = converted,
+                                    cached = availablePrices
+                                )
+                            )
+                        }
+                        is SteamLibraryResult.Failure -> prices
                     }
-                    is SteamLibraryResult.Failure -> prices
                 }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Throwable) {
+                SteamDiagLogger.append(
+                    "store_regional_prices failed type=${error::class.java.simpleName}"
+                )
+                SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
             }
             if (!regionalPriceRequestIsCurrent(accountId, appId, generation)) return@launch
             when (result) {
@@ -698,12 +709,22 @@ class SteamStoreViewModel(
             refreshToken = refreshResult.refreshToken ?: account.refreshToken,
             steamLoginSecure = "${account.steamId}||${refreshResult.accessToken}"
         )
-        accountRepository.updateSessionTokens(
-            id = account.id,
-            accessToken = refreshResult.accessToken,
-            refreshToken = refreshed.refreshToken,
-            steamLoginSecure = refreshed.steamLoginSecure
-        )
+        try {
+            accountRepository.updateSessionTokens(
+                id = account.id,
+                accessToken = refreshResult.accessToken,
+                refreshToken = refreshed.refreshToken,
+                steamLoginSecure = refreshed.steamLoginSecure
+            )
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            // Keep the fresh in-memory credentials usable for this request;
+            // a transient persistence failure should not crash the store.
+            SteamDiagLogger.append(
+                "store_session_persist failed type=${error::class.java.simpleName}"
+            )
+        }
         _uiState.value = _uiState.value.copy(
             accounts = _uiState.value.accounts.map { existing ->
                 if (existing.id == refreshed.id) refreshed else existing

@@ -15,6 +15,7 @@ import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.network.SteamAuthorizedDeviceService
 import takagi.ru.monica.steam.network.SteamConfirmationService
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.notifications.SteamNotificationService
 
 class SteamAlertReceiver : BroadcastReceiver() {
@@ -24,6 +25,18 @@ class SteamAlertReceiver : BroadcastReceiver() {
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             try {
                 checkAlerts(appContext)
+            } catch (error: Throwable) {
+                // BroadcastReceiver work runs outside the activity/ViewModel
+                // scope.  A transient Room, Keystore, or network failure must
+                // not become an uncaught process-level exception.
+                SteamDiagLogger.append(
+                    "alert_check failed type=${error::class.java.simpleName}"
+                )
+                android.util.Log.e(
+                    "MonicaSteamAlert",
+                    "Steam alert check failed",
+                    error
+                )
             } finally {
                 pendingResult.finish()
             }

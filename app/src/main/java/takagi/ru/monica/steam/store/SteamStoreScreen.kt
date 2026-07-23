@@ -119,9 +119,11 @@ fun SteamStoreScreen(
     LaunchedEffect(state.detail) {
         state.detail?.let { lastDetail = it }
     }
+    val webUrl = state.webUrl
+    val detailState = state.detail
     val storeDestination = when {
-        state.webUrl != null -> SteamStoreDestination.Web(state.webUrl!!)
-        state.detail != null -> SteamStoreDestination.Detail(state.detail!!.appId)
+        webUrl != null -> SteamStoreDestination.Web(webUrl)
+        detailState != null -> SteamStoreDestination.Detail(detailState.appId)
         state.cartOpen -> SteamStoreDestination.Cart
         else -> SteamStoreDestination.Home
     }
@@ -1265,9 +1267,10 @@ internal fun SteamStoreImage(
     val image by produceState<ImageBitmap?>(initialValue = null, key1 = url) {
         value = url.takeIf(String::isNotBlank)?.let { cache.load(it)?.asImageBitmap() }
     }
+    val loadedImage = image
     Box(modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
-        if (image != null) Image(
-            image!!,
+        if (loadedImage != null) Image(
+            loadedImage,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = contentScale,

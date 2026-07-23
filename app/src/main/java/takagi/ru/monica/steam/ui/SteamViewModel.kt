@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import java.io.BufferedReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -1981,35 +1982,45 @@ class SteamViewModel(
         viewModelScope.launch {
             val account = accountById(accountId) ?: return@launch
             setLoading(true)
-            val result = withContext(Dispatchers.IO) {
-                loginImportService.revokeAuthorizedDevice(
-                    userName = userName,
-                    password = password,
-                    sharedSecret = account.sharedSecret,
-                    tokenId = device.tokenId
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    loginImportService.revokeAuthorizedDevice(
+                        userName = userName,
+                        password = password,
+                        sharedSecret = account.sharedSecret,
+                        tokenId = device.tokenId
+                    )
+                }
+                when (result) {
+                    SteamLoginImportService.AuthorizedDeviceRevokeResult.Success -> {
+                        SteamDiagLogger.append(
+                            "authorized_device_revoke success transport=auth_poll current=false"
+                        )
+                        setMessage(R.string.steam_done)
+                        refreshAuthorizedDevices(accountId, silent = true)
+                    }
+                    is SteamLoginImportService.AuthorizedDeviceRevokeResult.Failure -> {
+                        val safeReason = result.message
+                            .replace('\n', ' ')
+                            .replace('\r', ' ')
+                            .take(160)
+                        SteamDiagLogger.append(
+                            "authorized_device_revoke failed transport=auth_poll " +
+                                "current=${device.isCurrent} reason=$safeReason"
+                        )
+                        setMessage(result.message)
+                    }
+                }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Throwable) {
+                SteamDiagLogger.append(
+                    "authorized_device_revoke exception type=${error::class.java.simpleName}"
                 )
+                setMessage(error.message ?: appContext.getString(R.string.steam_login_response_failed))
+            } finally {
+                setLoading(false)
             }
-            when (result) {
-                SteamLoginImportService.AuthorizedDeviceRevokeResult.Success -> {
-                    SteamDiagLogger.append(
-                        "authorized_device_revoke success transport=auth_poll current=false"
-                    )
-                    setMessage(R.string.steam_done)
-                    refreshAuthorizedDevices(accountId, silent = true)
-                }
-                is SteamLoginImportService.AuthorizedDeviceRevokeResult.Failure -> {
-                    val safeReason = result.message
-                    .replace('\n', ' ')
-                    .replace('\r', ' ')
-                    .take(160)
-                    SteamDiagLogger.append(
-                        "authorized_device_revoke failed transport=auth_poll " +
-                            "current=${device.isCurrent} reason=$safeReason"
-                    )
-                    setMessage(result.message)
-                }
-            }
-            setLoading(false)
         }
     }
 
@@ -2301,8 +2312,12 @@ class SteamViewModel(
         pendingLoginPollJob = viewModelScope.launch {
             repeat(40) {
                 delay(3_000L)
-                val result = withContext(Dispatchers.IO) {
-                    loginImportService.pollPendingSession(pendingSessionId)
+                val result = pollPendingLoginSafely(pendingSessionId) ?: run {
+                    pendingLoginDisplayName = null
+                    clearPendingLoginTarget()
+                    setMessage(R.string.steam_login_response_failed)
+                    pendingLoginPollJob = null
+                    return@launch
                 }
                 when (result) {
                     is SteamLoginImportService.LoginResult.ReadyForImport -> {
@@ -2342,8 +2357,13 @@ class SteamViewModel(
         pendingLoginPollJob = viewModelScope.launch {
             repeat(60) {
                 delay(2_000L)
-                when (val result = withContext(Dispatchers.IO) {
-                    loginImportService.pollQrLoginSession(pendingSessionId)
+                when (val result = pollQrLoginSafely(pendingSessionId) ?: run {
+                    pendingLoginDisplayName = null
+                    clearPendingLoginTarget()
+                    _uiState.value = _uiState.value.copy(pendingQrLoginChallenge = null)
+                    setMessage(R.string.steam_login_response_failed)
+                    pendingLoginPollJob = null
+                    return@launch
                 }) {
                     is SteamLoginImportService.QrLoginResult.ChallengeRequired -> {
                         _uiState.value = _uiState.value.copy(
@@ -2386,6 +2406,40 @@ class SteamViewModel(
             _uiState.value = _uiState.value.copy(pendingQrLoginChallenge = null)
             setMessage(R.string.steam_login_approval_timeout)
             pendingLoginPollJob = null
+        }
+    }
+
+    private suspend fun pollPendingLoginSafely(
+        pendingSessionId: String
+    ): SteamLoginImportService.LoginResult? {
+        return try {
+            withContext(Dispatchers.IO) {
+                loginImportService.pollPendingSession(pendingSessionId)
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            SteamDiagLogger.append(
+                "login_poll failed flow=session type=${error::class.java.simpleName}"
+            )
+            null
+        }
+    }
+
+    private suspend fun pollQrLoginSafely(
+        pendingSessionId: String
+    ): SteamLoginImportService.QrLoginResult? {
+        return try {
+            withContext(Dispatchers.IO) {
+                loginImportService.pollQrLoginSession(pendingSessionId)
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            SteamDiagLogger.append(
+                "login_poll failed flow=qr type=${error::class.java.simpleName}"
+            )
+            null
         }
     }
 
@@ -2624,6 +2678,12 @@ class SteamViewModel(
         batchQuoteGeneration++
         listingsLoadGeneration++
         authorizedDevicesLoadGeneration++
+        if (_uiState.value.loading) {
+            // A stale account request may return through an early guard and
+            // therefore never reach its old setLoading(false).  Reset the
+            // global indicator when the account scope itself changes.
+            _uiState.value = _uiState.value.copy(loading = false)
+        }
     }
 
     private fun accountRequestIsCurrent(accountId: Long, generation: Long): Boolean {

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,7 @@ import takagi.ru.monica.steam.data.SteamSecurityEvent
 import takagi.ru.monica.steam.data.SteamSecurityEventRepository
 import takagi.ru.monica.steam.data.SteamSecurityEventSeverity
 import takagi.ru.monica.steam.data.SteamSecurityEventType
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 data class SteamHealthUiState(
     val accounts: List<SteamAccount> = emptyList(),
@@ -67,41 +69,61 @@ class SteamHealthViewModel(
             val accounts = _uiState.value.accounts
             if (accounts.isEmpty()) return@launch
             _uiState.value = _uiState.value.copy(isChecking = true, networkUnavailable = false)
-            val checkedAt = System.currentTimeMillis()
-            val serverTime = withContext(Dispatchers.IO) {
-                runCatching(serverTimeService::queryServerTimeSeconds).getOrNull()
-            }
-            val clock = SteamClockSnapshot.merge(
-                previous = _uiState.value.clock,
-                checkedAt = checkedAt,
-                serverTimeSeconds = serverTime
-            )
-            if (serverTime != null) persistClockSnapshot(clock)
-            val reports = accounts.associate { account ->
-                account.id to SteamAccountHealthEvaluator.evaluate(
-                    account = account,
+            try {
+                val checkedAt = System.currentTimeMillis()
+                val serverTime = withContext(Dispatchers.IO) {
+                    runCatching(serverTimeService::queryServerTimeSeconds).getOrNull()
+                }
+                val clock = SteamClockSnapshot.merge(
+                    previous = _uiState.value.clock,
                     checkedAt = checkedAt,
                     serverTimeSeconds = serverTime
                 )
-            }
-            _uiState.value = _uiState.value.copy(
-                reports = reports,
-                clock = clock,
-                isChecking = false,
-                networkUnavailable = serverTime == null
-            )
-            withContext(Dispatchers.IO) {
-                reports.values.forEach { report ->
-                    accountRepository.markHealthChecked(report.accountId, checkedAt)
-                    eventRepository.record(
-                        accountId = report.accountId,
-                        type = SteamSecurityEventType.HEALTH_CHECK,
-                        severity = report.status.toEventSeverity(),
-                        summary = "health_status=${report.status.name.lowercase()}",
-                        detail = "clock_status=${report.clockStatus.name.lowercase()}",
-                        occurredAt = checkedAt
+                if (serverTime != null) persistClockSnapshot(clock)
+                val reports = accounts.associate { account ->
+                    account.id to SteamAccountHealthEvaluator.evaluate(
+                        account = account,
+                        checkedAt = checkedAt,
+                        serverTimeSeconds = serverTime
                     )
                 }
+                _uiState.value = _uiState.value.copy(
+                    reports = reports,
+                    clock = clock,
+                    networkUnavailable = serverTime == null
+                )
+                try {
+                    withContext(Dispatchers.IO) {
+                        reports.values.forEach { report ->
+                            accountRepository.markHealthChecked(report.accountId, checkedAt)
+                            eventRepository.record(
+                                accountId = report.accountId,
+                                type = SteamSecurityEventType.HEALTH_CHECK,
+                                severity = report.status.toEventSeverity(),
+                                summary = "health_status=${report.status.name.lowercase()}",
+                                detail = "clock_status=${report.clockStatus.name.lowercase()}",
+                                occurredAt = checkedAt
+                            )
+                        }
+                    }
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (error: Throwable) {
+                    // Reporting is best-effort; a database write failure must
+                    // not discard the health result or crash the screen.
+                    SteamDiagLogger.append(
+                        "health_event_persist failed type=${error::class.java.simpleName}"
+                    )
+                }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Throwable) {
+                SteamDiagLogger.append(
+                    "health_refresh failed type=${error::class.java.simpleName}"
+                )
+                _uiState.value = _uiState.value.copy(networkUnavailable = true)
+            } finally {
+                _uiState.value = _uiState.value.copy(isChecking = false)
             }
         }
     }

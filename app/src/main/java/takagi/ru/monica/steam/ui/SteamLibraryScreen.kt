@@ -2060,14 +2060,14 @@ private fun GameIcon(game: SteamGame, large: Boolean = false) {
         color = MaterialTheme.colorScheme.primaryContainer,
         shape = MaterialTheme.shapes.small
     ) {
-        if (bitmap != null) {
+        bitmap?.let { loadedBitmap ->
             Image(
-                bitmap = requireNotNull(bitmap),
+                bitmap = loadedBitmap,
                 contentDescription = game.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-        } else {
+        } ?: run {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Icon(Icons.Default.SportsEsports, contentDescription = game.name)
             }

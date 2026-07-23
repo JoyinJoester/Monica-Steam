@@ -52,9 +52,9 @@ class SteamCurrencyExchangeService(
             }
             val rates = root["rates"]?.jsonObject.orEmpty()
                 .mapNotNull { (currency, value) ->
-                    val rate = value.jsonPrimitive.doubleOrNull
-                    currency.uppercase().takeIf { rate != null && rate.isFinite() && rate > 0.0 }
-                        ?.let { it to requireNotNull(rate) }
+                    val rate = value.jsonPrimitive.doubleOrNull ?: return@mapNotNull null
+                    if (!rate.isFinite() || rate <= 0.0) return@mapNotNull null
+                    currency.uppercase() to rate
                 }
                 .toMap()
                 .toMutableMap()
