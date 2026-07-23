@@ -14,12 +14,11 @@ class SteamGiftInboxIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreWebScreen.kt"
         ).readText()
 
-        assertTrue(screen.contains("SteamNotificationCenter("))
+        assertTrue(screen.contains("SteamSection.NOTIFICATIONS"))
         assertTrue(screen.contains("steamGiftInboxUrl("))
         assertTrue(screen.contains("onGiftAction"))
-        assertTrue(screen.contains("webSessionAvailable"))
-        assertTrue(screen.contains("enabled = webSessionAvailable"))
-        assertTrue(screen.contains("steamLoginSecure = account?.steamLoginSecure"))
+        assertTrue(screen.contains("selectedAccount?.steamLoginSecure"))
+        assertTrue(screen.contains("selectedAccount?.accessToken"))
         assertTrue(screen.contains("SteamStoreWebScreen("))
         assertTrue(web.contains("title: String"))
         assertTrue(web.contains("SteamStoreNavigationPolicy.isAllowed(target)"))
@@ -36,13 +35,17 @@ class SteamGiftInboxIntegrationGuardTest {
         ).readText()
 
         assertTrue(page.contains("fun SteamNotificationsScreen("))
-        assertTrue(page.contains("BackHandler("))
+        assertTrue(!page.contains("BackHandler("))
+        assertTrue(!page.contains("Scaffold("))
+        assertTrue(!page.contains("TopAppBar("))
         assertTrue(page.contains("ModalBottomSheet("))
         assertTrue(page.contains("SteamGiftAction.ADD_TO_LIBRARY"))
         assertTrue(page.contains("SteamGiftAction.DECLINE"))
         assertTrue(page.contains("FilterChip("))
         assertTrue(page.contains("heightIn(min = 48.dp)"))
-        assertTrue(host.contains("showNotificationsPage"))
+        assertTrue(host.contains("SteamSection.NOTIFICATIONS -> SteamNotificationsScreen("))
+        assertTrue(!host.contains("SteamNotificationCenter("))
+        assertTrue(!host.contains("showNotificationsPage"))
         assertTrue(host.contains("SteamNotificationsScreen("))
     }
 

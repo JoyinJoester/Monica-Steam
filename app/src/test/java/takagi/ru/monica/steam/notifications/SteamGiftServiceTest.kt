@@ -20,7 +20,7 @@ import takagi.ru.monica.steam.network.SteamApiClient
 
 class SteamGiftServiceTest {
     @Test
-    fun pendingGameGiftKeepsAcceptActionsWhenMarkupOnlyExposesDecline() {
+    fun pendingGiftDoesNotInventAcceptActionsWhenMarkupOnlyExposesDecline() {
         val html = """
             <div id="pending_gift_445566">
               <div class="gift_name">Half-Life</div>
@@ -30,10 +30,10 @@ class SteamGiftServiceTest {
 
         val gift = SteamGiftParser.parsePending(html).single()
 
-        assertTrue(SteamGiftAction.ADD_TO_LIBRARY in gift.actions)
-        assertTrue(SteamGiftAction.KEEP_IN_INVENTORY in gift.actions)
+        assertTrue(SteamGiftAction.ADD_TO_LIBRARY !in gift.actions)
+        assertTrue(SteamGiftAction.KEEP_IN_INVENTORY !in gift.actions)
         assertTrue(SteamGiftAction.DECLINE in gift.actions)
-        assertFalse(gift.requiresWeb)
+        assertTrue(gift.requiresWeb)
     }
 
     @Test

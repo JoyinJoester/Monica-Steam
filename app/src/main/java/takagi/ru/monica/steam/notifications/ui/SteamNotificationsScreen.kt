@@ -1,6 +1,5 @@
 package takagi.ru.monica.steam.notifications.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -21,7 +20,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.ChevronRight
@@ -29,7 +27,6 @@ import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -39,14 +36,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,13 +71,11 @@ private enum class SteamNotificationFilter {
 fun SteamNotificationsScreen(
     account: SteamAccount?,
     state: SteamNotificationsUiState,
-    onBack: () -> Unit,
-    onRefresh: () -> Unit,
+    searchQuery: String,
     onGiftAction: (SteamPendingGift, SteamGiftAction) -> Unit,
     onOpenWeb: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    BackHandler(onBack = onBack)
     var filterName by rememberSaveable(account?.id) {
         mutableStateOf(SteamNotificationFilter.ALL.name)
     }
@@ -91,66 +83,34 @@ fun SteamNotificationsScreen(
     val filter = SteamNotificationFilter.entries.firstOrNull { it.name == filterName }
         ?: SteamNotificationFilter.ALL
     val snapshot = state.snapshot
-    val notifications = remember(snapshot, filter) {
+    val notifications = remember(snapshot, filter, searchQuery) {
         snapshot?.notifications.orEmpty().filter { notification ->
-            when (filter) {
+            val matchesFilter = when (filter) {
                 SteamNotificationFilter.ALL -> true
                 SteamNotificationFilter.UNREAD -> !notification.read
                 SteamNotificationFilter.ACTIONS -> notification.kind == SteamNotificationKind.GIFT
             }
+            val query = searchQuery.trim()
+            val matchesQuery = query.isBlank() || listOf(
+                notification.title,
+                notification.summary,
+                notification.bodyData
+            ).any { it.contains(query, ignoreCase = true) }
+            matchesFilter && matchesQuery
         }
     }
     val webSessionAvailable = account != null && (
         !account.steamLoginSecure.isNullOrBlank() || !account.accessToken.isNullOrBlank()
     )
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text(stringResource(R.string.steam_notifications_title))
-                        account?.let {
-                            Text(
-                                text = it.displayName.ifBlank { it.accountName },
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = onRefresh,
-                        enabled = account != null && !state.loading
-                    ) {
-                        if (state.loading) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
-                        }
-                    }
-                }
-            )
-        }
-    ) { contentPadding ->
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(contentPadding),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
+    LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                top = 12.dp,
+                end = 16.dp,
+                bottom = 96.dp
+            ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item(key = "notification_summary") {
@@ -198,9 +158,14 @@ fun SteamNotificationsScreen(
                 }
             }
 
+            val visibleGifts = snapshot?.pendingGifts.orEmpty().filter { gift ->
+                val query = searchQuery.trim()
+                query.isBlank() || listOf(gift.name, gift.senderName, gift.message)
+                    .any { it.contains(query, ignoreCase = true) }
+            }
             if (filter != SteamNotificationFilter.UNREAD) {
                 itemsIndexed(
-                    snapshot?.pendingGifts.orEmpty(),
+                    visibleGifts,
                     key = { index, gift -> "notification-gift-${gift.id}-$index" }
                 ) { _, gift ->
                     SteamGiftActionCard(
@@ -225,7 +190,7 @@ fun SteamNotificationsScreen(
             }
 
             if (!state.loading && notifications.isEmpty() &&
-                (filter == SteamNotificationFilter.UNREAD || snapshot?.pendingGifts.isNullOrEmpty())
+                (filter == SteamNotificationFilter.UNREAD || visibleGifts.isEmpty())
             ) {
                 item(key = "notification_empty") {
                     Text(
@@ -237,7 +202,6 @@ fun SteamNotificationsScreen(
                 }
             }
         }
-    }
 
     selectedNotification?.let { notification ->
         val relatedGift = snapshot?.pendingGifts.orEmpty().firstOrNull { gift ->
@@ -466,7 +430,8 @@ private fun SteamGiftActionCard(
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.steam_gift_handle_on_steam))
                 }
-            } else {
+            }
+            if (gift.actions.isNotEmpty()) {
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)

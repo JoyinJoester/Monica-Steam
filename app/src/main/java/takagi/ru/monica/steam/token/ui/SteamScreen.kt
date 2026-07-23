@@ -188,8 +188,6 @@ import takagi.ru.monica.steam.network.SteamConfirmation
 import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.gifts.domain.SteamGiftAction
 import takagi.ru.monica.steam.gifts.domain.SteamPendingGift
-import takagi.ru.monica.steam.notifications.domain.SteamNotification
-import takagi.ru.monica.steam.notifications.domain.SteamNotificationsUiState
 import takagi.ru.monica.steam.notifications.ui.SteamNotificationsScreen
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
@@ -255,6 +253,12 @@ private enum class SteamSection(
         labelRes = R.string.steam_section_confirmations,
         icon = Icons.Default.VerifiedUser,
         searchHintRes = R.string.steam_search_confirmations_hint,
+        supportsRefresh = true
+    ),
+    NOTIFICATIONS(
+        labelRes = R.string.steam_notifications_title,
+        icon = Icons.Default.Notifications,
+        searchHintRes = R.string.steam_search_notifications_hint,
         supportsRefresh = true
     ),
     TRADE_OFFERS(
@@ -420,6 +424,9 @@ fun SteamScreen(
     var removeAuthenticatorPasswordError by remember { mutableStateOf(false) }
     var scannedQrPayload by remember { mutableStateOf<String?>(null) }
     var pendingLoginAction by remember { mutableStateOf<LoginActionRequest?>(null) }
+    var pendingGiftAction by remember { mutableStateOf<SteamGiftActionRequest?>(null) }
+    var giftDeclineNote by rememberSaveable { mutableStateOf("") }
+    var showGiftInbox by rememberSaveable { mutableStateOf(false) }
     var autoPromptedLoginClientIds by remember(selectedAccount?.id) { mutableStateOf<Set<Long>>(emptySet()) }
     val pendingConfirmationCount = maxOf(
         if (selectedAccount?.canUseConfirmations == true) uiState.confirmations.size else 0,
@@ -626,6 +633,7 @@ fun SteamScreen(
                 SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
                 SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
                 SteamSection.CODE, SteamSection.CONFIRMATIONS -> Unit
+                SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
             }
         }
     }
@@ -1532,6 +1540,99 @@ fun SteamScreen(
         )
     }
 
+    if (showGiftInbox) {
+        Dialog(
+            onDismissRequest = { showGiftInbox = false },
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false,
+                usePlatformDefaultWidth = false,
+                decorFitsSystemWindows = false
+            )
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                SteamStoreWebScreen(
+                    url = selectedAccount?.let { steamGiftInboxUrl(it.steamId) }.orEmpty(),
+                    steamLoginSecure = selectedAccount?.steamLoginSecure
+                        ?: selectedAccount?.accessToken?.let { token ->
+                            "${selectedAccount?.steamId}||$token"
+                        },
+                    title = stringResource(R.string.steam_gift_inbox_title),
+                    securityNote = stringResource(R.string.steam_gift_inbox_security_note),
+                    onClose = { showGiftInbox = false },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
+
+    pendingGiftAction?.let { request ->
+        AlertDialog(
+            onDismissRequest = {
+                pendingGiftAction = null
+                giftDeclineNote = ""
+            },
+            title = {
+                Text(
+                    stringResource(
+                        when (request.action) {
+                            SteamGiftAction.ADD_TO_LIBRARY -> R.string.steam_gift_accept_library_title
+                            SteamGiftAction.KEEP_IN_INVENTORY -> R.string.steam_gift_accept_inventory_title
+                            SteamGiftAction.DECLINE -> R.string.steam_gift_decline_title
+                        }
+                    )
+                )
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(request.gift.name)
+                    if (request.action == SteamGiftAction.DECLINE) {
+                        OutlinedTextField(
+                            value = giftDeclineNote,
+                            onValueChange = { giftDeclineNote = it.take(200) },
+                            label = { Text(stringResource(R.string.steam_gift_decline_note)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            minLines = 2,
+                            maxLines = 4
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.respondGift(request.gift, request.action, giftDeclineNote)
+                        pendingGiftAction = null
+                        giftDeclineNote = ""
+                    }
+                ) {
+                    Text(
+                        stringResource(
+                            if (request.action == SteamGiftAction.DECLINE) {
+                                R.string.steam_reject
+                            } else {
+                                R.string.steam_approve
+                            }
+                        )
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        pendingGiftAction = null
+                        giftDeclineNote = ""
+                    }
+                ) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -1616,6 +1717,7 @@ fun SteamScreen(
                                             viewModel.refreshConfirmations()
                                             viewModel.refreshSteamNotifications()
                                         }
+                                        SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
                                         SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
                                         SteamSection.INVENTORY -> viewModel.refreshInventory(steamLanguage)
                                         SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
@@ -1793,7 +1895,6 @@ fun SteamScreen(
                                 accounts = uiState.accounts,
                                 confirmations = filteredSteamConfirmations,
                                 history = uiState.confirmationHistory,
-                                notifications = uiState.notifications,
                                 hasSearchQuery = steamSearchQuery.isNotBlank(),
                                 pullToSearch = pullToSearch,
                                 selectedIds = uiState.selectedConfirmationIds,
@@ -1807,9 +1908,17 @@ fun SteamScreen(
                                     )
                                 },
                                 onClearSelection = viewModel::clearSelectedConfirmations,
-                                onRefreshNotifications = { viewModel.refreshSteamNotifications() },
-                                onGiftAction = viewModel::respondGift,
                                 onRequestResponse = ::requestProtectedConfirmationAction
+                            )
+                            SteamSection.NOTIFICATIONS -> SteamNotificationsScreen(
+                                account = selectedAccount,
+                                state = uiState.notifications,
+                                searchQuery = steamSearchQuery,
+                                onGiftAction = { gift, action ->
+                                    pendingGiftAction = SteamGiftActionRequest(gift, action)
+                                },
+                                onOpenWeb = { showGiftInbox = true },
+                                modifier = Modifier.fillMaxSize()
                             )
                             SteamSection.TRADE_OFFERS -> SteamTradeOffersContent(
                                 account = selectedAccount,
@@ -3255,7 +3364,6 @@ private fun SteamConfirmationsContent(
     accounts: List<SteamAccount>,
     confirmations: List<SteamConfirmation>,
     history: List<SteamSecurityEvent>,
-    notifications: SteamNotificationsUiState,
     hasSearchQuery: Boolean,
     pullToSearch: PullToSearchStateHandle,
     selectedIds: Set<String>,
@@ -3263,20 +3371,14 @@ private fun SteamConfirmationsContent(
     onToggle: (String) -> Unit,
     onSelectVisible: (Set<String>) -> Unit,
     onClearSelection: () -> Unit,
-    onRefreshNotifications: () -> Unit,
-    onGiftAction: (SteamPendingGift, SteamGiftAction, String) -> Unit,
     onRequestResponse: (List<SteamConfirmation>, Boolean) -> Unit
 ) {
     var pendingAction by remember { mutableStateOf<ConfirmationActionRequest?>(null) }
     var showBulkActionDialog by remember { mutableStateOf(false) }
     var showAccountPicker by remember { mutableStateOf(false) }
     var pendingAccountSwitchId by remember { mutableStateOf<Long?>(null) }
-    var showGiftInbox by rememberSaveable { mutableStateOf(false) }
-    var showNotificationsPage by rememberSaveable { mutableStateOf(false) }
     var selectedKindName by rememberSaveable { mutableStateOf("ALL") }
     var detailConfirmation by remember { mutableStateOf<SteamConfirmation?>(null) }
-    var pendingGiftAction by remember { mutableStateOf<SteamGiftActionRequest?>(null) }
-    var giftDeclineNote by rememberSaveable { mutableStateOf("") }
     val selectedKind = SteamConfirmationKind.entries
         .firstOrNull { it.name == selectedKindName }
     val visibleConfirmations = remember(confirmations, selectedKind) {
@@ -3285,33 +3387,6 @@ private fun SteamConfirmationsContent(
     }
     val selectedConfirmations = visibleConfirmations.filter { it.id in selectedIds }
     val selectionMode = selectedIds.isNotEmpty()
-
-    if (showGiftInbox) {
-        Dialog(
-            onDismissRequest = { showGiftInbox = false },
-            properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false,
-                usePlatformDefaultWidth = false,
-                decorFitsSystemWindows = false
-            )
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                SteamStoreWebScreen(
-                    url = account?.let { steamGiftInboxUrl(it.steamId) }.orEmpty(),
-                    steamLoginSecure = account?.steamLoginSecure
-                        ?: account?.accessToken?.let { token -> "${account.steamId}||$token" },
-                    title = stringResource(R.string.steam_gift_inbox_title),
-                    securityNote = stringResource(R.string.steam_gift_inbox_security_note),
-                    onClose = { showGiftInbox = false },
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
-    }
 
     LaunchedEffect(showAccountPicker, pendingAccountSwitchId) {
         val accountId = pendingAccountSwitchId
@@ -3414,70 +3489,6 @@ private fun SteamConfirmationsContent(
         )
     }
 
-    pendingGiftAction?.let { request ->
-        AlertDialog(
-            onDismissRequest = {
-                pendingGiftAction = null
-                giftDeclineNote = ""
-            },
-            title = {
-                Text(
-                    stringResource(
-                        when (request.action) {
-                            SteamGiftAction.ADD_TO_LIBRARY -> R.string.steam_gift_accept_library_title
-                            SteamGiftAction.KEEP_IN_INVENTORY -> R.string.steam_gift_accept_inventory_title
-                            SteamGiftAction.DECLINE -> R.string.steam_gift_decline_title
-                        }
-                    )
-                )
-            },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(request.gift.name)
-                    if (request.action == SteamGiftAction.DECLINE) {
-                        OutlinedTextField(
-                            value = giftDeclineNote,
-                            onValueChange = { giftDeclineNote = it.take(200) },
-                            label = { Text(stringResource(R.string.steam_gift_decline_note)) },
-                            modifier = Modifier.fillMaxWidth(),
-                            minLines = 2,
-                            maxLines = 4
-                        )
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        onGiftAction(request.gift, request.action, giftDeclineNote)
-                        pendingGiftAction = null
-                        giftDeclineNote = ""
-                    }
-                ) {
-                    Text(
-                        stringResource(
-                            if (request.action == SteamGiftAction.DECLINE) {
-                                R.string.steam_reject
-                            } else {
-                                R.string.steam_approve
-                            }
-                        )
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        pendingGiftAction = null
-                        giftDeclineNote = ""
-                    }
-                ) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        )
-    }
-
     if (showBulkActionDialog) {
         AlertDialog(
             onDismissRequest = { showBulkActionDialog = false },
@@ -3522,21 +3533,6 @@ private fun SteamConfirmationsContent(
         )
     }
 
-    if (showNotificationsPage) {
-        SteamNotificationsScreen(
-            account = account,
-            state = notifications,
-            onBack = { showNotificationsPage = false },
-            onRefresh = onRefreshNotifications,
-            onGiftAction = { gift, action ->
-                pendingGiftAction = SteamGiftActionRequest(gift, action)
-            },
-            onOpenWeb = { showGiftInbox = true },
-            modifier = Modifier.fillMaxSize()
-        )
-        return
-    }
-
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -3550,19 +3546,6 @@ private fun SteamConfirmationsContent(
                     account = account,
                     onClick = { showAccountPicker = true },
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
-                )
-            }
-            item(key = "notification_center") {
-                SteamNotificationCenter(
-                    account = account,
-                    state = notifications,
-                    onRefresh = onRefreshNotifications,
-                    onGiftAction = { gift, action ->
-                        pendingGiftAction = SteamGiftActionRequest(gift, action)
-                    },
-                    onOpenWeb = { showGiftInbox = true },
-                    onOpenNotifications = { showNotificationsPage = true },
-                    modifier = Modifier.padding(start = 16.dp, top = 10.dp, end = 16.dp)
                 )
             }
             if (history.isNotEmpty()) {
@@ -3688,306 +3671,6 @@ private fun SteamConfirmationsContent(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun SteamNotificationCenter(
-    account: SteamAccount?,
-    state: SteamNotificationsUiState,
-    onRefresh: () -> Unit,
-    onGiftAction: (SteamPendingGift, SteamGiftAction) -> Unit,
-    onOpenWeb: () -> Unit,
-    onOpenNotifications: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val snapshot = state.snapshot
-    val webSessionAvailable = account != null && (
-        !account.steamLoginSecure.isNullOrBlank() || !account.accessToken.isNullOrBlank()
-    )
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Surface(
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Notifications,
-                        contentDescription = null,
-                        modifier = Modifier.padding(10.dp),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.steam_notifications_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = when {
-                            account == null -> stringResource(R.string.steam_gift_inbox_no_account)
-                            state.fromCache -> stringResource(R.string.steam_notifications_cached)
-                            snapshot == null -> stringResource(R.string.steam_notifications_description)
-                            else -> stringResource(
-                                R.string.steam_notifications_unread_summary,
-                                snapshot.unreadCount
-                            )
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                IconButton(onClick = { onRefresh() }, enabled = account != null && !state.loading) {
-                    if (state.loading) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                    } else {
-                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
-                    }
-                }
-            }
-
-            if (snapshot != null) {
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    SteamNotificationMetric(
-                        value = snapshot.unreadCount,
-                        label = stringResource(R.string.steam_notifications_unread)
-                    )
-                    SteamNotificationMetric(
-                        value = snapshot.pendingGiftCount,
-                        label = stringResource(R.string.steam_notifications_gifts)
-                    )
-                    SteamNotificationMetric(
-                        value = snapshot.pendingFriendCount,
-                        label = stringResource(R.string.steam_notifications_friends)
-                    )
-                    SteamNotificationMetric(
-                        value = snapshot.pendingFamilyInviteCount,
-                        label = stringResource(R.string.steam_notifications_family)
-                    )
-                }
-
-                snapshot.pendingGifts.forEach { gift ->
-                    SteamPendingGiftRow(
-                        gift = gift,
-                        actionInProgress = state.actionGiftId == gift.id,
-                        webSessionAvailable = webSessionAvailable,
-                        onAction = { action -> onGiftAction(gift, action) },
-                        onOpenWeb = onOpenWeb
-                    )
-                }
-
-                if (snapshot.pendingGiftCount > 0 && snapshot.pendingGifts.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.steam_gift_parse_fallback),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                val visibleNotifications = snapshot.notifications.take(3)
-                visibleNotifications.forEach { notification ->
-                    SteamNotificationRow(notification)
-                }
-                if (snapshot.notifications.isNotEmpty() || snapshot.pendingGifts.isNotEmpty()) {
-                    TextButton(
-                        onClick = onOpenNotifications,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.steam_notifications_show_all))
-                        Spacer(Modifier.width(6.dp))
-                        Icon(Icons.Default.ChevronRight, contentDescription = null)
-                    }
-                }
-
-                if (snapshot.notifications.isEmpty() && snapshot.pendingGiftCount == 0) {
-                    Text(
-                        text = stringResource(R.string.steam_notifications_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-
-            state.error?.takeIf(String::isNotBlank)?.let { error ->
-                Text(
-                    text = error,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-
-            OutlinedButton(
-                onClick = onOpenWeb,
-                enabled = webSessionAvailable,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.steam_gift_inbox_open_logged_in))
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamNotificationMetric(value: Int, label: String) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.secondaryContainer
-    ) {
-        Text(
-            text = "$value · $label",
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSecondaryContainer
-        )
-    }
-}
-
-@Composable
-private fun SteamPendingGiftRow(
-    gift: SteamPendingGift,
-    actionInProgress: Boolean,
-    webSessionAvailable: Boolean,
-    onAction: (SteamGiftAction) -> Unit,
-    onOpenWeb: () -> Unit
-) {
-    Surface(
-        shape = RoundedCornerShape(18.dp),
-        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.55f)
-    ) {
-        Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        text = gift.name,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    val sender = gift.senderName.ifBlank { gift.message }
-                    if (sender.isNotBlank()) {
-                        Text(
-                            text = sender,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                }
-                if (actionInProgress) {
-                    CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                }
-            }
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                if (gift.requiresWeb) {
-                    FilledTonalButton(
-                        onClick = onOpenWeb,
-                        enabled = !actionInProgress && webSessionAvailable
-                    ) {
-                        Text(stringResource(R.string.steam_gift_handle_on_steam))
-                    }
-                } else {
-                    if (SteamGiftAction.ADD_TO_LIBRARY in gift.actions) {
-                        FilledTonalButton(
-                            onClick = { onAction(SteamGiftAction.ADD_TO_LIBRARY) },
-                            enabled = !actionInProgress
-                        ) {
-                            Text(stringResource(R.string.steam_gift_add_to_library))
-                        }
-                    }
-                    if (SteamGiftAction.KEEP_IN_INVENTORY in gift.actions) {
-                        TextButton(
-                            onClick = { onAction(SteamGiftAction.KEEP_IN_INVENTORY) },
-                            enabled = !actionInProgress
-                        ) {
-                            Text(stringResource(R.string.steam_gift_keep_inventory))
-                        }
-                    }
-                    if (SteamGiftAction.DECLINE in gift.actions) {
-                        TextButton(
-                            onClick = { onAction(SteamGiftAction.DECLINE) },
-                            enabled = !actionInProgress
-                        ) {
-                            Text(
-                                stringResource(R.string.steam_reject),
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamNotificationRow(notification: SteamNotification) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        Surface(
-            modifier = Modifier.size(8.dp),
-            shape = CircleShape,
-            color = if (notification.read) {
-                MaterialTheme.colorScheme.outlineVariant
-            } else {
-                MaterialTheme.colorScheme.primary
-            }
-        ) {}
-        Column(Modifier.weight(1f)) {
-            Text(
-                text = notification.title,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = if (notification.read) FontWeight.Normal else FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            if (notification.summary.isNotBlank()) {
-                Text(
-                    text = notification.summary,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-        if (notification.timestamp > 0L) {
-            Text(
-                text = formatSteamLoginTime(notification.timestamp * 1000L),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
     }
 }

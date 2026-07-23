@@ -30,7 +30,9 @@ class SteamGiftService(
         note: String = ""
     ): SteamGiftActionResult {
         requireCommunitySession(account)
-        require(!gift.requiresWeb) { "This gift must be handled on the Steam page" }
+        if (action != SteamGiftAction.DECLINE) {
+            require(!gift.requiresWeb) { "This gift must be handled on the Steam page" }
+        }
         val sessionId = SteamInventoryService.newSessionId()
         val path = when (action) {
             SteamGiftAction.ADD_TO_LIBRARY -> "/gifts/${gift.id}/acceptunpack"
@@ -49,9 +51,18 @@ class SteamGiftService(
             cookies = SteamInventoryService.marketCookies(account, sessionId),
             referer = "https://steamcommunity.com/profiles/${account.steamId}/inventory/#pending_gifts"
         )
+        val success = payload.successCode() == 1
+        val responseMessage = payload.text("error")
+            .ifBlank { payload.text("message") }
+            .ifBlank { payload.text("detail") }
+            .takeIf(String::isNotBlank)
         return SteamGiftActionResult(
-            success = payload.successCode() == 1,
-            message = payload.text("error").ifBlank { payload.text("message") }.takeIf(String::isNotBlank)
+            success = success,
+            message = responseMessage ?: if (!success) {
+                "Steam returned no success response. The community session may have expired; reopen the Steam gift page and try again."
+            } else {
+                null
+            }
         )
     }
 
@@ -95,14 +106,6 @@ object SteamGiftParser {
             RegexOption.IGNORE_CASE
         ).find(block)?.groupValues?.getOrNull(1)
         val actions = buildSet {
-            if (giftCardId == null) {
-                // The current Steam inventory page sometimes renders the
-                // decline callback but wires accept through a delegated
-                // handler that is not present in the gift block. The native
-                // accept endpoints remain stable for ordinary game gifts.
-                add(SteamGiftAction.ADD_TO_LIBRARY)
-                add(SteamGiftAction.KEEP_IN_INVENTORY)
-            }
             if (containsAcceptCall(block, id, unpack = true)) {
                 add(SteamGiftAction.ADD_TO_LIBRARY)
             }
@@ -115,7 +118,9 @@ object SteamGiftParser {
             """ShowDeclineGiftOptions\s*\(\s*['\"]?$id['\"]?\s*,\s*['\"]?(\d+)""",
             RegexOption.IGNORE_CASE
         ).find(block)?.groupValues?.getOrNull(1).orEmpty()
-        val requiresWeb = giftCardId != null || actions.isEmpty()
+        val hasNativeAcceptAction = SteamGiftAction.ADD_TO_LIBRARY in actions ||
+            SteamGiftAction.KEEP_IN_INVENTORY in actions
+        val requiresWeb = giftCardId != null || !hasNativeAcceptAction
         return SteamPendingGift(
             id = id,
             senderSteamId = senderSteamId,

@@ -3919,6 +3919,7 @@
     <string name="security_score_needs_attention">需要处理</string>
     <string name="steam_search_tokens_hint">搜索 Steam 账号</string>
     <string name="steam_search_confirmations_hint">搜索确认项目</string>
+    <string name="steam_search_notifications_hint">搜索通知</string>
     <string name="steam_search_trade_offers_hint">搜索交易对象、留言或物品</string>
     <string name="steam_trade_filter_all">全部</string>
     <string name="steam_trade_filter_received">收到</string>

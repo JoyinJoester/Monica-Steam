@@ -4089,6 +4089,7 @@
     <string name="security_score_needs_attention">Needs attention</string>
     <string name="steam_search_tokens_hint">Search Steam accounts</string>
     <string name="steam_search_confirmations_hint">Search confirmations</string>
+    <string name="steam_search_notifications_hint">Search notifications</string>
     <string name="steam_search_trade_offers_hint">Search partners, messages or items</string>
     <string name="steam_trade_filter_all">All</string>
     <string name="steam_trade_filter_received">Received</string>
