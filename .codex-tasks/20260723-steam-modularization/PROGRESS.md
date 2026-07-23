@@ -45,4 +45,4 @@
 - 游戏库页面从 legacy `steam/ui` 迁移至 `steam/library/ui`，保留游戏库 ViewModel、缓存和详情/成就/多区价格行为。
 - 更新 `MonicaSteamActivity`、库测试和稳定性/动效守卫的路径与包引用。
 - 验证：`:app:compileDebugKotlin` 通过；库、动效、稳定性和架构聚焦测试通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`f0f436b`。
