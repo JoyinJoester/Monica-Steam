@@ -312,7 +312,7 @@ private fun SteamLibraryOverview(
     val sections = remember(snapshot, query, filter) {
         buildSteamLibrarySections(snapshot?.games.orEmpty(), query, filter)
     }
-    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 32.dp)) {
+    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 112.dp)) {
         item {
             SteamAccountHeroSwitcher(
                 accounts = state.accounts,

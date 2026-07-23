@@ -104,7 +104,7 @@ internal fun MonicaSteamSharedSettingsHost(
             context.getString(R.string.steam_ui_scale_description),
             "DPI"
         ),
-        contentBottomPadding = 24.dp,
+        contentBottomPadding = 112.dp,
         modifier = modifier
     )
 

@@ -22,9 +22,11 @@ class SteamStandaloneNavigationGuardTest {
         ).readText()
 
         assertTrue(activity.contains("HorizontalFloatingToolbar"))
-        assertTrue(activity.contains("FloatingActionButton"))
+        assertTrue(activity.contains("Box(modifier = Modifier.fillMaxSize())"))
+        assertTrue(activity.contains("modifier = Modifier.align(Alignment.BottomCenter)"))
+        assertFalse(activity.contains("bottomBar ="))
         assertTrue(activity.contains("SteamAccountPickerSheet("))
-        assertTrue(activity.contains("SteamAvatarImage("))
+        assertTrue(activity.contains("SteamAvatarImage(account = selectedAccount, size = 48.dp)"))
         assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(activity.contains("NavigationBarItem"))
         assertTrue(activity.contains("SteamDockPreferences"))

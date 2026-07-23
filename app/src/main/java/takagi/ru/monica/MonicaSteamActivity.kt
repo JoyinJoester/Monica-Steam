@@ -34,8 +34,6 @@ import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.FloatingToolbarDefaults
 import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.material3.Icon
@@ -275,28 +273,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        Scaffold(
-                            modifier = Modifier.fillMaxSize(),
-                            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-                            bottomBar = {
-                                if (currentPage.isDockPage()) {
-                                    SteamStandaloneDock(
-                                        order = dockOrder,
-                                        selected = currentPage.toDockTab(),
-                                        showProgress = currentPage == MonicaSteamPage.LIBRARY && libraryRefreshing,
-                                        accounts = globalAccountState.accounts,
-                                        selectedAccount = globalAccountState.selectedAccount,
-                                        onSelected = { tab ->
-                                            pageHistory = emptyList()
-                                            currentPage = tab.toPage()
-                                        },
-                                        onSelectAccount = { account ->
-                                            globalAccountViewModel.selectAccount(account.id)
-                                        }
-                                    )
-                                }
-                            }
-                        ) { dockPadding -> AnimatedContent(
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            Scaffold(
+                                modifier = Modifier.fillMaxSize(),
+                                contentWindowInsets = WindowInsets(0, 0, 0, 0)
+                            ) {
+                                AnimatedContent(
                         targetState = currentPage,
                         label = "monica_steam_page_transition",
                         transitionSpec = {
@@ -323,7 +305,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 onNavigateBack = {
                                     navigateBack()
                                 },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -342,21 +324,21 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     composeScope.launch { dockPreferences.updateOrder(order) }
                                 },
                                 showNavigationBack = false,
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
                         MonicaSteamPage.HEALTH -> {
                             SteamHealthScreen(
                                 onNavigateBack = { navigateBack() },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
                         MonicaSteamPage.FRIENDS -> {
                             SteamFriendsScreen(
                                 onNavigateBack = { navigateBack() },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -365,21 +347,21 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 onNavigateBack = { navigateBack() },
                                 showNavigationBack = false,
                                 onLoadingChange = { libraryRefreshing = it },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
                         MonicaSteamPage.STORE -> {
                             SteamStoreScreen(
                                 showNavigationBack = false,
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
                         MonicaSteamPage.BACKUP -> {
                             SteamBackupScreen(
                                 onNavigateBack = { navigateBack() },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -451,15 +433,35 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     scannerAccountId = accountId
                                     navigateTo(MonicaSteamPage.SCANNER)
                                 },
-                                modifier = Modifier.fillMaxSize().padding(dockPadding)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
                         } }
                     }
+
+                            if (currentPage.isDockPage()) {
+                                SteamStandaloneDock(
+                                    modifier = Modifier.align(Alignment.BottomCenter),
+                                    order = dockOrder,
+                                    selected = currentPage.toDockTab(),
+                                    showProgress = currentPage == MonicaSteamPage.LIBRARY && libraryRefreshing,
+                                    accounts = globalAccountState.accounts,
+                                    selectedAccount = globalAccountState.selectedAccount,
+                                    onSelected = { tab ->
+                                        pageHistory = emptyList()
+                                        currentPage = tab.toPage()
+                                    },
+                                    onSelectAccount = { account ->
+                                        globalAccountViewModel.selectAccount(account.id)
+                                    }
+                                )
+                            }
                 }
             }
         }
     }
+}
+
 }
 
 }
@@ -505,6 +507,7 @@ internal fun initialSteamDockPage(order: List<SteamDockTab>): String =
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SteamStandaloneDock(
+    modifier: Modifier = Modifier,
     order: List<SteamDockTab>,
     selected: SteamDockTab,
     showProgress: Boolean,
@@ -524,7 +527,7 @@ private fun SteamStandaloneDock(
     val accountActionDescription = stringResource(R.string.steam_switch_account)
 
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter
     ) {
         if (showProgress) {
@@ -545,23 +548,17 @@ private fun SteamStandaloneDock(
                 .padding(start = 16.dp, end = 16.dp, bottom = 0.dp),
             expanded = true,
             floatingActionButton = {
-                FloatingActionButton(
+                IconButton(
                     onClick = onAccountClick,
                     modifier = Modifier
                         .size(56.dp)
                         .semantics { contentDescription = accountActionDescription },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    shape = MaterialTheme.shapes.large,
-                    elevation = FloatingActionButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        focusedElevation = 0.dp,
-                        hoveredElevation = 0.dp
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface
                     )
                 ) {
                     if (selectedAccount != null) {
-                        SteamAvatarImage(account = selectedAccount, size = 44.dp)
+                        SteamAvatarImage(account = selectedAccount, size = 48.dp)
                     } else {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
