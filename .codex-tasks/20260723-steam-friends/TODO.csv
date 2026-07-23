@@ -1,7 +1,0 @@
-id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
-1,审查账号会话网络层缓存与导航,DONE,确认认证来源和现有页面入口,Select-String targeted sources,2026-07-23T13:12:00+08:00,0,复用共享SteamViewModel支持本地与MDBX
-2,实现好友模型服务解析与缓存,DONE,好友和邀请数据按账号同步且支持缓存,专项单元测试,2026-07-23T13:28:00+08:00,0,OAuth关系与资料接口加SharedPreferences缓存
-3,实现好友状态与筛选逻辑,DONE,加载刷新错误竞态和筛选均可验证,专项单元测试,2026-07-23T13:28:00+08:00,0,4项专项测试通过
-4,实现M3好友列表和详情页,DONE,页面适配主题大字体安全区并提供邀请操作,Kotlin 编译,2026-07-23T13:51:00+08:00,0,Kotlin编译通过
-5,接入令牌页胶囊菜单与返回栈,DONE,入口和返回行为通过回归测试,导航回归测试,2026-07-23T13:54:00+08:00,0,好友为二级页面且不进入Dock
-6,执行全量验证并提交推送,DONE,全量测试与Kotlin编译通过且main已推送,Gradle test compileDebugKotlin,2026-07-23T14:06:00+08:00,0,151个套件558项测试通过并推送6cf5ca6

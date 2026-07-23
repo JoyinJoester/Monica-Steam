@@ -1,4 +1,0 @@
-id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
-1,定位并锁定 Essentials Dock 结构,DONE,记录参考组件与 Monica 接入点,echo SKIP,2026-07-23,0,已读取 EssentialsFloatingToolbar 与 MainActivity 接入代码
-2,添加回归测试并移植浮动 Dock,DONE,四个排序项和固定扫码 FAB 均有测试覆盖,./gradlew :app:testDebugUnitTest --tests '*SteamFloatingDock*',2026-07-23,0,旧 Dock 上测试先失败；移植后专项测试通过
-3,编译验证并准备提交,DONE,Kotlin 编译通过且变更已准备,./gradlew :app:compileDebugKotlin,2026-07-23,1,全量 148 suites / 552 tests / 0 failures / 1 skipped

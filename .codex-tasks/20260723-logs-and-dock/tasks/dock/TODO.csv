@@ -1,5 +1,0 @@
-id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
-1,读取参考工具栏并建立 Dock 回归测试,DONE,测试覆盖悬浮结构四页和账号头像入口,Gradle targeted dock tests,2026-07-23T23:26:48+08:00,0,红灯验证完成；缺失全局账号状态和头像 Dock 结构
-2,建立全局账号选择状态与头像 Sheet,DONE,切换写入共享账号仓储,Gradle targeted dock tests,2026-07-23T23:39:37+08:00,1,全局 ViewModel 观察账号流并调用 repository.select；通用账号 Sheet 复用头像组件
-3,重制 Dock 布局色彩和标签动效,DONE,移除扫码 FAB并采用悬浮五项结构,Gradle targeted dock tests,2026-07-23T23:39:37+08:00,0,移除整宽 Column 与扫码 FAB；采用 Essentials 色彩和弹簧标签动效；相关测试通过
-4,验证并提交 Dock 模块,DONE,测试编译静态检查通过并推送,Gradle test compileDebugKotlin,2026-07-23T23:41:15+08:00,0,Dock 专项测试 Kotlin 编译和静态检查通过；提交 a18a35e 已推送 main

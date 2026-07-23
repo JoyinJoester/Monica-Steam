@@ -4,6 +4,7 @@
 .idea/
 .kotlin/
 /.codex-temp/
+/.codex-tasks/
 /local.properties
 /.idea/caches
 /.idea/libraries
