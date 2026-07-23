@@ -2017,7 +2017,10 @@ class SteamViewModel(
                 SteamDiagLogger.append(
                     "authorized_device_revoke exception type=${error::class.java.simpleName}"
                 )
-                setMessage(error.message ?: appContext.getString(R.string.steam_login_response_failed))
+                setMessage(
+                    error.message
+                        ?: appContext.getString(R.string.steam_authorized_device_revoke_failed)
+                )
             } finally {
                 setLoading(false)
             }

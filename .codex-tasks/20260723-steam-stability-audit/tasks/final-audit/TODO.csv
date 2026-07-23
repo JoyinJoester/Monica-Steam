@@ -1,0 +1,4 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,运行全量 Debug 单元测试,DONE,无失败测试,./gradlew :app:testDebugUnitTest,2026-07-23,1,首次发现两个过期 Guard；修正后 551 测试通过 1 跳过
+2,验证 Kotlin 编译,DONE,compileDebugKotlin 成功,./gradlew :app:compileDebugKotlin,2026-07-23,0,BUILD SUCCESSFUL
+3,记录结果并清理工作树,DONE,任务记录完成且工作树干净,git status --short,2026-07-23,0,等待最终记录提交

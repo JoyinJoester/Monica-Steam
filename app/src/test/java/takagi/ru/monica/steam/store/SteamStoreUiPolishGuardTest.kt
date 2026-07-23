@@ -20,7 +20,7 @@ class SteamStoreUiPolishGuardTest {
         assertTrue(store.contains("StoreHeroSkeleton("))
         assertTrue(store.contains("Brush.verticalGradient("))
         assertTrue(store.contains("height(390.dp)"))
-        assertTrue(store.contains("heightIn(min = 56.dp)"))
+        assertTrue(store.contains("heightIn(min = 52.dp)"))
         assertTrue(store.contains("containerColor = MaterialTheme.colorScheme.background"))
         assertFalse(store.contains("OutlinedTextField("))
 

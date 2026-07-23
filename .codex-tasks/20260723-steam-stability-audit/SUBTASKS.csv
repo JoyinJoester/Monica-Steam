@@ -3,6 +3,6 @@ id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_comm
 2,修复 SAF 导出取消与异常边界,single-full,DONE,,tasks/saf-export,取消文件选择器不闪退且有回归测试,./gradlew :app:testDebugUnitTest --tests '*SteamHealth*' --tests '*SteamInventory*',2026-07-23,1,统一 SAF writer 并覆盖空输出流和 provider 写入失败
 3,审查并修复 Compose 列表 key 与数据边界,single-full,DONE,,tasks/list-keys,重复数据/空数据不导致 Compose 崩溃,./gradlew :app:testDebugUnitTest --tests '*GuardTest*',2026-07-23,0,购物车/愿望单/库存/成就/区域价格/备份/交易列表统一使用索引复合 key
 4,审查 ViewModel 协程与生命周期竞态,single-full,DONE,,tasks/viewmodel-lifecycle,长期 collector 可取消且过期结果不会覆盖新状态,./gradlew :app:testDebugUnitTest --tests '*SteamViewModel*',2026-07-23,0,账号/详情/区域价格/库存市场/交易报价/登录审批/MDBX 请求增加 generation；安全事件 collector 固定到 init；22 suites/51 tests 通过
-5,完成度审查与最终验证,single-full,IN_PROGRESS,1;2;3;4;6;7,tasks/final-audit,输出风险清单并通过全量测试与 Kotlin 编译,./gradlew testDebugUnitTest :app:compileDebugKotlin,,0,
+5,完成度审查与最终验证,single-full,DONE,1;2;3;4;6;7,tasks/final-audit,输出风险清单并通过全量测试与 Kotlin 编译,./gradlew testDebugUnitTest :app:compileDebugKotlin,2026-07-23,1,147 suites / 551 tests / 0 failures / 0 errors / 1 skipped；Kotlin 编译通过；未构建 APK
 6,修复商店详情和愿望单交互,single-full,DONE,1;4,tasks/store-detail,所有有效 appId 都进入可恢复详情页且愿望单不会无限重定向,./gradlew :app:testDebugUnitTest --tests '*SteamStore*' --tests '*SteamWishlist*',2026-07-23,0,详情由 detailAppId 驱动；商店自动重定向关闭；操作区改为三层全宽 M3 按钮
 7,实现独立 Steam 通知页面,single-full,DONE,6,tasks/notifications,通知可查看详情且礼物等可操作项提供明确同意拒绝动作,./gradlew :app:testDebugUnitTest --tests '*SteamNotification*' --tests '*SteamGift*',2026-07-23,0,独立列表详情页；礼物接受保留拒绝动作；正常返回确认页

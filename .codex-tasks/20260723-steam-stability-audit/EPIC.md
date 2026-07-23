@@ -43,6 +43,6 @@
 
 ## Done-When
 
-- [ ] 每个子任务均已验证并在 `SUBTASKS.csv` 标记为 `DONE`。
-- [ ] 全量测试和 `:app:compileDebugKotlin` 通过。
-- [ ] 无 APK 构建。
+- [x] 每个子任务均已验证并在 `SUBTASKS.csv` 标记为 `DONE`。
+- [x] 全量测试和 `:app:compileDebugKotlin` 通过。
+- [x] 无 APK 构建。
