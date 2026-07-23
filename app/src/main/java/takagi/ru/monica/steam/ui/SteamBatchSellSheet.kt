@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -57,6 +58,7 @@ import takagi.ru.monica.steam.market.SteamBatchPricing
 import takagi.ru.monica.steam.market.SteamBatchSellEntry
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.SteamWalletInfo
+import takagi.ru.monica.steam.market.steamInventoryStackLazyKey
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 
 @Composable
@@ -332,7 +334,7 @@ internal fun SteamBatchSellSheet(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(stacks, key = { it.item.stackKey }) { stack ->
+                itemsIndexed(stacks, key = ::steamInventoryStackLazyKey) { _, stack ->
                     val stackKey = stack.item.stackKey
                     val entry = entriesByStackKey[stackKey]
                     val shape = RoundedCornerShape(18.dp)

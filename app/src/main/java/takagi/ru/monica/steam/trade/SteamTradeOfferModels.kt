@@ -62,6 +62,9 @@ data class SteamTradeOffer(
             state == SteamTradeOfferState.NEEDS_CONFIRMATION
 }
 
+internal fun steamTradeOfferLazyKey(index: Int, offer: SteamTradeOffer): String =
+    "${offer.id}-$index"
+
 data class SteamTradeOffersSnapshot(
     val received: List<SteamTradeOffer>,
     val sent: List<SteamTradeOffer>,
@@ -84,4 +87,3 @@ data class SteamTradeOfferActionResult(
     val tradeId: String? = null,
     val message: String? = null
 )
-

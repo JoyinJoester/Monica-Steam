@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -356,10 +357,10 @@ private fun SteamLibraryOverview(
                     item(key = "section_${section.type.name}") {
                         SteamGameSectionHeader(section)
                     }
-                    items(
+                    itemsIndexed(
                         items = section.games,
-                        key = { game -> "${section.type.name}_${game.appId}" }
-                    ) { game ->
+                        key = { index, game -> steamLibraryGameLazyKey(section.type, index, game) }
+                    ) { _, game ->
                         SteamGameLibraryRow(game = game, onClick = { onOpenGame(game) })
                     }
                 }
@@ -1329,6 +1330,18 @@ internal data class SteamLibraryGameSection(
     val games: List<SteamGame>
 )
 
+internal fun steamLibraryGameLazyKey(
+    section: SteamLibraryGameSectionType,
+    index: Int,
+    game: SteamGame
+): String = "${section.name}_${game.appId}_$index"
+
+internal fun steamAchievementLazyKey(index: Int, achievement: SteamAchievement): String =
+    "${achievement.apiName.ifBlank { "achievement" }}-$index"
+
+internal fun steamRegionalPriceLazyKey(index: Int, price: SteamRegionalPrice): String =
+    "${price.countryCode.uppercase(Locale.ROOT)}-$index"
+
 internal const val LONG_PLAYTIME_MINUTES = 100 * 60
 
 internal fun buildSteamLibrarySections(
@@ -1563,7 +1576,7 @@ private fun SteamGameDetail(
                         )
                     }
                 }
-                items(visibleAchievements, key = SteamAchievement::apiName) { achievement ->
+                itemsIndexed(visibleAchievements, key = ::steamAchievementLazyKey) { _, achievement ->
                     AchievementItem(achievement)
                 }
             }
@@ -1919,7 +1932,7 @@ private fun SteamRegionalPriceSheet(
                     }
                 }
             }
-            items(sortedPrices, key = SteamRegionalPrice::countryCode) { price ->
+            itemsIndexed(sortedPrices, key = ::steamRegionalPriceLazyKey) { _, price ->
                 SteamRegionalPriceRow(price)
             }
             item {

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -206,7 +207,7 @@ private fun SteamCartContent(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(items, key = SteamCartItem::appId) { item ->
+        itemsIndexed(items, key = ::steamCartLazyKey) { _, item ->
             SteamCartItemCard(item = item, onRemove = { onRemove(item.appId) })
         }
     }
@@ -264,7 +265,7 @@ private fun SteamWishlistContent(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(items, key = SteamWishlistItem::appId) { item ->
+                itemsIndexed(items, key = ::steamWishlistLazyKey) { _, item ->
                     SteamWishlistItemCard(item = item, onClick = { onOpenItem(item.appId) })
                 }
             }

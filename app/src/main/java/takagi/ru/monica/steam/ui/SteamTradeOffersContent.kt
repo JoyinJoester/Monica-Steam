@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -62,6 +63,7 @@ import takagi.ru.monica.steam.trade.SteamTradeOfferAction
 import takagi.ru.monica.steam.trade.SteamTradeOfferDirection
 import takagi.ru.monica.steam.trade.SteamTradeOfferItem
 import takagi.ru.monica.steam.trade.SteamTradeOfferState
+import takagi.ru.monica.steam.trade.steamTradeOfferLazyKey
 import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
@@ -200,7 +202,7 @@ internal fun SteamTradeOffersContent(
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(filteredOffers, key = SteamTradeOffer::id) { offer ->
+                itemsIndexed(filteredOffers, key = ::steamTradeOfferLazyKey) { _, offer ->
                     SteamTradeOfferCard(
                         offer = offer,
                         actionLoading = state.actionLoadingOfferId == offer.id,

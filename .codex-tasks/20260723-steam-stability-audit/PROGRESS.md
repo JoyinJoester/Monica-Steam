@@ -11,13 +11,13 @@
 
 ## Context Recovery Block
 
-- **Current milestone**: #3 — Compose 列表 key 与数据边界
+- **Current milestone**: #4 — ViewModel 协程与生命周期竞态
 - **Current status**: IN_PROGRESS
-- **Last completed**: #2 — SAF 导出取消与异常边界
+- **Last completed**: #3 — Compose 列表 key 与数据边界
 - **Current artifact**: `SUBTASKS.csv`
 - **Key context**: 当前基线测试为 528 通过、1 跳过；用户报告多次随机闪退，优先审查 `requireNotNull(selectedGame)` 和生命周期竞态。
 - **Known issues**: 尚未建立设备级复现环；将先用最小单元回归测试锁定状态竞态。
-- **Next action**: 将第三方/缓存列表的业务 key 改为包含索引的防重复 key，并补回归测试。
+- **Next action**: 审查 `SteamViewModel` 和 `SteamStoreViewModel` 的长期 collector、请求取消和过期结果覆盖。
 
 ---
 
@@ -52,3 +52,20 @@
   - `app/src/main/java/takagi/ru/monica/steam/ui/SteamBackupScreen.kt` — ZIP 导出。
   - `app/src/test/java/takagi/ru/monica/steam/io/SteamSafWriterTest.kt` — 空目标和 provider 失败回归测试。
 - **Next step**: Milestone 3 — Compose 列表 key 与数据边界
+
+---
+
+## Milestone 3: Compose 列表 key 与数据边界
+
+- **Status**: DONE
+- **What was done**: 对第三方/缓存可重复数据的 Lazy 列表统一改用索引复合 key，覆盖购物车、愿望单、游戏库、成就、区域价格、WebDAV 备份、库存批量出售和交易报价；保留数据库/枚举天然唯一 key。
+- **Validation**: `./gradlew :app:testDebugUnitTest --tests 'takagi.ru.monica.steam.library.SteamLibraryIntegrationGuardTest' --tests 'takagi.ru.monica.steam.store.SteamStoreCollectionUiGuardTest' --tests 'takagi.ru.monica.steam.trade.SteamTradeOfferIntegrationGuardTest' --tests 'takagi.ru.monica.steam.market.SteamInventoryLazyKeyTest' --tests 'takagi.ru.monica.steam.ui.SteamDuplicateLazyKeyTest' --tests 'takagi.ru.monica.steam.backup.SteamRemoteBackupLazyKeyTest' --no-daemon --max-workers=1 --console=plain` → exit 0
+- **Files changed**:
+  - `app/src/main/java/takagi/ru/monica/steam/store/SteamStoreModels.kt` / `SteamNativeCartScreen.kt` — 购物车/愿望单 key。
+  - `app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt` — 游戏、成就、区域价格 key。
+  - `app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt` — 商店区域价格 key。
+  - `app/src/main/java/takagi/ru/monica/steam/backup/SteamMaFileWebDavService.kt` / `SteamBackupScreen.kt` — WebDAV 备份 key。
+  - `app/src/main/java/takagi/ru/monica/steam/trade/SteamTradeOfferModels.kt` / `SteamTradeOffersContent.kt` — 交易报价 key。
+  - `app/src/main/java/takagi/ru/monica/steam/ui/SteamBatchSellSheet.kt` — 库存批量出售 key。
+  - `app/src/test/java/...` — 重复数据回归测试。
+- **Next step**: Milestone 4 — ViewModel 协程与生命周期竞态

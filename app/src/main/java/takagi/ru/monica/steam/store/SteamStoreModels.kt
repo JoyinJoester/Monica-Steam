@@ -96,6 +96,12 @@ data class SteamWishlistSnapshot(
     val fetchedAt: Long = System.currentTimeMillis()
 )
 
+internal fun steamCartLazyKey(index: Int, item: SteamCartItem): String =
+    "cart-${item.appId}-${item.packageId ?: 0}-$index"
+
+internal fun steamWishlistLazyKey(index: Int, item: SteamWishlistItem): String =
+    "wishlist-${item.appId}-${item.packageId ?: 0}-$index"
+
 enum class SteamStoreCollectionTab {
     CART,
     WISHLIST

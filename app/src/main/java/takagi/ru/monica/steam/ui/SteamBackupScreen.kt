@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CloudDone
@@ -71,6 +72,7 @@ import takagi.ru.monica.steam.backup.SteamMaFileRemoteBackup
 import takagi.ru.monica.steam.backup.SteamMaFileWebDavService
 import takagi.ru.monica.steam.backup.SteamMaFileZipCodec
 import takagi.ru.monica.steam.backup.SteamMaFileZipImport
+import takagi.ru.monica.steam.backup.steamRemoteBackupLazyKey
 import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.io.SteamSafWriter
@@ -418,7 +420,7 @@ fun SteamBackupScreen(
                     )
                 }
             } else {
-                items(remoteBackups, key = SteamMaFileRemoteBackup::name) { backup ->
+                itemsIndexed(remoteBackups, key = ::steamRemoteBackupLazyKey) { _, backup ->
                     Card(
                         onClick = { pendingRemoteImport = backup },
                         colors = CardDefaults.cardColors(

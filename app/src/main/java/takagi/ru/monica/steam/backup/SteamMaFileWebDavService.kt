@@ -17,6 +17,9 @@ data class SteamMaFileRemoteBackup(
     val modifiedAt: Long
 )
 
+internal fun steamRemoteBackupLazyKey(index: Int, backup: SteamMaFileRemoteBackup): String =
+    "${backup.name}-$index"
+
 class SteamMaFileWebDavService {
     suspend fun testConnection(
         serverUrl: String,

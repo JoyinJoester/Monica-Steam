@@ -470,6 +470,9 @@ private fun StoreSection(title: String, games: List<SteamStoreItem>, onOpen: (In
 internal fun steamStoreLazyKey(index: Int, item: SteamStoreItem): String =
     "${item.appId}-$index"
 
+internal fun steamStoreRegionalPriceLazyKey(index: Int, price: SteamRegionalPrice): String =
+    "${price.countryCode.uppercase(Locale.ROOT)}-$index"
+
 @Composable
 private fun StoreGameCard(game: SteamStoreItem, onClick: () -> Unit) {
     Card(
@@ -1024,7 +1027,7 @@ private fun SteamStoreRegionalPriceSheet(
                     )
                 }
             }
-            items(sortedPrices, key = { it.countryCode.uppercase(Locale.ROOT) }) { price ->
+            itemsIndexed(sortedPrices, key = ::steamStoreRegionalPriceLazyKey) { _, price ->
                 SteamStoreRegionalPriceCard(price)
             }
             item {
