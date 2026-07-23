@@ -9,7 +9,7 @@ class SteamMarketSensitiveActionGuardTest {
     @Test
     fun steamWritesAreOnlyReachedThroughTheOneTimeProtectedExecutor() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(source.contains("private sealed interface SteamProtectedMarketAction"))
@@ -25,7 +25,7 @@ class SteamMarketSensitiveActionGuardTest {
     @Test
     fun protectedExecutorRequiresMasterPasswordOrStrongBiometricSuccess() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(source.contains("M3IdentityVerifyDialog("))
@@ -40,7 +40,7 @@ class SteamMarketSensitiveActionGuardTest {
     @Test
     fun accountOrSectionChangesDiscardPendingAuthorization() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val lifecycleCleanup = source
             .substringAfter("LaunchedEffect(selectedSection, uiState.storageSource, detailAccountId)")

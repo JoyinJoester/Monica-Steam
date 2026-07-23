@@ -10,7 +10,7 @@ class SteamViewModelCollectorGuardTest {
     @Test
     fun recentSecurityEventsHaveOneViewModelScopedCollector() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val collectorCount = Regex("securityEventRepository.*?observeRecent\\(\\)\\.collect", RegexOption.DOT_MATCHES_ALL)
             .findAll(source)

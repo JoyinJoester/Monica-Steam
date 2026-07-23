@@ -62,8 +62,8 @@ import takagi.ru.monica.steam.market.steamInventoryStackLazyKey
 import takagi.ru.monica.steam.inventory.ui.SteamMarketRemoteImage
 import takagi.ru.monica.steam.inventory.ui.minorUnitsText
 import takagi.ru.monica.steam.inventory.ui.walletCurrencyPrefix
-import takagi.ru.monica.steam.ui.SteamInventoryMarketUiState
-import takagi.ru.monica.steam.ui.SteamMarketActionType
+import takagi.ru.monica.steam.token.presentation.SteamInventoryMarketUiState
+import takagi.ru.monica.steam.token.presentation.SteamMarketActionType
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 
 @Composable

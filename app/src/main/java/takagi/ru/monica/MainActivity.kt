@@ -138,9 +138,9 @@ import takagi.ru.monica.ui.screens.KeePassKdbxViewModel
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
-import takagi.ru.monica.steam.ui.SteamUiScaleOption
-import takagi.ru.monica.steam.ui.SteamUiScalePreferences
-import takagi.ru.monica.steam.ui.calculateSteamUiDensity
+import takagi.ru.monica.steam.foundation.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.foundation.ui.SteamUiScalePreferences
+import takagi.ru.monica.steam.foundation.ui.calculateSteamUiDensity
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel

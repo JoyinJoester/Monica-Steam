@@ -82,16 +82,6 @@ Shared modules cannot contain user-facing feature screens.
 4. Existing legacy files are migrated module by module and removed from the allowlist after each migration.
 5. Every module migration includes focused tests, Kotlin compilation, a separate commit and a push to `main`.
 
-## Legacy UI Migration List
+## Legacy UI Migration Status
 
-The following files existed before the module rule and are the complete temporary allowlist:
-
-```text
-SteamScreen.kt
-SteamSearchFilters.kt
-SteamUiScalePreferences.kt
-SteamUiScaleProvider.kt
-SteamViewModel.kt
-```
-
-The allowlist only prevents additional accumulation. Each child task removes migrated names until `steam/ui` contains no feature implementation.
+The migration allowlist is empty. `steam/ui` contains no feature implementation; new code must stay in its owning feature Module or an approved shared Module.

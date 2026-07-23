@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.token.presentation
 
 import android.content.Context
 import android.net.Uri

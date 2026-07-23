@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：拆分令牌页与令牌状态模块
+当前：整理共享基础设施并最终审查
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：迁移 `SteamScreen.kt`、`SteamViewModel.kt` 与搜索/缩放兼容入口，清除 legacy `steam/ui` 中最后的功能实现。
+下一步：运行全量单元测试和 Kotlin 编译，审查所有 Steam 根目录与跨 feature import，修复遗留后关闭 Epic。
 
 ## 已完成
 
@@ -84,3 +84,11 @@
 - alerts 按 `domain/data` 分层，登录请求通知也归入 alerts/data；Manifest 使用新 Receiver 路径。
 - 验证：`:app:compileDebugKotlin`、通知/礼物/提醒、总边界和架构测试通过。
 - 独立提交：`3ebbbe5`。
+
+### 子任务 9：令牌页与令牌状态模块
+
+- 令牌 Screen、搜索规则和协调状态迁移至 `steam/token/{domain,presentation,ui}`，公开函数名保持兼容。
+- 全局 UI 缩放偏好和 CompositionLocal Provider 迁移至 `steam/foundation/ui`。
+- 所有生产代码和回归测试切换到新路径；legacy `steam/ui` 不再包含 Kotlin 实现。
+- 验证：`:app:compileDebugKotlin` 通过；令牌、导入、搜索、缩放、市场保护、动效及架构共 90 个相关测试通过。
+- 独立提交：待提交后填写 commit id。

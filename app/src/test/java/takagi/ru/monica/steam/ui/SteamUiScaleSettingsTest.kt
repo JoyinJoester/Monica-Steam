@@ -4,6 +4,8 @@ import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import takagi.ru.monica.steam.foundation.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.foundation.ui.calculateSteamUiDensity
 
 class SteamUiScaleSettingsTest {
     @Test
@@ -13,10 +15,10 @@ class SteamUiScaleSettingsTest {
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val providerFile = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamUiScaleProvider.kt"
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamUiScaleProvider.kt"
         )
         val preferences = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamUiScalePreferences.kt"
+            "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamUiScalePreferences.kt"
         ).readText()
 
         assertTrue(gradle.contains("exclude 'takagi/ru/monica/MainActivity.kt'"))

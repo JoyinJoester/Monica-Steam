@@ -8,10 +8,10 @@ class SteamConfirmationIntegrationGuardTest {
     @Test
     fun productionActionsRecordHistoryAndUseSecurityRepository() {
         val viewModel = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(viewModel.contains("SteamSecurityEventRepository"))

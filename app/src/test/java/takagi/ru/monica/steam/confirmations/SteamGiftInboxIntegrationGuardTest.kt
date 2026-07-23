@@ -8,7 +8,7 @@ class SteamGiftInboxIntegrationGuardTest {
     @Test
     fun confirmationsExposeNativeNotificationsAndLoggedInGiftFallback() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val web = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreWebScreen.kt"
@@ -32,7 +32,7 @@ class SteamGiftInboxIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationsScreen.kt"
         ).readText()
         val host = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(page.contains("fun SteamNotificationsScreen("))

@@ -34,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.domain.SteamFriendsFilter
 import takagi.ru.monica.steam.friends.presentation.SteamFriendsViewModel
-import takagi.ru.monica.steam.ui.SteamViewModel
+import takagi.ru.monica.steam.token.presentation.SteamViewModel
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit

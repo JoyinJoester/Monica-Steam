@@ -6,7 +6,7 @@ import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.data.SteamAccount
-import takagi.ru.monica.steam.ui.reconcileSteamAccountsAfterSourceUpdate
+import takagi.ru.monica.steam.token.ui.reconcileSteamAccountsAfterSourceUpdate
 
 class SteamTokenReorderPerformanceGuardTest {
 
@@ -24,7 +24,7 @@ class SteamTokenReorderPerformanceGuardTest {
     @Test
     fun tokenReorderKeepsLocalListStableWhenPersistenceEmits() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val codeContent = source.substringAfter("private fun SteamCodeContent(")
             .substringBefore("private fun SteamAccountDetailContent(")

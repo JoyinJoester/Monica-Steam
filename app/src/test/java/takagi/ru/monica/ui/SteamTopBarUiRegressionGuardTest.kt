@@ -75,7 +75,7 @@ class SteamTopBarUiRegressionGuardTest {
     }
 
     private fun steamSource(): String = projectFile(
-        "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+        "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
     ).readText()
 
     private fun projectFile(relativePath: String): File {

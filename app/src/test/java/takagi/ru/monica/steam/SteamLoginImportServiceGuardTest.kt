@@ -35,7 +35,7 @@ class SteamLoginImportServiceGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
 
         assertTrue(source.contains("\"platform_type\" to \"3\""))
@@ -54,10 +54,10 @@ class SteamLoginImportServiceGuardTest {
     @Test
     fun steamLoginImportAllowsCodeOrApprovalAndOptionalRemark() {
         val viewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val screenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val loginDialogSource = screenSource.substringAfter("private fun SteamLoginImportDialog")
             .substringBefore("private fun badgeCountText")
@@ -121,7 +121,7 @@ class SteamLoginImportServiceGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val completionLoginSource = viewModelSource.substringAfter(
             "fun beginSteamIdCompletionLogin("
@@ -216,10 +216,10 @@ class SteamLoginImportServiceGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
         ).readText()
         val viewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val screenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val defaultStrings = projectFile("app/src/main/res/values/strings.xml").readText()
         val zhStrings = projectFile("app/src/main/res/values-zh/strings.xml").readText()

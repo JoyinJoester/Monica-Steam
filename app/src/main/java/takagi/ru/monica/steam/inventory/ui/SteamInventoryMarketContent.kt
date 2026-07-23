@@ -114,8 +114,8 @@ import takagi.ru.monica.steam.market.SteamMarketFees
 import takagi.ru.monica.steam.market.SteamMarketHistoryPoint
 import takagi.ru.monica.steam.market.SteamMarketListing
 import takagi.ru.monica.steam.market.SteamWalletInfo
-import takagi.ru.monica.steam.ui.SteamInventoryMarketUiState
-import takagi.ru.monica.steam.ui.SteamMarketActionType
+import takagi.ru.monica.steam.token.presentation.SteamInventoryMarketUiState
+import takagi.ru.monica.steam.token.presentation.SteamMarketActionType
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountCard
 import takagi.ru.monica.steam.foundation.ui.SteamConfirmationAccountPickerSheet
 import takagi.ru.monica.steam.foundation.ui.SteamEmptyState as EmptyState

@@ -12,7 +12,7 @@ class SteamMiniProfileRenderingRegressionTest {
             "app/src/main/java/takagi/ru/monica/ui/components/TotpCodeCard.kt"
         ).readText()
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val layer = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
@@ -56,7 +56,7 @@ class SteamMiniProfileRenderingRegressionTest {
     @Test
     fun listScrollingDoesNotDisableDynamicPlayback() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val layer = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"

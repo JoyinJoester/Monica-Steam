@@ -25,7 +25,7 @@ class SteamTradeOfferIntegrationGuardTest {
     @Test
     fun tradeOffersHaveProductionSectionDetailsAndIdentityVerification() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val content = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/trade/ui/SteamTradeOffersContent.kt"

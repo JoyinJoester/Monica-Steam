@@ -19,8 +19,8 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.quickaccess.SteamQuickAccessInstaller
-import takagi.ru.monica.steam.ui.SteamUiScaleOption
-import takagi.ru.monica.steam.ui.SteamUiScalePreferences
+import takagi.ru.monica.steam.foundation.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.foundation.ui.SteamUiScalePreferences
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.viewmodel.SettingsViewModel
 

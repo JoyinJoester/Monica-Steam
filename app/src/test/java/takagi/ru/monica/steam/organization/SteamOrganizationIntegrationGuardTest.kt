@@ -23,13 +23,13 @@ class SteamOrganizationIntegrationGuardTest {
     @Test
     fun productionUiKeepsEditorWithoutRenderingHomepageFiltersAndSupportsBothStorageBranches() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val components = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/organization/ui/SteamOrganizationComponents.kt"
         ).readText()
         val viewModel = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
 
         assertTrue(screen.contains("SteamOrganizationEditorDialog("))

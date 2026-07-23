@@ -19,7 +19,7 @@ import takagi.ru.monica.ui.screens.GeneratorScreen
 import takagi.ru.monica.ui.screens.NoteListScreen
 import takagi.ru.monica.ui.screens.PasskeyListScreen
 import takagi.ru.monica.ui.screens.SendScreen
-import takagi.ru.monica.steam.ui.SteamScreen
+import takagi.ru.monica.steam.token.ui.SteamScreen
 import takagi.ru.monica.ui.vaultv2.VaultV2Pane
 import takagi.ru.monica.ui.vaultv2.VaultV2PaneState
 import takagi.ru.monica.viewmodel.BankCardViewModel

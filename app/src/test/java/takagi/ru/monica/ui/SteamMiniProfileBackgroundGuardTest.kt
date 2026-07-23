@@ -35,7 +35,7 @@ class SteamMiniProfileBackgroundGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/components/TotpCodeCard.kt"
         ).readText()
         val steamScreen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(

@@ -18,7 +18,7 @@ class SteamStandaloneNavigationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
         val steamScreen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(activity.contains("HorizontalFloatingToolbar"))

@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.foundation.ui
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

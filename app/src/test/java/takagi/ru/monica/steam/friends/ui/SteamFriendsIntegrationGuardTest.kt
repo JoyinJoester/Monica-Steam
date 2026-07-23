@@ -12,7 +12,7 @@ class SteamFriendsIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val tokenScreen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val friendsScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt"

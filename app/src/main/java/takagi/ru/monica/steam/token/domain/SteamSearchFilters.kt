@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.token.domain
 
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.market.SteamInventoryItemStack

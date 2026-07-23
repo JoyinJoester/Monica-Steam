@@ -10,7 +10,7 @@ class SteamTokenProgressPullLayoutGuardTest {
     @Test
     fun steamProgressBarStaysOutsideThePullOffsetContainer() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val codeContent = source.substringAfter("private fun SteamCodeContent(")
             .substringBefore("internal fun reconcileSteamAccountsAfterSourceUpdate(")
@@ -30,7 +30,7 @@ class SteamTokenProgressPullLayoutGuardTest {
     @Test
     fun pullOffsetStillWrapsBothEmptyAndPopulatedTokenContent() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val codeContent = source.substringAfter("private fun SteamCodeContent(")
             .substringBefore("internal fun reconcileSteamAccountsAfterSourceUpdate(")

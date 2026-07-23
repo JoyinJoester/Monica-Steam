@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.foundation.ui
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

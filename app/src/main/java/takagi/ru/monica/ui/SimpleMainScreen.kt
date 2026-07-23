@@ -145,7 +145,7 @@ import takagi.ru.monica.ui.screens.DocumentDetailScreen
 import takagi.ru.monica.ui.screens.HistoryTab
 import takagi.ru.monica.ui.screens.TimelineScreen
 import takagi.ru.monica.ui.screens.PasskeyListScreen
-import takagi.ru.monica.steam.ui.SteamScreen
+import takagi.ru.monica.steam.token.ui.SteamScreen
 import takagi.ru.monica.ui.gestures.SwipeActions
 import takagi.ru.monica.ui.haptic.rememberHapticFeedback
 import kotlin.math.absoluteValue

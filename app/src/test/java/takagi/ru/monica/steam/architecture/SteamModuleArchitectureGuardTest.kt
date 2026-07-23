@@ -40,6 +40,7 @@ class SteamModuleArchitectureGuardTest {
             "scanner",
             "security",
             "store",
+            "token",
             "trade"
         )
         val actual = root.listFiles().orEmpty()
@@ -53,19 +54,12 @@ class SteamModuleArchitectureGuardTest {
     @Test
     fun legacySteamUiCannotReceiveAdditionalFiles() {
         val legacyUi = projectFile("app/src/main/java/takagi/ru/monica/steam/ui")
-        val temporaryAllowlist = setOf(
-            "SteamScreen.kt",
-            "SteamSearchFilters.kt",
-            "SteamUiScalePreferences.kt",
-            "SteamUiScaleProvider.kt",
-            "SteamViewModel.kt"
-        )
         val actual = legacyUi.listFiles().orEmpty()
             .filter { it.extension == "kt" }
             .map(File::getName)
             .toSet()
 
-        assertEquals(temporaryAllowlist, actual)
+        assertEquals(emptySet<String>(), actual)
     }
 
     @Test
@@ -79,6 +73,8 @@ class SteamModuleArchitectureGuardTest {
         assertFalse(activity.contains(".friends.presentation."))
         assertTrue(activity.contains(".friends.ui.SteamFriendsScreen"))
         assertTrue(activity.contains(".scanner.ui.SteamQrScannerScreen"))
+        assertTrue(activity.contains(".token.ui.SteamScreen"))
+        assertFalse(activity.contains(".token.presentation."))
     }
 
     @Test
@@ -188,14 +184,16 @@ class SteamModuleArchitectureGuardTest {
     }
 
     @Test
-    fun architectureDocumentTracksTheLegacyAllowlist() {
+    fun architectureDocumentRecordsCompletedLegacyMigration() {
         val document = projectFile("docs/architecture/STEAM_MODULES.md").readText()
 
         assertTrue(document.contains("## Feature Modules"))
         assertTrue(document.contains("## Shared Modules"))
         assertTrue(document.contains("## Dependency Rules"))
-        assertTrue(document.contains("SteamScreen.kt"))
-        assertTrue(document.contains("SteamViewModel.kt"))
+        assertTrue(document.contains("## Legacy UI Migration Status"))
+        assertTrue(document.contains("migration allowlist is empty"))
+        assertFalse(document.contains("SteamScreen.kt"))
+        assertFalse(document.contains("SteamViewModel.kt"))
     }
 
     private fun projectFile(path: String): File {

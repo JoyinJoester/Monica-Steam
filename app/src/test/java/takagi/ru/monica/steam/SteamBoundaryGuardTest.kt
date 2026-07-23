@@ -49,7 +49,7 @@ class SteamBoundaryGuardTest {
     @Test
     fun scannedQrApprovalDialogIsNotHostedInsideALazyColumnItem() {
         val steamScreenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val detailContent = steamScreenSource
             .substringAfter("private fun SteamAccountDetailContent(")
@@ -229,9 +229,9 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun maFileSteamIdCompletionIsASecondDialogOnlyAfterMissingSteamId() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
 
         val importDialogBlock = screenSource
@@ -268,10 +268,10 @@ class SteamBoundaryGuardTest {
     @Test
     fun steamAuthorizedDeviceRemovalUsesCredentialAuthPollForOneDevice() {
         val screenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val viewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val loginServiceSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
@@ -304,7 +304,7 @@ class SteamBoundaryGuardTest {
     @Test
     fun steamDiagnosticsAreAvailableFromBothLoginEntrypointsAndDeveloperExport() {
         val steamViewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val importViewModelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/viewmodel/DataExportImportViewModel.kt"
@@ -384,8 +384,8 @@ class SteamBoundaryGuardTest {
     @Test
     fun steamPageDoesNotUseLegacyTotpImportWritePath() {
         val steamSources = listOf(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt",
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt",
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt",
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt",
             "app/src/main/java/takagi/ru/monica/steam/importer/SteamMaFileParser.kt"
         ).joinToString("\n") { projectFile(it).readText() }
 
@@ -404,10 +404,10 @@ class SteamBoundaryGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/data/SteamMdbxAccountStore.kt"
         ).readText()
         val steamViewModelSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val steamScreenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(repositorySource.contains("listSteamMaFileEntries"))
@@ -463,10 +463,10 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamPageUsesMonicaTopBarAndLocalizedMenuInsteadOfWideTabs() {
-        val source = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val source = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
             .replace("\r\n", "\n")
         val avatarSource = projectFile(
@@ -733,9 +733,9 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamPageSupportsQrScanSmoothProgressAndBulkSelection() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
         val mainActivitySource = projectFile("app/src/main/java/takagi/ru/monica/MainActivity.kt")
             .readText()
@@ -927,10 +927,10 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamLoginChallengeCanPickExistingMonicaSteamCode() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
         val loginServiceSource = projectFile("app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt")
             .readText()
@@ -1005,10 +1005,10 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamDetailCanRebindAccountWithoutReplacingToken() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
             .replace("\r\n", "\n")
         val defaultStrings = projectFile("app/src/main/res/values/strings.xml").readText()
@@ -1059,13 +1059,13 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamErrorsExplainMissingQrAndConfirmationRequirements() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
         val scannerSource = projectFile("app/src/main/java/takagi/ru/monica/steam/scanner/ui/SteamQrScannerScreen.kt")
             .readText()
             .replace("\r\n", "\n")
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
             .replace("\r\n", "\n")
         val defaultStrings = projectFile("app/src/main/res/values/strings.xml").readText()
@@ -1099,10 +1099,10 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamAddDialogCanImportCodeOnlyFromSharedSecret() {
-        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val screenSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
             .replace("\r\n", "\n")
         val defaultStrings = projectFile("app/src/main/res/values/strings.xml").readText()
@@ -1165,7 +1165,7 @@ class SteamBoundaryGuardTest {
 
     @Test
     fun steamConfirmationPageUsesSlimSwipeSelectionLayout() {
-        val source = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt")
+        val source = projectFile("app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt")
             .readText()
             .replace("\r\n", "\n")
         val confirmationContent = source
@@ -1246,7 +1246,7 @@ class SteamBoundaryGuardTest {
         assertTrue(source.contains("R.string.steam_remove_authenticator_local_hint"))
         assertTrue(source.contains("R.string.steam_remove_authenticator_action"))
 
-        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt")
+        val viewModelSource = projectFile("app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt")
             .readText()
         assertTrue(viewModelSource.contains("fun removeAuthenticator(accountId: Long)"))
         assertTrue(viewModelSource.contains("authenticatorService.remove(account)"))

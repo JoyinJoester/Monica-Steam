@@ -9,7 +9,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun inventoryAndMarketRegisterThroughSteamSectionMenu() {
         val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(source.contains("INVENTORY("))
@@ -27,7 +27,7 @@ class SteamInventoryMarketUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val stateSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
 
         assertTrue(uiSource.contains("LazyVerticalGrid("))
@@ -63,7 +63,7 @@ class SteamInventoryMarketUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val screenSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
 
         assertTrue(uiSource.contains(".clip(shape)"))
@@ -81,7 +81,7 @@ class SteamInventoryMarketUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
         ).readText()
         val stateSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
 
         val listingCard = uiSource
@@ -130,7 +130,7 @@ class SteamInventoryMarketUiGuardTest {
     @Test
     fun batchListingPreservesPerStackPartialResultsAndOneConfirmationPass() {
         val stateSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+            "app/src/main/java/takagi/ru/monica/steam/token/presentation/SteamViewModel.kt"
         ).readText()
         val sheetSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/market/ui/SteamBatchSellSheet.kt"

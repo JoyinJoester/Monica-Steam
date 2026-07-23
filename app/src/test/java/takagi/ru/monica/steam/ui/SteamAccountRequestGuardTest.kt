@@ -4,6 +4,9 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.data.SteamStorageSource
+import takagi.ru.monica.steam.token.presentation.SteamUiState
+import takagi.ru.monica.steam.token.presentation.steamAccountRequestIsCurrent
+import takagi.ru.monica.steam.token.presentation.steamStorageSourceRequestIsCurrent
 
 class SteamAccountRequestGuardTest {
     @Test
