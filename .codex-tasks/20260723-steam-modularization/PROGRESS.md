@@ -38,4 +38,4 @@
 - 扫码页面位于 `steam/scanner/ui`，扫码偏好和 MDBX/本地存储选择位于 `steam/scanner/data`。
 - 更新 `MainActivity`、`MonicaSteamActivity`、令牌页、游戏库页和 ViewModel 的公开入口引用。
 - 验证：`:app:compileDebugKotlin` 通过；聚焦 58 个测试通过；架构守卫再次通过。
-- 独立提交：待提交后填写 commit id。
+- 独立提交：`adde11b`。
