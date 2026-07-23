@@ -62,6 +62,7 @@ import takagi.ru.monica.steam.health.SteamHealthCheck
 import takagi.ru.monica.steam.health.SteamHealthCheckType
 import takagi.ru.monica.steam.health.SteamHealthStatus
 import takagi.ru.monica.steam.health.SteamHealthViewModel
+import takagi.ru.monica.steam.io.SteamSafWriter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,11 +86,11 @@ fun SteamHealthScreen(
         if (uri != null) {
             scope.launch {
                 val saved = withContext(Dispatchers.IO) {
-                    runCatching {
-                        context.contentResolver.openOutputStream(uri, "w")?.bufferedWriter()?.use {
-                            it.write(viewModel.diagnosticText())
-                        } ?: error("Unable to open export destination")
-                    }.isSuccess
+                    SteamSafWriter.writeText(
+                        context = context,
+                        uri = uri,
+                        text = viewModel.diagnosticText()
+                    )
                 }
                 Toast.makeText(
                     context,

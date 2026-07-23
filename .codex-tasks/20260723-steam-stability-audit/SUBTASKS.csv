@@ -1,6 +1,6 @@
 id,task,task_type,status,depends_on,task_dir,acceptance_criteria,validation_command,completed_at,retry_count,notes
 1,修复异步游戏/价格请求过期状态竞态,single-full,DONE,,tasks/library-race,切换账号或返回页面时不抛异常且有回归测试,./gradlew :app:testDebugUnitTest --tests '*SteamLibrary*',2026-07-23,0,已移除 requireNotNull 竞态并加入 generation/状态保护
-2,修复 SAF 导出取消与异常边界,single-full,TODO,,tasks/saf-export,取消文件选择器不闪退且有回归测试,./gradlew :app:testDebugUnitTest --tests '*SteamHealth*' --tests '*SteamInventory*',,0,
-3,审查并修复 Compose 列表 key 与数据边界,single-full,TODO,,tasks/list-keys,重复数据/空数据不导致 Compose 崩溃,./gradlew :app:testDebugUnitTest --tests '*GuardTest*',,0,
+2,修复 SAF 导出取消与异常边界,single-full,DONE,,tasks/saf-export,取消文件选择器不闪退且有回归测试,./gradlew :app:testDebugUnitTest --tests '*SteamHealth*' --tests '*SteamInventory*',2026-07-23,1,统一 SAF writer 并覆盖空输出流和 provider 写入失败
+3,审查并修复 Compose 列表 key 与数据边界,single-full,IN_PROGRESS,,tasks/list-keys,重复数据/空数据不导致 Compose 崩溃,./gradlew :app:testDebugUnitTest --tests '*GuardTest*',,0,
 4,审查 ViewModel 协程与生命周期竞态,single-full,TODO,,tasks/viewmodel-lifecycle,长期 collector 可取消且过期结果不会覆盖新状态,./gradlew :app:testDebugUnitTest --tests '*SteamViewModel*',,0,
 5,完成度审查与最终验证,single-full,TODO,1;2;3;4,tasks/final-audit,输出风险清单并通过全量测试与 Kotlin 编译,./gradlew testDebugUnitTest :app:compileDebugKotlin,,0,

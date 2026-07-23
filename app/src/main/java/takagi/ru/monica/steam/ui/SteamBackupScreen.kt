@@ -73,6 +73,7 @@ import takagi.ru.monica.steam.backup.SteamMaFileZipCodec
 import takagi.ru.monica.steam.backup.SteamMaFileZipImport
 import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
+import takagi.ru.monica.steam.io.SteamSafWriter
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.utils.WebDavHelper
 
@@ -140,10 +141,8 @@ fun SteamBackupScreen(
             scope.launch {
                 isWorking = true
                 val result = withContext(Dispatchers.IO) {
-                    runCatching {
-                        context.contentResolver.openOutputStream(uri, "w")?.use { it.write(bytes) }
-                            ?: throw IOException("Cannot open export destination")
-                    }
+                    runCatching { SteamSafWriter.writeBytes(context, uri, bytes) }
+                        .mapCatching { saved -> check(saved) { "Cannot open export destination" } }
                 }
                 isWorking = false
                 result.onSuccess {

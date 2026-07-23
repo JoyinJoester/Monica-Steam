@@ -104,6 +104,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.steam.analytics.SteamListingAnalysis
 import takagi.ru.monica.steam.analytics.SteamMarketCsv
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.io.SteamSafWriter
 import takagi.ru.monica.steam.market.SteamInventoryGame
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.steamInventoryGameLazyKey
@@ -721,11 +722,12 @@ private fun AnalyticsAmountRow(label: String, value: String) {
 
 private suspend fun writeSteamCsv(context: Context, uri: Uri, csv: String): Boolean {
     return withContext(Dispatchers.IO) {
-        runCatching {
-            context.contentResolver.openOutputStream(uri, "wt")?.bufferedWriter(Charsets.UTF_8)?.use {
-                it.write(csv)
-            } ?: error("Unable to open export document")
-        }.isSuccess
+        SteamSafWriter.writeText(
+            context = context,
+            uri = uri,
+            text = csv,
+            mode = "wt"
+        )
     }
 }
 
