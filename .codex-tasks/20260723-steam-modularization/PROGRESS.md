@@ -16,11 +16,11 @@
 
 进度：1/10
 
-当前：整理游戏库模块
+当前：整理库存与市场模块
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：将 `SteamLibraryScreen.kt` 及其相关 UI/状态实现迁移到 `steam/library`，保持游戏库行为和缓存不变。
+下一步：迁移库存/市场页面、批量出售和市场状态到 `steam/inventory` 与 `steam/market`，保持 MDBX、缓存和确认流程不变。
 
 ## 已完成
 
@@ -39,3 +39,10 @@
 - 更新 `MainActivity`、`MonicaSteamActivity`、令牌页、游戏库页和 ViewModel 的公开入口引用。
 - 验证：`:app:compileDebugKotlin` 通过；聚焦 58 个测试通过；架构守卫再次通过。
 - 独立提交：`adde11b`。
+
+### 子任务 3：游戏库模块
+
+- 游戏库页面从 legacy `steam/ui` 迁移至 `steam/library/ui`，保留游戏库 ViewModel、缓存和详情/成就/多区价格行为。
+- 更新 `MonicaSteamActivity`、库测试和稳定性/动效守卫的路径与包引用。
+- 验证：`:app:compileDebugKotlin` 通过；库、动效、稳定性和架构聚焦测试通过。
+- 独立提交：待提交后填写 commit id。

@@ -9,7 +9,7 @@ class SteamAccountHeroLayoutGuardTest {
     @Test
     fun heroUsesTwoLineIdentityAndContentDrivenHeight() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val hero = screen
             .substringAfter("private fun SteamAccountHeroCard(")
@@ -25,7 +25,7 @@ class SteamAccountHeroLayoutGuardTest {
     @Test
     fun heroKeepsIdentityAndMetricsInSeparateLayoutGroups() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val hero = screen
             .substringAfter("private fun SteamAccountHeroCard(")

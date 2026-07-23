@@ -3,10 +3,10 @@ package takagi.ru.monica.steam.library
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import takagi.ru.monica.steam.ui.SteamLibraryGameFilter
-import takagi.ru.monica.steam.ui.SteamLibraryGameSectionType
-import takagi.ru.monica.steam.ui.buildSteamLibrarySections
-import takagi.ru.monica.steam.ui.steamGameImageUrls
+import takagi.ru.monica.steam.library.ui.SteamLibraryGameFilter
+import takagi.ru.monica.steam.library.ui.SteamLibraryGameSectionType
+import takagi.ru.monica.steam.library.ui.buildSteamLibrarySections
+import takagi.ru.monica.steam.library.ui.steamGameImageUrls
 
 class SteamLibraryDashboardTest {
     private val games = listOf(

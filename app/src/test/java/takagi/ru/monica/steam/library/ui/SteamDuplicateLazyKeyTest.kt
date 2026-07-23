@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.library.ui
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

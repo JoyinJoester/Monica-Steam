@@ -38,7 +38,7 @@ class MonicaSteamMotionParityTest {
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).readText()
         val library = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/SteamStoreScreen.kt"

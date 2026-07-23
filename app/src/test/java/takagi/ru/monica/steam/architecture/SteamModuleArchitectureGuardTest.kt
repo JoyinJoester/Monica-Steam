@@ -56,7 +56,6 @@ class SteamModuleArchitectureGuardTest {
             "SteamBatchSellSheet.kt",
             "SteamHealthScreen.kt",
             "SteamInventoryMarketContent.kt",
-            "SteamLibraryScreen.kt",
             "SteamLoginNotificationHelper.kt",
             "SteamScreen.kt",
             "SteamSearchFilters.kt",

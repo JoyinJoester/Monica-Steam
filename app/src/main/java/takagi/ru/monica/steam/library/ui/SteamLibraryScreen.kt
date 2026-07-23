@@ -1,4 +1,4 @@
-package takagi.ru.monica.steam.ui
+package takagi.ru.monica.steam.library.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent

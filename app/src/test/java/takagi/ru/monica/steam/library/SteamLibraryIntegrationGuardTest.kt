@@ -13,7 +13,7 @@ class SteamLibraryIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/theme/Type.kt"
         ).readText()
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val accountDetail = screen
             .substringAfter("private fun SteamAccountDetail(")
@@ -42,7 +42,7 @@ class SteamLibraryIntegrationGuardTest {
     @Test
     fun dockProgressIsReportedOnlyFromLibraryOverview() {
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val loadingEffect = screen
             .substringAfter("LaunchedEffect(state.loadingLibrary, libraryDestination)")
@@ -86,7 +86,7 @@ class SteamLibraryIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/ui/SteamLibraryScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
         val libraryViewModel = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt"
