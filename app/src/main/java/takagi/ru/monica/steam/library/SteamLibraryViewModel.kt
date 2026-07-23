@@ -50,6 +50,7 @@ class SteamLibraryViewModel(
     val uiState: StateFlow<SteamLibraryUiState> = _uiState.asStateFlow()
     private var initializedAccountIds = mutableSetOf<Long>()
     private var libraryLoadGeneration: Long = 0L
+    private var regionalPriceLoadGeneration: Long = 0L
 
     init {
         viewModelScope.launch {
@@ -70,6 +71,7 @@ class SteamLibraryViewModel(
     fun selectAccount(accountId: Long) {
         val account = _uiState.value.accounts.firstOrNull { it.id == accountId } ?: return
         if (_uiState.value.selectedAccountId == accountId) return
+        regionalPriceLoadGeneration++
         _uiState.value = _uiState.value.copy(
             selectedAccountId = accountId,
             snapshot = null,
@@ -132,6 +134,7 @@ class SteamLibraryViewModel(
 
     fun openGame(game: SteamGame) {
         val account = selectedAccount() ?: return
+        regionalPriceLoadGeneration++
         _uiState.value = _uiState.value.copy(
             selectedGame = game,
             achievements = null,
@@ -176,6 +179,7 @@ class SteamLibraryViewModel(
     }
 
     fun closeGame() {
+        regionalPriceLoadGeneration++
         _uiState.value = _uiState.value.copy(
             selectedGame = null,
             achievements = null,
@@ -199,6 +203,7 @@ class SteamLibraryViewModel(
             .filter(SteamRegionalPrice::isAvailable)
             .all { it.cnyFinalPriceMinor != null && it.cnyOriginalPriceMinor != null }
         if (!force && cacheIsFresh && conversionsReady) return
+        val generation = ++regionalPriceLoadGeneration
         _uiState.value = current.copy(
             loadingRegionalPrices = true,
             regionalPriceFailure = null
@@ -222,39 +227,35 @@ class SteamLibraryViewModel(
                     is SteamLibraryResult.Failure -> prices
                 }
             }
-            if (_uiState.value.selectedGame?.appId != game.appId) return@launch
+            if (generation != regionalPriceLoadGeneration ||
+                _uiState.value.selectedAccountId != account.id ||
+                _uiState.value.selectedGame?.appId != game.appId
+            ) return@launch
             when (result) {
                 is SteamLibraryResult.Success -> {
-                    val currentState = _uiState.value
-                    val currentGame = requireNotNull(currentState.selectedGame)
-                    val regionalPrices = mergeCachedRegionalPriceConversions(
-                        fresh = result.value,
-                        cached = currentGame.regionalPrices
-                    )
-                    val updatedGame = currentGame.copy(
-                        regionalPrices = regionalPrices
-                    )
-                    val updatedSnapshot = currentState.snapshot?.let { snapshot ->
-                        snapshot.copy(
-                            games = snapshot.games.map { existing ->
-                                if (existing.appId == game.appId) updatedGame else existing
-                            }
-                        )
-                    }
+                    val updatedState = applyRegionalPricesToState(
+                        state = _uiState.value,
+                        gameAppId = game.appId,
+                        freshPrices = result.value
+                    ) ?: return@launch
+                    val updatedSnapshot = updatedState.snapshot
                     if (updatedSnapshot != null) {
                         withContext(Dispatchers.IO) {
                             cacheRepository.saveLibrary(updatedSnapshot)
                         }
                         appContext?.let(SteamWidgetUpdater::refreshAll)
                     }
-                    _uiState.value = currentState.copy(
-                        snapshot = updatedSnapshot,
-                        selectedGame = updatedGame,
-                        loadingRegionalPrices = false,
-                        regionalPriceFailure = null
-                    )
+                    if (generation != regionalPriceLoadGeneration ||
+                        _uiState.value.selectedAccountId != account.id ||
+                        _uiState.value.selectedGame?.appId != game.appId
+                    ) return@launch
+                    _uiState.value = updatedState
                 }
                 is SteamLibraryResult.Failure -> {
+                    if (generation != regionalPriceLoadGeneration ||
+                        _uiState.value.selectedAccountId != account.id ||
+                        _uiState.value.selectedGame?.appId != game.appId
+                    ) return@launch
                     _uiState.value = _uiState.value.copy(
                         loadingRegionalPrices = false,
                         regionalPriceFailure = result.reason
@@ -266,6 +267,7 @@ class SteamLibraryViewModel(
 
     private suspend fun loadAccount(account: SteamAccount) {
         libraryLoadGeneration++
+        regionalPriceLoadGeneration++
         val cached = withContext(Dispatchers.IO) { cacheRepository.getLibrary(account.id) }
         if (_uiState.value.selectedAccountId != account.id) return
         _uiState.value = _uiState.value.copy(
@@ -458,6 +460,40 @@ class SteamLibraryViewModel(
             }
         }
     }
+}
+
+/**
+ * Applies a regional-price response only when the detail page still points at
+ * the requested game. A response can arrive after the user closes the detail
+ * page or switches games; returning null lets the caller discard it without
+ * dereferencing a cleared selection.
+ */
+internal fun applyRegionalPricesToState(
+    state: SteamLibraryUiState,
+    gameAppId: Int,
+    freshPrices: List<SteamRegionalPrice>
+): SteamLibraryUiState? {
+    val currentGame = state.selectedGame ?: return null
+    if (currentGame.appId != gameAppId) return null
+
+    val regionalPrices = mergeCachedRegionalPriceConversions(
+        fresh = freshPrices,
+        cached = currentGame.regionalPrices
+    )
+    val updatedGame = currentGame.copy(regionalPrices = regionalPrices)
+    val updatedSnapshot = state.snapshot?.let { snapshot ->
+        snapshot.copy(
+            games = snapshot.games.map { existing ->
+                if (existing.appId == gameAppId) updatedGame else existing
+            }
+        )
+    }
+    return state.copy(
+        snapshot = updatedSnapshot,
+        selectedGame = updatedGame,
+        loadingRegionalPrices = false,
+        regionalPriceFailure = null
+    )
 }
 
 internal fun mergeLibraryDashboardSnapshot(
