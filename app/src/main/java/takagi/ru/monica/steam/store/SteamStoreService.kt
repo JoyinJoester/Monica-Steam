@@ -20,6 +20,8 @@ class SteamStoreService(
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .callTimeout(45, TimeUnit.SECONDS)
+        .followRedirects(false)
+        .followSslRedirects(false)
         .build(),
     private val api: SteamApiClient = SteamApiClient(client)
 ) {
@@ -143,6 +145,9 @@ class SteamStoreService(
         val request = buildSteamStoreRequest(path, query, steamLoginSecure, countryCode)
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
+                if (response.isRedirect) {
+                    throw SteamStoreSessionException("Steam 商店会话被重定向，请刷新后重试")
+                }
                 throw IllegalStateException("Steam 商店请求失败：${response.code}")
             }
             return response.body?.string()?.takeIf { it.isNotBlank() }
@@ -153,7 +158,7 @@ class SteamStoreService(
     private fun executeText(request: Request): String {
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
-                if (response.code == 401 || response.code == 403) {
+                if (response.isRedirect || response.code == 401 || response.code == 403) {
                     throw SteamStoreWishlistSessionException()
                 }
                 throw IllegalStateException("Steam 愿望单请求失败：${response.code}")

@@ -4308,6 +4308,8 @@
     <string name="steam_store_regional_price_description">查看各区原价、现价与人民币换算</string>
     <string name="steam_store_regional_original_price">原价 %1$s</string>
     <string name="steam_store_open_detail">打开游戏详情</string>
+    <string name="steam_store_detail_loading">正在加载游戏详情…</string>
+    <string name="steam_store_detail_unavailable">暂时无法加载游戏详情</string>
     <string name="steam_store_add_wishlist">加入愿望单</string>
     <string name="steam_store_remove_wishlist">移出愿望单</string>
     <string name="steam_store_account">商店账号</string>

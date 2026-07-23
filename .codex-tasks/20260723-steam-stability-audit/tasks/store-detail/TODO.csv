@@ -1,0 +1,4 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,建立详情导航和重定向回归测试,DONE,测试覆盖无缓存详情目的地和重定向拒绝,./gradlew :app:testDebugUnitTest --tests '*SteamStore*' --tests '*SteamWishlist*',2026-07-23,0,修复前稳定复现两个失败
+2,实现详情与愿望单修复,DONE,详情可恢复且重定向不循环,./gradlew :app:testDebugUnitTest --tests '*SteamStore*' --tests '*SteamWishlist*',2026-07-23,0,专项测试通过
+3,优化详情操作区并验证,DONE,主次操作明确且动态文本不截断,./gradlew :app:compileDebugKotlin,2026-07-23,0,编译由专项测试任务覆盖并通过

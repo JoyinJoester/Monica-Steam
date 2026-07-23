@@ -36,6 +36,7 @@ data class SteamStoreUiState(
     val query: String = "",
     val searchResults: List<SteamStoreItem> = emptyList(),
     val searching: Boolean = false,
+    val detailAppId: Int? = null,
     val detail: SteamStoreDetail? = null,
     val detailFromCache: Boolean = false,
     val loadingDetail: Boolean = false,
@@ -194,6 +195,10 @@ class SteamStoreViewModel(
     }
 
     fun openDetail(appId: Int) {
+        if (appId <= 0) {
+            _uiState.value = _uiState.value.copy(error = "Steam 商店没有返回有效的应用编号")
+            return
+        }
         val accountId = _uiState.value.selectedAccountId
         val account = selectedAccount()
         val generation = ++detailRequestGeneration
@@ -201,22 +206,31 @@ class SteamStoreViewModel(
         if (account?.hasRealSteamId == true && !_uiState.value.wishlistLoaded) {
             loadWishlist()
         }
+        _uiState.value = _uiState.value.copy(
+            detailAppId = appId,
+            detail = null,
+            detailFromCache = false,
+            loadingDetail = true,
+            regionalPrices = emptyList(),
+            regionalPricesAppId = appId,
+            regionalPricesFromCache = false,
+            loadingRegionalPrices = false,
+            regionalPriceFailure = null,
+            regionalPriceSheetOpen = false,
+            error = null
+        )
         viewModelScope.launch {
-            val cached = withContext(Dispatchers.IO) { cache.readDetail(accountId, appId) }
+            val cached = runCatching {
+                withContext(Dispatchers.IO) { cache.readDetail(accountId, appId) }
+            }.getOrNull()
             if (generation != detailRequestGeneration ||
-                _uiState.value.selectedAccountId != accountId
+                _uiState.value.selectedAccountId != accountId ||
+                _uiState.value.detailAppId != appId
             ) return@launch
             _uiState.value = _uiState.value.copy(
                 detail = cached,
                 detailFromCache = cached != null,
-                loadingDetail = true,
-                regionalPrices = emptyList(),
-                regionalPricesAppId = appId,
-                regionalPricesFromCache = false,
-                loadingRegionalPrices = false,
-                regionalPriceFailure = null,
-                regionalPriceSheetOpen = false,
-                error = null
+                loadingDetail = true
             )
             runCatching {
                 withContext(Dispatchers.IO) {
@@ -274,6 +288,7 @@ class SteamStoreViewModel(
         detailRequestGeneration++
         regionalPriceRequestGeneration++
         _uiState.value = _uiState.value.copy(
+            detailAppId = null,
             detail = null,
             loadingDetail = false,
             regionalPrices = emptyList(),
@@ -414,9 +429,12 @@ class SteamStoreViewModel(
     fun removeFromCart(appId: Int) = updateCart(_uiState.value.cart.filterNot { it.appId == appId })
     fun clearCart() = updateCart(emptyList())
     fun openCart() {
+        detailRequestGeneration++
+        regionalPriceRequestGeneration++
         _uiState.value = _uiState.value.copy(
             cartOpen = true,
             collectionTab = SteamStoreCollectionTab.CART,
+            detailAppId = null,
             detail = null
         )
     }
@@ -585,6 +603,7 @@ class SteamStoreViewModel(
             query = "",
             searchResults = emptyList(),
             searching = false,
+            detailAppId = null,
             detail = null,
             detailFromCache = false,
             loadingDetail = false,
@@ -766,6 +785,5 @@ internal fun steamStoreDetailRequestIsCurrent(
 ): Boolean {
     return generation == currentGeneration &&
         state.selectedAccountId == accountId &&
-        (state.detail?.appId == appId ||
-            (state.loadingDetail && state.regionalPricesAppId == appId))
+        state.detailAppId == appId
 }

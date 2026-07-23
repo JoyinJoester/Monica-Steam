@@ -2,12 +2,24 @@ package takagi.ru.monica.steam.store
 
 import okio.Buffer
 import kotlinx.coroutines.test.runTest
+import okhttp3.OkHttpClient
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SteamWishlistTest {
+    @Test
+    fun storeClientDoesNotAutomaticallyFollowSessionRedirectLoops() {
+        val field = SteamStoreService::class.java.getDeclaredField("client").apply {
+            isAccessible = true
+        }
+        val client = field.get(SteamStoreService()) as OkHttpClient
+
+        assertFalse(client.followRedirects)
+        assertFalse(client.followSslRedirects)
+    }
+
     @Test
     fun parsesOfficialWishlistDataWithLocalizedPrices() {
         val payload = """

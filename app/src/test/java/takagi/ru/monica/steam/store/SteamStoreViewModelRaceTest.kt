@@ -6,9 +6,19 @@ import org.junit.Test
 
 class SteamStoreViewModelRaceTest {
     @Test
+    fun detailDestinationIsTrackedBeforePayloadArrives() {
+        assertTrue(
+            SteamStoreUiState::class.java.declaredFields.any { field ->
+                field.name == "detailAppId"
+            }
+        )
+    }
+
+    @Test
     fun staleDetailResponsesCannotReplaceClosedOrDifferentDetail() {
         val state = SteamStoreUiState(
             selectedAccountId = 7L,
+            detailAppId = 570,
             detail = SteamStoreDetail(appId = 570, name = "Dota 2")
         )
 
@@ -17,7 +27,7 @@ class SteamStoreViewModelRaceTest {
         assertFalse(steamStoreDetailRequestIsCurrent(state, 7L, 570, 2L, 3L))
         assertFalse(
             steamStoreDetailRequestIsCurrent(
-                state.copy(detail = null),
+                state.copy(detailAppId = null, detail = null),
                 7L,
                 570,
                 3L,

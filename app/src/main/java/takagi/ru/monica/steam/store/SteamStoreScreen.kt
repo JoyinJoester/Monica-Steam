@@ -51,7 +51,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -120,22 +119,22 @@ fun SteamStoreScreen(
         state.detail?.let { lastDetail = it }
     }
     val webUrl = state.webUrl
-    val detailState = state.detail
+    val detailAppId = state.detailAppId
     val storeDestination = when {
         webUrl != null -> SteamStoreDestination.Web(webUrl)
-        detailState != null -> SteamStoreDestination.Detail(detailState.appId)
+        detailAppId != null -> SteamStoreDestination.Detail(detailAppId)
         state.cartOpen -> SteamStoreDestination.Cart
         else -> SteamStoreDestination.Home
     }
 
     BackHandler(
         enabled = state.regionalPriceSheetOpen ||
-            state.webUrl != null || state.cartOpen || state.detail != null
+            state.webUrl != null || state.cartOpen || state.detailAppId != null
     ) {
         when {
             state.regionalPriceSheetOpen -> viewModel.closeRegionalPrices()
             state.webUrl != null -> viewModel.closeStoreWeb()
-            state.detail != null -> viewModel.closeDetail()
+            state.detailAppId != null -> viewModel.closeDetail()
             state.cartOpen -> viewModel.closeCart()
         }
     }
@@ -175,9 +174,18 @@ fun SteamStoreScreen(
             is SteamStoreDestination.Detail -> {
                 val detail = state.detail ?: lastDetail?.takeIf { it.appId == destination.appId }
                 if (detail == null) {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
+                    SteamStoreDetailUnavailableContent(
+                        loading = state.loadingDetail,
+                        error = state.error,
+                        onBack = viewModel::closeDetail,
+                        onRetry = { viewModel.openDetail(destination.appId) },
+                        onOpenOfficial = {
+                            viewModel.openStoreWeb(
+                                "https://store.steampowered.com/app/${destination.appId}/"
+                            )
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
                 } else {
                     SteamStoreDetailContent(
                         detail = detail,
@@ -364,6 +372,91 @@ fun SteamStoreScreen(
             onSelected = { viewModel.selectAccount(it); showAccounts = false },
             onDismiss = { showAccounts = false }
         )
+    }
+}
+
+@Composable
+private fun SteamStoreDetailUnavailableContent(
+    loading: Boolean,
+    error: String?,
+    onBack: () -> Unit,
+    onRetry: () -> Unit,
+    onOpenOfficial: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.steam_store_open_detail)) },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (loading) {
+                CircularProgressIndicator()
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text = stringResource(R.string.steam_store_detail_loading),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.ErrorOutline,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp),
+                    tint = MaterialTheme.colorScheme.error
+                )
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text = stringResource(R.string.steam_store_detail_unavailable),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+                error?.takeIf(String::isNotBlank)?.let { message ->
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = message,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Spacer(Modifier.height(24.dp))
+                Button(
+                    onClick = onRetry,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
+                ) {
+                    Icon(Icons.Default.Refresh, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.steam_store_retry))
+                }
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = onOpenOfficial,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
+                ) {
+                    Icon(Icons.Default.Storefront, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.steam_store_open_official))
+                }
+            }
+        }
     }
 }
 
@@ -844,69 +937,57 @@ private fun SteamStorePurchaseActions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Button(
+            onClick = onToggleCart,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
+            shape = RoundedCornerShape(18.dp)
         ) {
-            Button(
-                onClick = onToggleCart,
-                modifier = Modifier
-                    .weight(1f)
-                    .heightIn(min = 56.dp),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Icon(Icons.Default.ShoppingCart, contentDescription = null)
+            Icon(Icons.Default.ShoppingCart, contentDescription = null)
+            Spacer(Modifier.width(8.dp))
+            Text(
+                if (inCart) {
+                    stringResource(R.string.steam_store_cart_remove)
+                } else {
+                    stringResource(R.string.steam_store_add_cart)
+                }
+            )
+        }
+        FilledTonalButton(
+            onClick = onToggleWishlist,
+            enabled = wishlistAvailable && !wishlistMutating,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp),
+            shape = RoundedCornerShape(18.dp)
+        ) {
+            if (wishlistMutating) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+            } else {
+                Icon(
+                    imageVector = if (inWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                    contentDescription = null
+                )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    if (inCart) {
-                        stringResource(R.string.steam_store_cart_remove)
-                    } else {
-                        stringResource(R.string.steam_store_add_cart)
-                    },
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-            FilledTonalIconButton(
-                onClick = onToggleWishlist,
-                enabled = wishlistAvailable && !wishlistMutating,
-                modifier = Modifier.size(56.dp),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                if (wishlistMutating) {
-                    CircularProgressIndicator(modifier = Modifier.size(22.dp))
-                } else {
-                    Icon(
-                        imageVector = if (inWishlist) {
-                            Icons.Default.Favorite
+                    stringResource(
+                        if (inWishlist) {
+                            R.string.steam_store_remove_wishlist
                         } else {
-                            Icons.Default.FavoriteBorder
-                        },
-                        contentDescription = stringResource(
-                            if (inWishlist) {
-                                R.string.steam_store_remove_wishlist
-                            } else {
-                                R.string.steam_store_add_wishlist
-                            }
-                        )
+                            R.string.steam_store_add_wishlist
+                        }
                     )
-                }
+                )
             }
         }
         OutlinedButton(
             onClick = onOpenOfficial,
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 56.dp),
-            shape = RoundedCornerShape(16.dp)
+                .heightIn(min = 52.dp),
+            shape = RoundedCornerShape(18.dp)
         ) {
             Icon(Icons.Default.Storefront, contentDescription = null)
             Spacer(Modifier.width(8.dp))
             Text(
-                text = stringResource(R.string.steam_store_buy),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = stringResource(R.string.steam_store_buy)
             )
         }
         if (wishlistError != null) {

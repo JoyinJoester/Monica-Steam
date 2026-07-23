@@ -68,14 +68,14 @@ class SteamStoreCollectionUiGuardTest {
 
         assertTrue(Regex("(?m)^\\s*Button\\(").containsMatchIn(actions))
         assertTrue(Regex("(?m)^\\s*OutlinedButton\\(").containsMatchIn(actions))
-        assertTrue(actions.contains("FilledTonalIconButton("))
-        assertFalse(actions.contains("FilledTonalButton("))
-        assertTrue(actions.contains("Modifier.size(56.dp)"))
+        assertTrue(actions.contains("FilledTonalButton("))
+        assertFalse(actions.contains("FilledTonalIconButton("))
+        assertTrue(Regex("fillMaxWidth\\(\\)").findAll(actions).count() >= 3)
         assertTrue(
-            Regex("heightIn\\(min = 56\\.dp\\)").findAll(actions).count() >= 2
+            Regex("heightIn\\(min = 52\\.dp\\)").findAll(actions).count() >= 3
         )
         assertTrue(
-            Regex("RoundedCornerShape\\(16\\.dp\\)").findAll(actions).count() >= 3
+            Regex("RoundedCornerShape\\(18\\.dp\\)").findAll(actions).count() >= 3
         )
         assertTrue(actions.contains("MaterialTheme.colorScheme.errorContainer"))
         assertTrue(actions.contains("MaterialTheme.colorScheme.onErrorContainer"))

@@ -1,0 +1,4 @@
+id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,notes
+1,完善通知和礼物动作模型,IN_PROGRESS,可操作类型和详情数据可判定,./gradlew :app:testDebugUnitTest --tests '*SteamNotification*' --tests '*SteamGift*',,0,
+2,实现独立通知列表与详情,TODO,列表筛选详情和返回栈可用,./gradlew :app:compileDebugKotlin,,0,
+3,验证动作和导航,TODO,接受拒绝普通详情均有回归覆盖,./gradlew :app:testDebugUnitTest --tests '*SteamNotification*' --tests '*SteamGift*',,0,

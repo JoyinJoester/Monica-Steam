@@ -4478,6 +4478,8 @@
     <string name="steam_store_regional_price_description">View regional original prices and CNY conversions</string>
     <string name="steam_store_regional_original_price">Original %1$s</string>
     <string name="steam_store_open_detail">Open game details</string>
+    <string name="steam_store_detail_loading">Loading game details…</string>
+    <string name="steam_store_detail_unavailable">Game details are temporarily unavailable</string>
     <string name="steam_store_add_wishlist">Add to wishlist</string>
     <string name="steam_store_remove_wishlist">Remove from wishlist</string>
     <string name="steam_store_account">Store account</string>
