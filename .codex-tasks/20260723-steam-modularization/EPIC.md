@@ -41,7 +41,7 @@
 
 ## Done-When
 
-- [ ] `SUBTASKS.csv` 中所有子任务为 `DONE`
-- [ ] Steam 根包无跨功能 UI 实现堆放
-- [ ] 架构守卫、全量测试和 Kotlin 编译通过
-- [ ] 所有模块提交已推送 `origin/main`
+- [x] `SUBTASKS.csv` 中所有子任务为 `DONE`
+- [x] Steam 根包无跨功能 UI 实现堆放
+- [x] 架构守卫、全量测试和 Kotlin 编译通过
+- [x] 所有模块提交已推送 `origin/main`

@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-好友模块已经完成独立化，当前扩展到 Monica Steam 全部 Steam 功能。审查发现 `steam/ui` 中仍有大型跨功能页面：`SteamScreen.kt` 6488 行、`SteamViewModel.kt` 2936 行、`SteamLibraryScreen.kt` 2206 行、`SteamInventoryMarketContent.kt` 1441 行。
+Monica Steam 全部 Steam 功能模块整理已完成。legacy `steam/ui`、Steam 根包和旧 `steam/service` 均不再包含 Kotlin 实现；所有仍含 Kotlin 的 Steam 根模块均由架构守卫完整登记。
 
 ## 模块目录约定
 
@@ -14,13 +14,13 @@
 
 形态：epic
 
-进度：1/10
+进度：10/10
 
-当前：整理共享基础设施并最终审查
+当前：全部完成
 
 文件：`.codex-tasks/20260723-steam-modularization/SUBTASKS.csv`
 
-下一步：运行全量单元测试和 Kotlin 编译，审查所有 Steam 根目录与跨 feature import，修复遗留后关闭 Epic。
+下一步：无；后续功能继续遵循现有模块边界。
 
 ## 已完成
 
@@ -92,3 +92,11 @@
 - 所有生产代码和回归测试切换到新路径；legacy `steam/ui` 不再包含 Kotlin 实现。
 - 验证：`:app:compileDebugKotlin` 通过；令牌、导入、搜索、缩放、市场保护、动效及架构共 90 个相关测试通过。
 - 独立提交：`7145a1d`。
+
+### 子任务 10：共享基础设施与最终审查
+
+- 将模糊的 `steam/service/SteamLoginImportService.kt` 原样迁入 `steam/token/data`，仅调整包名和引用，不改变登录、扫码、授权设备或验证器迁移行为。
+- 架构守卫改为精确匹配所有含 Kotlin 的 Steam 根模块，并补充 `analytics`、`confirmations`、`gifts`、`importer` 的登记与文档说明。
+- 最终结构检查：legacy `steam/ui`、Steam 根包和旧 `steam/service` 的 Kotlin 文件数量均为 0；27 个含 Kotlin 的根模块全部被守卫覆盖。
+- 验证：`:app:testDebugUnitTest` 共 569 个测试，568 通过、1 跳过、0 失败；`:app:compileDebugKotlin` 通过；`git diff --check` 通过。
+- 独立提交并推送：`9ee226d`。
