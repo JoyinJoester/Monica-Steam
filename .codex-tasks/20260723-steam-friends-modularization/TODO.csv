@@ -3,4 +3,4 @@ id,task,status,acceptance_criteria,validation_command,completed_at,retry_count,n
 2,拆分domain data presentation包,DONE,依赖方向清晰且解析缓存状态测试通过,好友专项测试,2026-07-23T14:32:00+08:00,0,领域网关数据适配器解析缓存状态分离
 3,拆分ui页面与视觉元素,DONE,装配列表详情卡片分别存放,Kotlin编译,2026-07-23T14:35:00+08:00,0,6个UI文件均不超过400行
 4,更新引用和架构回归测试,DONE,Activity只依赖好友页入口且旧根包无实现,架构专项测试,2026-07-23T14:43:00+08:00,0,架构守卫通过且根包无Kotlin实现
-5,执行全量验证并提交推送,IN_PROGRESS,全量测试编译通过且main已推送,Gradle test compileDebugKotlin,,0,
+5,执行全量验证并提交推送,DONE,全量测试编译通过且main已推送,Gradle test compileDebugKotlin,2026-07-23T14:58:00+08:00,0,151个套件559项测试通过并推送8f3d48b
