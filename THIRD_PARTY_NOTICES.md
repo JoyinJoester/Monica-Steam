@@ -1,5 +1,16 @@
 # Third-Party Notices
 
+## Grit
+
+The Monica Steam game distribution and play-activity analytics components are adapted from
+[`Grit`](https://github.com/shub39/Grit), including `AnalyticsCard`, `WeekDayBreakdown`,
+`HabitHeatMap`, and `CardArrows` interaction patterns.
+
+Copyright (C) 2026 Shubham Gorai
+
+Licensed under the GNU General Public License v3.0 or later. The complete license text is
+included in this repository's `LICENSE` file.
+
 ## Essentials
 
 The Monica Steam floating Dock interaction is adapted from
