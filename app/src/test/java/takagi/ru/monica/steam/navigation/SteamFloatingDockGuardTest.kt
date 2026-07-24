@@ -76,9 +76,17 @@ class SteamFloatingDockGuardTest {
         val dock = activity
             .substringAfter("private fun SteamStandaloneDock(")
             .substringBefore("private fun SteamDockTab.icon()")
+        val pageModifier = activity
+            .substringAfter("AnimatedContent(")
+            .substringBefore("targetState = currentPage")
 
         assertTrue(activity.contains(".steamDockProgressiveBlur("))
         assertTrue(activity.contains("height = dockBlurHeightPx"))
+        assertTrue(
+            "Dock blur must wrap the full viewport before bottom content clearance",
+            pageModifier.indexOf(".steamDockProgressiveBlur(") in 0 until
+                pageModifier.indexOf(".padding(")
+        )
         assertTrue(blur.contains("RuntimeShader(STEAM_DOCK_BLUR_SHADER)"))
         assertTrue(blur.contains("RenderEffect.createRuntimeShaderEffect"))
         assertTrue(blur.contains("surfaceContainer.copy(alpha = 0.65f)"))

@@ -302,17 +302,17 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     AnimatedContent(
                                         modifier = Modifier
                                             .fillMaxSize()
+                                            .steamDockProgressiveBlur(
+                                                enabled = currentPage.isDockPage(),
+                                                blurRadius = 40f,
+                                                height = dockBlurHeightPx
+                                            )
                                             .padding(
                                                 bottom = if (currentPage.isDockPage()) {
                                                     SteamDockContentClearance
                                                 } else {
                                                     0.dp
                                                 }
-                                            )
-                                            .steamDockProgressiveBlur(
-                                                enabled = currentPage.isDockPage(),
-                                                blurRadius = 40f,
-                                                height = dockBlurHeightPx
                                             ),
                                         targetState = currentPage,
                                         label = "monica_steam_page_transition",
