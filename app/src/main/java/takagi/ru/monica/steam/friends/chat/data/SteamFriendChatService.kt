@@ -77,7 +77,9 @@ class SteamFriendChatService(
                 writeFixed64(1, partner)
                 writeVarint(2, CHAT_ENTRY_TYPE_MESSAGE)
                 writeString(3, normalizedBody)
-                writeBool(4, false)
+                // Steam's own friend chat sends rich content such as emoticons,
+                // stickers and uploaded media through the BBCode-aware text field.
+                writeBool(4, true)
                 writeBool(5, true)
                 writeBool(6, false)
                 writeString(8, clientMessageId)

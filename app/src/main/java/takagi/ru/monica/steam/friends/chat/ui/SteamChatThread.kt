@@ -42,6 +42,7 @@ import java.text.DateFormat
 import java.util.Date
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatUiState
+import takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaUiState
 import takagi.ru.monica.steam.friends.domain.SteamFriend
 import takagi.ru.monica.steam.friends.ui.FriendAvatar
 import takagi.ru.monica.steam.friends.ui.label
@@ -49,12 +50,19 @@ import takagi.ru.monica.steam.friends.ui.label
 @Composable
 internal fun SteamChatThread(
     state: SteamChatUiState,
+    richMediaState: SteamChatRichMediaUiState,
     friend: SteamFriend?,
     onNavigateBack: () -> Unit,
     onRefresh: () -> Unit,
     onLoadOlder: () -> Unit,
     onSend: (String) -> Unit,
     onRetryMessage: (String) -> Unit,
+    onAttachmentSelected: (String) -> Unit,
+    onAttachmentSpoilerChanged: (Boolean) -> Unit,
+    onUploadAttachment: () -> Unit,
+    onClearAttachment: () -> Unit,
+    onClearAttachmentFailure: () -> Unit,
+    onRefreshCatalogs: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val messages = state.thread?.messages.orEmpty()
@@ -147,7 +155,16 @@ internal fun SteamChatThread(
                 }
             }
         }
-        SteamChatComposer(onSend = onSend)
+        SteamChatComposer(
+            richMediaState = richMediaState,
+            onSend = onSend,
+            onAttachmentSelected = onAttachmentSelected,
+            onAttachmentSpoilerChanged = onAttachmentSpoilerChanged,
+            onUploadAttachment = onUploadAttachment,
+            onClearAttachment = onClearAttachment,
+            onClearAttachmentFailure = onClearAttachmentFailure,
+            onRefreshCatalogs = onRefreshCatalogs
+        )
     }
 }
 

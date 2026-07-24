@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.friends.chat.data
 import java.util.Base64
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.FormBody
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
@@ -120,6 +121,12 @@ class SteamFriendChatServiceTest {
         assertTrue(fields.any { it.number == 5 && it.wireType == 5 })
         assertEquals(1_700_000_000L, fields.first { it.number == 5 }.asFixed32UnsignedLong)
         assertEquals(9, fields.first { it.number == 7 }.asInt)
+        val sendBody = requests[2].body as FormBody
+        val sendEncoded = (0 until sendBody.size)
+            .first { sendBody.name(it) == "input_protobuf_encoded" }
+            .let(sendBody::value)
+        val sendFields = SteamProtoReader(Base64.getDecoder().decode(sendEncoded)).parseAll()
+        assertTrue(sendFields.first { it.number == 4 }.asBool)
     }
 
     private fun chatMessage(

@@ -39,6 +39,7 @@ import java.util.Date
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatDeliveryState
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatMessage
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRichMessageContent
 
 @Composable
 internal fun SteamChatMessageBubble(
@@ -89,10 +90,9 @@ internal fun SteamChatMessageBubble(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.Bottom
             ) {
-                Text(
-                    text = message.body,
-                    modifier = Modifier.weight(1f, fill = false),
-                    style = MaterialTheme.typography.bodyLarge
+                SteamChatRichMessageContent(
+                    body = message.body,
+                    modifier = Modifier.weight(1f, fill = false)
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(

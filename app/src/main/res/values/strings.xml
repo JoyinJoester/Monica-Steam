@@ -4703,4 +4703,17 @@
     <string name="steam_chat_message_hint">Message</string>
     <string name="steam_chat_send">Send</string>
     <string name="steam_chat_send_message">Send message</string>
+    <string name="steam_chat_rich_picker_title">Emoji and stickers</string>
+    <string name="steam_chat_rich_picker_refresh">Refresh emoji</string>
+    <string name="steam_chat_rich_picker_emoji">Emoji</string>
+    <string name="steam_chat_rich_picker_stickers">Steam stickers</string>
+    <string name="steam_chat_rich_picker_search">Search</string>
+    <string name="steam_chat_rich_picker_clear_search">Clear search</string>
+    <string name="steam_chat_attachment_title">Send attachment</string>
+    <string name="steam_chat_attachment_spoiler">Mark as spoiler</string>
+    <string name="steam_chat_attachment_spoiler_summary">The recipient reveals the content with a tap</string>
+    <string name="steam_chat_attachment_cancel">Cancel</string>
+    <string name="steam_chat_attachment_sending">Sending</string>
+    <string name="steam_chat_attachment_select">Choose attachment</string>
+    <string name="steam_chat_close">Close</string>
 </resources>

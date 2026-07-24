@@ -4533,4 +4533,17 @@
     <string name="steam_chat_message_hint">消息</string>
     <string name="steam_chat_send">发送</string>
     <string name="steam_chat_send_message">发送消息</string>
+    <string name="steam_chat_rich_picker_title">表情与贴纸</string>
+    <string name="steam_chat_rich_picker_refresh">刷新表情</string>
+    <string name="steam_chat_rich_picker_emoji">表情</string>
+    <string name="steam_chat_rich_picker_stickers">Steam 贴纸</string>
+    <string name="steam_chat_rich_picker_search">搜索</string>
+    <string name="steam_chat_rich_picker_clear_search">清除搜索</string>
+    <string name="steam_chat_attachment_title">发送附件</string>
+    <string name="steam_chat_attachment_spoiler">标记为剧透</string>
+    <string name="steam_chat_attachment_spoiler_summary">收件人点击后显示内容</string>
+    <string name="steam_chat_attachment_cancel">取消</string>
+    <string name="steam_chat_attachment_sending">正在发送</string>
+    <string name="steam_chat_attachment_select">选择附件</string>
+    <string name="steam_chat_close">关闭</string>
 </resources>
