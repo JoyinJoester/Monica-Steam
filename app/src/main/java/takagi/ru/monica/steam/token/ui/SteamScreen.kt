@@ -52,6 +52,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
@@ -195,6 +196,8 @@ import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationSummary
 import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
 import takagi.ru.monica.steam.friends.ui.SteamFriendsScreen
+import takagi.ru.monica.steam.friends.chat.ui.SteamChatScreen
+import takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModel
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
@@ -261,6 +264,12 @@ private enum class SteamSection(
         labelRes = R.string.steam_friends_title,
         icon = Icons.Default.Groups,
         searchHintRes = R.string.steam_friends_search_hint,
+        supportsRefresh = true
+    ),
+    CHAT(
+        labelRes = R.string.steam_chat_title,
+        icon = Icons.Default.ChatBubble,
+        searchHintRes = R.string.steam_chat_search_hint,
         supportsRefresh = true
     ),
     NOTIFICATIONS(
@@ -367,6 +376,9 @@ fun SteamScreen(
     val viewModel: SteamViewModel = viewModel(
         factory = remember(context) { SteamViewModel.factory(context) }
     )
+    val chatViewModel: SteamChatViewModel = viewModel(
+        factory = remember(context) { SteamChatViewModel.factory(context) }
+    )
     val passwordDatabase = remember(context) {
         PasswordDatabase.getDatabase(context.applicationContext)
     }
@@ -382,8 +394,17 @@ fun SteamScreen(
     val settingsManager = remember { SettingsManager(context.applicationContext) }
     val appSettings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
     val uiState by viewModel.uiState.collectAsState()
+    val chatUiState by chatViewModel.uiState.collectAsState()
     val selectedAccount = uiState.accounts.firstOrNull { it.id == uiState.selectedAccountId }
         ?: uiState.accounts.firstOrNull()
+    LaunchedEffect(
+        selectedAccount?.id,
+        selectedAccount?.steamId,
+        selectedAccount?.accessToken,
+        selectedAccount?.steamLoginSecure
+    ) {
+        chatViewModel.selectAccount(selectedAccount)
+    }
     var detailAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
     val detailAccount = uiState.accounts.firstOrNull { it.id == detailAccountId }
     var selectedSection by rememberSaveable { mutableStateOf(SteamSection.CODE) }
@@ -436,6 +457,8 @@ fun SteamScreen(
     var giftDeclineNote by rememberSaveable { mutableStateOf("") }
     var showGiftInbox by rememberSaveable { mutableStateOf(false) }
     var friendsRefreshRequest by rememberSaveable { mutableStateOf(0L) }
+    var chatRefreshRequest by rememberSaveable { mutableStateOf(0L) }
+    var requestedChatPartnerSteamId by rememberSaveable { mutableStateOf<String?>(null) }
     var autoPromptedLoginClientIds by remember(selectedAccount?.id) { mutableStateOf<Set<Long>>(emptySet()) }
     val notificationSnapshot = uiState.notifications.snapshot
     val pendingConfirmationCount = if (selectedAccount?.canUseConfirmations == true) {
@@ -444,7 +467,8 @@ fun SteamScreen(
         0
     }
     val pendingNotificationCount = notificationSnapshot?.unreadCount ?: 0
-    val pendingTopActionCount = pendingConfirmationCount + pendingNotificationCount
+    val chatUnreadCount = chatUiState.unreadCount
+    val pendingTopActionCount = pendingConfirmationCount + pendingNotificationCount + chatUnreadCount
     val organizationFilter = SteamAccountOrganizationFilter(
         groupName = organizationGroupFilter,
         tag = organizationTagFilter,
@@ -644,7 +668,8 @@ fun SteamScreen(
                 SteamSection.INVENTORY -> viewModel.refreshInventory(steamLanguage)
                 SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
                 SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
-                SteamSection.CODE, SteamSection.CONFIRMATIONS, SteamSection.FRIENDS -> Unit
+                SteamSection.CODE, SteamSection.CONFIRMATIONS, SteamSection.FRIENDS,
+                SteamSection.CHAT -> Unit
                 SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
             }
         }
@@ -1713,6 +1738,7 @@ fun SteamScreen(
                                 selectedSection = selectedSection,
                                 pendingConfirmationCount = pendingConfirmationCount,
                                 pendingNotificationCount = pendingNotificationCount,
+                                pendingChatCount = chatUnreadCount,
                                 onSelectSection = { section ->
                                     showTopActionsMenu = false
                                     clearSteamSearch()
@@ -1732,6 +1758,7 @@ fun SteamScreen(
                                         }
                                         SteamSection.NOTIFICATIONS -> viewModel.refreshSteamNotifications()
                                         SteamSection.FRIENDS -> friendsRefreshRequest++
+                                        SteamSection.CHAT -> chatRefreshRequest++
                                         SteamSection.TRADE_OFFERS -> viewModel.refreshTradeOffers(steamLanguage)
                                         SteamSection.INVENTORY -> viewModel.refreshInventory(steamLanguage)
                                         SteamSection.MARKET -> viewModel.refreshMarketListings(steamLanguage)
@@ -1927,6 +1954,20 @@ fun SteamScreen(
                             SteamSection.FRIENDS -> SteamFriendsScreen(
                                 searchQuery = steamSearchQuery,
                                 refreshRequest = friendsRefreshRequest,
+                                onStartChat = { partnerSteamId ->
+                                    clearSteamSearch()
+                                    requestedChatPartnerSteamId = partnerSteamId
+                                    selectedSection = SteamSection.CHAT
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            SteamSection.CHAT -> SteamChatScreen(
+                                searchQuery = steamSearchQuery,
+                                refreshRequest = chatRefreshRequest,
+                                requestedPartnerSteamId = requestedChatPartnerSteamId,
+                                onConsumeRequestedPartner = {
+                                    requestedChatPartnerSteamId = null
+                                },
                                 modifier = Modifier.fillMaxSize()
                             )
                             SteamSection.NOTIFICATIONS -> SteamNotificationsScreen(
@@ -2171,6 +2212,7 @@ private fun SteamTopActionsMenu(
     selectedSection: SteamSection,
     pendingConfirmationCount: Int,
     pendingNotificationCount: Int,
+    pendingChatCount: Int,
     onSelectSection: (SteamSection) -> Unit,
     onRefreshCurrent: () -> Unit,
     onAddAccount: () -> Unit,
@@ -2201,6 +2243,11 @@ private fun SteamTopActionsMenu(
                         if (section == SteamSection.NOTIFICATIONS && pendingNotificationCount > 0) {
                             Badge {
                                 Text(badgeCountText(pendingNotificationCount))
+                            }
+                        }
+                        if (section == SteamSection.CHAT && pendingChatCount > 0) {
+                            Badge {
+                                Text(badgeCountText(pendingChatCount))
                             }
                         }
                     }

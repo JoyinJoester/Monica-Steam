@@ -31,6 +31,7 @@ import takagi.ru.monica.ui.navigation.easyNotesScreenExit
 fun SteamFriendsScreen(
     searchQuery: String,
     refreshRequest: Long,
+    onStartChat: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -100,7 +101,8 @@ fun SteamFriendsScreen(
             if (detailSteamId != null && selectedFriend != null) {
                 SteamFriendDetailScreen(
                     friend = selectedFriend,
-                    onNavigateBack = { selectedFriendId = null }
+                    onNavigateBack = { selectedFriendId = null },
+                    onStartChat = { onStartChat(selectedFriend.steamId) }
                 )
             } else {
                 SteamFriendsListContent(

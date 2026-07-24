@@ -4684,4 +4684,23 @@
     <string name="steam_store_reviews_positive">Positive</string>
     <string name="steam_store_reviews_very_positive">Very Positive</string>
     <string name="steam_store_reviews_overwhelmingly_positive">Overwhelmingly Positive</string>
+    <string name="steam_chat_title">Messages</string>
+    <string name="steam_chat_search_hint">Search conversations or friends</string>
+    <string name="steam_chat_conversation_count">%1$d conversations</string>
+    <string name="steam_chat_unread_count">%1$d unread</string>
+    <string name="steam_chat_open_conversation">Open conversation</string>
+    <string name="steam_chat_empty_search">No matching conversations</string>
+    <string name="steam_chat_empty">No conversations yet</string>
+    <string name="steam_chat_account_required">Select a Steam account to view messages.</string>
+    <string name="steam_chat_session_required">Sign in to Steam again to use messages.</string>
+    <string name="steam_chat_network_error">Could not connect to Steam. Cached messages remain available.</string>
+    <string name="steam_chat_unavailable">Steam messages are temporarily unavailable.</string>
+    <string name="steam_chat_conversation">Steam conversation</string>
+    <string name="steam_chat_thread_empty">Send the first message</string>
+    <string name="steam_chat_sending">Sending</string>
+    <string name="steam_chat_sent">Sent</string>
+    <string name="steam_chat_retry_send">Send again</string>
+    <string name="steam_chat_message_hint">Message</string>
+    <string name="steam_chat_send">Send</string>
+    <string name="steam_chat_send_message">Send message</string>
 </resources>

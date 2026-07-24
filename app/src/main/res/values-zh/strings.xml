@@ -4514,4 +4514,23 @@
     <string name="steam_store_reviews_positive">好评</string>
     <string name="steam_store_reviews_very_positive">特别好评</string>
     <string name="steam_store_reviews_overwhelmingly_positive">好评如潮</string>
+    <string name="steam_chat_title">聊天</string>
+    <string name="steam_chat_search_hint">搜索会话或好友</string>
+    <string name="steam_chat_conversation_count">%1$d 个会话</string>
+    <string name="steam_chat_unread_count">%1$d 条未读</string>
+    <string name="steam_chat_open_conversation">打开会话</string>
+    <string name="steam_chat_empty_search">没有匹配的会话</string>
+    <string name="steam_chat_empty">还没有会话</string>
+    <string name="steam_chat_account_required">请选择 Steam 账号以查看聊天。</string>
+    <string name="steam_chat_session_required">请重新登录 Steam 后使用聊天。</string>
+    <string name="steam_chat_network_error">无法连接到 Steam，仍可查看已缓存的消息。</string>
+    <string name="steam_chat_unavailable">Steam 聊天暂时不可用。</string>
+    <string name="steam_chat_conversation">Steam 会话</string>
+    <string name="steam_chat_thread_empty">发送第一条消息</string>
+    <string name="steam_chat_sending">发送中</string>
+    <string name="steam_chat_sent">已发送</string>
+    <string name="steam_chat_retry_send">重新发送</string>
+    <string name="steam_chat_message_hint">消息</string>
+    <string name="steam_chat_send">发送</string>
+    <string name="steam_chat_send_message">发送消息</string>
 </resources>

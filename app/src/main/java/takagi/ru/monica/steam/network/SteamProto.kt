@@ -44,6 +44,15 @@ class SteamProtoWriter {
         }
     }
 
+    fun writeFixed32(field: Int, value: Long) {
+        writeTag(field, 5)
+        var current = value
+        repeat(4) {
+            out.write((current and 0xffL).toInt())
+            current = current shr 8
+        }
+    }
+
     private fun writeTag(field: Int, wireType: Int) {
         writeVarintRaw(((field shl 3) or wireType).toLong())
     }

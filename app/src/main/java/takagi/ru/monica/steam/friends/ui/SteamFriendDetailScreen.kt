@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.SportsEsports
@@ -45,7 +46,8 @@ import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
 @Composable
 internal fun SteamFriendDetailScreen(
     friend: SteamFriend,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onStartChat: () -> Unit
 ) {
     val context = LocalContext.current
     LazyColumn(
@@ -131,6 +133,16 @@ internal fun SteamFriendDetailScreen(
                         title = stringResource(R.string.steam_friend_location),
                         value = friend.countryCode
                     )
+                }
+            }
+            item(key = "friend-detail-chat") {
+                FilledTonalButton(
+                    onClick = onStartChat,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
+                ) {
+                    Icon(Icons.Default.ChatBubble, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.steam_chat_send_message))
                 }
             }
             item(key = "friend-detail-open-profile") {
