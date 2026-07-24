@@ -60,6 +60,28 @@ class SteamFloatingDockGuardTest {
         assertTrue(store.contains("padding(bottom = SteamDockFabClearance)"))
     }
 
+    @Test
+    fun dockBlursTheUnderlyingPageWhileKeepingControlsAboveTheEffect() {
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+        val blur = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamDockProgressiveBlur.kt"
+        ).readText()
+        val dock = activity
+            .substringAfter("private fun SteamStandaloneDock(")
+            .substringBefore("private fun SteamDockTab.icon()")
+
+        assertTrue(activity.contains(".steamDockProgressiveBlur("))
+        assertTrue(activity.contains("height = dockBlurHeightPx"))
+        assertTrue(blur.contains("RuntimeShader(STEAM_DOCK_BLUR_SHADER)"))
+        assertTrue(blur.contains("RenderEffect.createRuntimeShaderEffect"))
+        assertTrue(blur.contains("surfaceContainer.copy(alpha = 0.65f)"))
+        assertTrue(blur.contains("Build.VERSION_CODES.TIRAMISU"))
+        assertTrue(dock.contains("zIndex(1f)"))
+        assertFalse(dock.contains("steamDockProgressiveBlur"))
+    }
+
     private fun projectFile(path: String): File {
         var directory = File(requireNotNull(System.getProperty("user.dir"))).canonicalFile
         while (

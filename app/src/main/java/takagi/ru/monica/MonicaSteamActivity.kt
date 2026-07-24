@@ -44,6 +44,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.unit.dp
@@ -55,6 +56,7 @@ import takagi.ru.monica.steam.navigation.SteamDockPreferences
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.navigation.ui.SteamEssentialsFloatingToolbar
 import takagi.ru.monica.steam.navigation.ui.SteamToolbarItem
+import takagi.ru.monica.steam.navigation.ui.steamDockProgressiveBlur
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.ThemeMode
@@ -176,6 +178,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val dockOrder by dockPreferences.order.collectAsState(
                     initial = emptyList()
                 )
+                val dockBlurHeightPx = with(LocalDensity.current) { 130.dp.toPx() }
                 val homePage = dockOrder.firstOrNull()?.toPage() ?: MonicaSteamPage.STEAM
                 var appliedInitialDockPage by rememberSaveable { mutableStateOf(false) }
                 LaunchedEffect(dockOrder) {
@@ -254,6 +257,13 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 contentWindowInsets = WindowInsets(0, 0, 0, 0)
                             ) {
                                 AnimatedContent(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .steamDockProgressiveBlur(
+                                            enabled = currentPage.isDockPage(),
+                                            blurRadius = 40f,
+                                            height = dockBlurHeightPx
+                                        ),
                         targetState = currentPage,
                         label = "monica_steam_page_transition",
                         transitionSpec = {
