@@ -274,7 +274,10 @@ class SteamStoreViewModel(
                             currentGeneration = detailRequestGeneration
                         )
                     ) return@onSuccess
-                    withContext(Dispatchers.IO) { cache.writeDetail(accountId, detail) }
+                    val refreshedDetail = detail.preserveCachedReviews(cached)
+                    withContext(Dispatchers.IO) {
+                        cache.writeDetail(accountId, refreshedDetail)
+                    }
                     if (!steamStoreDetailRequestIsCurrent(
                             state = _uiState.value,
                             accountId = accountId,
@@ -284,7 +287,7 @@ class SteamStoreViewModel(
                         )
                     ) return@onSuccess
                     _uiState.value = _uiState.value.copy(
-                        detail = detail,
+                        detail = refreshedDetail,
                         detailFromCache = false,
                         loadingDetail = false
                     )

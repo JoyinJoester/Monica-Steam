@@ -60,12 +60,15 @@ data class SteamStoreDetail(
     val packageId: Int? = null,
     val availableInAccountRegion: Boolean? = null,
     val accountCountryCode: String? = null,
-    val priceCountryCode: String? = null
+    val priceCountryCode: String? = null,
+    val reviews: SteamStoreReviews? = null
 ) {
     val formattedFinalPrice: String
         get() = if (isFree) "免费" else formatSteamPrice(finalPriceCents, currency)
     val formattedInitialPrice: String get() = formatSteamPrice(initialPriceCents, currency)
     val storeUrl: String get() = "https://store.steampowered.com/app/$appId/"
+    val reviewsUrl: String
+        get() = "https://store.steampowered.com/app/$appId/#app_reviews_hash"
 }
 
 @Serializable

@@ -196,6 +196,7 @@ fun SteamStoreScreen(
                         cached = state.detailFromCache,
                         onBack = viewModel::closeDetail,
                         onOpenOfficial = { viewModel.openStoreWeb(detail.storeUrl) },
+                        onOpenReviews = { viewModel.openStoreWeb(detail.reviewsUrl) },
                         inCart = state.cart.any { it.appId == detail.appId },
                         inWishlist = state.wishlist.any { it.appId == detail.appId },
                         wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
@@ -722,6 +723,7 @@ private fun SteamStoreDetailContent(
     cached: Boolean,
     onBack: () -> Unit,
     onOpenOfficial: () -> Unit,
+    onOpenReviews: () -> Unit,
     inCart: Boolean,
     inWishlist: Boolean,
     wishlistAvailable: Boolean,
@@ -916,6 +918,15 @@ private fun SteamStoreDetailContent(
                         )
                     }
                 }
+            }
+        }
+        detail.reviews?.let { reviews ->
+            item {
+                SteamStoreReviewSummarySection(
+                    reviews = reviews,
+                    onOpenAll = onOpenReviews,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
         }
         if (detail.shortDescription.isNotBlank()) {

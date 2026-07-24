@@ -4636,4 +4636,20 @@
     <string name="steam_friend_location">Location</string>
     <string name="steam_friend_open_profile">Open Steam profile</string>
     <string name="steam_friend_unknown_time">Unavailable</string>
+    <string name="steam_store_reviews_title">Player reviews</string>
+    <string name="steam_store_reviews_overall">Overall</string>
+    <string name="steam_store_reviews_recent">Recent 30 days</string>
+    <string name="steam_store_reviews_view_all">View all</string>
+    <string name="steam_store_reviews_positive_percent">%1$d%% positive</string>
+    <string name="steam_store_reviews_count">%1$s positive / %2$s reviews</string>
+    <string name="steam_store_reviews_unrated">Not enough reviews</string>
+    <string name="steam_store_reviews_overwhelmingly_negative">Overwhelmingly Negative</string>
+    <string name="steam_store_reviews_very_negative">Very Negative</string>
+    <string name="steam_store_reviews_negative">Negative</string>
+    <string name="steam_store_reviews_mostly_negative">Mostly Negative</string>
+    <string name="steam_store_reviews_mixed">Mixed</string>
+    <string name="steam_store_reviews_mostly_positive">Mostly Positive</string>
+    <string name="steam_store_reviews_positive">Positive</string>
+    <string name="steam_store_reviews_very_positive">Very Positive</string>
+    <string name="steam_store_reviews_overwhelmingly_positive">Overwhelmingly Positive</string>
 </resources>

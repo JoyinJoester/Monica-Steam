@@ -46,7 +46,8 @@ class SteamStoreService(
         .followRedirects(false)
         .followSslRedirects(false)
         .build(),
-    private val api: SteamApiClient = SteamApiClient(client)
+    private val api: SteamApiClient = SteamApiClient(client),
+    private val reviewService: SteamStoreReviewService = SteamStoreReviewService(client)
 ) {
     private val countryBySession = ConcurrentHashMap<String, String>()
 
@@ -145,10 +146,14 @@ class SteamStoreService(
             steamLoginSecure = steamLoginSecure,
             countryCode = accountCountry
         )?.let { detail ->
-            return detail.copy(
-                availableInAccountRegion = accountCountry?.let { true },
-                accountCountryCode = accountCountry,
-                priceCountryCode = accountCountry
+            return attachReviews(
+                detail = detail.copy(
+                    availableInAccountRegion = accountCountry?.let { true },
+                    accountCountryCode = accountCountry,
+                    priceCountryCode = accountCountry
+                ),
+                appId = appId,
+                language = language
             )
         }
         steamStoreDetailFallbackCountries(
@@ -169,15 +174,25 @@ class SteamStoreService(
                 )
             }.getOrNull()
             if (detail != null) {
-                return detail.copy(
-                    availableInAccountRegion = accountCountry?.let { false },
-                    accountCountryCode = accountCountry,
-                    priceCountryCode = countryCode
+                return attachReviews(
+                    detail = detail.copy(
+                        availableInAccountRegion = accountCountry?.let { false },
+                        accountCountryCode = accountCountry,
+                        priceCountryCode = countryCode
+                    ),
+                    appId = appId,
+                    language = language
                 )
             }
         }
         throw IllegalStateException("Steam 商店没有返回该商品详情")
     }
+
+    private fun attachReviews(
+        detail: SteamStoreDetail,
+        appId: Int,
+        language: String
+    ): SteamStoreDetail = detail.copy(reviews = reviewService.fetch(appId, language))
 
     private fun requestDetail(
         appId: Int,

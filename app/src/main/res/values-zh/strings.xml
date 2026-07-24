@@ -4466,4 +4466,20 @@
     <string name="steam_friend_location">地区</string>
     <string name="steam_friend_open_profile">打开 Steam 资料</string>
     <string name="steam_friend_unknown_time">暂无数据</string>
+    <string name="steam_store_reviews_title">玩家评价</string>
+    <string name="steam_store_reviews_overall">总体评价</string>
+    <string name="steam_store_reviews_recent">最近 30 天</string>
+    <string name="steam_store_reviews_view_all">查看全部</string>
+    <string name="steam_store_reviews_positive_percent">%1$d%% 好评</string>
+    <string name="steam_store_reviews_count">%1$s 条好评 / 共 %2$s 条</string>
+    <string name="steam_store_reviews_unrated">评价不足</string>
+    <string name="steam_store_reviews_overwhelmingly_negative">差评如潮</string>
+    <string name="steam_store_reviews_very_negative">特别差评</string>
+    <string name="steam_store_reviews_negative">差评</string>
+    <string name="steam_store_reviews_mostly_negative">多半差评</string>
+    <string name="steam_store_reviews_mixed">褒贬不一</string>
+    <string name="steam_store_reviews_mostly_positive">多半好评</string>
+    <string name="steam_store_reviews_positive">好评</string>
+    <string name="steam_store_reviews_very_positive">特别好评</string>
+    <string name="steam_store_reviews_overwhelmingly_positive">好评如潮</string>
 </resources>
