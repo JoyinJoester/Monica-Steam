@@ -351,7 +351,7 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     
     // WebDAV for cloud backup
-    compileOnly 'com.github.thegrizzlylabs:sardine-android:0.8'
+    implementation 'com.github.thegrizzlylabs:sardine-android:0.8'
     
     // KeePass KDBX library for KeePass compatibility
     // 0.10.0 is the newest release compatible with the project's Kotlin 1.9 toolchain.
