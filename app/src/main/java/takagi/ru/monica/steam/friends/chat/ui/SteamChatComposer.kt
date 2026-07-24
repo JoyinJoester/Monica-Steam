@@ -83,7 +83,7 @@ internal fun SteamChatComposer(
             state = richMediaState,
             onDismiss = { showRichPicker = false },
             onEmojiSelected = { emoji -> text += emoji },
-            onEmoticonSelected = { emoticon ->
+    onEmoticonSelected = { emoticon ->
                 text += if (text.isBlank() || text.endsWith(' ')) {
                     emoticon.messageCode
                 } else {
@@ -92,6 +92,10 @@ internal fun SteamChatComposer(
             },
             onStickerSelected = { sticker ->
                 onSend(sticker.messageCode)
+                showRichPicker = false
+            },
+            onEffectSelected = { effect ->
+                onSend(effect.messageCode)
                 showRichPicker = false
             },
             onRefresh = onRefreshCatalogs

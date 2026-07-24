@@ -121,6 +121,7 @@ class SteamFriendChatServiceTest {
         assertTrue(fields.any { it.number == 5 && it.wireType == 5 })
         assertEquals(1_700_000_000L, fields.first { it.number == 5 }.asFixed32UnsignedLong)
         assertEquals(9, fields.first { it.number == 7 }.asInt)
+        assertTrue(fields.first { it.number == 6 }.asBool)
         val sendBody = requests[2].body as FormBody
         val sendEncoded = (0 until sendBody.size)
             .first { sendBody.name(it) == "input_protobuf_encoded" }

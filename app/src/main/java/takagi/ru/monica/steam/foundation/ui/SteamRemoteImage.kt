@@ -15,28 +15,29 @@ private const val STEAM_IMAGE_CACHE_TTL_MS = 3L * 24L * 60L * 60L * 1000L
 
 internal suspend fun loadSteamRemoteImage(context: Context, imageUrl: String): ImageBitmap? =
     withContext(Dispatchers.IO) {
-        val normalizedUrl = normalizeSteamImageUrl(imageUrl)
-        if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
-            return@withContext null
-        }
-
-        val cacheFile = steamRemoteImageCacheFile(context, normalizedUrl)
-        val cachedImage = readSteamRemoteImageCache(cacheFile)
-        if (cachedImage != null && !isSteamRemoteImageCacheExpired(cacheFile)) {
-            return@withContext cachedImage
-        }
-
-        val freshImage = runCatching {
-            downloadSteamRemoteImageBytes(normalizedUrl)?.also { bytes ->
-                cacheFile.parentFile?.mkdirs()
-                cacheFile.writeBytes(bytes)
-            }?.let { bytes ->
-                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
-            }
-        }.getOrNull()
-
-        freshImage ?: cachedImage
+        loadSteamRemoteBytesBlocking(context, imageUrl)
+            ?.let { bytes -> BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap() }
     }
+
+/** Loads the original CDN bytes so animated WebP/GIF stickers are not flattened. */
+internal suspend fun loadSteamRemoteBytes(context: Context, imageUrl: String): ByteArray? =
+    withContext(Dispatchers.IO) { loadSteamRemoteBytesBlocking(context, imageUrl) }
+
+private fun loadSteamRemoteBytesBlocking(context: Context, imageUrl: String): ByteArray? {
+    val normalizedUrl = normalizeSteamImageUrl(imageUrl)
+    if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) return null
+
+    val cacheFile = steamRemoteImageCacheFile(context, normalizedUrl)
+    val cachedBytes = cacheFile.takeIf(File::isFile)?.let { runCatching { it.readBytes() }.getOrNull() }
+    if (cachedBytes != null && !isSteamRemoteImageCacheExpired(cacheFile)) return cachedBytes
+
+    return runCatching {
+        downloadSteamRemoteImageBytes(normalizedUrl)?.also { bytes ->
+            cacheFile.parentFile?.mkdirs()
+            cacheFile.writeBytes(bytes)
+        } ?: cachedBytes
+    }.getOrNull() ?: cachedBytes
+}
 
 private fun normalizeSteamImageUrl(imageUrl: String): String {
     val trimmed = imageUrl.trim()
@@ -63,13 +64,6 @@ private fun downloadSteamRemoteImageBytes(imageUrl: String): ByteArray? {
 private fun steamRemoteImageCacheFile(context: Context, imageUrl: String): File {
     val safeName = imageUrl.hashCode().toUInt().toString(16)
     return File(File(context.cacheDir, "steam_confirmation_images"), "$safeName.png")
-}
-
-private fun readSteamRemoteImageCache(cacheFile: File): ImageBitmap? {
-    if (!cacheFile.isFile) return null
-    return runCatching {
-        BitmapFactory.decodeFile(cacheFile.absolutePath)?.asImageBitmap()
-    }.getOrNull()
 }
 
 private fun isSteamRemoteImageCacheExpired(cacheFile: File): Boolean {

@@ -14,26 +14,30 @@ import takagi.ru.monica.steam.network.SteamProtoWriter
 
 class SteamChatCatalogServiceTest {
     @Test
-    fun loadsOwnedEmoticonsAndPublicStickerDefinitions() {
+    fun loadsOnlyOwnedEmoticonsStickersAndEffectsFromOfficialCatalogue() {
         val client = OkHttpClient.Builder().addInterceptor { chain ->
             val request = chain.request()
             val responseBytes = when {
                 request.url.encodedPath.contains("GetEmoticonList") -> SteamProtoWriter().apply {
                     writeMessage(1, SteamProtoWriter().apply {
                         writeString(1, ":steamthumbsup:")
+                        writeVarint(2, 1L)
                         writeVarint(3, 100L)
                         writeVarint(4, 5L)
                         writeVarint(6, 753L)
                     })
-                }.toByteArray()
-                request.url.encodedPath.contains("QueryRewardItems") -> SteamProtoWriter().apply {
-                    writeMessage(1, SteamProtoWriter().apply {
-                        writeVarint(1, 570L)
-                        writeVarint(4, 11L)
-                        writeMessage(13, SteamProtoWriter().apply {
-                            writeString(1, "Mesmer spin")
-                            writeString(2, "Mesmer")
-                        })
+                    writeMessage(2, SteamProtoWriter().apply {
+                        writeString(1, "Mesmer spin")
+                        writeVarint(2, 1L)
+                        writeVarint(4, 570L)
+                        writeVarint(5, 90L)
+                    })
+                    writeMessage(3, SteamProtoWriter().apply {
+                        writeString(1, "confetti")
+                        writeVarint(2, 1L)
+                        writeVarint(3, 80L)
+                        writeBool(4, true)
+                        writeVarint(5, 570L)
                     })
                 }.toByteArray()
                 else -> error("Unexpected request: ${request.url}")
@@ -48,13 +52,17 @@ class SteamChatCatalogServiceTest {
         }.build()
         val service = SteamChatCatalogService(SteamApiClient(client))
 
-        val emoticon = service.loadEmoticons(account()).single()
-        val sticker = service.loadStickers().single()
+        val catalog = service.loadCatalog(account())
+        val emoticon = catalog.emoticons.single()
+        val sticker = catalog.stickers.single()
+        val effect = catalog.effects.single()
 
         assertEquals("steamthumbsup", emoticon.name)
         assertEquals(":steamthumbsup:", emoticon.messageCode)
         assertEquals("Mesmer spin", sticker.name)
         assertTrue(sticker.imageUrl.endsWith("Mesmer%20spin"))
+        assertEquals("/roomeffect confetti", effect.messageCode)
+        assertTrue(catalog.stickers.none { it.name == "locked-point-shop-item" })
     }
 
     private fun account() = SteamAccount(

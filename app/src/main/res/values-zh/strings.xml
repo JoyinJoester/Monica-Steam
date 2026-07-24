@@ -4544,7 +4544,9 @@
     <string name="steam_chat_rich_picker_title">表情与贴纸</string>
     <string name="steam_chat_rich_picker_refresh">刷新表情</string>
     <string name="steam_chat_rich_picker_emoji">表情</string>
+    <string name="steam_chat_rich_picker_emoticons">Steam 表情</string>
     <string name="steam_chat_rich_picker_stickers">Steam 贴纸</string>
+    <string name="steam_chat_rich_picker_effects">聊天特效</string>
     <string name="steam_chat_rich_picker_search">搜索</string>
     <string name="steam_chat_rich_picker_clear_search">清除搜索</string>
     <string name="steam_chat_attachment_title">发送附件</string>

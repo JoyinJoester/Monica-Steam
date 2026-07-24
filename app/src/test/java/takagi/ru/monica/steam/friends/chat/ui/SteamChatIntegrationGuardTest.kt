@@ -84,6 +84,23 @@ class SteamChatIntegrationGuardTest {
     }
 
     @Test
+    fun richMediaUsesOwnedOfficialCatalogAndSeparateSteamTabs() {
+        val catalog = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/data/SteamChatCatalogService.kt"
+        ).readText()
+        val picker = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPicker.kt"
+        ).readText()
+        assertFalse(catalog.contains("QueryRewardItems"))
+        assertTrue(catalog.contains("STICKERS_FIELD"))
+        assertTrue(catalog.contains("EFFECTS_FIELD"))
+        assertTrue(picker.contains("RichPickerPage.EMOTICON"))
+        assertTrue(picker.contains("RichPickerPage.STICKER"))
+        assertTrue(picker.contains("RichPickerPage.EFFECT"))
+        assertTrue(picker.contains("AnimatedImageDrawable"))
+    }
+
+    @Test
     fun cacheUsesMonicaEncryptionAndAccountThreadIsolation() {
         val cache = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/data/SteamChatCache.kt"

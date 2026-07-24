@@ -51,7 +51,10 @@ class SteamFriendChatService(
                     writeFixed32(5, boundary.timestamp)
                     writeVarint(7, boundary.ordinal.toLong())
                 }
-                writeBool(6, false)
+                // Request the original BBCode so Steam invites, stickers,
+                // media links and other structured chat entries are not
+                // flattened into an unparseable plain-text surrogate.
+                writeBool(6, true)
             },
             accessToken = accessToken,
             useGet = true

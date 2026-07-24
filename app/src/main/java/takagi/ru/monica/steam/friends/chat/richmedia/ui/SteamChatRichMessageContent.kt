@@ -15,8 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.OpenInNew
+import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
@@ -44,12 +47,61 @@ internal fun SteamChatRichMessageContent(
 ) {
     when (val content = remember(body) { SteamChatRichContentParser.parse(body) }) {
         is SteamChatRichContent.Text -> SteamChatEmoticonText(content.body, modifier)
+        is SteamChatRichContent.GameInvite -> GameInviteContent(content, modifier)
         is SteamChatRichContent.Sticker -> SteamChatRemoteImage(
             url = content.imageUrl,
             contentDescription = content.name,
             modifier = modifier.size(148.dp)
         )
         is SteamChatRichContent.Attachment -> AttachmentContent(content, modifier)
+    }
+}
+
+@Composable
+private fun GameInviteContent(
+    content: SteamChatRichContent.GameInvite,
+    modifier: Modifier
+) {
+    val context = LocalContext.current
+    val open = {
+        content.url?.let { url ->
+            runCatching {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
+        }
+        Unit
+    }
+    Surface(
+        modifier = modifier
+            .widthIn(min = 190.dp, max = 280.dp)
+            .clickable(enabled = content.url != null, onClick = open),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        shape = RoundedCornerShape(14.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Icon(Icons.Default.SportsEsports, contentDescription = null)
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = content.label,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = content.appId?.let { "App $it" } ?: "Steam invitation",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.76f)
+                )
+            }
+            if (content.url != null) {
+                Icon(Icons.Default.OpenInNew, contentDescription = null)
+            }
+        }
     }
 }
 

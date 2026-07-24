@@ -17,6 +17,7 @@ import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploader
 import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogService
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatEmoticon
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatEffect
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatPendingAttachment
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatSticker
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
@@ -24,6 +25,7 @@ import takagi.ru.monica.steam.network.SteamSessionRefreshService
 data class SteamChatRichMediaUiState(
     val emoticons: List<SteamChatEmoticon> = emptyList(),
     val stickers: List<SteamChatSticker> = emptyList(),
+    val effects: List<SteamChatEffect> = emptyList(),
     val catalogLoading: Boolean = false,
     val catalogFailure: Boolean = false,
     val pendingAttachment: SteamChatPendingAttachment? = null,
@@ -170,22 +172,21 @@ class SteamChatRichMediaViewModel(
 
     private fun loadCatalogs(account: SteamAccount, generation: Long) {
         viewModelScope.launch {
-            val emoticons = async(ioDispatcher) {
+            val catalogResult = async(ioDispatcher) {
                 runCatching {
-                    catalogService.loadEmoticons(prepareRichMediaSession(account, sessionRefreshService))
+                    catalogService.loadCatalog(prepareRichMediaSession(account, sessionRefreshService))
                 }
-            }
-            val stickers = async(ioDispatcher) { runCatching { catalogService.loadStickers() } }
-            val emoticonResult = emoticons.await()
-            val stickerResult = stickers.await()
+            }.await()
             if (generation != catalogGeneration || this@SteamChatRichMediaViewModel.account?.id != account.id) {
                 return@launch
             }
+            val catalog = catalogResult.getOrNull()
             _uiState.value = _uiState.value.copy(
-                emoticons = emoticonResult.getOrDefault(emptyList()),
-                stickers = stickerResult.getOrDefault(emptyList()),
+                emoticons = catalog?.emoticons.orEmpty(),
+                stickers = catalog?.stickers.orEmpty(),
+                effects = catalog?.effects.orEmpty(),
                 catalogLoading = false,
-                catalogFailure = emoticonResult.isFailure && stickerResult.isFailure
+                catalogFailure = catalogResult.isFailure
             )
         }
     }
