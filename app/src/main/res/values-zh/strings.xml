@@ -4148,8 +4148,10 @@
     <string name="steam_library_regional_cny_price">换算人民币</string>
     <string name="steam_library_change_filter">切换游戏筛选</string>
     <string name="steam_library_open_game_details">打开游戏详情</string>
-    <string name="steam_backup_title">mafile 备份</string>
-    <string name="steam_backup_description">以 mafile ZIP 导入、导出 Steam Guard 账号；WebDAV 也只保存同一种 mafile ZIP。</string>
+    <string name="steam_backup_title">maFile 导入与导出</string>
+    <string name="steam_backup_description">以可迁移的 maFile ZIP 导入或导出 Steam Guard 账号。</string>
+    <string name="steam_mafile_transfer_title">maFile 导入与导出</string>
+    <string name="steam_mafile_transfer_description">将当前 Steam Guard 账号导出为 ZIP，或从以前导出的 ZIP 中导入账号。</string>
     <string name="steam_backup_accounts">可备份账号：%1$d</string>
     <string name="steam_backup_password_hint">备份密码与 Monica 主密码相互独立。备份密码丢失后，文件将无法恢复。</string>
     <string name="steam_backup_export">导出 mafile ZIP</string>
@@ -4179,7 +4181,7 @@
     <string name="steam_webdav_restore_title">导入远端备份？</string>
     <string name="steam_webdav_restore_message">下载 %1$s 并导入到本地 Steam 账号库。</string>
     <string name="steam_settings_data_section">数据与存储</string>
-    <string name="steam_settings_mafile_backup_description">本地 ZIP 导入导出，以及仅限 mafile 的 WebDAV 备份</string>
+    <string name="steam_settings_mafile_backup_description">导入和导出本地 maFile ZIP</string>
     <string name="steam_mdbx_title">MDBX</string>
     <string name="steam_mdbx_description">创建、打开和管理本地或 WebDAV MDBX 数据库</string>
     <string name="steam_backup_preview_title">恢复预览</string>

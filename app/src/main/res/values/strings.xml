@@ -4318,8 +4318,10 @@
     <string name="steam_library_regional_cny_price">CNY converted</string>
     <string name="steam_library_change_filter">Change game filter</string>
     <string name="steam_library_open_game_details">Open game details</string>
-    <string name="steam_backup_title">mafile backup</string>
-    <string name="steam_backup_description">Import and export Steam Guard accounts as a mafile ZIP. WebDAV stores only the same mafile ZIP format.</string>
+    <string name="steam_backup_title">maFile import and export</string>
+    <string name="steam_backup_description">Import or export Steam Guard accounts as a portable maFile ZIP.</string>
+    <string name="steam_mafile_transfer_title">maFile import and export</string>
+    <string name="steam_mafile_transfer_description">Export the current Steam Guard accounts to a ZIP, or import accounts from a previously exported ZIP.</string>
     <string name="steam_backup_accounts">Accounts available: %1$d</string>
     <string name="steam_backup_password_hint">The backup password is independent from the Monica master password. Losing it makes the file unrecoverable.</string>
     <string name="steam_backup_export">Export mafile ZIP</string>
@@ -4349,7 +4351,7 @@
     <string name="steam_webdav_restore_title">Import remote backup?</string>
     <string name="steam_webdav_restore_message">Download and import %1$s into the local Steam account store.</string>
     <string name="steam_settings_data_section">Data &amp; storage</string>
-    <string name="steam_settings_mafile_backup_description">Local ZIP import/export and mafile-only WebDAV backup</string>
+    <string name="steam_settings_mafile_backup_description">Import and export a local maFile ZIP</string>
     <string name="steam_mdbx_title">MDBX</string>
     <string name="steam_mdbx_description">Create, open, and manage local or WebDAV MDBX databases</string>
     <string name="steam_backup_preview_title">Restore preview</string>
