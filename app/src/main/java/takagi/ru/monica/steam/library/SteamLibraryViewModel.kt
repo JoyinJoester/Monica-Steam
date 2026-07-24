@@ -17,6 +17,8 @@ import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.data.SteamLibraryCacheRepository
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
+import takagi.ru.monica.steam.library.analytics.data.SteamPlayActivityRepository
+import takagi.ru.monica.steam.library.analytics.domain.SteamPlayActivityHistory
 import takagi.ru.monica.steam.market.SteamInventoryService
 import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.network.SteamSessionRefreshService
@@ -27,6 +29,7 @@ data class SteamLibraryUiState(
     val selectedAccountId: Long? = null,
     val snapshot: SteamLibrarySnapshot? = null,
     val snapshotFromCache: Boolean = false,
+    val playActivity: SteamPlayActivityHistory? = null,
     val loadingLibrary: Boolean = false,
     val libraryFailure: SteamLibraryFailureReason? = null,
     val selectedGame: SteamGame? = null,
@@ -46,6 +49,7 @@ class SteamLibraryViewModel(
     private val sessionRefreshService: SteamSessionRefreshService = SteamSessionRefreshService(),
     private val currencyExchangeService: SteamCurrencyExchangeService =
         SteamCurrencyExchangeService(),
+    private val playActivityRepository: SteamPlayActivityRepository,
     private val appContext: Context? = null
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamLibraryUiState())
@@ -80,6 +84,7 @@ class SteamLibraryViewModel(
             selectedAccountId = accountId,
             snapshot = null,
             snapshotFromCache = false,
+            playActivity = null,
             selectedGame = null,
             achievements = null,
             loadingLibrary = false,
@@ -122,6 +127,11 @@ class SteamLibraryViewModel(
                     runSteamLibraryCatching {
                         withContext(Dispatchers.IO) { cacheRepository.saveLibrary(merged) }
                     }
+                    val playActivity = runSteamLibraryCatching {
+                        withContext(Dispatchers.IO) {
+                            playActivityRepository.recordSnapshot(merged)
+                        }
+                    }.getOrNull()
                     appContext?.let { context ->
                         runCatching { SteamWidgetUpdater.refreshAll(context) }
                             .onFailure { error ->
@@ -136,6 +146,7 @@ class SteamLibraryViewModel(
                     _uiState.value = _uiState.value.copy(
                         snapshot = merged,
                         snapshotFromCache = false,
+                        playActivity = playActivity ?: _uiState.value.playActivity,
                         loadingLibrary = false,
                         libraryFailure = null
                     )
@@ -319,13 +330,17 @@ class SteamLibraryViewModel(
         libraryLoadGeneration++
         achievementLoadGeneration++
         regionalPriceLoadGeneration++
-        val cached = runSteamLibraryCatching {
-            withContext(Dispatchers.IO) { cacheRepository.getLibrary(account.id) }
+        val cachedData = runSteamLibraryCatching {
+            withContext(Dispatchers.IO) {
+                cacheRepository.getLibrary(account.id) to playActivityRepository.load(account.id)
+            }
         }.getOrNull()
+        val cached = cachedData?.first
         if (_uiState.value.selectedAccountId != account.id) return
         _uiState.value = _uiState.value.copy(
             snapshot = cached,
             snapshotFromCache = cached != null,
+            playActivity = cachedData?.second,
             selectedGame = null,
             achievements = null,
             loadingLibrary = false,
@@ -525,6 +540,10 @@ class SteamLibraryViewModel(
                         ),
                         cacheRepository = SteamLibraryCacheRepository(
                             database.steamLibraryCacheDao(),
+                            securityManager
+                        ),
+                        playActivityRepository = SteamPlayActivityRepository(
+                            appContext,
                             securityManager
                         ),
                         appContext = appContext
