@@ -20,6 +20,9 @@ class SteamFriendsIntegrationGuardTest {
         val friendsList = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsList.kt"
         ).readText()
+        val friendCards = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendCards.kt"
+        ).readText()
         val dock = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
@@ -43,6 +46,9 @@ class SteamFriendsIntegrationGuardTest {
         assertTrue(friendsScreen.contains("easyNotesScreenEnter()"))
         assertTrue(friendsList.contains("FlowRow("))
         assertFalse(friendsList.contains("horizontalScroll("))
+        assertFalse(friendsList.contains("friends-summary"))
+        assertFalse(friendsList.contains("FriendsSummaryCard("))
+        assertFalse(friendCards.contains("fun FriendsSummaryCard("))
         assertTrue(friendsScreen.contains("SteamFriendDetailScreen("))
         assertTrue(friendsList.contains("FriendLoadingCard()"))
     }

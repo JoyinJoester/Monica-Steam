@@ -106,7 +106,6 @@ fun SteamFriendsScreen(
             } else {
                 SteamFriendsListContent(
                     state = state,
-                    account = selectedAccount,
                     query = searchQuery,
                     filter = filter,
                     onFilterChange = { filterName = it.name },

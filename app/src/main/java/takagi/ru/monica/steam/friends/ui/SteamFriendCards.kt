@@ -1,7 +1,6 @@
 package takagi.ru.monica.steam.friends.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,69 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
-import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.friends.domain.SteamFriend
 import takagi.ru.monica.steam.friends.domain.SteamFriendRelationship
-import takagi.ru.monica.steam.friends.domain.SteamFriendsSnapshot
-import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
-
-@Composable
-internal fun FriendsSummaryCard(snapshot: SteamFriendsSnapshot?, account: SteamAccount?) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-    ) {
-        Row(
-            modifier = Modifier.padding(18.dp),
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Surface(
-                modifier = Modifier.size(52.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(Icons.Default.Groups, contentDescription = null, modifier = Modifier.size(28.dp))
-                }
-            }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(
-                    text = stringResource(
-                        R.string.steam_friends_summary,
-                        snapshot?.acceptedFriends?.size ?: 0,
-                        snapshot?.onlineCount ?: 0
-                    ),
-                    style = MaterialTheme.typography.titleLarge.copy(fontFamily = GoogleSansFlexFontFamily),
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = account?.displayName?.ifBlank { account.accountName }
-                        ?: stringResource(R.string.steam_friends_description),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.78f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                if (snapshot != null &&
-                    (snapshot.incomingRequests.isNotEmpty() || snapshot.outgoingRequests.isNotEmpty())
-                ) {
-                    Text(
-                        text = stringResource(
-                            R.string.steam_friends_requests_summary,
-                            snapshot.incomingRequests.size,
-                            snapshot.outgoingRequests.size
-                        ),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
 internal fun SteamFriendCard(

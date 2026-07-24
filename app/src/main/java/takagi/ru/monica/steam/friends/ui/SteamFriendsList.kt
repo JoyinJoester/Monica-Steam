@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
-import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.friends.domain.SteamFriend
 import takagi.ru.monica.steam.friends.domain.SteamFriendsFilter
 import takagi.ru.monica.steam.friends.domain.filterSteamFriends
@@ -36,7 +35,6 @@ import takagi.ru.monica.steam.friends.presentation.SteamFriendsUiState
 @Composable
 internal fun SteamFriendsListContent(
     state: SteamFriendsUiState,
-    account: SteamAccount?,
     query: String,
     filter: SteamFriendsFilter,
     onFilterChange: (SteamFriendsFilter) -> Unit,
@@ -54,9 +52,6 @@ internal fun SteamFriendsListContent(
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        item(key = "friends-summary") {
-            FriendsSummaryCard(snapshot = snapshot, account = account)
-        }
         if (state.refreshing) {
             item(key = "friends-refreshing") {
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
