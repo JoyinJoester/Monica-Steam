@@ -107,6 +107,10 @@ object SteamChatRichContentParser {
         """^\[(sticker|roomeffect|emoticon)(?:\s+([^\]]+))?](.*?)\[/\1\s*]$""",
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
+    private val officialMediaSelfClosingTagPattern = Regex(
+        """^\[(sticker|roomeffect|emoticon)(?:\s+([^\]]+))?]\s*$""",
+        RegexOption.IGNORE_CASE
+    )
     private val joinLobbyPattern = Regex(
         "steam://joinlobby/(\\d+)(?:/([^/\\s\\]]+))?(?:/(7656119\\d{10}))?",
         RegexOption.IGNORE_CASE
@@ -142,25 +146,20 @@ object SteamChatRichContentParser {
             ?.let { return SteamChatRichContent.Sticker(decodeMediaName(it)) }
 
         officialMediaTagPattern.matchEntire(body.trim())?.let { match ->
-            val kind = match.groupValues[1].lowercase()
-            val attributes = parseAttributes(match.groupValues.getOrNull(2).orEmpty())
-            val inner = match.groupValues.getOrNull(3).orEmpty().trim()
-            val name = decodeMediaName(
-                attributes["type"]
-                    ?: attributes["name"]
-                    ?: inner
-            ).trim()
-            if (name.isNotBlank()) {
-                when (kind) {
-                    "sticker" -> return SteamChatRichContent.Sticker(name)
-                    "emoticon" -> return SteamChatRichContent.Text(":$name:")
-                    "roomeffect" -> return SteamChatRichContent.SystemMessage(
-                        kind = kind,
-                        label = name,
-                        rawBody = body
-                    )
-                }
-            }
+            parseOfficialMedia(
+                kind = match.groupValues[1],
+                rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
+                inner = match.groupValues.getOrNull(3).orEmpty(),
+                rawBody = body
+            )?.let { return it }
+        }
+        officialMediaSelfClosingTagPattern.matchEntire(body.trim())?.let { match ->
+            parseOfficialMedia(
+                kind = match.groupValues[1],
+                rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
+                inner = "",
+                rawBody = body
+            )?.let { return it }
         }
 
         val inviteMatch = joinLobbyPattern.find(body)
@@ -249,6 +248,32 @@ object SteamChatRichContentParser {
                 val value = match.groupValues.drop(2).firstOrNull(String::isNotEmpty).orEmpty()
                 match.groupValues[1].lowercase() to value
             }
+
+    private fun parseOfficialMedia(
+        kind: String,
+        rawAttributes: String,
+        inner: String,
+        rawBody: String
+    ): SteamChatRichContent? {
+        val normalizedKind = kind.lowercase()
+        val attributes = parseAttributes(rawAttributes)
+        val name = decodeMediaName(
+            attributes["type"]
+                ?: attributes["name"]
+                ?: inner.trim()
+        ).trim()
+        if (name.isBlank()) return null
+        return when (normalizedKind) {
+            "sticker" -> SteamChatRichContent.Sticker(name)
+            "emoticon" -> SteamChatRichContent.Text(":$name:")
+            "roomeffect" -> SteamChatRichContent.SystemMessage(
+                kind = normalizedKind,
+                label = name,
+                rawBody = rawBody
+            )
+            else -> null
+        }
+    }
 
     private fun decodeMediaName(value: String): String = runCatching {
         URLDecoder.decode(value.trim().trim('"', '\''), StandardCharsets.UTF_8.name())

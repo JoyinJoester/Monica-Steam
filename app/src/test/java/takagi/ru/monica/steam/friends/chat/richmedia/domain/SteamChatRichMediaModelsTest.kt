@@ -46,6 +46,20 @@ class SteamChatRichMediaModelsTest {
     }
 
     @Test
+    fun parsesOfficialSelfClosingStickerAndRoomEffectTags() {
+        val sticker = SteamChatRichContentParser.parse(
+            "[sticker type=Mesmer%20spin]"
+        ) as SteamChatRichContent.Sticker
+        assertEquals("Mesmer spin", sticker.name)
+
+        val effect = SteamChatRichContentParser.parse(
+            "[roomeffect type=confetti]"
+        ) as SteamChatRichContent.SystemMessage
+        assertEquals("roomeffect", effect.kind)
+        assertEquals("confetti", effect.label)
+    }
+
+    @Test
     fun richMediaCommandsUseSteamOfficialSyntax() {
         assertEquals("/sticker Mesmer spin", SteamChatSticker("Mesmer spin").messageCode)
         assertEquals("/roomeffect confetti", SteamChatEffect("confetti").messageCode)
