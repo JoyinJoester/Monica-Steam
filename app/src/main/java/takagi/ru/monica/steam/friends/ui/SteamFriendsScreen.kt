@@ -31,6 +31,8 @@ import takagi.ru.monica.ui.navigation.easyNotesScreenExit
 fun SteamFriendsScreen(
     searchQuery: String,
     refreshRequest: Long,
+    selectedFriendId: String?,
+    onSelectedFriendIdChange: (String?) -> Unit,
     onStartChat: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -46,11 +48,8 @@ fun SteamFriendsScreen(
     val selectedAccount = steamState.accounts.firstOrNull {
         it.id == steamState.selectedAccountId
     } ?: steamState.accounts.firstOrNull()
-    var selectedFriendId by rememberSaveable(selectedAccount?.id) {
-        mutableStateOf<String?>(null)
-    }
-    val selectedFriend = state.snapshot?.friends?.firstOrNull {
-        it.steamId == selectedFriendId
+    val friendsById = remember(state.snapshot?.friends) {
+        state.snapshot?.friends.orEmpty().associateBy { it.steamId }
     }
     var filterName by rememberSaveable { mutableStateOf(SteamFriendsFilter.ALL.name) }
     val filter = SteamFriendsFilter.entries.firstOrNull { it.name == filterName }
@@ -62,7 +61,7 @@ fun SteamFriendsScreen(
         selectedAccount?.accessToken,
         selectedAccount?.steamLoginSecure
     ) {
-        selectedFriendId = null
+        onSelectedFriendIdChange(null)
         friendsViewModel.selectAccount(selectedAccount)
     }
 
@@ -88,21 +87,21 @@ fun SteamFriendsScreen(
     }
 
     BackHandler(enabled = selectedFriendId != null) {
-        selectedFriendId = null
+        onSelectedFriendIdChange(null)
     }
 
     Box(modifier = modifier.fillMaxSize()) {
         AnimatedContent(
-            targetState = selectedFriend?.steamId,
+            targetState = selectedFriendId,
             modifier = Modifier.fillMaxSize(),
             transitionSpec = { easyNotesScreenEnter().togetherWith(easyNotesScreenExit()) },
             label = "SteamFriendsNavigation"
         ) { detailSteamId ->
-            if (detailSteamId != null && selectedFriend != null) {
+            val animatedFriend = detailSteamId?.let(friendsById::get)
+            if (animatedFriend != null) {
                 SteamFriendDetailScreen(
-                    friend = selectedFriend,
-                    onNavigateBack = { selectedFriendId = null },
-                    onStartChat = { onStartChat(selectedFriend.steamId) }
+                    friend = animatedFriend,
+                    onStartChat = { onStartChat(animatedFriend.steamId) }
                 )
             } else {
                 SteamFriendsListContent(
@@ -111,7 +110,7 @@ fun SteamFriendsScreen(
                     query = searchQuery,
                     filter = filter,
                     onFilterChange = { filterName = it.name },
-                    onOpenFriend = { selectedFriendId = it.steamId },
+                    onOpenFriend = { onSelectedFriendIdChange(it.steamId) },
                     onRespondToInvite = friendsViewModel::respondToInvite,
                     onRetry = friendsViewModel::refresh,
                     modifier = Modifier.fillMaxSize()

@@ -48,6 +48,32 @@ class SteamFriendsIntegrationGuardTest {
     }
 
     @Test
+    fun friendDetailUsesOneHoistedTopBarAndKeepsItsExitContentStable() {
+        val tokenScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
+        ).readText()
+        val friendsScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt"
+        ).readText()
+        val friendDetail = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendDetailScreen.kt"
+        ).readText()
+        val steamTopBar = tokenScreen
+            .substringAfter("topBar = {")
+            .substringBefore("floatingActionButton = {")
+
+        assertTrue(steamTopBar.contains("SteamTopBarMode.FriendDetail"))
+        assertTrue(steamTopBar.contains("R.string.steam_friend_details_title"))
+        assertTrue(friendsScreen.contains("selectedFriendId: String?"))
+        assertTrue(friendsScreen.contains("onSelectedFriendIdChange: (String?) -> Unit"))
+        assertFalse(friendsScreen.contains("var selectedFriendId by rememberSaveable"))
+        assertTrue(friendsScreen.contains("val animatedFriend = detailSteamId?.let(friendsById::get)"))
+        assertTrue(friendsScreen.contains("friend = animatedFriend"))
+        assertFalse(friendDetail.contains("onNavigateBack: () -> Unit"))
+        assertFalse(friendDetail.contains("Icons.AutoMirrored.Filled.ArrowBack"))
+    }
+
+    @Test
     fun friendsUseOAuthCacheAndAuthenticatedCommunityActions() {
         val service = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/data/SteamFriendsService.kt"

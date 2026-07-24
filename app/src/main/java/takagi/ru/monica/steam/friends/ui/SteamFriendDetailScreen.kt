@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.ChatBubble
@@ -27,7 +26,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,7 +44,6 @@ import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
 @Composable
 internal fun SteamFriendDetailScreen(
     friend: SteamFriend,
-    onNavigateBack: () -> Unit,
     onStartChat: () -> Unit
 ) {
     val context = LocalContext.current
@@ -55,106 +52,81 @@ internal fun SteamFriendDetailScreen(
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
-        item(key = "friend-detail-actions") {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = onNavigateBack) {
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back)
-                    )
-                }
-                Text(
-                    text = stringResource(R.string.steam_friend_details_title),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+        item(key = "friend-detail-hero") { FriendDetailHero(friend) }
+        if (friend.isPlaying) {
+            item(key = "friend-detail-game") {
+                DetailSectionCard(
+                    icon = { Icon(Icons.Default.SportsEsports, contentDescription = null) },
+                    title = stringResource(R.string.steam_friend_current_game),
+                    value = friend.gameName.ifBlank { friend.gameId },
+                    emphasized = true
                 )
-                IconButton(onClick = { openSteamProfile(context, friend) }) {
-                    Icon(
-                        Icons.AutoMirrored.Filled.OpenInNew,
-                        contentDescription = stringResource(R.string.steam_friend_open_profile)
-                    )
-                }
             }
         }
-            item(key = "friend-detail-hero") { FriendDetailHero(friend) }
-            if (friend.isPlaying) {
-                item(key = "friend-detail-game") {
-                    DetailSectionCard(
-                        icon = { Icon(Icons.Default.SportsEsports, contentDescription = null) },
-                        title = stringResource(R.string.steam_friend_current_game),
-                        value = friend.gameName.ifBlank { friend.gameId },
-                        emphasized = true
-                    )
-                }
-            }
-            item(key = "friend-detail-information-title") {
-                Text(
-                    text = stringResource(R.string.steam_friend_profile_information),
-                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+        item(key = "friend-detail-information-title") {
+            Text(
+                text = stringResource(R.string.steam_friend_profile_information),
+                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        item(key = "friend-detail-steamid") {
+            DetailSectionCard(
+                icon = { Icon(Icons.Default.Person, contentDescription = null) },
+                title = stringResource(R.string.steam_friend_steam_id),
+                value = friend.steamId
+            )
+        }
+        if (friend.friendSince > 0L) {
+            item(key = "friend-detail-friends-since") {
+                DetailSectionCard(
+                    icon = { Icon(Icons.Default.Groups, contentDescription = null) },
+                    title = stringResource(R.string.steam_friend_friends_since),
+                    value = formatSteamFriendTime(friend.friendSince)
                 )
             }
-            item(key = "friend-detail-steamid") {
+        }
+        item(key = "friend-detail-last-online") {
+            DetailSectionCard(
+                icon = { Icon(Icons.Default.Schedule, contentDescription = null) },
+                title = stringResource(R.string.steam_friend_last_online),
+                value = if (friend.lastLogoff > 0L) {
+                    formatSteamFriendTime(friend.lastLogoff)
+                } else {
+                    stringResource(R.string.steam_friend_unknown_time)
+                }
+            )
+        }
+        if (friend.countryCode.isNotBlank()) {
+            item(key = "friend-detail-location") {
                 DetailSectionCard(
                     icon = { Icon(Icons.Default.Person, contentDescription = null) },
-                    title = stringResource(R.string.steam_friend_steam_id),
-                    value = friend.steamId
+                    title = stringResource(R.string.steam_friend_location),
+                    value = friend.countryCode
                 )
             }
-            if (friend.friendSince > 0L) {
-                item(key = "friend-detail-friends-since") {
-                    DetailSectionCard(
-                        icon = { Icon(Icons.Default.Groups, contentDescription = null) },
-                        title = stringResource(R.string.steam_friend_friends_since),
-                        value = formatSteamFriendTime(friend.friendSince)
-                    )
-                }
+        }
+        item(key = "friend-detail-chat") {
+            FilledTonalButton(
+                onClick = onStartChat,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
+            ) {
+                Icon(Icons.Default.ChatBubble, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.steam_chat_send_message))
             }
-            item(key = "friend-detail-last-online") {
-                DetailSectionCard(
-                    icon = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                    title = stringResource(R.string.steam_friend_last_online),
-                    value = if (friend.lastLogoff > 0L) {
-                        formatSteamFriendTime(friend.lastLogoff)
-                    } else {
-                        stringResource(R.string.steam_friend_unknown_time)
-                    }
-                )
+        }
+        item(key = "friend-detail-open-profile") {
+            FilledTonalButton(
+                onClick = { openSteamProfile(context, friend) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
+            ) {
+                Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.steam_friend_open_profile))
             }
-            if (friend.countryCode.isNotBlank()) {
-                item(key = "friend-detail-location") {
-                    DetailSectionCard(
-                        icon = { Icon(Icons.Default.Person, contentDescription = null) },
-                        title = stringResource(R.string.steam_friend_location),
-                        value = friend.countryCode
-                    )
-                }
-            }
-            item(key = "friend-detail-chat") {
-                FilledTonalButton(
-                    onClick = onStartChat,
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-                ) {
-                    Icon(Icons.Default.ChatBubble, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.steam_chat_send_message))
-                }
-            }
-            item(key = "friend-detail-open-profile") {
-                FilledTonalButton(
-                    onClick = { openSteamProfile(context, friend) },
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-                ) {
-                    Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.steam_friend_open_profile))
-                }
-            }
+        }
     }
 }
 

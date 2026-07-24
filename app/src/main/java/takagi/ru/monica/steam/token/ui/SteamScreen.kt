@@ -298,6 +298,12 @@ private enum class SteamSection(
     )
 }
 
+private sealed interface SteamTopBarMode {
+    data object Root : SteamTopBarMode
+    data object FriendDetail : SteamTopBarMode
+    data class AccountDetail(val accountId: Long) : SteamTopBarMode
+}
+
 private enum class SteamAddAccountMethod {
     MAFILE,
     KEY_ONLY,
@@ -408,6 +414,7 @@ fun SteamScreen(
     var detailAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
     val detailAccount = uiState.accounts.firstOrNull { it.id == detailAccountId }
     var selectedSection by rememberSaveable { mutableStateOf(SteamSection.CODE) }
+    var selectedFriendId by rememberSaveable { mutableStateOf<String?>(null) }
     var steamSearchQuery by rememberSaveable { mutableStateOf("") }
     var isSteamSearchExpanded by rememberSaveable { mutableStateOf(false) }
     var showTopActionsMenu by remember { mutableStateOf(false) }
@@ -621,6 +628,7 @@ fun SteamScreen(
 
     LaunchedEffect(selectedAccount?.id) {
         if (selectedAccount == null) {
+            selectedFriendId = null
             selectedSection = SteamSection.CODE
         }
     }
@@ -1675,29 +1683,42 @@ fun SteamScreen(
         modifier = modifier,
         topBar = {
             AnimatedContent(
-                targetState = detailAccount?.id,
+                targetState = when {
+                    detailAccount != null -> SteamTopBarMode.AccountDetail(detailAccount.id)
+                    selectedSection == SteamSection.FRIENDS && selectedFriendId != null -> {
+                        SteamTopBarMode.FriendDetail
+                    }
+                    else -> SteamTopBarMode.Root
+                },
                 transitionSpec = {
                     easyNotesScreenEnter().togetherWith(easyNotesScreenExit())
                 },
                 label = "SteamTopBarNavigation"
-            ) { animatedDetailAccountId ->
-                if (animatedDetailAccountId != null) {
-                    val animatedDetailAccount = uiState.accounts.firstOrNull { it.id == animatedDetailAccountId }
-                    SteamDetailTopBar(
-                        title = stringResource(R.string.nav_steam),
-                        onNavigateBack = {
-                            detailAccountId = null
-                            scannedQrPayload = null
-                        },
-                        onRemoveAuthenticator = animatedDetailAccount?.let { account ->
-                            { removeAuthenticatorRequest = account }
-                        },
-                        onRebindAccount = animatedDetailAccount?.let { account ->
-                            { steamAccountRebindAccountId = account.id }
+            ) { topBarMode ->
+                when (topBarMode) {
+                    is SteamTopBarMode.AccountDetail -> {
+                        val animatedDetailAccount = uiState.accounts.firstOrNull {
+                            it.id == topBarMode.accountId
                         }
+                        SteamDetailTopBar(
+                            title = stringResource(R.string.nav_steam),
+                            onNavigateBack = {
+                                detailAccountId = null
+                                scannedQrPayload = null
+                            },
+                            onRemoveAuthenticator = animatedDetailAccount?.let { account ->
+                                { removeAuthenticatorRequest = account }
+                            },
+                            onRebindAccount = animatedDetailAccount?.let { account ->
+                                { steamAccountRebindAccountId = account.id }
+                            }
+                        )
+                    }
+                    SteamTopBarMode.FriendDetail -> SteamDetailTopBar(
+                        title = stringResource(R.string.steam_friend_details_title),
+                        onNavigateBack = { selectedFriendId = null }
                     )
-                } else {
-                    SteamRootTopBar(
+                    SteamTopBarMode.Root -> SteamRootTopBar(
                         title = stringResource(R.string.nav_steam),
                         searchQuery = steamSearchQuery,
                         onSearchQueryChange = { query ->
@@ -1742,6 +1763,7 @@ fun SteamScreen(
                                 onSelectSection = { section ->
                                     showTopActionsMenu = false
                                     clearSteamSearch()
+                                    selectedFriendId = null
                                     selectedTokenAccountIds = emptyList()
                                     viewModel.clearSelectedConfirmations()
                                     if (selectedSection != section) {
@@ -1954,8 +1976,17 @@ fun SteamScreen(
                             SteamSection.FRIENDS -> SteamFriendsScreen(
                                 searchQuery = steamSearchQuery,
                                 refreshRequest = friendsRefreshRequest,
+                                selectedFriendId = selectedFriendId,
+                                onSelectedFriendIdChange = { friendId ->
+                                    if (friendId != null) {
+                                        clearSteamSearch()
+                                        focusManager.clearFocus()
+                                    }
+                                    selectedFriendId = friendId
+                                },
                                 onStartChat = { partnerSteamId ->
                                     clearSteamSearch()
+                                    selectedFriendId = null
                                     requestedChatPartnerSteamId = partnerSteamId
                                     selectedSection = SteamSection.CHAT
                                 },
