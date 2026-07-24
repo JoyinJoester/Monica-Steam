@@ -5,6 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.foundation.ui.SteamUiScaleOption
+import takagi.ru.monica.steam.foundation.ui.calculateSteamContentDensity
 import takagi.ru.monica.steam.foundation.ui.calculateSteamUiDensity
 
 class SteamUiScaleSettingsTest {
@@ -73,6 +74,16 @@ class SteamUiScaleSettingsTest {
         assertEquals(
             3.3f,
             calculateSteamUiDensity(3f, SteamUiScaleOption.LARGE),
+            0.0001f
+        )
+        assertEquals(
+            3f,
+            calculateSteamContentDensity(3.3f, SteamUiScaleOption.LARGE),
+            0.0001f
+        )
+        assertEquals(
+            2.55f,
+            calculateSteamContentDensity(2.55f, SteamUiScaleOption.COMPACT),
             0.0001f
         )
     }

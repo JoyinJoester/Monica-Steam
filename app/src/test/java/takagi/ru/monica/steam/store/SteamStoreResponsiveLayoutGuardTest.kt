@@ -25,9 +25,24 @@ class SteamStoreResponsiveLayoutGuardTest {
             .substringAfter("private fun SearchResultCard(")
             .substringBefore("@OptIn(ExperimentalMaterial3Api::class)")
 
-        assertTrue(searchCard.contains("Column(Modifier.fillMaxWidth().padding(12.dp)"))
+        assertTrue(searchCard.contains("SteamStoreLayoutTokens.SearchCardPadding"))
         assertTrue(searchCard.contains("PriceRow("))
         assertTrue(searchCard.contains("modifier = Modifier.fillMaxWidth()"))
+    }
+
+    @Test
+    fun repeatedStoreCardsUseCompactStableLayoutTokens() {
+        val store = storeSource()
+        val tokens = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreLayoutTokens.kt"
+        ).readText()
+
+        assertTrue(tokens.contains("GameCardWidth = 196.dp"))
+        assertTrue(tokens.contains("GameCardHeight = 248.dp"))
+        assertTrue(tokens.contains("SearchImageWidth = 104.dp"))
+        assertTrue(store.contains("SteamStoreLayoutTokens.GameCardWidth"))
+        assertTrue(store.contains("SteamStoreLayoutTokens.GameCardHeight"))
+        assertTrue(store.contains("SteamStoreLayoutTokens.SearchImageWidth"))
     }
 
     @Test

@@ -297,7 +297,7 @@ fun SteamStoreScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxSize().padding(padding),
                     contentPadding = PaddingValues(bottom = 104.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     if (state.searching) {
                         item {
@@ -550,7 +550,7 @@ private fun StoreHeroSkeleton() {
 @Composable
 private fun StoreSection(title: String, games: List<SteamStoreItem>, onOpen: (Int) -> Unit) {
     if (games.isEmpty()) return
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -558,7 +558,7 @@ private fun StoreSection(title: String, games: List<SteamStoreItem>, onOpen: (In
             Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
             Text("${games.size}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(games, key = ::steamStoreLazyKey) { _, game ->
                 StoreGameCard(game) { onOpen(game.appId) }
             }
@@ -576,19 +576,24 @@ internal fun steamStoreRegionalPriceLazyKey(index: Int, price: SteamRegionalPric
 private fun StoreGameCard(game: SteamStoreItem, onClick: () -> Unit) {
     Card(
         onClick = onClick,
-        modifier = Modifier.width(224.dp).height(290.dp),
-        shape = RoundedCornerShape(22.dp),
+        modifier = Modifier
+            .width(SteamStoreLayoutTokens.GameCardWidth)
+            .height(SteamStoreLayoutTokens.GameCardHeight),
+        shape = RoundedCornerShape(SteamStoreLayoutTokens.CardCornerRadius),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
         SteamStoreImage(
             game.imageUrl.ifBlank { game.headerImageUrl },
-            Modifier.fillMaxWidth().height(126.dp)
+            Modifier.fillMaxWidth().height(SteamStoreLayoutTokens.GameImageHeight)
         )
         Column(
-            Modifier.fillMaxWidth().height(164.dp).padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            Modifier
+                .fillMaxWidth()
+                .height(SteamStoreLayoutTokens.GameBodyHeight)
+                .padding(SteamStoreLayoutTokens.GameCardPadding),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Box(Modifier.fillMaxWidth().height(52.dp), contentAlignment = Alignment.TopStart) {
+            Box(Modifier.fillMaxWidth().height(46.dp), contentAlignment = Alignment.TopStart) {
                 Text(game.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
             }
             Spacer(Modifier.weight(1f))
@@ -600,13 +605,19 @@ private fun StoreGameCard(game: SteamStoreItem, onClick: () -> Unit) {
 @Composable
 private fun SearchResultCard(game: SteamStoreItem, onClick: () -> Unit) {
     Card(onClick = onClick, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-        Column(Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(
+            Modifier.fillMaxWidth().padding(SteamStoreLayoutTokens.SearchCardPadding),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SteamStoreImage(
                     game.imageUrl.ifBlank { game.headerImageUrl },
-                    Modifier.width(120.dp).aspectRatio(460f / 215f).clip(RoundedCornerShape(10.dp))
+                    Modifier
+                        .width(SteamStoreLayoutTokens.SearchImageWidth)
+                        .aspectRatio(460f / 215f)
+                        .clip(RoundedCornerShape(8.dp))
                 )
-                Spacer(Modifier.width(12.dp))
+                Spacer(Modifier.width(10.dp))
                 Text(
                     game.name,
                     modifier = Modifier.weight(1f),
