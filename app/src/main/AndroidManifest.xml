@@ -11,15 +11,9 @@
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         android:minSdkVersion="33" />
-    <uses-permission
-        android:name="android.permission.WAKE_LOCK"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.RECEIVE_BOOT_COMPLETED"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE"
-        tools:node="remove" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.NFC"
         tools:node="remove" />
@@ -90,15 +84,6 @@
             android:name=".steam.alerts.data.SteamAlertReceiver"
             android:exported="false" />
 
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            tools:node="merge">
-            <meta-data
-                android:name="androidx.work.WorkManagerInitializer"
-                tools:node="remove" />
-        </provider>
-
         <!-- Share generated support logs and other cache attachments safely. -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -123,17 +108,6 @@
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" tools:node="remove" />
         <service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" tools:node="remove" />
         <activity android:name="androidx.slice.compat.SlicePermissionActivity" tools:node="remove" />
-        <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" tools:node="remove" />
-        <service android:name="androidx.work.impl.background.systemjob.SystemJobService" tools:node="remove" />
-        <service android:name="androidx.work.impl.foreground.SystemForegroundService" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" tools:node="remove" />
-        <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" tools:node="remove" />
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity" tools:node="remove" />
         <activity android:name="com.yubico.yubikit.android.ui.OtpActivity" tools:node="remove" />
         <activity android:name="com.yubico.yubikit.android.ui.YubiKeyPromptActivity" tools:node="remove" />

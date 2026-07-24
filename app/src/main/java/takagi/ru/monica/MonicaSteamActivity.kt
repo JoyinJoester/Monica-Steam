@@ -61,10 +61,13 @@ import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.repository.PasswordRepository
+import takagi.ru.monica.repository.MdbxRepository
+import takagi.ru.monica.repository.MdbxVaultStore
+import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.security.SteamAppLockGate
 import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
-import takagi.ru.monica.steam.backup.ui.SteamBackupScreen
+import takagi.ru.monica.steam.backup.ui.SteamMaFileTransferScreen
 import takagi.ru.monica.steam.health.ui.SteamHealthScreen
 import takagi.ru.monica.steam.library.ui.SteamLibraryScreen
 import takagi.ru.monica.steam.token.ui.SteamScreen
@@ -75,6 +78,7 @@ import takagi.ru.monica.steam.alerts.data.SteamAlertScheduler
 import takagi.ru.monica.steam.diagnostics.SteamCrashDiagnostics
 import takagi.ru.monica.ui.base.BaseMonicaActivity
 import takagi.ru.monica.ui.screens.MonicaSteamSettingsScreen
+import takagi.ru.monica.ui.screens.WebDavBackupScreen
 import takagi.ru.monica.ui.screens.MdbxLocalCreateScreen
 import takagi.ru.monica.ui.screens.MdbxLocalOpenScreen
 import takagi.ru.monica.ui.screens.MdbxManagerScreen
@@ -86,6 +90,7 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.viewmodel.MdbxViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SettingsViewModel
+import takagi.ru.monica.utils.AutoBackupManager
 
 private enum class MonicaSteamPage {
     STEAM,
@@ -93,7 +98,8 @@ private enum class MonicaSteamPage {
     HEALTH,
     LIBRARY,
     STORE,
-    BACKUP,
+    MAFILE_TRANSFER,
+    WEBDAV_BACKUP,
     MDBX,
     MDBX_CREATE,
     MDBX_OPEN,
@@ -103,6 +109,11 @@ private enum class MonicaSteamPage {
 }
 
 private const val MONICA_BACK_EXIT_TIMEOUT_MS = 2_000L
+private const val STEAM_AUTO_BACKUP_PREFS_NAME = "webdav_config"
+private const val STEAM_AUTO_BACKUP_ENABLED_KEY = "auto_backup_enabled"
+private const val STEAM_LAST_BACKUP_TIME_KEY = "last_backup_time"
+private const val STEAM_AUTO_BACKUP_INIT_DELAY_MS = 1_500L
+private const val STEAM_AUTO_BACKUP_INTERVAL_HOURS = 12L
 
 class MonicaSteamActivity : BaseMonicaActivity() {
     override fun shouldEnforceSharedSessionLock(): Boolean = false
@@ -114,6 +125,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
         lifecycleScope.launch {
             SteamAlertScheduler.sync(this@MonicaSteamActivity)
         }
+        initializeWebDavAutoBackupDeferred()
 
         setSteamUiScaledContent {
             val settings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
@@ -143,8 +155,35 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val securityManager = remember {
                     SecurityManager(this@MonicaSteamActivity.applicationContext)
                 }
-                val passwordRepository = remember(passwordDatabase) {
-                    PasswordRepository(passwordDatabase.passwordEntryDao())
+                val mdbxRepository: MdbxRepository = remember(passwordDatabase, securityManager) {
+                    MdbxVaultStore(
+                        this@MonicaSteamActivity.applicationContext,
+                        passwordDatabase.localMdbxDatabaseDao(),
+                        securityManager,
+                        passwordDatabase.mdbxRemoteSourceDao(),
+                        passwordDatabase.passwordEntryDao(),
+                        passwordDatabase.secureItemDao(),
+                        passwordDatabase.customFieldDao()
+                    )
+                }
+                val passwordRepository = remember(passwordDatabase, mdbxRepository) {
+                    PasswordRepository(
+                        passwordDatabase.passwordEntryDao(),
+                        passwordDatabase.categoryDao(),
+                        passwordDatabase.bitwardenFolderDao(),
+                        passwordDatabase.secureItemDao(),
+                        passwordDatabase.passkeyDao(),
+                        passwordDatabase.passwordArchiveSyncMetaDao(),
+                        passwordDatabase.passwordHistoryDao(),
+                        mdbxRepository = mdbxRepository
+                    )
+                }
+                val secureItemRepository = remember(passwordDatabase, mdbxRepository, securityManager) {
+                    SecureItemRepository(
+                        passwordDatabase.secureItemDao(),
+                        mdbxRepository,
+                        securityManager::decryptDataIfMonicaCiphertext
+                    )
                 }
                 val passwordViewModel: PasswordViewModel = viewModel {
                     PasswordViewModel(
@@ -305,7 +344,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 passwordViewModel = passwordViewModel,
                                 securityManager = securityManager,
                                 onNavigateBack = { navigateBack() },
-                                onOpenBackup = { navigateTo(MonicaSteamPage.BACKUP) },
+                                onOpenBackup = { navigateTo(MonicaSteamPage.MAFILE_TRANSFER) },
                                 onOpenMdbx = { navigateTo(MonicaSteamPage.MDBX) },
                                 dockOrder = dockOrder,
                                 onDockOrderChange = { order ->
@@ -339,10 +378,18 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                             )
                         }
 
-                        MonicaSteamPage.BACKUP -> {
-                            SteamBackupScreen(
+                        MonicaSteamPage.MAFILE_TRANSFER -> {
+                            SteamMaFileTransferScreen(
                                 onNavigateBack = { navigateBack() },
                                 modifier = Modifier.fillMaxSize()
+                            )
+                        }
+
+                        MonicaSteamPage.WEBDAV_BACKUP -> {
+                            WebDavBackupScreen(
+                                passwordRepository = passwordRepository,
+                                secureItemRepository = secureItemRepository,
+                                onNavigateBack = { navigateBack() }
                             )
                         }
 
@@ -399,7 +446,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     navigateTo(MonicaSteamPage.HEALTH)
                                 },
                                 onOpenBackup = {
-                                    navigateTo(MonicaSteamPage.BACKUP)
+                                    navigateTo(MonicaSteamPage.MAFILE_TRANSFER)
                                 },
                                 pendingSteamQrResult = pendingQrResult,
                                 pendingSteamQrAccountId = pendingQrAccountId,
@@ -435,6 +482,40 @@ class MonicaSteamActivity : BaseMonicaActivity() {
             }
         }
     }
+
+    private fun initializeWebDavAutoBackupDeferred() {
+        lifecycleScope.launch {
+            delay(STEAM_AUTO_BACKUP_INIT_DELAY_MS)
+            runCatching {
+                val prefs = getSharedPreferences(STEAM_AUTO_BACKUP_PREFS_NAME, MODE_PRIVATE)
+                if (!prefs.getBoolean(STEAM_AUTO_BACKUP_ENABLED_KEY, false)) return@runCatching
+                val lastBackupTime = prefs.getLong(STEAM_LAST_BACKUP_TIME_KEY, 0L)
+                if (shouldTriggerWebDavAutoBackup(lastBackupTime, System.currentTimeMillis())) {
+                    AutoBackupManager(this@MonicaSteamActivity).triggerBackupNow()
+                }
+            }.onFailure { error ->
+                takagi.ru.monica.steam.diagnostics.SteamDiagLogger.append(
+                    "webdav_auto_backup_init failed type=${error::class.java.simpleName}"
+                )
+            }
+        }
+    }
+
+    private fun shouldTriggerWebDavAutoBackup(lastBackupTime: Long, currentTime: Long): Boolean {
+        if (lastBackupTime == 0L) return true
+        val calendar = java.util.Calendar.getInstance()
+        calendar.timeInMillis = lastBackupTime
+        val lastBackupDay = calendar.get(java.util.Calendar.DAY_OF_YEAR)
+        val lastBackupYear = calendar.get(java.util.Calendar.YEAR)
+        calendar.timeInMillis = currentTime
+        val currentDay = calendar.get(java.util.Calendar.DAY_OF_YEAR)
+        val currentYear = calendar.get(java.util.Calendar.YEAR)
+        val isNewDay = currentYear > lastBackupYear ||
+            (currentYear == lastBackupYear && currentDay > lastBackupDay)
+        if (!isNewDay) return false
+        val hoursSinceLastBackup = (currentTime - lastBackupTime) / (1_000L * 60L * 60L)
+        return hoursSinceLastBackup >= STEAM_AUTO_BACKUP_INTERVAL_HOURS
+    }
 }
 
 }
@@ -448,7 +529,8 @@ private fun MonicaSteamPage.isDockPage(): Boolean = when (this) {
     MonicaSteamPage.SETTINGS -> true
     MonicaSteamPage.SCANNER,
     MonicaSteamPage.HEALTH,
-    MonicaSteamPage.BACKUP -> false
+    MonicaSteamPage.MAFILE_TRANSFER,
+    MonicaSteamPage.WEBDAV_BACKUP -> false
     MonicaSteamPage.MDBX,
     MonicaSteamPage.MDBX_CREATE,
     MonicaSteamPage.MDBX_OPEN,

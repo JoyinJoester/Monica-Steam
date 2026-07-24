@@ -25,26 +25,35 @@ class SteamStandaloneDataBoundaryTest {
     }
 
     @Test
-    fun standaloneWebDavOnlyHandlesMaFileZip() {
-        val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/backup/ui/SteamBackupScreen.kt"
+    fun standaloneWebDavReusesMonicaFullBackupFlow() {
+        val maFileScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/backup/ui/SteamMaFileTransferScreen.kt"
         ).readText()
-        val service = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/backup/SteamMaFileWebDavService.kt"
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
+        val webDavScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt"
+        ).readText()
+        val webDavHelper = projectFile(
+            "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt"
+        ).readText()
+        val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
+        val buildScript = projectFile("app/build.gradle").readText()
 
-        assertTrue(screen.contains("SteamMaFileZipCodec"))
-        assertTrue(screen.contains("SteamMaFileWebDavService"))
-        assertTrue(service.contains("REMOTE_DIRECTORY = \"steam/mafiles\""))
-        assertTrue(service.contains("application/zip"))
-        assertFalse(screen.contains("createAndUploadBackup"))
-        assertFalse(screen.contains("uploadBackup("))
-        assertFalse(screen.contains("downloadBackup("))
-        assertFalse(screen.contains("BackupPreferences"))
-        assertFalse(screen.contains("Mdbx"))
-        assertFalse(screen.contains("M3IdentityVerifyDialog"))
-        assertFalse(screen.contains("identityVerified"))
-        assertFalse(service.contains("WebDavHelper"))
+        assertTrue(maFileScreen.contains("SteamMaFileZipCodec"))
+        assertFalse(maFileScreen.contains("WebDav"))
+        assertTrue(activity.contains("WebDavBackupScreen("))
+        assertTrue(activity.contains("MonicaSteamPage.WEBDAV_BACKUP"))
+        assertTrue(webDavScreen.contains("createAndUploadBackup"))
+        assertTrue(webDavScreen.contains("downloadAndRestoreBackup"))
+        assertTrue(webDavScreen.contains("AutoBackupManager"))
+        assertTrue(webDavHelper.contains("STEAM_MAFILE_BACKUP_DIR"))
+        assertTrue(webDavHelper.contains("createSteamMaFileBackups"))
+        assertFalse(manifest.contains("androidx.work.WorkManagerInitializer\"\n                tools:node=\"remove"))
+        assertFalse(manifest.contains("SystemJobService\" tools:node=\"remove"))
+        assertTrue(buildScript.contains("implementation libs.androidx.work.runtime.ktx"))
+        assertFalse(buildScript.contains("compileOnly libs.androidx.work.runtime.ktx"))
     }
 
     @Test
