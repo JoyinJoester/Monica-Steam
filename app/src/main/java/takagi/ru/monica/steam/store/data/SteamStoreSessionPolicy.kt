@@ -20,6 +20,28 @@ data class SteamWebCookieWrite(
     val value: String
 )
 
+enum class SteamWebClientMode {
+    DEFAULT,
+    COMMUNITY_DESKTOP
+}
+
+object SteamWebClientPolicy {
+    private val chromeVersionPattern = Regex("Chrome/[0-9.]+")
+
+    fun userAgent(mode: SteamWebClientMode, defaultUserAgent: String): String = when (mode) {
+        SteamWebClientMode.DEFAULT -> defaultUserAgent
+        SteamWebClientMode.COMMUNITY_DESKTOP -> {
+            val chromeVersion = chromeVersionPattern.find(defaultUserAgent)?.value
+                ?: "Chrome/120.0.0.0"
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                "AppleWebKit/537.36 (KHTML, like Gecko) $chromeVersion Safari/537.36"
+        }
+    }
+
+    fun usesDesktopLayout(mode: SteamWebClientMode): Boolean =
+        mode == SteamWebClientMode.COMMUNITY_DESKTOP
+}
+
 object SteamStoreSessionPolicy {
     fun cookies(steamLoginSecure: String?, sessionId: String): List<String> =
         domainCookies(
@@ -29,7 +51,11 @@ object SteamStoreSessionPolicy {
             includeAgeGate = true
         )
 
-    fun cookieWrites(steamLoginSecure: String?, sessionId: String): List<SteamWebCookieWrite> {
+    fun cookieWrites(
+        steamLoginSecure: String?,
+        sessionId: String,
+        clientMode: SteamWebClientMode = SteamWebClientMode.DEFAULT
+    ): List<SteamWebCookieWrite> {
         return buildList {
             domainCookies(
                 domain = ".steampowered.com",
@@ -43,9 +69,24 @@ object SteamStoreSessionPolicy {
                 domain = ".steamcommunity.com",
                 steamLoginSecure = steamLoginSecure,
                 sessionId = sessionId,
-                includeAgeGate = false
+                includeAgeGate = false,
+                includeMobileClient = clientMode != SteamWebClientMode.COMMUNITY_DESKTOP
             ).forEach { value ->
                 add(SteamWebCookieWrite("https://steamcommunity.com", value))
+            }
+            if (clientMode == SteamWebClientMode.COMMUNITY_DESKTOP) {
+                add(
+                    SteamWebCookieWrite(
+                        "https://steamcommunity.com",
+                        "mobileClient=; Domain=.steamcommunity.com; Path=/; Max-Age=0; Secure"
+                    )
+                )
+                add(
+                    SteamWebCookieWrite(
+                        "https://steamcommunity.com",
+                        "mobileClientVersion=; Domain=.steamcommunity.com; Path=/; Max-Age=0; Secure"
+                    )
+                )
             }
         }
     }
@@ -54,13 +95,14 @@ object SteamStoreSessionPolicy {
         domain: String,
         steamLoginSecure: String?,
         sessionId: String,
-        includeAgeGate: Boolean
+        includeAgeGate: Boolean,
+        includeMobileClient: Boolean = !includeAgeGate
     ): List<String> = buildList {
         add("sessionid=${encode(sessionId)}; Domain=$domain; Path=/; Secure; SameSite=None")
         if (includeAgeGate) {
             add("birthtime=0; Domain=$domain; Path=/; Secure")
             add("lastagecheckage=1-January-1980; Domain=$domain; Path=/; Secure")
-        } else {
+        } else if (includeMobileClient) {
             add("mobileClient=android; Domain=$domain; Path=/; Secure")
             add("mobileClientVersion=777777%203.6.4; Domain=$domain; Path=/; Secure")
         }

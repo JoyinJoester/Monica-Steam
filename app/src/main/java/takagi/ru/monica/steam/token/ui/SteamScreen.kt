@@ -199,6 +199,7 @@ import takagi.ru.monica.steam.friends.ui.SteamFriendsScreen
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.scanner.data.readLastSteamQrAccountId
 import takagi.ru.monica.steam.scanner.data.saveLastSteamQrAccountId
+import takagi.ru.monica.steam.store.data.SteamWebClientMode
 import takagi.ru.monica.steam.store.ui.SteamStoreWebScreen
 import takagi.ru.monica.steam.trade.SteamTradeOffer
 import takagi.ru.monica.steam.trade.SteamTradeOfferAction
@@ -1573,6 +1574,7 @@ fun SteamScreen(
                         },
                     title = stringResource(R.string.steam_gift_inbox_title),
                     securityNote = stringResource(R.string.steam_gift_inbox_security_note),
+                    clientMode = SteamWebClientMode.COMMUNITY_DESKTOP,
                     onClose = { showGiftInbox = false },
                     modifier = Modifier.fillMaxSize()
                 )

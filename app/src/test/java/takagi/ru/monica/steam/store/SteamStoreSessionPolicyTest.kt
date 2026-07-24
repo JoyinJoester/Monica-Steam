@@ -49,6 +49,38 @@ class SteamStoreSessionPolicyTest {
     }
 
     @Test
+    fun communityDesktopModeUsesBrowserUaWithoutLegacyMobileCookies() {
+        val defaultUserAgent =
+            "Mozilla/5.0 (Linux; Android 15; Pixel 8 Build/AP3A; wv) " +
+                "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 " +
+                "Chrome/138.0.7204.157 Mobile Safari/537.36"
+
+        val userAgent = SteamWebClientPolicy.userAgent(
+            mode = SteamWebClientMode.COMMUNITY_DESKTOP,
+            defaultUserAgent = defaultUserAgent
+        )
+        val writes = SteamStoreSessionPolicy.cookieWrites(
+            steamLoginSecure = "76561198000000000||token",
+            sessionId = "abcdef0123456789abcdef01",
+            clientMode = SteamWebClientMode.COMMUNITY_DESKTOP
+        )
+
+        assertTrue(userAgent.contains("Windows NT 10.0; Win64; x64"))
+        assertTrue(userAgent.contains("Chrome/138.0.7204.157"))
+        assertFalse(userAgent.contains("; wv"))
+        assertFalse(userAgent.contains(" Mobile "))
+        val legacyMobileCookies = writes.filter {
+            it.value.startsWith("mobileClient=") ||
+                it.value.startsWith("mobileClientVersion=")
+        }
+        assertEquals(2, legacyMobileCookies.size)
+        assertTrue(legacyMobileCookies.all { it.value.contains("Max-Age=0") })
+        assertFalse(legacyMobileCookies.any { it.value.contains("=android") })
+        assertFalse(legacyMobileCookies.any { it.value.contains("777777") })
+        assertTrue(writes.any { it.value.startsWith("steamLoginSecure=") })
+    }
+
+    @Test
     fun keepsPreviouslyEncodedSteamLoginSecureAtSingleEncodingLevel() {
         val raw = SteamStoreSessionPolicy.cookies(
             steamLoginSecure = "76561198000000000%7C%7Ctoken%2Fvalue",

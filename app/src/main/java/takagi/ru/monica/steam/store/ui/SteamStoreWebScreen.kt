@@ -57,6 +57,7 @@ fun SteamStoreWebScreen(
     title: String? = null,
     securityNote: String? = null,
     checkoutPackageIds: List<Int> = emptyList(),
+    clientMode: SteamWebClientMode = SteamWebClientMode.DEFAULT,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -121,6 +122,12 @@ fun SteamStoreWebScreen(
                     webView = this
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true
+                    settings.userAgentString = SteamWebClientPolicy.userAgent(
+                        mode = clientMode,
+                        defaultUserAgent = settings.userAgentString
+                    )
+                    settings.useWideViewPort = SteamWebClientPolicy.usesDesktopLayout(clientMode)
+                    settings.loadWithOverviewMode = SteamWebClientPolicy.usesDesktopLayout(clientMode)
                     settings.databaseEnabled = false
                     settings.allowFileAccess = false
                     settings.allowContentAccess = false
@@ -167,7 +174,11 @@ fun SteamStoreWebScreen(
                     }
                     val targetAllowed = SteamStoreNavigationPolicy.isAllowed(url)
                     cookies.installSteamCookies(
-                        SteamStoreSessionPolicy.cookieWrites(steamLoginSecure, sessionId)
+                        SteamStoreSessionPolicy.cookieWrites(
+                            steamLoginSecure = steamLoginSecure,
+                            sessionId = sessionId,
+                            clientMode = clientMode
+                        )
                     ) {
                         if (webView === this@webView && targetAllowed) {
                             loadUrl(url)

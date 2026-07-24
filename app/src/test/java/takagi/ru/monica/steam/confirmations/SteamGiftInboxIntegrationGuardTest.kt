@@ -20,6 +20,7 @@ class SteamGiftInboxIntegrationGuardTest {
         assertTrue(screen.contains("selectedAccount?.steamLoginSecure"))
         assertTrue(screen.contains("selectedAccount?.accessToken"))
         assertTrue(screen.contains("SteamStoreWebScreen("))
+        assertTrue(screen.contains("clientMode = SteamWebClientMode.COMMUNITY_DESKTOP"))
         assertTrue(web.contains("title: String"))
         assertTrue(web.contains("SteamStoreNavigationPolicy.isAllowed(target)"))
         assertTrue(web.contains("installSteamCookies"))
