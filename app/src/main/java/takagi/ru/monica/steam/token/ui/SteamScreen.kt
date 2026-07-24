@@ -372,7 +372,8 @@ fun SteamScreen(
     pendingSteamQrResult: String? = null,
     pendingSteamQrAccountId: Long? = null,
     onConsumePendingSteamQrResult: () -> Unit = {},
-    onScanSteamQrCode: ((Long?) -> Unit)? = null
+    onScanSteamQrCode: ((Long?) -> Unit)? = null,
+    onThreadVisibilityChange: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -414,6 +415,7 @@ fun SteamScreen(
     var detailAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
     val detailAccount = uiState.accounts.firstOrNull { it.id == detailAccountId }
     var selectedSection by rememberSaveable { mutableStateOf(SteamSection.CODE) }
+    var isChatThreadOpen by rememberSaveable { mutableStateOf(false) }
     var selectedFriendId by rememberSaveable { mutableStateOf<String?>(null) }
     var steamSearchQuery by rememberSaveable { mutableStateOf("") }
     var isSteamSearchExpanded by rememberSaveable { mutableStateOf(false) }
@@ -1682,7 +1684,8 @@ fun SteamScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            AnimatedContent(
+            if (!(selectedSection == SteamSection.CHAT && isChatThreadOpen)) {
+                AnimatedContent(
                 targetState = when {
                     detailAccount != null -> SteamTopBarMode.AccountDetail(detailAccount.id)
                     selectedSection == SteamSection.FRIENDS && selectedFriendId != null -> {
@@ -1806,35 +1809,38 @@ fun SteamScreen(
                         onOpenTopActionsMenu = { showTopActionsMenu = true }
                     )
                 }
+                }
             }
         },
         floatingActionButton = {
-            val scanQr = onScanSteamQrCode
-            val detailQrAccount = detailAccount?.takeIf { it.canApproveLogins }
-            val account = detailQrAccount ?: tokenQrAccount
-            AnimatedVisibility(
-                visible = scanQr != null && account != null,
-                enter = fadeIn(animationSpec = tween(160)) +
-                    scaleIn(initialScale = 0.9f, animationSpec = tween(180)),
-                exit = fadeOut(animationSpec = tween(120)) +
-                    scaleOut(targetScale = 0.9f, animationSpec = tween(140))
-            ) {
-                if (scanQr != null && account != null && account.hasRealSteamId) {
-                    FloatingActionButton(
-                        onClick = {
-                            val freshAccount = detailQrAccount
-                                ?: uiState.accounts.firstOrNull {
-                                    it.canApproveLogins && it.id == readLastSteamQrAccountId(context)
-                                }
-                                ?: account
-                            rememberLastSteamQrAccount(freshAccount.id)
-                            scanQr(freshAccount.id)
+            if (!(selectedSection == SteamSection.CHAT && isChatThreadOpen)) {
+                val scanQr = onScanSteamQrCode
+                val detailQrAccount = detailAccount?.takeIf { it.canApproveLogins }
+                val account = detailQrAccount ?: tokenQrAccount
+                AnimatedVisibility(
+                    visible = scanQr != null && account != null,
+                    enter = fadeIn(animationSpec = tween(160)) +
+                        scaleIn(initialScale = 0.9f, animationSpec = tween(180)),
+                    exit = fadeOut(animationSpec = tween(120)) +
+                        scaleOut(targetScale = 0.9f, animationSpec = tween(140))
+                ) {
+                    if (scanQr != null && account != null && account.hasRealSteamId) {
+                        FloatingActionButton(
+                            onClick = {
+                                val freshAccount = detailQrAccount
+                                    ?: uiState.accounts.firstOrNull {
+                                        it.canApproveLogins && it.id == readLastSteamQrAccountId(context)
+                                    }
+                                    ?: account
+                                rememberLastSteamQrAccount(freshAccount.id)
+                                scanQr(freshAccount.id)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.QrCodeScanner,
+                                contentDescription = stringResource(R.string.scan_qr_code)
+                            )
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.QrCodeScanner,
-                            contentDescription = stringResource(R.string.scan_qr_code)
-                        )
                     }
                 }
             }
@@ -1998,6 +2004,10 @@ fun SteamScreen(
                                 requestedPartnerSteamId = requestedChatPartnerSteamId,
                                 onConsumeRequestedPartner = {
                                     requestedChatPartnerSteamId = null
+                                },
+                                onThreadVisibilityChange = { open ->
+                                    isChatThreadOpen = open
+                                    onThreadVisibilityChange(open)
                                 },
                                 modifier = Modifier.fillMaxSize()
                             )

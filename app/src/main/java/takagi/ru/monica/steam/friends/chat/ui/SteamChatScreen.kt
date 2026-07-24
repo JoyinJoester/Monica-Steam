@@ -30,6 +30,7 @@ fun SteamChatScreen(
     requestedPartnerSteamId: String? = null,
     onConsumeRequestedPartner: () -> Unit = {},
     onUnreadCountChange: (Int) -> Unit = {},
+    onThreadVisibilityChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -70,6 +71,11 @@ fun SteamChatScreen(
 
     LaunchedEffect(chatState.selectedPartnerSteamId) {
         richMediaViewModel.selectPartner(chatState.selectedPartnerSteamId)
+        onThreadVisibilityChange(chatState.selectedPartnerSteamId != null)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { onThreadVisibilityChange(false) }
     }
 
     LaunchedEffect(richMediaState.uploadCompletedAt) {

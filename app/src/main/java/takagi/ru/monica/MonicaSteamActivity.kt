@@ -206,6 +206,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 var pendingQrResult by rememberSaveable { mutableStateOf<String?>(null) }
                 var pendingQrAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
                 var pendingStoreAppId by rememberSaveable { mutableStateOf<Int?>(null) }
+                var isSteamChatThreadOpen by rememberSaveable { mutableStateOf(false) }
                 var backPressedOnce by remember { mutableStateOf(false) }
                 val composeScope = rememberCoroutineScope()
                 val dockPreferences = remember {
@@ -222,6 +223,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                         currentPage = homePage
                         pageHistory = emptyList()
                         appliedInitialDockPage = true
+                    }
+                }
+
+                LaunchedEffect(currentPage) {
+                    if (currentPage != MonicaSteamPage.STEAM) {
+                        isSteamChatThreadOpen = false
                     }
                 }
 
@@ -297,12 +304,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         modifier = Modifier
                                             .fillMaxSize()
                                             .steamDockProgressiveBlur(
-                                                enabled = currentPage.isDockPage(),
+                                                enabled = currentPage.isDockPage() && !isSteamChatThreadOpen,
                                                 blurRadius = 40f,
                                                 height = dockBlurHeightPx
                                             )
                                             .padding(
-                                                bottom = if (currentPage.isDockPage()) {
+                                                bottom = if (currentPage.isDockPage() && !isSteamChatThreadOpen) {
                                                     SteamDockContentClearance
                                                 } else {
                                                     0.dp
@@ -472,6 +479,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     scannerAccountId = accountId
                                     navigateTo(MonicaSteamPage.SCANNER)
                                 },
+                                onThreadVisibilityChange = { open ->
+                                    isSteamChatThreadOpen = open
+                                },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -480,7 +490,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 }
                     }
 
-                            if (currentPage.isDockPage()) {
+                            if (currentPage.isDockPage() && !isSteamChatThreadOpen) {
                                 SteamStandaloneDock(
                                     modifier = Modifier.align(Alignment.BottomCenter),
                                     order = dockOrder,

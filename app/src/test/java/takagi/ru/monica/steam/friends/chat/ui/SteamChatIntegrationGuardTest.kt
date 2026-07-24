@@ -59,8 +59,28 @@ class SteamChatIntegrationGuardTest {
         assertTrue(thread.contains("animateItem()"))
         assertTrue(bubble.contains("SteamChatDeliveryState.FAILED"))
         assertTrue(bubble.contains("RoundedCornerShape"))
-        assertTrue(composer.contains("imePadding()"))
+        assertFalse(composer.contains("imePadding()"))
         assertTrue(composer.contains("heightIn(min = 52.dp"))
+    }
+
+    @Test
+    fun openingAThreadCanHideRootSteamChrome() {
+        val chatScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt"
+        ).readText()
+        val steamScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
+        ).readText()
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+
+        assertTrue(chatScreen.contains("onThreadVisibilityChange"))
+        assertTrue(chatScreen.contains("DisposableEffect(Unit)"))
+        assertTrue(steamScreen.contains("onThreadVisibilityChange"))
+        assertTrue(steamScreen.contains("isChatThreadOpen"))
+        assertTrue(activity.contains("isSteamChatThreadOpen"))
+        assertTrue(activity.contains("!isSteamChatThreadOpen"))
     }
 
     @Test

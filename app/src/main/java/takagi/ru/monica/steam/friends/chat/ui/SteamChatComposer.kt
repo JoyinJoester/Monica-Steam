@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -108,7 +107,10 @@ internal fun SteamChatComposer(
     }
 
     Surface(
-        modifier = modifier.fillMaxWidth().imePadding(),
+        // The thread is hosted in an edge-to-edge activity. Window resize/IME
+        // insets are consumed by the host; applying imePadding here as well
+        // creates a second, visible gap above the keyboard.
+        modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 2.dp
     ) {
