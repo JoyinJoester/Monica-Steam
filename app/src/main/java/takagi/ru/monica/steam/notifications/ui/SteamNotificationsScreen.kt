@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.CardGiftcard
@@ -214,6 +215,19 @@ fun SteamNotificationsScreen(
             gift.id == notification.relatedId
         } ?: snapshot?.pendingGifts.orEmpty().singleOrNull()
             ?.takeIf { notification.kind == SteamNotificationKind.GIFT }
+        val details = remember(
+            notification.id,
+            notification.bodyData,
+            notification.title,
+            notification.summary
+        ) {
+            SteamNotificationDetailParser.parse(
+                bodyData = notification.bodyData,
+                title = notification.title,
+                summary = notification.summary
+            )
+        }
+        val hasSummary = isMeaningfulNotificationText(notification.summary)
         ModalBottomSheet(onDismissRequest = { selectedNotification = null }) {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().heightIn(max = 640.dp),
@@ -236,9 +250,25 @@ fun SteamNotificationsScreen(
                         )
                     }
                 }
-                if (isMeaningfulNotificationText(notification.summary)) {
+                if (hasSummary) {
                     item(key = "notification_detail_summary") {
-                        Text(notification.summary, style = MaterialTheme.typography.bodyLarge)
+                        SelectionContainer {
+                            Text(notification.summary, style = MaterialTheme.typography.bodyLarge)
+                        }
+                    }
+                }
+                details.message
+                    ?.takeIf(::isMeaningfulNotificationText)
+                    ?.let { message ->
+                        item(key = "notification_detail_message") {
+                            SelectionContainer {
+                                Text(message, style = MaterialTheme.typography.bodyLarge)
+                            }
+                        }
+                    }
+                if (details.fields.isNotEmpty()) {
+                    item(key = "notification_detail_fields") {
+                        SteamNotificationDetailContent(details.fields)
                     }
                 }
                 relatedGift?.let { gift ->
@@ -251,6 +281,21 @@ fun SteamNotificationsScreen(
                             onAction = { action -> onGiftAction(gift, action) },
                             onOpenWeb = onOpenWeb
                         )
+                    }
+                }
+                if (!hasSummary && details.message == null && details.fields.isEmpty() && relatedGift == null) {
+                    item(key = "notification_detail_unavailable") {
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surfaceContainer
+                        ) {
+                            Text(
+                                text = stringResource(R.string.steam_notification_detail_unavailable),
+                                modifier = Modifier.padding(16.dp),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
             }

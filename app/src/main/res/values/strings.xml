@@ -4543,6 +4543,14 @@
     <string name="steam_notifications_filter_actions">Action required</string>
     <string name="steam_notifications_action_summary">%1$d gifts · %2$d friend requests</string>
     <string name="steam_notifications_open_detail">Open notification details</string>
+    <string name="steam_notification_detail_title">Notification details</string>
+    <string name="steam_notification_detail_unavailable">Steam did not provide additional content for this notification.</string>
+    <string name="steam_notification_detail_app_id">App ID</string>
+    <string name="steam_notification_detail_package_id">Package ID</string>
+    <string name="steam_notification_detail_bundle_id">Bundle ID</string>
+    <string name="steam_notification_detail_quantity">Quantity</string>
+    <string name="steam_notification_detail_discount">Discount</string>
+    <string name="steam_notification_detail_price">Price</string>
     <string name="steam_notifications_gifts">gifts</string>
     <string name="steam_notifications_friends">friends</string>
     <string name="steam_notifications_family">family</string>

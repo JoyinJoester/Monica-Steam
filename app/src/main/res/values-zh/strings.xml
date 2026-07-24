@@ -4373,6 +4373,14 @@
     <string name="steam_notifications_filter_actions">待处理</string>
     <string name="steam_notifications_action_summary">%1$d 份礼物 · %2$d 个好友请求</string>
     <string name="steam_notifications_open_detail">查看通知详情</string>
+    <string name="steam_notification_detail_title">通知详情</string>
+    <string name="steam_notification_detail_unavailable">Steam 没有为这条通知提供更多正文内容。</string>
+    <string name="steam_notification_detail_app_id">应用 ID</string>
+    <string name="steam_notification_detail_package_id">软件包 ID</string>
+    <string name="steam_notification_detail_bundle_id">捆绑包 ID</string>
+    <string name="steam_notification_detail_quantity">数量</string>
+    <string name="steam_notification_detail_discount">折扣</string>
+    <string name="steam_notification_detail_price">价格</string>
     <string name="steam_notifications_gifts">礼物</string>
     <string name="steam_notifications_friends">好友</string>
     <string name="steam_notifications_family">家庭</string>

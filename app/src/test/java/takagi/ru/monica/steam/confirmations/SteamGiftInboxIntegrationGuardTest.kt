@@ -34,6 +34,9 @@ class SteamGiftInboxIntegrationGuardTest {
         val host = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
+        val detailContent = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationDetailContent.kt"
+        ).readText()
 
         assertTrue(page.contains("fun SteamNotificationsScreen("))
         assertTrue(!page.contains("BackHandler("))
@@ -46,7 +49,13 @@ class SteamGiftInboxIntegrationGuardTest {
         assertTrue(page.contains("heightIn(min = 48.dp)"))
         assertTrue(page.contains("containerColor = MaterialTheme.colorScheme.surfaceContainerHigh"))
         assertTrue(page.contains("border = BorderStroke"))
+        assertTrue(page.contains("SteamNotificationDetailContent(details.fields)"))
+        assertTrue(page.contains("steam_notification_detail_unavailable"))
         assertTrue(!page.contains("notification_detail_body"))
+        assertTrue(!page.contains("text = notification.bodyData"))
+        assertTrue(detailContent.contains("internal fun SteamNotificationDetailContent("))
+        assertTrue(detailContent.contains("SelectionContainer"))
+        assertTrue(detailContent.contains("steam_notification_detail_app_id"))
         assertTrue(host.contains("SteamSection.NOTIFICATIONS -> SteamNotificationsScreen("))
         assertTrue(!host.contains("SteamNotificationCenter("))
         assertTrue(!host.contains("showNotificationsPage"))
