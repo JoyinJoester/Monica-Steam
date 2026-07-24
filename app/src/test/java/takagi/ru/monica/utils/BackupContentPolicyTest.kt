@@ -1,6 +1,7 @@
 package takagi.ru.monica.utils
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -11,6 +12,16 @@ import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.isLocalOnlyItem
 
 class BackupContentPolicyTest {
+    @Test
+    fun steamMaFileScopeExcludesEveryMonicaVaultType() {
+        val scope = BackupContentScope.STEAM_MAFILE_ONLY
+
+        assertFalse(BackupContentPolicy.shouldIncludePassword(password("local"), scope))
+        assertFalse(BackupContentPolicy.shouldIncludeSecureItem(secureItem("local"), scope))
+        assertFalse(BackupContentPolicy.shouldIncludePasskey(passkey("local"), scope))
+        assertFalse(takagi.ru.monica.data.BackupPreferences.steamMaFileOnly().hasAnyEnabled())
+    }
+
     @Test
     fun allOfflineScopeIncludesExternalPasswordsAndSanitizesThemAsLocalCopies() {
         val entries = listOf(

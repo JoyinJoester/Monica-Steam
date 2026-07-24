@@ -3,7 +3,6 @@ package takagi.ru.monica.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.flow.first
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.repository.SecureItemRepository
@@ -44,6 +43,9 @@ class AutoBackupWorker(
         android.util.Log.d(TAG, "Starting auto backup work...")
 
         val isManualTrigger = inputData.getBoolean(KEY_MANUAL_TRIGGER, false)
+        // Existing scheduled work from older Steam builds has no mode flag.
+        // Default it to maFile-only so an upgrade cannot resume full-vault backups.
+        val steamMaFileOnly = inputData.getBoolean(KEY_STEAM_MAFILE_ONLY, true)
         val taskId = SyncDiagnostics.nextTaskId("backup-webdav")
         val target = SyncTarget.Backup(SyncBackupProvider.WEBDAV)
         val targetLabel = target.stableKey.value
@@ -62,7 +64,7 @@ class AutoBackupWorker(
         )
 
         return when (val result = SyncTaskRunner.requestAndAwait(request) {
-            runBackup(isManualTrigger, taskId, targetLabel, triggerLabel)
+            runBackup(isManualTrigger, steamMaFileOnly, taskId, targetLabel, triggerLabel)
         }) {
             is SyncTaskAwaitResult.Completed -> result.value
             is SyncTaskAwaitResult.Merged -> {
@@ -107,6 +109,7 @@ class AutoBackupWorker(
 
     private suspend fun runBackup(
         isManualTrigger: Boolean,
+        steamMaFileOnly: Boolean,
         taskId: String,
         target: String,
         trigger: String
@@ -161,45 +164,61 @@ class AutoBackupWorker(
 
             android.util.Log.d(TAG, "Proceeding with backup (manual=$isManualTrigger)")
 
-            val database = PasswordDatabase.getDatabase(applicationContext)
-            val passwordRepo = PasswordRepository(database.passwordEntryDao())
-            val secureItemRepo = SecureItemRepository(database.secureItemDao())
+            val passwords = if (steamMaFileOnly) {
+                emptyList()
+            } else {
+                val database = PasswordDatabase.getDatabase(applicationContext)
+                PasswordRepository(database.passwordEntryDao()).getAllLocalPasswordEntries()
+            }
+            val secureItems = if (steamMaFileOnly) {
+                emptyList()
+            } else {
+                val database = PasswordDatabase.getDatabase(applicationContext)
+                SecureItemRepository(database.secureItemDao()).getAllLocalItems()
+            }
 
-            val passwords = passwordRepo.getAllLocalPasswordEntries()
-            val secureItems = secureItemRepo.getAllLocalItems()
-
-            val securityManager = takagi.ru.monica.security.SecurityManager(applicationContext)
-            var failedPasswordDecryptCount = 0
-            val decryptedPasswords = passwords.map { entry ->
-                try {
-                    entry.copy(password = securityManager.decryptData(entry.password))
-                } catch (e: Exception) {
-                    android.util.Log.w(TAG, "无法解密密码条目: ${e.message}")
-                    failedPasswordDecryptCount++
-                    entry.copy(password = "")
+            val decryptedPasswords = if (steamMaFileOnly) {
+                emptyList()
+            } else {
+                val securityManager = takagi.ru.monica.security.SecurityManager(applicationContext)
+                var failedPasswordDecryptCount = 0
+                val decrypted = passwords.map { entry ->
+                    try {
+                        entry.copy(password = securityManager.decryptData(entry.password))
+                    } catch (e: Exception) {
+                        android.util.Log.w(TAG, "无法解密密码条目: ${e.message}")
+                        failedPasswordDecryptCount++
+                        entry.copy(password = "")
+                    }
                 }
-            }
-            if (failedPasswordDecryptCount > 0) {
-                android.util.Log.w(
-                    TAG,
-                    "Auto backup postponed: $failedPasswordDecryptCount password secrets could not be decrypted"
-                )
-                SyncDiagnostics.blocked(
-                    taskId = taskId,
-                    target = target,
-                    trigger = trigger,
-                    reason = "decrypt_failed",
-                    startedAt = startedAt,
-                    detail = "passwords=$failedPasswordDecryptCount"
-                )
-                return androidx.work.ListenableWorker.Result.retry()
+                if (failedPasswordDecryptCount > 0) {
+                    android.util.Log.w(
+                        TAG,
+                        "Auto backup postponed: $failedPasswordDecryptCount password secrets could not be decrypted"
+                    )
+                    SyncDiagnostics.blocked(
+                        taskId = taskId,
+                        target = target,
+                        trigger = trigger,
+                        reason = "decrypt_failed",
+                        startedAt = startedAt,
+                        detail = "passwords=$failedPasswordDecryptCount"
+                    )
+                    return androidx.work.ListenableWorker.Result.retry()
+                }
+                decrypted
             }
 
-            val backupPreferences = webDavHelper.getBackupPreferences()
+            val backupPreferences = if (steamMaFileOnly) {
+                takagi.ru.monica.data.BackupPreferences.steamMaFileOnly()
+            } else {
+                webDavHelper.getBackupPreferences()
+            }
 
             android.util.Log.d(
                 TAG,
-                "Creating Monica-local backup with ${passwords.size} passwords and ${secureItems.size} secure items"
+                "Creating backup scope=${if (steamMaFileOnly) "steam-mafile" else "monica-local"} " +
+                    "passwords=${passwords.size} secureItems=${secureItems.size}"
             )
 
             val backupResult = webDavHelper.createAndUploadBackup(
@@ -208,7 +227,11 @@ class AutoBackupWorker(
                 preferences = backupPreferences,
                 isPermanent = false,
                 isManualTrigger = isManualTrigger,
-                contentScope = BackupContentScope.MONICA_LOCAL_ONLY
+                contentScope = if (steamMaFileOnly) {
+                    BackupContentScope.STEAM_MAFILE_ONLY
+                } else {
+                    BackupContentScope.MONICA_LOCAL_ONLY
+                }
             )
 
             if (backupResult.isSuccess) {
@@ -280,5 +303,6 @@ class AutoBackupWorker(
         private const val TAG = "AutoBackupWorker"
         const val WORK_NAME = "auto_webdav_backup"
         const val KEY_MANUAL_TRIGGER = "manual_trigger"
+        const val KEY_STEAM_MAFILE_ONLY = "steam_mafile_only"
     }
 }

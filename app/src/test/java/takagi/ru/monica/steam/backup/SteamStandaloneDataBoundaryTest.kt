@@ -25,7 +25,7 @@ class SteamStandaloneDataBoundaryTest {
     }
 
     @Test
-    fun standaloneWebDavReusesMonicaFullBackupFlow() {
+    fun standaloneWebDavReusesMonicaFlowButLimitsPayloadToMaFiles() {
         val maFileScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/backup/ui/SteamMaFileTransferScreen.kt"
         ).readText()
@@ -43,16 +43,26 @@ class SteamStandaloneDataBoundaryTest {
         val settings = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSharedSettingsHost.kt"
         ).readText()
+        val worker = projectFile(
+            "app/src/main/java/takagi/ru/monica/workers/AutoBackupWorker.kt"
+        ).readText()
 
         assertTrue(maFileScreen.contains("SteamMaFileZipCodec"))
         assertFalse(maFileScreen.contains("WebDav"))
         assertTrue(activity.contains("WebDavBackupScreen("))
         assertTrue(activity.contains("MonicaSteamPage.WEBDAV_BACKUP"))
+        assertTrue(activity.contains("steamMaFileOnly = true"))
         assertTrue(webDavScreen.contains("createAndUploadBackup"))
         assertTrue(webDavScreen.contains("downloadAndRestoreBackup"))
         assertTrue(webDavScreen.contains("AutoBackupManager"))
+        assertTrue(webDavScreen.contains("if (!steamMaFileOnly)"))
+        assertTrue(webDavScreen.contains("showPasswordPicker && !steamMaFileOnly"))
+        assertTrue(webDavScreen.contains("BackupContentScope.STEAM_MAFILE_ONLY"))
         assertTrue(webDavHelper.contains("STEAM_MAFILE_BACKUP_DIR"))
         assertTrue(webDavHelper.contains("createSteamMaFileBackups"))
+        assertTrue(webDavHelper.contains("contentScope == BackupContentScope.STEAM_MAFILE_ONLY"))
+        assertTrue(worker.contains("KEY_STEAM_MAFILE_ONLY"))
+        assertTrue(worker.contains("BackupPreferences.steamMaFileOnly()"))
         assertFalse(manifest.contains("androidx.work.WorkManagerInitializer\"\n                tools:node=\"remove"))
         assertFalse(manifest.contains("SystemJobService\" tools:node=\"remove"))
         assertTrue(buildScript.contains("implementation libs.androidx.work.runtime.ktx"))

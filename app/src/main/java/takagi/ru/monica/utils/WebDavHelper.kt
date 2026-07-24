@@ -1097,7 +1097,10 @@ class WebDavHelper(
     ): Result<Pair<File, BackupReport>> = withContext(Dispatchers.IO) {
         try {
             // 验证：检查是否至少启用了一种内容类型
-            if (!preferences.hasAnyEnabled()) {
+            if (
+                contentScope != BackupContentScope.STEAM_MAFILE_ONLY &&
+                !preferences.hasAnyEnabled()
+            ) {
                 android.util.Log.w("WebDavHelper", "Backup cancelled: no content types selected")
                 return@withContext Result.failure(Exception("请至少选择一种备份内容"))
             }
@@ -1116,7 +1119,10 @@ class WebDavHelper(
             var successImageCount = 0
             var successSteamMaFileCount = 0
             val securityManager = SecurityManager(context)
-            val steamMaFileBackups = if (preferences.includeAuthenticators) {
+            val steamMaFileBackups = if (
+                contentScope == BackupContentScope.STEAM_MAFILE_ONLY ||
+                preferences.includeAuthenticators
+            ) {
                 runCatching { createSteamMaFileBackups(securityManager) }
                     .onFailure { error ->
                         android.util.Log.w("WebDavHelper", "Failed to prepare Steam maFile backups: ${error.message}")
@@ -1125,6 +1131,12 @@ class WebDavHelper(
                     .getOrDefault(emptyList())
             } else {
                 emptyList()
+            }
+            if (
+                contentScope == BackupContentScope.STEAM_MAFILE_ONLY &&
+                steamMaFileBackups.isEmpty()
+            ) {
+                return@withContext Result.failure(Exception("没有可备份的 Steam maFile"))
             }
 
             // 1. 创建临时导出文件/目录
@@ -2658,7 +2670,8 @@ class WebDavHelper(
 
     private suspend fun clearLocalDataForOverwriteRestore(
         backupFileName: String,
-        clearSteamAccounts: Boolean = false
+        clearSteamAccounts: Boolean = false,
+        clearMonicaData: Boolean = true
     ): Result<Unit> {
         return try {
             android.util.Log.d(
@@ -2666,15 +2679,17 @@ class WebDavHelper(
                 "Overwrite restore validated, clearing Monica local data only: file=$backupFileName, " +
                     "clearSteamAccounts=$clearSteamAccounts"
             )
-            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-            database.passwordEntryDao().deleteAllLocalPasswordEntries()
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.TOTP)
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.BANK_CARD)
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.DOCUMENT)
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.BILLING_ADDRESS)
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.PAYMENT_ACCOUNT)
-            database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.NOTE)
-            database.passkeyDao().deleteAllLocalPasskeys()
+            if (clearMonicaData) {
+                val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+                database.passwordEntryDao().deleteAllLocalPasswordEntries()
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.TOTP)
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.BANK_CARD)
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.DOCUMENT)
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.BILLING_ADDRESS)
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.PAYMENT_ACCOUNT)
+                database.secureItemDao().deleteAllLocalItemsByType(takagi.ru.monica.data.ItemType.NOTE)
+                database.passkeyDao().deleteAllLocalPasskeys()
+            }
             if (clearSteamAccounts) {
                 SteamDatabase.getDatabase(context).steamAccountDao().deleteAll()
             }
@@ -2697,6 +2712,7 @@ class WebDavHelper(
         decryptPassword: String? = null,
         overwrite: Boolean = false,
         restoreMonicaConfig: Boolean? = true,
+        contentScope: BackupContentScope = BackupContentScope.MONICA_LOCAL_ONLY,
     ): Result<RestoreResult> = withContext(Dispatchers.IO) {
         try {
             // P0修复：错误跟踪
@@ -2747,12 +2763,16 @@ class WebDavHelper(
                 backupFile
             }
 
-            detectedMonicaConfigEntries = runCatching {
-                detectMonicaConfigEntries(zipFile)
-            }.onFailure { error ->
-                android.util.Log.w("WebDavHelper", "Failed to detect Monica config entries: ${error.message}")
-                warnings.add("Monica配置检测失败，按默认恢复策略继续")
-            }.getOrDefault(emptyList())
+            detectedMonicaConfigEntries = if (contentScope == BackupContentScope.STEAM_MAFILE_ONLY) {
+                emptyList()
+            } else {
+                runCatching {
+                    detectMonicaConfigEntries(zipFile)
+                }.onFailure { error ->
+                    android.util.Log.w("WebDavHelper", "Failed to detect Monica config entries: ${error.message}")
+                    warnings.add("Monica配置检测失败，按默认恢复策略继续")
+                }.getOrDefault(emptyList())
+            }
 
             if (detectedMonicaConfigEntries.isNotEmpty() && restoreMonicaConfig == null) {
                 return@withContext Result.failure(
@@ -2812,6 +2832,25 @@ class WebDavHelper(
                             val normalizedEntryName = entry.name.replace('\\', '/')
                             
                             when {
+                                contentScope == BackupContentScope.STEAM_MAFILE_ONLY &&
+                                    isSteamMaFileBackupEntry(normalizedEntryName) -> {
+                                    backupSteamMaFileCount++
+                                    val payload = restoreSteamMaFilePayload(tempFile)
+                                    if (payload != null) {
+                                        steamMaFiles.add(payload)
+                                        restoredSteamMaFileCount++
+                                    } else {
+                                        failedItems.add(
+                                            FailedItem(
+                                                id = 0,
+                                                type = STEAM_MAFILE_BACKUP_TYPE,
+                                                title = entryName,
+                                                reason = "maFile解析失败"
+                                            )
+                                        )
+                                    }
+                                }
+                                contentScope == BackupContentScope.STEAM_MAFILE_ONLY -> Unit
                                 !shouldRestoreMonicaConfig && isMonicaConfigEntry(
                                     normalizeBackupEntryName(normalizedEntryName),
                                     entryName,
@@ -4078,7 +4117,8 @@ class WebDavHelper(
                     val clearResult = if (steamMaFiles.isNotEmpty()) {
                         clearLocalDataForOverwriteRestore(
                             backupFileName = backupFile.name,
-                            clearSteamAccounts = true
+                            clearSteamAccounts = true,
+                            clearMonicaData = contentScope != BackupContentScope.STEAM_MAFILE_ONLY
                         )
                     } else {
                         clearLocalDataForOverwriteRestore(backupFile.name)
@@ -4141,6 +4181,7 @@ class WebDavHelper(
         decryptPassword: String? = null,
         overwrite: Boolean = false,
         restoreMonicaConfig: Boolean? = true,
+        contentScope: BackupContentScope = BackupContentScope.MONICA_LOCAL_ONLY,
     ): Result<RestoreResult> = 
         withContext(Dispatchers.IO) {
         try {
@@ -4160,6 +4201,7 @@ class WebDavHelper(
                     decryptPassword = decryptPassword,
                     overwrite = overwrite,
                     restoreMonicaConfig = restoreMonicaConfig,
+                    contentScope = contentScope,
                 )
                 if (restoreResult.isFailure) {
                     // 如果是密码错误，传递具体的异常

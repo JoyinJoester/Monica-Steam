@@ -10,13 +10,15 @@ import takagi.ru.monica.data.resolveOwnership
 
 enum class BackupContentScope {
     MONICA_LOCAL_ONLY,
-    ALL_OFFLINE
+    ALL_OFFLINE,
+    STEAM_MAFILE_ONLY
 }
 
 object BackupContentPolicy {
     fun shouldIncludePassword(entry: PasswordEntry, scope: BackupContentScope): Boolean {
         return when (scope) {
             BackupContentScope.ALL_OFFLINE -> true
+            BackupContentScope.STEAM_MAFILE_ONLY -> false
             BackupContentScope.MONICA_LOCAL_ONLY ->
                 entry.isLocalOnlyEntry() || isLikelyDetachedKeePassPassword(entry)
         }
@@ -25,6 +27,7 @@ object BackupContentPolicy {
     fun shouldIncludeSecureItem(item: SecureItem, scope: BackupContentScope): Boolean {
         return when (scope) {
             BackupContentScope.ALL_OFFLINE -> true
+            BackupContentScope.STEAM_MAFILE_ONLY -> false
             BackupContentScope.MONICA_LOCAL_ONLY ->
                 item.isLocalOnlyItem() || isLikelyDetachedKeePassSecureItem(item)
         }
@@ -33,6 +36,7 @@ object BackupContentPolicy {
     fun shouldIncludePasskey(passkey: PasskeyEntry, scope: BackupContentScope): Boolean {
         return when (scope) {
             BackupContentScope.ALL_OFFLINE -> true
+            BackupContentScope.STEAM_MAFILE_ONLY -> false
             BackupContentScope.MONICA_LOCAL_ONLY -> passkey.isLocalOnlyPasskey()
         }
     }

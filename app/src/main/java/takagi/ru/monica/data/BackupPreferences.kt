@@ -19,6 +19,24 @@ data class BackupPreferences(
     val includeWebDavConfig: Boolean = false,      // WebDAV 配置（默认关闭，需手动开启）
     val includeLocalKeePass: Boolean = false      // 本地 KeePass 数据库（默认关闭）
 ) {
+    companion object {
+        fun steamMaFileOnly(): BackupPreferences = BackupPreferences(
+            includePasswords = false,
+            includeAuthenticators = false,
+            includeDocuments = false,
+            includeBankCards = false,
+            includePasskeys = false,
+            includeGeneratorHistory = false,
+            includeImages = false,
+            includeNotes = false,
+            includeTimeline = false,
+            includeTrash = false,
+            includeTrashAndHistory = false,
+            includeWebDavConfig = false,
+            includeLocalKeePass = false
+        )
+    }
+
     /**
      * 检查是否至少启用了一种内容类型
      * 注意：WebDAV 配置和 KeePass 相关选项不计入必选项，因为它们是附加配置

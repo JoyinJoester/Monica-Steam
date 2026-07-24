@@ -402,7 +402,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                             WebDavBackupScreen(
                                 passwordRepository = passwordRepository,
                                 secureItemRepository = secureItemRepository,
-                                onNavigateBack = { navigateBack() }
+                                onNavigateBack = { navigateBack() },
+                                steamMaFileOnly = true
                             )
                         }
 
@@ -508,7 +509,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 if (!prefs.getBoolean(STEAM_AUTO_BACKUP_ENABLED_KEY, false)) return@runCatching
                 val lastBackupTime = prefs.getLong(STEAM_LAST_BACKUP_TIME_KEY, 0L)
                 if (shouldTriggerWebDavAutoBackup(lastBackupTime, System.currentTimeMillis())) {
-                    AutoBackupManager(this@MonicaSteamActivity).triggerBackupNow()
+                    AutoBackupManager(this@MonicaSteamActivity).triggerBackupNow(
+                        steamMaFileOnly = true
+                    )
                 }
             }.onFailure { error ->
                 takagi.ru.monica.steam.diagnostics.SteamDiagLogger.append(

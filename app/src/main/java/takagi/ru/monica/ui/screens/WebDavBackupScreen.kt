@@ -174,7 +174,8 @@ private fun RestoreModeOptionCard(
 fun WebDavBackupScreen(
     passwordRepository: PasswordRepository,
     secureItemRepository: SecureItemRepository,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    steamMaFileOnly: Boolean = false
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -201,7 +202,15 @@ fun WebDavBackupScreen(
     var encryptionPasswordVisible by remember { mutableStateOf(false) }
     
     // 选择性备份状态
-    var backupPreferences by remember { mutableStateOf(takagi.ru.monica.data.BackupPreferences()) }
+    var backupPreferences by remember(steamMaFileOnly) {
+        mutableStateOf(
+            if (steamMaFileOnly) {
+                takagi.ru.monica.data.BackupPreferences.steamMaFileOnly()
+            } else {
+                takagi.ru.monica.data.BackupPreferences()
+            }
+        )
+    }
     var passwordCount by remember { mutableStateOf(0) }
     var authenticatorCount by remember { mutableStateOf(0) }
     var documentCount by remember { mutableStateOf(0) }
@@ -243,40 +252,44 @@ fun WebDavBackupScreen(
         encryptionEnabled = encryptionConfig.enabled
         encryptionPassword = encryptionConfig.password
         
-        // 加载备份偏好设置
-        backupPreferences = webDavHelper.getBackupPreferences()
-        
-        // WebDAV 主备份只备份 Monica 本地库；外部来源有各自的同步/备份入口。
-        passwordCount = passwordRepository.getLocalEntriesCount()
-        authenticatorCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.TOTP)
-        documentCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.DOCUMENT)
-        bankCardCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.BANK_CARD)
-        noteCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.NOTE)
-        
-        // 获取本地回收站数量（排除 KeePass 和 Bitwarden 的数据）
-        val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-        val deletedPasswordCount = passwordRepository.getLocalDeletedEntriesCount()
-        val deletedSecureItemCount = secureItemRepository.getLocalDeletedItemCount()
-        trashCount = deletedPasswordCount + deletedSecureItemCount
-        
-        // 获取本地 KeePass 数据库数量
-        try {
-            val keepassDao = database.localKeePassDatabaseDao()
-            localKeePassCount = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                keepassDao.getAllDatabasesSync().size
-            }
-        } catch (e: Exception) {
-            localKeePassCount = 0
-        }
+        if (steamMaFileOnly) {
+            backupPreferences = takagi.ru.monica.data.BackupPreferences.steamMaFileOnly()
+        } else {
+            // 加载备份偏好设置
+            backupPreferences = webDavHelper.getBackupPreferences()
 
-        // 获取本地 Passkey 数量（排除 KeePass 和 Bitwarden 的数据）
-        try {
-            val passkeyDao = database.passkeyDao()
-            passkeyCount = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                passkeyDao.getLocalPasskeyCount()
+            // WebDAV 主备份只备份 Monica 本地库；外部来源有各自的同步/备份入口。
+            passwordCount = passwordRepository.getLocalEntriesCount()
+            authenticatorCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.TOTP)
+            documentCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.DOCUMENT)
+            bankCardCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.BANK_CARD)
+            noteCount = secureItemRepository.getLocalItemCountByType(takagi.ru.monica.data.ItemType.NOTE)
+
+            // 获取本地回收站数量（排除 KeePass 和 Bitwarden 的数据）
+            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+            val deletedPasswordCount = passwordRepository.getLocalDeletedEntriesCount()
+            val deletedSecureItemCount = secureItemRepository.getLocalDeletedItemCount()
+            trashCount = deletedPasswordCount + deletedSecureItemCount
+
+            // 获取本地 KeePass 数据库数量
+            try {
+                val keepassDao = database.localKeePassDatabaseDao()
+                localKeePassCount = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    keepassDao.getAllDatabasesSync().size
+                }
+            } catch (e: Exception) {
+                localKeePassCount = 0
             }
-        } catch (e: Exception) {
-            passkeyCount = 0
+
+            // 获取本地 Passkey 数量（排除 KeePass 和 Bitwarden 的数据）
+            try {
+                val passkeyDao = database.passkeyDao()
+                passkeyCount = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    passkeyDao.getLocalPasskeyCount()
+                }
+            } catch (e: Exception) {
+                passkeyCount = 0
+            }
         }
     }
     
@@ -409,14 +422,16 @@ fun WebDavBackupScreen(
                         style = MaterialTheme.typography.titleMedium
                     )
 
-                    FilledTonalButton(
-                        onClick = { showPasswordPicker = true },
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = !isTesting && !isConfigured
-                    ) {
-                        Icon(Icons.Default.Key, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(R.string.webdav_fill_from_password))
+                    if (!steamMaFileOnly) {
+                        FilledTonalButton(
+                            onClick = { showPasswordPicker = true },
+                            modifier = Modifier.fillMaxWidth(),
+                            enabled = !isTesting && !isConfigured
+                        ) {
+                            Icon(Icons.Default.Key, contentDescription = null)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(stringResource(R.string.webdav_fill_from_password))
+                        }
                     }
                     
                     // 服务器地址
@@ -686,7 +701,9 @@ fun WebDavBackupScreen(
                             onClick = {
                                 coroutineScope.launch {
                                     try {
-                                        val enqueued = autoBackupManager.triggerBackupNow()
+                                        val enqueued = autoBackupManager.triggerBackupNow(
+                                            steamMaFileOnly = steamMaFileOnly
+                                        )
                                         if (!enqueued) {
                                             Toast.makeText(
                                                 context,
@@ -732,22 +749,24 @@ fun WebDavBackupScreen(
                 }
                 
                 // 选择性备份设置卡片
-                takagi.ru.monica.ui.components.SelectiveBackupCard(
-                    preferences = backupPreferences,
-                    onPreferencesChange = { newPreferences ->
-                        backupPreferences = newPreferences
-                        webDavHelper.saveBackupPreferences(newPreferences)
-                    },
-                    passwordCount = passwordCount,
-                    authenticatorCount = authenticatorCount,
-                    documentCount = documentCount,
-                    bankCardCount = bankCardCount,
-                    noteCount = noteCount,
-                    trashCount = trashCount,
-                    passkeyCount = passkeyCount,
-                    localKeePassCount = localKeePassCount,
-                    isWebDavConfigured = isConfigured
-                )
+                if (!steamMaFileOnly) {
+                    takagi.ru.monica.ui.components.SelectiveBackupCard(
+                        preferences = backupPreferences,
+                        onPreferencesChange = { newPreferences ->
+                            backupPreferences = newPreferences
+                            webDavHelper.saveBackupPreferences(newPreferences)
+                        },
+                        passwordCount = passwordCount,
+                        authenticatorCount = authenticatorCount,
+                        documentCount = documentCount,
+                        bankCardCount = bankCardCount,
+                        noteCount = noteCount,
+                        trashCount = trashCount,
+                        passkeyCount = passkeyCount,
+                        localKeePassCount = localKeePassCount,
+                        isWebDavConfigured = isConfigured
+                    )
+                }
             }
             
             // 备份列表(仅在配置成功后显示)
@@ -768,7 +787,7 @@ fun WebDavBackupScreen(
                         }
                         
                         // 验证：检查是否至少选择了一种内容类型
-                        if (!backupPreferences.hasAnyEnabled()) {
+                        if (!steamMaFileOnly && !backupPreferences.hasAnyEnabled()) {
                             Toast.makeText(
                                 context,
                                 context.getString(R.string.backup_validation_error),
@@ -801,7 +820,11 @@ fun WebDavBackupScreen(
                                     val startedAt = SyncDiagnostics.start(taskId, targetLog, triggerLog)
                                     try {
                                         // 获取 Monica 本地密码数据
-                                        val localPasswords = passwordRepository.getAllLocalPasswordEntries()
+                                        val localPasswords = if (steamMaFileOnly) {
+                                            emptyList()
+                                        } else {
+                                            passwordRepository.getAllLocalPasswordEntries()
+                                        }
 
                                         // WebDAV 是跨端备份；如果 Android 本机密钥不可用，不能把设备密文写进备份。
                                         val securityManager = takagi.ru.monica.security.SecurityManager(context)
@@ -822,7 +845,11 @@ fun WebDavBackupScreen(
                                         }
 
                                         // 获取 Monica 本地其他数据(TOTP、银行卡、证件、笔记)
-                                        val localSecureItems = secureItemRepository.getAllLocalItems()
+                                        val localSecureItems = if (steamMaFileOnly) {
+                                            emptyList()
+                                        } else {
+                                            secureItemRepository.getAllLocalItems()
+                                        }
 
                                         // 创建并上传永久备份
                                         val report = webDavHelper.createAndUploadBackup(
@@ -831,7 +858,11 @@ fun WebDavBackupScreen(
                                             preferences = backupPreferences,
                                             isPermanent = true, // Manual backups are permanent
                                             isManualTrigger = true,
-                                            contentScope = BackupContentScope.MONICA_LOCAL_ONLY
+                                            contentScope = if (steamMaFileOnly) {
+                                                BackupContentScope.STEAM_MAFILE_ONLY
+                                            } else {
+                                                BackupContentScope.MONICA_LOCAL_ONLY
+                                            }
                                         ).getOrThrow()
 
                                         SyncDiagnostics.success(
@@ -1013,6 +1044,11 @@ fun WebDavBackupScreen(
                                     webDavHelper = webDavHelper,
                                     passwordRepository = passwordRepository,
                                     secureItemRepository = secureItemRepository,
+                                    contentScope = if (steamMaFileOnly) {
+                                        BackupContentScope.STEAM_MAFILE_ONLY
+                                    } else {
+                                        BackupContentScope.MONICA_LOCAL_ONLY
+                                    },
                                     onDeleted = {
                                         backupList = backupList - backup
                                     },
@@ -1044,7 +1080,7 @@ fun WebDavBackupScreen(
         }
     }
 
-    if (showPasswordPicker) {
+    if (showPasswordPicker && !steamMaFileOnly) {
         PasswordEntryPickerBottomSheet(
             visible = true,
             title = stringResource(R.string.webdav_fill_from_password),
@@ -1088,6 +1124,7 @@ private fun BackupItem(
     webDavHelper: WebDavHelper,
     passwordRepository: PasswordRepository,
     secureItemRepository: SecureItemRepository,
+    contentScope: BackupContentScope,
     onDeleted: () -> Unit,
     onRestoreSuccess: () -> Unit,
     onStatusChanged: () -> Unit // Callback for status change
@@ -1259,6 +1296,7 @@ private fun BackupItem(
                     decryptPassword = decryptPassword,
                     overwrite = resolveRestoreOverwrite(),
                     restoreMonicaConfig = restoreMonicaConfig,
+                    contentScope = contentScope,
                 )
                 handleRestoreResult(
                     result = result,

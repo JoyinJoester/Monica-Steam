@@ -19,7 +19,7 @@ class AutoBackupManager(private val context: Context) {
      * 启动自动备份
      * 每天执行一次，在凌晨2点执行
      */
-    fun scheduleAutoBackup() {
+    fun scheduleAutoBackup(steamMaFileOnly: Boolean = false) {
         android.util.Log.d("AutoBackupManager", "Scheduling auto backup...")
         
         // 创建约束条件
@@ -50,6 +50,11 @@ class AutoBackupManager(private val context: Context) {
         )
             .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
             .setConstraints(constraints)
+            .setInputData(
+                androidx.work.Data.Builder()
+                    .putBoolean(AutoBackupWorker.KEY_STEAM_MAFILE_ONLY, steamMaFileOnly)
+                    .build()
+            )
             .setBackoffCriteria(
                 BackoffPolicy.EXPONENTIAL,
                 WorkRequest.MIN_BACKOFF_MILLIS,
@@ -61,7 +66,7 @@ class AutoBackupManager(private val context: Context) {
         // 使用 KEEP 策略，如果已存在则保持现有的
         workManager.enqueueUniquePeriodicWork(
             AutoBackupWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.UPDATE,
             workRequest
         )
         
@@ -98,7 +103,7 @@ class AutoBackupManager(private val context: Context) {
      *
      * @return true 表示任务已入队；false 表示由于 backoff 被拒绝或未配置服务器。
      */
-    fun triggerBackupNow(): Boolean {
+    fun triggerBackupNow(steamMaFileOnly: Boolean = false): Boolean {
         android.util.Log.d("AutoBackupManager", "Triggering immediate backup...")
 
         val webDavHelper = takagi.ru.monica.utils.WebDavHelper(context)
@@ -119,6 +124,7 @@ class AutoBackupManager(private val context: Context) {
 
         val inputData = androidx.work.Data.Builder()
             .putBoolean(AutoBackupWorker.KEY_MANUAL_TRIGGER, true)
+            .putBoolean(AutoBackupWorker.KEY_STEAM_MAFILE_ONLY, steamMaFileOnly)
             .build()
 
         val workRequest = OneTimeWorkRequestBuilder<AutoBackupWorker>()
