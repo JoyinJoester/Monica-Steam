@@ -45,6 +45,23 @@ class SteamAccountHeroLayoutGuardTest {
         assertTrue(metric.contains("overflow = TextOverflow.Ellipsis"))
     }
 
+    @Test
+    fun accountDetailHeroClipsAnimatedBackgroundAtItsLayoutBoundary() {
+        val screen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
+        ).readText()
+        val detailHero = screen
+            .substringAfter("private fun SteamAccountDetailHero(")
+            .substringBefore("private fun SteamAccountDetailMetric(")
+        val heroBoundary = detailHero
+            .substringAfter(".height(320.dp)")
+            .substringBefore(".background(MaterialTheme.colorScheme.primaryContainer)")
+
+        assertTrue(heroBoundary.contains(".clipToBounds()"))
+        assertTrue(detailHero.contains("SteamMiniProfileBackgroundLayer("))
+        assertTrue(detailHero.contains("modifier = Modifier.matchParentSize()"))
+    }
+
     private fun projectFile(path: String): File {
         var dir = File(requireNotNull(System.getProperty("user.dir"))).canonicalFile
         while (

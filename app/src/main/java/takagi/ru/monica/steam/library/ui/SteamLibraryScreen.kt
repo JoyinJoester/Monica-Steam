@@ -69,6 +69,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -889,6 +890,7 @@ private fun SteamAccountDetailHero(
         modifier = Modifier
             .fillMaxWidth()
             .height(320.dp)
+            .clipToBounds()
             .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
         if (account.hasRealSteamId) {
