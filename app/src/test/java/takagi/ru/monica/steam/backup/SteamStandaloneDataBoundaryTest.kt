@@ -40,6 +40,9 @@ class SteamStandaloneDataBoundaryTest {
         ).readText()
         val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
         val buildScript = projectFile("app/build.gradle").readText()
+        val settings = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSharedSettingsHost.kt"
+        ).readText()
 
         assertTrue(maFileScreen.contains("SteamMaFileZipCodec"))
         assertFalse(maFileScreen.contains("WebDav"))
@@ -54,6 +57,10 @@ class SteamStandaloneDataBoundaryTest {
         assertFalse(manifest.contains("SystemJobService\" tools:node=\"remove"))
         assertTrue(buildScript.contains("implementation libs.androidx.work.runtime.ktx"))
         assertFalse(buildScript.contains("compileOnly libs.androidx.work.runtime.ktx"))
+        assertTrue(settings.contains("onNavigateToSteamBackup = onOpenMaFileTransfer"))
+        assertTrue(settings.contains("onNavigateToWebDavBackup = onOpenWebDavBackup"))
+        assertTrue(activity.contains("onOpenMaFileTransfer ="))
+        assertTrue(activity.contains("onOpenWebDavBackup ="))
     }
 
     @Test

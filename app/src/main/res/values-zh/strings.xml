@@ -4182,6 +4182,7 @@
     <string name="steam_webdav_restore_message">下载 %1$s 并导入到本地 Steam 账号库。</string>
     <string name="steam_settings_data_section">数据与存储</string>
     <string name="steam_settings_mafile_backup_description">导入和导出本地 maFile ZIP</string>
+    <string name="steam_settings_webdav_backup_description">使用 Monica 全量逻辑备份和恢复 Steam 账号、maFile 与应用数据</string>
     <string name="steam_mdbx_title">MDBX</string>
     <string name="steam_mdbx_description">创建、打开和管理本地或 WebDAV MDBX 数据库</string>
     <string name="steam_backup_preview_title">恢复预览</string>

@@ -4352,6 +4352,7 @@
     <string name="steam_webdav_restore_message">Download and import %1$s into the local Steam account store.</string>
     <string name="steam_settings_data_section">Data &amp; storage</string>
     <string name="steam_settings_mafile_backup_description">Import and export a local maFile ZIP</string>
+    <string name="steam_settings_webdav_backup_description">Full Monica backup and restore for Steam accounts, maFiles, and app data</string>
     <string name="steam_mdbx_title">MDBX</string>
     <string name="steam_mdbx_description">Create, open, and manage local or WebDAV MDBX databases</string>
     <string name="steam_backup_preview_title">Restore preview</string>

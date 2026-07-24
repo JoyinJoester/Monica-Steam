@@ -344,7 +344,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 passwordViewModel = passwordViewModel,
                                 securityManager = securityManager,
                                 onNavigateBack = { navigateBack() },
-                                onOpenBackup = { navigateTo(MonicaSteamPage.MAFILE_TRANSFER) },
+                                onOpenMaFileTransfer = {
+                                    navigateTo(MonicaSteamPage.MAFILE_TRANSFER)
+                                },
+                                onOpenWebDavBackup = {
+                                    navigateTo(MonicaSteamPage.WEBDAV_BACKUP)
+                                },
                                 onOpenMdbx = { navigateTo(MonicaSteamPage.MDBX) },
                                 dockOrder = dockOrder,
                                 onDockOrderChange = { order ->

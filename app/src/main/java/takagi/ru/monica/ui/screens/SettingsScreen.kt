@@ -128,6 +128,9 @@ fun SettingsScreen(
     steamBackupTitle: String? = null,
     steamBackupDescription: String? = null,
     onNavigateToSteamBackup: (() -> Unit)? = null,
+    webDavBackupTitle: String? = null,
+    webDavBackupDescription: String? = null,
+    onNavigateToWebDavBackup: (() -> Unit)? = null,
     surfacePolicy: SettingsSurfacePolicy = SettingsSurfacePolicy(),
     additionalSettingsContent: (@Composable () -> Unit)? = null,
     additionalAppearanceContent: (@Composable () -> Unit)? = null,
@@ -681,6 +684,14 @@ fun SettingsScreen(
             steamBackupTitle,
             steamBackupDescription
         )
+    val showWebDavBackupItem = webDavBackupTitle != null &&
+        webDavBackupDescription != null &&
+        onNavigateToWebDavBackup != null &&
+        matchesSettingsItem(
+            dataManagementTitle,
+            webDavBackupTitle,
+            webDavBackupDescription
+        )
     val showMdbxItem = showMdbxSurface && matchesSettingsItem(
         dataManagementTitle,
         context.getString(R.string.mdbx_format_title),
@@ -690,6 +701,7 @@ fun SettingsScreen(
         showSyncBackupItem,
         showAutofillItem,
         showSteamBackupItem,
+        showWebDavBackupItem,
         showMdbxItem,
         showTrashItem,
         showClearDataItem,
@@ -949,11 +961,21 @@ fun SettingsScreen(
                 SettingsSection(title = dataManagementTitle) {
                     if (showSteamBackupItem) {
                         SettingsItem(
-                            icon = Icons.Default.CloudUpload,
+                            icon = Icons.Default.ImportExport,
                             title = steamBackupTitle.orEmpty(),
                             subtitle = steamBackupDescription.orEmpty(),
                             onClick = onNavigateToSteamBackup ?: {},
                             modifier = getSharedModifier("steam_backup_settings_card")
+                        )
+                    }
+
+                    if (showWebDavBackupItem) {
+                        SettingsItem(
+                            icon = Icons.Default.CloudSync,
+                            title = webDavBackupTitle.orEmpty(),
+                            subtitle = webDavBackupDescription.orEmpty(),
+                            onClick = onNavigateToWebDavBackup ?: {},
+                            modifier = getSharedModifier("webdav_backup_settings_card")
                         )
                     }
 
