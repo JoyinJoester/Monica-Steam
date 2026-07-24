@@ -349,6 +349,7 @@ dependencies {
     
     // Kotlinx Serialization
     implementation libs.kotlinx.serialization.json
+    implementation "com.kizitonwose.calendar:compose:2.6.1"
     
     // WebDAV for cloud backup
     implementation 'com.github.thegrizzlylabs:sardine-android:0.8'

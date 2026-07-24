@@ -4092,6 +4092,9 @@
     <string name="steam_library_open_account_details">查看账号详情</string>
     <string name="steam_library_account_overview">账号数据</string>
     <string name="steam_analytics_game_distribution">游戏数分布</string>
+    <string name="steam_analytics_game_heatmap">游戏热力图</string>
+    <string name="steam_analytics_local_tracking_note">每日时长根据本机 Steam 同步增量记录，首次同步只建立基线。</string>
+    <string name="steam_analytics_day_total">当日合计：%1$s</string>
     <string name="steam_analytics_playtime">游戏时长</string>
     <string name="steam_analytics_price">游戏价格</string>
     <string name="steam_distribution_unplayed">未玩</string>

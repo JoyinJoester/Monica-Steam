@@ -99,6 +99,9 @@ import takagi.ru.monica.steam.library.SteamLibrarySnapshot
 import takagi.ru.monica.steam.library.SteamLibraryViewModel
 import takagi.ru.monica.steam.library.SteamRegionalPrice
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
+import takagi.ru.monica.steam.library.analytics.domain.SteamPlayActivityHistory
+import takagi.ru.monica.steam.library.analytics.ui.SteamGameDistributionCard
+import takagi.ru.monica.steam.library.analytics.ui.SteamPlayHeatMapCard
 import takagi.ru.monica.steam.profile.SteamMiniProfileDecor
 import takagi.ru.monica.steam.profile.SteamMiniProfileDecorRepository
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
@@ -246,6 +249,7 @@ fun SteamLibraryScreen(
                         SteamAccountDetail(
                             account = account,
                             snapshot = state.snapshot,
+                            playActivity = state.playActivity,
                             fromCache = state.snapshotFromCache,
                             loading = state.loadingLibrary,
                             failure = state.libraryFailure,
@@ -726,6 +730,7 @@ private fun SteamAccountHeroCard(
 private fun SteamAccountDetail(
     account: SteamAccount,
     snapshot: SteamLibrarySnapshot?,
+    playActivity: SteamPlayActivityHistory?,
     fromCache: Boolean,
     loading: Boolean,
     failure: SteamLibraryFailureReason?,
@@ -736,7 +741,7 @@ private fun SteamAccountDetail(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = 32.dp)
+        contentPadding = PaddingValues(bottom = 112.dp)
     ) {
         item {
             SteamAccountDetailHero(
@@ -868,6 +873,15 @@ private fun SteamAccountDetail(
                         )
                     }
                 }
+            }
+        }
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                SteamGameDistributionCard(snapshot = snapshot)
+                SteamPlayHeatMapCard(history = playActivity)
             }
         }
     }

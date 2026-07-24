@@ -11,6 +11,10 @@ Copyright (C) 2026 Shubham Gorai
 Licensed under the GNU General Public License v3.0 or later. The complete license text is
 included in this repository's `LICENSE` file.
 
+The heatmap calendar is rendered with
+[`Kizitonwose Calendar`](https://github.com/kizitonwose/calendar), developed by Kizito Nwose
+and distributed under the MIT License.
+
 ## Essentials
 
 The Monica Steam floating Dock interaction is adapted from

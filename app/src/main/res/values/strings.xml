@@ -4262,6 +4262,9 @@
     <string name="steam_library_open_account_details">Open account details</string>
     <string name="steam_library_account_overview">Account overview</string>
     <string name="steam_analytics_game_distribution">Game distribution</string>
+    <string name="steam_analytics_game_heatmap">Game heatmap</string>
+    <string name="steam_analytics_local_tracking_note">Daily playtime is recorded from local Steam sync changes. The first sync establishes a baseline.</string>
+    <string name="steam_analytics_day_total">Total: %1$s</string>
     <string name="steam_analytics_playtime">Playtime</string>
     <string name="steam_analytics_price">Price</string>
     <string name="steam_distribution_unplayed">Unplayed</string>
