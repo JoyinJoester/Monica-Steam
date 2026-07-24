@@ -1123,8 +1123,8 @@
     <string name="developer_share_logs">Chia sẻ nhật ký</string>
     <string name="developer_share_logs_desc">Xuất và chia sẻ nhật ký gần đây</string>
     <string name="developer_functions">Chức năng nhà phát triển</string>
-    <string name="developer_disable_password_verification">Tắt xác minh mật khẩu</string>
-    <string name="developer_disable_password_verification_desc">Bỏ qua xác minh mật khẩu khi khởi động ứng dụng (chỉ dành cho kiểm thử phát triển)</string>
+    <string name="disable_password_verification">Tắt xác minh mật khẩu</string>
+    <string name="disable_password_verification_desc">Bỏ qua xác minh mật khẩu chính khi khởi động ứng dụng. Hãy thận trọng vì điều này làm giảm tính bảo mật.</string>
     <string name="developer_launcher_name_use_pass">Dùng Monica Pass làm tên ngoài màn hình chính</string>
     <string name="developer_launcher_name_use_pass_desc">Bật: Monica Pass. Tắt: Monica. Chỉ đổi tên lối vào chính trên launcher.</string>
     <string name="developer_bitwarden_forensics_toggle">Bật forensics đồng bộ Bitwarden</string>

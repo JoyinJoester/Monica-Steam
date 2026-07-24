@@ -1104,8 +1104,8 @@
     <string name="developer_share_logs">ログを共有</string>
     <string name="developer_share_logs_desc">最近のログをエクスポートして共有</string>
     <string name="developer_functions">開発者機能</string>
-    <string name="developer_disable_password_verification">パスワード検証を無効化</string>
-    <string name="developer_disable_password_verification_desc">アプリ起動時のパスワード検証をスキップ（開発テスト専用）</string>
+    <string name="disable_password_verification">パスワード検証を無効化</string>
+    <string name="disable_password_verification_desc">アプリ起動時のマスターパスワード検証をスキップします。セキュリティが低下するため、注意して使用してください。</string>
     <string name="developer_launcher_name_use_pass">ランチャー名を Monica Pass にする</string>
     <string name="developer_launcher_name_use_pass_desc">オンで Monica Pass、オフで Monica。メインのランチャー表示名だけを切り替えます。</string>
     <string name="developer_bitwarden_forensics_toggle">Bitwarden 同期フォレンジックを有効化</string>

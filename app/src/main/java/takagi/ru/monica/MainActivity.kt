@@ -3338,15 +3338,8 @@ fun MonicaContent(
                 takagi.ru.monica.ui.LocalAnimatedVisibilityScope provides this
             ) {
             takagi.ru.monica.ui.screens.DeveloperSettingsScreen(
-                viewModel = settingsViewModel,
                 onNavigateBack = {
                     navController.popBackStack()
-                },
-                onNavigateToMdbx = {
-                    navController.navigate(Screen.MdbxManager.route) {
-                        popUpTo(Screen.MdbxManager.route) { inclusive = true }
-                        launchSingleTop = true
-                    }
                 }
             )
             }

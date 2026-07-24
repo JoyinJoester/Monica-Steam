@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.VpnKey
@@ -166,6 +167,16 @@ fun MasterPasswordLockingSettingsScreen(
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                }
+            )
+
+            SettingsItemWithSwitch(
+                icon = Icons.Default.LockOpen,
+                title = stringResource(R.string.disable_password_verification),
+                subtitle = stringResource(R.string.disable_password_verification_desc),
+                checked = settings.disablePasswordVerification,
+                onCheckedChange = { disabled ->
+                    viewModel.updateDisablePasswordVerification(disabled)
                 }
             )
 

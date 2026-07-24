@@ -238,9 +238,7 @@ fun MonicaSteamSettingsScreen(
                     modifier = Modifier.fillMaxSize()
                 )
                 SteamSettingsChild.DEVELOPER -> DeveloperSettingsScreen(
-                    viewModel = settingsViewModel,
                     onNavigateBack = { child = null },
-                    onNavigateToMdbx = onOpenMdbx,
                     modifier = Modifier.fillMaxSize()
                 )
                 SteamSettingsChild.EXTENSIONS -> ExtensionsScreen(

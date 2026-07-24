@@ -1721,8 +1721,8 @@
     <string name="developer_share_logs">Поделиться логами</string>
     <string name="developer_share_logs_desc">Экспорт и отправка последних логов</string>
     <string name="developer_functions">Функции разработчика</string>
-    <string name="developer_disable_password_verification">Отключить проверку пароля</string>
-    <string name="developer_disable_password_verification_desc">Пропускать проверку пароля при запуске (только для разработки)</string>
+    <string name="disable_password_verification">Отключить проверку пароля</string>
+    <string name="disable_password_verification_desc">Пропускать проверку мастер-пароля при запуске. Используйте осторожно: это снижает безопасность.</string>
     <string name="developer_launcher_name_use_pass">Использовать Monica Pass как имя</string>
     <string name="developer_launcher_name_use_pass_desc">Вкл: Monica Pass. Выкл: Monica. Меняет только имя в лаунчере.</string>
     <string name="developer_bitwarden_forensics_toggle">Криминалистика синхронизации Bitwarden</string>
