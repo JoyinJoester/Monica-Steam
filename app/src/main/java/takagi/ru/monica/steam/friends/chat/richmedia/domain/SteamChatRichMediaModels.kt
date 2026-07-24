@@ -72,6 +72,15 @@ sealed interface SteamChatRichContent {
         val inviterSteamId: String?,
         val url: String?,
         val label: String,
+        val rawBody: String,
+        val inviteKind: String = "gameinvite"
+    ) : SteamChatRichContent
+
+    /** Steam BBCode notification that has no safe rich renderer yet. */
+    data class SystemMessage(
+        val kind: String,
+        val label: String,
+        val url: String? = null,
         val rawBody: String
     ) : SteamChatRichContent
 
@@ -93,10 +102,23 @@ object SteamChatRichContentParser {
         "steam://joinlobby/(\\d+)(?:/([^/\\s\\]]+))?(?:/(7656119\\d{10}))?",
         RegexOption.IGNORE_CASE
     )
+    private val gameUrlPattern = Regex(
+        "steam://(joinlobby|joinparty|rungame|remoteplay/connect)/([^\\s\\]]+)",
+        RegexOption.IGNORE_CASE
+    )
     private val linkedUrlPattern = Regex(
         "\\[url=(steam://joinlobby/[^]]+)]([^\\[]+)\\[/url]",
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
+    private val specialTagPattern = Regex(
+        "\\[(gameinvite|lobbyinvite|tradeoffer|broadcastinvite|broadcastviewrequest|playtestinvite|invite)(?:\\s+([^]]+))?](.*?)\\[/\\1]",
+        setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
+    )
+    private val steamUrlPattern = Regex(
+        "steam://(?:joinlobby|joinparty|rungame|remoteplay/connect)/[^\\s\\]]+",
+        RegexOption.IGNORE_CASE
+    )
+    private val httpUrlPattern = Regex("https?://[^\\s\\]]+", RegexOption.IGNORE_CASE)
     private val imagePattern = Regex("\\[img(?:=[^]]+)?](https?://[^\\[]+)\\[/img]", RegexOption.IGNORE_CASE)
     private val videoPattern = Regex("\\[video(?:=[^]]+)?](https?://[^\\[]+)\\[/video]", RegexOption.IGNORE_CASE)
     private val urlPattern = Regex(
@@ -126,6 +148,53 @@ object SteamChatRichContentParser {
             )
         }
 
+        gameUrlPattern.find(body)?.let { match ->
+            val kind = match.groupValues[1].lowercase()
+            val parts = match.groupValues[2].split('/')
+            val appId = parts.firstOrNull()?.toIntOrNull()
+            val lobbyId = parts.getOrNull(1)?.takeIf { kind == "joinlobby" }
+            val inviter = parts.firstOrNull { it.startsWith("7656119") }
+            return SteamChatRichContent.GameInvite(
+                appId = appId,
+                lobbyId = lobbyId,
+                inviterSteamId = inviter,
+                url = match.value,
+                label = linkedUrlPattern.find(body)?.groupValues?.getOrNull(2)?.trim()
+                    .orEmpty().ifBlank { "Steam game invitation" },
+                rawBody = body,
+                inviteKind = kind
+            )
+        }
+
+        specialTagPattern.find(body)?.let { match ->
+            val kind = match.groupValues[1].lowercase()
+            val attributes = parseAttributes(match.groupValues.getOrNull(2).orEmpty())
+            val innerText = match.groupValues.getOrNull(3).orEmpty().trim()
+            val appId = attributes["appid"]?.toIntOrNull()
+            val lobbyId = attributes["lobbyid"] ?: attributes["lobby_id"]
+            val inviter = attributes["steamid"] ?: attributes["steamid64"]
+            val url = steamUrlPattern.find(innerText)?.value
+                ?: httpUrlPattern.find(innerText)?.value
+                ?: buildInviteUrl(kind, appId, lobbyId, inviter, attributes)
+            if (kind == "gameinvite" || kind == "lobbyinvite") {
+                return SteamChatRichContent.GameInvite(
+                    appId = appId,
+                    lobbyId = lobbyId,
+                    inviterSteamId = inviter,
+                    url = url,
+                    label = innerText.ifBlank { "Steam game invitation" },
+                    rawBody = body,
+                    inviteKind = kind
+                )
+            }
+            return SteamChatRichContent.SystemMessage(
+                kind = kind,
+                label = innerText.ifBlank { steamSpecialLabel(kind) },
+                url = url,
+                rawBody = body
+            )
+        }
+
         imagePattern.find(body)?.let { match ->
             val url = match.groupValues[1].trim()
             return SteamChatRichContent.Attachment(url, fileLabel(url), SteamChatAttachmentKind.IMAGE)
@@ -140,6 +209,43 @@ object SteamChatRichContentParser {
             return SteamChatRichContent.Attachment(url, label, attachmentKind(url))
         }
         return SteamChatRichContent.Text(body)
+    }
+
+    private fun parseAttributes(raw: String): Map<String, String> =
+        Regex("""([A-Za-z0-9_]+)=(?:"([^"]*)"|'([^']*)'|([^\s]+))""")
+            .findAll(raw)
+            .associate { match ->
+                val value = match.groupValues.drop(2).firstOrNull(String::isNotEmpty).orEmpty()
+                match.groupValues[1].lowercase() to value
+            }
+
+    private fun buildInviteUrl(
+        kind: String,
+        appId: Int?,
+        lobbyId: String?,
+        inviterSteamId: String?,
+        attributes: Map<String, String>
+    ): String? {
+        if (appId == null) return null
+        return when {
+            (kind == "lobbyinvite" || kind == "gameinvite") && !lobbyId.isNullOrBlank() ->
+                "steam://joinlobby/$appId/$lobbyId" +
+                    (inviterSteamId?.let { "/$it" } ?: "")
+            !attributes["remoteplay"].isNullOrBlank() ->
+                "steam://remoteplay/connect/${inviterSteamId.orEmpty()}?appid=$appId&${attributes["remoteplay"]}"
+            !attributes["connectstring"].isNullOrBlank() && !inviterSteamId.isNullOrBlank() ->
+                "steam://rungame/$appId/$inviterSteamId/${attributes["connectstring"]}"
+            else -> null
+        }
+    }
+
+    private fun steamSpecialLabel(kind: String): String = when (kind) {
+        "tradeoffer" -> "Steam trade offer"
+        "broadcastinvite" -> "Steam broadcast invitation"
+        "broadcastviewrequest" -> "Steam broadcast request"
+        "playtestinvite" -> "Steam playtest invitation"
+        "invite" -> "Steam invitation"
+        else -> "Steam notification"
     }
 
     private fun fileLabel(url: String): String = runCatching {

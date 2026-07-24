@@ -48,12 +48,49 @@ internal fun SteamChatRichMessageContent(
     when (val content = remember(body) { SteamChatRichContentParser.parse(body) }) {
         is SteamChatRichContent.Text -> SteamChatEmoticonText(content.body, modifier)
         is SteamChatRichContent.GameInvite -> GameInviteContent(content, modifier)
+        is SteamChatRichContent.SystemMessage -> SteamSystemMessageContent(content, modifier)
         is SteamChatRichContent.Sticker -> SteamChatRemoteImage(
             url = content.imageUrl,
             contentDescription = content.name,
             modifier = modifier.size(148.dp)
         )
         is SteamChatRichContent.Attachment -> AttachmentContent(content, modifier)
+    }
+}
+
+@Composable
+private fun SteamSystemMessageContent(
+    content: SteamChatRichContent.SystemMessage,
+    modifier: Modifier
+) {
+    val context = LocalContext.current
+    val open = {
+        content.url?.let { url ->
+            runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
+        }
+        Unit
+    }
+    Surface(
+        modifier = modifier
+            .widthIn(min = 180.dp, max = 280.dp)
+            .clickable(enabled = content.url != null, onClick = open),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(Icons.Default.OpenInNew, contentDescription = null)
+            Text(
+                text = content.label,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
 

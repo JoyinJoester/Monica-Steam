@@ -60,4 +60,21 @@ class SteamChatRichMediaModelsTest {
         val body = "[steam_unknown type=42]payload[/steam_unknown]"
         assertEquals(body, (SteamChatRichContentParser.parse(body) as SteamChatRichContent.Text).body)
     }
+
+    @Test
+    fun parsesSteamBbcodeGameInviteArgumentsAndOtherSystemTags() {
+        val invite = SteamChatRichContentParser.parse(
+            "[gameinvite appid=440 lobbyid=123456789]Team Fortress 2[/gameinvite]"
+        ) as SteamChatRichContent.GameInvite
+        assertEquals(440, invite.appId)
+        assertEquals("123456789", invite.lobbyId)
+        assertEquals("steam://joinlobby/440/123456789", invite.url)
+
+        val trade = SteamChatRichContentParser.parse(
+            "[tradeoffer]https://steamcommunity.com/tradeoffer/123[/tradeoffer]"
+        ) as SteamChatRichContent.SystemMessage
+        assertEquals("tradeoffer", trade.kind)
+        assertEquals("https://steamcommunity.com/tradeoffer/123", trade.label)
+        assertEquals("https://steamcommunity.com/tradeoffer/123", trade.url)
+    }
 }

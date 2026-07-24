@@ -98,6 +98,10 @@ class SteamChatIntegrationGuardTest {
         assertTrue(picker.contains("RichPickerPage.STICKER"))
         assertTrue(picker.contains("RichPickerPage.EFFECT"))
         assertTrue(picker.contains("AnimatedImageDrawable"))
+        val richContent = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMessageContent.kt"
+        ).readText()
+        assertTrue(richContent.contains("SystemMessage"))
     }
 
     @Test
