@@ -32,6 +32,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -166,6 +168,39 @@ internal fun SteamChatRichMediaPickerSheet(
             }
             if (state.catalogLoading) {
                 LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+            if (state.catalogFailure && page != RichPickerPage.EMOJI) {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Icon(Icons.Default.ErrorOutline, contentDescription = null)
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(
+                                    R.string.steam_chat_rich_picker_catalog_unavailable
+                                ),
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                            Text(
+                                text = stringResource(
+                                    R.string.steam_chat_rich_picker_catalog_unavailable_summary
+                                ),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                        TextButton(onClick = onRefresh, enabled = !state.catalogLoading) {
+                            Text(stringResource(R.string.steam_chat_rich_picker_refresh))
+                        }
+                    }
+                }
             }
             when (page) {
                 RichPickerPage.EMOJI -> EmojiGrid(

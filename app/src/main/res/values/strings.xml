@@ -4719,6 +4719,8 @@
     <string name="steam_chat_rich_picker_effects">Chat effects</string>
     <string name="steam_chat_rich_picker_search">Search</string>
     <string name="steam_chat_rich_picker_clear_search">Clear search</string>
+    <string name="steam_chat_rich_picker_catalog_unavailable">Steam-owned stickers and effects are temporarily unavailable.</string>
+    <string name="steam_chat_rich_picker_catalog_unavailable_summary">Only resources returned for this account can be sent. Refresh after signing in again.</string>
     <string name="steam_chat_attachment_title">Send attachment</string>
     <string name="steam_chat_attachment_spoiler">Mark as spoiler</string>
     <string name="steam_chat_attachment_spoiler_summary">The recipient reveals the content with a tap</string>
