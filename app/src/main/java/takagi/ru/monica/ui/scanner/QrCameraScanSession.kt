@@ -43,7 +43,8 @@ internal class QrCameraScanSession(
     private val healthPolicy = QrScanHealthPolicy()
     private val active = AtomicBoolean(false)
     private val closed = AtomicBoolean(false)
-    private val processingFrame = AtomicBoolean(false)
+    private val analysisResourcesClosed = AtomicBoolean(false)
+    private val frameLifecycle = QrFrameLifecycleGate()
     private val previewStreaming = AtomicBoolean(false)
     private val previewObserver = Observer<PreviewView.StreamState> { state ->
         val streaming = state == PreviewView.StreamState.STREAMING
@@ -117,17 +118,20 @@ internal class QrCameraScanSession(
         }
     }
 
-    fun isProcessingFrame(): Boolean = processingFrame.get()
+    fun isProcessingFrame(): Boolean = frameLifecycle.isFrameInFlight()
 
     private fun analyzeFrame(imageProxy: ImageProxy) {
-        if (!active.get()) {
-            imageProxy.close()
-            return
-        }
-        if (!processingFrame.compareAndSet(false, true)) {
-            diagnostics?.logFrameSkipped()
-            imageProxy.close()
-            return
+        when (frameLifecycle.tryAcquireFrame()) {
+            QrFrameAdmission.Stopped -> {
+                imageProxy.close()
+                return
+            }
+            QrFrameAdmission.Busy -> {
+                diagnostics?.logFrameSkipped()
+                imageProxy.close()
+                return
+            }
+            QrFrameAdmission.Acquired -> Unit
         }
 
         val frameStartedAt = SystemClock.elapsedRealtime()
@@ -137,8 +141,8 @@ internal class QrCameraScanSession(
         if (mediaImage == null) {
             diagnostics?.logFrameMissingImage()
             healthPolicy.onFrameCompleted(SystemClock.elapsedRealtime(), succeeded = false)
-            processingFrame.set(false)
             imageProxy.close()
+            releaseFrame()
             return
         }
 
@@ -146,11 +150,16 @@ internal class QrCameraScanSession(
         fun finishFrame(succeeded: Boolean) {
             if (!frameFinished.compareAndSet(false, true)) return
             healthPolicy.onFrameCompleted(SystemClock.elapsedRealtime(), succeeded)
-            processingFrame.set(false)
             runCatching { imageProxy.close() }
+            releaseFrame()
         }
 
-        val inputImage = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+        val inputImage = runCatching {
+            InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+        }.onFailure { error ->
+            diagnostics?.logFrameFailure(error)
+            finishFrame(succeeded = false)
+        }.getOrNull() ?: return
         val task = runCatching { scanner.process(inputImage) }
             .onFailure { error ->
                 diagnostics?.logFrameFailure(error)
@@ -166,9 +175,13 @@ internal class QrCameraScanSession(
                 .flatMap { it.candidateValues() }
                 .distinct()
             val durationMs = SystemClock.elapsedRealtime() - frameStartedAt
-            val matched = runCatching {
-                onCandidates(candidates, barcodes.size, durationMs)
-            }.getOrDefault(false)
+            val matched = if (active.get()) {
+                runCatching {
+                    onCandidates(candidates, barcodes.size, durationMs)
+                }.getOrDefault(false)
+            } else {
+                false
+            }
             diagnostics?.logFrameSuccess(
                 durationMs = durationMs,
                 barcodeCount = barcodes.size,
@@ -179,6 +192,12 @@ internal class QrCameraScanSession(
             diagnostics?.logFrameFailure(error)
         }.addOnCompleteListener {
             finishFrame(succeeded.get())
+        }
+    }
+
+    private fun releaseFrame() {
+        if (frameLifecycle.completeFrame()) {
+            closeAnalysisResources()
         }
     }
 
@@ -223,12 +242,21 @@ internal class QrCameraScanSession(
 
     private fun closeResources() {
         if (!closed.compareAndSet(false, true)) return
-        diagnostics?.logDispose(processingFrame.get())
+        val processingFrame = frameLifecycle.isFrameInFlight()
+        val releaseAnalysisResources = frameLifecycle.requestStop()
+        diagnostics?.logDispose(processingFrame)
         previewStreaming.set(false)
         runCatching { previewView.previewStreamState.removeObserver(previewObserver) }
         runCatching { controller.clearImageAnalysisAnalyzer() }
-        runCatching { previewView.controller = null }
         runCatching { controller.unbind() }
+        runCatching { previewView.controller = null }
+        if (releaseAnalysisResources) {
+            closeAnalysisResources()
+        }
+    }
+
+    private fun closeAnalysisResources() {
+        if (!analysisResourcesClosed.compareAndSet(false, true)) return
         runCatching { scanner.close() }
         analysisExecutor.shutdown()
     }
