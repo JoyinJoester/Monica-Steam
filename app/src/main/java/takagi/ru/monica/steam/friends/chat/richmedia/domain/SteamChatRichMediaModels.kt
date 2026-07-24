@@ -98,6 +98,15 @@ sealed interface SteamChatRichContent {
 
 object SteamChatRichContentParser {
     private val stickerPattern = Regex("^/sticker\\s+(.+?)\\s*$", RegexOption.IGNORE_CASE)
+    /**
+     * Steam's web client receives rich media in both slash-command form and
+     * BBCode form.  The latter is what GetRecentMessages returns for older
+     * messages, so keep the tag parser separate from the invitation parser.
+     */
+    private val officialMediaTagPattern = Regex(
+        """^\[(sticker|roomeffect|emoticon)(?:\s+([^\]]+))?](.*?)\[/\1\s*]$""",
+        setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
+    )
     private val joinLobbyPattern = Regex(
         "steam://joinlobby/(\\d+)(?:/([^/\\s\\]]+))?(?:/(7656119\\d{10}))?",
         RegexOption.IGNORE_CASE
@@ -130,7 +139,29 @@ object SteamChatRichContentParser {
         stickerPattern.matchEntire(body.trim())?.groupValues?.getOrNull(1)
             ?.trim()
             ?.takeIf(String::isNotBlank)
-            ?.let { return SteamChatRichContent.Sticker(it) }
+            ?.let { return SteamChatRichContent.Sticker(decodeMediaName(it)) }
+
+        officialMediaTagPattern.matchEntire(body.trim())?.let { match ->
+            val kind = match.groupValues[1].lowercase()
+            val attributes = parseAttributes(match.groupValues.getOrNull(2).orEmpty())
+            val inner = match.groupValues.getOrNull(3).orEmpty().trim()
+            val name = decodeMediaName(
+                attributes["type"]
+                    ?: attributes["name"]
+                    ?: inner
+            ).trim()
+            if (name.isNotBlank()) {
+                when (kind) {
+                    "sticker" -> return SteamChatRichContent.Sticker(name)
+                    "emoticon" -> return SteamChatRichContent.Text(":$name:")
+                    "roomeffect" -> return SteamChatRichContent.SystemMessage(
+                        kind = kind,
+                        label = name,
+                        rawBody = body
+                    )
+                }
+            }
+        }
 
         val inviteMatch = joinLobbyPattern.find(body)
         if (inviteMatch != null) {
@@ -219,6 +250,10 @@ object SteamChatRichContentParser {
                 match.groupValues[1].lowercase() to value
             }
 
+    private fun decodeMediaName(value: String): String = runCatching {
+        URLDecoder.decode(value.trim().trim('"', '\''), StandardCharsets.UTF_8.name())
+    }.getOrDefault(value.trim().trim('"', '\''))
+
     private fun buildInviteUrl(
         kind: String,
         appId: Int?,
@@ -233,11 +268,19 @@ object SteamChatRichContentParser {
                     (inviterSteamId?.let { "/$it" } ?: "")
             !attributes["remoteplay"].isNullOrBlank() ->
                 "steam://remoteplay/connect/${inviterSteamId.orEmpty()}?appid=$appId&${attributes["remoteplay"]}"
-            !attributes["connectstring"].isNullOrBlank() && !inviterSteamId.isNullOrBlank() ->
-                "steam://rungame/$appId/$inviterSteamId/${attributes["connectstring"]}"
+            !(attributes["connect"] ?: attributes["connectstring"]).isNullOrBlank() &&
+                !inviterSteamId.isNullOrBlank() -> {
+                val connect = attributes["connect"] ?: attributes["connectstring"]!!
+                "steam://rungame/$appId/$inviterSteamId/${encodeUriComponent(connect)}"
+            }
             else -> null
         }
     }
+
+    private fun encodeUriComponent(value: String): String = URLEncoder.encode(
+        value,
+        StandardCharsets.UTF_8.name()
+    ).replace("+", "%20")
 
     private fun steamSpecialLabel(kind: String): String = when (kind) {
         "tradeoffer" -> "Steam trade offer"

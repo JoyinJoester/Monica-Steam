@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -82,7 +83,14 @@ private fun SteamSystemMessageContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Icon(Icons.Default.OpenInNew, contentDescription = null)
+            Icon(
+                imageVector = if (content.kind == "roomeffect") {
+                    Icons.Default.AutoAwesome
+                } else {
+                    Icons.Default.OpenInNew
+                },
+                contentDescription = null
+            )
             Text(
                 text = content.label,
                 modifier = Modifier.weight(1f),

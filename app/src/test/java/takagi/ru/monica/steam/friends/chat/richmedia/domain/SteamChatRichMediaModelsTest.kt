@@ -15,6 +15,37 @@ class SteamChatRichMediaModelsTest {
     }
 
     @Test
+    fun parsesOfficialStickerBbcodeTag() {
+        val content = SteamChatRichContentParser.parse(
+            "[sticker type=Mesmer%20spin][/sticker]"
+        )
+
+        assertTrue(content is SteamChatRichContent.Sticker)
+        assertEquals("Mesmer spin", (content as SteamChatRichContent.Sticker).name)
+    }
+
+    @Test
+    fun parsesOfficialRoomEffectBbcodeTag() {
+        val content = SteamChatRichContentParser.parse(
+            "[roomeffect type=confetti][/roomeffect]"
+        )
+
+        assertTrue(content is SteamChatRichContent.SystemMessage)
+        val effect = content as SteamChatRichContent.SystemMessage
+        assertEquals("roomeffect", effect.kind)
+        assertEquals("confetti", effect.label)
+    }
+
+    @Test
+    fun normalizesOfficialEmoticonBbcodeTagForInlineRendering() {
+        val content = SteamChatRichContentParser.parse(
+            "[emoticon]steamthumbsup[/emoticon]"
+        )
+
+        assertEquals(":steamthumbsup:", (content as SteamChatRichContent.Text).body)
+    }
+
+    @Test
     fun richMediaCommandsUseSteamOfficialSyntax() {
         assertEquals("/sticker Mesmer spin", SteamChatSticker("Mesmer spin").messageCode)
         assertEquals("/roomeffect confetti", SteamChatEffect("confetti").messageCode)
@@ -76,5 +107,24 @@ class SteamChatRichMediaModelsTest {
         assertEquals("tradeoffer", trade.kind)
         assertEquals("https://steamcommunity.com/tradeoffer/123", trade.label)
         assertEquals("https://steamcommunity.com/tradeoffer/123", trade.url)
+    }
+
+    @Test
+    fun buildsOfficialGameInviteUrlsForConnectAndRemotePlayArguments() {
+        val connect = SteamChatRichContentParser.parse(
+            "[gameinvite appid=440 steamid=76561198000000001 connect=+connect][/gameinvite]"
+        ) as SteamChatRichContent.GameInvite
+        assertEquals(
+            "steam://rungame/440/76561198000000001/%2Bconnect",
+            connect.url
+        )
+
+        val remotePlay = SteamChatRichContentParser.parse(
+            "[gameinvite appid=440 steamid=76561198000000001 remoteplay=restricted_countries=CN][/gameinvite]"
+        ) as SteamChatRichContent.GameInvite
+        assertEquals(
+            "steam://remoteplay/connect/76561198000000001?appid=440&restricted_countries=CN",
+            remotePlay.url
+        )
     }
 }
