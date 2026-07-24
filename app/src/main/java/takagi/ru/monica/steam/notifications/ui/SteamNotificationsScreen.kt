@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -83,6 +84,7 @@ fun SteamNotificationsScreen(
     val filter = SteamNotificationFilter.entries.firstOrNull { it.name == filterName }
         ?: SteamNotificationFilter.ALL
     val snapshot = state.snapshot
+    val pendingGifts = snapshot?.pendingGifts.orEmpty()
     val notifications = remember(snapshot, filter, searchQuery) {
         snapshot?.notifications.orEmpty().filter { notification ->
             val matchesFilter = when (filter) {
@@ -96,7 +98,11 @@ fun SteamNotificationsScreen(
                 notification.summary,
                 notification.bodyData
             ).any { it.contains(query, ignoreCase = true) }
-            matchesFilter && matchesQuery
+            val representedByGiftAction = notification.kind == SteamNotificationKind.GIFT && (
+                pendingGifts.any { gift -> gift.id == notification.relatedId } ||
+                    (notification.relatedId.isNullOrBlank() && pendingGifts.size == 1)
+                )
+            matchesFilter && matchesQuery && !representedByGiftAction
         }
     }
     val webSessionAvailable = account != null && (
@@ -158,7 +164,7 @@ fun SteamNotificationsScreen(
                 }
             }
 
-            val visibleGifts = snapshot?.pendingGifts.orEmpty().filter { gift ->
+            val visibleGifts = pendingGifts.filter { gift ->
                 val query = searchQuery.trim()
                 query.isBlank() || listOf(gift.name, gift.senderName, gift.message)
                     .any { it.contains(query, ignoreCase = true) }
@@ -216,7 +222,7 @@ fun SteamNotificationsScreen(
             ) {
                 item(key = "notification_detail_title") {
                     Text(
-                        text = notification.title,
+                        text = notificationDisplayTitle(notification),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -230,26 +236,9 @@ fun SteamNotificationsScreen(
                         )
                     }
                 }
-                if (notification.summary.isNotBlank()) {
+                if (isMeaningfulNotificationText(notification.summary)) {
                     item(key = "notification_detail_summary") {
                         Text(notification.summary, style = MaterialTheme.typography.bodyLarge)
-                    }
-                }
-                notification.bodyData.takeIf { body ->
-                    body.isNotBlank() && body != notification.summary
-                }?.let { body ->
-                    item(key = "notification_detail_body") {
-                        Surface(
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainer
-                        ) {
-                            Text(
-                                text = body,
-                                modifier = Modifier.padding(14.dp),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
                     }
                 }
                 relatedGift?.let { gift ->
@@ -274,7 +263,7 @@ private fun SteamNotificationSummaryCard(state: SteamNotificationsUiState) {
     val snapshot = state.snapshot
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         )
@@ -327,12 +316,12 @@ private fun SteamNotificationListCard(
     Card(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp),
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (notification.read) {
                 MaterialTheme.colorScheme.surfaceContainerLow
             } else {
-                MaterialTheme.colorScheme.secondaryContainer
+                MaterialTheme.colorScheme.surfaceContainerHigh
             }
         )
     ) {
@@ -352,13 +341,15 @@ private fun SteamNotificationListCard(
             ) {}
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = notification.title,
+                    text = notificationDisplayTitle(notification),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = if (notification.read) FontWeight.Normal else FontWeight.SemiBold,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                notification.summary.takeIf(String::isNotBlank)?.let { summary ->
+                notification.summary
+                    .takeIf(::isMeaningfulNotificationText)
+                    ?.let { summary ->
                     Text(
                         text = summary,
                         style = MaterialTheme.typography.bodySmall,
@@ -389,9 +380,9 @@ private fun SteamGiftActionCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         )
     ) {
         Column(
@@ -402,14 +393,24 @@ private fun SteamGiftActionCard(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(Icons.Default.CardGiftcard, contentDescription = null)
+                Surface(
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                ) {
+                    Icon(
+                        Icons.Default.CardGiftcard,
+                        contentDescription = null,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
                 Column(Modifier.weight(1f)) {
                     Text(gift.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     gift.senderName.takeIf(String::isNotBlank)?.let { sender ->
                         Text(
                             sender,
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.78f)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -417,11 +418,11 @@ private fun SteamGiftActionCard(
                     CircularProgressIndicator(modifier = Modifier.size(22.dp), strokeWidth = 2.dp)
                 }
             }
-            gift.message.takeIf(String::isNotBlank)?.let { message ->
+            gift.message.takeIf(::isMeaningfulNotificationText)?.let { message ->
                 Text(message, style = MaterialTheme.typography.bodyMedium)
             }
             if (gift.requiresWeb) {
-                OutlinedButton(
+                Button(
                     onClick = onOpenWeb,
                     enabled = actionsEnabled && webSessionAvailable,
                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)
@@ -465,7 +466,8 @@ private fun SteamGiftActionCard(
                             modifier = Modifier.heightIn(min = 48.dp),
                             colors = ButtonDefaults.outlinedButtonColors(
                                 contentColor = MaterialTheme.colorScheme.error
-                            )
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
                         ) {
                             Text(stringResource(R.string.steam_reject))
                         }
@@ -474,6 +476,59 @@ private fun SteamGiftActionCard(
             }
         }
     }
+}
+
+@Composable
+private fun notificationDisplayTitle(notification: SteamNotification): String {
+    if (!notification.usesFallbackTitle()) return notification.title
+    return stringResource(
+        when (notification.kind) {
+            SteamNotificationKind.GIFT -> R.string.steam_notification_kind_gift
+            SteamNotificationKind.COMMENT -> R.string.steam_notification_kind_comment
+            SteamNotificationKind.ITEM -> R.string.steam_notification_kind_item
+            SteamNotificationKind.FRIEND_INVITE -> R.string.steam_notification_kind_friend_invite
+            SteamNotificationKind.SALE -> R.string.steam_notification_kind_sale
+            SteamNotificationKind.PRELOAD -> R.string.steam_notification_kind_preload
+            SteamNotificationKind.WISHLIST -> R.string.steam_notification_kind_wishlist
+            SteamNotificationKind.TRADE_OFFER -> R.string.steam_notification_kind_trade_offer
+            SteamNotificationKind.GENERAL -> R.string.steam_notification_kind_general
+            SteamNotificationKind.HELP_REQUEST -> R.string.steam_notification_kind_help_request
+            SteamNotificationKind.ASYNC_GAME -> R.string.steam_notification_kind_game_update
+            SteamNotificationKind.CHAT_MESSAGE -> R.string.steam_notification_kind_chat_message
+            SteamNotificationKind.MODERATOR_MESSAGE -> R.string.steam_notification_kind_moderator_message
+            SteamNotificationKind.FAMILY -> R.string.steam_notification_kind_family
+            SteamNotificationKind.PARENTAL -> R.string.steam_notification_kind_parental
+            SteamNotificationKind.GAME_INVITE -> R.string.steam_notification_kind_game_invite
+            SteamNotificationKind.TRADE_REVERSED -> R.string.steam_notification_kind_trade_reversed
+            SteamNotificationKind.UNKNOWN -> R.string.steam_notification_kind_general
+        }
+    )
+}
+
+private fun SteamNotification.usesFallbackTitle(): Boolean = title == when (kind) {
+    SteamNotificationKind.GIFT -> "Steam gift"
+    SteamNotificationKind.COMMENT -> "New comment"
+    SteamNotificationKind.ITEM -> "New item"
+    SteamNotificationKind.FRIEND_INVITE -> "Friend invitation"
+    SteamNotificationKind.SALE -> "Steam sale"
+    SteamNotificationKind.PRELOAD -> "Preload available"
+    SteamNotificationKind.WISHLIST -> "Wishlist update"
+    SteamNotificationKind.TRADE_OFFER -> "Trade offer"
+    SteamNotificationKind.GENERAL -> "Steam notification"
+    SteamNotificationKind.HELP_REQUEST -> "Steam Support"
+    SteamNotificationKind.ASYNC_GAME -> "Game update"
+    SteamNotificationKind.CHAT_MESSAGE -> "Chat message"
+    SteamNotificationKind.MODERATOR_MESSAGE -> "Moderator message"
+    SteamNotificationKind.FAMILY -> "Steam Family"
+    SteamNotificationKind.PARENTAL -> "Parental controls"
+    SteamNotificationKind.GAME_INVITE -> "Game invitation"
+    SteamNotificationKind.TRADE_REVERSED -> "Trade update"
+    SteamNotificationKind.UNKNOWN -> "Steam notification"
+}
+
+private fun isMeaningfulNotificationText(value: String): Boolean {
+    val normalized = value.trim().removeSuffix(":").trim()
+    return normalized.isNotBlank() && !normalized.equals("A gift from", ignoreCase = true)
 }
 
 private fun formatSteamNotificationTime(timestampSeconds: Long): String {

@@ -436,11 +436,14 @@ fun SteamScreen(
     var showGiftInbox by rememberSaveable { mutableStateOf(false) }
     var friendsRefreshRequest by rememberSaveable { mutableStateOf(0L) }
     var autoPromptedLoginClientIds by remember(selectedAccount?.id) { mutableStateOf<Set<Long>>(emptySet()) }
-    val pendingConfirmationCount = maxOf(
-        if (selectedAccount?.canUseConfirmations == true) uiState.confirmations.size else 0,
-        uiState.notifications.snapshot?.unreadCount ?: 0,
-        uiState.notifications.snapshot?.pendingGiftCount ?: 0
-    )
+    val notificationSnapshot = uiState.notifications.snapshot
+    val pendingConfirmationCount = if (selectedAccount?.canUseConfirmations == true) {
+        maxOf(uiState.confirmations.size, notificationSnapshot?.confirmationCount ?: 0)
+    } else {
+        0
+    }
+    val pendingNotificationCount = notificationSnapshot?.unreadCount ?: 0
+    val pendingTopActionCount = pendingConfirmationCount + pendingNotificationCount
     val organizationFilter = SteamAccountOrganizationFilter(
         groupName = organizationGroupFilter,
         tag = organizationTagFilter,
@@ -1681,7 +1684,7 @@ fun SteamScreen(
                             if (!expanded) steamSearchQuery = ""
                         },
                         searchHint = stringResource(selectedSection.searchHintRes),
-                        pendingConfirmationCount = pendingConfirmationCount,
+                        pendingActionCount = pendingTopActionCount,
                         onOpenSearch = { isSteamSearchExpanded = true },
                         storageSourceMenu = {
                             SteamStorageSourceMenu(
@@ -1707,6 +1710,7 @@ fun SteamScreen(
                                 onDismissRequest = { showTopActionsMenu = false },
                                 selectedSection = selectedSection,
                                 pendingConfirmationCount = pendingConfirmationCount,
+                                pendingNotificationCount = pendingNotificationCount,
                                 onSelectSection = { section ->
                                     showTopActionsMenu = false
                                     clearSteamSearch()
@@ -2048,7 +2052,7 @@ private fun SteamRootTopBar(
     isSearchExpanded: Boolean,
     onSearchExpandedChange: (Boolean) -> Unit,
     searchHint: String,
-    pendingConfirmationCount: Int,
+    pendingActionCount: Int,
     onOpenSearch: () -> Unit,
     onOpenStorageSourceMenu: () -> Unit,
     storageSourceMenu: @Composable () -> Unit,
@@ -2086,9 +2090,9 @@ private fun SteamRootTopBar(
                 IconButton(onClick = onOpenTopActionsMenu) {
                     BadgedBox(
                         badge = {
-                            if (pendingConfirmationCount > 0) {
+                            if (pendingActionCount > 0) {
                                 Badge {
-                                    Text(badgeCountText(pendingConfirmationCount))
+                                    Text(badgeCountText(pendingActionCount))
                                 }
                             }
                         }
@@ -2164,6 +2168,7 @@ private fun SteamTopActionsMenu(
     onDismissRequest: () -> Unit,
     selectedSection: SteamSection,
     pendingConfirmationCount: Int,
+    pendingNotificationCount: Int,
     onSelectSection: (SteamSection) -> Unit,
     onRefreshCurrent: () -> Unit,
     onAddAccount: () -> Unit,
@@ -2189,6 +2194,11 @@ private fun SteamTopActionsMenu(
                         if (section == SteamSection.CONFIRMATIONS && pendingConfirmationCount > 0) {
                             Badge {
                                 Text(badgeCountText(pendingConfirmationCount))
+                            }
+                        }
+                        if (section == SteamSection.NOTIFICATIONS && pendingNotificationCount > 0) {
+                            Badge {
+                                Text(badgeCountText(pendingNotificationCount))
                             }
                         }
                     }
