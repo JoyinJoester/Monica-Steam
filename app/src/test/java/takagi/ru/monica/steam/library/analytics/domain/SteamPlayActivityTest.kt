@@ -8,15 +8,16 @@ import takagi.ru.monica.steam.library.SteamLibrarySnapshot
 
 class SteamPlayActivityTest {
     @Test
-    fun firstSnapshotOnlyEstablishesBaseline() {
+    fun firstSnapshotSeedsRecentPlaytimeAndEstablishesBaseline() {
         val history = updateSteamPlayActivity(
             previous = null,
-            snapshot = snapshot(game(10, "Portal", 600)),
+            snapshot = snapshot(game(10, "Portal", 600, recentMinutes = 45)),
             localDate = "2026-07-24",
             recordedAt = 1L
         )
 
-        assertTrue(history.days.isEmpty())
+        assertEquals(45, history.days.single().totalMinutes)
+        assertEquals("2026-07-24", history.days.single().date)
         assertEquals(600, history.baseline.single().cumulativeMinutes)
     }
 
@@ -65,11 +66,16 @@ class SteamPlayActivityTest {
         assertEquals(2, history.baseline.size)
     }
 
-    private fun game(appId: Int, name: String, minutes: Int) = SteamGame(
+    private fun game(
+        appId: Int,
+        name: String,
+        minutes: Int,
+        recentMinutes: Int = 0
+    ) = SteamGame(
         appId = appId,
         name = name,
         playtimeForeverMinutes = minutes,
-        playtimeRecentMinutes = 0
+        playtimeRecentMinutes = recentMinutes
     )
 
     private fun snapshot(vararg games: SteamGame) = SteamLibrarySnapshot(

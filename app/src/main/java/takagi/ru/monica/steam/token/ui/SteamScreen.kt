@@ -189,7 +189,6 @@ import takagi.ru.monica.steam.network.SteamPendingLogin
 import takagi.ru.monica.steam.gifts.domain.SteamGiftAction
 import takagi.ru.monica.steam.gifts.domain.SteamPendingGift
 import takagi.ru.monica.steam.notifications.ui.SteamNotificationsScreen
-import takagi.ru.monica.steam.navigation.ui.SteamDockFabClearance
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationFilter
 import takagi.ru.monica.steam.organization.SteamAccountOrganizer
 import takagi.ru.monica.steam.organization.ui.SteamOrganizationEditorDialog
@@ -1764,7 +1763,6 @@ fun SteamScreen(
             val detailQrAccount = detailAccount?.takeIf { it.canApproveLogins }
             val account = detailQrAccount ?: tokenQrAccount
             AnimatedVisibility(
-                modifier = Modifier.padding(bottom = SteamDockFabClearance),
                 visible = scanQr != null && account != null,
                 enter = fadeIn(animationSpec = tween(160)) +
                     scaleIn(initialScale = 0.9f, animationSpec = tween(180)),
@@ -2656,7 +2654,7 @@ private fun SteamCodeContent(
                             start = 16.dp,
                             top = 16.dp,
                             end = 16.dp,
-                            bottom = if (selectionMode) 112.dp else 80.dp
+                            bottom = if (selectionMode) 80.dp else 16.dp
                         ),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
@@ -3557,7 +3555,7 @@ private fun SteamConfirmationsContent(
                 .fillMaxSize()
                 .offset { IntOffset(0, pullToSearch.currentOffset.toInt()) }
                 .nestedScroll(pullToSearch.nestedScrollConnection),
-            contentPadding = PaddingValues(bottom = if (selectionMode) 144.dp else 88.dp)
+            contentPadding = PaddingValues(bottom = if (selectionMode) 80.dp else 16.dp)
         ) {
             item(key = "confirmation_account") {
                 SteamConfirmationAccountCard(
@@ -3666,8 +3664,7 @@ private fun SteamConfirmationsContent(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 24.dp, bottom = 24.dp)
-                    .padding(bottom = SteamDockFabClearance),
+                    .padding(start = 16.dp, end = 24.dp, bottom = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SelectionActionBar(

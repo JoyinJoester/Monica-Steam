@@ -12,5 +12,5 @@ internal object SteamStoreLayoutTokens {
     val SearchImageWidth = 104.dp
     val SearchCardPadding = 10.dp
     val CardCornerRadius = 18.dp
-    val CollectionBottomClearance = 112.dp
+    val CollectionBottomClearance = 16.dp
 }

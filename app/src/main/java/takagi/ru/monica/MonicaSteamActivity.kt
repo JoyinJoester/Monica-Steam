@@ -55,6 +55,7 @@ import kotlinx.coroutines.delay
 import takagi.ru.monica.steam.navigation.SteamDockPreferences
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.navigation.ui.SteamEssentialsFloatingToolbar
+import takagi.ru.monica.steam.navigation.ui.SteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.SteamToolbarItem
 import takagi.ru.monica.steam.navigation.ui.steamDockProgressiveBlur
 import takagi.ru.monica.data.AppSettings
@@ -300,6 +301,13 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     AnimatedContent(
                                         modifier = Modifier
                                             .fillMaxSize()
+                                            .padding(
+                                                bottom = if (currentPage.isDockPage()) {
+                                                    SteamDockContentClearance
+                                                } else {
+                                                    0.dp
+                                                }
+                                            )
                                             .steamDockProgressiveBlur(
                                                 enabled = currentPage.isDockPage(),
                                                 blurRadius = 40f,

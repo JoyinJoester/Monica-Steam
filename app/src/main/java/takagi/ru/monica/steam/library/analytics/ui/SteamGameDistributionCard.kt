@@ -133,16 +133,16 @@ private fun DistributionBars(
                         )
                 )
                 Text(
-                    text = distributionLabel(bucket.range),
+                    text = distributionShortLabel(bucket.range),
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontFamily = GoogleSansFlexFontFamily,
-                        fontSize = 9.sp,
-                        lineHeight = 11.sp
+                        fontSize = 10.sp,
+                        lineHeight = 12.sp
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
-                    maxLines = 2
+                    maxLines = 1
                 )
             }
         }
@@ -150,22 +150,20 @@ private fun DistributionBars(
 }
 
 @Composable
-private fun distributionLabel(range: SteamGameDistributionRange): String = stringResource(
-    when (range) {
-        SteamGameDistributionRange.UNPLAYED -> R.string.steam_distribution_unplayed
-        SteamGameDistributionRange.UNDER_ONE_HOUR -> R.string.steam_distribution_under_1h
-        SteamGameDistributionRange.ONE_TO_THREE_HOURS -> R.string.steam_distribution_1_3h
-        SteamGameDistributionRange.THREE_TO_TEN_HOURS -> R.string.steam_distribution_3_10h
-        SteamGameDistributionRange.TEN_TO_THIRTY_HOURS -> R.string.steam_distribution_10_30h
-        SteamGameDistributionRange.THIRTY_TO_HUNDRED_HOURS -> R.string.steam_distribution_30_100h
-        SteamGameDistributionRange.OVER_HUNDRED_HOURS -> R.string.steam_distribution_over_100h
-        SteamGameDistributionRange.FREE -> R.string.steam_distribution_free
-        SteamGameDistributionRange.PRICE_UNDER_25 -> R.string.steam_distribution_price_under_25
-        SteamGameDistributionRange.PRICE_25_TO_50 -> R.string.steam_distribution_price_25_50
-        SteamGameDistributionRange.PRICE_50_TO_100 -> R.string.steam_distribution_price_50_100
-        SteamGameDistributionRange.PRICE_100_TO_200 -> R.string.steam_distribution_price_100_200
-        SteamGameDistributionRange.PRICE_200_TO_400 -> R.string.steam_distribution_price_200_400
-        SteamGameDistributionRange.PRICE_OVER_400 -> R.string.steam_distribution_price_over_400
-        SteamGameDistributionRange.PRICE_UNKNOWN -> R.string.steam_distribution_price_unknown
-    }
-)
+private fun distributionShortLabel(range: SteamGameDistributionRange): String = when (range) {
+    SteamGameDistributionRange.UNPLAYED -> "0"
+    SteamGameDistributionRange.UNDER_ONE_HOUR -> "1"
+    SteamGameDistributionRange.ONE_TO_THREE_HOURS -> "3"
+    SteamGameDistributionRange.THREE_TO_TEN_HOURS -> "10"
+    SteamGameDistributionRange.TEN_TO_THIRTY_HOURS -> "30"
+    SteamGameDistributionRange.THIRTY_TO_HUNDRED_HOURS -> "100"
+    SteamGameDistributionRange.OVER_HUNDRED_HOURS -> "100+"
+    SteamGameDistributionRange.FREE -> stringResource(R.string.steam_distribution_free)
+    SteamGameDistributionRange.PRICE_UNDER_25 -> "25"
+    SteamGameDistributionRange.PRICE_25_TO_50 -> "50"
+    SteamGameDistributionRange.PRICE_50_TO_100 -> "100"
+    SteamGameDistributionRange.PRICE_100_TO_200 -> "200"
+    SteamGameDistributionRange.PRICE_200_TO_400 -> "400"
+    SteamGameDistributionRange.PRICE_OVER_400 -> "400+"
+    SteamGameDistributionRange.PRICE_UNKNOWN -> stringResource(R.string.steam_distribution_price_unknown)
+}

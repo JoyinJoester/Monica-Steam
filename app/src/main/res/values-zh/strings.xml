@@ -4093,7 +4093,7 @@
     <string name="steam_library_account_overview">账号数据</string>
     <string name="steam_analytics_game_distribution">游戏数分布</string>
     <string name="steam_analytics_game_heatmap">游戏热力图</string>
-    <string name="steam_analytics_local_tracking_note">每日时长根据本机 Steam 同步增量记录，首次同步只建立基线。</string>
+    <string name="steam_analytics_local_tracking_note">首次同步会将 Steam 近两周时长记在同步当天，之后按本机同步增量记录。</string>
     <string name="steam_analytics_day_total">当日合计：%1$s</string>
     <string name="steam_analytics_playtime">游戏时长</string>
     <string name="steam_analytics_price">游戏价格</string>
@@ -4128,7 +4128,7 @@
     <string name="steam_library_section_played">已玩游戏（%1$d）</string>
     <string name="steam_library_section_unplayed">未开始（%1$d）</string>
     <string name="steam_library_section_results">筛选结果（%1$d）</string>
-    <string name="steam_library_recent_increment">近两周 +%1$s</string>
+    <string name="steam_library_recent_increment">+%1$s</string>
     <string name="steam_library_unplayed_badge">尚未开始</string>
     <string name="steam_library_long_played_badge">长期游玩 · 100 小时+</string>
     <string name="steam_library_played_badge">已游玩</string>

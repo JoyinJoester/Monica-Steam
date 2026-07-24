@@ -16,7 +16,12 @@ class SteamStoreCollectionUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreLayoutTokens.kt"
         ).readText()
 
-        assertTrue(tokens.contains("CollectionBottomClearance = 112.dp"))
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+
+        assertTrue(tokens.contains("CollectionBottomClearance = 16.dp"))
+        assertTrue(activity.contains("SteamDockContentClearance"))
         assertEquals(
             2,
             Regex("bottom = SteamStoreLayoutTokens\\.CollectionBottomClearance")

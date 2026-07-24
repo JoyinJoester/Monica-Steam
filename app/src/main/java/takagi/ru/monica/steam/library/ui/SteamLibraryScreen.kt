@@ -317,7 +317,7 @@ private fun SteamLibraryOverview(
     val sections = remember(snapshot, query, filter) {
         buildSteamLibrarySections(snapshot?.games.orEmpty(), query, filter)
     }
-    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 112.dp)) {
+    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 16.dp)) {
         item {
             SteamAccountHeroSwitcher(
                 accounts = state.accounts,
@@ -741,7 +741,7 @@ private fun SteamAccountDetail(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = 112.dp)
+        contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
             SteamAccountDetailHero(

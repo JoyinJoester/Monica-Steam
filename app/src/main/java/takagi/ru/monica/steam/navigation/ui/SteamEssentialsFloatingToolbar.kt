@@ -33,7 +33,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
-internal val SteamDockFabClearance = 80.dp
+/**
+ * Space reserved by every top-level Steam page for the floating toolbar and
+ * the system navigation area. Child screens inherit this from the activity.
+ */
+internal val SteamDockContentClearance = 104.dp
 
 internal data class SteamToolbarItem(
     val icon: ImageVector,

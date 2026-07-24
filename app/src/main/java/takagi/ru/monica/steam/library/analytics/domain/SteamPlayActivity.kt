@@ -34,8 +34,9 @@ data class SteamPlayActivityGame(
 )
 
 /**
- * Steam exposes cumulative playtime, not a daily timeline. A first observation only establishes
- * the baseline; later positive deltas are attributed to the local day on which they are observed.
+ * Steam exposes cumulative playtime and a rolling two-week total, not a daily timeline. The first
+ * observation seeds the current day with that recent total so the heatmap is immediately useful;
+ * later positive cumulative deltas are attributed to the local day on which they are observed.
  */
 fun updateSteamPlayActivity(
     previous: SteamPlayActivityHistory?,
@@ -45,7 +46,13 @@ fun updateSteamPlayActivity(
     retentionDays: Int = 400
 ): SteamPlayActivityHistory {
     val previousBaseline = previous?.baseline.orEmpty().associateBy(SteamPlaytimeBaseline::appId)
-    val deltas = if (previousBaseline.isEmpty()) {
+    val deltas = if (previous == null) {
+        snapshot.games.mapNotNull { game ->
+            game.playtimeRecentMinutes
+                .takeIf { it > 0 }
+                ?.let { minutes -> SteamPlayActivityGame(game.appId, game.name, minutes) }
+        }
+    } else if (previousBaseline.isEmpty()) {
         emptyList()
     } else {
         snapshot.games.mapNotNull { game ->

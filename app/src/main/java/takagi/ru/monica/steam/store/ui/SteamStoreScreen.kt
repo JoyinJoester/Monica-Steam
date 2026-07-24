@@ -91,7 +91,6 @@ import takagi.ru.monica.steam.library.SteamLibraryFailureReason
 import takagi.ru.monica.steam.library.SteamRegionalPrice
 import takagi.ru.monica.steam.store.domain.*
 import takagi.ru.monica.steam.store.presentation.SteamStoreViewModel
-import takagi.ru.monica.steam.navigation.ui.SteamDockFabClearance
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.ui.components.ExpressiveTopBar
@@ -276,7 +275,6 @@ fun SteamStoreScreen(
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
-                        modifier = Modifier.padding(bottom = SteamDockFabClearance),
                         onClick = viewModel::openCart,
                         icon = {
                             Icon(
@@ -297,7 +295,7 @@ fun SteamStoreScreen(
             ) { padding ->
                 LazyColumn(
                     modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(bottom = 104.dp),
+                    contentPadding = PaddingValues(bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     if (state.searching) {

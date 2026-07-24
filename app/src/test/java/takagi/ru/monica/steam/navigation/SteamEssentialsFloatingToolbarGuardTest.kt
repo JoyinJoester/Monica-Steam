@@ -32,7 +32,8 @@ class SteamEssentialsFloatingToolbarGuardTest {
         assertTrue(activity.contains("onSelected(SteamDockTab.TOKEN)"))
         assertTrue(activity.contains("zIndex(1f)"))
         assertTrue(settingsHost.contains("SettingsScreen("))
-        assertTrue(settingsHost.contains("contentBottomPadding = 112.dp"))
+        assertTrue(activity.contains("SteamDockContentClearance"))
+        assertTrue(settingsHost.contains("contentBottomPadding = 16.dp"))
     }
 
     private fun projectFile(path: String): File {

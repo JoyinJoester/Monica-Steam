@@ -204,7 +204,7 @@ internal fun SteamTradeOffersContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .nestedScroll(pullToSearch.nestedScrollConnection),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 itemsIndexed(filteredOffers, key = ::steamTradeOfferLazyKey) { _, offer ->

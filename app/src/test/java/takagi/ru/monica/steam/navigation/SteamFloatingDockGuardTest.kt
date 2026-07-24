@@ -44,9 +44,12 @@ class SteamFloatingDockGuardTest {
     }
 
     @Test
-    fun dockPagesKeepFloatingActionsAboveTheToolbar() {
+    fun dockPagesShareOneSafeContentAreaForScreensAndFixedActions() {
         val toolbar = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamEssentialsFloatingToolbar.kt"
+        ).readText()
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val token = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
@@ -55,9 +58,11 @@ class SteamFloatingDockGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
 
-        assertTrue(toolbar.contains("SteamDockFabClearance"))
-        assertTrue(token.contains("padding(bottom = SteamDockFabClearance)"))
-        assertTrue(store.contains("padding(bottom = SteamDockFabClearance)"))
+        assertTrue(toolbar.contains("SteamDockContentClearance = 104.dp"))
+        assertTrue(activity.contains("SteamDockContentClearance"))
+        assertTrue(activity.contains("bottom = if (currentPage.isDockPage())"))
+        assertFalse(token.contains("SteamDockFabClearance"))
+        assertFalse(store.contains("SteamDockFabClearance"))
     }
 
     @Test
