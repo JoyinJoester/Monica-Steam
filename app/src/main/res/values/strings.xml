@@ -4441,7 +4441,7 @@
     <string name="steam_alert_notification_public">Open Monica Steam to review status.</string>
     <string name="steam_dock_token">Tokens</string>
     <string name="steam_dock_order_title">Dock order</string>
-    <string name="steam_dock_order_description">Drag to arrange Tokens, Game Library, Store, and Settings.</string>
+    <string name="steam_dock_order_description">Arrange Game Library, Store, and Settings. Tokens remain fixed on the right.</string>
     <string name="steam_dock_order_hint">Long press the handle, then drag an item to change the Dock order.</string>
     <string name="steam_ui_scale_title">Interface scale</string>
     <string name="steam_ui_scale_current">Current · %1$d%%</string>

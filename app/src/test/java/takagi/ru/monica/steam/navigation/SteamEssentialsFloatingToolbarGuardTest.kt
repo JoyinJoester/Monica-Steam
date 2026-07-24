@@ -28,8 +28,9 @@ class SteamEssentialsFloatingToolbarGuardTest {
         assertTrue(toolbar.contains("HorizontalFloatingToolbar("))
         assertTrue(activity.contains("SteamEssentialsFloatingToolbar("))
         assertTrue(activity.contains("selectedIndex = tabs.indexOf(selected)"))
+        assertTrue(activity.contains("floatingActionButton ="))
+        assertTrue(activity.contains("onSelected(SteamDockTab.TOKEN)"))
         assertTrue(activity.contains("zIndex(1f)"))
-        assertTrue(activity.contains("offset(x = 8.dp)"))
         assertTrue(settingsHost.contains("SettingsScreen("))
         assertTrue(settingsHost.contains("contentBottomPadding = 112.dp"))
     }

@@ -4271,7 +4271,7 @@
     <string name="steam_alert_notification_public">打开 Monica Steam 查看状态。</string>
     <string name="steam_dock_token">令牌</string>
     <string name="steam_dock_order_title">Dock 排序</string>
-    <string name="steam_dock_order_description">调整令牌、游戏库、商店和设置在底栏中的顺序。</string>
+    <string name="steam_dock_order_description">调整游戏库、商店和设置的顺序；令牌固定显示在右侧。</string>
     <string name="steam_dock_order_hint">长按拖动把手，即可调整 Dock 中的显示顺序。</string>
     <string name="steam_ui_scale_title">界面缩放</string>
     <string name="steam_ui_scale_current">当前 · %1$d%%</string>

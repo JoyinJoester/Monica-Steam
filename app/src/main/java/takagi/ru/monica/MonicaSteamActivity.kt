@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -26,8 +25,9 @@ import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -473,6 +473,9 @@ private fun SteamStandaloneDock(
     onSelected: (SteamDockTab) -> Unit
 ) {
     val tabs = SteamDockTab.sanitizeOrder(order)
+        .filterNot { it == SteamDockTab.TOKEN }
+    val tokenSelected = selected == SteamDockTab.TOKEN
+    val tokenLabel = SteamDockTab.TOKEN.label()
 
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -492,7 +495,6 @@ private fun SteamStandaloneDock(
         SteamEssentialsFloatingToolbar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .offset(x = 8.dp)
                 .zIndex(1f),
             selectedIndex = tabs.indexOf(selected),
             items = tabs.map { tab ->
@@ -501,6 +503,35 @@ private fun SteamStandaloneDock(
                     label = tab.label(),
                     onClick = { onSelected(tab) }
                 )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { onSelected(SteamDockTab.TOKEN) },
+                    modifier = Modifier.size(56.dp),
+                    containerColor = if (tokenSelected) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.primaryContainer
+                    },
+                    contentColor = if (tokenSelected) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    },
+                    shape = MaterialTheme.shapes.large,
+                    elevation = FloatingActionButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 0.dp,
+                        focusedElevation = 0.dp,
+                        hoveredElevation = 0.dp
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Security,
+                        contentDescription = tokenLabel,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         )
     }

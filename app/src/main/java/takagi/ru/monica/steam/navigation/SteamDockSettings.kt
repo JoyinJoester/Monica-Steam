@@ -14,10 +14,10 @@ enum class SteamDockTab {
     SETTINGS;
 
     companion object {
-        val DEFAULT_ORDER: List<SteamDockTab> = listOf(TOKEN, LIBRARY, STORE, SETTINGS)
+        val DEFAULT_ORDER: List<SteamDockTab> = listOf(LIBRARY, STORE, SETTINGS)
 
         fun sanitizeOrder(order: List<SteamDockTab>): List<SteamDockTab> {
-            val result = order.distinct().filter { it in entries }.toMutableList()
+            val result = order.distinct().filter { it in DEFAULT_ORDER }.toMutableList()
             DEFAULT_ORDER.forEach { tab ->
                 if (tab !in result) result += tab
             }

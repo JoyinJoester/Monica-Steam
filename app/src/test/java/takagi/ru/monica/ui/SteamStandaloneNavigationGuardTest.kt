@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SteamStandaloneNavigationGuardTest {
     @Test
-    fun standaloneUsesSortableFourItemDockAndKeepsPrimaryDestinationsOutOfOverflow() {
+    fun standaloneUsesThreeSortableTabsAndIndependentTokenAction() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -26,6 +26,8 @@ class SteamStandaloneNavigationGuardTest {
         assertTrue(activity.contains("modifier = Modifier.align(Alignment.BottomCenter)"))
         assertFalse(activity.contains("bottomBar ="))
         assertTrue(activity.contains("selectedIndex = tabs.indexOf(selected)"))
+        assertTrue(activity.contains("floatingActionButton ="))
+        assertTrue(activity.contains("onSelected(SteamDockTab.TOKEN)"))
         assertTrue(activity.contains("zIndex(1f)"))
         assertFalse(activity.contains("SteamAccountPickerSheet("))
         assertFalse(activity.contains("SteamAvatarImage("))
@@ -35,7 +37,7 @@ class SteamStandaloneNavigationGuardTest {
         assertTrue(activity.contains("LinearProgressIndicator"))
         assertTrue(activity.contains("showProgress = currentPage == MonicaSteamPage.LIBRARY"))
         assertTrue(activity.contains("if (showProgress)"))
-        assertTrue(dock.contains("listOf(TOKEN, LIBRARY, STORE, SETTINGS)"))
+        assertTrue(dock.contains("listOf(LIBRARY, STORE, SETTINGS)"))
         assertTrue(settings.contains("SteamDockOrderScreen("))
         assertTrue(settings.contains("rememberReorderableLazyListState"))
         val dockOrderScreen = settings

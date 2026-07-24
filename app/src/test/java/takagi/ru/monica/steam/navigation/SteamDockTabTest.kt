@@ -5,10 +5,9 @@ import org.junit.Test
 
 class SteamDockTabTest {
     @Test
-    fun defaultOrderIsTokenLibraryStoreSettings() {
+    fun defaultOrderContainsThreeSortableContentTabs() {
         assertEquals(
             listOf(
-                SteamDockTab.TOKEN,
                 SteamDockTab.LIBRARY,
                 SteamDockTab.STORE,
                 SteamDockTab.SETTINGS
@@ -22,7 +21,6 @@ class SteamDockTabTest {
         assertEquals(
             listOf(
                 SteamDockTab.SETTINGS,
-                SteamDockTab.TOKEN,
                 SteamDockTab.LIBRARY,
                 SteamDockTab.STORE
             ),
@@ -36,21 +34,19 @@ class SteamDockTabTest {
     fun reorderHandlesFirstAndLastItemsWithoutIndexErrors() {
         assertEquals(
             listOf(
-                SteamDockTab.LIBRARY,
                 SteamDockTab.STORE,
                 SteamDockTab.SETTINGS,
-                SteamDockTab.TOKEN
+                SteamDockTab.LIBRARY
             ),
-            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 0, toIndex = 3)
+            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 0, toIndex = 2)
         )
         assertEquals(
             listOf(
                 SteamDockTab.SETTINGS,
-                SteamDockTab.TOKEN,
                 SteamDockTab.LIBRARY,
                 SteamDockTab.STORE
             ),
-            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 3, toIndex = 0)
+            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 2, toIndex = 0)
         )
     }
 
@@ -58,11 +54,11 @@ class SteamDockTabTest {
     fun reorderIgnoresLazyListHeaderIndicesInsteadOfThrowing() {
         assertEquals(
             SteamDockTab.DEFAULT_ORDER,
-            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 4, toIndex = 1)
+            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 3, toIndex = 1)
         )
         assertEquals(
             SteamDockTab.DEFAULT_ORDER,
-            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 1, toIndex = 4)
+            reorderDockOrder(SteamDockTab.DEFAULT_ORDER, fromIndex = 1, toIndex = 3)
         )
     }
 }

@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SteamFloatingDockGuardTest {
     @Test
-    fun dockReusesEssentialsFloatingToolbarWithoutCrowdedAccountAction() {
+    fun dockUsesThreeItemToolbarWithIndependentTokenAction() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -25,13 +25,16 @@ class SteamFloatingDockGuardTest {
         assertTrue(activity.contains("selectedIndex = tabs.indexOf(selected)"))
         assertTrue(activity.contains("zIndex(1f)"))
         assertFalse(activity.contains("bottomBar ="))
-        assertTrue(settings.contains("listOf(TOKEN, LIBRARY, STORE, SETTINGS)"))
-        assertFalse(dock.contains("floatingActionButton"))
+        assertTrue(settings.contains("listOf(LIBRARY, STORE, SETTINGS)"))
+        assertTrue(dock.contains("filterNot { it == SteamDockTab.TOKEN }"))
+        assertTrue(dock.contains("floatingActionButton ="))
+        assertTrue(dock.contains("FloatingActionButton("))
+        assertTrue(dock.contains("onSelected(SteamDockTab.TOKEN)"))
         assertFalse(dock.contains("SteamAvatarImage"))
         assertFalse(dock.contains("SteamAccountPickerSheet"))
         assertFalse(dock.contains("Icons.Default.QrCodeScanner"))
         assertTrue(dock.contains("WindowInsets.navigationBars"))
-        assertTrue(dock.contains("offset(x = 8.dp)"))
+        assertFalse(dock.contains("offset(x = 8.dp)"))
         assertTrue(dock.contains("showProgress"))
         assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(dock.contains("Column(modifier = Modifier.fillMaxWidth())"))
