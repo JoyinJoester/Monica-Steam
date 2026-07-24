@@ -4572,6 +4572,14 @@
     <string name="steam_notification_detail_unavailable">Steam did not provide additional content for this notification.</string>
     <string name="steam_notification_detail_discount">Discount</string>
     <string name="steam_notification_detail_price">Price</string>
+    <string name="steam_notification_friend_actor">Friend request from %1$s</string>
+    <string name="steam_notification_friend_state">Friend request state</string>
+    <string name="steam_notification_inventory_item_title">Inventory item received</string>
+    <string name="steam_notification_inventory_item_fallback">Steam inventory item</string>
+    <string name="steam_notification_inventory_item_source">App %1$d · Context %2$s</string>
+    <string name="steam_notification_friend_state_pending">Pending</string>
+    <string name="steam_notification_friend_state_accepted">Accepted</string>
+    <string name="steam_notification_friend_state_ignored">Ignored</string>
     <string name="steam_notification_wishlist_update_body">A game on your wishlist has new price or availability information.</string>
     <string name="steam_notifications_gifts">gifts</string>
     <string name="steam_notifications_friends">friends</string>

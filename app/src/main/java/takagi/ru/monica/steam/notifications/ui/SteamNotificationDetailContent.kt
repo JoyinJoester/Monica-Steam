@@ -73,12 +73,22 @@ private fun notificationDetailFieldLabel(key: String): String {
             stringResource(R.string.steam_notification_detail_discount)
         "price", "final_price", "price_final", "formatted_price" ->
             stringResource(R.string.steam_notification_detail_price)
+        "friend_invite_state" -> stringResource(R.string.steam_notification_friend_state)
         else -> humanizeNotificationDetailKey(key)
     }
 }
 
+@Composable
 private fun notificationDetailFieldValue(field: SteamNotificationDetailField): String {
     val discountKeys = setOf("discount", "discount_percent", "discount_percentage", "discount_pct")
+    if (field.key.leafKey() == "friend_invite_state") {
+        return when (field.value.lowercase()) {
+            "pending" -> stringResource(R.string.steam_notification_friend_state_pending)
+            "accepted" -> stringResource(R.string.steam_notification_friend_state_accepted)
+            "ignored" -> stringResource(R.string.steam_notification_friend_state_ignored)
+            else -> field.value
+        }
+    }
     return if (field.key.leafKey() in discountKeys &&
         '%' !in field.value && field.value.toDoubleOrNull() != null
     ) {

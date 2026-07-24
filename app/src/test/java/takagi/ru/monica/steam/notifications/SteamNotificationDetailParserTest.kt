@@ -5,6 +5,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.steam.notifications.domain.SteamNotificationDetailParser
+import takagi.ru.monica.steam.notifications.domain.SteamNotificationKind
 
 class SteamNotificationDetailParserTest {
     @Test
@@ -77,5 +78,34 @@ class SteamNotificationDetailParserTest {
 
         assertEquals(null, details.message)
         assertTrue(details.fields.isEmpty())
+    }
+
+    @Test
+    fun inventoryItemExtractsAssetReferenceWithoutResolvingCommunityAsAStoreGame() {
+        val details = SteamNotificationDetailParser.parse(
+            bodyData = """{"appid":753,"contextid":"6","assetid":"123456789"}""",
+            title = "New item",
+            summary = "",
+            kind = SteamNotificationKind.ITEM
+        )
+
+        assertTrue(details.appIds.isEmpty())
+        assertEquals(753, details.inventoryReference?.appId)
+        assertEquals("6", details.inventoryReference?.contextId)
+        assertEquals("123456789", details.inventoryReference?.assetId)
+        assertFalse(details.fields.any { it.key in setOf("appid", "contextid", "assetid") })
+    }
+
+    @Test
+    fun friendInviteConvertsRequestorAccountIdIntoSteamId64() {
+        val details = SteamNotificationDetailParser.parse(
+            bodyData = """{"requestor_id":1487451525,"state":2}""",
+            title = "Friend invitation",
+            summary = "",
+            kind = SteamNotificationKind.FRIEND_INVITE
+        )
+
+        assertEquals("76561199447717253", details.actorSteamId)
+        assertFalse(details.fields.any { it.key in setOf("requestor_id", "state") })
     }
 }

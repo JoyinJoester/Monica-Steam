@@ -4402,6 +4402,14 @@
     <string name="steam_notification_detail_unavailable">Steam 没有为这条通知提供更多正文内容。</string>
     <string name="steam_notification_detail_discount">折扣</string>
     <string name="steam_notification_detail_price">价格</string>
+    <string name="steam_notification_friend_actor">好友请求来自 %1$s</string>
+    <string name="steam_notification_friend_state">好友请求状态</string>
+    <string name="steam_notification_inventory_item_title">收到库存物品</string>
+    <string name="steam_notification_inventory_item_fallback">Steam 库存物品</string>
+    <string name="steam_notification_inventory_item_source">App %1$d · Context %2$s</string>
+    <string name="steam_notification_friend_state_pending">待处理</string>
+    <string name="steam_notification_friend_state_accepted">已接受</string>
+    <string name="steam_notification_friend_state_ignored">已忽略</string>
     <string name="steam_notification_wishlist_update_body">愿望单中的游戏有新的价格或销售状态。</string>
     <string name="steam_notifications_gifts">礼物</string>
     <string name="steam_notifications_friends">好友</string>

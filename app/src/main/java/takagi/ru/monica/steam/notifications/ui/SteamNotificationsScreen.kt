@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.notifications.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -51,6 +53,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,7 +101,9 @@ fun SteamNotificationsScreen(
             val matchesQuery = query.isBlank() || listOf(
                 notification.title,
                 notification.summary,
-                notification.bodyData
+                notification.bodyData,
+                notification.actorContent?.displayName.orEmpty(),
+                notification.itemContent?.name.orEmpty()
             ).any { it.contains(query, ignoreCase = true) }
             val representedByGiftAction = notification.kind == SteamNotificationKind.GIFT && (
                 pendingGifts.any { gift -> gift.id == notification.relatedId } ||
@@ -110,6 +115,7 @@ fun SteamNotificationsScreen(
     val webSessionAvailable = account != null && (
         !account.steamLoginSecure.isNullOrBlank() || !account.accessToken.isNullOrBlank()
     )
+    val context = LocalContext.current
 
     LazyColumn(
             modifier = modifier.fillMaxSize(),
@@ -225,11 +231,16 @@ fun SteamNotificationsScreen(
             SteamNotificationDetailParser.parse(
                 bodyData = notification.bodyData,
                 title = notification.title,
-                summary = notification.summary
+                summary = notification.summary,
+                kind = notification.kind
             )
         }
         val hasSummary = isMeaningfulNotificationText(notification.summary)
         val hasAppContent = notification.appContent.isNotEmpty()
+        val hasResolvedNotificationContent = hasAppContent ||
+            notification.actorContent != null ||
+            notification.itemContent != null ||
+            details.inventoryReference != null
         ModalBottomSheet(onDismissRequest = { selectedNotification = null }) {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().heightIn(max = 640.dp),
@@ -279,6 +290,29 @@ fun SteamNotificationsScreen(
                         )
                     }
                 }
+                notification.actorContent?.let { actor ->
+                    item(key = "notification_detail_actor_${actor.steamId}") {
+                        SteamNotificationActorCard(
+                            actor = actor,
+                            onOpenProfile = {
+                                val profileUrl = actor.profileUrl
+                                    .takeIf { it.startsWith("https://steamcommunity.com/") }
+                                    ?: "https://steamcommunity.com/profiles/${actor.steamId}"
+                                runCatching {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(profileUrl)))
+                                }
+                            }
+                        )
+                    }
+                }
+                if (notification.itemContent != null || details.inventoryReference != null) {
+                    item(key = "notification_detail_item") {
+                        SteamNotificationInventoryItemCard(
+                            item = notification.itemContent,
+                            reference = details.inventoryReference
+                        )
+                    }
+                }
                 items(
                     items = notification.appContent,
                     key = { content -> "notification_app_${content.appId}" }
@@ -291,7 +325,7 @@ fun SteamNotificationsScreen(
                         }
                     )
                 }
-                if (details.fields.isNotEmpty() && !hasAppContent) {
+                if (details.fields.isNotEmpty() && !hasResolvedNotificationContent) {
                     item(key = "notification_detail_fields") {
                         SteamNotificationDetailContent(details.fields)
                     }
@@ -309,7 +343,7 @@ fun SteamNotificationsScreen(
                     }
                 }
                 if (!hasSummary && details.message == null && details.fields.isEmpty() &&
-                    relatedGift == null && !hasAppContent
+                    relatedGift == null && !hasResolvedNotificationContent
                 ) {
                     item(key = "notification_detail_unavailable") {
                         Surface(
@@ -422,6 +456,12 @@ private fun SteamNotificationListCard(
                 notification.summary
                     .takeIf(::isMeaningfulNotificationText)
                     .orEmpty()
+                    .ifBlank {
+                        notification.actorContent?.displayName.orEmpty()
+                    }
+                    .ifBlank {
+                        notification.itemContent?.name.orEmpty()
+                    }
                     .ifBlank {
                         notification.appContent.joinToString { content -> content.name }
                     }

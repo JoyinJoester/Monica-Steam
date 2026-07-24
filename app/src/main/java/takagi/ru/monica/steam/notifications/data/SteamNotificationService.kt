@@ -86,6 +86,7 @@ object SteamNotificationParser {
             "gifter_name",
             "sender",
             "persona_name",
+            "requestor_name",
             "body",
             "message",
             "text",

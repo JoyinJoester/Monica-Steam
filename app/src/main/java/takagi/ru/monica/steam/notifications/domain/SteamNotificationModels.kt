@@ -62,7 +62,29 @@ data class SteamNotification(
     val hidden: Boolean = false,
     val expiry: Long = 0L,
     val viewed: Long = 0L,
-    val appContent: List<SteamNotificationAppContent> = emptyList()
+    val appContent: List<SteamNotificationAppContent> = emptyList(),
+    val actorContent: SteamNotificationActorContent? = null,
+    val itemContent: SteamNotificationItemContent? = null
+)
+
+@Serializable
+data class SteamNotificationActorContent(
+    val steamId: String,
+    val displayName: String,
+    val avatarUrl: String = "",
+    val profileUrl: String = ""
+)
+
+@Serializable
+data class SteamNotificationItemContent(
+    val appId: Int,
+    val contextId: String,
+    val assetId: String,
+    val name: String,
+    val type: String = "",
+    val iconUrl: String = "",
+    val marketable: Boolean = false,
+    val tradable: Boolean = false
 )
 
 @Serializable
