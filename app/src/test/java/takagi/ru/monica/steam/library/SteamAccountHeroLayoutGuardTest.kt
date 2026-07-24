@@ -14,8 +14,13 @@ class SteamAccountHeroLayoutGuardTest {
         val hero = screen
             .substringAfter("private fun SteamAccountHeroCard(")
             .substringBefore("private fun SteamAccountDetail(")
+        val tokens = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryLayoutTokens.kt"
+        ).readText()
 
-        assertTrue(hero.contains("heightIn(min = 208.dp)"))
+        assertTrue(tokens.contains("OverviewHeroMinHeight = 184.dp"))
+        assertTrue(hero.contains("SteamLibraryLayoutTokens.OverviewHeroMinHeight"))
+        assertTrue(hero.contains("compact = true"))
         assertTrue(hero.contains("maxLines = 2"))
         assertTrue(hero.contains("fontFamily = GoogleSansFlexFontFamily"))
         assertFalse(hero.contains(".aspectRatio(1.62f)"))

@@ -58,11 +58,21 @@ class SteamGameLibraryService(
             language = language,
             accessToken = token
         )
+        val achievementProgress = fetchAchievementProgress(
+            steamId = account.steamId.toLong(),
+            appIds = games.map(SteamGame::appId),
+            language = language,
+            accessToken = token
+        )
         val enrichedGames = games.map { game ->
             val metadata = storeMetadata.items[game.appId]
+            val progress = achievementProgress[game.appId]
             game.copy(
                 headerImageUrl = metadata?.headerImageUrl.orEmpty(),
-                price = metadata?.price
+                price = metadata?.price,
+                achievementUnlockedCount = progress?.unlocked,
+                achievementTotalCount = progress?.total,
+                allAchievementsUnlocked = progress?.allUnlocked == true
             )
         }
         return SteamLibraryResult.Success(
@@ -194,6 +204,36 @@ class SteamGameLibraryService(
         return SteamStoreMetadataResult(items = items, failure = failure)
     }
 
+    private fun fetchAchievementProgress(
+        steamId: Long,
+        appIds: List<Int>,
+        language: String,
+        accessToken: String
+    ): Map<Int, SteamGameAchievementProgress> {
+        val progress = mutableMapOf<Int, SteamGameAchievementProgress>()
+        appIds.distinct().chunked(ACHIEVEMENT_PROGRESS_BATCH_SIZE).forEach { batch ->
+            runCatching {
+                parseAchievementProgress(
+                    api.callProtobuf(
+                        iface = "IPlayerService",
+                        method = "GetAchievementsProgress",
+                        request = SteamProtoWriter().apply {
+                            writeUint64(1, steamId)
+                            writeString(2, language)
+                            batch.forEach { appId -> writeVarint(3, appId.toLong()) }
+                            writeBool(4, true)
+                        },
+                        accessToken = accessToken,
+                        useGet = true
+                    )
+                )
+            }.onSuccess { parsed ->
+                progress += parsed
+            }
+        }
+        return progress
+    }
+
     private fun buildStoreItemsRequest(
         appIds: List<Int>,
         countryCode: String,
@@ -235,6 +275,7 @@ class SteamGameLibraryService(
 
     companion object {
         private const val STORE_PRICE_BATCH_SIZE = 40
+        private const val ACHIEVEMENT_PROGRESS_BATCH_SIZE = 100
         private const val STORE_ASSET_BASE =
             "https://shared.akamai.steamstatic.com/store_item_assets/"
         private val json = Json { ignoreUnknownKeys = true }
@@ -280,6 +321,31 @@ class SteamGameLibraryService(
                         iconHash = game[5]?.asString.orEmpty()
                     )
                 }
+        }
+
+        internal fun parseAchievementProgress(
+            response: ByteArray
+        ): Map<Int, SteamGameAchievementProgress> {
+            return SteamProtoReader(response).parseAll()
+                .asSequence()
+                .filter { it.number == 1 && it.bytes != null }
+                .mapNotNull { field ->
+                    val item = runCatching {
+                        SteamProtoReader(field.bytes ?: return@mapNotNull null).parse()
+                    }.getOrNull() ?: return@mapNotNull null
+                    val appId = item[1]?.asLong?.toInt()?.takeIf { it > 0 }
+                        ?: return@mapNotNull null
+                    val unlocked = item[2]?.asLong?.coerceAtLeast(0L)?.toInt() ?: 0
+                    val total = item[3]?.asLong?.coerceAtLeast(0L)?.toInt() ?: 0
+                    appId to SteamGameAchievementProgress(
+                        appId = appId,
+                        unlocked = unlocked,
+                        total = total,
+                        allUnlocked = item[5]?.asBool == true ||
+                            (total > 0 && unlocked >= total)
+                    )
+                }
+                .toMap()
         }
 
         fun parseAchievements(

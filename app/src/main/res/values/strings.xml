@@ -4272,6 +4272,7 @@
     <string name="steam_library_filter_unplayed">Unplayed</string>
     <string name="steam_library_filter_recent">Recently played</string>
     <string name="steam_library_filter_long_played">100h+</string>
+    <string name="steam_library_filter_perfect">Perfect games</string>
     <string name="steam_library_section_recent">Recent activity (%1$d)</string>
     <string name="steam_library_section_played">Played games (%1$d)</string>
     <string name="steam_library_section_unplayed">Unplayed games (%1$d)</string>

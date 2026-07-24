@@ -12,7 +12,25 @@ data class SteamGame(
     val iconHash: String = "",
     val headerImageUrl: String = "",
     val price: SteamGamePrice? = null,
-    val regionalPrices: List<SteamRegionalPrice> = emptyList()
+    val regionalPrices: List<SteamRegionalPrice> = emptyList(),
+    val achievementUnlockedCount: Int? = null,
+    val achievementTotalCount: Int? = null,
+    val allAchievementsUnlocked: Boolean = false
+) {
+    val isPerfectAchievementGame: Boolean
+        get() {
+            val total = achievementTotalCount ?: return false
+            return total > 0 && (
+                allAchievementsUnlocked || (achievementUnlockedCount ?: 0) >= total
+            )
+        }
+}
+
+internal data class SteamGameAchievementProgress(
+    val appId: Int,
+    val unlocked: Int,
+    val total: Int,
+    val allUnlocked: Boolean
 )
 
 @Serializable

@@ -604,13 +604,13 @@ private fun SteamAccountHeroCard(
     Card(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(28.dp),
+        shape = RoundedCornerShape(SteamLibraryLayoutTokens.OverviewHeroCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 208.dp)
+                .heightIn(min = SteamLibraryLayoutTokens.OverviewHeroMinHeight)
                 .background(
                     Brush.linearGradient(
                         listOf(
@@ -644,8 +644,8 @@ private fun SteamAccountHeroCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 208.dp)
-                    .padding(horizontal = 18.dp, vertical = 16.dp),
+                    .heightIn(min = SteamLibraryLayoutTokens.OverviewHeroMinHeight)
+                    .padding(horizontal = 16.dp, vertical = 14.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(
@@ -653,7 +653,7 @@ private fun SteamAccountHeroCard(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    SteamFramedAvatar(account = account, decor = decor)
+                    SteamFramedAvatar(account = account, decor = decor, compact = true)
                     Column(
                         modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -694,7 +694,7 @@ private fun SteamAccountHeroCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp),
+                        .padding(top = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     HeroMetric(
@@ -1109,18 +1109,24 @@ private fun rememberSteamMiniProfileDecor(account: SteamAccount): SteamMiniProfi
 }
 
 @Composable
-private fun SteamFramedAvatar(account: SteamAccount, decor: SteamMiniProfileDecor?) {
+private fun SteamFramedAvatar(
+    account: SteamAccount,
+    decor: SteamMiniProfileDecor?,
+    compact: Boolean = false
+) {
     val frame = rememberSteamRemoteImage(decor?.avatarFrameUrl)
-    Box(modifier = Modifier.size(82.dp), contentAlignment = Alignment.Center) {
+    val frameSize = if (compact) SteamLibraryLayoutTokens.OverviewHeroFrameSize else 82.dp
+    val avatarSize = if (compact) SteamLibraryLayoutTokens.OverviewHeroAvatarSize else 68.dp
+    Box(modifier = Modifier.size(frameSize), contentAlignment = Alignment.Center) {
         Box(
             modifier = Modifier
-                .size(68.dp)
+                .size(avatarSize)
                 .clip(CircleShape)
                 .border(2.dp, Color.White.copy(alpha = 0.88f), CircleShape)
         ) {
             SteamAvatarImage(
                 account = account,
-                size = 68.dp,
+                size = avatarSize,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -1198,22 +1204,38 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Icon(
-                        Icons.Default.Schedule,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Text(
-                        text = formatGameHours(game.playtimeForeverMinutes),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Schedule,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text(
+                            text = formatGameHours(game.playtimeForeverMinutes),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1
+                        )
+                    }
+                    if (game.playtimeRecentMinutes > 0) {
+                        Text(
+                            text = stringResource(
+                                R.string.steam_library_recent_increment,
+                                formatGameHours(game.playtimeRecentMinutes)
+                            ),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary,
+                            maxLines = 1
+                        )
+                    }
                 }
             }
             Icon(
@@ -1296,6 +1318,7 @@ private fun steamLibraryFilterLabel(filter: SteamLibraryGameFilter): String {
             SteamLibraryGameFilter.UNPLAYED -> R.string.steam_library_filter_unplayed
             SteamLibraryGameFilter.RECENT -> R.string.steam_library_filter_recent
             SteamLibraryGameFilter.LONG_PLAYED -> R.string.steam_library_filter_long_played
+            SteamLibraryGameFilter.PERFECT -> R.string.steam_library_filter_perfect
         }
     )
 }
@@ -1313,86 +1336,11 @@ private fun steamLibrarySectionLabel(type: SteamLibraryGameSectionType, count: I
     )
 }
 
-internal enum class SteamLibraryGameFilter {
-    ALL,
-    UNPLAYED,
-    RECENT,
-    LONG_PLAYED
-}
-
-internal enum class SteamLibraryGameSectionType {
-    RECENT,
-    PLAYED,
-    UNPLAYED,
-    RESULTS
-}
-
-internal data class SteamLibraryGameSection(
-    val type: SteamLibraryGameSectionType,
-    val games: List<SteamGame>
-)
-
-internal fun steamLibraryGameLazyKey(
-    section: SteamLibraryGameSectionType,
-    index: Int,
-    game: SteamGame
-): String = "${section.name}_${game.appId}_$index"
-
 internal fun steamAchievementLazyKey(index: Int, achievement: SteamAchievement): String =
     "${achievement.apiName.ifBlank { "achievement" }}-$index"
 
 internal fun steamRegionalPriceLazyKey(index: Int, price: SteamRegionalPrice): String =
     "${price.countryCode.uppercase(Locale.ROOT)}-$index"
-
-internal const val LONG_PLAYTIME_MINUTES = 100 * 60
-
-internal fun buildSteamLibrarySections(
-    games: List<SteamGame>,
-    query: String,
-    filter: SteamLibraryGameFilter
-): List<SteamLibraryGameSection> {
-    val searched = games.filter { game ->
-        query.isBlank() || game.name.contains(query.trim(), ignoreCase = true)
-    }
-    val scoped = when (filter) {
-        SteamLibraryGameFilter.ALL -> searched
-        SteamLibraryGameFilter.UNPLAYED -> searched.filter { it.playtimeForeverMinutes == 0 }
-        SteamLibraryGameFilter.RECENT -> searched.filter { it.playtimeRecentMinutes > 0 }
-        SteamLibraryGameFilter.LONG_PLAYED -> searched.filter {
-            it.playtimeForeverMinutes >= LONG_PLAYTIME_MINUTES
-        }
-    }
-    if (filter != SteamLibraryGameFilter.ALL) {
-        return listOf(
-            SteamLibraryGameSection(
-                type = SteamLibraryGameSectionType.RESULTS,
-                games = scoped.sortedWith(
-                    compareByDescending<SteamGame> { it.playtimeRecentMinutes }
-                        .thenByDescending { it.playtimeForeverMinutes }
-                        .thenBy { it.name.lowercase(Locale.ROOT) }
-                )
-            )
-        )
-    }
-    return listOf(
-        SteamLibraryGameSection(
-            type = SteamLibraryGameSectionType.RECENT,
-            games = scoped.filter { it.playtimeRecentMinutes > 0 }
-                .sortedByDescending { it.playtimeRecentMinutes }
-        ),
-        SteamLibraryGameSection(
-            type = SteamLibraryGameSectionType.PLAYED,
-            games = scoped.filter {
-                it.playtimeForeverMinutes > 0 && it.playtimeRecentMinutes == 0
-            }.sortedByDescending { it.playtimeForeverMinutes }
-        ),
-        SteamLibraryGameSection(
-            type = SteamLibraryGameSectionType.UNPLAYED,
-            games = scoped.filter { it.playtimeForeverMinutes == 0 }
-                .sortedBy { it.name.lowercase(Locale.ROOT) }
-        )
-    )
-}
 
 @Composable
 private fun LibrarySummary(snapshot: SteamLibrarySnapshot) {

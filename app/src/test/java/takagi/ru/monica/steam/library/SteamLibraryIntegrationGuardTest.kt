@@ -145,8 +145,9 @@ class SteamLibraryIntegrationGuardTest {
             .substringBefore("private fun SteamGameBanner(")
         assertTrue(gameRow.contains("game.name"))
         assertTrue(gameRow.contains("formatGameHours(game.playtimeForeverMinutes)"))
+        assertTrue(gameRow.contains("steam_library_recent_increment"))
+        assertTrue(gameRow.contains("formatGameHours(game.playtimeRecentMinutes)"))
         assertFalse(gameRow.contains("game.price"))
-        assertFalse(gameRow.contains("game.playtimeRecentMinutes"))
         assertFalse(gameRow.contains("steam_library_unplayed_badge"))
         val regionalSheet = screen
             .substringAfter("private fun SteamRegionalPriceSheet(")

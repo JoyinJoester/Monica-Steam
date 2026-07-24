@@ -58,6 +58,9 @@ class SteamLibraryModelsTest {
         assertEquals("", snapshot.games.single().headerImageUrl)
         assertEquals(990L, snapshot.games.single().price?.originalPriceMinor)
         assertTrue(snapshot.games.single().regionalPrices.isEmpty())
+        assertNull(snapshot.games.single().achievementUnlockedCount)
+        assertNull(snapshot.games.single().achievementTotalCount)
+        assertTrue(!snapshot.games.single().allAchievementsUnlocked)
     }
 
     @Test
@@ -115,7 +118,10 @@ class SteamLibraryModelsTest {
                     playtimeForeverMinutes = 1,
                     playtimeRecentMinutes = 0,
                     headerImageUrl = "https://example/header.jpg",
-                    price = SteamGamePrice("CNY", 990, 1_990, true)
+                    price = SteamGamePrice("CNY", 990, 1_990, true),
+                    achievementUnlockedCount = 12,
+                    achievementTotalCount = 12,
+                    allAchievementsUnlocked = true
                 )
             ),
             fetchedAt = 100L
@@ -135,6 +141,9 @@ class SteamLibraryModelsTest {
 
         assertEquals(cached.games.single().headerImageUrl, merged.games.single().headerImageUrl)
         assertEquals(1_990L, merged.games.single().price?.originalPriceMinor)
+        assertEquals(12, merged.games.single().achievementUnlockedCount)
+        assertEquals(12, merged.games.single().achievementTotalCount)
+        assertTrue(merged.games.single().isPerfectAchievementGame)
     }
 
     @Test
@@ -201,6 +210,33 @@ class SteamLibraryModelsTest {
         assertEquals(45, parsed.single().playtimeRecentMinutes)
         assertEquals(1_234, parsed.single().playtimeForeverMinutes)
         assertEquals("icon-hash", parsed.single().iconHash)
+    }
+
+    @Test
+    fun achievementProgressProtobufParsesPerfectCompletion() {
+        val response = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 730L)
+                writeVarint(2, 10L)
+                writeVarint(3, 10L)
+                writeBool(5, true)
+                writeBool(7, true)
+            })
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 570L)
+                writeVarint(2, 5L)
+                writeVarint(3, 12L)
+                writeBool(5, false)
+                writeBool(7, true)
+            })
+        }.toByteArray()
+
+        val progress = SteamGameLibraryService.parseAchievementProgress(response)
+
+        assertEquals(10, progress.getValue(730).unlocked)
+        assertEquals(10, progress.getValue(730).total)
+        assertTrue(progress.getValue(730).allUnlocked)
+        assertTrue(!progress.getValue(570).allUnlocked)
     }
 
     @Test
@@ -314,6 +350,14 @@ class SteamLibraryModelsTest {
                 )
             )
         }.toByteArray()
+        val progressResponse = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 1718570L)
+                writeVarint(2, 63L)
+                writeVarint(3, 63L)
+                writeBool(5, true)
+            })
+        }.toByteArray()
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request()
@@ -321,6 +365,7 @@ class SteamLibraryModelsTest {
                 val body = when {
                     request.url.encodedPath.contains("GetOwnedGames") -> ownedGamesResponse
                     request.url.encodedPath.contains("GetItems") -> storeResponse
+                    request.url.encodedPath.contains("GetAchievementsProgress") -> progressResponse
                     else -> error("Unexpected request: ${request.url}")
                 }
                 Response.Builder()
@@ -341,6 +386,10 @@ class SteamLibraryModelsTest {
 
         val storeRequests = requests.filter { it.second.contains("GetItems") }
         assertEquals(listOf("GET"), storeRequests.map { it.first })
+        assertEquals(
+            listOf("GET"),
+            requests.filter { it.second.contains("GetAchievementsProgress") }.map { it.first }
+        )
         assertTrue(requests.none { it.second.contains("appdetails") })
         val astlibra = result.value.games.first { it.appId == 1718570 }
         assertEquals(
@@ -349,6 +398,9 @@ class SteamLibraryModelsTest {
         )
         assertEquals(8_000L, astlibra.price?.finalPriceMinor)
         assertEquals(8_800L, astlibra.price?.originalPriceMinor)
+        assertEquals(63, astlibra.achievementUnlockedCount)
+        assertEquals(63, astlibra.achievementTotalCount)
+        assertTrue(astlibra.isPerfectAchievementGame)
         assertEquals(8_800L, result.value.estimatedReplacementValueMinor)
         assertEquals("CNY", result.value.currency)
     }

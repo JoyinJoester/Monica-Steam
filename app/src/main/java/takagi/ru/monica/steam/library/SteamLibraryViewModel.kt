@@ -627,7 +627,16 @@ internal fun mergeLibraryDashboardSnapshot(
                 game.headerImageUrl
             },
             price = if (fresh.priceFailure != null) game.price ?: previous?.price else game.price,
-            regionalPrices = game.regionalPrices.ifEmpty { previous?.regionalPrices.orEmpty() }
+            regionalPrices = game.regionalPrices.ifEmpty { previous?.regionalPrices.orEmpty() },
+            achievementUnlockedCount = game.achievementUnlockedCount
+                ?: previous?.achievementUnlockedCount,
+            achievementTotalCount = game.achievementTotalCount
+                ?: previous?.achievementTotalCount,
+            allAchievementsUnlocked = if (game.achievementTotalCount != null) {
+                game.allAchievementsUnlocked
+            } else {
+                previous?.allAchievementsUnlocked == true
+            }
         )
     }
     val library = fresh.copy(games = gamesWithCachedStoreFallback)
