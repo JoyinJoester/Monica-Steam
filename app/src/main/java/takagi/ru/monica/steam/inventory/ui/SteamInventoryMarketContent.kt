@@ -1,10 +1,5 @@
 package takagi.ru.monica.steam.inventory.ui
 
-import android.content.Context
-import android.net.Uri
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -45,8 +40,6 @@ import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Inventory2
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
@@ -70,7 +63,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -93,18 +85,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntOffset
 import java.util.Locale
-import java.text.SimpleDateFormat
-import java.util.Date
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
-import takagi.ru.monica.steam.analytics.SteamListingAnalysis
-import takagi.ru.monica.steam.analytics.SteamMarketCsv
 import takagi.ru.monica.steam.data.SteamAccount
-import takagi.ru.monica.steam.io.SteamSafWriter
 import takagi.ru.monica.steam.market.SteamInventoryGame
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.steamInventoryGameLazyKey
@@ -134,7 +118,6 @@ internal fun SteamInventoryContent(
     selectedStackKeys: Set<String>,
     onSelectAccount: (Long) -> Unit,
     onSelectGame: (SteamInventoryGame) -> Unit,
-    onRefreshValuation: () -> Unit,
     onLoadMore: () -> Unit,
     onToggleSelection: (SteamInventoryItemStack) -> Unit,
     onClearSelection: () -> Unit,
@@ -143,26 +126,6 @@ internal fun SteamInventoryContent(
 ) {
     var showAccountPicker by remember { mutableStateOf(false) }
     val gridState = androidx.compose.foundation.lazy.grid.rememberLazyGridState()
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val inventoryExportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("text/csv")
-    ) { uri ->
-        uri?.let {
-            scope.launch {
-                val success = writeSteamCsv(
-                    context,
-                    it,
-                    SteamMarketCsv.inventory(state.inventoryStacks, state.inventoryPriceQuotes)
-                )
-                Toast.makeText(
-                    context,
-                    if (success) R.string.steam_analytics_csv_exported else R.string.steam_analytics_csv_failed,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
 
     if (showAccountPicker) {
         SteamConfirmationAccountPickerSheet(
@@ -200,15 +163,6 @@ internal fun SteamInventoryContent(
             account = account,
             onClick = { showAccountPicker = true },
             modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 16.dp)
-        )
-
-        SteamInventoryAnalyticsCard(
-            state = state,
-            onRefresh = onRefreshValuation,
-            onExport = {
-                inventoryExportLauncher.launch("monica-steam-inventory.csv")
-            },
-            modifier = Modifier.padding(start = 16.dp, top = 10.dp, end = 16.dp)
         )
 
         val games = state.overview?.games.orEmpty()
@@ -369,22 +323,6 @@ internal fun SteamMarketListingsContent(
 ) {
     var showAccountPicker by remember { mutableStateOf(false) }
     val listState = androidx.compose.foundation.lazy.rememberLazyListState()
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val listingsExportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("text/csv")
-    ) { uri ->
-        uri?.let {
-            scope.launch {
-                val success = writeSteamCsv(context, it, SteamMarketCsv.listings(state.listings))
-                Toast.makeText(
-                    context,
-                    if (success) R.string.steam_analytics_csv_exported else R.string.steam_analytics_csv_failed,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
 
     if (showAccountPicker) {
         SteamConfirmationAccountPickerSheet(
@@ -423,17 +361,6 @@ internal fun SteamMarketListingsContent(
             onClick = { showAccountPicker = true },
             modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 16.dp)
         )
-
-        state.listingAnalysis?.let { analysis ->
-            SteamListingAnalyticsCard(
-                analysis = analysis,
-                wallet = state.overview?.wallet ?: SteamWalletInfo.Fallback,
-                onExport = {
-                    listingsExportLauncher.launch("monica-steam-market-listings.csv")
-                },
-                modifier = Modifier.padding(start = 16.dp, top = 10.dp, end = 16.dp)
-            )
-        }
 
         when {
             account == null || !account.hasSteamCommunitySession -> {
@@ -556,193 +483,6 @@ internal fun SteamMarketListingsContent(
             }
         }
     }
-}
-
-@Composable
-private fun SteamInventoryAnalyticsCard(
-    state: SteamInventoryMarketUiState,
-    onRefresh: () -> Unit,
-    onExport: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val wallet = state.overview?.wallet ?: SteamWalletInfo.Fallback
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(R.string.steam_analytics_inventory_value),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
-                )
-                IconButton(
-                    onClick = onRefresh,
-                    enabled = !state.inventoryValuationLoading && state.inventoryStacks.isNotEmpty()
-                ) {
-                    Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
-                }
-                IconButton(onClick = onExport, enabled = state.inventoryStacks.isNotEmpty()) {
-                    Icon(
-                        Icons.Default.Download,
-                        contentDescription = stringResource(R.string.steam_analytics_export_csv)
-                    )
-                }
-            }
-            if (state.inventoryValuationLoading) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                Text(
-                    text = stringResource(R.string.steam_analytics_loading_prices),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            } else {
-                val valuation = state.inventoryValuation
-                if (valuation == null) {
-                    Text(
-                        text = stringResource(R.string.steam_analytics_refresh_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                } else {
-                    AnalyticsAmountRow(
-                        stringResource(R.string.steam_analytics_buyer_value),
-                        walletCurrencyPrefix(wallet.currency) + minorUnitsLongText(valuation.buyerValueMinor)
-                    )
-                    AnalyticsAmountRow(
-                        stringResource(R.string.steam_analytics_seller_receive),
-                        walletCurrencyPrefix(wallet.currency) + minorUnitsLongText(valuation.sellerReceiveMinor)
-                    )
-                    Text(
-                        text = stringResource(
-                            R.string.steam_analytics_coverage,
-                            valuation.pricedItems,
-                            valuation.marketableItems,
-                            valuation.coveragePercent
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    state.inventoryValuationFetchedAt?.let { fetchedAt ->
-                        Text(
-                            text = stringResource(
-                                R.string.steam_analytics_refreshed_at,
-                                analyticsTime(fetchedAt)
-                            ),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            }
-            state.inventoryValuationError?.let { error ->
-                Text(error, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
-            }
-            Text(
-                text = stringResource(R.string.steam_analytics_value_disclaimer),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Composable
-private fun SteamListingAnalyticsCard(
-    analysis: SteamListingAnalysis,
-    wallet: SteamWalletInfo,
-    onExport: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(R.string.steam_analytics_active_listings, analysis.listingCount),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
-                )
-                IconButton(onClick = onExport, enabled = analysis.listingCount > 0) {
-                    Icon(
-                        Icons.Default.Download,
-                        contentDescription = stringResource(R.string.steam_analytics_export_csv)
-                    )
-                }
-            }
-            AnalyticsAmountRow(
-                stringResource(R.string.steam_analytics_buyer_value),
-                walletCurrencyPrefix(wallet.currency) + minorUnitsLongText(analysis.buyerValueMinor)
-            )
-            AnalyticsAmountRow(
-                stringResource(R.string.steam_analytics_seller_receive),
-                walletCurrencyPrefix(wallet.currency) + minorUnitsLongText(analysis.sellerReceiveMinor)
-            )
-            AnalyticsAmountRow(
-                stringResource(R.string.steam_analytics_fees),
-                walletCurrencyPrefix(wallet.currency) + minorUnitsLongText(analysis.feesMinor)
-            )
-            if (analysis.invalidPriceCount > 0) {
-                Text(
-                    text = stringResource(
-                        R.string.steam_analytics_invalid_prices,
-                        analysis.invalidPriceCount
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun AnalyticsAmountRow(label: String, value: String) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = label,
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Text(text = value, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
-    }
-}
-
-private suspend fun writeSteamCsv(context: Context, uri: Uri, csv: String): Boolean {
-    return withContext(Dispatchers.IO) {
-        SteamSafWriter.writeText(
-            context = context,
-            uri = uri,
-            text = csv,
-            mode = "wt"
-        )
-    }
-}
-
-private fun minorUnitsLongText(value: Long): String {
-    return String.format(Locale.US, "%.2f", value.coerceAtLeast(0L) / 100.0)
-}
-
-private fun analyticsTime(timestamp: Long): String {
-    return SimpleDateFormat("MM-dd HH:mm", Locale.getDefault()).format(Date(timestamp))
 }
 
 @Composable

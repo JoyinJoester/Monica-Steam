@@ -22,6 +22,19 @@ class SteamInventoryMarketUiGuardTest {
     }
 
     @Test
+    fun inventoryAndListingsOpenDirectlyIntoTheirContent() {
+        val uiSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"
+        ).readText()
+
+        assertTrue(uiSource.contains("SteamConfirmationAccountCard("))
+        assertFalse(uiSource.contains("SteamInventoryAnalyticsCard("))
+        assertFalse(uiSource.contains("SteamListingAnalyticsCard("))
+        assertFalse(uiSource.contains("R.string.steam_analytics_inventory_value"))
+        assertFalse(uiSource.contains("R.string.steam_analytics_active_listings"))
+    }
+
+    @Test
     fun marketUiUsesNativeComponentsAndSafeAutoConfirmation() {
         val uiSource = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt"

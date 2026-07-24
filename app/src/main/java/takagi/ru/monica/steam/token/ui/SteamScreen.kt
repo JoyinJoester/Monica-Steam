@@ -2044,7 +2044,6 @@ fun SteamScreen(
                                     selectedInventoryStackKeys = emptyList()
                                     viewModel.selectInventoryGame(game, steamLanguage)
                                 },
-                                onRefreshValuation = viewModel::refreshInventoryValuation,
                                 onLoadMore = viewModel::loadMoreInventory,
                                 onToggleSelection = { stack ->
                                     val key = stack.item.stackKey
