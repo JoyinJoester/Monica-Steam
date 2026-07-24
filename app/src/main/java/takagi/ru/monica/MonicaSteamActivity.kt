@@ -210,6 +210,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 var pageHistory by rememberSaveable { mutableStateOf<List<String>>(emptyList()) }
                 var pendingQrResult by rememberSaveable { mutableStateOf<String?>(null) }
                 var pendingQrAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
+                var pendingStoreAppId by rememberSaveable { mutableStateOf<Int?>(null) }
                 var libraryRefreshing by rememberSaveable { mutableStateOf(false) }
                 var backPressedOnce by remember { mutableStateOf(false) }
                 val composeScope = rememberCoroutineScope()
@@ -387,6 +388,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                         MonicaSteamPage.STORE -> {
                             SteamStoreScreen(
                                 showNavigationBack = false,
+                                initialAppId = pendingStoreAppId,
+                                onInitialAppIdConsumed = { pendingStoreAppId = null },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -461,6 +464,10 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 },
                                 onOpenBackup = {
                                     navigateTo(MonicaSteamPage.MAFILE_TRANSFER)
+                                },
+                                onOpenStoreApp = { appId ->
+                                    pendingStoreAppId = appId
+                                    navigateTo(MonicaSteamPage.STORE)
                                 },
                                 pendingSteamQrResult = pendingQrResult,
                                 pendingSteamQrAccountId = pendingQrAccountId,

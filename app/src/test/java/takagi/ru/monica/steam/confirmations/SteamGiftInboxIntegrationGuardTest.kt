@@ -37,6 +37,9 @@ class SteamGiftInboxIntegrationGuardTest {
         val detailContent = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationDetailContent.kt"
         ).readText()
+        val appContent = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationAppContentCard.kt"
+        ).readText()
 
         assertTrue(page.contains("fun SteamNotificationsScreen("))
         assertTrue(!page.contains("BackHandler("))
@@ -55,11 +58,34 @@ class SteamGiftInboxIntegrationGuardTest {
         assertTrue(!page.contains("text = notification.bodyData"))
         assertTrue(detailContent.contains("internal fun SteamNotificationDetailContent("))
         assertTrue(detailContent.contains("SelectionContainer"))
-        assertTrue(detailContent.contains("steam_notification_detail_app_id"))
+        assertTrue(!detailContent.contains("steam_notification_detail_app_id"))
+        assertTrue(page.contains("SteamNotificationAppContentCard("))
+        assertTrue(page.contains("onOpenStoreApp(content.appId)"))
+        assertTrue(appContent.contains("ContentScale.Fit"))
+        assertTrue(appContent.contains("heightIn(min = 48.dp)"))
+        assertTrue(appContent.contains("steam_store_open_detail"))
         assertTrue(host.contains("SteamSection.NOTIFICATIONS -> SteamNotificationsScreen("))
+        assertTrue(host.contains("onOpenStoreApp = onOpenStoreApp"))
         assertTrue(!host.contains("SteamNotificationCenter("))
         assertTrue(!host.contains("showNotificationsPage"))
         assertTrue(host.contains("SteamNotificationsScreen("))
+    }
+
+    @Test
+    fun notificationGameContentDeepLinksIntoStandaloneStoreDetail() {
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+        val store = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+        ).readText()
+
+        assertTrue(activity.contains("pendingStoreAppId = appId"))
+        assertTrue(activity.contains("navigateTo(MonicaSteamPage.STORE)"))
+        assertTrue(activity.contains("initialAppId = pendingStoreAppId"))
+        assertTrue(store.contains("LaunchedEffect(initialAppId)"))
+        assertTrue(store.contains("viewModel.openDetail(appId)"))
+        assertTrue(store.contains("onInitialAppIdConsumed()"))
     }
 
     @Test

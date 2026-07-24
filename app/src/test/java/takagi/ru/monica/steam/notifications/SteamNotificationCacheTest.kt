@@ -18,7 +18,14 @@ class SteamNotificationCacheTest {
                     type = 2,
                     kind = SteamNotificationKind.GIFT,
                     title = "Portal 2",
-                    summary = "Alice"
+                    summary = "Alice",
+                    appContent = listOf(
+                        SteamNotificationAppContent(
+                            appId = 620,
+                            name = "Portal 2",
+                            imageUrl = "https://cdn.example/620.jpg"
+                        )
+                    )
                 )
             ),
             unreadCount = 1,
@@ -38,6 +45,7 @@ class SteamNotificationCacheTest {
         )!!
 
         assertEquals(original, restored)
+        assertEquals("Portal 2", restored.notifications.single().appContent.single().name)
         assertTrue(SteamGiftAction.ADD_TO_LIBRARY in restored.pendingGifts.single().actions)
     }
 }

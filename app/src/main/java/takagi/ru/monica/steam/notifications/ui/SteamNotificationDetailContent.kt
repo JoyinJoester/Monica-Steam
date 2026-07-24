@@ -69,10 +69,6 @@ internal fun SteamNotificationDetailContent(fields: List<SteamNotificationDetail
 @Composable
 private fun notificationDetailFieldLabel(key: String): String {
     return when (key.leafKey()) {
-        "appid", "app_id" -> stringResource(R.string.steam_notification_detail_app_id)
-        "packageid", "package_id" -> stringResource(R.string.steam_notification_detail_package_id)
-        "bundleid", "bundle_id" -> stringResource(R.string.steam_notification_detail_bundle_id)
-        "count", "quantity", "item_count" -> stringResource(R.string.steam_notification_detail_quantity)
         "discount", "discount_percent", "discount_percentage", "discount_pct" ->
             stringResource(R.string.steam_notification_detail_discount)
         "price", "final_price", "price_final", "formatted_price" ->

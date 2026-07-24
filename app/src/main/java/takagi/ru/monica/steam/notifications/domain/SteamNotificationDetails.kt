@@ -14,7 +14,8 @@ data class SteamNotificationDetailField(
 
 data class SteamNotificationDetails(
     val message: String? = null,
-    val fields: List<SteamNotificationDetailField> = emptyList()
+    val fields: List<SteamNotificationDetailField> = emptyList(),
+    val appIds: List<Int> = emptyList()
 )
 
 object SteamNotificationDetailParser {
@@ -46,18 +47,27 @@ object SteamNotificationDetailParser {
             .firstOrNull { field -> field.key.leafKey() in MESSAGE_KEYS }
             ?.value
             ?.takeIf { it.isDistinctText(title, summary) }
+        val appIds = flattened
+            .asSequence()
+            .filter { field -> field.key.leafKey() in APP_ID_KEYS }
+            .flatMap { field -> APP_ID_PATTERN.findAll(field.value).map { it.value.toIntOrNull() } }
+            .filterNotNull()
+            .filter { it > 0 }
+            .distinct()
+            .take(MAX_APP_IDS)
+            .toList()
         val fields = flattened
             .asSequence()
             .filter { field ->
                 val leafKey = field.key.leafKey()
-                leafKey !in TITLE_KEYS && leafKey !in MESSAGE_KEYS
+                leafKey !in TITLE_KEYS && leafKey !in MESSAGE_KEYS && leafKey !in TECHNICAL_KEYS
             }
             .filter { field -> field.value.isDistinctText(title, summary, message.orEmpty()) }
             .distinctBy { field -> field.key.lowercase() to field.value }
             .take(MAX_DETAIL_FIELDS)
             .toList()
 
-        return SteamNotificationDetails(message = message, fields = fields)
+        return SteamNotificationDetails(message = message, fields = fields, appIds = appIds)
     }
 
     private fun flatten(
@@ -125,5 +135,17 @@ object SteamNotificationDetailParser {
         "notification_body",
         "notification_text"
     )
+    private val APP_ID_KEYS = setOf("appid", "app_id", "appids", "app_ids")
+    private val TECHNICAL_KEYS = APP_ID_KEYS + setOf(
+        "count",
+        "quantity",
+        "item_count",
+        "packageid",
+        "package_id",
+        "bundleid",
+        "bundle_id"
+    )
+    private val APP_ID_PATTERN = Regex("\\d+")
+    private const val MAX_APP_IDS = 12
     private const val MAX_DETAIL_FIELDS = 24
 }

@@ -76,6 +76,7 @@ fun SteamNotificationsScreen(
     searchQuery: String,
     onGiftAction: (SteamPendingGift, SteamGiftAction) -> Unit,
     onOpenWeb: () -> Unit,
+    onOpenStoreApp: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var filterName by rememberSaveable(account?.id) {
@@ -228,6 +229,7 @@ fun SteamNotificationsScreen(
             )
         }
         val hasSummary = isMeaningfulNotificationText(notification.summary)
+        val hasAppContent = notification.appContent.isNotEmpty()
         ModalBottomSheet(onDismissRequest = { selectedNotification = null }) {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().heightIn(max = 640.dp),
@@ -237,8 +239,8 @@ fun SteamNotificationsScreen(
                 item(key = "notification_detail_title") {
                     Text(
                         text = notificationDisplayTitle(notification),
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
                 if (notification.timestamp > 0L) {
@@ -266,7 +268,30 @@ fun SteamNotificationsScreen(
                             }
                         }
                     }
-                if (details.fields.isNotEmpty()) {
+                if (notification.kind == SteamNotificationKind.WISHLIST &&
+                    !hasSummary && details.message == null && hasAppContent
+                ) {
+                    item(key = "notification_detail_wishlist_message") {
+                        Text(
+                            text = stringResource(R.string.steam_notification_wishlist_update_body),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                items(
+                    items = notification.appContent,
+                    key = { content -> "notification_app_${content.appId}" }
+                ) { content ->
+                    SteamNotificationAppContentCard(
+                        content = content,
+                        onOpenStore = {
+                            selectedNotification = null
+                            onOpenStoreApp(content.appId)
+                        }
+                    )
+                }
+                if (details.fields.isNotEmpty() && !hasAppContent) {
                     item(key = "notification_detail_fields") {
                         SteamNotificationDetailContent(details.fields)
                     }
@@ -283,7 +308,9 @@ fun SteamNotificationsScreen(
                         )
                     }
                 }
-                if (!hasSummary && details.message == null && details.fields.isEmpty() && relatedGift == null) {
+                if (!hasSummary && details.message == null && details.fields.isEmpty() &&
+                    relatedGift == null && !hasAppContent
+                ) {
                     item(key = "notification_detail_unavailable") {
                         Surface(
                             shape = RoundedCornerShape(16.dp),
@@ -394,6 +421,11 @@ private fun SteamNotificationListCard(
                 )
                 notification.summary
                     .takeIf(::isMeaningfulNotificationText)
+                    .orEmpty()
+                    .ifBlank {
+                        notification.appContent.joinToString { content -> content.name }
+                    }
+                    .takeIf(String::isNotBlank)
                     ?.let { summary ->
                     Text(
                         text = summary,

@@ -110,6 +110,8 @@ private sealed interface SteamStoreDestination {
 fun SteamStoreScreen(
     showNavigationBack: Boolean = true,
     onNavigateBack: () -> Unit = {},
+    initialAppId: Int? = null,
+    onInitialAppIdConsumed: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: SteamStoreViewModel = viewModel(factory = SteamStoreViewModel.factory(LocalContext.current))
 ) {
@@ -119,6 +121,12 @@ fun SteamStoreScreen(
     var lastDetail by remember { mutableStateOf<SteamStoreDetail?>(null) }
     LaunchedEffect(state.detail) {
         state.detail?.let { lastDetail = it }
+    }
+    LaunchedEffect(initialAppId) {
+        initialAppId?.let { appId ->
+            viewModel.openDetail(appId)
+            onInitialAppIdConsumed()
+        }
     }
     val webUrl = state.webUrl
     val detailAppId = state.detailAppId
@@ -1441,7 +1449,8 @@ internal fun SteamStoreImage(
     url: String,
     modifier: Modifier,
     contentScale: ContentScale = ContentScale.Crop,
-    alpha: Float = 1f
+    alpha: Float = 1f,
+    contentDescription: String? = null
 ) {
     val context = LocalContext.current
     val cache = remember(context) { SteamRemoteImageCache.get(context.applicationContext) }
@@ -1452,7 +1461,7 @@ internal fun SteamStoreImage(
     Box(modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
         if (loadedImage != null) Image(
             loadedImage,
-            contentDescription = null,
+            contentDescription = contentDescription,
             modifier = Modifier.fillMaxSize(),
             contentScale = contentScale,
             alpha = alpha

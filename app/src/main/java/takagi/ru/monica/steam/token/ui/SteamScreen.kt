@@ -351,6 +351,7 @@ fun SteamScreen(
     onOpenStandaloneSettings: () -> Unit = {},
     onOpenHealth: () -> Unit = {},
     onOpenLibrary: () -> Unit = {},
+    onOpenStoreApp: (Int) -> Unit = {},
     onOpenBackup: () -> Unit = {},
     modifier: Modifier = Modifier,
     pendingSteamQrResult: String? = null,
@@ -1936,6 +1937,7 @@ fun SteamScreen(
                                     pendingGiftAction = SteamGiftActionRequest(gift, action)
                                 },
                                 onOpenWeb = { showGiftInbox = true },
+                                onOpenStoreApp = onOpenStoreApp,
                                 modifier = Modifier.fillMaxSize()
                             )
                             SteamSection.TRADE_OFFERS -> SteamTradeOffersContent(

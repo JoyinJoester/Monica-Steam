@@ -77,9 +77,12 @@ import takagi.ru.monica.steam.gifts.data.SteamGiftService
 import takagi.ru.monica.steam.gifts.domain.SteamGiftAction
 import takagi.ru.monica.steam.gifts.domain.SteamPendingGift
 import takagi.ru.monica.steam.notifications.data.SteamNotificationCache
+import takagi.ru.monica.steam.notifications.data.SteamNotificationContentService
 import takagi.ru.monica.steam.notifications.data.SteamNotificationPreferencesCache
 import takagi.ru.monica.steam.notifications.data.SteamNotificationService
 import takagi.ru.monica.steam.notifications.domain.SteamNotificationsUiState
+import takagi.ru.monica.steam.store.data.SteamStoreCache
+import takagi.ru.monica.steam.store.data.SteamStoreService
 import takagi.ru.monica.steam.organization.SteamAccountOrganizationRules
 import takagi.ru.monica.steam.scanner.data.readSteamStorageSource
 import takagi.ru.monica.steam.scanner.data.saveSteamStorageSource
@@ -227,7 +230,9 @@ class SteamViewModel(
     private val notificationService: SteamNotificationService = SteamNotificationService(),
     private val giftService: SteamGiftService = SteamGiftService(),
     private val notificationCache: SteamNotificationCache = SteamNotificationPreferencesCache(appContext),
-    private val securityEventRepository: SteamSecurityEventRepository? = null
+    private val securityEventRepository: SteamSecurityEventRepository? = null,
+    private val notificationContentService: SteamNotificationContentService =
+        SteamNotificationContentService(SteamStoreService(), SteamStoreCache(appContext))
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamUiState())
     val uiState: StateFlow<SteamUiState> = _uiState.asStateFlow()
@@ -940,7 +945,11 @@ class SteamViewModel(
                         appContext.getString(R.string.steam_notifications_session_required)
                     )
                 withContext(Dispatchers.IO) {
-                    val freshSnapshot = notificationService.fetch(freshAccount)
+                    val freshSnapshot = notificationContentService.enrich(
+                        account = freshAccount,
+                        snapshot = notificationService.fetch(freshAccount),
+                        cachedSnapshot = cached
+                    )
                     val giftResult: Result<List<SteamPendingGift>> =
                         if (freshSnapshot.pendingGiftCount > 0) {
                             runCatching { giftService.fetchPending(freshAccount) }

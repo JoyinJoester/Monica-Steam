@@ -8,6 +8,18 @@ import takagi.ru.monica.steam.notifications.domain.SteamNotificationDetailParser
 
 class SteamNotificationDetailParserTest {
     @Test
+    fun wishlistTechnicalMetadataIsNotPresentedAsNotificationContent() {
+        val details = SteamNotificationDetailParser.parse(
+            bodyData = """{"appid":430960,"count":1}""",
+            title = "Wishlist update",
+            summary = ""
+        )
+
+        assertTrue(details.fields.isEmpty())
+        assertEquals(listOf(430960), details.appIds)
+    }
+
+    @Test
     fun wishlistBodyExposesMessageAndStructuredFieldsWithoutRawJson() {
         val details = SteamNotificationDetailParser.parse(
             bodyData = """{
@@ -21,8 +33,7 @@ class SteamNotificationDetailParserTest {
         )
 
         assertEquals("Two games on your wishlist are discounted", details.message)
-        assertEquals("570", details.fields.first { it.key == "appid" }.value)
-        assertEquals("2", details.fields.first { it.key == "count" }.value)
+        assertEquals(listOf(570), details.appIds)
         assertEquals("75", details.fields.first { it.key == "discount_percent" }.value)
         assertFalse(details.fields.any { it.key == "message" })
     }

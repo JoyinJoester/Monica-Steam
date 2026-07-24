@@ -138,6 +138,34 @@ class SteamStoreService(
         accessToken: String? = null,
         language: String = "schinese",
         discoveryCountryCode: String? = null
+    ): SteamStoreDetail = resolveDetail(
+        appId = appId,
+        steamLoginSecure = steamLoginSecure,
+        accessToken = accessToken,
+        language = language,
+        discoveryCountryCode = discoveryCountryCode
+    ).let { detail -> attachReviews(detail, appId, language) }
+
+    fun compactDetail(
+        appId: Int,
+        steamLoginSecure: String? = null,
+        accessToken: String? = null,
+        language: String = "schinese",
+        discoveryCountryCode: String? = null
+    ): SteamStoreDetail = resolveDetail(
+        appId = appId,
+        steamLoginSecure = steamLoginSecure,
+        accessToken = accessToken,
+        language = language,
+        discoveryCountryCode = discoveryCountryCode
+    )
+
+    private fun resolveDetail(
+        appId: Int,
+        steamLoginSecure: String?,
+        accessToken: String?,
+        language: String,
+        discoveryCountryCode: String?
     ): SteamStoreDetail {
         val accountCountry = accountCountryOrFail(steamLoginSecure, accessToken)
         requestDetail(
@@ -146,14 +174,10 @@ class SteamStoreService(
             steamLoginSecure = steamLoginSecure,
             countryCode = accountCountry
         )?.let { detail ->
-            return attachReviews(
-                detail = detail.copy(
-                    availableInAccountRegion = accountCountry?.let { true },
-                    accountCountryCode = accountCountry,
-                    priceCountryCode = accountCountry
-                ),
-                appId = appId,
-                language = language
+            return detail.copy(
+                availableInAccountRegion = accountCountry?.let { true },
+                accountCountryCode = accountCountry,
+                priceCountryCode = accountCountry
             )
         }
         steamStoreDetailFallbackCountries(
@@ -174,14 +198,10 @@ class SteamStoreService(
                 )
             }.getOrNull()
             if (detail != null) {
-                return attachReviews(
-                    detail = detail.copy(
-                        availableInAccountRegion = accountCountry?.let { false },
-                        accountCountryCode = accountCountry,
-                        priceCountryCode = countryCode
-                    ),
-                    appId = appId,
-                    language = language
+                return detail.copy(
+                    availableInAccountRegion = accountCountry?.let { false },
+                    accountCountryCode = accountCountry,
+                    priceCountryCode = countryCode
                 )
             }
         }
