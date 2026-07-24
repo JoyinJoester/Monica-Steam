@@ -488,6 +488,10 @@ class MonicaSteamActivity : BaseMonicaActivity() {
         }
     }
 
+}
+
+}
+
     private fun initializeWebDavAutoBackupDeferred() {
         lifecycleScope.launch {
             delay(STEAM_AUTO_BACKUP_INIT_DELAY_MS)
@@ -521,9 +525,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
         val hoursSinceLastBackup = (currentTime - lastBackupTime) / (1_000L * 60L * 60L)
         return hoursSinceLastBackup >= STEAM_AUTO_BACKUP_INTERVAL_HOURS
     }
-}
-
-}
 
 }
 
