@@ -1,11 +1,30 @@
 package takagi.ru.monica.steam.store
 
 import java.io.File
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SteamStoreCollectionUiGuardTest {
+    @Test
+    fun cartAndWishlistListsReserveSpaceAboveFloatingDock() {
+        val collection = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamNativeCartScreen.kt"
+        ).readText()
+        val tokens = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreLayoutTokens.kt"
+        ).readText()
+
+        assertTrue(tokens.contains("CollectionBottomClearance = 112.dp"))
+        assertEquals(
+            2,
+            Regex("bottom = SteamStoreLayoutTokens\\.CollectionBottomClearance")
+                .findAll(collection)
+                .count()
+        )
+    }
+
     @Test
     fun collectionScreenUsesM3TabsWishlistAndConditionalCheckoutBar() {
         val collection = projectFile(

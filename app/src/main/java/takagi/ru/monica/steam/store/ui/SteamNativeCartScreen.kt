@@ -205,7 +205,12 @@ private fun SteamCartContent(
     }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            top = 12.dp,
+            end = 16.dp,
+            bottom = SteamStoreLayoutTokens.CollectionBottomClearance
+        ),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         itemsIndexed(items, key = ::steamCartLazyKey) { _, item ->
@@ -263,7 +268,12 @@ private fun SteamWishlistContent(
         } else {
             LazyColumn(
                 modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    top = 12.dp,
+                    end = 16.dp,
+                    bottom = SteamStoreLayoutTokens.CollectionBottomClearance
+                ),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 itemsIndexed(items, key = ::steamWishlistLazyKey) { _, item ->
