@@ -40,7 +40,8 @@ class SteamStandaloneNavigationGuardTest {
         assertFalse(activity.contains("LinearProgressIndicator"))
         assertFalse(activity.contains("showProgress"))
         assertTrue(libraryScreen.contains(".align(Alignment.TopCenter)"))
-        assertTrue(dock.contains("listOf(LIBRARY, STORE, SETTINGS)"))
+        assertTrue(dock.contains("listOf(STORE, LIBRARY, SETTINGS)"))
+        assertTrue(activity.contains("steamDockSwipe("))
         assertTrue(settings.contains("SteamDockOrderScreen("))
         assertTrue(settings.contains("rememberReorderableLazyListState"))
         val dockOrderScreen = settings

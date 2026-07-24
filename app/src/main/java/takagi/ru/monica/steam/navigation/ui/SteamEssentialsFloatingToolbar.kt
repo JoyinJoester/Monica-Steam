@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.navigation.ui
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,9 +30,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.steam.navigation.SteamDockTab
+import takagi.ru.monica.steam.navigation.dockSwipeTarget
 
 /**
  * Space reserved by every top-level Steam page for the floating toolbar and
@@ -45,6 +49,37 @@ internal data class SteamToolbarItem(
     val onClick: () -> Unit,
     val hasBadge: Boolean = false
 )
+
+/**
+ * Handles page switching only while the pointer is inside the floating Dock.
+ * Content lists never receive this modifier, so their normal vertical and
+ * horizontal gestures remain independent from top-level navigation.
+ */
+internal fun Modifier.steamDockSwipe(
+    order: List<SteamDockTab>,
+    selected: SteamDockTab,
+    thresholdPx: Float,
+    onSelected: (SteamDockTab) -> Unit
+): Modifier = pointerInput(order, selected, thresholdPx) {
+    var totalDrag = 0f
+    detectHorizontalDragGestures(
+        onDragStart = { totalDrag = 0f },
+        onDragEnd = {
+            dockSwipeTarget(
+                order = order,
+                selected = selected,
+                totalDragPx = totalDrag,
+                thresholdPx = thresholdPx
+            )?.let(onSelected)
+            totalDrag = 0f
+        },
+        onDragCancel = { totalDrag = 0f },
+        onHorizontalDrag = { change, dragAmount ->
+            totalDrag += dragAmount
+            change.consume()
+        }
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable

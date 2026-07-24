@@ -52,6 +52,7 @@ import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.navigation.ui.SteamEssentialsFloatingToolbar
 import takagi.ru.monica.steam.navigation.ui.SteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.SteamToolbarItem
+import takagi.ru.monica.steam.navigation.ui.steamDockSwipe
 import takagi.ru.monica.steam.navigation.ui.steamDockProgressiveBlur
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordDatabase
@@ -600,7 +601,14 @@ private fun SteamStandaloneDock(
     val tokenLabel = SteamDockTab.TOKEN.label()
 
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .steamDockSwipe(
+                order = tabs,
+                selected = selected,
+                thresholdPx = with(LocalDensity.current) { 56.dp.toPx() },
+                onSelected = onSelected
+            ),
         contentAlignment = Alignment.BottomCenter
     ) {
         SteamEssentialsFloatingToolbar(
