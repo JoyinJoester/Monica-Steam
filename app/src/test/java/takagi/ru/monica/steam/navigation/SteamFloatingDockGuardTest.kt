@@ -33,9 +33,10 @@ class SteamFloatingDockGuardTest {
         assertFalse(dock.contains("SteamAvatarImage"))
         assertFalse(dock.contains("SteamAccountPickerSheet"))
         assertFalse(dock.contains("Icons.Default.QrCodeScanner"))
-        assertTrue(dock.contains("WindowInsets.navigationBars"))
+        assertFalse(dock.contains("WindowInsets.navigationBars"))
         assertFalse(dock.contains("offset(x = 8.dp)"))
-        assertTrue(dock.contains("showProgress"))
+        assertFalse(dock.contains("showProgress"))
+        assertFalse(dock.contains("LinearProgressIndicator"))
         assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(dock.contains("Column(modifier = Modifier.fillMaxWidth())"))
         assertFalse(settings.substringAfter("enum class SteamDockTab").substringBefore(";").contains("SCANNER"))
@@ -57,12 +58,17 @@ class SteamFloatingDockGuardTest {
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
+        val library = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
+        ).readText()
 
         assertTrue(toolbar.contains("SteamDockContentClearance = 104.dp"))
         assertTrue(activity.contains("SteamDockContentClearance"))
         assertTrue(activity.contains("bottom = if (currentPage.isDockPage())"))
         assertFalse(token.contains("SteamDockFabClearance"))
         assertFalse(store.contains("SteamDockFabClearance"))
+        assertTrue(library.contains(".align(Alignment.TopCenter)"))
+        assertFalse(library.contains("onLoadingChange"))
     }
 
     @Test

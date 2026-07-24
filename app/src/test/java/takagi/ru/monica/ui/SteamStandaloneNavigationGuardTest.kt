@@ -20,6 +20,9 @@ class SteamStandaloneNavigationGuardTest {
         val steamScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
+        val libraryScreen = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
+        ).readText()
 
         assertTrue(activity.contains("SteamEssentialsFloatingToolbar("))
         assertTrue(activity.contains("Box(modifier = Modifier.fillMaxSize())"))
@@ -34,9 +37,9 @@ class SteamStandaloneNavigationGuardTest {
         assertFalse(activity.contains("onScan = { navigateTo(MonicaSteamPage.SCANNER) }"))
         assertFalse(activity.contains("NavigationBarItem"))
         assertTrue(activity.contains("SteamDockPreferences"))
-        assertTrue(activity.contains("LinearProgressIndicator"))
-        assertTrue(activity.contains("showProgress = currentPage == MonicaSteamPage.LIBRARY"))
-        assertTrue(activity.contains("if (showProgress)"))
+        assertFalse(activity.contains("LinearProgressIndicator"))
+        assertFalse(activity.contains("showProgress"))
+        assertTrue(libraryScreen.contains(".align(Alignment.TopCenter)"))
         assertTrue(dock.contains("listOf(LIBRARY, STORE, SETTINGS)"))
         assertTrue(settings.contains("SteamDockOrderScreen("))
         assertTrue(settings.contains("rememberReorderableLazyListState"))

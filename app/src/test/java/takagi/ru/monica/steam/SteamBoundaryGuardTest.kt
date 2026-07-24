@@ -538,8 +538,12 @@ class SteamBoundaryGuardTest {
         assertFalse(source.contains("SteamSection.values().forEach"))
         assertFalse(source.contains("steam_more_options_with_confirmations"))
         assertFalse(source.contains("CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))"))
-        assertTrue(source.contains(".align(Alignment.BottomCenter)"))
-        assertTrue(source.contains(".padding(horizontal = 16.dp, vertical = 8.dp)"))
+        val loadingIndicator = source
+            .substringAfter("if (uiState.loading)")
+            .substringBefore("@Composable\nprivate fun SteamRootTopBar(")
+        assertTrue(loadingIndicator.contains(".align(Alignment.TopCenter)"))
+        assertTrue(loadingIndicator.contains("contentPadding.calculateTopPadding()"))
+        assertFalse(loadingIndicator.contains(".align(Alignment.BottomCenter)"))
 
         val detailTopBar = source
             .substringAfter("private fun SteamDetailTopBar(")

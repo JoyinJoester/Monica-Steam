@@ -125,7 +125,6 @@ private sealed interface SteamLibraryDestination {
 fun SteamLibraryScreen(
     onNavigateBack: () -> Unit,
     showNavigationBack: Boolean = true,
-    onLoadingChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
@@ -150,12 +149,6 @@ fun SteamLibraryScreen(
     BackHandler(enabled = selectedGame != null || accountDetailsVisible) {
         if (selectedGame != null) viewModel.closeGame() else showAccountDetails = false
     }
-    LaunchedEffect(state.loadingLibrary, libraryDestination) {
-        onLoadingChange(
-            state.loadingLibrary && libraryDestination == SteamLibraryDestination.Overview
-        )
-    }
-
     AnimatedContent(
         targetState = libraryDestination,
         modifier = modifier,
@@ -263,16 +256,26 @@ fun SteamLibraryScreen(
                         )
                     }
                 }
-                SteamLibraryDestination.Overview -> SteamLibraryOverview(
-                    state = state,
-                    query = query,
-                    onOpenGame = viewModel::openGame,
-                    onOpenAccountDetails = { showAccountDetails = true },
-                    onRetry = viewModel::refreshLibrary,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding)
-                )
+                SteamLibraryDestination.Overview -> Box(
+                    modifier = Modifier.fillMaxSize().padding(padding)
+                ) {
+                    SteamLibraryOverview(
+                        state = state,
+                        query = query,
+                        onOpenGame = viewModel::openGame,
+                        onOpenAccountDetails = { showAccountDetails = true },
+                        onRetry = viewModel::refreshLibrary,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    if (state.loadingLibrary) {
+                        LinearProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.TopCenter)
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
+                }
             }
         }
     }

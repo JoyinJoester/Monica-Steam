@@ -9,15 +9,11 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
@@ -28,7 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -211,7 +206,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 var pendingQrResult by rememberSaveable { mutableStateOf<String?>(null) }
                 var pendingQrAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
                 var pendingStoreAppId by rememberSaveable { mutableStateOf<Int?>(null) }
-                var libraryRefreshing by rememberSaveable { mutableStateOf(false) }
                 var backPressedOnce by remember { mutableStateOf(false) }
                 val composeScope = rememberCoroutineScope()
                 val dockPreferences = remember {
@@ -380,7 +374,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                             SteamLibraryScreen(
                                 onNavigateBack = { navigateBack() },
                                 showNavigationBack = false,
-                                onLoadingChange = { libraryRefreshing = it },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -492,7 +485,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     modifier = Modifier.align(Alignment.BottomCenter),
                                     order = dockOrder,
                                     selected = currentPage.toDockTab(),
-                                    showProgress = currentPage == MonicaSteamPage.LIBRARY && libraryRefreshing,
                                     onSelected = { tab ->
                                         pageHistory = emptyList()
                                         currentPage = tab.toPage()
@@ -590,7 +582,6 @@ private fun SteamStandaloneDock(
     modifier: Modifier = Modifier,
     order: List<SteamDockTab>,
     selected: SteamDockTab,
-    showProgress: Boolean,
     onSelected: (SteamDockTab) -> Unit
 ) {
     val tabs = SteamDockTab.sanitizeOrder(order)
@@ -602,17 +593,6 @@ private fun SteamStandaloneDock(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter
     ) {
-        if (showProgress) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .windowInsetsPadding(WindowInsets.navigationBars)
-                    .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, bottom = 68.dp)
-                    .height(2.dp)
-            )
-        }
-
         SteamEssentialsFloatingToolbar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)

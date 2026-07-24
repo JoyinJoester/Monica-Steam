@@ -2106,9 +2106,13 @@ fun SteamScreen(
             if (uiState.loading) {
                 LinearProgressIndicator(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
+                        .align(Alignment.TopCenter)
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(
+                            start = 16.dp,
+                            top = contentPadding.calculateTopPadding(),
+                            end = 16.dp
+                        )
                 )
             }
 
