@@ -4311,8 +4311,6 @@
     <string name="steam_backup_exported">Encrypted backup saved</string>
     <string name="steam_backup_export_failed">Could not save the backup</string>
     <string name="steam_backup_import_failed">Could not open the backup</string>
-    <string name="steam_backup_identity_title">Verify identity</string>
-    <string name="steam_backup_identity_message">Verify the Monica master password before accessing mafile import, export, or WebDAV backup.</string>
     <string name="steam_mafile_local_title">Local mafile ZIP</string>
     <string name="steam_mafile_exported">mafile ZIP saved</string>
     <string name="steam_mafile_imported">Imported %1$d accounts, skipped %2$d entries</string>

@@ -42,6 +42,8 @@ class SteamStandaloneDataBoundaryTest {
         assertFalse(screen.contains("downloadBackup("))
         assertFalse(screen.contains("BackupPreferences"))
         assertFalse(screen.contains("Mdbx"))
+        assertFalse(screen.contains("M3IdentityVerifyDialog"))
+        assertFalse(screen.contains("identityVerified"))
         assertFalse(service.contains("WebDavHelper"))
     }
 

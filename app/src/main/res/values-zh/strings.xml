@@ -4141,8 +4141,6 @@
     <string name="steam_backup_exported">加密备份已保存</string>
     <string name="steam_backup_export_failed">备份保存失败</string>
     <string name="steam_backup_import_failed">备份文件打开失败</string>
-    <string name="steam_backup_identity_title">验证身份</string>
-    <string name="steam_backup_identity_message">访问 mafile 导入、导出或 WebDAV 备份前，请验证 Monica 主密码。</string>
     <string name="steam_mafile_local_title">本地 mafile ZIP</string>
     <string name="steam_mafile_exported">mafile ZIP 已保存</string>
     <string name="steam_mafile_imported">已导入 %1$d 个账号，跳过 %2$d 个条目</string>

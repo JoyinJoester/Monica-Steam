@@ -76,7 +76,6 @@ import takagi.ru.monica.steam.backup.steamRemoteBackupLazyKey
 import takagi.ru.monica.steam.data.SteamAccountRepository
 import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.steam.io.SteamSafWriter
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.utils.WebDavHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,9 +103,6 @@ fun SteamBackupScreen(
     var username by rememberSaveable { mutableStateOf(initialConfig?.username.orEmpty()) }
     var password by rememberSaveable { mutableStateOf(webDavHelper.getCurrentPasswordForEdit()) }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
-    var identityVerified by remember { mutableStateOf(!securityManager.isMasterPasswordSet()) }
-    var identityPassword by rememberSaveable { mutableStateOf("") }
-    var identityError by rememberSaveable { mutableStateOf(false) }
     var isWorking by remember { mutableStateOf(false) }
     var statusMessage by remember { mutableStateOf<String?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -197,34 +193,10 @@ fun SteamBackupScreen(
         }
     }
 
-    LaunchedEffect(identityVerified, initialConfig?.serverUrl) {
-        if (identityVerified && initialConfig != null) refreshRemoteBackups()
+    LaunchedEffect(initialConfig?.serverUrl) {
+        if (initialConfig != null) refreshRemoteBackups()
     }
     BackHandler(onBack = onNavigateBack)
-
-    if (!identityVerified) {
-        M3IdentityVerifyDialog(
-            title = stringResource(R.string.steam_backup_identity_title),
-            message = stringResource(R.string.steam_backup_identity_message),
-            passwordValue = identityPassword,
-            onPasswordChange = { identityPassword = it; identityError = false },
-            onDismiss = onNavigateBack,
-            onConfirm = {
-                if (securityManager.verifyMasterPassword(identityPassword)) {
-                    identityVerified = true
-                    identityPassword = ""
-                } else {
-                    identityError = true
-                }
-            },
-            confirmText = stringResource(R.string.continue_text),
-            isPasswordError = identityError,
-            passwordErrorText = stringResource(R.string.incorrect_master_password),
-            showBiometricSlot = false,
-            onBiometricClick = null,
-            destructiveConfirm = false
-        )
-    }
 
     Scaffold(
         modifier = modifier,
@@ -270,7 +242,7 @@ fun SteamBackupScreen(
                                 }.onFailure(::showError)
                             }
                         },
-                        enabled = identityVerified && !isWorking && accounts.isNotEmpty(),
+                        enabled = !isWorking && accounts.isNotEmpty(),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(Icons.Default.UploadFile, contentDescription = null)
@@ -279,7 +251,7 @@ fun SteamBackupScreen(
                     }
                     OutlinedButton(
                         onClick = { importLauncher.launch(arrayOf("application/zip", "application/octet-stream")) },
-                        enabled = identityVerified && !isWorking,
+                        enabled = !isWorking,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(Icons.Default.FolderOpen, contentDescription = null)
@@ -353,7 +325,7 @@ fun SteamBackupScreen(
                                     }.onFailure(::showError)
                                 }
                             },
-                            enabled = identityVerified && !isWorking,
+                            enabled = !isWorking,
                             modifier = Modifier.weight(1f)
                         ) {
                             Icon(Icons.Default.CloudDone, contentDescription = null)
@@ -383,7 +355,7 @@ fun SteamBackupScreen(
                                     }.onFailure(::showError)
                                 }
                             },
-                            enabled = identityVerified && !isWorking && accounts.isNotEmpty(),
+                            enabled = !isWorking && accounts.isNotEmpty(),
                             modifier = Modifier.weight(1f)
                         ) {
                             Icon(Icons.Default.CloudUpload, contentDescription = null)
@@ -405,7 +377,7 @@ fun SteamBackupScreen(
                     )
                     IconButton(
                         onClick = ::refreshRemoteBackups,
-                        enabled = identityVerified && !isWorking
+                        enabled = !isWorking
                     ) {
                         Icon(Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
