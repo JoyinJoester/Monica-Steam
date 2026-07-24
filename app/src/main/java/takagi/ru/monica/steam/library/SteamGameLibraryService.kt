@@ -8,6 +8,7 @@ import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.library.family.SteamFamilyLibraryService
 import takagi.ru.monica.steam.network.SteamApiClient
 import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.network.SteamProtoReader
@@ -26,6 +27,8 @@ private data class SteamStoreMetadataResult(
 class SteamGameLibraryService(
     private val api: SteamApiClient = SteamApiClient()
 ) {
+    private val familyLibraryService = SteamFamilyLibraryService(api)
+
     fun fetchLibrary(
         account: SteamAccount,
         countryCode: String,
@@ -36,7 +39,7 @@ class SteamGameLibraryService(
         if (!account.hasRealSteamId) {
             return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
         }
-        val games = runCatching {
+        val ownedGames = runCatching {
             parseOwnedGames(
                 api.callProtobuf(
                     iface = "IPlayerService",
@@ -52,8 +55,13 @@ class SteamGameLibraryService(
                 )
             )
         }.getOrElse { return mapFailure(it) }
+        val familyLibrary = familyLibraryService.fetch(account, language)
+        val games = mergeOwnedAndFamilySharedGames(
+            ownedGames = ownedGames,
+            sharedGames = familyLibrary.games
+        )
         val storeMetadata = fetchStoreMetadata(
-            appIds = games.map(SteamGame::appId),
+            appIds = ownedGames.map(SteamGame::appId),
             countryCode = countryCode,
             language = language,
             accessToken = token
@@ -83,7 +91,9 @@ class SteamGameLibraryService(
                 region = countryCode,
                 currency = enrichedGames.firstNotNullOfOrNull { it.price?.currency }
                     ?: currencyForCountry(countryCode),
-                priceFailure = storeMetadata.failure
+                priceFailure = storeMetadata.failure,
+                familyGroupId = familyLibrary.familyGroupId,
+                familyShareFailure = familyLibrary.failure
             )
         )
     }

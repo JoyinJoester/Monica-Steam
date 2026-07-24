@@ -15,7 +15,9 @@ data class SteamGame(
     val regionalPrices: List<SteamRegionalPrice> = emptyList(),
     val achievementUnlockedCount: Int? = null,
     val achievementTotalCount: Int? = null,
-    val allAchievementsUnlocked: Boolean = false
+    val allAchievementsUnlocked: Boolean = false,
+    val ownership: SteamGameOwnership = SteamGameOwnership.OWNED,
+    val ownerSteamIds: List<String> = emptyList()
 ) {
     val isPerfectAchievementGame: Boolean
         get() {
@@ -24,6 +26,14 @@ data class SteamGame(
                 allAchievementsUnlocked || (achievementUnlockedCount ?: 0) >= total
             )
         }
+
+    val isFamilyShared: Boolean get() = ownership == SteamGameOwnership.FAMILY_SHARED
+}
+
+@Serializable
+enum class SteamGameOwnership {
+    OWNED,
+    FAMILY_SHARED
 }
 
 internal data class SteamGameAchievementProgress(
@@ -63,21 +73,40 @@ data class SteamLibrarySnapshot(
     val region: String = "",
     val currency: String = "",
     val priceFailure: SteamLibraryFailureReason? = null,
+    val familyGroupId: Long? = null,
+    val familyShareFailure: SteamLibraryFailureReason? = null,
     val inventoryItemCount: Int? = null,
     val inventoryFetchedAt: Long? = null,
     val inventoryFailure: SteamLibraryFailureReason? = null
 ) {
-    val gameCount: Int get() = games.size
+    val ownedGames: List<SteamGame> get() = games.filterNot(SteamGame::isFamilyShared)
+    val sharedGames: List<SteamGame> get() = games.filter(SteamGame::isFamilyShared)
+    val gameCount: Int get() = ownedGames.size
+    val availableGameCount: Int get() = games.size
+    val sharedGameCount: Int get() = sharedGames.size
     val totalPlaytimeMinutes: Long get() = games.sumOf { it.playtimeForeverMinutes.toLong() }
     val recentPlaytimeMinutes: Long get() = games.sumOf { it.playtimeRecentMinutes.toLong() }
-    val pricedGameCount: Int get() = games.count { it.price?.isAvailable == true }
+    val pricedGameCount: Int get() = ownedGames.count { it.price?.isAvailable == true }
     val unpricedGameCount: Int get() = gameCount - pricedGameCount
     val estimatedReplacementValueMinor: Long
-        get() = games.sumOf { game ->
+        get() = ownedGames.sumOf { game ->
             game.price?.takeIf { it.isAvailable }?.originalPriceMinor ?: 0L
         }
     val priceCoverage: Float
         get() = if (gameCount == 0) 0f else pricedGameCount.toFloat() / gameCount.toFloat()
+}
+
+internal fun mergeOwnedAndFamilySharedGames(
+    ownedGames: List<SteamGame>,
+    sharedGames: List<SteamGame>
+): List<SteamGame> {
+    val ownedAppIds = ownedGames.mapTo(hashSetOf(), SteamGame::appId)
+    return ownedGames + sharedGames
+        .asSequence()
+        .filter(SteamGame::isFamilyShared)
+        .filterNot { it.appId in ownedAppIds }
+        .distinctBy(SteamGame::appId)
+        .toList()
 }
 
 data class SteamInventorySummary(

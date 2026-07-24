@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
@@ -1224,6 +1225,9 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
+                    if (game.isFamilyShared) {
+                        SteamFamilySharedBadge()
+                    }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -1262,6 +1266,32 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
             )
         }
         HorizontalDivider(modifier = Modifier.padding(start = 144.dp, end = 16.dp))
+    }
+}
+
+@Composable
+private fun SteamFamilySharedBadge() {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.Groups,
+                contentDescription = null,
+                modifier = Modifier.size(14.dp)
+            )
+            Text(
+                text = stringResource(R.string.steam_library_family_shared),
+                style = MaterialTheme.typography.labelSmall,
+                maxLines = 1
+            )
+        }
     }
 }
 
@@ -1335,6 +1365,7 @@ private fun steamLibraryFilterLabel(filter: SteamLibraryGameFilter): String {
             SteamLibraryGameFilter.RECENT -> R.string.steam_library_filter_recent
             SteamLibraryGameFilter.LONG_PLAYED -> R.string.steam_library_filter_long_played
             SteamLibraryGameFilter.PERFECT -> R.string.steam_library_filter_perfect
+            SteamLibraryGameFilter.FAMILY_SHARED -> R.string.steam_library_filter_family_shared
         }
     )
 }
@@ -1630,6 +1661,9 @@ private fun SteamGameDetailHero(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
+            if (game.isFamilyShared) {
+                SteamFamilySharedBadge()
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)

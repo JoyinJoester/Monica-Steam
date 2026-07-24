@@ -74,6 +74,25 @@ class SteamLibraryDashboardTest {
     }
 
     @Test
+    fun familySharedFilterIncludesOnlyBorrowedLicenses() {
+        val familyGame = SteamGame(
+            appId = 6,
+            name = "Family game",
+            playtimeForeverMinutes = 0,
+            playtimeRecentMinutes = 0,
+            ownership = SteamGameOwnership.FAMILY_SHARED
+        )
+
+        val sections = buildSteamLibrarySections(
+            games = games + familyGame,
+            query = "",
+            filter = SteamLibraryGameFilter.FAMILY_SHARED
+        )
+
+        assertEquals(listOf("Family game"), sections.single().games.map(SteamGame::name))
+    }
+
+    @Test
     fun localizedHeaderIsPreferredBeforeCdnAndIconFallbacks() {
         val game = SteamGame(
             appId = 10,

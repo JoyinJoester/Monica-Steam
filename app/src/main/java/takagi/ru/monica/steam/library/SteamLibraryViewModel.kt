@@ -658,7 +658,20 @@ internal fun mergeLibraryDashboardSnapshot(
             }
         )
     }
-    val library = fresh.copy(games = gamesWithCachedStoreFallback)
+    val gamesWithFamilyCacheFallback = if (fresh.familyShareFailure != null) {
+        val freshAppIds = gamesWithCachedStoreFallback.mapTo(hashSetOf(), SteamGame::appId)
+        gamesWithCachedStoreFallback + cached
+            ?.sharedGames
+            .orEmpty()
+            .filterNot { it.appId in freshAppIds }
+    } else {
+        gamesWithCachedStoreFallback
+    }
+    val library = fresh.copy(
+        games = gamesWithFamilyCacheFallback,
+        familyGroupId = fresh.familyGroupId
+            ?: cached?.familyGroupId?.takeIf { fresh.familyShareFailure != null }
+    )
     return when (inventoryResult) {
         is SteamLibraryResult.Success -> library.copy(
             inventoryItemCount = inventoryResult.value.itemCount,

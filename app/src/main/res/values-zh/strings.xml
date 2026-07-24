@@ -4124,6 +4124,8 @@
     <string name="steam_library_filter_recent">最近游玩</string>
     <string name="steam_library_filter_long_played">100 小时+</string>
     <string name="steam_library_filter_perfect">完美通关</string>
+    <string name="steam_library_filter_family_shared">家庭共享</string>
+    <string name="steam_library_family_shared">家庭共享</string>
     <string name="steam_library_section_recent">近期活跃（%1$d）</string>
     <string name="steam_library_section_played">已玩游戏（%1$d）</string>
     <string name="steam_library_section_unplayed">未开始（%1$d）</string>

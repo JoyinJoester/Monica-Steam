@@ -8,7 +8,8 @@ internal enum class SteamLibraryGameFilter {
     UNPLAYED,
     RECENT,
     LONG_PLAYED,
-    PERFECT
+    PERFECT,
+    FAMILY_SHARED
 }
 
 internal enum class SteamLibraryGameSectionType {
@@ -47,6 +48,7 @@ internal fun buildSteamLibrarySections(
             it.playtimeForeverMinutes >= LONG_PLAYTIME_MINUTES
         }
         SteamLibraryGameFilter.PERFECT -> searched.filter(SteamGame::isPerfectAchievementGame)
+        SteamLibraryGameFilter.FAMILY_SHARED -> searched.filter(SteamGame::isFamilyShared)
     }
     if (filter != SteamLibraryGameFilter.ALL) {
         return listOf(

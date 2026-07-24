@@ -61,6 +61,8 @@ class SteamLibraryModelsTest {
         assertNull(snapshot.games.single().achievementUnlockedCount)
         assertNull(snapshot.games.single().achievementTotalCount)
         assertTrue(!snapshot.games.single().allAchievementsUnlocked)
+        assertEquals(SteamGameOwnership.OWNED, snapshot.games.single().ownership)
+        assertTrue(snapshot.games.single().ownerSteamIds.isEmpty())
     }
 
     @Test
@@ -105,6 +107,70 @@ class SteamLibraryModelsTest {
         assertEquals(42, merged.inventoryItemCount)
         assertEquals(199L, merged.inventoryFetchedAt)
         assertNull(merged.inventoryFailure)
+    }
+
+    @Test
+    fun familyGamesRemainAvailableWithoutInflatingOwnedCountOrAccountValue() {
+        val owned = SteamGame(
+            appId = 10,
+            name = "Owned",
+            playtimeForeverMinutes = 60,
+            playtimeRecentMinutes = 0,
+            price = SteamGamePrice("CNY", 1_990, 2_990, true)
+        )
+        val shared = SteamGame(
+            appId = 20,
+            name = "Shared",
+            playtimeForeverMinutes = 120,
+            playtimeRecentMinutes = 0,
+            price = SteamGamePrice("CNY", 3_990, 4_990, true),
+            ownership = SteamGameOwnership.FAMILY_SHARED,
+            ownerSteamIds = listOf("76561198000000002")
+        )
+        val snapshot = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(owned, shared),
+            fetchedAt = 1L
+        )
+
+        assertEquals(1, snapshot.gameCount)
+        assertEquals(2, snapshot.availableGameCount)
+        assertEquals(1, snapshot.sharedGameCount)
+        assertEquals(2_990L, snapshot.estimatedReplacementValueMinor)
+        assertEquals(180L, snapshot.totalPlaytimeMinutes)
+    }
+
+    @Test
+    fun familyRequestFailureKeepsCachedSharedGamesOffline() {
+        val cachedShared = SteamGame(
+            appId = 20,
+            name = "Shared cached",
+            playtimeForeverMinutes = 120,
+            playtimeRecentMinutes = 0,
+            ownership = SteamGameOwnership.FAMILY_SHARED
+        )
+        val cached = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(cachedShared),
+            fetchedAt = 100L,
+            familyGroupId = 42L
+        )
+        val fresh = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(SteamGame(10, "Owned", 10, 0)),
+            fetchedAt = 200L,
+            familyShareFailure = SteamLibraryFailureReason.NETWORK
+        )
+
+        val merged = mergeLibraryDashboardSnapshot(
+            fresh = fresh,
+            cached = cached,
+            inventoryResult = SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
+        )
+
+        assertEquals(listOf(10, 20), merged.games.map(SteamGame::appId))
+        assertTrue(merged.games.last().isFamilyShared)
+        assertEquals(42L, merged.familyGroupId)
     }
 
     @Test
