@@ -22,6 +22,23 @@ class SteamPlayActivityTest {
     }
 
     @Test
+    fun existingBaselineWithoutDaysIsSeededAfterUpgrade() {
+        val previous = SteamPlayActivityHistory(
+            accountId = 1L,
+            baseline = listOf(SteamPlaytimeBaseline(10, "Portal", 600))
+        )
+
+        val history = updateSteamPlayActivity(
+            previous = previous,
+            snapshot = snapshot(game(10, "Portal", 600, recentMinutes = 45)),
+            localDate = "2026-07-24",
+            recordedAt = 2L
+        )
+
+        assertEquals(45, history.days.single().totalMinutes)
+    }
+
+    @Test
     fun laterSnapshotsAccumulatePositiveDeltasForSameDay() {
         val baseline = updateSteamPlayActivity(
             previous = null,

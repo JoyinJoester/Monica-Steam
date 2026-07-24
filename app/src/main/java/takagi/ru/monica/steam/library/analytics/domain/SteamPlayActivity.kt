@@ -46,7 +46,9 @@ fun updateSteamPlayActivity(
     retentionDays: Int = 400
 ): SteamPlayActivityHistory {
     val previousBaseline = previous?.baseline.orEmpty().associateBy(SteamPlaytimeBaseline::appId)
-    val deltas = if (previous == null) {
+    val shouldSeedRecent = (previous == null || previous.days.isEmpty()) &&
+        snapshot.games.any { it.playtimeRecentMinutes > 0 }
+    val deltas = if (shouldSeedRecent) {
         snapshot.games.mapNotNull { game ->
             game.playtimeRecentMinutes
                 .takeIf { it > 0 }
