@@ -214,6 +214,16 @@ class SteamStoreService(
         language: String
     ): SteamStoreDetail = detail.copy(reviews = reviewService.fetch(appId, language))
 
+    fun reviewPage(
+        appId: Int,
+        cursor: String,
+        language: String = "schinese"
+    ): SteamReviewPage = reviewService.fetchPage(
+        appId = appId,
+        cursor = cursor,
+        language = language
+    )
+
     private fun requestDetail(
         appId: Int,
         language: String,

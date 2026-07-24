@@ -43,6 +43,8 @@ data class SteamStoreUiState(
     val detail: SteamStoreDetail? = null,
     val detailFromCache: Boolean = false,
     val loadingDetail: Boolean = false,
+    val loadingMoreReviews: Boolean = false,
+    val reviewLoadError: String? = null,
     val error: String? = null,
     val webUrl: String? = null,
     val cart: List<SteamCartItem> = emptyList(),
@@ -232,6 +234,8 @@ class SteamStoreViewModel(
             detail = null,
             detailFromCache = false,
             loadingDetail = true,
+            loadingMoreReviews = false,
+            reviewLoadError = null,
             regionalPrices = emptyList(),
             regionalPricesAppId = appId,
             regionalPricesFromCache = false,
@@ -289,7 +293,8 @@ class SteamStoreViewModel(
                     _uiState.value = _uiState.value.copy(
                         detail = refreshedDetail,
                         detailFromCache = false,
-                        loadingDetail = false
+                        loadingDetail = false,
+                        reviewLoadError = null
                     )
                 }
                 .onFailure { error ->
@@ -317,6 +322,8 @@ class SteamStoreViewModel(
             detailDiscoveryCountryCode = null,
             detail = null,
             loadingDetail = false,
+            loadingMoreReviews = false,
+            reviewLoadError = null,
             regionalPrices = emptyList(),
             regionalPricesAppId = null,
             regionalPricesFromCache = false,
@@ -325,6 +332,59 @@ class SteamStoreViewModel(
             regionalPriceSheetOpen = false,
             error = null
         )
+    }
+
+    fun loadMoreReviews() {
+        val initialState = _uiState.value
+        if (initialState.loadingMoreReviews) return
+        val detail = initialState.detail ?: return
+        val cursor = detail.reviews?.nextCursor?.takeIf(String::isNotBlank) ?: return
+        val accountId = initialState.selectedAccountId
+        val appId = detail.appId
+        val generation = detailRequestGeneration
+        _uiState.value = initialState.copy(
+            loadingMoreReviews = true,
+            reviewLoadError = null
+        )
+        viewModelScope.launch {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    service.reviewPage(appId = appId, cursor = cursor)
+                }
+            }.onSuccess { page ->
+                if (!reviewRequestIsCurrent(accountId, appId, generation)) return@onSuccess
+                val currentDetail = _uiState.value.detail ?: return@onSuccess
+                val terminalPage = if (page.items.isEmpty() || page.nextCursor == cursor) {
+                    page.copy(nextCursor = null)
+                } else {
+                    page
+                }
+                val updatedDetail = currentDetail.copy(
+                    reviews = currentDetail.reviews
+                        ?.mergePage(terminalPage)
+                        ?: SteamStoreReviews(
+                            overall = terminalPage.summary,
+                            items = terminalPage.items,
+                            nextCursor = terminalPage.nextCursor
+                        )
+                )
+                withContext(Dispatchers.IO) {
+                    cache.writeDetail(accountId, updatedDetail)
+                }
+                if (!reviewRequestIsCurrent(accountId, appId, generation)) return@onSuccess
+                _uiState.value = _uiState.value.copy(
+                    detail = updatedDetail,
+                    loadingMoreReviews = false,
+                    reviewLoadError = null
+                )
+            }.onFailure { error ->
+                if (!reviewRequestIsCurrent(accountId, appId, generation)) return@onFailure
+                _uiState.value = _uiState.value.copy(
+                    loadingMoreReviews = false,
+                    reviewLoadError = error.message ?: "Steam 评价加载失败"
+                )
+            }
+        }
     }
 
     fun openRegionalPrices(appId: Int) {
@@ -645,6 +705,8 @@ class SteamStoreViewModel(
             detail = null,
             detailFromCache = false,
             loadingDetail = false,
+            loadingMoreReviews = false,
+            reviewLoadError = null,
             error = null,
             cart = emptyList(),
             cartOpen = false,
@@ -688,6 +750,18 @@ class SteamStoreViewModel(
             state.selectedAccountId == accountId &&
             state.detail?.appId == appId &&
             state.regionalPricesAppId == appId
+    }
+
+    private fun reviewRequestIsCurrent(
+        accountId: Long?,
+        appId: Int,
+        generation: Long
+    ): Boolean {
+        val state = _uiState.value
+        return generation == detailRequestGeneration &&
+            state.selectedAccountId == accountId &&
+            state.detailAppId == appId &&
+            state.detail?.appId == appId
     }
 
     private fun regionalPricesAreReady(prices: List<SteamRegionalPrice>): Boolean {

@@ -28,7 +28,7 @@ import takagi.ru.monica.steam.store.domain.SteamStoreReviews
 @Composable
 internal fun SteamStoreReviewSummarySection(
     reviews: SteamStoreReviews,
-    onOpenAll: () -> Unit,
+    onOpenAll: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val summaries = listOfNotNull(
@@ -47,13 +47,15 @@ internal fun SteamStoreReviewSummarySection(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 2.dp, top = 10.dp)
             )
-            TextButton(onClick = onOpenAll) {
-                Text(stringResource(R.string.steam_store_reviews_view_all))
+            onOpenAll?.let { action ->
+                TextButton(onClick = action) {
+                    Text(stringResource(R.string.steam_store_reviews_view_all))
+                }
             }
         }
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(18.dp),
+            shape = RoundedCornerShape(12.dp),
             color = MaterialTheme.colorScheme.surfaceContainerLow
         ) {
             BoxWithConstraints(Modifier.fillMaxWidth().padding(16.dp)) {

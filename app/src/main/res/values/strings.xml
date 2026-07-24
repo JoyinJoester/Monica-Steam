@@ -4659,6 +4659,17 @@
     <string name="steam_store_reviews_overall">Overall</string>
     <string name="steam_store_reviews_recent">Recent 30 days</string>
     <string name="steam_store_reviews_view_all">View all</string>
+    <string name="steam_store_reviews_load_more">Load more reviews</string>
+    <string name="steam_store_reviews_loading_more">Loading reviews</string>
+    <string name="steam_store_review_recommended">Recommended</string>
+    <string name="steam_store_review_not_recommended">Not recommended</string>
+    <string name="steam_store_review_steam_player">Steam player</string>
+    <string name="steam_store_review_playtime_total">%1$s hours played</string>
+    <string name="steam_store_review_playtime_both">%1$s hours played · %2$s hours at review</string>
+    <string name="steam_store_review_helpful">%1$d found this helpful</string>
+    <string name="steam_store_review_steam_purchase">Steam purchase</string>
+    <string name="steam_store_review_received_free">Received for free</string>
+    <string name="steam_store_review_early_access">Early Access review</string>
     <string name="steam_store_reviews_positive_percent">%1$d%% positive</string>
     <string name="steam_store_reviews_count">%1$s positive / %2$s reviews</string>
     <string name="steam_store_reviews_unrated">Not enough reviews</string>

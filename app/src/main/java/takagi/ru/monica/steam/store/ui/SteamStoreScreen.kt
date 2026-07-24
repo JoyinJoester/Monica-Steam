@@ -203,7 +203,9 @@ fun SteamStoreScreen(
                         cached = state.detailFromCache,
                         onBack = viewModel::closeDetail,
                         onOpenOfficial = { viewModel.openStoreWeb(detail.storeUrl) },
-                        onOpenReviews = { viewModel.openStoreWeb(detail.reviewsUrl) },
+                        loadingMoreReviews = state.loadingMoreReviews,
+                        reviewLoadError = state.reviewLoadError,
+                        onLoadMoreReviews = viewModel::loadMoreReviews,
                         inCart = state.cart.any { it.appId == detail.appId },
                         inWishlist = state.wishlist.any { it.appId == detail.appId },
                         wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
@@ -729,7 +731,9 @@ private fun SteamStoreDetailContent(
     cached: Boolean,
     onBack: () -> Unit,
     onOpenOfficial: () -> Unit,
-    onOpenReviews: () -> Unit,
+    loadingMoreReviews: Boolean,
+    reviewLoadError: String?,
+    onLoadMoreReviews: () -> Unit,
     inCart: Boolean,
     inWishlist: Boolean,
     wishlistAvailable: Boolean,
@@ -926,15 +930,6 @@ private fun SteamStoreDetailContent(
                 }
             }
         }
-        detail.reviews?.let { reviews ->
-            item {
-                SteamStoreReviewSummarySection(
-                    reviews = reviews,
-                    onOpenAll = onOpenReviews,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-            }
-        }
         if (detail.shortDescription.isNotBlank()) {
             item {
                 DetailTextSection(
@@ -989,6 +984,20 @@ private fun SteamStoreDetailContent(
                     )
                     DetailLine(stringResource(R.string.steam_store_release_date), detail.releaseDate)
                     if (detail.genres.isNotEmpty()) DetailLine("类型", detail.genres.joinToString())
+                }
+            }
+        }
+        detail.reviews?.let { reviews ->
+            if (reviews.overall != null || reviews.recent != null || reviews.items.isNotEmpty()) {
+                item(key = "store_reviews_${detail.appId}") {
+                    SteamStoreReviewsSection(
+                        appId = detail.appId,
+                        reviews = reviews,
+                        loadingMore = loadingMoreReviews,
+                        loadError = reviewLoadError,
+                        onLoadMore = onLoadMoreReviews,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
                 }
             }
         }

@@ -4,28 +4,14 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
-import takagi.ru.monica.steam.store.domain.SteamReviewSummary
+import takagi.ru.monica.steam.store.domain.SteamReviewPage
 import takagi.ru.monica.steam.store.domain.SteamStoreReviews
 
 class SteamStoreReviewService(
     private val client: OkHttpClient
 ) {
     fun fetch(appId: Int, language: String = "schinese"): SteamStoreReviews? {
-        val overall = fetchPart(appId, "overall") {
-            SteamStoreReviewParser.parseOverall(
-                get(
-                    pathSegments = listOf("appreviews", appId.toString()),
-                    query = mapOf(
-                        "json" to "1",
-                        "language" to language,
-                        "purchase_type" to "all",
-                        "review_type" to "all",
-                        "filter" to "summary",
-                        "num_per_page" to "0"
-                    )
-                )
-            )
-        }
+        val page = fetchPart(appId, "page") { fetchPage(appId, language = language) }
         val recent = fetchPart(appId, "recent") {
             SteamStoreReviewParser.parseRecent(
                 get(
@@ -37,18 +23,44 @@ class SteamStoreReviewService(
                 )
             )
         }
-        return if (overall == null && recent == null) {
+        return if (page == null && recent == null) {
             null
         } else {
-            SteamStoreReviews(overall = overall, recent = recent)
+            SteamStoreReviews(
+                overall = page?.summary,
+                recent = recent,
+                items = page?.items.orEmpty(),
+                nextCursor = page?.nextCursor
+            )
         }
     }
 
-    private fun fetchPart(
+    fun fetchPage(
+        appId: Int,
+        cursor: String = "*",
+        language: String = "schinese",
+        pageSize: Int = DEFAULT_PAGE_SIZE
+    ): SteamReviewPage = SteamStoreReviewParser.parsePage(
+        get(
+            pathSegments = listOf("appreviews", appId.toString()),
+            query = mapOf(
+                "json" to "1",
+                "language" to language,
+                "purchase_type" to "all",
+                "review_type" to "all",
+                "filter" to "recent",
+                "day_range" to "30",
+                "num_per_page" to pageSize.coerceIn(1, MAX_PAGE_SIZE).toString(),
+                "cursor" to cursor
+            )
+        )
+    )
+
+    private fun <T> fetchPart(
         appId: Int,
         part: String,
-        request: () -> SteamReviewSummary?
-    ): SteamReviewSummary? = runCatching(request).onFailure { error ->
+        request: () -> T?
+    ): T? = runCatching(request).onFailure { error ->
         SteamDiagLogger.append(
             "store_reviews $part failed app_id=$appId type=${error.javaClass.simpleName}"
         )
@@ -75,5 +87,7 @@ class SteamStoreReviewService(
 
     private companion object {
         const val STORE_BASE_URL = "https://store.steampowered.com/"
+        const val DEFAULT_PAGE_SIZE = 20
+        const val MAX_PAGE_SIZE = 100
     }
 }

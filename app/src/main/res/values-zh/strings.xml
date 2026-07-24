@@ -4489,6 +4489,17 @@
     <string name="steam_store_reviews_overall">总体评价</string>
     <string name="steam_store_reviews_recent">最近 30 天</string>
     <string name="steam_store_reviews_view_all">查看全部</string>
+    <string name="steam_store_reviews_load_more">加载更多评价</string>
+    <string name="steam_store_reviews_loading_more">正在加载评价</string>
+    <string name="steam_store_review_recommended">推荐</string>
+    <string name="steam_store_review_not_recommended">不推荐</string>
+    <string name="steam_store_review_steam_player">Steam 玩家</string>
+    <string name="steam_store_review_playtime_total">总时长 %1$s 小时</string>
+    <string name="steam_store_review_playtime_both">总时长 %1$s 小时 · 评测时 %2$s 小时</string>
+    <string name="steam_store_review_helpful">%1$d 人认为有帮助</string>
+    <string name="steam_store_review_steam_purchase">Steam 购买</string>
+    <string name="steam_store_review_received_free">免费获取</string>
+    <string name="steam_store_review_early_access">抢先体验评测</string>
     <string name="steam_store_reviews_positive_percent">%1$d%% 好评</string>
     <string name="steam_store_reviews_count">%1$s 条好评 / 共 %2$s 条</string>
     <string name="steam_store_reviews_unrated">评价不足</string>
