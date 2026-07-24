@@ -355,8 +355,8 @@ private class SteamMiniProfileTextureView @JvmOverloads constructor(
         val current = player
         player = null
         current?.let {
-            runCatching { current.stop() }
-            runCatching { current.reset() }
+            // stop() and reset() make synchronous media-service calls and can
+            // stall the UI thread when several animated cards leave composition.
             runCatching { current.release() }
         }
     }

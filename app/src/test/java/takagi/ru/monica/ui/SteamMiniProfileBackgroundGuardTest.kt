@@ -2,6 +2,7 @@ package takagi.ru.monica.ui
 
 import java.io.File
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -64,6 +65,20 @@ class SteamMiniProfileBackgroundGuardTest {
         assertTrue(layer.contains("MediaPlayer"))
         assertTrue(layer.contains("setVolume(0f, 0f)"))
         assertTrue(layer.contains("private const val MAX_BYTES = 8 * 1024 * 1024"))
+    }
+
+    @Test
+    fun mediaPlayerTeardownDoesNotSynchronouslyStopOrResetOnTheUiThread() {
+        val layer = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/profile/ui/SteamMiniProfileBackgroundLayer.kt"
+        ).readText()
+        val releasePlayer = layer
+            .substringAfter("private fun releasePlayer()")
+            .substringBefore("\n    }\n}")
+
+        assertFalse(releasePlayer.contains("current.stop()"))
+        assertFalse(releasePlayer.contains("current.reset()"))
+        assertTrue(releasePlayer.contains("current.release()"))
     }
 
     @Test
