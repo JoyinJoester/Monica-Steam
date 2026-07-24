@@ -5,13 +5,9 @@ import android.graphics.RenderEffect
 import android.graphics.RuntimeShader
 import android.os.Build
 import android.os.PowerManager
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
@@ -64,7 +60,6 @@ internal fun Modifier.steamDockProgressiveBlur(
     if (!enabled || height <= 0f) return@composed this
 
     val context = LocalContext.current
-    val overlayColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.65f)
     val canUseRuntimeBlur = remember(context) {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             !isPowerSaveMode(context) &&
@@ -84,17 +79,7 @@ internal fun Modifier.steamDockProgressiveBlur(
         Modifier
     }
 
-    this
-        .then(blurModifier)
-        .drawWithContent {
-            drawContent()
-            drawRect(
-                brush = Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, overlayColor),
-                    startY = size.height - height
-                )
-            )
-        }
+    this.then(blurModifier)
 }
 
 private fun isPowerSaveMode(context: Context): Boolean {
