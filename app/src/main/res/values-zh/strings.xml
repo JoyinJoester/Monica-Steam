@@ -4395,13 +4395,10 @@
     <string name="steam_settings_group_security_data">安全与数据</string>
     <string name="steam_settings_group_interface">界面与交互</string>
     <string name="steam_settings_group_steam">Steam 体验</string>
-    <string name="steam_settings_group_application">应用</string>
     <string name="steam_settings_navigation_title">导航与动效</string>
     <string name="steam_settings_navigation_description">管理 Dock 样式与顺序、页面导航和减少动效。</string>
     <string name="steam_settings_connectivity_title">通知</string>
     <string name="steam_settings_connectivity_description">管理聊天消息、愿望单折扣、登录申请和其他 Steam 通知。</string>
-    <string name="steam_settings_app_support_title">应用与支持</string>
-    <string name="steam_settings_app_support_description">管理语言、扩展、版本信息、支持日志和开发者工具。</string>
     <string name="steam_settings_application_preferences_title">应用偏好</string>
     <string name="steam_store_title">商店</string>
     <string name="steam_store_hint_settings_section">商店体验</string>

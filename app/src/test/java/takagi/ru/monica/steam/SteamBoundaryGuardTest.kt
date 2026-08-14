@@ -340,7 +340,7 @@ class SteamBoundaryGuardTest {
         assertTrue(settingsHostSource.contains("onNavigateToDeveloperSettings = onOpenDeveloper"))
         assertTrue(
             settingsHostSource.contains(
-                "showDeveloperSettings = screenMode == SettingsScreenMode.APP_SUPPORT"
+                "showDeveloperSettings = inlineAppSupportItems"
             )
         )
         assertFalse(settingsHostSource.contains("SteamSupportLogExporter"))

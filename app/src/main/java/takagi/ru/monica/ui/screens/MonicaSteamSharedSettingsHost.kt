@@ -91,6 +91,7 @@ internal fun MonicaSteamSharedSettingsHost(
     var showFramedAvatarShapeSheet by remember { mutableStateOf(false) }
     var showProgressBarStyleDialog by remember { mutableStateOf(false) }
     val dockContentClearance = LocalSteamDockContentClearance.current
+    val inlineAppSupportItems = screenMode == SettingsScreenMode.COMPACT_HOME
 
     SettingsScreen(
         viewModel = settingsViewModel,
@@ -129,14 +130,14 @@ internal fun MonicaSteamSharedSettingsHost(
             showPermissionManagement = false,
             showTrash = false,
             showClearData = false,
-            showExtensions = settings.isPlusActivated &&
-                screenMode == SettingsScreenMode.APP_SUPPORT,
+            showExtensions = settings.isPlusActivated && inlineAppSupportItems,
             showPageCustomization = false,
-            showUpdateCheck = screenMode == SettingsScreenMode.APP_SUPPORT,
+            showUpdateCheck = inlineAppSupportItems,
             showPreviewFeatures = false,
-            showDeveloperSettings = screenMode == SettingsScreenMode.APP_SUPPORT,
-            showLanguage = screenMode == SettingsScreenMode.APP_SUPPORT,
-            showBottomNavigation = false
+            showDeveloperSettings = inlineAppSupportItems,
+            showLanguage = inlineAppSupportItems,
+            showBottomNavigation = false,
+            showAppSupportItemsOnCompactHome = inlineAppSupportItems
         ),
         screenMode = screenMode,
         screenTitle = screenTitle,

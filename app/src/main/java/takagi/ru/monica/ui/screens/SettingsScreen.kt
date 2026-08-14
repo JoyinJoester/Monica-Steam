@@ -101,6 +101,7 @@ data class SettingsSurfacePolicy(
     val showDeveloperSettings: Boolean = true,
     val showLanguage: Boolean = true,
     val showBottomNavigation: Boolean = true,
+    val showAppSupportItemsOnCompactHome: Boolean = false,
     val forceMonicaPlusActivated: Boolean = false
 )
 
@@ -169,8 +170,9 @@ fun SettingsScreen(
     val isDataManagementMode = screenMode == SettingsScreenMode.DATA_MANAGEMENT
     val isAppearanceMode = screenMode == SettingsScreenMode.APPEARANCE
     val isAdditionalMode = screenMode == SettingsScreenMode.ADDITIONAL
-    val isAppSupportMode = screenMode == SettingsScreenMode.APP_SUPPORT
     val useCustomCompactHome = isCompactHomeMode && compactHomeSections.isNotEmpty()
+    val showInlineAppSupport = isCompactHomeMode &&
+        surfacePolicy.showAppSupportItemsOnCompactHome
     val showDataManagementDetails = screenMode == SettingsScreenMode.FULL || isDataManagementMode
     val showAppearanceDetails = screenMode == SettingsScreenMode.FULL || isAppearanceMode
     val showAdditionalDetails = screenMode == SettingsScreenMode.FULL || isAdditionalMode
@@ -829,7 +831,7 @@ fun SettingsScreen(
         *colorSchemeSearchTexts
     )
     val showLanguageItem = surfacePolicy.showLanguage &&
-        (showAppearanceDetails || isAppSupportMode) && matchesSettingsItem(
+        (showAppearanceDetails || showInlineAppSupport) && matchesSettingsItem(
         appearanceTitle,
         context.getString(R.string.language),
         languageSubtitle,
@@ -843,7 +845,7 @@ fun SettingsScreen(
         *bottomNavSubSettingsSearchTexts
     )
     val showExtensionsItem = surfacePolicy.showExtensions &&
-        (showAppearanceDetails || isAppSupportMode) && matchesSettingsItem(
+        (showAppearanceDetails || showInlineAppSupport) && matchesSettingsItem(
         appearanceTitle,
         context.getString(R.string.extensions_title),
         context.getString(R.string.extensions_description),
@@ -877,7 +879,7 @@ fun SettingsScreen(
         showPageCustomizationItem,
         showAdditionalAppearanceContent
     ).any { it }
-    val showAppearanceSection = (showAppearanceDetails || isAppSupportMode) && hasAppearanceItems
+    val showAppearanceSection = (showAppearanceDetails || showInlineAppSupport) && hasAppearanceItems
     val appearanceEntryMatches = matchesSettingsItem(
         appearanceTitle,
         context.getString(R.string.settings_appearance_entry_title),
@@ -893,29 +895,29 @@ fun SettingsScreen(
     val showAppearanceEntry = isCompactHomeMode && !useCustomCompactHome &&
         (hasAppearanceItems || appearanceEntryMatches)
 
-    val showVersionItem = (isHomeMode || isAppSupportMode) &&
-        (!useCustomCompactHome || isAppSupportMode) && matchesSettingsItem(
+    val showVersionItem = isHomeMode &&
+        (!useCustomCompactHome || showInlineAppSupport) && matchesSettingsItem(
         aboutTitle,
         context.getString(R.string.version),
         settingsVersionNumber
     )
-    val showUpdateCheckItem = (isHomeMode || isAppSupportMode) &&
-        (!useCustomCompactHome || isAppSupportMode) &&
+    val showUpdateCheckItem = isHomeMode &&
+        (!useCustomCompactHome || showInlineAppSupport) &&
         surfacePolicy.showUpdateCheck && matchesSettingsItem(
         aboutTitle,
         context.getString(R.string.update_check_title),
         context.getString(R.string.update_check_subtitle),
         context.getString(R.string.update_check_latest_release)
     )
-    val showPreviewFeaturesItem = (isHomeMode || isAppSupportMode) &&
-        (!useCustomCompactHome || isAppSupportMode) &&
+    val showPreviewFeaturesItem = isHomeMode &&
+        (!useCustomCompactHome || showInlineAppSupport) &&
         surfacePolicy.showPreviewFeatures && matchesSettingsItem(
         developerTitle,
         context.getString(R.string.preview_features_title),
         context.getString(R.string.preview_features_description)
     )
-    val showDeveloperSettingsItem = (isHomeMode || isAppSupportMode) &&
-        (!useCustomCompactHome || isAppSupportMode) &&
+    val showDeveloperSettingsItem = isHomeMode &&
+        (!useCustomCompactHome || showInlineAppSupport) &&
         surfacePolicy.showDeveloperSettings && matchesSettingsItem(
         developerTitle,
         context.getString(R.string.developer_settings),
@@ -1243,7 +1245,7 @@ fun SettingsScreen(
             
             if (showAppearanceSection) {
                 SettingsSection(
-                    title = if (isAppSupportMode) {
+                    title = if (showInlineAppSupport) {
                         applicationSectionTitle ?: appearanceTitle
                     } else {
                         appearanceTitle

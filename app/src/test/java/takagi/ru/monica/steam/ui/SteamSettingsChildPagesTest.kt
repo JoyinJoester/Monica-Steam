@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.ui
 
 import java.io.File
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -18,8 +19,7 @@ class SteamSettingsChildPagesTest {
             "COMPACT_HOME",
             "DATA_MANAGEMENT",
             "APPEARANCE",
-            "ADDITIONAL",
-            "APP_SUPPORT"
+            "ADDITIONAL"
         ).forEach { expected -> assertTrue(mode.contains(expected)) }
         assertTrue(screen.contains("screenMode: SettingsScreenMode = SettingsScreenMode.FULL"))
         assertTrue(screen.contains("val showDataManagementEntry = isCompactHomeMode"))
@@ -46,11 +46,10 @@ class SteamSettingsChildPagesTest {
         assertTrue(navigation.contains("mode = SettingsScreenMode.APPEARANCE"))
         assertTrue(navigation.contains("SteamSettingsChild.STEAM_FEATURES"))
         assertTrue(navigation.contains("SteamSettingsChild.NAVIGATION"))
-        assertTrue(navigation.contains("SteamSettingsChild.APP_SUPPORT"))
+        assertFalse(navigation.contains("SteamSettingsChild.APP_SUPPORT"))
         assertTrue(navigation.contains("SteamSettingsChild.NETWORK_OPTIMIZATION_ADVANCED"))
         assertTrue(navigation.contains("SteamSettingsAdditionalGroup.STEAM_EXPERIENCE"))
         assertTrue(navigation.contains("SteamSettingsAdditionalGroup.NAVIGATION"))
-        assertTrue(navigation.contains("mode = SettingsScreenMode.APP_SUPPORT"))
         assertTrue(navigation.contains("onOpenNotifications = { child = SteamSettingsChild.NOTIFICATIONS }"))
         assertTrue(navigation.contains("onNavigateBack = { child = null }"))
         assertTrue(navigation.contains("SteamNetworkOptimizationAutoScreen("))
@@ -78,7 +77,8 @@ class SteamSettingsChildPagesTest {
         assertTrue(host.contains("SteamNetworkOptimizationPullCard("))
         assertTrue(host.contains("onHomeHeaderPullTriggered = onOpenNetworkOptimization"))
         assertTrue(host.contains("SteamSettingsAdditionalGroup.NAVIGATION"))
-        assertTrue(host.contains("showLanguage = screenMode == SettingsScreenMode.APP_SUPPORT"))
+        assertTrue(host.contains("showLanguage = inlineAppSupportItems"))
+        assertTrue(host.contains("showAppSupportItemsOnCompactHome = inlineAppSupportItems"))
         assertTrue(host.contains("showBottomNavigation = false"))
     }
 

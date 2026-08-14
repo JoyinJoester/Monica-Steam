@@ -33,7 +33,7 @@ class SteamReleaseIntegrityGuardTest {
         assertTrue(settings.contains("UpdateChecker.checkLatestRelease(currentVersion)"))
         assertTrue(settings.contains("UpdateChecker.validateDownloadedApk(context, apkFile)"))
         assertTrue(settings.contains("Monica-Steam-\${result.latestVersion}.apk"))
-        assertTrue(settingsHost.contains("showUpdateCheck = screenMode == SettingsScreenMode.APP_SUPPORT"))
+        assertTrue(settingsHost.contains("showUpdateCheck = inlineAppSupportItems"))
         assertTrue(manifest.contains("android.permission.REQUEST_INSTALL_PACKAGES"))
         assertTrue(filePaths.contains("<cache-path name=\"update_apk\" path=\"update_apk/\" />"))
         assertTrue(englishStrings.contains("A newer Monica Steam release is available."))

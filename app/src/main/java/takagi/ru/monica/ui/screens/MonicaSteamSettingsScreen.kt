@@ -60,7 +60,6 @@ private enum class SteamSettingsChild {
     APPEARANCE,
     STEAM_FEATURES,
     NAVIGATION,
-    APP_SUPPORT,
     DOCK,
     COLORS,
     CUSTOM_COLORS,
@@ -85,7 +84,6 @@ private fun SteamSettingsChild.parent(): SteamSettingsChild? = when (this) {
     SteamSettingsChild.APPEARANCE,
     SteamSettingsChild.STEAM_FEATURES,
     SteamSettingsChild.NAVIGATION,
-    SteamSettingsChild.APP_SUPPORT,
     SteamSettingsChild.MASTER_PASSWORD_SETUP,
     SteamSettingsChild.MASTER_PASSWORD_LOCKING,
     SteamSettingsChild.NOTIFICATIONS,
@@ -96,7 +94,7 @@ private fun SteamSettingsChild.parent(): SteamSettingsChild? = when (this) {
     SteamSettingsChild.DOCK -> SteamSettingsChild.NAVIGATION
     SteamSettingsChild.EXTENSIONS,
     SteamSettingsChild.PLUS,
-    SteamSettingsChild.DEVELOPER -> SteamSettingsChild.APP_SUPPORT
+    SteamSettingsChild.DEVELOPER -> null
 
     SteamSettingsChild.CUSTOM_COLORS -> SteamSettingsChild.COLORS
     SteamSettingsChild.STORE_HINTS,
@@ -138,7 +136,6 @@ fun MonicaSteamSettingsScreen(
     val appearanceScrollState = rememberScrollState()
     val steamFeaturesScrollState = rememberScrollState()
     val navigationScrollState = rememberScrollState()
-    val appSupportScrollState = rememberScrollState()
     val context = LocalContext.current
     val dockContentClearance = LocalSteamDockContentClearance.current
 
@@ -157,8 +154,7 @@ fun MonicaSteamSettingsScreen(
             onOpenAppearance = { child = SteamSettingsChild.APPEARANCE },
             onOpenNavigation = { child = SteamSettingsChild.NAVIGATION },
             onOpenSteamExperience = { child = SteamSettingsChild.STEAM_FEATURES },
-            onOpenNotifications = { child = SteamSettingsChild.NOTIFICATIONS },
-            onOpenAppSupport = { child = SteamSettingsChild.APP_SUPPORT }
+            onOpenNotifications = { child = SteamSettingsChild.NOTIFICATIONS }
         )
     }
 
@@ -255,13 +251,6 @@ fun MonicaSteamSettingsScreen(
                     onBack = { child = null },
                     additionalGroup = SteamSettingsAdditionalGroup.NAVIGATION
                 )
-                SteamSettingsChild.APP_SUPPORT -> SharedSettingsSurface(
-                    mode = SettingsScreenMode.APP_SUPPORT,
-                    title = context.getString(R.string.steam_settings_app_support_title),
-                    scrollState = appSupportScrollState,
-                    showBack = true,
-                    onBack = { child = null }
-                )
                 SteamSettingsChild.DOCK -> SteamDockOrderScreen(
                     order = dockOrder,
                     onOrderChange = onDockOrderChange,
@@ -351,7 +340,7 @@ fun MonicaSteamSettingsScreen(
                     }
                 SteamSettingsChild.PLUS -> MonicaPlusScreen(
                     isPlusActivated = settings.isPlusActivated,
-                    onNavigateBack = { child = SteamSettingsChild.APP_SUPPORT },
+                    onNavigateBack = { child = null },
                     onNavigateToPayment = { child = SteamSettingsChild.PAYMENT },
                     onDeactivatePlus = { settingsViewModel.clearPlusLicenseData() },
                     contentBottomPadding = dockContentClearance + 16.dp,
@@ -370,12 +359,12 @@ fun MonicaSteamSettingsScreen(
                     modifier = Modifier.fillMaxSize()
                 )
                 SteamSettingsChild.DEVELOPER -> DeveloperSettingsScreen(
-                    onNavigateBack = { child = SteamSettingsChild.APP_SUPPORT },
+                    onNavigateBack = { child = null },
                     contentBottomPadding = dockContentClearance + 16.dp,
                     modifier = Modifier.fillMaxSize()
                 )
                 SteamSettingsChild.EXTENSIONS -> ExtensionsScreen(
-                    onNavigateBack = { child = SteamSettingsChild.APP_SUPPORT },
+                    onNavigateBack = { child = null },
                     onNavigateToMonicaPlus = { child = SteamSettingsChild.PLUS },
                     isPlusActivated = settings.isPlusActivated,
                     clipboardAutoClearSeconds = settings.clipboardAutoClearSeconds,

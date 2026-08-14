@@ -2,7 +2,6 @@ package takagi.ru.monica.ui.screens
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Security
@@ -24,8 +23,7 @@ internal fun buildMonicaSteamSettingsHomeSections(
     onOpenAppearance: () -> Unit,
     onOpenNavigation: () -> Unit,
     onOpenSteamExperience: () -> Unit,
-    onOpenNotifications: () -> Unit,
-    onOpenAppSupport: () -> Unit
+    onOpenNotifications: () -> Unit
 ): List<SettingsNavigationSection> = listOf(
     SettingsNavigationSection(
         title = context.getString(R.string.steam_settings_group_security_data),
@@ -104,23 +102,6 @@ internal fun buildMonicaSteamSettingsHomeSections(
                     context.getString(R.string.steam_notification_settings_description)
                 ),
                 onClick = onOpenNotifications
-            )
-        )
-    ),
-    SettingsNavigationSection(
-        title = context.getString(R.string.steam_settings_group_application),
-        entries = listOf(
-            SettingsNavigationEntry(
-                icon = Icons.Default.Info,
-                title = context.getString(R.string.steam_settings_app_support_title),
-                subtitle = context.getString(R.string.steam_settings_app_support_description),
-                searchTexts = listOf(
-                    context.getString(R.string.language),
-                    context.getString(R.string.extensions_title),
-                    context.getString(R.string.version),
-                    context.getString(R.string.developer_settings)
-                ),
-                onClick = onOpenAppSupport
             )
         )
     )
