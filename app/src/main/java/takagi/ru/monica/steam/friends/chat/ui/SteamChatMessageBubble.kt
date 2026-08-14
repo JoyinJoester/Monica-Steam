@@ -62,6 +62,7 @@ import takagi.ru.monica.steam.friends.chat.domain.SteamChatDeliveryState
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatMessage
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatReaction
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatReactionType
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentKind
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatEmoticon
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatSticker
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImage
@@ -92,6 +93,8 @@ internal fun SteamChatMessageBubble(
     val standaloneCard = richContent is SteamChatRichContent.GameInvite ||
         richContent is SteamChatRichContent.StoreGameShare
     val transparentMedia = richContent is SteamChatRichContent.Sticker ||
+        (richContent is SteamChatRichContent.Attachment &&
+            richContent.kind == SteamChatAttachmentKind.IMAGE) ||
         isSingleSteamEmoticonMessage(message.body)
     val interactionModifier = Modifier.pointerInput(retryable, message.stableId) {
         detectTapGestures(

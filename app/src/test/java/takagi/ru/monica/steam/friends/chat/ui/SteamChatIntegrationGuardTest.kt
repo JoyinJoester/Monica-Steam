@@ -108,6 +108,8 @@ class SteamChatIntegrationGuardTest {
         assertTrue(bubble.contains("RoundedCornerShape"))
         assertTrue(bubble.contains("MessageReactionStrip("))
         assertTrue(bubble.contains("SteamChatRemoteImage("))
+        assertTrue(bubble.contains("richContent is SteamChatRichContent.Attachment"))
+        assertTrue(bubble.contains("richContent.kind == SteamChatAttachmentKind.IMAGE"))
         assertTrue(bubble.contains("reaction.count.toString()"))
         assertFalse(composer.contains("imePadding()"))
         assertTrue(composer.contains("heightIn(min = 52.dp"))
