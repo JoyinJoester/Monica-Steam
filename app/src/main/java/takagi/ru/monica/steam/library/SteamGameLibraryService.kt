@@ -67,22 +67,12 @@ class SteamGameLibraryService(
             language = language,
             accessToken = token
         )
-        val achievementProgress = fetchAchievementProgress(
-            steamId = account.steamId.toLong(),
-            appIds = games.map(SteamGame::appId),
-            language = language,
-            accessToken = token
-        )
         val enrichedGames = games.map { game ->
             val metadata = storeMetadata.items[game.appId]
-            val progress = achievementProgress[game.appId]
             game.copy(
                 headerImageUrl = metadata?.headerImageUrl.orEmpty(),
                 price = metadata?.price,
-                supportsSteamCloud = metadata?.supportsSteamCloud,
-                achievementUnlockedCount = progress?.unlocked,
-                achievementTotalCount = progress?.total,
-                allAchievementsUnlocked = progress?.allUnlocked == true
+                supportsSteamCloud = metadata?.supportsSteamCloud
             )
         }
         return SteamLibraryResult.Success(
@@ -143,6 +133,29 @@ class SteamGameLibraryService(
                 gameName = game.name,
                 definitionsResponse = definitions,
                 userResponse = userAchievements
+            )
+        }.fold(
+            onSuccess = { SteamLibraryResult.Success(it) },
+            onFailure = ::mapFailure
+        )
+    }
+
+    internal fun fetchAchievementProgress(
+        account: SteamAccount,
+        appIds: List<Int>,
+        language: String
+    ): SteamLibraryResult<Map<Int, SteamGameAchievementProgress>> {
+        val token = account.accessToken?.takeIf { it.isNotBlank() }
+            ?: return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
+        if (!account.hasRealSteamId) {
+            return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
+        }
+        return runCatching {
+            fetchAchievementProgress(
+                steamId = account.steamId.toLong(),
+                appIds = appIds,
+                language = language,
+                accessToken = token
             )
         }.fold(
             onSuccess = { SteamLibraryResult.Success(it) },
@@ -230,26 +243,22 @@ class SteamGameLibraryService(
     ): Map<Int, SteamGameAchievementProgress> {
         val progress = mutableMapOf<Int, SteamGameAchievementProgress>()
         appIds.distinct().chunked(ACHIEVEMENT_PROGRESS_BATCH_SIZE).forEach { batch ->
-            runCatching {
-                parseAchievementProgress(
-                    api.callProtobuf(
-                        iface = "IPlayerService",
-                        method = "GetAchievementsProgress",
-                        request = SteamProtoWriter().apply {
-                            writeUint64(1, steamId)
-                            writeString(2, language)
-                            batch.forEach { appId ->
-                                writeVarint(3, appId.toLong())
-                            }
-                            writeBool(4, true)
-                        },
-                        accessToken = accessToken,
-                        useGet = true
-                    )
+            progress += parseAchievementProgress(
+                api.callProtobuf(
+                    iface = "IPlayerService",
+                    method = "GetAchievementsProgress",
+                    request = SteamProtoWriter().apply {
+                        writeUint64(1, steamId)
+                        writeString(2, language)
+                        batch.forEach { appId ->
+                            writeVarint(3, appId.toLong())
+                        }
+                        writeBool(4, true)
+                    },
+                    accessToken = accessToken,
+                    useGet = true
                 )
-            }.onSuccess { parsed ->
-                progress += parsed
-            }
+            )
         }
         return progress
     }

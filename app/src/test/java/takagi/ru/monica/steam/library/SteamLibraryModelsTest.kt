@@ -253,10 +253,12 @@ class SteamLibraryModelsTest {
                     price = SteamGamePrice("CNY", 990, 1_990, true),
                     achievementUnlockedCount = 12,
                     achievementTotalCount = 12,
-                    allAchievementsUnlocked = true
+                    allAchievementsUnlocked = true,
+                    achievementProgressPlaytimeMinutes = 1
                 )
             ),
-            fetchedAt = 100L
+            fetchedAt = 100L,
+            achievementProgressFullSyncAt = 90L
         )
         val fresh = SteamLibrarySnapshot(
             accountId = 7L,
@@ -276,6 +278,8 @@ class SteamLibraryModelsTest {
         assertEquals(12, merged.games.single().achievementUnlockedCount)
         assertEquals(12, merged.games.single().achievementTotalCount)
         assertTrue(merged.games.single().isPerfectAchievementGame)
+        assertEquals(1, merged.games.single().achievementProgressPlaytimeMinutes)
+        assertEquals(90L, merged.achievementProgressFullSyncAt)
     }
 
     @Test
@@ -473,6 +477,90 @@ class SteamLibraryModelsTest {
     }
 
     @Test
+    fun firstAchievementProgressSyncRequestsTheEntireLibrary() {
+        val snapshot = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(
+                SteamGame(10, "Unplayed", 0, 0),
+                SteamGame(20, "Played", 120, 10)
+            ),
+            fetchedAt = 2L,
+            achievementProgressFullSyncAt = null
+        )
+
+        val plan = planSteamAchievementProgressSync(
+            current = snapshot,
+            forceFull = false
+        )
+
+        assertTrue(plan.isFullSync)
+        assertEquals(listOf(10, 20), plan.appIds)
+    }
+
+    @Test
+    fun laterAchievementProgressSyncOnlyRequestsGamesWithMorePlaytime() {
+        val current = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(
+                SteamGame(
+                    10,
+                    "Played again",
+                    125,
+                    25,
+                    achievementProgressPlaytimeMinutes = 100
+                ),
+                SteamGame(
+                    20,
+                    "Unchanged",
+                    240,
+                    20,
+                    achievementProgressPlaytimeMinutes = 240
+                ),
+                SteamGame(
+                    30,
+                    "Still unplayed",
+                    0,
+                    0,
+                    achievementProgressPlaytimeMinutes = 0
+                ),
+                SteamGame(40, "New played game", 15, 15),
+                SteamGame(50, "New unplayed game", 0, 0)
+            ),
+            fetchedAt = 2L,
+            achievementProgressFullSyncAt = 1L
+        )
+
+        val plan = planSteamAchievementProgressSync(
+            current = current,
+            forceFull = false
+        )
+
+        assertFalse(plan.isFullSync)
+        assertEquals(listOf(10, 40), plan.appIds)
+    }
+
+    @Test
+    fun manualAchievementProgressSyncAlwaysRequestsTheEntireLibrary() {
+        val snapshot = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(
+                SteamGame(10, "Unplayed", 0, 0),
+                SteamGame(20, "Played", 120, 10)
+            ),
+            fetchedAt = 2L,
+            achievementProgressFullSyncAt = 1L
+        )
+
+        val plan = planSteamAchievementProgressSync(
+            current = snapshot,
+            forceFull = true
+        )
+
+        assertTrue(plan.isFullSync)
+        assertEquals(listOf(10, 20), plan.appIds)
+    }
+
+    @Test
     fun declaredGamesWithoutGameMessagesAreRejectedInsteadOfCachedAsEmpty() {
         val malformedResponse = SteamProtoWriter().apply {
             writeVarint(1, 12L)
@@ -591,14 +679,6 @@ class SteamLibraryModelsTest {
                 )
             )
         }.toByteArray()
-        val progressResponse = SteamProtoWriter().apply {
-            writeMessage(1, SteamProtoWriter().apply {
-                writeVarint(1, 1718570L)
-                writeVarint(2, 63L)
-                writeVarint(3, 63L)
-                writeBool(5, true)
-            })
-        }.toByteArray()
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request()
@@ -606,7 +686,8 @@ class SteamLibraryModelsTest {
                 val body = when {
                     request.url.encodedPath.contains("GetOwnedGames") -> ownedGamesResponse
                     request.url.encodedPath.contains("GetItems") -> storeResponse
-                    request.url.encodedPath.contains("GetAchievementsProgress") -> progressResponse
+                    request.url.encodedPath.contains("GetAchievementsProgress") ->
+                        error("Core library refresh must not block on achievement progress")
                     else -> error("Unexpected request: ${request.url}")
                 }
                 Response.Builder()
@@ -627,10 +708,7 @@ class SteamLibraryModelsTest {
 
         val storeRequests = requests.filter { it.second.contains("GetItems") }
         assertEquals(listOf("GET"), storeRequests.map { it.first })
-        assertEquals(
-            listOf("GET"),
-            requests.filter { it.second.contains("GetAchievementsProgress") }.map { it.first }
-        )
+        assertTrue(requests.none { it.second.contains("GetAchievementsProgress") })
         assertTrue(requests.none { it.second.contains("appdetails") })
         val astlibra = result.value.games.first { it.appId == 1718570 }
         assertEquals(
@@ -639,11 +717,44 @@ class SteamLibraryModelsTest {
         )
         assertEquals(8_000L, astlibra.price?.finalPriceMinor)
         assertEquals(8_800L, astlibra.price?.originalPriceMinor)
-        assertEquals(63, astlibra.achievementUnlockedCount)
-        assertEquals(63, astlibra.achievementTotalCount)
-        assertTrue(astlibra.isPerfectAchievementGame)
+        assertNull(astlibra.achievementUnlockedCount)
+        assertNull(astlibra.achievementTotalCount)
         assertEquals(8_800L, result.value.estimatedReplacementValueMinor)
         assertEquals("CNY", result.value.currency)
+    }
+
+    @Test
+    fun achievementProgressSyncUsesHundredGameBatches() {
+        val requests = mutableListOf<String>()
+        val progressResponse = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 1L)
+                writeVarint(2, 1L)
+                writeVarint(3, 10L)
+            })
+        }.toByteArray()
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request()
+                requests += request.url.encodedPath
+                Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body(progressResponse.toResponseBody("application/octet-stream".toMediaType()))
+                    .build()
+            }
+            .build()
+
+        val result = SteamGameLibraryService(SteamApiClient(httpClient)).fetchAchievementProgress(
+            account = account(accessToken = "access-token"),
+            appIds = (1..201).toList(),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        assertEquals(3, requests.count { it.contains("GetAchievementsProgress") })
     }
 
     @Test

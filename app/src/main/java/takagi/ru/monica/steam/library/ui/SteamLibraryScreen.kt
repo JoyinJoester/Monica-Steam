@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.SwitchAccount
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -118,6 +119,7 @@ import takagi.ru.monica.steam.foundation.ui.LocalSteamAvatarFrameShape
 import takagi.ru.monica.steam.foundation.ui.SteamAccountSwitcherSheet
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
 import takagi.ru.monica.steam.foundation.ui.SteamPageOverflowMenu
+import takagi.ru.monica.steam.foundation.ui.SteamPageOverflowAction
 import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerTarget
 import takagi.ru.monica.steam.profile.viewer.ui.SteamProfileViewerScreen
@@ -249,7 +251,23 @@ fun SteamLibraryScreen(
                                 refreshing = state.loadingLibrary,
                                 onRefresh = viewModel::refreshLibrary,
                                 onOpenNotifications = onOpenNotifications,
-                                onOpenSettings = onOpenSettings
+                                onOpenSettings = onOpenSettings,
+                                additionalActions = listOf(
+                                    SteamPageOverflowAction(
+                                        label = stringResource(
+                                            if (state.syncingAchievementProgress) {
+                                                R.string.steam_library_syncing_achievements
+                                            } else {
+                                                R.string.steam_library_sync_all_achievements
+                                            }
+                                        ),
+                                        icon = Icons.Default.Sync,
+                                        enabled = state.snapshot != null &&
+                                            !state.loadingLibrary &&
+                                            !state.syncingAchievementProgress,
+                                        onClick = viewModel::syncAllAchievementProgress
+                                    )
+                                )
                             )
                         }
                     )

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -49,6 +50,8 @@ data class SteamLibraryUiState(
     val playActivity: SteamPlayActivityHistory? = null,
     val loadingLibrary: Boolean = false,
     val libraryFailure: SteamLibraryFailureReason? = null,
+    val syncingAchievementProgress: Boolean = false,
+    val achievementProgressFailure: SteamLibraryFailureReason? = null,
     val selectedGame: SteamGame? = null,
     val gameContext: SteamLibraryGameContext? = null,
     val gameContextFromCache: Boolean = false,
@@ -83,6 +86,8 @@ class SteamLibraryViewModel(
     private var initializedAccountIds = mutableSetOf<Long>()
     private var libraryLoadGeneration: Long = 0L
     private var achievementLoadGeneration: Long = 0L
+    private var achievementProgressSyncGeneration: Long = 0L
+    private var achievementProgressSyncJob: Job? = null
     private var regionalPriceLoadGeneration: Long = 0L
     private var gameContextLoadGeneration: Long = 0L
 
@@ -107,6 +112,7 @@ class SteamLibraryViewModel(
                 } else if ((sourceChanged || accountChanged) && selected == null) {
                     libraryLoadGeneration++
                     achievementLoadGeneration++
+                    cancelAchievementProgressSync()
                     regionalPriceLoadGeneration++
                     gameContextLoadGeneration++
                     _uiState.value = _uiState.value.copy(
@@ -120,7 +126,9 @@ class SteamLibraryViewModel(
                         gameContextFailure = null,
                         achievements = null,
                         loadingLibrary = false,
-                        libraryFailure = null
+                        libraryFailure = null,
+                        syncingAchievementProgress = false,
+                        achievementProgressFailure = null
                     )
                 }
             }
@@ -142,6 +150,7 @@ class SteamLibraryViewModel(
     fun refreshLibrary() {
         val account = selectedAccount() ?: return
         if (_uiState.value.loadingLibrary) return
+        cancelAchievementProgressSync()
         val generation = ++libraryLoadGeneration
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(loadingLibrary = true, libraryFailure = null)
@@ -194,6 +203,10 @@ class SteamLibraryViewModel(
                         loadingLibrary = false,
                         libraryFailure = null
                     )
+                    startAchievementProgressSync(
+                        account = account,
+                        forceFull = false
+                    )
                 }
                 is SteamLibraryResult.Failure -> {
                     if (generation != libraryLoadGeneration ||
@@ -206,6 +219,99 @@ class SteamLibraryViewModel(
                 }
             }
         }
+    }
+
+    fun syncAllAchievementProgress() {
+        val account = selectedAccount() ?: return
+        if (_uiState.value.loadingLibrary) return
+        startAchievementProgressSync(
+            account = account,
+            forceFull = true
+        )
+    }
+
+    private fun startAchievementProgressSync(
+        account: SteamAccount,
+        forceFull: Boolean
+    ) {
+        val snapshot = _uiState.value.snapshot
+            ?.takeIf { it.accountId == account.id }
+            ?: return
+        val plan = planSteamAchievementProgressSync(
+            current = snapshot,
+            forceFull = forceFull
+        )
+        if (plan.appIds.isEmpty()) {
+            if (plan.isFullSync && snapshot.achievementProgressFullSyncAt == null) {
+                val updatedSnapshot = snapshot.copy(
+                    achievementProgressFullSyncAt = System.currentTimeMillis()
+                )
+                _uiState.value = _uiState.value.copy(snapshot = updatedSnapshot)
+                viewModelScope.launch(Dispatchers.IO) {
+                    runSteamLibraryCatching { cacheRepository.saveLibrary(updatedSnapshot) }
+                }
+            }
+            return
+        }
+
+        val generation = ++achievementProgressSyncGeneration
+        achievementProgressSyncJob?.cancel()
+        _uiState.value = _uiState.value.copy(
+            syncingAchievementProgress = true,
+            achievementProgressFailure = null
+        )
+        achievementProgressSyncJob = viewModelScope.launch {
+            val result = runSteamLibraryCatching {
+                withContext(Dispatchers.IO) {
+                    fetchAchievementProgressWithSessionRetry(account, plan.appIds)
+                }
+            }.getOrElse { error ->
+                SteamLibraryResult.Failure(steamLibraryFailureReason(error))
+            }
+            if (!achievementProgressSyncIsCurrent(account.id, generation)) return@launch
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    val updatedState = applyAchievementProgressToState(
+                        state = _uiState.value,
+                        accountId = account.id,
+                        progress = result.value,
+                        syncedAppIds = plan.appIds.toSet(),
+                        fullSyncAt = System.currentTimeMillis().takeIf { plan.isFullSync }
+                    ) ?: return@launch
+                    _uiState.value = updatedState.copy(
+                        syncingAchievementProgress = false,
+                        achievementProgressFailure = null
+                    )
+                    updatedState.snapshot?.let { updatedSnapshot ->
+                        withContext(Dispatchers.IO) {
+                            runSteamLibraryCatching {
+                                cacheRepository.saveLibrary(updatedSnapshot)
+                            }
+                        }
+                    }
+                }
+                is SteamLibraryResult.Failure -> {
+                    _uiState.value = _uiState.value.copy(
+                        syncingAchievementProgress = false,
+                        achievementProgressFailure = result.reason
+                    )
+                }
+            }
+        }
+    }
+
+    private fun cancelAchievementProgressSync() {
+        achievementProgressSyncGeneration++
+        achievementProgressSyncJob?.cancel()
+        achievementProgressSyncJob = null
+        if (_uiState.value.syncingAchievementProgress) {
+            _uiState.value = _uiState.value.copy(syncingAchievementProgress = false)
+        }
+    }
+
+    private fun achievementProgressSyncIsCurrent(accountId: Long, generation: Long): Boolean {
+        return generation == achievementProgressSyncGeneration &&
+            _uiState.value.selectedAccountId == accountId
     }
 
     private suspend fun normalizeLibraryPrices(snapshot: SteamLibrarySnapshot): SteamLibrarySnapshot {
@@ -506,6 +612,7 @@ class SteamLibraryViewModel(
     private suspend fun loadAccount(account: SteamAccount) {
         libraryLoadGeneration++
         achievementLoadGeneration++
+        cancelAchievementProgressSync()
         regionalPriceLoadGeneration++
         gameContextLoadGeneration++
         val cachedData = runSteamLibraryCatching {
@@ -527,6 +634,8 @@ class SteamLibraryViewModel(
             achievements = null,
             loadingLibrary = false,
             libraryFailure = null,
+            syncingAchievementProgress = false,
+            achievementProgressFailure = null,
             achievementFailure = null,
             loadingRegionalPrices = false,
             regionalPriceFailure = null
@@ -623,6 +732,33 @@ class SteamLibraryViewModel(
         val refreshed = refreshAccountSession(prepared, force = true)
         return if (refreshed.accessToken != prepared.accessToken) {
             service.fetchAchievements(refreshed, game, language = "schinese")
+        } else {
+            first
+        }
+    }
+
+    private suspend fun fetchAchievementProgressWithSessionRetry(
+        account: SteamAccount,
+        appIds: List<Int>
+    ): SteamLibraryResult<Map<Int, SteamGameAchievementProgress>> {
+        val prepared = refreshAccountSession(account, force = false)
+        val first = service.fetchAchievementProgress(
+            account = prepared,
+            appIds = appIds,
+            language = "schinese"
+        )
+        if (first !is SteamLibraryResult.Failure ||
+            first.reason != SteamLibraryFailureReason.SESSION_REQUIRED
+        ) {
+            return first
+        }
+        val refreshed = refreshAccountSession(prepared, force = true)
+        return if (refreshed.accessToken != prepared.accessToken) {
+            service.fetchAchievementProgress(
+                account = refreshed,
+                appIds = appIds,
+                language = "schinese"
+            )
         } else {
             first
         }
@@ -869,7 +1005,8 @@ internal fun applyAchievementsToState(
     fun SteamGame.withProgress(): SteamGame = copy(
         achievementUnlockedCount = unlocked,
         achievementTotalCount = total,
-        allAchievementsUnlocked = total > 0 && unlocked >= total
+        allAchievementsUnlocked = total > 0 && unlocked >= total,
+        achievementProgressPlaytimeMinutes = playtimeForeverMinutes
     )
 
     val updatedSelectedGame = state.selectedGame
@@ -881,6 +1018,37 @@ internal fun applyAchievementsToState(
             if (game.appId == achievements.appId) game.withProgress() else game
         }
     )
+    return state.copy(
+        snapshot = updatedSnapshot,
+        selectedGame = updatedSelectedGame
+    )
+}
+
+internal fun applyAchievementProgressToState(
+    state: SteamLibraryUiState,
+    accountId: Long,
+    progress: Map<Int, SteamGameAchievementProgress>,
+    syncedAppIds: Set<Int>,
+    fullSyncAt: Long?
+): SteamLibraryUiState? {
+    val snapshot = state.snapshot?.takeIf { it.accountId == accountId } ?: return null
+    fun SteamGame.withProgress(): SteamGame {
+        if (appId !in syncedAppIds) return this
+        val summary = progress[appId]
+        return copy(
+            achievementUnlockedCount = summary?.unlocked ?: achievementUnlockedCount,
+            achievementTotalCount = summary?.total ?: achievementTotalCount,
+            allAchievementsUnlocked = summary?.allUnlocked ?: allAchievementsUnlocked,
+            achievementProgressPlaytimeMinutes = playtimeForeverMinutes
+        )
+    }
+
+    val updatedSnapshot = snapshot.copy(
+        games = snapshot.games.map { it.withProgress() },
+        achievementProgressFullSyncAt = fullSyncAt
+            ?: snapshot.achievementProgressFullSyncAt
+    )
+    val updatedSelectedGame = state.selectedGame?.withProgress()
     return state.copy(
         snapshot = updatedSnapshot,
         selectedGame = updatedSelectedGame
@@ -946,6 +1114,8 @@ internal fun mergeLibraryDashboardSnapshot(
             } else {
                 previous?.allAchievementsUnlocked == true
             },
+            achievementProgressPlaytimeMinutes = game.achievementProgressPlaytimeMinutes
+                ?: previous?.achievementProgressPlaytimeMinutes,
             supportsSteamCloud = game.supportsSteamCloud ?: previous?.supportsSteamCloud
         )
     }
@@ -961,7 +1131,9 @@ internal fun mergeLibraryDashboardSnapshot(
     val library = fresh.copy(
         games = gamesWithFamilyCacheFallback,
         familyGroupId = fresh.familyGroupId
-            ?: cached?.familyGroupId?.takeIf { fresh.familyShareFailure != null }
+            ?: cached?.familyGroupId?.takeIf { fresh.familyShareFailure != null },
+        achievementProgressFullSyncAt = fresh.achievementProgressFullSyncAt
+            ?: cached?.achievementProgressFullSyncAt
     )
     return when (inventoryResult) {
         is SteamLibraryResult.Success -> library.copy(

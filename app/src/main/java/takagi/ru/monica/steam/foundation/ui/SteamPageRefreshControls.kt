@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -42,12 +43,20 @@ private const val PULL_REFRESH_HIDDEN_EPSILON = 0.001f
 private const val PULL_REFRESH_OVERSHOOT_RESISTANCE = 0.18f
 private const val PULL_REFRESH_MAX_VISUAL_FRACTION = 1.15f
 
+data class SteamPageOverflowAction(
+    val label: String,
+    val icon: ImageVector,
+    val enabled: Boolean = true,
+    val onClick: () -> Unit
+)
+
 @Composable
 fun SteamPageOverflowMenu(
     refreshing: Boolean,
     onRefresh: () -> Unit,
     onOpenNotifications: () -> Unit,
-    onOpenSettings: () -> Unit
+    onOpenSettings: () -> Unit,
+    additionalActions: List<SteamPageOverflowAction> = emptyList()
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
@@ -66,6 +75,17 @@ fun SteamPageOverflowMenu(
                     onOpenNotifications()
                 }
             )
+            additionalActions.forEach { action ->
+                DropdownMenuItem(
+                    text = { Text(action.label) },
+                    leadingIcon = { Icon(action.icon, contentDescription = null) },
+                    enabled = action.enabled,
+                    onClick = {
+                        expanded = false
+                        action.onClick()
+                    }
+                )
+            }
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.refresh)) },
                 leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },

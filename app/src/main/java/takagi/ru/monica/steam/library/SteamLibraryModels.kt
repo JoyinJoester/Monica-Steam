@@ -18,7 +18,8 @@ data class SteamGame(
     val allAchievementsUnlocked: Boolean = false,
     val ownership: SteamGameOwnership = SteamGameOwnership.OWNED,
     val ownerSteamIds: List<String> = emptyList(),
-    val supportsSteamCloud: Boolean? = null
+    val supportsSteamCloud: Boolean? = null,
+    val achievementProgressPlaytimeMinutes: Int? = null
 ) {
     val isPerfectAchievementGame: Boolean
         get() {
@@ -127,7 +128,8 @@ data class SteamLibrarySnapshot(
     val familyShareFailure: SteamLibraryFailureReason? = null,
     val inventoryItemCount: Int? = null,
     val inventoryFetchedAt: Long? = null,
-    val inventoryFailure: SteamLibraryFailureReason? = null
+    val inventoryFailure: SteamLibraryFailureReason? = null,
+    val achievementProgressFullSyncAt: Long? = null
 ) {
     val ownedGames: List<SteamGame> get() = games.filterNot(SteamGame::isFamilyShared)
     val sharedGames: List<SteamGame> get() = games.filter(SteamGame::isFamilyShared)
@@ -144,6 +146,35 @@ data class SteamLibrarySnapshot(
         }
     val priceCoverage: Float
         get() = if (gameCount == 0) 0f else pricedGameCount.toFloat() / gameCount.toFloat()
+}
+
+internal data class SteamAchievementProgressSyncPlan(
+    val appIds: List<Int>,
+    val isFullSync: Boolean
+)
+
+internal fun planSteamAchievementProgressSync(
+    current: SteamLibrarySnapshot,
+    forceFull: Boolean
+): SteamAchievementProgressSyncPlan {
+    val currentGames = current.games.distinctBy(SteamGame::appId)
+    val isFullSync = forceFull || current.achievementProgressFullSyncAt == null
+    if (isFullSync) {
+        return SteamAchievementProgressSyncPlan(
+            appIds = currentGames.map(SteamGame::appId),
+            isFullSync = true
+        )
+    }
+
+    val changedAppIds = currentGames.mapNotNull { game ->
+        val playtimeIncreased = game.playtimeForeverMinutes >
+            (game.achievementProgressPlaytimeMinutes ?: 0)
+        game.appId.takeIf { playtimeIncreased }
+    }
+    return SteamAchievementProgressSyncPlan(
+        appIds = changedAppIds,
+        isFullSync = false
+    )
 }
 
 internal fun mergeOwnedAndFamilySharedGames(

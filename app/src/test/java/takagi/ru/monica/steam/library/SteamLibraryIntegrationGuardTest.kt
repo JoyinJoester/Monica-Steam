@@ -93,7 +93,7 @@ class SteamLibraryIntegrationGuardTest {
         assertTrue(repository.contains("SteamGameAchievements.serializer()"))
         val failureBranch = viewModel
             .substringAfter("is SteamLibraryResult.Failure -> {")
-            .substringBefore("fun openGame")
+            .substringBefore("fun syncAllAchievementProgress")
         assertFalse(failureBranch.contains("cacheRepository.saveLibrary"))
         assertTrue(database.contains("version = 6"))
         assertTrue(database.contains("migration4To5()"))
@@ -137,6 +137,9 @@ class SteamLibraryIntegrationGuardTest {
         assertTrue(hero.contains("onOpenAccountDetails"))
         assertTrue(screen.contains("SteamAccountSwitcherSheet("))
         assertTrue(screen.contains("onSelectStorageSource = viewModel::selectStorageSource"))
+        assertTrue(screen.contains("viewModel::syncAllAchievementProgress"))
+        assertTrue(screen.contains("state.syncingAchievementProgress"))
+        assertTrue(screen.contains("steam_library_sync_all_achievements"))
         val detail = screen
             .substringAfter("private fun SteamGameDetail(")
             .substringBefore("private fun SteamGameDetailHero(")

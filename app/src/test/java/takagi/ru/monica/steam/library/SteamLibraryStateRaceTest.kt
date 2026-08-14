@@ -103,6 +103,38 @@ class SteamLibraryStateRaceTest {
         assertTrue(updated.snapshot?.games?.single()?.supportsSteamCloud == true)
     }
 
+    @Test
+    fun achievementProgressUpdatesListDetailAndFullSyncMarkerTogether() {
+        val game = SteamGame(620, "Portal 2", 120, 10)
+        val state = SteamLibraryUiState(
+            selectedAccountId = 7L,
+            selectedGame = game,
+            snapshot = SteamLibrarySnapshot(
+                accountId = 7L,
+                games = listOf(game, SteamGame(730, "Counter-Strike 2", 60, 0)),
+                fetchedAt = 1L
+            )
+        )
+
+        val updated = applyAchievementProgressToState(
+            state = state,
+            accountId = 7L,
+            progress = mapOf(
+                620 to SteamGameAchievementProgress(620, 50, 50, true)
+            ),
+            syncedAppIds = setOf(620, 730),
+            fullSyncAt = 100L
+        )
+
+        assertEquals(50, updated?.selectedGame?.achievementUnlockedCount)
+        assertTrue(updated?.selectedGame?.isPerfectAchievementGame == true)
+        assertEquals(50, updated?.snapshot?.games?.first()?.achievementTotalCount)
+        assertNull(updated?.snapshot?.games?.last()?.achievementTotalCount)
+        assertEquals(120, updated?.snapshot?.games?.first()?.achievementProgressPlaytimeMinutes)
+        assertEquals(60, updated?.snapshot?.games?.last()?.achievementProgressPlaytimeMinutes)
+        assertEquals(100L, updated?.snapshot?.achievementProgressFullSyncAt)
+    }
+
     private fun account(steamId: String) = SteamAccount(
         id = 7L,
         steamId = steamId,

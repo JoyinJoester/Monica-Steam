@@ -37,6 +37,8 @@ class SteamSharedOverflowMenuGuardTest {
         assertTrue(tokenMenu.contains("SteamSection.CHAT"))
         assertFalse(tokenMenu.contains("pendingChatCount"))
         assertTrue(pageMenu.contains("R.string.steam_notifications_title"))
+        assertTrue(pageMenu.contains("additionalActions.forEach"))
+        assertTrue(pageMenu.contains("SteamPageOverflowAction"))
         assertTrue(store.contains("onOpenNotifications"))
         assertTrue(library.contains("onOpenNotifications"))
         assertTrue(activity.contains("openNotificationsOnEntry = pendingSteamNotifications"))
