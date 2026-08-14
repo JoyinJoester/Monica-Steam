@@ -14,13 +14,22 @@
 
 ## Steam 网络解析
 
-- 普通 DNS 与加密 DoH 改为统一的“解析服务器”管理，可在同一列表启用、关闭、测速和删除。
+- 网络优化按职责明确区分为“动态网络优化”和“静态网络优化（Hosts）”：传统 DNS 与 HTTPS DoH 统一归入动态解析，固定域名到 IP 的映射继续由静态 Hosts 负责。
+- 新增内置优选 Hosts 预设，覆盖 18 个常用 Steam / CDN hostname；新安装或从未保存过 Hosts 的用户可直接使用，已有用户自定义 Hosts 不会在升级时被强行覆盖。
+- 内置优选 Hosts 与手工填写 Hosts 使用同一套 `SteamCustomHostsDns` 静态解析链路；静态命中后直接使用固定 IP，不再先调用动态 DNS / DoH。
+- 静态 Hosts 可继续保留 Android System DNS fallback，在固定 CDN 节点未来失效时提供兼容回退。
+- 动态网络优化调整 System DNS 的角色：当存在已启用的传统 DNS / DoH 时，System DNS 不再与它们抢第一个响应，而只在动态来源失败时作为 fallback；仅启用 System DNS 时仍直接使用系统解析。
+- 修复“开启 DoH 但本地 System DNS 因响应更快而长期抢先，导致 DoH 实际很少被使用”的问题。
+- 动态 DNS / DoH 不再把“返回了公网 IP”直接视为成功。缓存 miss 时会收集多个候选，并使用原始 Steam hostname 对候选执行轻量 HTTPS / SNI / 证书可用性验证。
+- 最快返回的自定义 DNS / DoH 如果给出不可用路线，会继续尝试其他动态来源；所有动态候选都不可用时，可回退 Android System DNS，避免开启自定义解析后反而导致 Steam 整体不可用。
+- 通过验证的动态结果继续使用短期缓存，并合并同 hostname 的并发解析任务，避免每个 HTTP 请求重复进行 HTTPS 探测。
+- 普通 DNS 与加密 DoH 保留统一的“解析服务器”管理，可在同一列表启用、关闭、测速和删除。
 - 添加解析服务器时会根据地址自动识别普通 DNS 与 HTTPS DoH，并分别显示各自的数量和上限。
-- 自定义 DoH 支持填写多个 Bootstrap IPv4 或 IPv6，使应用无需先依赖系统 DNS 查找 DoH 主机；
-  HTTPS 仍使用原始域名完成 SNI 与证书校验。
-- 再次填写已有 DoH 地址可以更新或清空 Bootstrap IP，无需先删除解析服务器。
-- 强化 IPv4、IPv6、DoH 地址及 Bootstrap 配置校验，忽略损坏和已失效的旧配置条目，并保留现有 DNS、
-  DoH 与启用状态设置。
+- 自定义 DoH 支持填写多个 Bootstrap IPv4 或 IPv6，使应用无需先依赖系统 DNS 查找 DoH 主机；HTTPS 仍使用原始域名完成 SNI 与证书校验。
+- 再次填写已有 DoH 地址可以更新或清空 Bootstrap IP，无需先删除解析服务器；修改 DoH endpoint 或 Bootstrap 后会重置旧 DnsOverHttps 实例及其连接池，避免旧 TLS keep-alive 继续复用原地址。
+- 修改静态 Hosts、动态解析来源、Bootstrap 或强制刷新缓存后会立即清理空闲的旧 HTTPS 连接，减少“刚保存新配置却仍复用旧 IP”的窗口；不会因此取消正在执行的 HTTPS 请求。
+- 强化 IPv4、IPv6、DoH 地址及 Bootstrap 配置校验，忽略损坏和已失效的旧配置条目，并保留现有 DNS、DoH 与启用状态设置。
+- 本轮网络优化没有关闭 TLS 证书校验、修改 Steam SNI、安装自定义 CA、建立系统 VPN 或修改 Android 系统 Hosts；网络优化仍限定在 Monica Steam 应用范围内。
 
 ## 小窗与系统窗口
 

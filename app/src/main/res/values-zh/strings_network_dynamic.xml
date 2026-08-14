@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="steam_network_dynamic_dns_title">动态 DNS 加速</string>
-    <string name="steam_network_dynamic_dns_description">选择解析来源后，Steam API、商店、社区、聊天、媒体与 CDN 域名会在请求时动态解析，不需要先扫描并固定 IP。</string>
+    <string name="steam_network_dynamic_dns_title">动态网络优化</string>
+    <string name="steam_network_dynamic_dns_description">统一管理 Steam 的动态域名解析。系统 DNS、传统 DNS 与 HTTPS DoH 在实现上是不同传输方式，但都属于动态网络优化。</string>
     <string name="steam_network_dynamic_dns_active">已启用 %1$d 个解析来源</string>
     <string name="steam_network_dynamic_dns_system_only">仅使用系统 DNS</string>
     <string name="steam_network_dynamic_dns_no_sources">当前没有启用任何解析来源</string>
-    <string name="steam_network_dynamic_dns_disabled">动态 DNS 已关闭</string>
+    <string name="steam_network_dynamic_dns_disabled">动态网络优化已关闭</string>
     <string name="steam_network_dynamic_dns_cache_title">本地 DNS 缓存</string>
     <string name="steam_network_dynamic_dns_cache_count">当前缓存 %1$d 个 Steam 域名</string>
     <string name="steam_network_dynamic_dns_cache_empty">暂未缓存 Steam DNS 记录</string>
@@ -13,7 +13,7 @@
     <string name="steam_network_dynamic_dns_cache_clear">清空缓存</string>
     <string name="steam_network_dynamic_dns_cache_refresh">强制刷新</string>
     <string name="steam_network_dynamic_dns_scope">覆盖 Steam 手机版常用 API 与服务子域，包括 steampowered.com、steamcommunity.com、steamstatic.com、steamusercontent.com、steam-chat.com 及已知 Steam CDN 域名族。</string>
-    <string name="steam_network_resolver_live_summary">所有解析来源统一管理：既支持传统 DNS，也支持 HTTPS DoH。</string>
+    <string name="steam_network_resolver_live_summary">动态解析来源统一管理：既支持传统 DNS，也支持 HTTPS DoH。</string>
     <string name="steam_network_dynamic_dns_privacy">DNS / DoH 服务可以看到 Monica Steam 查询的公开 Steam 域名；账号凭据、Steam Guard 密钥、Cookie、令牌和聊天正文不会发送给解析服务。</string>
     <string name="steam_network_resolver_servers_title">解析服务器</string>
     <string name="steam_network_resolver_benchmark_all">全部测速</string>
@@ -41,14 +41,16 @@
 
     <string name="steam_network_ipv6_prefer">IPv6 优先</string>
     <string name="steam_network_ipv6_prefer_description">DoH / 系统解析同时获得 IPv4 与 IPv6 时优先尝试 IPv6；不可用时仍可回落 IPv4。传统自定义 DNS 当前仍查询 A 记录。</string>
-    <string name="steam_network_dynamic_entry_title">动态 DNS</string>
+    <string name="steam_network_dynamic_entry_title">动态网络优化</string>
     <string name="steam_network_dynamic_entry_enabled">实时动态解析已开启 · %1$d 个来源</string>
     <string name="steam_network_dynamic_entry_disabled">实时动态解析未开启 · 点击配置解析来源</string>
-    <string name="steam_network_dynamic_entry_description">这是日常推荐模式：配置一次后自动解析，不固定 Steam IP，也不要求每次先扫描。</string>
-    <string name="steam_network_static_hosts_title">静态 Hosts 扫描加速</string>
-    <string name="steam_network_static_hosts_description">这是另一套独立机制：扫描并验证当前可用 IP 后写入应用内 Hosts。IP 被固定，网络环境变化后应重新扫描再应用。</string>
+    <string name="steam_network_dynamic_entry_description">系统 DNS、传统 DNS 与 DoH 都作为动态解析来源统一管理；这一模式不会固定 Steam IP。</string>
+    <string name="steam_network_static_hosts_title">静态网络优化（Hosts）</string>
+    <string name="steam_network_static_hosts_description">使用应用内固定域名到 IP 映射。内置优选 Hosts 会保留正常 DNS 回退，也不会降低 HTTPS 的 SNI 与证书校验安全性。</string>
     <string name="steam_network_static_hosts_scan">扫描静态 Hosts</string>
     <string name="steam_network_static_hosts_rescan">重新扫描静态 Hosts</string>
     <string name="steam_network_static_hosts_apply">应用静态 Hosts</string>
     <string name="steam_network_static_hosts_disable">停用静态 Hosts</string>
+    <string name="steam_network_static_hosts_builtin_apply">使用内置优选 Hosts</string>
+    <string name="steam_network_static_hosts_builtin_applied">已应用内置优选 Hosts · 18 个域名 · 已启用 DNS 回退</string>
 </resources>

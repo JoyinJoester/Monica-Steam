@@ -78,7 +78,7 @@ fun SteamNetworkResolverSettingsScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.steam_network_resolver_title)) },
+                title = { Text(stringResource(R.string.steam_network_dynamic_dns_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(

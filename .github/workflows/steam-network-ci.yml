@@ -33,8 +33,10 @@ jobs:
       - name: Run Steam network tests
         run: >-
           ./gradlew testDebugUnitTest --stacktrace
+          --tests 'takagi.ru.monica.steam.network.optimization.SteamCustomHostsDnsTest'
           --tests 'takagi.ru.monica.steam.network.optimization.SteamDynamicDnsTest'
           --tests 'takagi.ru.monica.steam.network.optimization.diagnostics.SteamResolverBenchmarkTest'
+          --tests 'takagi.ru.monica.steam.network.optimization.domain.SteamBuiltInHostsPresetTest'
           --tests 'takagi.ru.monica.steam.network.optimization.domain.SteamNetworkResolverSettingsTest'
           --tests 'takagi.ru.monica.steam.network.optimization.domain.SteamNetworkTargetCatalogTest'
           --tests 'takagi.ru.monica.steam.network.optimization.diagnostics.SteamDnsOptimizationScannerTest'

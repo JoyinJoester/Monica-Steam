@@ -16,8 +16,12 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Dns
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.network.optimization.diagnostics.OkHttpSteamDnsResolver
+import takagi.ru.monica.steam.network.optimization.diagnostics.OkHttpSteamHostProbe
+import takagi.ru.monica.steam.network.optimization.diagnostics.ResettableSteamDnsResolver
 import takagi.ru.monica.steam.network.optimization.diagnostics.SteamDnsResolver
+import takagi.ru.monica.steam.network.optimization.diagnostics.SteamHostProbe
 import takagi.ru.monica.steam.network.optimization.domain.SteamDnsProvider
+import takagi.ru.monica.steam.network.optimization.domain.SteamHostProbeTarget
 import takagi.ru.monica.steam.network.optimization.domain.SteamHostsRuleParser
 import takagi.ru.monica.steam.network.optimization.domain.SteamNetworkResolverSettings
 import takagi.ru.monica.steam.network.optimization.domain.SteamNetworkTargetCatalog
@@ -25,16 +29,20 @@ import takagi.ru.monica.steam.network.optimization.domain.SteamNetworkTargetCata
 /**
  * App-scoped dynamic DNS for Steam traffic.
  *
- * Unlike the optional Hosts override, this resolver never persists an address for a Steam
- * hostname. Every cache miss races the resolver sources the user has enabled, keeps a short
- * in-memory cache, and resolves again after expiry. Non-Steam traffic is delegated to Android's
- * system resolver.
+ * Dynamic resolver answers are not trusted merely because they are syntactically valid public
+ * addresses. On a cache miss, enabled non-system DNS/DoH sources are raced, a small number of
+ * candidate addresses are harvested, then candidates are verified with HTTPS while preserving the
+ * original Steam hostname for SNI and certificate validation. Only verified candidates are cached
+ * and returned. Android system DNS remains the compatibility fallback when configured.
  */
 internal class SteamDynamicDns(
     private val systemDns: Dns = Dns.SYSTEM,
     private val resolver: SteamDnsResolver = OkHttpSteamDnsResolver(
         systemDns = systemDns,
         timeoutMillis = RESOLVER_TIMEOUT_MILLIS
+    ),
+    private val candidateProbe: SteamHostProbe = OkHttpSteamHostProbe(
+        timeoutMillis = CANDIDATE_PROBE_TIMEOUT_MILLIS
     ),
     private val settingsProvider: () -> SteamNetworkResolverSettings = {
         SteamNetworkResolverSettingsRuntime.settings.value
@@ -50,9 +58,13 @@ internal class SteamDynamicDns(
 
     private val cache = ConcurrentHashMap<String, CacheEntry>()
     private val inFlight = ConcurrentHashMap<String, FutureTask<List<InetAddress>>>()
-    private val executor = Executors.newFixedThreadPool(
+    private val resolverExecutor = Executors.newFixedThreadPool(
         MAX_PARALLEL_RESOLVERS,
-        ResolverThreadFactory()
+        ResolverThreadFactory("DNS")
+    )
+    private val probeExecutor = Executors.newFixedThreadPool(
+        MAX_PARALLEL_PROBES,
+        ResolverThreadFactory("Probe")
     )
 
     override fun lookup(hostname: String): List<InetAddress> {
@@ -66,10 +78,18 @@ internal class SteamDynamicDns(
             return systemDns.lookup(hostname)
         }
 
-        val providers = settings.activeProviders
+        val activeProviders = settings.activeProviders
+        if (activeProviders.isEmpty()) {
+            return systemDns.lookup(hostname)
+        }
+
+        // System DNS is a fallback, not a racer. If it races explicit DNS/DoH sources, the local
+        // resolver usually wins by latency and silently bypasses the user's dynamic configuration.
+        val providers = activeProviders.filterNot(SteamDnsProvider::isSystem)
         if (providers.isEmpty()) {
             return systemDns.lookup(hostname)
         }
+
         val cacheKey = buildCacheKey(normalized, providers)
         val now = clockMillis()
         val cached = cache[cacheKey]
@@ -111,6 +131,12 @@ internal class SteamDynamicDns(
         logSafely("dynamic_dns cache_cleared")
     }
 
+    fun onResolverSettingsChanged() {
+        cache.clear()
+        (resolver as? ResettableSteamDnsResolver)?.resetRuntimeState()
+        logSafely("dynamic_dns resolver_state_reset")
+    }
+
     fun cacheSize(): Int = cache.size
 
     private fun resolveShared(
@@ -119,21 +145,27 @@ internal class SteamDynamicDns(
         hostname: String
     ): List<InetAddress> {
         val candidate = FutureTask {
-            val resolved = raceResolvers(providers = providers, hostname = hostname)
-            if (resolved.isNotEmpty()) {
+            val harvested = harvestResolverCandidates(providers = providers, hostname = hostname)
+            val verified = verifyCandidates(hostname = hostname, candidates = harvested)
+            if (verified.isNotEmpty()) {
                 val resolvedAt = clockMillis()
                 cache[cacheKey] = CacheEntry(
-                    addresses = resolved,
+                    addresses = verified,
                     expiresAtMillis = resolvedAt + CACHE_TTL_MILLIS,
                     staleUntilMillis = resolvedAt + STALE_TTL_MILLIS
                 )
                 pruneExpired(resolvedAt)
                 logSafely(
-                    "dynamic_dns resolved host=$hostname addresses=${resolved.size} " +
+                    "dynamic_dns resolved host=$hostname verified=${verified.size} " +
+                        "candidates=${harvested.size} sources=${providers.size}"
+                )
+            } else if (harvested.isNotEmpty()) {
+                logSafely(
+                    "dynamic_dns rejected_all host=$hostname candidates=${harvested.size} " +
                         "sources=${providers.size}"
                 )
             }
-            resolved
+            verified
         }
         val active = inFlight.putIfAbsent(cacheKey, candidate) ?: candidate
         val ownsResolution = active === candidate
@@ -150,41 +182,125 @@ internal class SteamDynamicDns(
         }
     }
 
-    private fun raceResolvers(
+    /**
+     * Keep the first usable resolver fast, but briefly harvest other enabled sources so a single
+     * poisoned or unreachable custom answer cannot become the only route considered.
+     */
+    private fun harvestResolverCandidates(
         providers: List<SteamDnsProvider>,
         hostname: String
     ): List<InetAddress> {
         if (providers.isEmpty()) return emptyList()
 
-        // The settings UI supports up to 22 simultaneous sources (system + public DoH + custom
-        // DNS/DoH). Keep concurrency bounded, but enqueue every enabled source so a user-selected
-        // resolver is never silently ignored merely because it appears later in the list.
         val candidates = providers.take(MAX_RACE_PROVIDERS)
-        val completion = ExecutorCompletionService<List<InetAddress>>(executor)
+        val completion = ExecutorCompletionService<List<InetAddress>>(resolverExecutor)
         val futures = mutableListOf<Future<List<InetAddress>>>()
-        val deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(RACE_TIMEOUT_MILLIS)
+        val globalDeadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(RACE_TIMEOUT_MILLIS)
+        var harvestDeadline = globalDeadline
         var completed = 0
-        var answer: List<InetAddress> = emptyList()
+        var foundFirstAnswer = false
+        val merged = mutableListOf<InetAddress>()
 
         candidates.forEach { provider ->
             futures += completion.submit(Callable { resolveProvider(provider, hostname) })
         }
 
         try {
-            while (completed < futures.size && answer.isEmpty()) {
-                val remaining = deadline - System.nanoTime()
+            while (completed < futures.size && merged.size < MAX_DYNAMIC_CANDIDATES) {
+                val remaining = harvestDeadline - System.nanoTime()
                 if (remaining <= 0L) break
                 val future = completion.poll(remaining, TimeUnit.NANOSECONDS) ?: break
                 completed += 1
                 val addresses = runCatching { future.get() }.getOrDefault(emptyList())
-                if (addresses.isNotEmpty()) answer = addresses
+                if (addresses.isNotEmpty() && !foundFirstAnswer) {
+                    foundFirstAnswer = true
+                    harvestDeadline = minOf(
+                        globalDeadline,
+                        System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(
+                            FIRST_ANSWER_HARVEST_MILLIS
+                        )
+                    )
+                }
+                addresses.forEach { address ->
+                    if (merged.none { it.hostAddress == address.hostAddress }) {
+                        merged += address
+                    }
+                }
             }
         } finally {
             futures.forEach { future ->
                 if (!future.isDone) future.cancel(true)
             }
         }
-        return answer
+        return merged.take(MAX_DYNAMIC_CANDIDATES)
+    }
+
+    /**
+     * Validate candidates in parallel with the same hostname/SNI/certificate semantics used by
+     * the existing scanner. Once the first working candidate is found, briefly harvest any other
+     * verification already finishing so OkHttp still has a small failover list.
+     */
+    private fun verifyCandidates(
+        hostname: String,
+        candidates: List<InetAddress>
+    ): List<InetAddress> {
+        if (candidates.isEmpty()) return emptyList()
+
+        val limited = candidates.take(MAX_DYNAMIC_CANDIDATES)
+        val completion = ExecutorCompletionService<Pair<String, Boolean>>(probeExecutor)
+        val futures = mutableListOf<Future<Pair<String, Boolean>>>()
+        val globalDeadline = System.nanoTime() +
+            TimeUnit.MILLISECONDS.toNanos(CANDIDATE_VALIDATION_BUDGET_MILLIS)
+        var harvestDeadline = globalDeadline
+        var completed = 0
+        var foundFirstVerified = false
+        val verifiedAddresses = linkedSetOf<String>()
+
+        limited.forEach { address ->
+            val rawAddress = address.hostAddress
+            futures += completion.submit(Callable {
+                val available = runCatching {
+                    runBlocking {
+                        candidateProbe.probe(
+                            SteamHostProbeTarget(
+                                hostname = hostname,
+                                address = rawAddress
+                            )
+                        ).isAvailable
+                    }
+                }.getOrDefault(false)
+                rawAddress to available
+            })
+        }
+
+        try {
+            while (completed < futures.size) {
+                val remaining = harvestDeadline - System.nanoTime()
+                if (remaining <= 0L) break
+                val future = completion.poll(remaining, TimeUnit.NANOSECONDS) ?: break
+                completed += 1
+                val (address, available) = runCatching { future.get() }
+                    .getOrDefault("" to false)
+                if (available) {
+                    verifiedAddresses += address
+                    if (!foundFirstVerified) {
+                        foundFirstVerified = true
+                        harvestDeadline = minOf(
+                            globalDeadline,
+                            System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(
+                                VERIFIED_ANSWER_HARVEST_MILLIS
+                            )
+                        )
+                    }
+                }
+            }
+        } finally {
+            futures.forEach { future ->
+                if (!future.isDone) future.cancel(true)
+            }
+        }
+
+        return limited.filter { it.hostAddress in verifiedAddresses }
     }
 
     private fun resolveProvider(
@@ -228,10 +344,10 @@ internal class SteamDynamicDns(
         runCatching { logger(message) }
     }
 
-    private class ResolverThreadFactory : ThreadFactory {
+    private class ResolverThreadFactory(private val role: String) : ThreadFactory {
         override fun newThread(runnable: Runnable): Thread = Thread(
             runnable,
-            "Monica-Steam-DNS-${threadIds.incrementAndGet()}"
+            "Monica-Steam-$role-${threadIds.incrementAndGet()}"
         ).apply {
             isDaemon = true
             priority = Thread.NORM_PRIORITY
@@ -240,10 +356,16 @@ internal class SteamDynamicDns(
 
     private companion object {
         const val MAX_PARALLEL_RESOLVERS = 8
+        const val MAX_PARALLEL_PROBES = 6
         const val MAX_RACE_PROVIDERS = 24
+        const val MAX_DYNAMIC_CANDIDATES = 12
         const val MAX_CACHE_ENTRIES = 256
         const val RESOLVER_TIMEOUT_MILLIS = 2_500L
         const val RACE_TIMEOUT_MILLIS = 3_000L
+        const val FIRST_ANSWER_HARVEST_MILLIS = 220L
+        const val CANDIDATE_PROBE_TIMEOUT_MILLIS = 1_800L
+        const val CANDIDATE_VALIDATION_BUDGET_MILLIS = 2_500L
+        const val VERIFIED_ANSWER_HARVEST_MILLIS = 120L
         const val CACHE_TTL_MILLIS = 5 * 60 * 1_000L
         const val STALE_TTL_MILLIS = 30 * 60 * 1_000L
         val threadIds = AtomicInteger(0)

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="steam_network_dynamic_dns_title">Dynamic DNS acceleration</string>
-    <string name="steam_network_dynamic_dns_description">After selecting resolver sources, Steam APIs, Store, Community, chat, media and CDN hosts are resolved dynamically on demand without scanning and pinning an IP first.</string>
+    <string name="steam_network_dynamic_dns_title">Dynamic network optimization</string>
+    <string name="steam_network_dynamic_dns_description">Manage live Steam name resolution here. System DNS, traditional DNS and HTTPS DoH are separate resolver transports but one dynamic optimization feature.</string>
     <string name="steam_network_dynamic_dns_active">%1$d resolver sources enabled</string>
     <string name="steam_network_dynamic_dns_system_only">System DNS only</string>
     <string name="steam_network_dynamic_dns_no_sources">No resolver sources are currently enabled</string>
-    <string name="steam_network_dynamic_dns_disabled">Dynamic DNS is off</string>
+    <string name="steam_network_dynamic_dns_disabled">Dynamic network optimization is off</string>
     <string name="steam_network_dynamic_dns_cache_title">Local DNS cache</string>
     <string name="steam_network_dynamic_dns_cache_count">%1$d cached Steam host entries</string>
     <string name="steam_network_dynamic_dns_cache_empty">No Steam DNS entries cached yet</string>
@@ -13,7 +13,7 @@
     <string name="steam_network_dynamic_dns_cache_clear">Clear cache</string>
     <string name="steam_network_dynamic_dns_cache_refresh">Force refresh</string>
     <string name="steam_network_dynamic_dns_scope">Coverage includes Steam mobile APIs and service subdomains under steampowered.com, steamcommunity.com, steamstatic.com, steamusercontent.com, steam-chat.com and known Steam CDN host families.</string>
-    <string name="steam_network_resolver_live_summary">All resolver sources are managed together, including traditional DNS and HTTPS DoH.</string>
+    <string name="steam_network_resolver_live_summary">All dynamic resolver sources are managed together, including traditional DNS and HTTPS DoH.</string>
     <string name="steam_network_dynamic_dns_privacy">DNS and DoH providers can see the public Steam hostnames queried by Monica Steam. Account credentials, Steam Guard secrets, cookies, tokens and chat message contents are never sent to resolver services.</string>
     <string name="steam_network_resolver_servers_title">Resolver servers</string>
     <string name="steam_network_resolver_benchmark_all">Benchmark all</string>
@@ -41,14 +41,16 @@
 
     <string name="steam_network_ipv6_prefer">Prefer IPv6</string>
     <string name="steam_network_ipv6_prefer_description">Prefer IPv6 when DoH or system resolution returns both families, while keeping IPv4 fallback. Traditional custom DNS currently still queries A records.</string>
-    <string name="steam_network_dynamic_entry_title">Dynamic DNS</string>
+    <string name="steam_network_dynamic_entry_title">Dynamic network optimization</string>
     <string name="steam_network_dynamic_entry_enabled">Live dynamic resolution on · %1$d sources</string>
     <string name="steam_network_dynamic_entry_disabled">Live dynamic resolution off · tap to configure sources</string>
-    <string name="steam_network_dynamic_entry_description">Recommended for everyday use: configure once and resolve automatically without pinning Steam IPs or requiring a scan first.</string>
-    <string name="steam_network_static_hosts_title">Static Hosts scan acceleration</string>
-    <string name="steam_network_static_hosts_description">A separate mechanism: scan and verify current IPs, then write app-scoped Hosts entries. Because IPs are pinned, rescan and apply again when the network changes.</string>
+    <string name="steam_network_dynamic_entry_description">System DNS, traditional DNS and DoH are unified here as dynamic resolution sources. No Steam IP is pinned by this mode.</string>
+    <string name="steam_network_static_hosts_title">Static network optimization (Hosts)</string>
+    <string name="steam_network_static_hosts_description">Use app-scoped fixed hostname-to-IP mappings. The built-in preset keeps normal DNS fallback enabled and does not weaken HTTPS SNI or certificate verification.</string>
     <string name="steam_network_static_hosts_scan">Scan static Hosts</string>
     <string name="steam_network_static_hosts_rescan">Rescan static Hosts</string>
     <string name="steam_network_static_hosts_apply">Apply static Hosts</string>
     <string name="steam_network_static_hosts_disable">Disable static Hosts</string>
+    <string name="steam_network_static_hosts_builtin_apply">Use built-in optimized Hosts</string>
+    <string name="steam_network_static_hosts_builtin_applied">Built-in optimized Hosts applied · 18 hosts · DNS fallback enabled</string>
 </resources>

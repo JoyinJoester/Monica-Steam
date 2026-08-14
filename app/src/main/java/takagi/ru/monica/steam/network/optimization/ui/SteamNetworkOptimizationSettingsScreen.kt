@@ -205,7 +205,7 @@ fun SteamNetworkOptimizationSettingsScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(context.getString(R.string.steam_network_advanced_title)) },
+                title = { Text(context.getString(R.string.steam_network_static_hosts_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -217,6 +217,19 @@ fun SteamNetworkOptimizationSettingsScreen(
                 actions = {
                     SteamHostsActionsMenu(
                         hasDraftContent = hostsDraft.isNotEmpty(),
+                        onUseBuiltInPreset = {
+                            val result = SteamNetworkOptimizationRuntime.applyBuiltInHostsPreset(context)
+                            if (result.isValid) {
+                                hostsDraft = SteamNetworkOptimizationRuntime.settings.value.hostsText
+                                probeResults = emptyMap()
+                                advancedExpanded = false
+                                showMessage(
+                                    context.getString(
+                                        R.string.steam_network_static_hosts_builtin_applied
+                                    )
+                                )
+                            }
+                        },
                         onImport = dataExchange.importFromFile,
                         onExport = dataExchange.exportToFile,
                         onCopy = dataExchange.copyToClipboard,

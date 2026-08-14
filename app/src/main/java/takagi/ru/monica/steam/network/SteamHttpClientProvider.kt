@@ -2,6 +2,7 @@ package takagi.ru.monica.steam.network
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Dns
 import okhttp3.OkHttpClient
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.network.optimization.SteamCustomHostsDns
@@ -12,7 +13,10 @@ object SteamHttpClientProvider {
     private val baseClientDelegate = lazy { OkHttpClient.Builder().build() }
     private val dynamicDnsDelegate = lazy { SteamDynamicDns() }
     private val customHostsDnsDelegate = lazy {
-        SteamCustomHostsDns(systemDns = dynamicDnsDelegate.value)
+        SteamCustomHostsDns(
+            unmappedDns = dynamicDnsDelegate.value,
+            fallbackDns = Dns.SYSTEM
+        )
     }
     private val clientDelegate = lazy {
         baseClientDelegate.value.newBuilder()
@@ -30,8 +34,8 @@ object SteamHttpClientProvider {
 
     internal fun onResolverSettingsChanged() {
         if (dynamicDnsDelegate.isInitialized()) {
-            runCatching { dynamicDnsDelegate.value.clearCache() }
-                .onFailure { error -> logCleanupFailure("resolver_cache", error) }
+            runCatching { dynamicDnsDelegate.value.onResolverSettingsChanged() }
+                .onFailure { error -> logCleanupFailure("resolver_state", error) }
         }
         evictInitializedConnections("resolver_settings")
     }
@@ -74,12 +78,11 @@ object SteamHttpClientProvider {
     private fun evictInitializedConnections(reason: String) {
         if (!clientDelegate.isInitialized()) return
         val initializedClient = clientDelegate.value
+        // connectionPool.evictAll() is cheap and synchronous for idle pooled connections. Running
+        // it immediately prevents a save/toggle followed by a refresh from reusing the old route
+        // before a queued cleanup task gets a chance to execute. Active calls are not cancelled.
         runCatching {
-            initializedClient.dispatcher.executorService.execute {
-                runCatching {
-                    initializedClient.connectionPool.evictAll()
-                }.onFailure { error -> logCleanupFailure(reason, error) }
-            }
+            initializedClient.connectionPool.evictAll()
         }.onFailure { error -> logCleanupFailure(reason, error) }
     }
 

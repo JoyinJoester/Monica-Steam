@@ -9,10 +9,12 @@ import org.junit.Test
 
 class SteamCustomHostsDnsTest {
     @Test
-    fun exactUserMappingOverridesSystemDns() {
+    fun exactUserMappingOverridesWithoutTouchingAnyFallbackResolver() {
+        val dynamic = RecordingDns(listOf(InetAddress.getByName("9.9.9.9")))
         val system = RecordingDns(listOf(InetAddress.getByName("8.8.8.8")))
         val dns = SteamCustomHostsDns(
-            systemDns = system,
+            unmappedDns = dynamic,
+            fallbackDns = system,
             customAddresses = { hostname ->
                 if (hostname == "store.steampowered.com") {
                     listOf(InetAddress.getByName("23.45.67.89"))
@@ -27,15 +29,18 @@ class SteamCustomHostsDnsTest {
         val result = dns.lookup("STORE.STEAMPOWERED.COM.")
 
         assertEquals(listOf("23.45.67.89"), result.map(InetAddress::getHostAddress))
+        assertFalse(dynamic.called)
         assertFalse(system.called)
     }
 
     @Test
-    fun enabledFallbackAppendsSystemAddressesAndRecordsTheCustomHit() {
+    fun enabledFallbackAppendsOnlySystemAddressesAndNeverRunsDynamicDns() {
+        val dynamic = RecordingDns(listOf(InetAddress.getByName("9.9.9.9")))
         val system = RecordingDns(listOf(InetAddress.getByName("8.8.8.8")))
         val hits = mutableListOf<String>()
         val dns = SteamCustomHostsDns(
-            systemDns = system,
+            unmappedDns = dynamic,
+            fallbackDns = system,
             customAddresses = {
                 listOf(InetAddress.getByName("23.45.67.89"))
             },
@@ -51,15 +56,18 @@ class SteamCustomHostsDnsTest {
             result.map(InetAddress::getHostAddress)
         )
         assertEquals(listOf("store.steampowered.com"), hits)
+        assertFalse(dynamic.called)
         assertTrue(system.called)
     }
 
     @Test
-    fun missingUserMappingAlwaysUsesSystemDns() {
+    fun missingUserMappingUsesDynamicResolverChain() {
+        val dynamic = RecordingDns(listOf(InetAddress.getByName("9.9.9.9")))
         val system = RecordingDns(listOf(InetAddress.getByName("8.8.4.4")))
         val requestedHosts = mutableListOf<String>()
         val dns = SteamCustomHostsDns(
-            systemDns = system,
+            unmappedDns = dynamic,
+            fallbackDns = system,
             customAddresses = { hostname ->
                 requestedHosts += hostname
                 emptyList()
@@ -69,16 +77,19 @@ class SteamCustomHostsDnsTest {
 
         val result = dns.lookup("api.steampowered.com")
 
-        assertEquals(listOf("8.8.4.4"), result.map(InetAddress::getHostAddress))
+        assertEquals(listOf("9.9.9.9"), result.map(InetAddress::getHostAddress))
         assertEquals(listOf("api.steampowered.com"), requestedHosts)
-        assertTrue(system.called)
+        assertTrue(dynamic.called)
+        assertFalse(system.called)
     }
 
     @Test
-    fun unusableUserAddressFallsBackToSystemDns() {
-        val system = RecordingDns(listOf(InetAddress.getByName("1.1.1.1")))
+    fun unusableUserAddressUsesDynamicResolverChainAsUnmapped() {
+        val dynamic = RecordingDns(listOf(InetAddress.getByName("1.1.1.1")))
+        val system = RecordingDns(listOf(InetAddress.getByName("8.8.8.8")))
         val dns = SteamCustomHostsDns(
-            systemDns = system,
+            unmappedDns = dynamic,
+            fallbackDns = system,
             customAddresses = { listOf(InetAddress.getByName("127.0.0.1")) },
             logger = {}
         )
@@ -86,7 +97,8 @@ class SteamCustomHostsDnsTest {
         val result = dns.lookup("steamcommunity.com")
 
         assertEquals(listOf("1.1.1.1"), result.map(InetAddress::getHostAddress))
-        assertTrue(system.called)
+        assertTrue(dynamic.called)
+        assertFalse(system.called)
     }
 
     private class RecordingDns(

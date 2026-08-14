@@ -9,3 +9,8 @@ fun interface SteamDnsResolver {
         hostname: String
     ): SteamDnsResolutionResult
 }
+
+/** Optional runtime hook for resolvers that keep transport or bootstrap connection state. */
+internal interface ResettableSteamDnsResolver {
+    fun resetRuntimeState()
+}

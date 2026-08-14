@@ -35,6 +35,21 @@ class SteamNetworkResolverSettingsTest {
     }
 
     @Test
+    fun builtInDohProvidersCarryValidLiteralBootstrapAddresses() {
+        val publicBuiltIns = SteamDnsProvider.DEFAULTS.filterNot(SteamDnsProvider::isSystem)
+
+        publicBuiltIns.forEach { provider ->
+            assertTrue("${provider.id} has no bootstrap IP", provider.bootstrapAddresses.isNotEmpty())
+            assertEquals(
+                provider.bootstrapAddresses,
+                SteamResolverInputValidator.normalizeBootstrapAddresses(
+                    provider.bootstrapAddresses.joinToString(",")
+                )
+            )
+        }
+    }
+
+    @Test
     fun disabledBuiltInProviderIsRemovedFromActiveProviders() {
         val settings = SteamNetworkResolverSettings(
             useSystemDns = false,

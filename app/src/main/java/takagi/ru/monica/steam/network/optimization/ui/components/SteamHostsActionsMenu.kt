@@ -29,6 +29,7 @@ import takagi.ru.monica.ui.password.MonicaTopActionsDropdownMenu
 @Composable
 internal fun SteamHostsActionsMenu(
     hasDraftContent: Boolean,
+    onUseBuiltInPreset: () -> Unit,
     onImport: () -> Unit,
     onExport: () -> Unit,
     onCopy: () -> Unit,
@@ -50,6 +51,18 @@ internal fun SteamHostsActionsMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.steam_network_static_hosts_builtin_apply)) },
+                leadingIcon = { Icon(Icons.Default.FileDownload, contentDescription = null) },
+                onClick = {
+                    expanded = false
+                    onUseBuiltInPreset()
+                }
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+            )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.steam_network_optimization_import_file)) },
                 leadingIcon = { Icon(Icons.Default.FileOpen, contentDescription = null) },

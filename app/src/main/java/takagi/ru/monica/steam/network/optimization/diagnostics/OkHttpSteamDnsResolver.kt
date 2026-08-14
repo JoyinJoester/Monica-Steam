@@ -26,7 +26,7 @@ internal class OkHttpSteamDnsResolver(
     private val systemDns: Dns = Dns.SYSTEM,
     private val timeoutMillis: Long = 4_000L,
     private val clockNanos: () -> Long = System::nanoTime
-) : SteamDnsResolver {
+) : SteamDnsResolver, ResettableSteamDnsResolver {
     private val client = OkHttpClient.Builder()
         .connectTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
         .readTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
@@ -80,6 +80,19 @@ internal class OkHttpSteamDnsResolver(
                 errorType = error::class.java.simpleName
             )
         }
+    }
+
+    /**
+     * Resolver settings can change the DoH endpoint or its bootstrap IPs while the process stays
+     * alive. DnsOverHttps instances are keyed by those settings, but they share this OkHttpClient;
+     * without evicting its pool a newly-created resolver may reuse an old TLS connection to the
+     * same DoH hostname and make a changed bootstrap address appear ineffective.
+     */
+    override fun resetRuntimeState() {
+        synchronized(dohResolvers) {
+            dohResolvers.clear()
+        }
+        client.connectionPool.evictAll()
     }
 
     private fun resolverFor(provider: SteamDnsProvider): Dns {
