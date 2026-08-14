@@ -11,7 +11,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -22,9 +21,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RateReview
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ShoppingBag
@@ -62,11 +61,19 @@ import takagi.ru.monica.ui.LocalReduceAnimations
 import kotlin.math.roundToInt
 
 private const val AUTO_COLLAPSE_MILLIS = 3_500L
+internal const val STEAM_STORE_DETAIL_TOOLBAR_COLLAPSED_SIZE_DP = 48
 
 internal enum class SteamStoreDetailToolbarEdge {
     LEFT,
     RIGHT
 }
+
+internal data class SteamStoreDetailToolbarCornerRadii(
+    val topStartDp: Int,
+    val topEndDp: Int,
+    val bottomStartDp: Int,
+    val bottomEndDp: Int
+)
 
 @Composable
 internal fun SteamStoreDetailActionToolbar(
@@ -97,10 +104,10 @@ internal fun SteamStoreDetailActionToolbar(
         val containerWidth = constraints.maxWidth
         val containerHeight = constraints.maxHeight
         val fallbackWidth = with(density) {
-            (if (expanded) 44.dp else 40.dp).roundToPx()
+            (if (expanded) 44.dp else STEAM_STORE_DETAIL_TOOLBAR_COLLAPSED_SIZE_DP.dp).roundToPx()
         }
         val fallbackHeight = with(density) {
-            (if (expanded) 164.dp else 40.dp).roundToPx()
+            (if (expanded) 164.dp else STEAM_STORE_DETAIL_TOOLBAR_COLLAPSED_SIZE_DP.dp).roundToPx()
         }
         val toolbarWidth = toolbarSize.width.takeIf { it > 0 } ?: fallbackWidth
         val toolbarHeight = toolbarSize.height.takeIf { it > 0 } ?: fallbackHeight
@@ -184,6 +191,7 @@ internal fun SteamStoreDetailActionToolbar(
             if (reduceAnimations) {
                 SteamStoreDetailToolbarBody(
                     expanded = expanded,
+                    dragging = dragging,
                     edge = if (attachedToLeft) {
                         SteamStoreDetailToolbarEdge.LEFT
                     } else {
@@ -211,6 +219,7 @@ internal fun SteamStoreDetailActionToolbar(
                 ) { isExpanded ->
                     SteamStoreDetailToolbarBody(
                         expanded = isExpanded,
+                        dragging = dragging,
                         edge = if (attachedToLeft) {
                             SteamStoreDetailToolbarEdge.LEFT
                         } else {
@@ -235,6 +244,7 @@ internal fun SteamStoreDetailActionToolbar(
 @Composable
 private fun SteamStoreDetailToolbarBody(
     expanded: Boolean,
+    dragging: Boolean,
     edge: SteamStoreDetailToolbarEdge,
     onExpand: () -> Unit,
     onInteraction: () -> Unit,
@@ -243,47 +253,43 @@ private fun SteamStoreDetailToolbarBody(
     onOpenReviews: () -> Unit,
     onShare: () -> Unit
 ) {
+    val cornerRadii = steamStoreDetailToolbarCornerRadii(edge, dragging)
+    val toolbarShape = RoundedCornerShape(
+        topStart = cornerRadii.topStartDp.dp,
+        topEnd = cornerRadii.topEndDp.dp,
+        bottomStart = cornerRadii.bottomStartDp.dp,
+        bottomEnd = cornerRadii.bottomEndDp.dp
+    )
     if (!expanded) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clickable(
-                    role = Role.Button,
-                    onClickLabel = stringResource(R.string.steam_store_detail_toolbar_expand),
-                    onClick = onExpand
-                ),
-            contentAlignment = if (edge == SteamStoreDetailToolbarEdge.LEFT) {
-                Alignment.CenterStart
-            } else {
-                Alignment.CenterEnd
-            }
+        Surface(
+            shape = toolbarShape,
+            color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.94f),
+            contentColor = MaterialTheme.colorScheme.primary,
+            tonalElevation = 2.dp,
+            shadowElevation = 6.dp
         ) {
             Box(
                 modifier = Modifier
-                    .size(12.dp)
-                    .background(MaterialTheme.colorScheme.primary, CircleShape)
-            )
+                    .size(STEAM_STORE_DETAIL_TOOLBAR_COLLAPSED_SIZE_DP.dp)
+                    .clickable(
+                        role = Role.Button,
+                        onClickLabel = stringResource(R.string.steam_store_detail_toolbar_expand),
+                        onClick = onExpand
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = stringResource(R.string.steam_store_detail_toolbar_expand),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
         return
     }
 
-    val attachedShape = if (edge == SteamStoreDetailToolbarEdge.LEFT) {
-        RoundedCornerShape(
-            topStart = 5.dp,
-            bottomStart = 5.dp,
-            topEnd = 24.dp,
-            bottomEnd = 24.dp
-        )
-    } else {
-        RoundedCornerShape(
-            topStart = 24.dp,
-            bottomStart = 24.dp,
-            topEnd = 5.dp,
-            bottomEnd = 5.dp
-        )
-    }
     Surface(
-        shape = attachedShape,
+        shape = toolbarShape,
         color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.94f),
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         tonalElevation = 2.dp,
@@ -363,6 +369,35 @@ internal fun resolveSteamStoreDetailToolbarEdge(
         SteamStoreDetailToolbarEdge.LEFT
     } else {
         SteamStoreDetailToolbarEdge.RIGHT
+    }
+}
+
+internal fun steamStoreDetailToolbarCornerRadii(
+    edge: SteamStoreDetailToolbarEdge,
+    dragging: Boolean
+): SteamStoreDetailToolbarCornerRadii {
+    if (dragging) {
+        return SteamStoreDetailToolbarCornerRadii(
+            topStartDp = 24,
+            topEndDp = 24,
+            bottomStartDp = 24,
+            bottomEndDp = 24
+        )
+    }
+    return if (edge == SteamStoreDetailToolbarEdge.LEFT) {
+        SteamStoreDetailToolbarCornerRadii(
+            topStartDp = 5,
+            topEndDp = 24,
+            bottomStartDp = 5,
+            bottomEndDp = 24
+        )
+    } else {
+        SteamStoreDetailToolbarCornerRadii(
+            topStartDp = 24,
+            topEndDp = 5,
+            bottomStartDp = 24,
+            bottomEndDp = 5
+        )
     }
 }
 

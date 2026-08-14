@@ -96,6 +96,8 @@ class SteamStoreDetailInteractionGuardTest {
         assertTrue(toolbar.contains("AUTO_COLLAPSE_MILLIS"))
         assertTrue(toolbar.contains("SteamStoreDetailToolbarEdge.LEFT"))
         assertTrue(toolbar.contains("SteamStoreDetailToolbarEdge.RIGHT"))
+        assertTrue(toolbar.contains("Icons.Default.MoreVert"))
+        assertTrue(toolbar.contains("dragging = dragging"))
     }
 
     @Test
