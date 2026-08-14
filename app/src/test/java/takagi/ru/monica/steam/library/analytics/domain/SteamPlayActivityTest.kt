@@ -188,6 +188,40 @@ class SteamPlayActivityTest {
         assertEquals(30, history.days.single().totalMinutes)
     }
 
+    @Test
+    fun legacyRefreshDayMovesBackToLastPlayedDateOnce() {
+        val previous = SteamPlayActivityHistory(
+            accountId = 1L,
+            baseline = listOf(SteamPlaytimeBaseline(10, "Portal", 630)),
+            days = listOf(
+                SteamPlayActivityDay(
+                    date = "2026-08-13",
+                    games = listOf(SteamPlayActivityGame(10, "Portal", 30))
+                )
+            ),
+            updatedAt = Instant.parse("2026-08-13T09:00:00Z").toEpochMilli()
+        )
+
+        val history = updateSteamPlayActivity(
+            previous = previous,
+            snapshot = snapshot(
+                game(
+                    appId = 10,
+                    name = "Portal",
+                    minutes = 630,
+                    lastPlayedAt = Instant.parse("2026-08-11T21:30:00Z").epochSecond
+                )
+            ),
+            localDate = "2026-08-14",
+            recordedAt = Instant.parse("2026-08-14T09:00:00Z").toEpochMilli(),
+            zoneId = ZoneOffset.UTC
+        )
+
+        assertEquals("2026-08-11", history.days.single().date)
+        assertEquals(30, history.days.single().totalMinutes)
+        assertEquals(2, history.dateAttributionVersion)
+    }
+
     private fun game(
         appId: Int,
         name: String,

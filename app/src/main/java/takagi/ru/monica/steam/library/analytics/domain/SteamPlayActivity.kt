@@ -12,7 +12,8 @@ data class SteamPlayActivityHistory(
     val accountId: Long,
     val baseline: List<SteamPlaytimeBaseline> = emptyList(),
     val days: List<SteamPlayActivityDay> = emptyList(),
-    val updatedAt: Long = 0L
+    val updatedAt: Long = 0L,
+    val dateAttributionVersion: Int = 1
 )
 
 @Serializable
@@ -91,7 +92,7 @@ fun updateSteamPlayActivity(
         }
     }
 
-    val updatedDays = previous?.days.orEmpty().toMutableList()
+    val updatedDays = migrateLegacyPlayActivityDates(previous, snapshot, zoneId).toMutableList()
     deltas.groupBy(SteamPlayActivityDelta::date).forEach { (date, datedDeltas) ->
         val existingIndex = updatedDays.indexOfFirst { it.date == date }
         val existingGames = updatedDays
@@ -134,7 +135,8 @@ fun updateSteamPlayActivity(
             SteamPlaytimeBaseline(game.appId, game.name, game.playtimeForeverMinutes)
         },
         days = enrichedDays.sortedByDescending(SteamPlayActivityDay::date).take(retentionDays),
-        updatedAt = recordedAt
+        updatedAt = recordedAt,
+        dateAttributionVersion = LAST_PLAYED_DATE_ATTRIBUTION_VERSION
     )
 }
 
@@ -158,11 +160,7 @@ private fun resolveSteamPlayActivityDate(
     fallbackDate: String,
     zoneId: ZoneId
 ): String {
-    val lastPlayedDate = runCatching {
-        game.lastPlayedAt
-            .takeIf { it > 0L }
-            ?.let { LocalDate.ofInstant(Instant.ofEpochSecond(it), zoneId) }
-    }.getOrNull() ?: return fallbackDate
+    val lastPlayedDate = game.lastPlayedDate(zoneId) ?: return fallbackDate
     val recordedDate = runCatching {
         LocalDate.ofInstant(Instant.ofEpochMilli(recordedAt), zoneId)
     }.getOrNull() ?: return fallbackDate
@@ -181,4 +179,50 @@ private fun resolveSteamPlayActivityDate(
         ?: fallbackDate
 }
 
+private fun migrateLegacyPlayActivityDates(
+    previous: SteamPlayActivityHistory?,
+    snapshot: SteamLibrarySnapshot,
+    zoneId: ZoneId
+): List<SteamPlayActivityDay> {
+    val previousDays = previous?.days.orEmpty()
+    if (previous == null || previous.dateAttributionVersion >= LAST_PLAYED_DATE_ATTRIBUTION_VERSION) {
+        return previousDays
+    }
+
+    val currentGames = snapshot.games.associateBy(SteamGame::appId)
+    val migrated = linkedMapOf<String, MutableMap<Int, SteamPlayActivityGame>>()
+    previousDays.forEach { day ->
+        val observedDate = runCatching { LocalDate.parse(day.date) }.getOrNull()
+        day.games.forEach { activity ->
+            val lastPlayedDate = currentGames[activity.appId]?.lastPlayedDate(zoneId)
+            val targetDate = lastPlayedDate
+                ?.takeIf { date ->
+                    observedDate != null &&
+                        date < observedDate &&
+                        date >= observedDate.minusDays(RECENT_PLAYTIME_WINDOW_DAYS)
+                }
+                ?.toString()
+                ?: day.date
+            val games = migrated.getOrPut(targetDate) { linkedMapOf() }
+            val existing = games[activity.appId]
+            games[activity.appId] = activity.copy(
+                minutes = activity.minutes + (existing?.minutes ?: 0)
+            )
+        }
+    }
+    return migrated.map { (date, games) ->
+        SteamPlayActivityDay(
+            date = date,
+            games = games.values.sortedByDescending(SteamPlayActivityGame::minutes)
+        )
+    }
+}
+
+private fun SteamGame.lastPlayedDate(zoneId: ZoneId): LocalDate? = runCatching {
+    lastPlayedAt
+        .takeIf { it > 0L }
+        ?.let { LocalDate.ofInstant(Instant.ofEpochSecond(it), zoneId) }
+}.getOrNull()
+
 private const val RECENT_PLAYTIME_WINDOW_DAYS = 14L
+private const val LAST_PLAYED_DATE_ATTRIBUTION_VERSION = 2
