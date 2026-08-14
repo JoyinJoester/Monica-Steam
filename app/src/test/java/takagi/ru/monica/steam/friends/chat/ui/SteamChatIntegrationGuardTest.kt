@@ -231,6 +231,9 @@ class SteamChatIntegrationGuardTest {
         val preview = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatGameShareDraftPreview.kt"
         ).readText()
+        val renderedCard = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatStoreGameCard.kt"
+        ).readText()
 
         assertTrue(activity.contains("onOpenChatShare = { partnerSteamId, share ->"))
         assertTrue(activity.contains("pendingChatGameShare = share"))
@@ -242,6 +245,10 @@ class SteamChatIntegrationGuardTest {
         assertTrue(composer.contains("text.isNotBlank() || pendingGameShare != null"))
         assertTrue(composer.contains("SteamChatGameShareDraftPreview("))
         assertTrue(preview.contains("steamGameInviteHeaderUrl(share.appId)"))
+        assertTrue(preview.contains("mode = SteamChatRemoteImageMode.ARTWORK"))
+        assertTrue(preview.contains("aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)"))
+        assertTrue(renderedCard.contains("mode = SteamChatRemoteImageMode.ARTWORK"))
+        assertTrue(renderedCard.contains("aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)"))
     }
 
     @Test

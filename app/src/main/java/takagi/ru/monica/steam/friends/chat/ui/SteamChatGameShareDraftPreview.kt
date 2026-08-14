@@ -1,13 +1,13 @@
 package takagi.ru.monica.steam.friends.chat.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -20,14 +20,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.friends.chat.gameinvite.domain.STEAM_GAME_HEADER_ASPECT_RATIO
 import takagi.ru.monica.steam.friends.chat.gameinvite.domain.steamGameInviteHeaderUrl
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImage
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImageMode
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 
 @Composable
@@ -52,28 +53,23 @@ internal fun SteamChatGameShareDraftPreview(
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .clip(RoundedCornerShape(12.dp))
                     .clickable { onOpenStoreApp(share.appId) },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Surface(
-                    modifier = Modifier.size(width = 96.dp, height = 54.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        SteamChatRemoteImage(
-                            url = steamGameInviteHeaderUrl(share.appId),
-                            contentDescription = stringResource(
-                                R.string.steam_chat_store_game_artwork,
-                                share.name
-                            ),
-                            modifier = Modifier.fillMaxSize(),
-                            fallbackIcon = Icons.Default.SportsEsports
-                        )
-                    }
-                }
+                SteamChatRemoteImage(
+                    url = steamGameInviteHeaderUrl(share.appId),
+                    contentDescription = stringResource(
+                        R.string.steam_chat_store_game_artwork,
+                        share.name
+                    ),
+                    modifier = Modifier
+                        .width(96.dp)
+                        .aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    mode = SteamChatRemoteImageMode.ARTWORK,
+                    fallbackIcon = Icons.Default.SportsEsports
+                )
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(2.dp)

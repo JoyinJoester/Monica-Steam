@@ -2,15 +2,16 @@ package takagi.ru.monica.steam.friends.chat.richmedia.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -27,7 +28,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.gameinvite.data.SteamChatGameInviteMetadataRepository
+import takagi.ru.monica.steam.friends.chat.gameinvite.domain.STEAM_GAME_HEADER_ASPECT_RATIO
 import takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInviteMetadata
 import takagi.ru.monica.steam.friends.chat.gameinvite.domain.steamGameInviteHeaderUrl
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContent
@@ -81,23 +82,19 @@ internal fun SteamChatStoreGameCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Surface(
-                    modifier = Modifier.size(width = 112.dp, height = 63.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        SteamChatRemoteImage(
-                            url = artworkUrl,
-                            contentDescription = stringResource(
-                                R.string.steam_chat_store_game_artwork,
-                                title
-                            ),
-                            modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)),
-                            fallbackIcon = Icons.Default.SportsEsports
-                        )
-                    }
-                }
+                SteamChatRemoteImage(
+                    url = artworkUrl,
+                    contentDescription = stringResource(
+                        R.string.steam_chat_store_game_artwork,
+                        title
+                    ),
+                    modifier = Modifier
+                        .width(112.dp)
+                        .aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    mode = SteamChatRemoteImageMode.ARTWORK,
+                    fallbackIcon = Icons.Default.SportsEsports
+                )
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(3.dp)

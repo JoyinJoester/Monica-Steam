@@ -47,3 +47,5 @@ internal fun meaningfulGameInviteLabel(raw: String): String? {
 
 internal fun steamGameInviteHeaderUrl(appId: Int): String =
     "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/$appId/header.jpg"
+
+internal const val STEAM_GAME_HEADER_ASPECT_RATIO = 460f / 215f

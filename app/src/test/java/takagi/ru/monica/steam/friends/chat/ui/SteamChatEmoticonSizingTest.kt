@@ -23,6 +23,10 @@ class SteamChatEmoticonSizingTest {
             FilterQuality.High,
             staticSteamImageFilterQuality(SteamChatRemoteImageMode.CONTENT)
         )
+        assertEquals(
+            FilterQuality.High,
+            staticSteamImageFilterQuality(SteamChatRemoteImageMode.ARTWORK)
+        )
     }
 
     @Test
@@ -35,7 +39,9 @@ class SteamChatEmoticonSizingTest {
         ).readText()
 
         assertTrue(source.contains("ImageView.ScaleType.FIT_CENTER"))
+        assertTrue(source.contains("ImageView.ScaleType.CENTER_CROP"))
         assertTrue(source.contains("ImageView.ScaleType.CENTER_INSIDE"))
+        assertTrue(source.contains("ContentScale.Crop"))
         assertTrue(source.contains("ContentScale.Inside"))
         assertTrue(source.contains("setAutoPlay(true)"))
         assertTrue(source.contains("setVisible(true, false)"))

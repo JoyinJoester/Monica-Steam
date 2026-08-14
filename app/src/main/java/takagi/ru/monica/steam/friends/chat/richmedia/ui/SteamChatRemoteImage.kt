@@ -49,6 +49,7 @@ import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 /** Rendering policy for the small, fixed-size assets served by Steam. */
 internal enum class SteamChatRemoteImageMode {
     CONTENT,
+    ARTWORK,
     EMOTICON,
     STICKER
 }
@@ -160,12 +161,14 @@ internal fun SteamChatRemoteImage(
             ),
             contentDescription = contentDescription,
             modifier = modifier,
-            contentScale = if (mode == SteamChatRemoteImageMode.STICKER) {
-                // A Steam sticker is only 150px wide. Never invent pixels by
-                // scaling it to a multi-density dp box.
-                ContentScale.Inside
-            } else {
-                ContentScale.Fit
+            contentScale = when (mode) {
+                SteamChatRemoteImageMode.ARTWORK -> ContentScale.Crop
+                SteamChatRemoteImageMode.STICKER -> {
+                    // A Steam sticker is only 150px wide. Never invent pixels by
+                    // scaling it to a multi-density dp box.
+                    ContentScale.Inside
+                }
+                else -> ContentScale.Fit
             }
         )
         else -> Box(modifier = modifier, contentAlignment = Alignment.Center) {
@@ -301,9 +304,8 @@ private fun stopSteamAnimation(drawable: Drawable?) {
 private suspend fun decodeStaticSteamBitmap(payload: ByteArray): Bitmap? =
     withContext(Dispatchers.Default) { decodeSteamRemoteBitmap(payload) }
 
-private fun imageScaleType(mode: SteamChatRemoteImageMode): ImageView.ScaleType =
-    if (mode == SteamChatRemoteImageMode.STICKER) {
-        ImageView.ScaleType.CENTER_INSIDE
-    } else {
-        ImageView.ScaleType.FIT_CENTER
-    }
+private fun imageScaleType(mode: SteamChatRemoteImageMode): ImageView.ScaleType = when (mode) {
+    SteamChatRemoteImageMode.ARTWORK -> ImageView.ScaleType.CENTER_CROP
+    SteamChatRemoteImageMode.STICKER -> ImageView.ScaleType.CENTER_INSIDE
+    else -> ImageView.ScaleType.FIT_CENTER
+}
