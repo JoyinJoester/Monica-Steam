@@ -4793,6 +4793,7 @@
     <string name="steam_store_detail_purchase_options">Purchase options</string>
     <string name="steam_store_detail_jump_to_reviews">Jump to player reviews</string>
     <string name="steam_store_detail_share">Share game</string>
+    <string name="steam_store_detail_toolbar_expand">Expand quick toolbar</string>
     <string name="steam_store_share_chooser">Share Steam game</string>
     <string name="steam_store_share_title">Share game</string>
     <string name="steam_store_share_external">Share to another app</string>

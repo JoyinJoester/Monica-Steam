@@ -4623,6 +4623,7 @@
     <string name="steam_store_detail_purchase_options">购买选项</string>
     <string name="steam_store_detail_jump_to_reviews">跳转到玩家评价</string>
     <string name="steam_store_detail_share">分享游戏</string>
+    <string name="steam_store_detail_toolbar_expand">展开快捷工具栏</string>
     <string name="steam_store_share_chooser">分享 Steam 游戏</string>
     <string name="steam_store_share_title">分享游戏</string>
     <string name="steam_store_share_external">分享到其他应用</string>

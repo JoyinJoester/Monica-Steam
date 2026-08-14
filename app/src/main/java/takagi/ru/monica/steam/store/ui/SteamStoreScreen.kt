@@ -1627,24 +1627,20 @@ private fun SteamStoreDetailContent(
             }
         }
         }
-        Box(
+        SteamStoreDetailActionToolbar(
+            onOpenPurchaseOptions = { scrollToSection(purchaseSectionIndex) },
+            onOpenOfficialStore = onOpenOfficial,
+            onOpenReviews = {
+                if (hasReviews) scrollToSection(reviewSectionIndex)
+                else onOpenOfficialReviews()
+            },
+            onShare = onShare,
             modifier = Modifier
                 .fillMaxSize()
                 .steamWindowTopPadding()
                 .steamWindowBottomPadding()
-                .padding(end = 12.dp, bottom = dockContentClearance)
-        ) {
-            SteamStoreDetailActionToolbar(
-                onOpenPurchaseOptions = { scrollToSection(purchaseSectionIndex) },
-                onOpenOfficialStore = onOpenOfficial,
-                onOpenReviews = {
-                    if (hasReviews) scrollToSection(reviewSectionIndex)
-                    else onOpenOfficialReviews()
-                },
-                onShare = onShare,
-                modifier = Modifier.align(Alignment.CenterEnd)
-            )
-        }
+                .padding(bottom = dockContentClearance)
+        )
     }
     if (showHeroViewer && heroViewerUrl.isNotBlank()) {
         SteamStoreScreenshotViewer(
