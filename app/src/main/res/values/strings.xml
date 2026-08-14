@@ -4274,6 +4274,9 @@
     <string name="steam_library_perfect_achievement">All achievements completed</string>
     <string name="steam_library_sync_all_achievements">Sync all achievements</string>
     <string name="steam_library_syncing_achievements">Syncing achievements…</string>
+    <string name="steam_library_syncing_achievements_background">Completing the full achievement library in the background. You can keep using the library.</string>
+    <string name="steam_library_sync_started">Full achievement sync started</string>
+    <string name="steam_library_sync_unavailable">Unable to sync now. Refresh the library or check the signed-in account.</string>
     <string name="steam_library_no_achievements">This game has no Steam achievements.</string>
     <string name="steam_library_retry">Retry</string>
     <string name="steam_library_completed">Completed</string>

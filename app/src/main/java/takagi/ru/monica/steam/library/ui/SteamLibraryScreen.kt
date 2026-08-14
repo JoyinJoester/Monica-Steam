@@ -262,10 +262,22 @@ fun SteamLibraryScreen(
                                             }
                                         ),
                                         icon = Icons.Default.Sync,
-                                        enabled = state.snapshot != null &&
+                                        enabled = selectedAccount != null &&
+                                            state.snapshot?.accountId == selectedAccount.id &&
                                             !state.loadingLibrary &&
                                             !state.syncingAchievementProgress,
-                                        onClick = viewModel::syncAllAchievementProgress
+                                        onClick = {
+                                            val started = viewModel.syncAllAchievementProgress()
+                                            android.widget.Toast.makeText(
+                                                context,
+                                                if (started) {
+                                                    R.string.steam_library_sync_started
+                                                } else {
+                                                    R.string.steam_library_sync_unavailable
+                                                },
+                                                android.widget.Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     )
                                 )
                             )
@@ -407,6 +419,7 @@ fun SteamLibraryScreen(
                         onOpenGame = viewModel::openGame,
                         onOpenAccountDetails = { showAccountDetails = true },
                         onRetry = viewModel::refreshLibrary,
+                        onSyncAllAchievements = { viewModel.syncAllAchievementProgress() },
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -449,6 +462,7 @@ private fun SteamLibraryOverview(
     onOpenGame: (SteamGame) -> Unit,
     onOpenAccountDetails: () -> Unit,
     onRetry: () -> Unit,
+    onSyncAllAchievements: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val dockContentClearance = LocalSteamDockContentClearance.current
@@ -479,6 +493,18 @@ private fun SteamLibraryOverview(
                 appSettings = appSettings,
                 onOpenAccountDetails = onOpenAccountDetails
             )
+        }
+        if (state.syncingAchievementProgress || state.achievementProgressFailure != null) {
+            item(key = "achievement_progress_sync_status") {
+                SteamAchievementSyncStatus(
+                    syncing = state.syncingAchievementProgress,
+                    failureMessage = state.achievementProgressFailure?.let {
+                        libraryFailureLabel(it)
+                    },
+                    onRetry = onSyncAllAchievements,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
         }
         if (snapshot == null) {
             item {

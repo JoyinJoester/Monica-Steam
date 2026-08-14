@@ -221,10 +221,10 @@ class SteamLibraryViewModel(
         }
     }
 
-    fun syncAllAchievementProgress() {
-        val account = selectedAccount() ?: return
-        if (_uiState.value.loadingLibrary) return
-        startAchievementProgressSync(
+    fun syncAllAchievementProgress(): Boolean {
+        val account = selectedAccount() ?: return false
+        if (_uiState.value.loadingLibrary) return false
+        return startAchievementProgressSync(
             account = account,
             forceFull = true
         )
@@ -233,10 +233,10 @@ class SteamLibraryViewModel(
     private fun startAchievementProgressSync(
         account: SteamAccount,
         forceFull: Boolean
-    ) {
+    ): Boolean {
         val snapshot = _uiState.value.snapshot
             ?.takeIf { it.accountId == account.id }
-            ?: return
+            ?: return false
         val plan = planSteamAchievementProgressSync(
             current = snapshot,
             forceFull = forceFull
@@ -251,7 +251,7 @@ class SteamLibraryViewModel(
                     runSteamLibraryCatching { cacheRepository.saveLibrary(updatedSnapshot) }
                 }
             }
-            return
+            return true
         }
 
         val generation = ++achievementProgressSyncGeneration
@@ -277,7 +277,14 @@ class SteamLibraryViewModel(
                         progress = result.value,
                         syncedAppIds = plan.appIds.toSet(),
                         fullSyncAt = System.currentTimeMillis().takeIf { plan.isFullSync }
-                    ) ?: return@launch
+                    )
+                    if (updatedState == null) {
+                        _uiState.value = _uiState.value.copy(
+                            syncingAchievementProgress = false,
+                            achievementProgressFailure = SteamLibraryFailureReason.INVALID_RESPONSE
+                        )
+                        return@launch
+                    }
                     _uiState.value = updatedState.copy(
                         syncingAchievementProgress = false,
                         achievementProgressFailure = null
@@ -298,6 +305,7 @@ class SteamLibraryViewModel(
                 }
             }
         }
+        return true
     }
 
     private fun cancelAchievementProgressSync() {

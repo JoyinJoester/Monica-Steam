@@ -137,9 +137,16 @@ class SteamLibraryIntegrationGuardTest {
         assertTrue(hero.contains("onOpenAccountDetails"))
         assertTrue(screen.contains("SteamAccountSwitcherSheet("))
         assertTrue(screen.contains("onSelectStorageSource = viewModel::selectStorageSource"))
-        assertTrue(screen.contains("viewModel::syncAllAchievementProgress"))
+        assertTrue(screen.contains("viewModel.syncAllAchievementProgress()"))
         assertTrue(screen.contains("state.syncingAchievementProgress"))
         assertTrue(screen.contains("steam_library_sync_all_achievements"))
+        assertTrue(screen.contains("steam_library_sync_started"))
+        assertTrue(overview.contains("SteamAchievementSyncStatus("))
+        val syncStatus = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementSyncStatus.kt"
+        ).readText()
+        assertTrue(syncStatus.contains("LinearProgressIndicator("))
+        assertTrue(syncStatus.contains("steam_library_syncing_achievements_background"))
         val detail = screen
             .substringAfter("private fun SteamGameDetail(")
             .substringBefore("private fun SteamGameDetailHero(")
