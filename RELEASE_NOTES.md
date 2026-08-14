@@ -15,7 +15,7 @@
 ## Steam 网络解析
 
 - 网络优化按职责明确区分为“动态网络优化”和“静态网络优化（Hosts）”：传统 DNS 与 HTTPS DoH 统一归入动态解析，固定域名到 IP 的映射继续由静态 Hosts 负责。
-- 新增内置优选 Hosts 预设，覆盖 18 个常用 Steam / CDN hostname；新安装或从未保存过 Hosts 的用户可直接使用，已有用户自定义 Hosts 不会在升级时被强行覆盖。
+- 新增内置优选 Hosts 预设，覆盖 18 个常用 Steam / CDN hostname，可从静态 Hosts 页面右上角菜单手动应用；新安装不会自动写入或启用固定 IP，已有用户自定义 Hosts 也不会在升级时被覆盖。
 - 内置优选 Hosts 与手工填写 Hosts 使用同一套 `SteamCustomHostsDns` 静态解析链路；静态命中后直接使用固定 IP，不再先调用动态 DNS / DoH。
 - 静态 Hosts 可继续保留 Android System DNS fallback，在固定 CDN 节点未来失效时提供兼容回退。
 - 动态网络优化调整 System DNS 的角色：当存在已启用的传统 DNS / DoH 时，System DNS 不再与它们抢第一个响应，而只在动态来源失败时作为 fallback；仅启用 System DNS 时仍直接使用系统解析。
