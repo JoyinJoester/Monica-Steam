@@ -159,6 +159,7 @@ import takagi.ru.monica.steam.store.activation.domain.SteamStoreProductActivatio
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.steamDockActionClearance
+import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.steam.web.ui.SteamWebBrowserScreen
@@ -1217,12 +1218,13 @@ private fun SteamStoreDetailContent(
             }
         }
     }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        state = listState,
-        contentPadding = PaddingValues(bottom = dockContentClearance + 32.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp)
-    ) {
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            contentPadding = PaddingValues(bottom = dockContentClearance + 32.dp),
+            verticalArrangement = Arrangement.spacedBy(18.dp)
+        ) {
         item {
             Box(Modifier.fillMaxWidth().height(390.dp)) {
                 SteamStoreImage(
@@ -1273,18 +1275,6 @@ private fun SteamStoreDetailContent(
                         )
                     }
                 }
-                SteamStoreDetailActionToolbar(
-                    onOpenPurchaseOptions = { scrollToSection(purchaseSectionIndex) },
-                    onOpenOfficialStore = onOpenOfficial,
-                    onOpenReviews = {
-                        if (hasReviews) scrollToSection(reviewSectionIndex)
-                        else onOpenOfficialReviews()
-                    },
-                    onShare = onShare,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 12.dp)
-                )
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
@@ -1635,6 +1625,25 @@ private fun SteamStoreDetailContent(
                     )
                 }
             }
+        }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .steamWindowTopPadding()
+                .steamWindowBottomPadding()
+                .padding(end = 12.dp, bottom = dockContentClearance)
+        ) {
+            SteamStoreDetailActionToolbar(
+                onOpenPurchaseOptions = { scrollToSection(purchaseSectionIndex) },
+                onOpenOfficialStore = onOpenOfficial,
+                onOpenReviews = {
+                    if (hasReviews) scrollToSection(reviewSectionIndex)
+                    else onOpenOfficialReviews()
+                },
+                onShare = onShare,
+                modifier = Modifier.align(Alignment.CenterEnd)
+            )
         }
     }
     if (showHeroViewer && heroViewerUrl.isNotBlank()) {

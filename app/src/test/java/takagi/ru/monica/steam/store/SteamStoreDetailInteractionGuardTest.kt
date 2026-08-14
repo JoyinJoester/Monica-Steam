@@ -70,6 +70,27 @@ class SteamStoreDetailInteractionGuardTest {
     }
 
     @Test
+    fun detailActionToolbarFloatsOutsideTheScrollableHero() {
+        val detailUi = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+        ).readText()
+        val detail = detailUi
+            .substringAfter("private fun SteamStoreDetailContent(")
+            .substringBefore("private fun SteamStorePurchaseActions(")
+        val hero = detail
+            .substringAfter("item {\n            Box(Modifier.fillMaxWidth().height(390.dp))")
+            .substringBefore("if (showTags && detail.tags.isNotEmpty())")
+
+        assertTrue(detail.contains("Box(modifier = modifier.fillMaxSize())"))
+        assertTrue(detail.contains("modifier = Modifier.fillMaxSize(),\n            state = listState"))
+        assertFalse(hero.contains("SteamStoreDetailActionToolbar("))
+        assertTrue(detail.contains(".align(Alignment.CenterEnd)"))
+        assertTrue(detail.contains(".steamWindowTopPadding()"))
+        assertTrue(detail.contains(".steamWindowBottomPadding()"))
+        assertTrue(detail.contains(".padding(end = 12.dp, bottom = dockContentClearance)"))
+    }
+
+    @Test
     fun fullDetailsAndInformationValuesAreSelectable() {
         val detailUi = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
