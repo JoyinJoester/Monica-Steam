@@ -151,7 +151,6 @@ import takagi.ru.monica.steam.store.requirements.ui.SteamStoreSystemRequirements
 import takagi.ru.monica.steam.store.related.ui.SteamStoreRelatedContentSection
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.steam.store.share.domain.toGameShare
-import takagi.ru.monica.steam.store.share.presentation.SteamStoreGameShareViewModel
 import takagi.ru.monica.steam.store.share.ui.SteamStoreGameShareSheet
 import takagi.ru.monica.steam.store.bundle.ui.SteamStoreBundleSection
 import takagi.ru.monica.steam.store.ui.gallery.SteamStoreScreenshotViewer
@@ -187,20 +186,17 @@ fun SteamStoreScreen(
     onOpenSettings: () -> Unit = {},
     onOpenNotifications: () -> Unit = {},
     onAddSteamAccount: () -> Unit = {},
+    onOpenChatShare: (String, SteamStoreGameShare) -> Unit = { _, _ -> },
     initialAppId: Int? = null,
     onInitialAppIdConsumed: () -> Unit = {},
     initialWebUrl: String? = null,
     onInitialWebUrlConsumed: () -> Unit = {},
     onPlatformViewVisibilityChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
-    viewModel: SteamStoreViewModel = viewModel(factory = SteamStoreViewModel.factory(LocalContext.current)),
-    shareViewModel: SteamStoreGameShareViewModel = viewModel(
-        factory = SteamStoreGameShareViewModel.factory(LocalContext.current)
-    )
+    viewModel: SteamStoreViewModel = viewModel(factory = SteamStoreViewModel.factory(LocalContext.current))
 ) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val shareState by shareViewModel.uiState.collectAsStateWithLifecycle()
     val hintPreferences = remember(context) { SteamStoreHintPreferences(context) }
     val hintSettings by hintPreferences.settings.collectAsState(
         initial = SteamStoreHintSettings()
@@ -248,17 +244,6 @@ fun SteamStoreScreen(
     var lastDetail by remember { mutableStateOf<SteamStoreDetail?>(null) }
     LaunchedEffect(state.detail) {
         state.detail?.let { lastDetail = it }
-    }
-    LaunchedEffect(shareState.sentToSteamId) {
-        if (shareState.sentToSteamId != null) {
-            android.widget.Toast.makeText(
-                context,
-                R.string.steam_store_share_success,
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
-            pendingGameShare = null
-            shareViewModel.consumeResult()
-        }
     }
     LaunchedEffect(initialAppId) {
         initialAppId?.let { appId ->
@@ -755,9 +740,9 @@ fun SteamStoreScreen(
         SteamStoreGameShareSheet(
             share = share,
             friendsState = state.gift,
-            sendState = shareState,
-            onSendToFriend = { friend ->
-                shareViewModel.sendToFriend(friend.steamId, share)
+            onOpenChat = { friend ->
+                pendingGameShare = null
+                onOpenChatShare(friend.steamId, share)
             },
             onShareExternal = {
                 shareSteamStoreGame(context, share)
@@ -765,7 +750,6 @@ fun SteamStoreScreen(
             onRefresh = viewModel::refreshGiftFriends,
             onDismiss = {
                 pendingGameShare = null
-                shareViewModel.consumeResult()
             }
         )
     }

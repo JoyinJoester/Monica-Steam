@@ -218,6 +218,33 @@ class SteamChatIntegrationGuardTest {
     }
 
     @Test
+    fun storeShareOpensTheSelectedChatAsAnEditableCardDraft() {
+        val activity = projectFile(
+            "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
+        ).readText()
+        val shareSheet = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/store/share/ui/SteamStoreGameShareSheet.kt"
+        ).readText()
+        val composer = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt"
+        ).readText()
+        val preview = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatGameShareDraftPreview.kt"
+        ).readText()
+
+        assertTrue(activity.contains("onOpenChatShare = { partnerSteamId, share ->"))
+        assertTrue(activity.contains("pendingChatGameShare = share"))
+        assertTrue(activity.contains("requestedGameShare = pendingChatGameShare"))
+        assertTrue(shareSheet.contains("onOpenChat: (SteamFriend) -> Unit"))
+        assertTrue(shareSheet.contains("onClick = { onOpenChat(friend) }"))
+        assertFalse(shareSheet.contains("sendingToSteamId"))
+        assertTrue(composer.contains("pendingGameShare?.messageBody(text)"))
+        assertTrue(composer.contains("text.isNotBlank() || pendingGameShare != null"))
+        assertTrue(composer.contains("SteamChatGameShareDraftPreview("))
+        assertTrue(preview.contains("steamGameInviteHeaderUrl(share.appId)"))
+    }
+
+    @Test
     fun cacheUsesMonicaEncryptionAndAccountThreadIsolation() {
         val cache = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/data/SteamChatCache.kt"

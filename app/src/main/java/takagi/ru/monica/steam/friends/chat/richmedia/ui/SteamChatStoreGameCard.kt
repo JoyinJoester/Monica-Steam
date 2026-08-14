@@ -120,6 +120,13 @@ internal fun SteamChatStoreGameCard(
                     )
                 }
             }
+            content.caption?.takeIf(String::isNotBlank)?.let { caption ->
+                Text(
+                    text = caption,
+                    modifier = Modifier.padding(top = 10.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
             FilledTonalButton(
                 onClick = { onOpenStoreApp(content.appId) },
                 modifier = Modifier

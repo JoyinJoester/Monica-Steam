@@ -89,6 +89,7 @@ import takagi.ru.monica.steam.links.domain.SteamExternalLinkTarget
 import takagi.ru.monica.steam.token.ui.SteamScreen
 import takagi.ru.monica.steam.foundation.ui.ProvideSteamContentDensity
 import takagi.ru.monica.steam.foundation.ui.setSteamUiScaledContent
+import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.steam.store.ui.SteamStoreScreen
 import takagi.ru.monica.steam.alerts.SteamAlerts
 import takagi.ru.monica.steam.friends.chat.background.SteamChatBackground
@@ -276,6 +277,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 var pendingStoreWebUrl by rememberSaveable { mutableStateOf<String?>(null) }
                 var pendingCommunitySteamId by rememberSaveable { mutableStateOf<String?>(null) }
                 var pendingChatPartnerSteamId by rememberSaveable { mutableStateOf<String?>(null) }
+                var pendingChatGameShare by rememberSaveable {
+                    mutableStateOf<SteamStoreGameShare?>(null)
+                }
+                var pendingChatGameSharePartnerSteamId by rememberSaveable {
+                    mutableStateOf<String?>(null)
+                }
                 var pendingSteamNotifications by rememberSaveable { mutableStateOf(false) }
                 var pendingAddSteamAccount by rememberSaveable { mutableStateOf(false) }
                 var isSteamChatThreadOpen by rememberSaveable { mutableStateOf(false) }
@@ -323,6 +330,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                     if (activated) {
                         appliedInitialDockPage = true
                         pageHistory = emptyList()
+                        pendingChatGameShare = null
+                        pendingChatGameSharePartnerSteamId = null
                         pendingChatPartnerSteamId = request.partnerSteamId
                         currentPage = MonicaSteamPage.CHAT
                     } else {
@@ -593,6 +602,12 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     navigateTo(MonicaSteamPage.STEAM)
                                 },
                                 onAddSteamAccount = ::openSteamAccountAddition,
+                                onOpenChatShare = { partnerSteamId, share ->
+                                    pendingChatPartnerSteamId = partnerSteamId
+                                    pendingChatGameShare = share
+                                    pendingChatGameSharePartnerSteamId = partnerSteamId
+                                    navigateTo(MonicaSteamPage.CHAT)
+                                },
                                 initialAppId = pendingStoreAppId,
                                 onInitialAppIdConsumed = { pendingStoreAppId = null },
                                 initialWebUrl = pendingStoreWebUrl,
@@ -608,6 +623,13 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 requestedPartnerSteamId = pendingChatPartnerSteamId,
                                 onConsumeRequestedPartner = {
                                     pendingChatPartnerSteamId = null
+                                },
+                                requestedGameShare = pendingChatGameShare,
+                                requestedGameSharePartnerSteamId =
+                                    pendingChatGameSharePartnerSteamId,
+                                onConsumeRequestedGameShare = {
+                                    pendingChatGameShare = null
+                                    pendingChatGameSharePartnerSteamId = null
                                 },
                                 onThreadVisibilityChange = { open ->
                                     isSteamChatThreadOpen = open
@@ -741,6 +763,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         navigateTo(MonicaSteamPage.STORE)
                                     },
                                     onOpenChat = { partnerSteamId ->
+                                        pendingChatGameShare = null
+                                        pendingChatGameSharePartnerSteamId = null
                                         pendingChatPartnerSteamId = partnerSteamId
                                         navigateTo(MonicaSteamPage.CHAT)
                                     },

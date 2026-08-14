@@ -94,7 +94,8 @@ sealed interface SteamChatRichContent {
         val appId: Int,
         val label: String?,
         val url: String,
-        val rawBody: String
+        val rawBody: String,
+        val caption: String? = null
     ) : SteamChatRichContent
 
     data class OfficialMessage(val message: SteamChatOfficialMessage) : SteamChatRichContent
@@ -193,6 +194,10 @@ object SteamChatRichContentParser {
     private val steamStoreAppUrlPattern = Regex(
         "https?://(?:store\\.steampowered\\.com|store\\.steamcommunity\\.com)/app/(\\d+)(?:/[^\\s\\]\\[]*)?",
         RegexOption.IGNORE_CASE
+    )
+    private val steamStoreTagPattern = Regex(
+        "\\[steamstore(?:\\s+([^]]+))?](.*?)\\[/steamstore\\s*]",
+        setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
     private val imagePattern = Regex(
         """\[img(?:\s+([^]]+)|=([^]]+))?](.*?)\[/img\s*]""",
@@ -368,7 +373,44 @@ object SteamChatRichContentParser {
 
     private fun parseStoreGameShare(body: String): SteamChatRichContent.StoreGameShare? {
         val trimmed = body.trim()
-        anyBbcodeUrlPattern.matchEntire(trimmed)?.let { match ->
+        val steamStoreTags = steamStoreTagPattern.findAll(trimmed).toList()
+        if (steamStoreTags.size == 1) steamStoreTags.single().let { match ->
+            val attributes = parseAttributes(match.groupValues.getOrNull(1).orEmpty())
+            val rawUrl = match.groupValues.getOrNull(2).orEmpty().trim()
+                .replace(Regex("\\s+"), "")
+            val storeMatch = steamStoreAppUrlPattern.matchEntire(rawUrl)
+            val appId = attributes.firstValue("app", "appid", "app_id")?.toIntOrNull()
+                ?.takeIf { it > 0 }
+                ?: storeMatch?.groupValues?.getOrNull(1)?.toIntOrNull()?.takeIf { it > 0 }
+                ?: return@let
+            val url = storeMatch?.value ?: "https://store.steampowered.com/app/$appId/"
+            val leadingLines = trimmed.substring(0, match.range.first).trim().lines()
+            val labelIndex = leadingLines.indexOfLast(String::isNotBlank)
+            val hasSeparatedLabel = labelIndex >= 0 &&
+                (labelIndex == 0 || leadingLines[labelIndex - 1].isBlank())
+            val label = leadingLines.getOrNull(labelIndex)?.trim()?.takeIf {
+                hasSeparatedLabel && it.isNotBlank()
+            }
+            val caption = buildList {
+                addAll(leadingLines.take(if (label != null) labelIndex else leadingLines.size))
+                add(trimmed.substring(match.range.last + 1))
+            }.joinToString("\n").trim().takeIf(String::isNotBlank)
+            return SteamChatRichContent.StoreGameShare(
+                appId = appId,
+                label = label,
+                url = url,
+                rawBody = body,
+                caption = caption
+            )
+        }
+
+        val bbcodeMatches = anyBbcodeUrlPattern.findAll(trimmed).toList()
+        if (bbcodeMatches.size == 1) bbcodeMatches.single().let { match ->
+            val leading = trimmed.substring(0, match.range.first)
+            val trailing = trimmed.substring(match.range.last + 1)
+            val standaloneOrCaptioned = (leading.isBlank() && trailing.isBlank()) ||
+                leading.endsWith("\n\n") || trailing.startsWith("\n\n")
+            if (!standaloneOrCaptioned) return@let
             val explicitUrl = match.groupValues[1]
             val innerText = match.groupValues[2].ifBlank { match.groupValues[3] }
             val candidateUrl = normalizeAttachmentUrl(explicitUrl.ifBlank { innerText })
@@ -378,30 +420,45 @@ object SteamChatRichContentParser {
             val label = decodeBbcodeText(innerText).trim().takeIf {
                 it.isNotBlank() && it != candidateUrl
             }
+            val caption = buildString {
+                append(leading)
+                append(trailing)
+            }.trim().takeIf(String::isNotBlank)?.let(::decodeBbcodeText)
             return SteamChatRichContent.StoreGameShare(
                 appId = appId,
                 label = label,
                 url = candidateUrl,
-                rawBody = body
+                rawBody = body,
+                caption = caption
             )
         }
 
-        val lines = trimmed.lineSequence().map(String::trim).filter(String::isNotBlank).toList()
-        if (lines.size !in 1..2 || plainLinkPattern.findAll(trimmed).count() != 1) return null
-        val urlLineIndex = lines.indexOfFirst { line ->
-            steamStoreAppUrlPattern.matchEntire(line) != null
+        val lines = trimmed.lines()
+        val urlLines = lines.mapIndexedNotNull { index, line ->
+            steamStoreAppUrlPattern.matchEntire(line.trim())?.let { index to it }
         }
-        if (urlLineIndex < 0) return null
-        val storeMatch = steamStoreAppUrlPattern.matchEntire(lines[urlLineIndex]) ?: return null
+        if (urlLines.size != 1) return null
+        val (urlLineIndex, storeMatch) = urlLines.single()
         val appId = storeMatch.groupValues.getOrNull(1)?.toIntOrNull()?.takeIf { it > 0 }
             ?: return null
         val url = storeMatch.value
-        val label = lines.getOrNull(1 - urlLineIndex)?.takeIf(String::isNotBlank)
+        val labelIndex = urlLineIndex - 1
+        val hasSeparatedLabel = labelIndex >= 0 && lines[labelIndex].isNotBlank() &&
+            (labelIndex == 0 || lines[labelIndex - 1].isBlank())
+        val label = lines.getOrNull(labelIndex)?.trim()?.takeIf {
+            hasSeparatedLabel && it.isNotBlank()
+        }
+        val captionLines = buildList {
+            addAll(lines.take(if (label != null) labelIndex else urlLineIndex))
+            addAll(lines.drop(urlLineIndex + 1))
+        }
+        val caption = captionLines.joinToString("\n").trim().takeIf(String::isNotBlank)
         return SteamChatRichContent.StoreGameShare(
             appId = appId,
             label = label,
             url = url,
-            rawBody = body
+            rawBody = body,
+            caption = caption
         )
     }
 

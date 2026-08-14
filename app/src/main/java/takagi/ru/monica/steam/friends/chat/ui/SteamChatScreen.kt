@@ -41,6 +41,7 @@ import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationId
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationPreferences
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationType
 import takagi.ru.monica.steam.friends.voice.presentation.SteamVoiceCallRuntime
+import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit
 
@@ -51,6 +52,9 @@ fun SteamChatScreen(
     standalone: Boolean = false,
     requestedPartnerSteamId: String? = null,
     onConsumeRequestedPartner: () -> Unit = {},
+    requestedGameShare: SteamStoreGameShare? = null,
+    requestedGameSharePartnerSteamId: String? = null,
+    onConsumeRequestedGameShare: () -> Unit = {},
     onUnreadCountChange: (Int) -> Unit = {},
     onThreadVisibilityChange: (Boolean) -> Unit = {},
     onPlatformViewVisibilityChanged: (Boolean) -> Unit = {},
@@ -423,6 +427,9 @@ fun SteamChatScreen(
                 voiceState = voiceState,
                 conversationPreferences = conversationPreferences,
                 targetMessageId = targetMessageId,
+                gameShareDraft = requestedGameShare.takeIf {
+                    partnerSteamId == requestedGameSharePartnerSteamId
+                },
                 chatViewModel = chatViewModel,
                 friendsViewModel = friendsViewModel,
                 groupChatViewModel = groupChatViewModel,
@@ -444,6 +451,7 @@ fun SteamChatScreen(
                     targetMessageId = messageId
                     subpage = null
                 },
+                onConsumeGameShareDraft = onConsumeRequestedGameShare,
                 onOpenStoreApp = onOpenStoreApp,
                 modifier = Modifier.fillMaxSize()
             )

@@ -4802,8 +4802,6 @@
     <string name="steam_store_share_empty">No friends match this search.</string>
     <string name="steam_store_share_account_required">Select a signed-in Steam account to share with friends.</string>
     <string name="steam_store_share_friends_failed">Unable to load Steam friends.</string>
-    <string name="steam_store_share_failed">Unable to send this game.</string>
-    <string name="steam_store_share_success">Game shared</string>
     <string name="steam_chat_store_game_share">Steam game</string>
     <string name="steam_chat_store_game_view">View store</string>
     <string name="steam_chat_store_game_app_id">App %1$d</string>

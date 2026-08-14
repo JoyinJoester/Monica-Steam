@@ -4632,8 +4632,6 @@
     <string name="steam_store_share_empty">没有符合搜索条件的好友。</string>
     <string name="steam_store_share_account_required">选择已登录的 Steam 账号后可分享给好友。</string>
     <string name="steam_store_share_friends_failed">无法加载 Steam 好友。</string>
-    <string name="steam_store_share_failed">游戏发送失败。</string>
-    <string name="steam_store_share_success">已分享游戏</string>
     <string name="steam_chat_store_game_share">Steam 游戏分享</string>
     <string name="steam_chat_store_game_view">查看商店</string>
     <string name="steam_chat_store_game_app_id">App %1$d</string>

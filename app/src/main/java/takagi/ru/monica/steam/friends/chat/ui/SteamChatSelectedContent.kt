@@ -30,6 +30,7 @@ import takagi.ru.monica.steam.friends.presentation.SteamFriendsUiState
 import takagi.ru.monica.steam.friends.presentation.SteamFriendsViewModel
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.presentation.SteamVoiceCallRuntime
+import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit
@@ -47,6 +48,7 @@ internal fun SteamChatSelectedContent(
     voiceState: SteamVoiceCallState,
     conversationPreferences: SteamChatConversationPreferences,
     targetMessageId: String?,
+    gameShareDraft: SteamStoreGameShare?,
     chatViewModel: SteamChatViewModel,
     friendsViewModel: SteamFriendsViewModel,
     groupChatViewModel: SteamGroupChatViewModel,
@@ -59,6 +61,7 @@ internal fun SteamChatSelectedContent(
     onInviteFriend: () -> Unit,
     onPreferencesChange: (SteamChatConversationPreferences) -> Unit,
     onOpenTargetMessage: (String) -> Unit,
+    onConsumeGameShareDraft: () -> Unit,
     onOpenStoreApp: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -105,6 +108,7 @@ internal fun SteamChatSelectedContent(
                 richMediaState = richMediaState,
                 friend = selectedFriend,
                 targetMessageId = targetMessageId,
+                gameShareDraft = gameShareDraft,
                 onNavigateBack = chatViewModel::closeThread,
                 onOpenInfo = { onSubpageChange(SteamChatSubpage.INFO) },
                 onRefresh = chatViewModel::refreshThread,
@@ -126,6 +130,7 @@ internal fun SteamChatSelectedContent(
                 onClearAttachment = richMediaViewModel::clearAttachment,
                 onClearAttachmentFailure = richMediaViewModel::clearAttachmentFailure,
                 onRefreshCatalogs = richMediaViewModel::refreshCatalogs,
+                onConsumeGameShareDraft = onConsumeGameShareDraft,
                 voiceState = voiceState,
                 onStartVoice = {
                     val friendName = selectedFriend?.displayName ?: partnerSteamId

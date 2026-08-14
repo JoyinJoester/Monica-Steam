@@ -39,6 +39,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -60,10 +61,14 @@ import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatAttachmentSheet
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRichMediaPickerPanel
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.rememberSteamChatFilePicker
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.rememberSteamChatGalleryPicker
+import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 
 @Composable
 internal fun SteamChatComposer(
+    draftKey: String,
     richMediaState: SteamChatRichMediaUiState,
+    initialGameShare: SteamStoreGameShare? = null,
+    onConsumeInitialGameShare: () -> Unit = {},
     onSend: (String) -> Unit,
     onAttachmentSelected: (String) -> Unit,
     onAttachmentSpoilerChanged: (Boolean) -> Unit,
@@ -71,21 +76,32 @@ internal fun SteamChatComposer(
     onClearAttachment: () -> Unit,
     onClearAttachmentFailure: () -> Unit,
     onRefreshCatalogs: () -> Unit,
+    onOpenStoreApp: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var showRichPicker by rememberSaveable { mutableStateOf(false) }
-    var showAttachmentPicker by rememberSaveable { mutableStateOf(false) }
+    var text by rememberSaveable(draftKey) { mutableStateOf("") }
+    var pendingGameShare by rememberSaveable(draftKey) {
+        mutableStateOf<SteamStoreGameShare?>(null)
+    }
+    var showRichPicker by rememberSaveable(draftKey) { mutableStateOf(false) }
+    var showAttachmentPicker by rememberSaveable(draftKey) { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val launchGalleryPicker = rememberSteamChatGalleryPicker(onAttachmentSelected)
     val launchFilePicker = rememberSteamChatFilePicker(onAttachmentSelected)
-    val canSend = text.isNotBlank()
+    val canSend = text.isNotBlank() || pendingGameShare != null
     val send = {
-        val body = text.trim()
+        val body = pendingGameShare?.messageBody(text).orEmpty().ifBlank { text.trim() }
         if (body.isNotEmpty()) {
             onSend(body)
             text = ""
+            pendingGameShare = null
         }
+    }
+
+    LaunchedEffect(draftKey, initialGameShare) {
+        val share = initialGameShare ?: return@LaunchedEffect
+        pendingGameShare = share
+        onConsumeInitialGameShare()
     }
 
     BackHandler(enabled = showRichPicker || showAttachmentPicker) {
@@ -140,6 +156,18 @@ internal fun SteamChatComposer(
                             )
                         }
                     }
+                }
+            }
+            AnimatedVisibility(visible = pendingGameShare != null) {
+                pendingGameShare?.let { share ->
+                    SteamChatGameShareDraftPreview(
+                        share = share,
+                        onOpenStoreApp = onOpenStoreApp,
+                        onRemove = { pendingGameShare = null },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp, vertical = 6.dp)
+                    )
                 }
             }
             Row(

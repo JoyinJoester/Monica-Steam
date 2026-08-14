@@ -263,6 +263,7 @@ internal fun SteamGroupChatThread(
         }
         if (voiceRoom == null) {
             SteamChatComposer(
+                draftKey = conversationKey,
                 richMediaState = richMediaState,
                 onSend = onSend,
                 onAttachmentSelected = onAttachmentSelected,

@@ -232,12 +232,23 @@ class SteamChatRichMediaModelsTest {
         val bbcode = SteamChatRichContentParser.parse(
             "[url=https://store.steampowered.com/app/730/]Counter-Strike 2[/url]"
         ) as SteamChatRichContent.StoreGameShare
+        val captioned = SteamChatRichContentParser.parse(
+            "今晚一起玩吗？\n\nCyberpunk 2077\nhttps://store.steampowered.com/app/1091500/"
+        ) as SteamChatRichContent.StoreGameShare
+        val steamConverted = SteamChatRichContentParser.parse(
+            "黑神话：悟空\n[steamstore app=\"2358720\"]" +
+                "https://store.steampowered.com/app/2358720/[/steamstore]"
+        ) as SteamChatRichContent.StoreGameShare
 
         assertEquals(1091500, plain.appId)
         assertEquals("Cyberpunk 2077", plain.label)
         assertEquals("https://store.steampowered.com/app/1091500/", plain.url)
         assertEquals(730, bbcode.appId)
         assertEquals("Counter-Strike 2", bbcode.label)
+        assertEquals("今晚一起玩吗？", captioned.caption)
+        assertEquals("Cyberpunk 2077", captioned.label)
+        assertEquals(2358720, steamConverted.appId)
+        assertEquals("黑神话：悟空", steamConverted.label)
     }
 
     @Test

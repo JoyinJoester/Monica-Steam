@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
@@ -49,8 +48,6 @@ import takagi.ru.monica.steam.friends.ui.label
 import takagi.ru.monica.steam.store.gift.domain.SteamStoreGiftFailure
 import takagi.ru.monica.steam.store.gift.presentation.SteamStoreGiftUiState
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
-import takagi.ru.monica.steam.store.share.presentation.SteamStoreGameShareError
-import takagi.ru.monica.steam.store.share.presentation.SteamStoreGameShareUiState
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,8 +55,7 @@ import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 internal fun SteamStoreGameShareSheet(
     share: SteamStoreGameShare,
     friendsState: SteamStoreGiftUiState,
-    sendState: SteamStoreGameShareUiState,
-    onSendToFriend: (SteamFriend) -> Unit,
+    onOpenChat: (SteamFriend) -> Unit,
     onShareExternal: () -> Unit,
     onRefresh: () -> Unit,
     onDismiss: () -> Unit
@@ -141,34 +137,6 @@ internal fun SteamStoreGameShareSheet(
                 placeholder = { Text(stringResource(R.string.steam_store_share_search_hint)) },
                 shape = RoundedCornerShape(18.dp)
             )
-            sendState.error?.let { error ->
-                Surface(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ) {
-                    Row(
-                        modifier = Modifier.padding(14.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Default.ErrorOutline, contentDescription = null)
-                        Text(
-                            text = stringResource(
-                                when (error) {
-                                    SteamStoreGameShareError.ACCOUNT_REQUIRED ->
-                                        R.string.steam_store_share_account_required
-                                    SteamStoreGameShareError.SEND_FAILED ->
-                                        R.string.steam_store_share_failed
-                                }
-                            ),
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                }
-            }
             when {
                 friendsState.loading && friendsState.friends.isEmpty() -> Box(
                     modifier = Modifier.fillMaxSize(),
@@ -199,8 +167,7 @@ internal fun SteamStoreGameShareSheet(
                 ) {
                     items(friends, key = SteamFriend::steamId) { friend ->
                         Surface(
-                            onClick = { onSendToFriend(friend) },
-                            enabled = sendState.sendingToSteamId == null,
+                            onClick = { onOpenChat(friend) },
                             modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp),
                             shape = RoundedCornerShape(20.dp),
                             color = MaterialTheme.colorScheme.surfaceContainerLow
@@ -223,12 +190,6 @@ internal fun SteamStoreGameShareSheet(
                                         text = friend.personaState.label(),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-                                if (sendState.sendingToSteamId == friend.steamId) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(22.dp),
-                                        strokeWidth = 2.dp
                                     )
                                 }
                             }

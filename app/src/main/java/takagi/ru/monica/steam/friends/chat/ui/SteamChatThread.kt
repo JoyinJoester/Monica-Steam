@@ -67,6 +67,7 @@ import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceAudioRoute
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceTargetType
 import takagi.ru.monica.steam.friends.voice.ui.SteamVoiceStatusBanner
+import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 @Composable
@@ -75,6 +76,7 @@ internal fun SteamChatThread(
     richMediaState: SteamChatRichMediaUiState,
     friend: SteamFriend?,
     targetMessageId: String? = null,
+    gameShareDraft: SteamStoreGameShare? = null,
     onNavigateBack: () -> Unit,
     onOpenInfo: () -> Unit,
     onRefresh: () -> Unit,
@@ -90,6 +92,7 @@ internal fun SteamChatThread(
     onClearAttachment: () -> Unit,
     onClearAttachmentFailure: () -> Unit,
     onRefreshCatalogs: () -> Unit,
+    onConsumeGameShareDraft: () -> Unit = {},
     voiceState: SteamVoiceCallState = SteamVoiceCallState(),
     onStartVoice: () -> Unit = {},
     onStopVoice: () -> Unit = {},
@@ -304,14 +307,18 @@ internal fun SteamChatThread(
             )
         }
         SteamChatComposer(
+            draftKey = conversationKey,
             richMediaState = richMediaState,
+            initialGameShare = gameShareDraft,
+            onConsumeInitialGameShare = onConsumeGameShareDraft,
             onSend = onSend,
             onAttachmentSelected = onAttachmentSelected,
             onAttachmentSpoilerChanged = onAttachmentSpoilerChanged,
             onUploadAttachment = onUploadAttachment,
             onClearAttachment = onClearAttachment,
             onClearAttachmentFailure = onClearAttachmentFailure,
-            onRefreshCatalogs = onRefreshCatalogs
+            onRefreshCatalogs = onRefreshCatalogs,
+            onOpenStoreApp = onOpenStoreApp
         )
     }
     reportMessage?.let { message ->
