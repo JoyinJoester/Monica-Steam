@@ -81,4 +81,15 @@ class SteamRichTextParserTest {
         assertTrue(parsed.spans.any { it.style == SteamRichTextStyle.BOLD })
         assertTrue(parsed.spans.any { it.style == SteamRichTextStyle.QUOTE })
     }
+
+    @Test
+    fun preservesSteamSpoilerRangesForPressToRevealUi() {
+        val parsed = SteamRichTextParser.parse("Visible [spoiler]hidden text[/spoiler]")
+
+        assertEquals("Visible hidden text", parsed.text)
+        assertEquals(
+            SteamRichTextSpan(8, 19, SteamRichTextStyle.SPOILER),
+            parsed.spans.single { it.style == SteamRichTextStyle.SPOILER }
+        )
+    }
 }

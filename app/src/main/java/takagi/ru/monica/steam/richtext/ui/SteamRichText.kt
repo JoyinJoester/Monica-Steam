@@ -3,18 +3,27 @@ package takagi.ru.monica.steam.richtext.ui
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.LinkInteractionListener
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import takagi.ru.monica.steam.richtext.domain.SteamRichTextDocument
 import takagi.ru.monica.steam.richtext.domain.SteamRichTextLink
 import takagi.ru.monica.steam.richtext.domain.SteamRichTextParser
+import takagi.ru.monica.steam.richtext.domain.SteamRichTextSpan
 import takagi.ru.monica.steam.richtext.domain.SteamRichTextStyle
 
 @Composable
@@ -66,7 +76,14 @@ internal fun SteamRichText(
     val linkColor = MaterialTheme.colorScheme.primary
     val codeBackground = MaterialTheme.colorScheme.surfaceContainerHighest
     val quoteColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val spoilerMaskColor = MaterialTheme.colorScheme.onSurfaceVariant
     val contentColor = LocalContentColor.current
+    val haptics = LocalHapticFeedback.current
+    val spoilerSpans = remember(document) {
+        document.spans.filter { it.style == SteamRichTextStyle.SPOILER }
+    }
+    var pressedSpoiler by remember(document) { mutableStateOf<SteamRichTextSpan?>(null) }
+    var textLayout by remember(document) { mutableStateOf<TextLayoutResult?>(null) }
     val linkListener = remember(onOpenLink) {
         LinkInteractionListener { annotation ->
             (annotation as? LinkAnnotation.Url)?.url?.let(onOpenLink)
@@ -77,27 +94,60 @@ internal fun SteamRichText(
         linkColor,
         codeBackground,
         quoteColor,
+        spoilerMaskColor,
         contentColor,
         linkListener,
         inlineRanges,
+        pressedSpoiler,
     ) {
         buildSteamRichAnnotatedString(
             document = document,
             linkColor = linkColor,
             codeBackground = codeBackground,
             quoteColor = quoteColor,
+            spoilerMaskColor = spoilerMaskColor,
             contentColor = contentColor,
             linkListener = linkListener,
             inlineRanges = inlineRanges,
+            revealedSpoilers = setOfNotNull(pressedSpoiler),
         )
+    }
+    val spoilerPressModifier = if (spoilerSpans.isEmpty()) {
+        Modifier
+    } else {
+        Modifier.pointerInput(document, textLayout) {
+            awaitEachGesture {
+                val down = awaitFirstDown(requireUnconsumed = false)
+                val offset = textLayout?.getOffsetForPosition(down.position)
+                    ?: return@awaitEachGesture
+                val spoiler = spoilerSpans.firstOrNull {
+                    offset >= it.start && offset < it.endExclusive
+                } ?: return@awaitEachGesture
+                down.consume()
+                pressedSpoiler = spoiler
+                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                try {
+                    while (true) {
+                        val change = awaitPointerEvent().changes.firstOrNull {
+                            it.id == down.id
+                        } ?: break
+                        change.consume()
+                        if (!change.pressed) break
+                    }
+                } finally {
+                    pressedSpoiler = null
+                }
+            }
+        }
     }
     Text(
         text = annotated,
         inlineContent = inlineContent,
-        modifier = modifier,
+        modifier = modifier.then(spoilerPressModifier),
         style = style,
         maxLines = maxLines,
         overflow = overflow,
+        onTextLayout = { textLayout = it },
     )
 }
 
@@ -112,9 +162,11 @@ private fun buildSteamRichAnnotatedString(
     linkColor: Color,
     codeBackground: Color,
     quoteColor: Color,
+    spoilerMaskColor: Color,
     contentColor: Color,
     linkListener: LinkInteractionListener,
     inlineRanges: List<SteamRichTextInlineRange>,
+    revealedSpoilers: Set<SteamRichTextSpan>,
 ): AnnotatedString = AnnotatedString.Builder().apply {
     val validInlineRanges = inlineRanges
         .sortedBy(SteamRichTextInlineRange::start)
@@ -157,10 +209,17 @@ private fun buildSteamRichAnnotatedString(
                 )
                 SteamRichTextStyle.HEADING -> SpanStyle(fontWeight = FontWeight.SemiBold)
                 SteamRichTextStyle.HIGHLIGHT -> SpanStyle(background = linkColor.copy(alpha = 0.18f))
-                SteamRichTextStyle.SPOILER -> SpanStyle(
-                    background = contentColor,
-                    color = contentColor,
-                )
+                SteamRichTextStyle.SPOILER -> if (span in revealedSpoilers) {
+                    SpanStyle(
+                        background = spoilerMaskColor.copy(alpha = 0.18f),
+                        color = contentColor,
+                    )
+                } else {
+                    SpanStyle(
+                        background = spoilerMaskColor,
+                        color = spoilerMaskColor,
+                    )
+                }
             },
             start = span.start,
             end = span.endExclusive,
