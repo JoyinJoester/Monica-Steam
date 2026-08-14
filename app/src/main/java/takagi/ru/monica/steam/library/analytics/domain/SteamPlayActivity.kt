@@ -1,6 +1,10 @@
 package takagi.ru.monica.steam.library.analytics.domain
 
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import kotlinx.serialization.Serializable
+import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.library.SteamLibrarySnapshot
 
 @Serializable
@@ -36,16 +40,17 @@ data class SteamPlayActivityGame(
 )
 
 /**
- * Steam exposes cumulative playtime and a rolling two-week total, not a daily timeline. The first
- * observation seeds the current day with that recent total so the heatmap is immediately useful;
- * later positive cumulative deltas are attributed to the local day on which they are observed.
+ * Steam exposes cumulative playtime, a rolling two-week total and only the most recent play time
+ * for each game. Playtime deltas are attributed to that Steam-provided date when it belongs to the
+ * current observation window; otherwise the local snapshot date is used as a safe fallback.
  */
 fun updateSteamPlayActivity(
     previous: SteamPlayActivityHistory?,
     snapshot: SteamLibrarySnapshot,
     localDate: String,
     recordedAt: Long,
-    retentionDays: Int = 400
+    retentionDays: Int = 400,
+    zoneId: ZoneId = ZoneId.systemDefault()
 ): SteamPlayActivityHistory {
     val previousBaseline = previous?.baseline.orEmpty().associateBy(SteamPlaytimeBaseline::appId)
     val shouldSeedRecent = (previous == null || previous.days.isEmpty()) &&
@@ -55,12 +60,15 @@ fun updateSteamPlayActivity(
             game.playtimeRecentMinutes
                 .takeIf { it > 0 }
                 ?.let { minutes ->
-                    SteamPlayActivityGame(
-                        appId = game.appId,
-                        gameName = game.name,
-                        minutes = minutes,
-                        iconHash = game.iconHash,
-                        headerImageUrl = game.headerImageUrl
+                    SteamPlayActivityDelta(
+                        date = resolveSteamPlayActivityDate(
+                            game = game,
+                            previousRecordedAt = null,
+                            recordedAt = recordedAt,
+                            fallbackDate = localDate,
+                            zoneId = zoneId
+                        ),
+                        game = game.toPlayActivity(minutes)
                     )
                 }
         }
@@ -70,30 +78,36 @@ fun updateSteamPlayActivity(
         snapshot.games.mapNotNull { game ->
             val old = previousBaseline[game.appId] ?: return@mapNotNull null
             val delta = game.playtimeForeverMinutes - old.cumulativeMinutes
-            if (delta <= 0) null else SteamPlayActivityGame(
-                appId = game.appId,
-                gameName = game.name,
-                minutes = delta,
-                iconHash = game.iconHash,
-                headerImageUrl = game.headerImageUrl
+            if (delta <= 0) null else SteamPlayActivityDelta(
+                date = resolveSteamPlayActivityDate(
+                    game = game,
+                    previousRecordedAt = previous?.updatedAt?.takeIf { it > 0L },
+                    recordedAt = recordedAt,
+                    fallbackDate = localDate,
+                    zoneId = zoneId
+                ),
+                game = game.toPlayActivity(delta)
             )
         }
     }
 
     val updatedDays = previous?.days.orEmpty().toMutableList()
-    if (deltas.isNotEmpty()) {
-        val existingIndex = updatedDays.indexOfFirst { it.date == localDate }
-        val existingGames = if (existingIndex >= 0) {
-            updatedDays[existingIndex].games.associateBy(SteamPlayActivityGame::appId).toMutableMap()
-        } else {
-            mutableMapOf()
-        }
-        deltas.forEach { delta ->
-            val old = existingGames[delta.appId]
-            existingGames[delta.appId] = delta.copy(minutes = delta.minutes + (old?.minutes ?: 0))
+    deltas.groupBy(SteamPlayActivityDelta::date).forEach { (date, datedDeltas) ->
+        val existingIndex = updatedDays.indexOfFirst { it.date == date }
+        val existingGames = updatedDays
+            .getOrNull(existingIndex)
+            ?.games
+            .orEmpty()
+            .associateBy(SteamPlayActivityGame::appId)
+            .toMutableMap()
+        datedDeltas.forEach { delta ->
+            val old = existingGames[delta.game.appId]
+            existingGames[delta.game.appId] = delta.game.copy(
+                minutes = delta.game.minutes + (old?.minutes ?: 0)
+            )
         }
         val day = SteamPlayActivityDay(
-            date = localDate,
+            date = date,
             games = existingGames.values.sortedByDescending(SteamPlayActivityGame::minutes)
         )
         if (existingIndex >= 0) updatedDays[existingIndex] = day else updatedDays += day
@@ -123,3 +137,48 @@ fun updateSteamPlayActivity(
         updatedAt = recordedAt
     )
 }
+
+private data class SteamPlayActivityDelta(
+    val date: String,
+    val game: SteamPlayActivityGame
+)
+
+private fun SteamGame.toPlayActivity(minutes: Int): SteamPlayActivityGame = SteamPlayActivityGame(
+    appId = appId,
+    gameName = name,
+    minutes = minutes,
+    iconHash = iconHash,
+    headerImageUrl = headerImageUrl
+)
+
+private fun resolveSteamPlayActivityDate(
+    game: SteamGame,
+    previousRecordedAt: Long?,
+    recordedAt: Long,
+    fallbackDate: String,
+    zoneId: ZoneId
+): String {
+    val lastPlayedDate = runCatching {
+        game.lastPlayedAt
+            .takeIf { it > 0L }
+            ?.let { LocalDate.ofInstant(Instant.ofEpochSecond(it), zoneId) }
+    }.getOrNull() ?: return fallbackDate
+    val recordedDate = runCatching {
+        LocalDate.ofInstant(Instant.ofEpochMilli(recordedAt), zoneId)
+    }.getOrNull() ?: return fallbackDate
+    if (lastPlayedDate > recordedDate) return fallbackDate
+
+    val earliestTrustedDate = previousRecordedAt
+        ?.let { timestamp ->
+            runCatching {
+                LocalDate.ofInstant(Instant.ofEpochMilli(timestamp), zoneId)
+            }.getOrNull()
+        }
+        ?: recordedDate.minusDays(RECENT_PLAYTIME_WINDOW_DAYS)
+    return lastPlayedDate
+        .takeIf { it >= earliestTrustedDate }
+        ?.toString()
+        ?: fallbackDate
+}
+
+private const val RECENT_PLAYTIME_WINDOW_DAYS = 14L

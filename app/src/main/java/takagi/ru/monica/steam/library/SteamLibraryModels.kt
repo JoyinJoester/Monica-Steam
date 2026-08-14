@@ -19,7 +19,8 @@ data class SteamGame(
     val ownership: SteamGameOwnership = SteamGameOwnership.OWNED,
     val ownerSteamIds: List<String> = emptyList(),
     val supportsSteamCloud: Boolean? = null,
-    val achievementProgressPlaytimeMinutes: Int? = null
+    val achievementProgressPlaytimeMinutes: Int? = null,
+    val lastPlayedAt: Long = 0L
 ) {
     val isPerfectAchievementGame: Boolean
         get() {

@@ -355,7 +355,8 @@ class SteamGameLibraryService(
                         name = game[2]?.asString.orEmpty().ifBlank { "App $appId" },
                         playtimeRecentMinutes = game[3]?.asLong?.coerceAtLeast(0L)?.toInt() ?: 0,
                         playtimeForeverMinutes = game[4]?.asLong?.coerceAtLeast(0L)?.toInt() ?: 0,
-                        iconHash = game[5]?.asString.orEmpty()
+                        iconHash = game[5]?.asString.orEmpty(),
+                        lastPlayedAt = game[11]?.asLong?.coerceAtLeast(0L) ?: 0L
                     )
                 }
         }

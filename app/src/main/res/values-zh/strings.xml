@@ -4128,7 +4128,7 @@
     <string name="steam_library_account_overview">账号数据</string>
     <string name="steam_analytics_game_distribution">游戏数分布</string>
     <string name="steam_analytics_game_heatmap">游戏热力图</string>
-    <string name="steam_analytics_local_tracking_note">首次同步会将 Steam 近两周时长记在同步当天，之后按本机同步增量记录。</string>
+    <string name="steam_analytics_local_tracking_note">根据 Steam 上次游玩时间估算日期；同一游戏跨多日的时长仍以最近日期记录。</string>
     <string name="steam_analytics_day_total">当日合计：%1$s</string>
     <string name="steam_analytics_playtime">游戏时长</string>
     <string name="steam_analytics_price">游戏价格</string>

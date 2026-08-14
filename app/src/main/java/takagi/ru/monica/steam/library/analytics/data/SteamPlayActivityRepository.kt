@@ -35,7 +35,8 @@ class SteamPlayActivityRepository(
             previous = read(snapshot.accountId),
             snapshot = snapshot,
             localDate = LocalDate.ofInstant(Instant.ofEpochMilli(nowMillis), zoneId).toString(),
-            recordedAt = nowMillis
+            recordedAt = nowMillis,
+            zoneId = zoneId
         )
         write(history)
         history

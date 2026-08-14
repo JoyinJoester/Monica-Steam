@@ -356,6 +356,7 @@ class SteamLibraryModelsTest {
             writeUint64(3, 45L)
             writeUint64(4, 1_234L)
             writeString(5, "icon-hash")
+            writeUint64(11, 1_754_263_800L)
         }
         val response = SteamProtoWriter().apply {
             writeVarint(1, 1L)
@@ -370,6 +371,7 @@ class SteamLibraryModelsTest {
         assertEquals(45, parsed.single().playtimeRecentMinutes)
         assertEquals(1_234, parsed.single().playtimeForeverMinutes)
         assertEquals("icon-hash", parsed.single().iconHash)
+        assertEquals(1_754_263_800L, parsed.single().lastPlayedAt)
     }
 
     @Test

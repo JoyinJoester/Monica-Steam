@@ -4298,7 +4298,7 @@
     <string name="steam_library_account_overview">Account overview</string>
     <string name="steam_analytics_game_distribution">Game distribution</string>
     <string name="steam_analytics_game_heatmap">Game heatmap</string>
-    <string name="steam_analytics_local_tracking_note">The first sync places Steam’s recent two-week playtime on the sync day. Later days use local sync changes.</string>
+    <string name="steam_analytics_local_tracking_note">Dates use Steam’s last-played time; playtime for one game across several days remains assigned to its latest date.</string>
     <string name="steam_analytics_day_total">Total: %1$s</string>
     <string name="steam_analytics_playtime">Playtime</string>
     <string name="steam_analytics_price">Price</string>

@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.library.analytics.domain
 
+import java.time.Instant
+import java.time.ZoneOffset
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -11,13 +13,22 @@ class SteamPlayActivityTest {
     fun firstSnapshotSeedsRecentPlaytimeAndEstablishesBaseline() {
         val history = updateSteamPlayActivity(
             previous = null,
-            snapshot = snapshot(game(10, "Portal", 600, recentMinutes = 45)),
+            snapshot = snapshot(
+                game(
+                    appId = 10,
+                    name = "Portal",
+                    minutes = 600,
+                    recentMinutes = 45,
+                    lastPlayedAt = Instant.parse("2026-07-22T18:00:00Z").epochSecond
+                )
+            ),
             localDate = "2026-07-24",
-            recordedAt = 1L
+            recordedAt = Instant.parse("2026-07-24T12:00:00Z").toEpochMilli(),
+            zoneId = ZoneOffset.UTC
         )
 
         assertEquals(45, history.days.single().totalMinutes)
-        assertEquals("2026-07-24", history.days.single().date)
+        assertEquals("2026-07-22", history.days.single().date)
         assertEquals(600, history.baseline.single().cumulativeMinutes)
     }
 
@@ -113,16 +124,82 @@ class SteamPlayActivityTest {
         assertEquals("https://cdn.example/header.jpg", activity.headerImageUrl)
     }
 
+    @Test
+    fun elapsedSnapshotsUseEachGamesLastPlayedDate() {
+        val previous = SteamPlayActivityHistory(
+            accountId = 1L,
+            baseline = listOf(
+                SteamPlaytimeBaseline(10, "Portal", 600),
+                SteamPlaytimeBaseline(20, "Half-Life", 300)
+            ),
+            updatedAt = Instant.parse("2026-08-10T12:00:00Z").toEpochMilli()
+        )
+
+        val history = updateSteamPlayActivity(
+            previous = previous,
+            snapshot = snapshot(
+                game(
+                    appId = 10,
+                    name = "Portal",
+                    minutes = 630,
+                    lastPlayedAt = Instant.parse("2026-08-11T21:30:00Z").epochSecond
+                ),
+                game(
+                    appId = 20,
+                    name = "Half-Life",
+                    minutes = 345,
+                    lastPlayedAt = Instant.parse("2026-08-12T08:15:00Z").epochSecond
+                )
+            ),
+            localDate = "2026-08-13",
+            recordedAt = Instant.parse("2026-08-13T09:00:00Z").toEpochMilli(),
+            zoneId = ZoneOffset.UTC
+        )
+
+        assertEquals(listOf("2026-08-12", "2026-08-11"), history.days.map { it.date })
+        assertEquals(45, history.days.first { it.date == "2026-08-12" }.totalMinutes)
+        assertEquals(30, history.days.first { it.date == "2026-08-11" }.totalMinutes)
+    }
+
+    @Test
+    fun staleLastPlayedTimestampFallsBackToSnapshotDate() {
+        val previous = SteamPlayActivityHistory(
+            accountId = 1L,
+            baseline = listOf(SteamPlaytimeBaseline(10, "Portal", 600)),
+            updatedAt = Instant.parse("2026-08-12T12:00:00Z").toEpochMilli()
+        )
+
+        val history = updateSteamPlayActivity(
+            previous = previous,
+            snapshot = snapshot(
+                game(
+                    appId = 10,
+                    name = "Portal",
+                    minutes = 630,
+                    lastPlayedAt = Instant.parse("2026-08-11T21:30:00Z").epochSecond
+                )
+            ),
+            localDate = "2026-08-13",
+            recordedAt = Instant.parse("2026-08-13T09:00:00Z").toEpochMilli(),
+            zoneId = ZoneOffset.UTC
+        )
+
+        assertEquals("2026-08-13", history.days.single().date)
+        assertEquals(30, history.days.single().totalMinutes)
+    }
+
     private fun game(
         appId: Int,
         name: String,
         minutes: Int,
-        recentMinutes: Int = 0
+        recentMinutes: Int = 0,
+        lastPlayedAt: Long = 0L
     ) = SteamGame(
         appId = appId,
         name = name,
         playtimeForeverMinutes = minutes,
-        playtimeRecentMinutes = recentMinutes
+        playtimeRecentMinutes = recentMinutes,
+        lastPlayedAt = lastPlayedAt
     )
 
     private fun snapshot(vararg games: SteamGame) = SteamLibrarySnapshot(
