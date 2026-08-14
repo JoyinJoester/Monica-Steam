@@ -38,6 +38,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -85,7 +86,6 @@ internal fun SteamChatMessageBubble(
     modifier: Modifier = Modifier
 ) {
     val outgoing = message.isOutgoing(accountSteamId)
-    val retryable = outgoing && message.deliveryState == SteamChatDeliveryState.FAILED_RETRYABLE
     val haptics = LocalHapticFeedback.current
     val retryLabel = stringResource(R.string.steam_chat_retry_send)
     val bubbleShape = chatBubbleShape(outgoing, groupedWithPrevious, groupedWithNext)
@@ -96,14 +96,8 @@ internal fun SteamChatMessageBubble(
         (richContent is SteamChatRichContent.Attachment &&
             richContent.kind == SteamChatAttachmentKind.IMAGE) ||
         isSingleSteamEmoticonMessage(message.body)
-    val interactionModifier = Modifier.pointerInput(retryable, message.stableId) {
+    val interactionModifier = Modifier.pointerInput(message.stableId) {
         detectTapGestures(
-            onTap = {
-                if (retryable) {
-                    haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
-                    onRetry()
-                }
-            },
             onLongPress = {
                 haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                 onLongClick()
@@ -133,6 +127,7 @@ internal fun SteamChatMessageBubble(
                         message = message,
                         outgoing = outgoing,
                         retryLabel = retryLabel,
+                        onRetry = onRetry,
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 3.dp, end = 4.dp)
@@ -173,6 +168,7 @@ internal fun SteamChatMessageBubble(
                                     message = message,
                                     outgoing = outgoing,
                                     retryLabel = retryLabel,
+                                    onRetry = onRetry,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                                 )
                             }
@@ -194,7 +190,12 @@ internal fun SteamChatMessageBubble(
                                 onOpenStoreApp = onOpenStoreApp,
                                 modifier = Modifier.weight(1f, fill = false)
                             )
-                            DeliveryMetadata(message, outgoing, retryLabel)
+                            DeliveryMetadata(
+                                message = message,
+                                outgoing = outgoing,
+                                retryLabel = retryLabel,
+                                onRetry = onRetry
+                            )
                         }
                     }
                 }
@@ -296,8 +297,10 @@ private fun DeliveryMetadata(
     message: SteamChatMessage,
     outgoing: Boolean,
     retryLabel: String,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val haptics = LocalHapticFeedback.current
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(message.timestamp * 1_000L)),
@@ -327,7 +330,20 @@ private fun DeliveryMetadata(
                         modifier = Modifier.size(15.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
-                    SteamChatDeliveryState.FAILED_RETRYABLE,
+                    SteamChatDeliveryState.FAILED_RETRYABLE -> IconButton(
+                        onClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
+                            onRetry()
+                        },
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.ErrorOutline,
+                            contentDescription = retryLabel,
+                            modifier = Modifier.size(18.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
                     SteamChatDeliveryState.FAILED_PERMANENT -> Icon(
                         Icons.Default.ErrorOutline,
                         contentDescription = retryLabel,

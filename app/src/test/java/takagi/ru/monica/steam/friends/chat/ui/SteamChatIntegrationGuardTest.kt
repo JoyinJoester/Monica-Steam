@@ -116,6 +116,24 @@ class SteamChatIntegrationGuardTest {
     }
 
     @Test
+    fun retryableMessageHasADedicatedAccessibleRetryButton() {
+        val bubble = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatMessageBubble.kt"
+        ).readText()
+        val deliveryMetadata = bubble.substringAfter("private fun DeliveryMetadata(")
+
+        assertTrue(deliveryMetadata.contains("onRetry: () -> Unit"))
+        assertTrue(
+            deliveryMetadata.contains(
+                "SteamChatDeliveryState.FAILED_RETRYABLE -> IconButton("
+            )
+        )
+        assertTrue(deliveryMetadata.contains("contentDescription = retryLabel"))
+        assertTrue(deliveryMetadata.contains("onRetry()"))
+        assertTrue(deliveryMetadata.contains("HapticFeedbackType.ContextClick"))
+    }
+
+    @Test
     fun openingAThreadCanHideRootSteamChrome() {
         val chatScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt"

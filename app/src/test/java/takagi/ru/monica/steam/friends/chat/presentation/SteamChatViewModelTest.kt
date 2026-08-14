@@ -63,6 +63,8 @@ class SteamChatViewModelTest {
     @Test
     fun failedOptimisticMessageCanRetryInPlace() = runTest(mainDispatcher.scheduler) {
         var sendCount = 0
+        val body = "这个好游戏\nhttps://store.steampowered.com/app/2358720/"
+        val replyToStableId = "reply-message"
         val gateway = FakeGateway().apply {
             sendBlock = { account, partner, body, clientId ->
                 sendCount++
@@ -85,7 +87,7 @@ class SteamChatViewModelTest {
         viewModel.openThread(partner)
         runCurrent()
 
-        viewModel.sendMessage("hello")
+        viewModel.sendReply(body, replyToStableId)
         assertEquals(
             SteamChatDeliveryState.QUEUED,
             viewModel.uiState.value.thread?.messages?.single()?.deliveryState
@@ -93,13 +95,20 @@ class SteamChatViewModelTest {
         runCurrent()
         val failed = viewModel.uiState.value.thread?.messages?.single()
         assertEquals(SteamChatDeliveryState.FAILED_RETRYABLE, failed?.deliveryState)
+        val originalClientMessageId = failed?.clientMessageId.orEmpty()
 
-        viewModel.retryMessage(failed?.clientMessageId.orEmpty())
+        viewModel.retryMessage(originalClientMessageId)
+        viewModel.retryMessage(originalClientMessageId)
         runCurrent()
 
-        val sent = viewModel.uiState.value.thread?.messages?.single()
+        val messages = viewModel.uiState.value.thread?.messages.orEmpty()
+        val sent = messages.single()
         assertEquals(SteamChatDeliveryState.SENT, sent?.deliveryState)
         assertEquals(200L, sent?.timestamp)
+        assertEquals(originalClientMessageId, sent?.clientMessageId)
+        assertEquals(body, sent?.body)
+        assertEquals(replyToStableId, sent?.replyToStableId)
+        assertEquals(1, messages.size)
         assertEquals(2, sendCount)
         assertEquals(partner, viewModel.uiState.value.sessions?.sessions?.first()?.partnerSteamId)
         assertEquals(200L, viewModel.uiState.value.sessions?.sessions?.first()?.lastMessageTimestamp)
