@@ -499,7 +499,11 @@ private fun SteamLibraryOverview(
                 SteamAchievementSyncStatus(
                     syncing = state.syncingAchievementProgress,
                     failureMessage = state.achievementProgressFailure?.let {
-                        libraryFailureLabel(it)
+                        if (state.achievementProgressPartialFailure) {
+                            stringResource(R.string.steam_library_achievement_sync_partial_failure)
+                        } else {
+                            libraryFailureLabel(it)
+                        }
                     },
                     onRetry = onSyncAllAchievements,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)

@@ -411,7 +411,7 @@ class SteamLibraryModelsTest {
             .substringAfter("method = \"GetAchievementsProgress\"")
             .substringBefore("accessToken = accessToken")
 
-        assertTrue(request.contains("batch.forEach { appId ->"))
+        assertTrue(request.contains("appIds.forEach { appId ->"))
         assertTrue(request.contains("writeVarint(3, appId.toLong())"))
         assertFalse(request.contains("writePackedVarints(3"))
     }
@@ -498,6 +498,33 @@ class SteamLibraryModelsTest {
 
         assertTrue(plan.isFullSync)
         assertEquals(listOf(10, 20), plan.appIds)
+    }
+
+    @Test
+    fun interruptedFirstAchievementSyncOnlyRetriesGamesWithoutSavedProgress() {
+        val snapshot = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(
+                SteamGame(
+                    10,
+                    "Saved batch",
+                    100,
+                    0,
+                    achievementProgressPlaytimeMinutes = 100
+                ),
+                SteamGame(20, "Missing batch", 120, 0)
+            ),
+            fetchedAt = 2L,
+            achievementProgressFullSyncAt = null
+        )
+
+        val plan = planSteamAchievementProgressSync(
+            current = snapshot,
+            forceFull = false
+        )
+
+        assertTrue(plan.isFullSync)
+        assertEquals(listOf(20), plan.appIds)
     }
 
     @Test
@@ -860,6 +887,92 @@ class SteamLibraryModelsTest {
 
         assertTrue(result is SteamLibraryResult.Success)
         assertEquals(3, requests.count { it.contains("GetAchievementsProgress") })
+    }
+
+    @Test
+    fun achievementProgressSyncKeepsSuccessfulBatchesWhenOneBatchFails() {
+        var requestCount = 0
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                requestCount++
+                if (requestCount == 2) throw IOException("simulated middle batch failure")
+                val appId = if (requestCount == 1) 1 else 201
+                val response = SteamProtoWriter().apply {
+                    writeMessage(1, SteamProtoWriter().apply {
+                        writeVarint(1, appId.toLong())
+                        writeVarint(2, 1L)
+                        writeVarint(3, 10L)
+                    })
+                }.toByteArray()
+                Response.Builder()
+                    .request(chain.request())
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body(response.toResponseBody("application/octet-stream".toMediaType()))
+                    .build()
+            }
+            .build()
+
+        val result = SteamGameLibraryService(SteamApiClient(httpClient)).fetchAchievementProgress(
+            account = account(accessToken = "access-token"),
+            appIds = (1..201).toList(),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        val fetch = (result as SteamLibraryResult.Success).value
+        assertEquals(
+            setOf(1, 201),
+            fetch.progress.keys
+        )
+        assertEquals((1..100).toSet() + 201, fetch.syncedAppIds)
+        assertEquals(SteamLibraryFailureReason.NETWORK, fetch.failure)
+        assertEquals(3, requestCount)
+    }
+
+    @Test
+    fun achievementProgressSyncRetriesTransportFailureThroughSystemDns() {
+        val primaryClient = OkHttpClient.Builder()
+            .addInterceptor { throw IOException("simulated optimized route failure") }
+            .build()
+        var fallbackCalls = 0
+        val fallbackClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                fallbackCalls++
+                val response = SteamProtoWriter().apply {
+                    writeMessage(1, SteamProtoWriter().apply {
+                        writeVarint(1, 730L)
+                        writeVarint(2, 10L)
+                        writeVarint(3, 10L)
+                        writeBool(5, true)
+                    })
+                }.toByteArray()
+                Response.Builder()
+                    .request(chain.request())
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body(response.toResponseBody("application/octet-stream".toMediaType()))
+                    .build()
+            }
+            .build()
+
+        val result = SteamGameLibraryService(
+            api = SteamApiClient(primaryClient),
+            systemDnsApi = SteamApiClient(fallbackClient)
+        ).fetchAchievementProgress(
+            account = account(accessToken = "access-token"),
+            appIds = listOf(730),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        val fetch = (result as SteamLibraryResult.Success).value
+        assertEquals(10, fetch.progress.getValue(730).unlocked)
+        assertEquals(setOf(730), fetch.syncedAppIds)
+        assertNull(fetch.failure)
+        assertEquals(1, fallbackCalls)
     }
 
     @Test

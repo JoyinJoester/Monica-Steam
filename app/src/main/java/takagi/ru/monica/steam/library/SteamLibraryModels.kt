@@ -154,6 +154,12 @@ internal data class SteamAchievementProgressSyncPlan(
     val isFullSync: Boolean
 )
 
+internal data class SteamAchievementProgressFetch(
+    val progress: Map<Int, SteamGameAchievementProgress>,
+    val syncedAppIds: Set<Int>,
+    val failure: SteamLibraryFailureReason? = null
+)
+
 internal fun planSteamAchievementProgressSync(
     current: SteamLibrarySnapshot,
     forceFull: Boolean
@@ -162,7 +168,9 @@ internal fun planSteamAchievementProgressSync(
     val isFullSync = forceFull || current.achievementProgressFullSyncAt == null
     if (isFullSync) {
         return SteamAchievementProgressSyncPlan(
-            appIds = currentGames.map(SteamGame::appId),
+            appIds = currentGames
+                .filter { forceFull || it.achievementProgressPlaytimeMinutes == null }
+                .map(SteamGame::appId),
             isFullSync = true
         )
     }

@@ -33,6 +33,11 @@ private data class SteamOwnedGamesFetch(
     val api: SteamApiClient
 )
 
+private data class SteamAchievementProgressBatchFetch(
+    val progress: Map<Int, SteamGameAchievementProgress>,
+    val api: SteamApiClient
+)
+
 class SteamGameLibraryService internal constructor(
     private val api: SteamApiClient,
     private val systemDnsApi: SteamApiClient?
@@ -103,7 +108,7 @@ class SteamGameLibraryService internal constructor(
         primary.getOrNull()?.let { return SteamOwnedGamesFetch(it, api) }
         val primaryError = requireNotNull(primary.exceptionOrNull())
         val fallback = systemDnsApi
-            ?.takeIf { shouldRetryOwnedGamesThroughSystemDns(primaryError) }
+            ?.takeIf { shouldRetryThroughSystemDns(primaryError) }
             ?: throw primaryError
 
         logOwnedGamesFallback("retry", primaryError)
@@ -139,7 +144,7 @@ class SteamGameLibraryService internal constructor(
         )
     )
 
-    private fun shouldRetryOwnedGamesThroughSystemDns(error: Throwable): Boolean = when (error) {
+    private fun shouldRetryThroughSystemDns(error: Throwable): Boolean = when (error) {
         is IOException -> true
         is SteamLibraryException -> error.reason == SteamLibraryFailureReason.INVALID_RESPONSE
         is SteamApiException ->
@@ -212,7 +217,7 @@ class SteamGameLibraryService internal constructor(
         account: SteamAccount,
         appIds: List<Int>,
         language: String
-    ): SteamLibraryResult<Map<Int, SteamGameAchievementProgress>> {
+    ): SteamLibraryResult<SteamAchievementProgressFetch> {
         val token = account.accessToken?.takeIf { it.isNotBlank() }
             ?: return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
         if (!account.hasRealSteamId) {
@@ -310,27 +315,139 @@ class SteamGameLibraryService internal constructor(
         appIds: List<Int>,
         language: String,
         accessToken: String
-    ): Map<Int, SteamGameAchievementProgress> {
+    ): SteamAchievementProgressFetch {
         val progress = mutableMapOf<Int, SteamGameAchievementProgress>()
-        appIds.distinct().chunked(ACHIEVEMENT_PROGRESS_BATCH_SIZE).forEach { batch ->
-            progress += parseAchievementProgress(
-                api.callProtobuf(
-                    iface = "IPlayerService",
-                    method = "GetAchievementsProgress",
-                    request = SteamProtoWriter().apply {
-                        writeUint64(1, steamId)
-                        writeString(2, language)
-                        batch.forEach { appId ->
-                            writeVarint(3, appId.toLong())
-                        }
-                        writeBool(4, true)
-                    },
-                    accessToken = accessToken,
-                    useGet = true
+        val syncedAppIds = linkedSetOf<Int>()
+        var firstFailure: SteamLibraryFailureReason? = null
+        var activeApi = api
+        for (batch in appIds.distinct().chunked(ACHIEVEMENT_PROGRESS_BATCH_SIZE)) {
+            val result = runCatching {
+                fetchAchievementProgressBatchWithNetworkFallback(
+                    primaryApi = activeApi,
+                    steamId = steamId,
+                    appIds = batch,
+                    language = language,
+                    accessToken = accessToken
                 )
+            }
+            val fetched = result.getOrNull()
+            if (fetched != null) {
+                progress += fetched.progress
+                syncedAppIds += batch
+                activeApi = fetched.api
+                continue
+            }
+
+            val error = requireNotNull(result.exceptionOrNull())
+            val reason = failureReason(error)
+            if (reason == SteamLibraryFailureReason.SESSION_REQUIRED) throw error
+            if (firstFailure == null || reason == SteamLibraryFailureReason.RATE_LIMITED) {
+                firstFailure = reason
+            }
+            logAchievementProgressBatchFailure(batch.size, error)
+            if (reason == SteamLibraryFailureReason.RATE_LIMITED) break
+        }
+        return SteamAchievementProgressFetch(
+            progress = progress,
+            syncedAppIds = syncedAppIds,
+            failure = firstFailure
+        )
+    }
+
+    private fun fetchAchievementProgressBatchWithNetworkFallback(
+        primaryApi: SteamApiClient,
+        steamId: Long,
+        appIds: List<Int>,
+        language: String,
+        accessToken: String
+    ): SteamAchievementProgressBatchFetch {
+        val primary = runCatching {
+            fetchAchievementProgressBatch(
+                client = primaryApi,
+                steamId = steamId,
+                appIds = appIds,
+                language = language,
+                accessToken = accessToken
             )
         }
-        return progress
+        primary.getOrNull()?.let {
+            return SteamAchievementProgressBatchFetch(progress = it, api = primaryApi)
+        }
+        val primaryError = requireNotNull(primary.exceptionOrNull())
+        val fallback = systemDnsApi
+            ?.takeIf { primaryApi === api && shouldRetryThroughSystemDns(primaryError) }
+            ?: throw primaryError
+
+        logAchievementProgressFallback("retry", appIds.size, primaryError)
+        return runCatching {
+            fetchAchievementProgressBatch(
+                client = fallback,
+                steamId = steamId,
+                appIds = appIds,
+                language = language,
+                accessToken = accessToken
+            )
+        }.onSuccess {
+            runCatching {
+                SteamDiagLogger.append(
+                    "library_achievement_progress system_dns_success batch_size=${appIds.size}"
+                )
+            }
+        }.map { parsed ->
+            SteamAchievementProgressBatchFetch(progress = parsed, api = fallback)
+        }.getOrElse { fallbackError ->
+            logAchievementProgressFallback("failed", appIds.size, fallbackError)
+            throw fallbackError
+        }
+    }
+
+    private fun fetchAchievementProgressBatch(
+        client: SteamApiClient,
+        steamId: Long,
+        appIds: List<Int>,
+        language: String,
+        accessToken: String
+    ): Map<Int, SteamGameAchievementProgress> = parseAchievementProgress(
+        client.callProtobuf(
+            iface = "IPlayerService",
+            method = "GetAchievementsProgress",
+            request = SteamProtoWriter().apply {
+                writeUint64(1, steamId)
+                writeString(2, language)
+                appIds.forEach { appId ->
+                    writeVarint(3, appId.toLong())
+                }
+                writeBool(4, true)
+            },
+            accessToken = accessToken,
+            useGet = true
+        )
+    )
+
+    private fun logAchievementProgressFallback(
+        stage: String,
+        batchSize: Int,
+        error: Throwable
+    ) {
+        val apiError = error as? SteamApiException
+        runCatching {
+            SteamDiagLogger.append(
+                "library_achievement_progress system_dns_$stage batch_size=$batchSize " +
+                    "type=${error::class.java.simpleName} " +
+                    "http=${apiError?.httpStatusCode ?: -1} eresult=${apiError?.eResult ?: -1}"
+            )
+        }
+    }
+
+    private fun logAchievementProgressBatchFailure(batchSize: Int, error: Throwable) {
+        val apiError = error as? SteamApiException
+        runCatching {
+            SteamDiagLogger.append(
+                "library_achievement_progress batch_failed batch_size=$batchSize " +
+                    "type=${error::class.java.simpleName} " +
+                    "http=${apiError?.httpStatusCode ?: -1} eresult=${apiError?.eResult ?: -1}"
+            )
+        }
     }
 
     private fun buildStoreItemsRequest(

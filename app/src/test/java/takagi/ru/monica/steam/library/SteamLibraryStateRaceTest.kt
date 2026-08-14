@@ -135,6 +135,34 @@ class SteamLibraryStateRaceTest {
         assertEquals(100L, updated?.snapshot?.achievementProgressFullSyncAt)
     }
 
+    @Test
+    fun partialAchievementProgressOnlyMarksSuccessfulGamesForResume() {
+        val first = SteamGame(620, "Portal 2", 120, 10)
+        val second = SteamGame(730, "Counter-Strike 2", 60, 0)
+        val state = SteamLibraryUiState(
+            selectedAccountId = 7L,
+            snapshot = SteamLibrarySnapshot(
+                accountId = 7L,
+                games = listOf(first, second),
+                fetchedAt = 1L
+            )
+        )
+
+        val updated = applyAchievementProgressToState(
+            state = state,
+            accountId = 7L,
+            progress = mapOf(
+                620 to SteamGameAchievementProgress(620, 50, 50, true)
+            ),
+            syncedAppIds = setOf(620),
+            fullSyncAt = null
+        )
+
+        assertEquals(120, updated?.snapshot?.games?.first()?.achievementProgressPlaytimeMinutes)
+        assertNull(updated?.snapshot?.games?.last()?.achievementProgressPlaytimeMinutes)
+        assertNull(updated?.snapshot?.achievementProgressFullSyncAt)
+    }
+
     private fun account(steamId: String) = SteamAccount(
         id = 7L,
         steamId = steamId,

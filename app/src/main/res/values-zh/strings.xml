@@ -4105,6 +4105,7 @@
     <string name="steam_library_sync_all_achievements">同步全部成就</string>
     <string name="steam_library_syncing_achievements">正在同步成就…</string>
     <string name="steam_library_syncing_achievements_background">正在后台补全整库成就，期间可以继续使用游戏库。</string>
+    <string name="steam_library_achievement_sync_partial_failure">部分成就同步失败，成功结果已经保留；重试将继续补全剩余内容。</string>
     <string name="steam_library_sync_started">已开始同步全部成就</string>
     <string name="steam_library_sync_unavailable">当前无法同步，请先刷新游戏库或检查登录状态。</string>
     <string name="steam_library_no_achievements">这个游戏没有 Steam 成就。</string>
