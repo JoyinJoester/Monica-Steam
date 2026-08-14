@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.library
 
+import java.io.IOException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -645,6 +646,108 @@ class SteamLibraryModelsTest {
             "GET",
             requests.single { it.second.contains("GetOwnedGames") }.first
         )
+    }
+
+    @Test
+    fun ownedGamesTransportFailureRetriesThroughSystemDnsClient() {
+        val ownedGamesResponse = SteamProtoWriter().apply {
+            writeVarint(1, 1L)
+            writeMessage(2, ownedGame(appId = 730, name = "Counter-Strike 2"))
+        }.toByteArray()
+        val primaryRequests = mutableListOf<String>()
+        val fallbackRequests = mutableListOf<String>()
+        val primaryClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                primaryRequests += chain.request().url.encodedPath
+                throw IOException("simulated optimized route failure")
+            }
+            .build()
+        val fallbackClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request()
+                fallbackRequests += request.url.encodedPath
+                val body = when {
+                    request.url.encodedPath.contains("GetOwnedGames") -> ownedGamesResponse
+                    request.url.encodedPath.contains("GetFamilyGroupForUser") ->
+                        SteamProtoWriter().apply { writeBool(2, true) }.toByteArray()
+                    request.url.encodedPath.contains("GetItems") -> ByteArray(0)
+                    else -> error("Unexpected fallback request: ${request.url}")
+                }
+                Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(200)
+                    .message("OK")
+                    .body(
+                        body.toResponseBody(
+                            "application/octet-stream".toMediaType()
+                        )
+                    )
+                    .build()
+            }
+            .build()
+
+        val result = SteamGameLibraryService(
+            api = SteamApiClient(primaryClient),
+            systemDnsApi = SteamApiClient(fallbackClient)
+        ).fetchLibrary(
+            account = account(accessToken = "access-token"),
+            countryCode = "CN",
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        assertEquals(listOf(730), (result as SteamLibraryResult.Success).value.games.map { it.appId })
+        assertEquals(
+            listOf("/IPlayerService/GetOwnedGames/v1/"),
+            primaryRequests
+        )
+        assertEquals(
+            listOf(
+                "/IPlayerService/GetOwnedGames/v1/",
+                "/IFamilyGroupsService/GetFamilyGroupForUser/v1/",
+                "/IStoreBrowseService/GetItems/v1/"
+            ),
+            fallbackRequests
+        )
+    }
+
+    @Test
+    fun ownedGamesAuthenticationFailureDoesNotUseNetworkFallback() {
+        var fallbackCalls = 0
+        val primaryClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                Response.Builder()
+                    .request(chain.request())
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(401)
+                    .message("Unauthorized")
+                    .body(ByteArray(0).toResponseBody("text/plain".toMediaType()))
+                    .build()
+            }
+            .build()
+        val fallbackClient = OkHttpClient.Builder()
+            .addInterceptor {
+                fallbackCalls++
+                error("System DNS fallback must not retry authentication failures")
+            }
+            .build()
+
+        val result = SteamGameLibraryService(
+            api = SteamApiClient(primaryClient),
+            systemDnsApi = SteamApiClient(fallbackClient)
+        ).fetchLibrary(
+            account = account(accessToken = "expired-token"),
+            countryCode = "CN",
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Failure)
+        assertEquals(
+            SteamLibraryFailureReason.SESSION_REQUIRED,
+            (result as SteamLibraryResult.Failure).reason
+        )
+        assertEquals(0, fallbackCalls)
     }
 
     @Test

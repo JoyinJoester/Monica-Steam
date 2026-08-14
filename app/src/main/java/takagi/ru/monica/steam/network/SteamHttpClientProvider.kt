@@ -11,6 +11,11 @@ import takagi.ru.monica.steam.network.optimization.domain.SteamNetworkTargetCata
 
 object SteamHttpClientProvider {
     private val baseClientDelegate = lazy { OkHttpClient.Builder().build() }
+    private val systemDnsClientDelegate = lazy {
+        OkHttpClient.Builder()
+            .dns(Dns.SYSTEM)
+            .build()
+    }
     private val dynamicDnsDelegate = lazy { SteamDynamicDns() }
     private val customHostsDnsDelegate = lazy {
         SteamCustomHostsDns(
@@ -25,6 +30,7 @@ object SteamHttpClientProvider {
     }
 
     val client: OkHttpClient get() = clientDelegate.value
+    internal val systemDnsClient: OkHttpClient get() = systemDnsClientDelegate.value
 
     fun newBuilder(): OkHttpClient.Builder = client.newBuilder()
 

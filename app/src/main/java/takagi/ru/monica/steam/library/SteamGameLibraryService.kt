@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.library
 
+import java.io.IOException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -8,9 +9,11 @@ import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.library.family.SteamFamilyLibraryService
 import takagi.ru.monica.steam.network.SteamApiClient
 import takagi.ru.monica.steam.network.SteamApiException
+import takagi.ru.monica.steam.network.SteamHttpClientProvider
 import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
 
@@ -25,10 +28,21 @@ private data class SteamStoreMetadataResult(
     val failure: SteamLibraryFailureReason?
 )
 
-class SteamGameLibraryService(
-    private val api: SteamApiClient = SteamApiClient()
+private data class SteamOwnedGamesFetch(
+    val games: List<SteamGame>,
+    val api: SteamApiClient
+)
+
+class SteamGameLibraryService internal constructor(
+    private val api: SteamApiClient,
+    private val systemDnsApi: SteamApiClient?
 ) {
-    private val familyLibraryService = SteamFamilyLibraryService(api)
+    constructor() : this(
+        api = SteamApiClient(),
+        systemDnsApi = SteamApiClient(SteamHttpClientProvider.systemDnsClient)
+    )
+
+    constructor(api: SteamApiClient) : this(api = api, systemDnsApi = null)
 
     fun fetchLibrary(
         account: SteamAccount,
@@ -40,28 +54,16 @@ class SteamGameLibraryService(
         if (!account.hasRealSteamId) {
             return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
         }
-        val ownedGames = runCatching {
-            parseOwnedGames(
-                api.callProtobuf(
-                    iface = "IPlayerService",
-                    method = "GetOwnedGames",
-                    request = SteamProtoWriter().apply {
-                        writeUint64(1, account.steamId.toLong())
-                        writeBool(2, true)
-                        writeBool(3, true)
-                        writeString(7, language)
-                    },
-                    accessToken = token,
-                    useGet = true
-                )
-            )
+        val ownedGamesFetch = runCatching {
+            fetchOwnedGamesWithNetworkFallback(account, language, token)
         }.getOrElse { return mapFailure(it) }
-        val familyLibrary = familyLibraryService.fetch(account, language)
+        val familyLibrary = SteamFamilyLibraryService(ownedGamesFetch.api).fetch(account, language)
         val games = mergeOwnedAndFamilySharedGames(
-            ownedGames = ownedGames,
+            ownedGames = ownedGamesFetch.games,
             sharedGames = familyLibrary.games
         )
         val storeMetadata = fetchStoreMetadata(
+            client = ownedGamesFetch.api,
             appIds = games.map(SteamGame::appId),
             countryCode = countryCode,
             language = language,
@@ -88,6 +90,72 @@ class SteamGameLibraryService(
                 familyShareFailure = familyLibrary.failure
             )
         )
+    }
+
+    private fun fetchOwnedGamesWithNetworkFallback(
+        account: SteamAccount,
+        language: String,
+        accessToken: String
+    ): SteamOwnedGamesFetch {
+        val primary = runCatching {
+            fetchOwnedGames(api, account, language, accessToken)
+        }
+        primary.getOrNull()?.let { return SteamOwnedGamesFetch(it, api) }
+        val primaryError = requireNotNull(primary.exceptionOrNull())
+        val fallback = systemDnsApi
+            ?.takeIf { shouldRetryOwnedGamesThroughSystemDns(primaryError) }
+            ?: throw primaryError
+
+        logOwnedGamesFallback("retry", primaryError)
+        return runCatching {
+            fetchOwnedGames(fallback, account, language, accessToken)
+        }.onSuccess {
+            runCatching { SteamDiagLogger.append("library_owned_games system_dns_success") }
+        }.map { games ->
+            SteamOwnedGamesFetch(games = games, api = fallback)
+        }.getOrElse { fallbackError ->
+            logOwnedGamesFallback("failed", fallbackError)
+            throw fallbackError
+        }
+    }
+
+    private fun fetchOwnedGames(
+        client: SteamApiClient,
+        account: SteamAccount,
+        language: String,
+        accessToken: String
+    ): List<SteamGame> = parseOwnedGames(
+        client.callProtobuf(
+            iface = "IPlayerService",
+            method = "GetOwnedGames",
+            request = SteamProtoWriter().apply {
+                writeUint64(1, account.steamId.toLong())
+                writeBool(2, true)
+                writeBool(3, true)
+                writeString(7, language)
+            },
+            accessToken = accessToken,
+            useGet = true
+        )
+    )
+
+    private fun shouldRetryOwnedGamesThroughSystemDns(error: Throwable): Boolean = when (error) {
+        is IOException -> true
+        is SteamLibraryException -> error.reason == SteamLibraryFailureReason.INVALID_RESPONSE
+        is SteamApiException ->
+            error.httpStatusCode?.let { it in RETRYABLE_LIBRARY_HTTP_STATUS_CODES } == true ||
+                error.eResult?.let { it in RETRYABLE_LIBRARY_ERESULTS } == true
+        else -> false
+    }
+
+    private fun logOwnedGamesFallback(stage: String, error: Throwable) {
+        val apiError = error as? SteamApiException
+        runCatching {
+            SteamDiagLogger.append(
+                "library_owned_games system_dns_$stage type=${error::class.java.simpleName} " +
+                    "http=${apiError?.httpStatusCode ?: -1} eresult=${apiError?.eResult ?: -1}"
+            )
+        }
     }
 
     fun fetchAchievements(
@@ -178,6 +246,7 @@ class SteamGameLibraryService(
         var firstFailure: SteamLibraryFailureReason? = null
         countryCodes.map(String::uppercase).distinct().forEach { countryCode ->
             val result = fetchStoreMetadata(
+                client = api,
                 appIds = listOf(appId),
                 countryCode = countryCode,
                 language = language,
@@ -207,6 +276,7 @@ class SteamGameLibraryService(
     }
 
     private fun fetchStoreMetadata(
+        client: SteamApiClient,
         appIds: List<Int>,
         countryCode: String,
         language: String,
@@ -217,7 +287,7 @@ class SteamGameLibraryService(
         appIds.distinct().chunked(STORE_PRICE_BATCH_SIZE).forEach { batch ->
             runCatching {
                 parseStoreItems(
-                    response = api.callProtobuf(
+                    response = client.callProtobuf(
                         iface = "IStoreBrowseService",
                         method = "GetItems",
                         request = buildStoreItemsRequest(batch, countryCode, language),
@@ -306,6 +376,8 @@ class SteamGameLibraryService(
         private const val STORE_PRICE_BATCH_SIZE = 40
         private const val ACHIEVEMENT_PROGRESS_BATCH_SIZE = 100
         private const val STEAM_CLOUD_CATEGORY_ID = 23
+        private val RETRYABLE_LIBRARY_HTTP_STATUS_CODES = setOf(408, 425, 500, 502, 503, 504)
+        private val RETRYABLE_LIBRARY_ERESULTS = setOf(2, 3, 10, 16, 20, 35, 36, 37, 38)
         private const val STORE_ASSET_BASE =
             "https://shared.akamai.steamstatic.com/store_item_assets/"
         private val json = Json { ignoreUnknownKeys = true }
