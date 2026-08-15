@@ -264,6 +264,7 @@ Monica Steam 的设计、兼容性适配与部分功能方向，受到以下优�
 
 - Issue：[Monica Steam Issues](https://github.com/JoyinJoester/Monica-Steam/issues)
 - QQ 群：`1087865010`
+- Telegram 群组：[加入 Monica 社区](https://t.me/+IZUDLL-vWOA1Y2U1)
 - 赞助：[爱发电](https://afdian.com/a/JoyinJoester) · [Ko-fi](https://ko-fi.com/joyinjoester) · [PayPal](https://www.paypal.com/ncp/payment/BHSYWK73CA8FW)
 
 ---
