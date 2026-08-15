@@ -90,7 +90,7 @@ internal suspend fun runSteamAchievementSync(
     }
 
     return firstRetryableFailure?.let { failure ->
-        SteamAchievementSyncRunResult.Retry(
+        SteamAchievementSyncRunResult.PartialFailure(
             completedGames = completed,
             totalGames = total,
             failure = failure

@@ -30,8 +30,8 @@ class SteamAchievementSyncRunnerTest {
         )
 
         assertEquals(listOf(10), checkpoints)
-        assertTrue(result is SteamAchievementSyncRunResult.Retry)
-        result as SteamAchievementSyncRunResult.Retry
+        assertTrue(result is SteamAchievementSyncRunResult.PartialFailure)
+        result as SteamAchievementSyncRunResult.PartialFailure
         assertEquals(1, result.completedGames)
         assertEquals(2, result.totalGames)
         assertEquals(SteamLibraryFailureReason.NETWORK, result.failure)
@@ -107,7 +107,7 @@ class SteamAchievementSyncRunnerTest {
         )
 
         assertEquals(listOf(10, 30), checkpoints)
-        assertTrue(result is SteamAchievementSyncRunResult.Retry)
+        assertTrue(result is SteamAchievementSyncRunResult.PartialFailure)
         assertEquals(2, result.completedGames)
     }
 
