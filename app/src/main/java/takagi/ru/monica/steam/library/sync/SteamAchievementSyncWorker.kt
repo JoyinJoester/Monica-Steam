@@ -27,11 +27,13 @@ class SteamAchievementSyncWorker(
             SteamAchievementSyncCoordinator.KEY_FORCE_FULL,
             false
         )
+        val requestId = inputData.getString(SteamAchievementSyncCoordinator.KEY_REQUEST_ID)
+            ?: return failure(SteamLibraryFailureReason.INVALID_RESPONSE, 0, 0)
         val handle = findHandle(stableKey, accountId, steamId)
             ?: return failure(SteamLibraryFailureReason.SESSION_REQUIRED, 0, 0)
         val coordinator = SteamAchievementSyncCoordinator.get(applicationContext)
         return try {
-            val result = coordinator.runWorker(handle, forceFull) { state ->
+            val result = coordinator.runWorker(handle, forceFull, requestId) { state ->
                 setProgress(state.toWorkData())
             }
             coordinator.publishResult(handle, result)
@@ -42,10 +44,8 @@ class SteamAchievementSyncWorker(
             when (result) {
                 is SteamAchievementSyncRunResult.Completed ->
                     Result.success(result.toWorkData())
-                is SteamAchievementSyncRunResult.Retry -> {
-                    setProgress(result.toWorkData())
-                    Result.retry()
-                }
+                is SteamAchievementSyncRunResult.Superseded ->
+                    Result.success(result.toWorkData())
                 is SteamAchievementSyncRunResult.PartialFailure ->
                     Result.failure(result.toWorkData())
             }
@@ -55,7 +55,7 @@ class SteamAchievementSyncWorker(
             SteamDiagLogger.append(
                 "library_achievement_worker exception type=${error::class.java.simpleName}"
             )
-            Result.retry()
+            failure(SteamLibraryFailureReason.INVALID_RESPONSE, 0, 0)
         }
     }
 
@@ -96,7 +96,7 @@ private fun SteamAchievementSyncState.toWorkData(): Data = Data.Builder()
 private fun SteamAchievementSyncRunResult.toWorkData(): Data {
     val failure = when (this) {
         is SteamAchievementSyncRunResult.Completed -> null
-        is SteamAchievementSyncRunResult.Retry -> failure
+        is SteamAchievementSyncRunResult.Superseded -> null
         is SteamAchievementSyncRunResult.PartialFailure -> failure
     }
     return Data.Builder()

@@ -193,7 +193,10 @@ class SteamGameLibraryService internal constructor(
         }
         val fallback = systemDnsApi
             ?.takeIf { shouldRetryThroughSystemDns(primaryError) }
-            ?: return if (storeConfirmsNoAchievements(game, language)) {
+            ?: return if (
+                achievementProgressConfirmsNoAchievements(account, game, language) ||
+                storeConfirmsNoAchievements(game, language)
+            ) {
                 SteamLibraryResult.Success(emptyAchievements(account.id, game))
             } else {
                 mapFailure(primaryError)
@@ -210,6 +213,7 @@ class SteamGameLibraryService internal constructor(
             onSuccess = { SteamLibraryResult.Success(it) },
             onFailure = { error ->
                 if (isMissingAchievementSchema(error) ||
+                    achievementProgressConfirmsNoAchievements(account, game, language) ||
                     storeConfirmsNoAchievements(game, language)
                 ) {
                     SteamLibraryResult.Success(emptyAchievements(account.id, game))
@@ -253,6 +257,21 @@ class SteamGameLibraryService internal constructor(
             }
         }
         return false
+    }
+
+    private fun achievementProgressConfirmsNoAchievements(
+        account: SteamAccount,
+        game: SteamGame,
+        language: String
+    ): Boolean {
+        val result = fetchAchievementProgress(
+            account = account,
+            appIds = listOf(game.appId),
+            language = language
+        )
+        val fetch = (result as? SteamLibraryResult.Success)?.value ?: return false
+        if (game.appId !in fetch.syncedAppIds) return false
+        return (fetch.progress[game.appId]?.total ?: 0) == 0
     }
 
     private fun fetchAchievements(
@@ -414,7 +433,7 @@ class SteamGameLibraryService internal constructor(
             val fetched = result.getOrNull()
             if (fetched != null) {
                 progress += fetched.progress
-                syncedAppIds += fetched.progress.keys
+                syncedAppIds += batch
                 activeApi = fetched.api
                 continue
             }
@@ -501,7 +520,7 @@ class SteamGameLibraryService internal constructor(
                 writeBool(4, true)
             },
             accessToken = accessToken,
-            useGet = true
+            useGet = false
         )
     )
 

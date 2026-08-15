@@ -654,6 +654,9 @@ class SteamLibraryViewModel internal constructor(
             regionalPriceFailure = null
         )
         handle?.let { viewModelScope.launch { achievementSyncCoordinator?.refreshState(it) } }
+        if (cached?.achievementSyncPlan != null) {
+            scheduleAchievementSync(account, forceFull = false)
+        }
         if (initializedAccountIds.add(account.id)) {
             refreshLibrary()
         } else if (cached != null) {
@@ -1125,7 +1128,9 @@ internal fun mergeLibraryDashboardSnapshot(
         familyGroupId = fresh.familyGroupId
             ?: cached?.familyGroupId?.takeIf { fresh.familyShareFailure != null },
         achievementProgressFullSyncAt = fresh.achievementProgressFullSyncAt
-            ?: cached?.achievementProgressFullSyncAt
+            ?: cached?.achievementProgressFullSyncAt,
+        achievementSyncPlan = fresh.achievementSyncPlan
+            ?: cached?.achievementSyncPlan
     )
     return when (inventoryResult) {
         is SteamLibraryResult.Success -> library.copy(

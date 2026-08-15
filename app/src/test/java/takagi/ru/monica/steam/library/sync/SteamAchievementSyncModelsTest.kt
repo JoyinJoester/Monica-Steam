@@ -44,32 +44,6 @@ class SteamAchievementSyncModelsTest {
         assertEquals(120, updated.games.last().achievementProgressPlaytimeMinutes)
     }
 
-    @Test
-    fun fullSyncMarkerWaitsUntilEveryGameHasACheckpoint() {
-        val incomplete = SteamLibrarySnapshot(
-            accountId = 7L,
-            games = listOf(
-                game(10).copy(
-                    achievementUnlockedCount = 0,
-                    achievementTotalCount = 0,
-                    achievementProgressPlaytimeMinutes = 120
-                ),
-                game(20)
-            ),
-            fetchedAt = 1L
-        )
-
-        assertNull(incomplete.withCompletedAchievementFullSync(100L).achievementProgressFullSyncAt)
-
-        val complete = incomplete.withAchievementCheckpoint(
-            achievements(appId = 20, unlocked = 0, total = 0)
-        )
-        assertEquals(
-            100L,
-            complete.withCompletedAchievementFullSync(100L).achievementProgressFullSyncAt
-        )
-    }
-
     private fun game(
         appId: Int,
         recent: Int = 0,

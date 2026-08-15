@@ -11,10 +11,10 @@ import takagi.ru.monica.steam.data.SteamLibraryCacheRepository
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.library.SteamGameAchievements
-import takagi.ru.monica.steam.library.SteamGameLibraryService
 import takagi.ru.monica.steam.library.SteamLibraryFailureReason
 import takagi.ru.monica.steam.library.SteamLibraryResult
 import takagi.ru.monica.steam.library.steamLibraryFailureReason
+import takagi.ru.monica.steam.library.SteamGameLibraryService
 import takagi.ru.monica.steam.session.data.SteamAccountSessionManager
 import takagi.ru.monica.steam.session.domain.SteamAccountSessionHandle
 
@@ -22,7 +22,8 @@ internal class SteamAchievementSyncRepository(
     private val cacheRepository: SteamLibraryCacheRepository,
     private val sessionManager: SteamAccountSessionManager,
     private val service: SteamGameLibraryService = SteamGameLibraryService(),
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val nowMillis: () -> Long = System::currentTimeMillis
 ) {
     private val inFlightMutex = Mutex()
     private val inFlight = mutableMapOf<String, CompletableDeferred<SteamLibraryResult<SteamGameAchievements>>>()
@@ -31,6 +32,9 @@ internal class SteamAchievementSyncRepository(
         handle: SteamAccountSessionHandle
     ): Pair<Int, Int>? {
         val snapshot = cacheRepository.getLibrary(handle.account.id) ?: return null
+        snapshot.achievementSyncPlan?.let { plan ->
+            return plan.completedGames to plan.totalGames
+        }
         val selection = selectSteamAchievementSyncGames(snapshot, forceFull = false)
         if (!selection.isFullSync) return null
         val total = snapshot.games.distinctBy(SteamGame::appId).size
@@ -40,52 +44,99 @@ internal class SteamAchievementSyncRepository(
     suspend fun syncLibrary(
         handle: SteamAccountSessionHandle,
         forceFull: Boolean,
+        requestId: String,
         onProgress: suspend (completed: Int, total: Int, currentAppId: Int?) -> Unit =
             { _, _, _ -> }
     ): SteamAchievementSyncRunResult {
-        val snapshot = cacheRepository.getLibrary(handle.account.id)
+        var snapshot = cacheRepository.updateLibrary(handle.account.id) { current ->
+            current?.prepareAchievementSyncPlan(
+                requestId = requestId,
+                forceFull = forceFull,
+                nowMillis = nowMillis()
+            )
+        } ?: return SteamAchievementSyncRunResult.PartialFailure(
+            completedGames = 0,
+            totalGames = 0,
+            failure = SteamLibraryFailureReason.INVALID_RESPONSE
+        )
+        var plan = snapshot.achievementSyncPlan
             ?: return SteamAchievementSyncRunResult.PartialFailure(
                 completedGames = 0,
                 totalGames = 0,
                 failure = SteamLibraryFailureReason.INVALID_RESPONSE
             )
-        val selection = selectSteamAchievementSyncGames(snapshot, forceFull)
-        val distinctGameCount = snapshot.games.distinctBy(SteamGame::appId).size
-        val completedBeforeRun = if (selection.isFullSync && !forceFull) {
-            (distinctGameCount - selection.games.size).coerceAtLeast(0)
-        } else {
-            0
-        }
-        val progressTotal = if (selection.isFullSync) {
-            distinctGameCount
-        } else {
-            selection.games.size
-        }
-        val runResult = runSteamAchievementSync(
-            games = selection.games,
-            forceFull = forceFull,
-            fetch = { game, refreshKnownEmpty ->
-                fetchAchievementsSingleFlight(handle, game, refreshKnownEmpty).also { result ->
-                    if (result is SteamLibraryResult.Failure) {
-                        SteamDiagLogger.append(
-                            "library_achievement_game failed app_id=${game.appId} " +
-                                "reason=${result.reason.name}"
-                        )
-                    }
-                }
-            },
-            checkpoint = { details -> saveCheckpoint(details) },
-            onProgress = { completed, _, currentAppId ->
-                onProgress(completedBeforeRun + completed, progressTotal, currentAppId)
-            }
+        val activeRequestId = plan.requestId
+        onProgress(
+            plan.completedGames,
+            plan.totalGames,
+            plan.nextAchievementSyncBatch()?.appIds?.firstOrNull()
         )
-        val result = runResult.withOverallProgress(completedBeforeRun, progressTotal)
-        if (result is SteamAchievementSyncRunResult.Completed && selection.isFullSync) {
-            cacheRepository.updateLibrary(handle.account.id) { current ->
-                current?.withCompletedAchievementFullSync(System.currentTimeMillis())
+
+        while (true) {
+            val batch = plan.nextAchievementSyncBatch() ?: break
+            val outcome = fetchAchievementProgressBatch(handle, batch.appIds)
+            if (outcome is SteamAchievementSyncBatchOutcome.Failure &&
+                (outcome.reason == SteamLibraryFailureReason.SESSION_REQUIRED ||
+                    outcome.reason == SteamLibraryFailureReason.PRIVATE_PROFILE)
+            ) {
+                return SteamAchievementSyncRunResult.PartialFailure(
+                    completedGames = plan.completedGames,
+                    totalGames = plan.totalGames,
+                    failure = outcome.reason
+                )
             }
+            snapshot = cacheRepository.updateLibrary(handle.account.id) { current ->
+                current?.applyAchievementSyncBatch(
+                    requestId = activeRequestId,
+                    batch = batch,
+                    outcome = outcome,
+                    nowMillis = nowMillis()
+                )
+            } ?: return SteamAchievementSyncRunResult.PartialFailure(
+                completedGames = plan.completedGames,
+                totalGames = plan.totalGames,
+                failure = SteamLibraryFailureReason.INVALID_RESPONSE
+            )
+            val updatedPlan = snapshot.achievementSyncPlan
+            if (updatedPlan == null || updatedPlan.requestId != activeRequestId) {
+                return SteamAchievementSyncRunResult.Superseded(
+                    completedGames = plan.completedGames,
+                    totalGames = plan.totalGames
+                )
+            }
+            plan = updatedPlan
+            when (outcome) {
+                is SteamAchievementSyncBatchOutcome.Success -> SteamDiagLogger.append(
+                    "library_achievement_batch saved size=${batch.appIds.size} " +
+                        "retry=${batch.isRetry} completed=${plan.completedGames} " +
+                        "total=${plan.totalGames}"
+                )
+                is SteamAchievementSyncBatchOutcome.Failure -> SteamDiagLogger.append(
+                    "library_achievement_batch failed size=${batch.appIds.size} " +
+                        "retry=${batch.isRetry} reason=${outcome.reason.name}"
+                )
+            }
+            onProgress(
+                plan.completedGames,
+                plan.totalGames,
+                plan.nextAchievementSyncBatch()?.appIds?.firstOrNull()
+            )
         }
-        return result
+
+        cacheRepository.updateLibrary(handle.account.id) { current ->
+            current?.finishAchievementSyncPlan(
+                requestId = activeRequestId,
+                nowMillis = nowMillis()
+            )
+        }
+        SteamDiagLogger.append(
+            "library_achievement_sync finished total=${plan.totalGames} " +
+                "skipped=${plan.failedAppIds.size}"
+        )
+        return SteamAchievementSyncRunResult.Completed(
+            completedGames = plan.totalGames,
+            totalGames = plan.totalGames
+        )
     }
 
     suspend fun syncGame(
@@ -101,6 +152,62 @@ internal class SteamAchievementSyncRepository(
                 result
             }
             is SteamLibraryResult.Failure -> result
+        }
+    }
+
+    private suspend fun fetchAchievementProgressBatch(
+        handle: SteamAccountSessionHandle,
+        appIds: List<Int>
+    ): SteamAchievementSyncBatchOutcome {
+        return try {
+            val prepared = sessionManager.resolve(handle, forceRefresh = false).account
+            val first = withContext(ioDispatcher) {
+                service.fetchAchievementProgress(
+                    account = prepared,
+                    appIds = appIds,
+                    language = "schinese"
+                )
+            }
+            val result = if (first is SteamLibraryResult.Failure &&
+                first.reason == SteamLibraryFailureReason.SESSION_REQUIRED
+            ) {
+                val refreshed = sessionManager.resolve(
+                    handle.copy(account = prepared),
+                    forceRefresh = true
+                ).account
+                if (refreshed.accessToken != prepared.accessToken) {
+                    withContext(ioDispatcher) {
+                        service.fetchAchievementProgress(
+                            account = refreshed,
+                            appIds = appIds,
+                            language = "schinese"
+                        )
+                    }
+                } else {
+                    first
+                }
+            } else {
+                first
+            }
+            when (result) {
+                is SteamLibraryResult.Success -> {
+                    val fetch = result.value
+                    if (fetch.syncedAppIds.containsAll(appIds)) {
+                        SteamAchievementSyncBatchOutcome.Success(fetch.progress)
+                    } else {
+                        SteamAchievementSyncBatchOutcome.Failure(
+                            fetch.failure ?: SteamLibraryFailureReason.INVALID_RESPONSE
+                        )
+                    }
+                }
+                is SteamLibraryResult.Failure -> {
+                    SteamAchievementSyncBatchOutcome.Failure(result.reason)
+                }
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Throwable) {
+            SteamAchievementSyncBatchOutcome.Failure(steamLibraryFailureReason(error))
         }
     }
 
@@ -203,22 +310,4 @@ internal class SteamAchievementSyncRepository(
             val deferred: CompletableDeferred<SteamLibraryResult<SteamGameAchievements>>
         ) : FetchDecision
     }
-}
-
-internal fun SteamAchievementSyncRunResult.withOverallProgress(
-    completedBeforeRun: Int,
-    totalGames: Int
-): SteamAchievementSyncRunResult = when (this) {
-    is SteamAchievementSyncRunResult.Completed -> copy(
-        completedGames = completedBeforeRun + completedGames,
-        totalGames = totalGames
-    )
-    is SteamAchievementSyncRunResult.Retry -> copy(
-        completedGames = completedBeforeRun + completedGames,
-        totalGames = totalGames
-    )
-    is SteamAchievementSyncRunResult.PartialFailure -> copy(
-        completedGames = completedBeforeRun + completedGames,
-        totalGames = totalGames
-    )
 }

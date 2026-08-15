@@ -423,11 +423,12 @@ class SteamLibraryModelsTest {
         ).readText()
         val request = source
             .substringAfter("method = \"GetAchievementsProgress\"")
-            .substringBefore("accessToken = accessToken")
+            .substringBefore("override fun fetchAchievementDefinitions")
 
         assertTrue(request.contains("appIds.forEach { appId ->"))
         assertTrue(request.contains("writeVarint(3, appId.toLong())"))
         assertFalse(request.contains("writePackedVarints(3"))
+        assertTrue(request.contains("useGet = false"))
     }
 
     @Test
@@ -530,7 +531,7 @@ class SteamLibraryModelsTest {
     }
 
     @Test
-    fun legacyAchievementMarkerWithoutCountsIsRetried() {
+    fun previouslyAttemptedUnchangedGameIsNotRetriedAutomatically() {
         val snapshot = SteamLibrarySnapshot(
             accountId = 7L,
             games = listOf(
@@ -548,7 +549,7 @@ class SteamLibraryModelsTest {
 
         val plan = planSteamAchievementProgressSync(snapshot, forceFull = false)
 
-        assertEquals(listOf(10), plan.appIds)
+        assertTrue(plan.appIds.isEmpty())
     }
 
     @Test
@@ -886,8 +887,8 @@ class SteamLibraryModelsTest {
     }
 
     @Test
-    fun achievementProgressSyncUsesHundredGameBatches() {
-        val requests = mutableListOf<String>()
+    fun achievementProgressSyncUsesHundredGamePostBatches() {
+        val requests = mutableListOf<Pair<String, String>>()
         val progressResponse = SteamProtoWriter().apply {
             writeMessage(1, SteamProtoWriter().apply {
                 writeVarint(1, 1L)
@@ -898,7 +899,7 @@ class SteamLibraryModelsTest {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request()
-                requests += request.url.encodedPath
+                requests += request.method to request.url.encodedPath
                 Response.Builder()
                     .request(request)
                     .protocol(Protocol.HTTP_1_1)
@@ -916,7 +917,9 @@ class SteamLibraryModelsTest {
         )
 
         assertTrue(result is SteamLibraryResult.Success)
-        assertEquals(3, requests.count { it.contains("GetAchievementsProgress") })
+        val progressRequests = requests.filter { it.second.contains("GetAchievementsProgress") }
+        assertEquals(3, progressRequests.size)
+        assertEquals(listOf("POST", "POST", "POST"), progressRequests.map { it.first })
     }
 
     @Test
@@ -956,7 +959,7 @@ class SteamLibraryModelsTest {
             setOf(1, 201),
             fetch.progress.keys
         )
-        assertEquals(setOf(1, 201), fetch.syncedAppIds)
+        assertEquals(((1..100).toSet() + 201), fetch.syncedAppIds)
         assertEquals(SteamLibraryFailureReason.NETWORK, fetch.failure)
         assertEquals(3, requestCount)
     }
@@ -1264,6 +1267,58 @@ class SteamLibraryModelsTest {
         assertTrue((result as SteamLibraryResult.Success).value.achievements.isEmpty())
         assertEquals(1, requests.size)
         assertTrue(requests.single().contains("GetGameAchievements"))
+    }
+
+    @Test
+    fun batchProgressConfirmsNoAchievementsAfterDetailRequestNetworkFailure() {
+        val requests = mutableListOf<Pair<String, String>>()
+        val noAchievements = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 10L)
+                writeVarint(2, 0L)
+                writeVarint(3, 0L)
+            })
+        }.toByteArray()
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request()
+                requests += request.method to request.url.encodedPath
+                when {
+                    request.url.encodedPath.contains("GetGameAchievements") -> {
+                        Response.Builder()
+                            .request(request)
+                            .protocol(Protocol.HTTP_1_1)
+                            .code(503)
+                            .message("Unavailable")
+                            .body(ByteArray(0).toResponseBody("application/octet-stream".toMediaType()))
+                            .build()
+                    }
+                    request.url.encodedPath.contains("GetAchievementsProgress") -> {
+                        Response.Builder()
+                            .request(request)
+                            .protocol(Protocol.HTTP_1_1)
+                            .code(200)
+                            .message("OK")
+                            .body(noAchievements.toResponseBody("application/octet-stream".toMediaType()))
+                            .build()
+                    }
+                    else -> error("Store fallback should not be needed: ${request.url}")
+                }
+            }
+            .build()
+
+        val result = SteamGameLibraryService(SteamApiClient(httpClient)).fetchAchievements(
+            account = account(accessToken = "access-token"),
+            game = SteamGame(10, "No achievements", 1, 0),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        assertTrue((result as SteamLibraryResult.Success).value.achievements.isEmpty())
+        assertEquals(
+            listOf("GET", "POST"),
+            requests.map { it.first }
+        )
     }
 
     @Test

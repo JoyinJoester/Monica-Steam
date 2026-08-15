@@ -1,7 +1,6 @@
 package takagi.ru.monica.steam.library.sync
 
 import android.content.Context
-import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
@@ -11,7 +10,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import java.security.MessageDigest
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.TimeUnit
+import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -71,6 +70,7 @@ internal class SteamAchievementSyncCoordinator private constructor(
             ),
             resetProgress = true
         )
+        val requestId = UUID.randomUUID().toString()
         val request = OneTimeWorkRequestBuilder<SteamAchievementSyncWorker>()
             .setConstraints(
                 Constraints.Builder()
@@ -83,12 +83,8 @@ internal class SteamAchievementSyncCoordinator private constructor(
                     .putLong(KEY_ACCOUNT_ID, handle.account.id)
                     .putString(KEY_STEAM_ID, handle.account.steamId)
                     .putBoolean(KEY_FORCE_FULL, forceFull)
+                    .putString(KEY_REQUEST_ID, requestId)
                     .build()
-            )
-            .setBackoffCriteria(
-                BackoffPolicy.EXPONENTIAL,
-                15L,
-                TimeUnit.SECONDS
             )
             .addTag(WORK_TAG)
             .build()
@@ -154,11 +150,13 @@ internal class SteamAchievementSyncCoordinator private constructor(
     suspend fun runWorker(
         handle: SteamAccountSessionHandle,
         forceFull: Boolean,
+        requestId: String,
         onProgress: suspend (SteamAchievementSyncState) -> Unit
     ): SteamAchievementSyncRunResult {
         return repository.syncLibrary(
             handle = handle,
             forceFull = forceFull,
+            requestId = requestId,
             onProgress = { completed, total, currentAppId ->
                 val state = SteamAchievementSyncState(
                     accountId = handle.account.id,
@@ -178,9 +176,10 @@ internal class SteamAchievementSyncCoordinator private constructor(
         handle: SteamAccountSessionHandle,
         result: SteamAchievementSyncRunResult
     ) {
+        if (result is SteamAchievementSyncRunResult.Superseded) return
         val failure = when (result) {
             is SteamAchievementSyncRunResult.Completed -> null
-            is SteamAchievementSyncRunResult.Retry -> result.failure
+            is SteamAchievementSyncRunResult.Superseded -> null
             is SteamAchievementSyncRunResult.PartialFailure -> result.failure
         }
         publish(
@@ -191,8 +190,8 @@ internal class SteamAchievementSyncCoordinator private constructor(
                 phase = when (result) {
                     is SteamAchievementSyncRunResult.Completed ->
                         SteamAchievementSyncPhase.COMPLETED
-                    is SteamAchievementSyncRunResult.Retry ->
-                        SteamAchievementSyncPhase.QUEUED
+                    is SteamAchievementSyncRunResult.Superseded ->
+                        SteamAchievementSyncPhase.COMPLETED
                     is SteamAchievementSyncRunResult.PartialFailure ->
                         SteamAchievementSyncPhase.FAILED
                 },
@@ -234,6 +233,7 @@ internal class SteamAchievementSyncCoordinator private constructor(
         internal const val KEY_ACCOUNT_ID = "achievement_sync_account_id"
         internal const val KEY_STEAM_ID = "achievement_sync_steam_id"
         internal const val KEY_FORCE_FULL = "achievement_sync_force_full"
+        internal const val KEY_REQUEST_ID = "achievement_sync_request_id"
         internal const val KEY_COMPLETED = "achievement_sync_completed"
         internal const val KEY_TOTAL = "achievement_sync_total"
         internal const val KEY_CURRENT_APP_ID = "achievement_sync_current_app_id"

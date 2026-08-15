@@ -1,160 +1,231 @@
 package takagi.ru.monica.steam.library.sync
 
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import takagi.ru.monica.steam.library.SteamAchievement
 import takagi.ru.monica.steam.library.SteamGame
-import takagi.ru.monica.steam.library.SteamGameAchievements
+import takagi.ru.monica.steam.library.SteamGameAchievementProgress
 import takagi.ru.monica.steam.library.SteamLibraryFailureReason
-import takagi.ru.monica.steam.library.SteamLibraryResult
+import takagi.ru.monica.steam.library.SteamLibrarySnapshot
+import takagi.ru.monica.steam.library.needsAchievementProgressSync
 
 class SteamAchievementSyncRunnerTest {
     @Test
-    fun completedGamesAreCheckpointedBeforeALaterNetworkFailure() = runTest {
-        val games = listOf(game(10, "First"), game(20, "Second"))
-        val checkpoints = mutableListOf<Int>()
-
-        val result = runSteamAchievementSync(
-            games = games,
-            forceFull = false,
-            fetch = { game, _ ->
-                if (game.appId == 10) {
-                    SteamLibraryResult.Success(achievements(game, unlocked = 1, total = 2))
+    fun firstFullSyncPersistsCompletedGamesAndOnlyQueuesTheRemainder() {
+        val games = (1..266).map { appId ->
+            game(appId).let { game ->
+                if (appId <= 265) {
+                    game.copy(
+                        achievementUnlockedCount = 0,
+                        achievementTotalCount = 0,
+                        achievementProgressPlaytimeMinutes = game.playtimeForeverMinutes
+                    )
                 } else {
-                    SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
+                    game
                 }
-            },
-            checkpoint = { checkpoints += it.appId }
-        )
-
-        assertEquals(listOf(10), checkpoints)
-        assertTrue(result is SteamAchievementSyncRunResult.PartialFailure)
-        result as SteamAchievementSyncRunResult.PartialFailure
-        assertEquals(1, result.completedGames)
-        assertEquals(2, result.totalGames)
-        assertEquals(SteamLibraryFailureReason.NETWORK, result.failure)
-    }
-
-    @Test
-    fun explicitNoAchievementResultIsPersistedAsACompletedGame() = runTest {
-        val game = game(30, "No achievements")
-        val checkpoints = mutableListOf<SteamGameAchievements>()
-
-        val result = runSteamAchievementSync(
-            games = listOf(game),
+            }
+        }
+        val prepared = snapshot(games).prepareAchievementSyncPlan(
+            requestId = "request-a",
             forceFull = false,
-            fetch = { requested, _ ->
-                SteamLibraryResult.Success(achievements(requested, unlocked = 0, total = 0))
-            },
-            checkpoint = { checkpoints += it }
+            nowMillis = 100L
         )
 
-        assertTrue(result is SteamAchievementSyncRunResult.Completed)
-        assertEquals(1, checkpoints.size)
-        assertTrue(checkpoints.single().achievements.isEmpty())
+        val plan = requireNotNull(prepared.achievementSyncPlan)
+        assertEquals(265, plan.completedGames)
+        assertEquals(266, plan.totalGames)
+        assertEquals(listOf(266), plan.pendingAppIds)
     }
 
     @Test
-    fun forceFullIsPassedToEveryPerGameRequest() = runTest {
-        val forceFlags = mutableListOf<Boolean>()
+    fun interruptedSyncResumesThePersistedPlanInsteadOfStartingOver() {
+        val prepared = snapshot((1..266).map(::game)).prepareAchievementSyncPlan(
+            requestId = "request-a",
+            forceFull = false,
+            nowMillis = 100L
+        )
+        val originalPlan = requireNotNull(prepared.achievementSyncPlan)
+        val firstBatch = requireNotNull(originalPlan.nextAchievementSyncBatch())
+        val checkpointed = prepared.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = firstBatch,
+            outcome = SteamAchievementSyncBatchOutcome.Success(emptyMap()),
+            nowMillis = 200L
+        )
 
-        runSteamAchievementSync(
-            games = listOf(game(10, "First"), game(20, "Second")),
+        val resumed = checkpointed.prepareAchievementSyncPlan(
+            requestId = "request-b",
+            forceFull = false,
+            nowMillis = 300L
+        )
+        val plan = requireNotNull(resumed.achievementSyncPlan)
+
+        assertEquals("request-a", plan.requestId)
+        assertEquals(100, plan.completedGames)
+        assertEquals(originalPlan.pendingAppIds.drop(100), plan.pendingAppIds)
+    }
+
+    @Test
+    fun replacedForceSyncRejectsAStaleWorkerCheckpoint() {
+        val first = snapshot(listOf(game(10), game(20))).prepareAchievementSyncPlan(
+            requestId = "request-a",
+            forceFull = false,
+            nowMillis = 100L
+        )
+        val staleBatch = requireNotNull(
+            requireNotNull(first.achievementSyncPlan).nextAchievementSyncBatch()
+        )
+        val replacement = first.prepareAchievementSyncPlan(
+            requestId = "request-b",
             forceFull = true,
-            fetch = { game, force ->
-                forceFlags += force
-                SteamLibraryResult.Success(achievements(game, unlocked = 0, total = 0))
-            },
-            checkpoint = {}
+            nowMillis = 200L
         )
 
-        assertEquals(listOf(true, true), forceFlags)
+        val afterStaleCheckpoint = replacement.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = staleBatch,
+            outcome = SteamAchievementSyncBatchOutcome.Success(emptyMap()),
+            nowMillis = 300L
+        )
+
+        val plan = requireNotNull(afterStaleCheckpoint.achievementSyncPlan)
+        assertEquals("request-b", plan.requestId)
+        assertEquals(0, plan.completedGames)
+        assertEquals(2, plan.pendingAppIds.size)
     }
 
     @Test
-    fun retryProgressIncludesGamesCompletedByEarlierWorkerRuns() {
-        val resumed = SteamAchievementSyncRunResult.Retry(
-            completedGames = 0,
-            totalGames = 259,
-            failure = SteamLibraryFailureReason.NETWORK
-        ).withOverallProgress(
-            completedBeforeRun = 7,
-            totalGames = 266
-        ) as SteamAchievementSyncRunResult.Retry
-
-        assertEquals(7, resumed.completedGames)
-        assertEquals(266, resumed.totalGames)
-    }
-
-    @Test
-    fun isolatedNetworkFailureDoesNotBlockLaterGames() = runTest {
-        val games = listOf(game(10, "First"), game(20, "Offline"), game(30, "Third"))
-        val checkpoints = mutableListOf<Int>()
-
-        val result = runSteamAchievementSync(
-            games = games,
+    fun successfulBatchStoresZeroProgressForGamesWithoutAchievements() {
+        val prepared = snapshot(listOf(game(10), game(20))).prepareAchievementSyncPlan(
+            requestId = "request-a",
             forceFull = false,
-            fetch = { game, _ ->
-                if (game.appId == 20) {
-                    SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
-                } else {
-                    SteamLibraryResult.Success(achievements(game, unlocked = 0, total = 0))
-                }
-            },
-            checkpoint = { checkpoints += it.appId }
+            nowMillis = 100L
+        )
+        val batch = requireNotNull(
+            requireNotNull(prepared.achievementSyncPlan)
+                .nextAchievementSyncBatch(batchSize = 2)
+        )
+        val updated = prepared.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = batch,
+            outcome = SteamAchievementSyncBatchOutcome.Success(
+                mapOf(
+                    10 to SteamGameAchievementProgress(
+                        appId = 10,
+                        unlocked = 3,
+                        total = 8,
+                        allUnlocked = false
+                    )
+                )
+            ),
+            nowMillis = 200L
         )
 
-        assertEquals(listOf(10, 30), checkpoints)
-        assertTrue(result is SteamAchievementSyncRunResult.PartialFailure)
-        assertEquals(2, result.completedGames)
+        val withAchievements = updated.games.first { it.appId == 10 }
+        val withoutAchievements = updated.games.first { it.appId == 20 }
+        assertEquals(3, withAchievements.achievementUnlockedCount)
+        assertEquals(8, withAchievements.achievementTotalCount)
+        assertEquals(0, withoutAchievements.achievementUnlockedCount)
+        assertEquals(0, withoutAchievements.achievementTotalCount)
+        assertEquals(2, requireNotNull(updated.achievementSyncPlan).completedGames)
     }
 
     @Test
-    fun consecutiveNetworkFailuresStopBeforeHammeringSteam() = runTest {
-        var requestCount = 0
-
-        val result = runSteamAchievementSync(
-            games = (1..10).map { game(it, "Game $it") },
+    fun failedBatchMovesToOneFinalRetryThenStopsBlockingThePlan() {
+        val prepared = snapshot(listOf(game(10), game(20))).prepareAchievementSyncPlan(
+            requestId = "request-a",
             forceFull = false,
-            fetch = { _, _ ->
-                requestCount++
-                SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
-            },
-            checkpoint = {}
+            nowMillis = 100L
+        )
+        val firstBatch = requireNotNull(
+            requireNotNull(prepared.achievementSyncPlan)
+                .nextAchievementSyncBatch(batchSize = 2)
+        )
+        val waitingForRetry = prepared.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = firstBatch,
+            outcome = SteamAchievementSyncBatchOutcome.Failure(
+                SteamLibraryFailureReason.NETWORK
+            ),
+            nowMillis = 200L
         )
 
-        assertTrue(result is SteamAchievementSyncRunResult.Retry)
-        assertEquals(3, requestCount)
+        val retryPlan = requireNotNull(waitingForRetry.achievementSyncPlan)
+        assertEquals(0, retryPlan.completedGames)
+        assertTrue(retryPlan.pendingAppIds.isEmpty())
+        assertEquals(listOf(10, 20), retryPlan.retryAppIds)
+        val retryBatch = requireNotNull(retryPlan.nextAchievementSyncBatch(batchSize = 2))
+        assertTrue(retryBatch.isRetry)
+
+        val skipped = waitingForRetry.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = retryBatch,
+            outcome = SteamAchievementSyncBatchOutcome.Failure(
+                SteamLibraryFailureReason.NETWORK
+            ),
+            nowMillis = 300L
+        )
+        val skippedPlan = requireNotNull(skipped.achievementSyncPlan)
+
+        assertEquals(2, skippedPlan.completedGames)
+        assertEquals(listOf(10, 20), skippedPlan.failedAppIds)
+        assertTrue(skippedPlan.retryAppIds.isEmpty())
+        assertTrue(skipped.games.all { it.achievementProgressPlaytimeMinutes == 10 })
+        assertTrue(skipped.games.all { it.achievementTotalCount == null })
     }
 
-    private fun game(appId: Int, name: String) = SteamGame(
-        appId = appId,
-        name = name,
-        playtimeForeverMinutes = 10,
-        playtimeRecentMinutes = 0
+    @Test
+    fun finishingAFullPlanRecordsCompletionEvenWhenOneGameWasSkipped() {
+        val prepared = snapshot(listOf(game(10))).prepareAchievementSyncPlan(
+            requestId = "request-a",
+            forceFull = false,
+            nowMillis = 100L
+        )
+        val first = requireNotNull(
+            requireNotNull(prepared.achievementSyncPlan).nextAchievementSyncBatch()
+        )
+        val retryQueued = prepared.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = first,
+            outcome = SteamAchievementSyncBatchOutcome.Failure(
+                SteamLibraryFailureReason.NETWORK
+            ),
+            nowMillis = 200L
+        )
+        val retry = requireNotNull(
+            requireNotNull(retryQueued.achievementSyncPlan).nextAchievementSyncBatch()
+        )
+        val exhausted = retryQueued.applyAchievementSyncBatch(
+            requestId = "request-a",
+            batch = retry,
+            outcome = SteamAchievementSyncBatchOutcome.Failure(
+                SteamLibraryFailureReason.NETWORK
+            ),
+            nowMillis = 300L
+        )
+
+        val finished = exhausted.finishAchievementSyncPlan(
+            requestId = "request-a",
+            nowMillis = 400L
+        )
+
+        assertNull(finished.achievementSyncPlan)
+        assertEquals(400L, finished.achievementProgressFullSyncAt)
+        assertFalse(finished.games.first().needsAchievementProgressSync())
+    }
+
+    private fun snapshot(games: List<SteamGame>) = SteamLibrarySnapshot(
+        accountId = 7L,
+        games = games,
+        fetchedAt = 1L
     )
 
-    private fun achievements(
-        game: SteamGame,
-        unlocked: Int,
-        total: Int
-    ) = SteamGameAchievements(
-        accountId = 7L,
-        appId = game.appId,
-        gameName = game.name,
-        achievements = (0 until total).map { index ->
-            SteamAchievement(
-                apiName = "ACH_$index",
-                displayName = "Achievement $index",
-                description = "",
-                achieved = index < unlocked,
-                unlockTimeSeconds = null,
-                iconUrl = null,
-                lockedIconUrl = null
-            )
-        },
-        fetchedAt = 100L
+    private fun game(appId: Int) = SteamGame(
+        appId = appId,
+        name = "Game $appId",
+        playtimeForeverMinutes = 10,
+        playtimeRecentMinutes = 0
     )
 }

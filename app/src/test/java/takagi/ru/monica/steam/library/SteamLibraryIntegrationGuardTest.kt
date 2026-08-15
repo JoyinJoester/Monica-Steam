@@ -102,7 +102,7 @@ class SteamLibraryIntegrationGuardTest {
     }
 
     @Test
-    fun achievementSyncUsesPerGameWorkerInsteadOfPageBatchJob() {
+    fun achievementSyncUsesPersistentBatchWorkerInsteadOfPageJob() {
         val viewModel = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt"
         ).readText()
@@ -119,13 +119,17 @@ class SteamLibraryIntegrationGuardTest {
         assertFalse(viewModel.contains("achievementProgressSyncJob"))
         assertFalse(viewModel.contains("fetchAchievementProgressWithSessionRetry"))
         assertTrue(viewModel.contains("achievementSyncCoordinator"))
-        assertTrue(repository.contains("fetchAchievements"))
-        assertTrue(repository.contains("saveCheckpoint"))
+        assertTrue(viewModel.contains("cached?.achievementSyncPlan != null"))
+        assertTrue(viewModel.contains("scheduleAchievementSync(account, forceFull = false)"))
+        assertTrue(repository.contains("fetchAchievementProgress"))
+        assertTrue(repository.contains("nextAchievementSyncBatch"))
+        assertTrue(repository.contains("applyAchievementSyncBatch"))
         assertTrue(repository.contains("updateLibrary"))
         assertTrue(coordinator.contains("enqueueUniqueWork"))
         assertTrue(coordinator.contains("NetworkType.CONNECTED"))
         assertTrue(worker.contains("CoroutineWorker"))
-        assertTrue(worker.contains("Result.retry()"))
+        assertTrue(worker.contains("KEY_REQUEST_ID"))
+        assertFalse(worker.contains("Result.retry()"))
     }
 
     @Test

@@ -97,7 +97,7 @@ internal class SteamProfileViewerSteamRemote(
             writeBool(4, true)
         },
         accessToken = accessToken,
-        useGet = true
+        useGet = false
     )
 
     override fun fetchAchievementDefinitions(
