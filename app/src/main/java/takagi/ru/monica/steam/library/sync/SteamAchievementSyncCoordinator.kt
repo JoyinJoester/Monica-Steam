@@ -48,14 +48,28 @@ internal class SteamAchievementSyncCoordinator private constructor(
     fun enqueue(handle: SteamAccountSessionHandle, forceFull: Boolean): Boolean {
         val key = handle.stableKey
         val current = _states.value[key]
-        if (!forceFull && current?.active == true) return true
+        if (!forceFull && current?.active == true) {
+            val workState = runCatching {
+                workManager.getWorkInfosForUniqueWork(workName(handle))
+                    .get()
+                    .firstOrNull()
+                    ?.state
+            }.getOrNull()
+            if (workState == WorkInfo.State.ENQUEUED ||
+                workState == WorkInfo.State.BLOCKED ||
+                workState == WorkInfo.State.RUNNING
+            ) {
+                return true
+            }
+        }
         publish(
             key,
             SteamAchievementSyncState(
                 accountId = handle.account.id,
                 steamId = handle.account.steamId,
                 phase = SteamAchievementSyncPhase.QUEUED
-            )
+            ),
+            resetProgress = true
         )
         val request = OneTimeWorkRequestBuilder<SteamAchievementSyncWorker>()
             .setConstraints(
@@ -177,8 +191,30 @@ internal class SteamAchievementSyncCoordinator private constructor(
         )
     }
 
-    private fun publish(key: String, state: SteamAchievementSyncState) {
-        _states.update { current -> current + (key to state) }
+    private fun publish(
+        key: String,
+        state: SteamAchievementSyncState,
+        resetProgress: Boolean = false
+    ) {
+        _states.update { current ->
+            val previous = current[key]
+            val merged = if (!resetProgress &&
+                previous != null &&
+                previous.active &&
+                previous.accountId == state.accountId &&
+                previous.steamId == state.steamId &&
+                (state.totalGames == 0 || state.totalGames <= previous.totalGames)
+            ) {
+                state.copy(
+                    completedGames = maxOf(previous.completedGames, state.completedGames),
+                    totalGames = maxOf(previous.totalGames, state.totalGames),
+                    currentAppId = state.currentAppId ?: previous.currentAppId
+                )
+            } else {
+                state
+            }
+            current + (key to merged)
+        }
     }
 
     companion object {

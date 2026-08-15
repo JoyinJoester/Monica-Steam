@@ -282,8 +282,13 @@ class SteamLibraryViewModel internal constructor(
             val failed = sync?.phase == SteamAchievementSyncPhase.FAILED
             state.copy(
                 syncingAchievementProgress = active,
-                achievementSyncCompletedGames = sync?.completedGames ?: 0,
-                achievementSyncTotalGames = sync?.totalGames ?: 0,
+                // WorkManager can briefly expose an empty/stale state while the
+                // process reconnects to a running worker. Do not regress the
+                // visible checkpoint to 0 during that hand-off.
+                achievementSyncCompletedGames = sync?.completedGames
+                    ?: state.achievementSyncCompletedGames,
+                achievementSyncTotalGames = sync?.totalGames
+                    ?: state.achievementSyncTotalGames,
                 achievementProgressFailure = sync?.failure?.takeIf { failed },
                 achievementProgressPartialFailure = failed &&
                     (sync?.completedGames ?: 0) > 0
