@@ -193,7 +193,11 @@ class SteamGameLibraryService internal constructor(
         }
         val fallback = systemDnsApi
             ?.takeIf { shouldRetryThroughSystemDns(primaryError) }
-            ?: return mapFailure(primaryError)
+            ?: return if (storeConfirmsNoAchievements(game, language)) {
+                SteamLibraryResult.Success(emptyAchievements(account.id, game))
+            } else {
+                mapFailure(primaryError)
+            }
         return runCatching {
             fetchAchievements(
                 client = fallback,
@@ -205,7 +209,9 @@ class SteamGameLibraryService internal constructor(
         }.fold(
             onSuccess = { SteamLibraryResult.Success(it) },
             onFailure = { error ->
-                if (isMissingAchievementSchema(error)) {
+                if (isMissingAchievementSchema(error) ||
+                    storeConfirmsNoAchievements(game, language)
+                ) {
                     SteamLibraryResult.Success(emptyAchievements(account.id, game))
                 } else {
                     mapFailure(error)
@@ -219,6 +225,34 @@ class SteamGameLibraryService internal constructor(
         return apiError.httpStatusCode == 400 ||
             apiError.httpStatusCode == 404 ||
             (apiError.httpStatusCode == 200 && apiError.eResult == 2)
+    }
+
+    private fun storeConfirmsNoAchievements(
+        game: SteamGame,
+        language: String
+    ): Boolean {
+        val clients = listOfNotNull(api, systemDnsApi).distinct()
+        for (client in clients) {
+            val confirmed = runCatching {
+                val payload = client.steamStoreGetJson(
+                    appId = game.appId,
+                    currency = "US",
+                    language = language
+                )
+                val app = payload[game.appId.toString()] as? JsonObject
+                    ?: return@runCatching false
+                val success = (app["success"] as? JsonPrimitive)?.booleanOrNull == true
+                val data = app["data"] as? JsonObject
+                success && data != null && "achievements" !in data
+            }.getOrDefault(false)
+            if (confirmed) {
+                SteamDiagLogger.append(
+                    "library_achievement_game no_schema app_id=${game.appId} source=store"
+                )
+                return true
+            }
+        }
+        return false
     }
 
     private fun fetchAchievements(

@@ -1267,6 +1267,46 @@ class SteamLibraryModelsTest {
     }
 
     @Test
+    fun storeMetadataConfirmsNoAchievementsAfterAchievementNetworkFailure() {
+        val requests = mutableListOf<String>()
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request()
+                requests += request.url.encodedPath
+                if (request.url.encodedPath.contains("GetGameAchievements")) {
+                    Response.Builder()
+                        .request(request)
+                        .protocol(Protocol.HTTP_1_1)
+                        .code(503)
+                        .message("Unavailable")
+                        .body(ByteArray(0).toResponseBody("application/octet-stream".toMediaType()))
+                        .build()
+                } else {
+                    val body = """{"10":{"success":true,"data":{"steam_appid":10,"name":"No achievements"}}}"""
+                    Response.Builder()
+                        .request(request)
+                        .protocol(Protocol.HTTP_1_1)
+                        .code(200)
+                        .message("OK")
+                        .body(body.toResponseBody("application/json".toMediaType()))
+                        .build()
+                }
+            }
+            .build()
+
+        val result = SteamGameLibraryService(SteamApiClient(httpClient)).fetchAchievements(
+            account = account(accessToken = "access-token"),
+            game = SteamGame(10, "No achievements", 1, 0),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        assertTrue((result as SteamLibraryResult.Success).value.achievements.isEmpty())
+        assertTrue(requests.any { it.contains("GetGameAchievements") })
+        assertTrue(requests.any { it.contains("appdetails") })
+    }
+
+    @Test
     fun unauthorizedOwnedGamesResponseRequiresFreshSteamSession() {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
