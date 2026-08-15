@@ -264,6 +264,7 @@ See [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) for full third-party li
 
 - Issues: [Monica Steam Issues](https://github.com/JoyinJoester/Monica-Steam/issues)
 - QQ group: `1087865010`
+- Telegram group: [Join the Monica community](https://t.me/+IZUDLL-vWOA1Y2U1)
 - Sponsor: [Afdian](https://afdian.com/a/JoyinJoester) · [Ko-fi](https://ko-fi.com/joyinjoester) · [PayPal](https://www.paypal.com/ncp/payment/BHSYWK73CA8FW)
 
 ---
