@@ -188,6 +188,9 @@ class SteamGameLibraryService internal constructor(
         }
         primary.getOrNull()?.let { return SteamLibraryResult.Success(it) }
         val primaryError = requireNotNull(primary.exceptionOrNull())
+        if (isMissingAchievementSchema(primaryError)) {
+            return SteamLibraryResult.Success(emptyAchievements(account.id, game))
+        }
         val fallback = systemDnsApi
             ?.takeIf { shouldRetryThroughSystemDns(primaryError) }
             ?: return mapFailure(primaryError)
@@ -201,8 +204,21 @@ class SteamGameLibraryService internal constructor(
             )
         }.fold(
             onSuccess = { SteamLibraryResult.Success(it) },
-            onFailure = ::mapFailure
+            onFailure = { error ->
+                if (isMissingAchievementSchema(error)) {
+                    SteamLibraryResult.Success(emptyAchievements(account.id, game))
+                } else {
+                    mapFailure(error)
+                }
+            }
         )
+    }
+
+    private fun isMissingAchievementSchema(error: Throwable): Boolean {
+        val apiError = error as? SteamApiException ?: return false
+        return apiError.httpStatusCode == 400 ||
+            apiError.httpStatusCode == 404 ||
+            (apiError.httpStatusCode == 200 && apiError.eResult == 2)
     }
 
     private fun fetchAchievements(

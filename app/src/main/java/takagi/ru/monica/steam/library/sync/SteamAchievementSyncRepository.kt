@@ -40,15 +40,36 @@ internal class SteamAchievementSyncRepository(
                 failure = SteamLibraryFailureReason.INVALID_RESPONSE
             )
         val selection = selectSteamAchievementSyncGames(snapshot, forceFull)
-        val result = runSteamAchievementSync(
+        val distinctGameCount = snapshot.games.distinctBy(SteamGame::appId).size
+        val completedBeforeRun = if (selection.isFullSync && !forceFull) {
+            (distinctGameCount - selection.games.size).coerceAtLeast(0)
+        } else {
+            0
+        }
+        val progressTotal = if (selection.isFullSync) {
+            distinctGameCount
+        } else {
+            selection.games.size
+        }
+        val runResult = runSteamAchievementSync(
             games = selection.games,
             forceFull = forceFull,
             fetch = { game, refreshKnownEmpty ->
-                fetchAchievementsSingleFlight(handle, game, refreshKnownEmpty)
+                fetchAchievementsSingleFlight(handle, game, refreshKnownEmpty).also { result ->
+                    if (result is SteamLibraryResult.Failure) {
+                        SteamDiagLogger.append(
+                            "library_achievement_game failed app_id=${game.appId} " +
+                                "reason=${result.reason.name}"
+                        )
+                    }
+                }
             },
             checkpoint = { details -> saveCheckpoint(details) },
-            onProgress = onProgress
+            onProgress = { completed, _, currentAppId ->
+                onProgress(completedBeforeRun + completed, progressTotal, currentAppId)
+            }
         )
+        val result = runResult.withOverallProgress(completedBeforeRun, progressTotal)
         if (result is SteamAchievementSyncRunResult.Completed && selection.isFullSync) {
             cacheRepository.updateLibrary(handle.account.id) { current ->
                 current?.withCompletedAchievementFullSync(System.currentTimeMillis())
@@ -172,4 +193,22 @@ internal class SteamAchievementSyncRepository(
             val deferred: CompletableDeferred<SteamLibraryResult<SteamGameAchievements>>
         ) : FetchDecision
     }
+}
+
+internal fun SteamAchievementSyncRunResult.withOverallProgress(
+    completedBeforeRun: Int,
+    totalGames: Int
+): SteamAchievementSyncRunResult = when (this) {
+    is SteamAchievementSyncRunResult.Completed -> copy(
+        completedGames = completedBeforeRun + completedGames,
+        totalGames = totalGames
+    )
+    is SteamAchievementSyncRunResult.Retry -> copy(
+        completedGames = completedBeforeRun + completedGames,
+        totalGames = totalGames
+    )
+    is SteamAchievementSyncRunResult.PartialFailure -> copy(
+        completedGames = completedBeforeRun + completedGames,
+        totalGames = totalGames
+    )
 }

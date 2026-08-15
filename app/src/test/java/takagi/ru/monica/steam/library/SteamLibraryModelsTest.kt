@@ -1238,6 +1238,35 @@ class SteamLibraryModelsTest {
     }
 
     @Test
+    fun missingAchievementSchemaIsTreatedAsNoAchievements() {
+        val requests = mutableListOf<String>()
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request()
+                requests += request.url.encodedPath
+                Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(404)
+                    .message("Not Found")
+                    .body(ByteArray(0).toResponseBody("application/octet-stream".toMediaType()))
+                    .build()
+            }
+            .build()
+
+        val result = SteamGameLibraryService(SteamApiClient(httpClient)).fetchAchievements(
+            account = account(accessToken = "access-token"),
+            game = SteamGame(10, "Game without achievements", 1, 0),
+            language = "schinese"
+        )
+
+        assertTrue(result is SteamLibraryResult.Success)
+        assertTrue((result as SteamLibraryResult.Success).value.achievements.isEmpty())
+        assertEquals(1, requests.size)
+        assertTrue(requests.single().contains("GetGameAchievements"))
+    }
+
+    @Test
     fun unauthorizedOwnedGamesResponseRequiresFreshSteamSession() {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->

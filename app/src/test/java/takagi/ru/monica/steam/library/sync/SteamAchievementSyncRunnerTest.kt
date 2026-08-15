@@ -73,6 +73,21 @@ class SteamAchievementSyncRunnerTest {
         assertEquals(listOf(true, true), forceFlags)
     }
 
+    @Test
+    fun retryProgressIncludesGamesCompletedByEarlierWorkerRuns() {
+        val resumed = SteamAchievementSyncRunResult.Retry(
+            completedGames = 0,
+            totalGames = 259,
+            failure = SteamLibraryFailureReason.NETWORK
+        ).withOverallProgress(
+            completedBeforeRun = 7,
+            totalGames = 266
+        ) as SteamAchievementSyncRunResult.Retry
+
+        assertEquals(7, resumed.completedGames)
+        assertEquals(266, resumed.totalGames)
+    }
+
     private fun game(appId: Int, name: String) = SteamGame(
         appId = appId,
         name = name,

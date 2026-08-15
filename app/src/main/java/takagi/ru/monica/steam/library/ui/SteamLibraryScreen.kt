@@ -1343,6 +1343,14 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                         maxLines = 1
                     )
                 }
+            } else if (game.achievementTotalCount == 0) {
+                Text(
+                    text = "-/-",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1
+                )
             }
         }
         HorizontalDivider(modifier = Modifier.padding(start = 144.dp, end = 16.dp))
@@ -1645,15 +1653,17 @@ private fun SteamGameDetail(
             }
         }
         if (achievements != null) {
-            item {
-                Column(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    SteamAchievementFilterSplitButton(
-                        selectedFilter = filter,
-                        onSelectFilter = { filterName = it.name }
-                    )
+            if (achievements.achievements.isNotEmpty()) {
+                item {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        SteamAchievementFilterSplitButton(
+                            selectedFilter = filter,
+                            onSelectFilter = { filterName = it.name }
+                        )
+                    }
                 }
             }
             if (achievements.achievements.isEmpty()) {
