@@ -166,50 +166,81 @@ class SteamGameLibraryService internal constructor(
     fun fetchAchievements(
         account: SteamAccount,
         game: SteamGame,
-        language: String
+        language: String,
+        forceRefresh: Boolean = false
     ): SteamLibraryResult<SteamGameAchievements> {
         val token = account.accessToken?.takeIf { it.isNotBlank() }
             ?: return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
         if (!account.hasRealSteamId) {
             return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
         }
-        if (game.achievementTotalCount == 0) {
+        if (!forceRefresh && game.achievementTotalCount == 0) {
             return SteamLibraryResult.Success(emptyAchievements(account.id, game))
         }
+        val primary = runCatching {
+            fetchAchievements(
+                client = api,
+                account = account,
+                game = game,
+                language = language,
+                accessToken = token
+            )
+        }
+        primary.getOrNull()?.let { return SteamLibraryResult.Success(it) }
+        val primaryError = requireNotNull(primary.exceptionOrNull())
+        val fallback = systemDnsApi
+            ?.takeIf { shouldRetryThroughSystemDns(primaryError) }
+            ?: return mapFailure(primaryError)
         return runCatching {
-            val definitions = api.callProtobuf(
+            fetchAchievements(
+                client = fallback,
+                account = account,
+                game = game,
+                language = language,
+                accessToken = token
+            )
+        }.fold(
+            onSuccess = { SteamLibraryResult.Success(it) },
+            onFailure = ::mapFailure
+        )
+    }
+
+    private fun fetchAchievements(
+        client: SteamApiClient,
+        account: SteamAccount,
+        game: SteamGame,
+        language: String,
+        accessToken: String
+    ): SteamGameAchievements {
+        val definitions = client.callProtobuf(
                 iface = "IPlayerService",
                 method = "GetGameAchievements",
                 request = SteamProtoWriter().apply {
                     writeVarint(1, game.appId.toLong())
                     writeString(2, language)
                 },
-                accessToken = token,
+                accessToken = accessToken,
                 useGet = true
             )
-            if (!hasAchievementDefinitions(definitions)) {
-                return@runCatching emptyAchievements(account.id, game)
-            }
-            val userAchievements = api.callProtobuf(
+        if (!hasAchievementDefinitions(definitions)) {
+            return emptyAchievements(account.id, game)
+        }
+        val userAchievements = client.callProtobuf(
                 iface = "IPlayerService",
                 method = "GetUserAchievements",
                 request = SteamProtoWriter().apply {
                     writeUint64(1, account.steamId.toLong())
                     writeVarint(2, game.appId.toLong())
                 },
-                accessToken = token,
+                accessToken = accessToken,
                 useGet = true
             )
-            parseAchievementResponses(
-                accountId = account.id,
-                appId = game.appId,
-                gameName = game.name,
-                definitionsResponse = definitions,
-                userResponse = userAchievements
-            )
-        }.fold(
-            onSuccess = { SteamLibraryResult.Success(it) },
-            onFailure = ::mapFailure
+        return parseAchievementResponses(
+            accountId = account.id,
+            appId = game.appId,
+            gameName = game.name,
+            definitionsResponse = definitions,
+            userResponse = userAchievements
         )
     }
 
@@ -333,7 +364,7 @@ class SteamGameLibraryService internal constructor(
             val fetched = result.getOrNull()
             if (fetched != null) {
                 progress += fetched.progress
-                syncedAppIds += batch
+                syncedAppIds += fetched.progress.keys
                 activeApi = fetched.api
                 continue
             }

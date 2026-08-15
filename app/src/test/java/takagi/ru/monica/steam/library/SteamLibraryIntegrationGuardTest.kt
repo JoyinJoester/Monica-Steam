@@ -102,6 +102,33 @@ class SteamLibraryIntegrationGuardTest {
     }
 
     @Test
+    fun achievementSyncUsesPerGameWorkerInsteadOfPageBatchJob() {
+        val viewModel = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt"
+        ).readText()
+        val repository = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/sync/SteamAchievementSyncRepository.kt"
+        ).readText()
+        val coordinator = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/sync/SteamAchievementSyncCoordinator.kt"
+        ).readText()
+        val worker = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/library/sync/SteamAchievementSyncWorker.kt"
+        ).readText()
+
+        assertFalse(viewModel.contains("achievementProgressSyncJob"))
+        assertFalse(viewModel.contains("fetchAchievementProgressWithSessionRetry"))
+        assertTrue(viewModel.contains("achievementSyncCoordinator"))
+        assertTrue(repository.contains("fetchAchievements"))
+        assertTrue(repository.contains("saveCheckpoint"))
+        assertTrue(repository.contains("updateLibrary"))
+        assertTrue(coordinator.contains("enqueueUniqueWork"))
+        assertTrue(coordinator.contains("NetworkType.CONNECTED"))
+        assertTrue(worker.contains("CoroutineWorker"))
+        assertTrue(worker.contains("Result.retry()"))
+    }
+
+    @Test
     fun productionNavigationContainsLibraryAndAchievementStates() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"

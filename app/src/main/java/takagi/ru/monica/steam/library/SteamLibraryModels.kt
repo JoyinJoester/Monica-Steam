@@ -169,7 +169,7 @@ internal fun planSteamAchievementProgressSync(
     if (isFullSync) {
         return SteamAchievementProgressSyncPlan(
             appIds = currentGames
-                .filter { forceFull || it.achievementProgressPlaytimeMinutes == null }
+                .filter { forceFull || it.needsAchievementProgressSync() }
                 .map(SteamGame::appId),
             isFullSync = true
         )
@@ -178,13 +178,18 @@ internal fun planSteamAchievementProgressSync(
     val changedAppIds = currentGames.mapNotNull { game ->
         val playtimeIncreased = game.playtimeForeverMinutes >
             (game.achievementProgressPlaytimeMinutes ?: 0)
-        game.appId.takeIf { playtimeIncreased }
+        game.appId.takeIf { game.needsAchievementProgressSync() || playtimeIncreased }
     }
     return SteamAchievementProgressSyncPlan(
         appIds = changedAppIds,
         isFullSync = false
     )
 }
+
+internal fun SteamGame.needsAchievementProgressSync(): Boolean =
+    achievementUnlockedCount == null ||
+        achievementTotalCount == null ||
+        achievementProgressPlaytimeMinutes == null
 
 internal fun mergeOwnedAndFamilySharedGames(
     ownedGames: List<SteamGame>,

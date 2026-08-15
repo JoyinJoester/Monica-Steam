@@ -26,6 +26,8 @@ import takagi.ru.monica.R
 @Composable
 internal fun SteamAchievementSyncStatus(
     syncing: Boolean,
+    completedGames: Int,
+    totalGames: Int,
     failureMessage: String?,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
@@ -67,10 +69,25 @@ internal fun SteamAchievementSyncStatus(
             }
             if (syncing) {
                 Text(
-                    text = stringResource(R.string.steam_library_syncing_achievements_background),
+                    text = if (totalGames > 0) {
+                        stringResource(
+                            R.string.steam_library_syncing_achievements_progress,
+                            completedGames,
+                            totalGames
+                        )
+                    } else {
+                        stringResource(R.string.steam_library_syncing_achievements_background)
+                    },
                     style = MaterialTheme.typography.bodySmall
                 )
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                if (totalGames > 0) {
+                    LinearProgressIndicator(
+                        progress = { (completedGames.toFloat() / totalGames).coerceIn(0f, 1f) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
             } else {
                 FilledTonalButton(onClick = onRetry) {
                     Text(stringResource(R.string.steam_library_retry))

@@ -1,9 +1,12 @@
 package takagi.ru.monica.steam.data
 
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.library.SteamGameAchievements
@@ -25,6 +28,24 @@ class SteamLibraryCacheRepository(
     }
 
     suspend fun saveLibrary(snapshot: SteamLibrarySnapshot) {
+        libraryLocks.getOrPut(snapshot.accountId) { Mutex() }.withLock {
+            saveLibraryUnlocked(snapshot)
+        }
+    }
+
+    suspend fun updateLibrary(
+        accountId: Long,
+        transform: (SteamLibrarySnapshot?) -> SteamLibrarySnapshot?
+    ): SteamLibrarySnapshot? {
+        return libraryLocks.getOrPut(accountId) { Mutex() }.withLock {
+            val current = dao.getLibrary(accountId)?.let(::decodeLibrary)
+            val updated = transform(current) ?: return@withLock null
+            saveLibraryUnlocked(updated)
+            updated
+        }
+    }
+
+    private suspend fun saveLibraryUnlocked(snapshot: SteamLibrarySnapshot) {
         dao.saveLibrary(
             SteamLibraryCacheEntity(
                 accountId = snapshot.accountId,
@@ -67,5 +88,9 @@ class SteamLibraryCacheRepository(
                 securityManager.decryptDataIfMonicaCiphertext(entity.payload)
             )
         }.getOrNull()
+    }
+
+    private companion object {
+        val libraryLocks = ConcurrentHashMap<Long, Mutex>()
     }
 }

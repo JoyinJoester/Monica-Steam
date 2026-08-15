@@ -498,6 +498,8 @@ private fun SteamLibraryOverview(
             item(key = "achievement_progress_sync_status") {
                 SteamAchievementSyncStatus(
                     syncing = state.syncingAchievementProgress,
+                    completedGames = state.achievementSyncCompletedGames,
+                    totalGames = state.achievementSyncTotalGames,
                     failureMessage = state.achievementProgressFailure?.let {
                         if (state.achievementProgressPartialFailure) {
                             stringResource(R.string.steam_library_achievement_sync_partial_failure)

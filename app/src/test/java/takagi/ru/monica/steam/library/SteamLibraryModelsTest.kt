@@ -510,6 +510,8 @@ class SteamLibraryModelsTest {
                     "Saved batch",
                     100,
                     0,
+                    achievementUnlockedCount = 0,
+                    achievementTotalCount = 0,
                     achievementProgressPlaytimeMinutes = 100
                 ),
                 SteamGame(20, "Missing batch", 120, 0)
@@ -528,6 +530,28 @@ class SteamLibraryModelsTest {
     }
 
     @Test
+    fun legacyAchievementMarkerWithoutCountsIsRetried() {
+        val snapshot = SteamLibrarySnapshot(
+            accountId = 7L,
+            games = listOf(
+                SteamGame(
+                    appId = 10,
+                    name = "False success",
+                    playtimeForeverMinutes = 100,
+                    playtimeRecentMinutes = 0,
+                    achievementProgressPlaytimeMinutes = 100
+                )
+            ),
+            fetchedAt = 2L,
+            achievementProgressFullSyncAt = 1L
+        )
+
+        val plan = planSteamAchievementProgressSync(snapshot, forceFull = false)
+
+        assertEquals(listOf(10), plan.appIds)
+    }
+
+    @Test
     fun laterAchievementProgressSyncOnlyRequestsGamesWithMorePlaytime() {
         val current = SteamLibrarySnapshot(
             accountId = 7L,
@@ -537,6 +561,8 @@ class SteamLibraryModelsTest {
                     "Played again",
                     125,
                     25,
+                    achievementUnlockedCount = 5,
+                    achievementTotalCount = 10,
                     achievementProgressPlaytimeMinutes = 100
                 ),
                 SteamGame(
@@ -544,6 +570,8 @@ class SteamLibraryModelsTest {
                     "Unchanged",
                     240,
                     20,
+                    achievementUnlockedCount = 6,
+                    achievementTotalCount = 10,
                     achievementProgressPlaytimeMinutes = 240
                 ),
                 SteamGame(
@@ -551,6 +579,8 @@ class SteamLibraryModelsTest {
                     "Still unplayed",
                     0,
                     0,
+                    achievementUnlockedCount = 0,
+                    achievementTotalCount = 0,
                     achievementProgressPlaytimeMinutes = 0
                 ),
                 SteamGame(40, "New played game", 15, 15),
@@ -566,7 +596,7 @@ class SteamLibraryModelsTest {
         )
 
         assertFalse(plan.isFullSync)
-        assertEquals(listOf(10, 40), plan.appIds)
+        assertEquals(listOf(10, 40, 50), plan.appIds)
     }
 
     @Test
@@ -926,7 +956,7 @@ class SteamLibraryModelsTest {
             setOf(1, 201),
             fetch.progress.keys
         )
-        assertEquals((1..100).toSet() + 201, fetch.syncedAppIds)
+        assertEquals(setOf(1, 201), fetch.syncedAppIds)
         assertEquals(SteamLibraryFailureReason.NETWORK, fetch.failure)
         assertEquals(3, requestCount)
     }
