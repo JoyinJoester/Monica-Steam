@@ -202,16 +202,41 @@ private fun WebView.applySteamStoreMenuScrollFix(pageUrl: String) {
 private val STEAM_STORE_MENU_SCROLL_FIX_SCRIPT = """
     (() => {
         const styleId = 'monica-steam-store-menu-scroll-fix';
-        if (document.getElementById(styleId)) return;
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = `
-            [data-featuretarget="store-menu-v7"] > .PlaceholderInner + * > :first-child {
-                position: absolute !important;
+        const fixedClass = 'monica-steam-store-menu-scroll-target';
+        if (!document.getElementById(styleId)) {
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = `
+            .${'$'}{fixedClass} {
+                position: relative !important;
                 top: auto !important;
                 height: auto !important;
+                overflow: visible !important;
             }
-        `;
-        (document.head || document.documentElement).appendChild(style);
+            `;
+            (document.head || document.documentElement).appendChild(style);
+        }
+
+        const markMenu = () => {
+            const menuRoot = document.querySelector('[data-featuretarget="store-menu-v7"]');
+            const placeholder = menuRoot?.querySelector(':scope > .PlaceholderInner');
+            const container = placeholder?.nextElementSibling;
+            if (!container) return false;
+            const menu = Array.from(container.children).find((element) => {
+                const position = window.getComputedStyle(element).position;
+                return (position === 'sticky' || position === 'fixed') &&
+                    element.querySelector('a[href*="/wishlist"]');
+            });
+            if (!menu) return false;
+            menu.classList.add(fixedClass);
+            return true;
+        };
+
+        if (markMenu()) return;
+        const observer = new MutationObserver(() => {
+            if (markMenu()) observer.disconnect();
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        window.setTimeout(() => observer.disconnect(), 5000);
     })();
 """.trimIndent()

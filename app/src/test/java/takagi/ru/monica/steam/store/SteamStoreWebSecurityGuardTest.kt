@@ -106,15 +106,14 @@ class SteamStoreWebSecurityGuardTest {
         val script = clients.substringAfter("STEAM_STORE_MENU_SCROLL_FIX_SCRIPT =")
 
         assertTrue(script.contains("monica-steam-store-menu-scroll-fix"))
-        assertTrue(
-            script.contains(
-                "[data-featuretarget=\"store-menu-v7\"] > .PlaceholderInner + * > :first-child"
-            )
-        )
-        assertTrue(script.contains("position: absolute !important"))
+        assertTrue(script.contains("monica-steam-store-menu-scroll-target"))
+        assertTrue(script.contains("placeholder?.nextElementSibling"))
+        assertTrue(script.contains("a[href*=\"/wishlist\"]"))
+        assertTrue(script.contains("position: relative !important"))
         assertTrue(script.contains("height: auto !important"))
+        assertFalse(script.contains(":first-child"))
+        assertFalse(script.contains("position: absolute !important"))
         assertFalse(script.contains("querySelectorAll('*')"))
-        assertFalse(script.contains("MutationObserver"))
     }
 
     private fun projectFile(path: String): File {
