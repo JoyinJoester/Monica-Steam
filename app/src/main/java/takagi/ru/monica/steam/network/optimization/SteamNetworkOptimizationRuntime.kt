@@ -41,18 +41,43 @@ object SteamNetworkOptimizationRuntime {
             Context.MODE_PRIVATE
         )
 
-        // Static Hosts are always opt-in. Fixed CDN addresses age quickly, so a new install must
-        // stay on normal resolution until the user imports, scans, edits, or explicitly applies
-        // the built-in preset from the Hosts menu.
-        val hostsText = preferences.getString(KEY_CUSTOM_HOSTS, "").orEmpty()
+        // New/untouched installs get the maintained static preset. Existing user/scan rules,
+        // including an intentionally saved empty Hosts file, are never overwritten on upgrade.
+        val shouldSeedBuiltInPreset = !preferences.contains(KEY_CUSTOM_HOSTS)
+        val hostsText = if (shouldSeedBuiltInPreset) {
+            SteamBuiltInHostsPreset.hostsText
+        } else {
+            preferences.getString(KEY_CUSTOM_HOSTS, "").orEmpty()
+        }
         val parsed = SteamHostsRuleParser.parse(hostsText)
         hostOverrides = parsed.addresses
 
-        val persistedEnabled = preferences.getBoolean(KEY_ENABLED, false)
-        val fallbackToSystemDns = preferences.getBoolean(KEY_FALLBACK_TO_SYSTEM_DNS, true)
+        val persistedEnabled = if (shouldSeedBuiltInPreset) {
+            true
+        } else {
+            preferences.getBoolean(KEY_ENABLED, false)
+        }
+        val fallbackToSystemDns = if (shouldSeedBuiltInPreset) {
+            true
+        } else {
+            preferences.getBoolean(KEY_FALLBACK_TO_SYSTEM_DNS, true)
+        }
         val enabled = persistedEnabled && parsed.isValid && parsed.addresses.isNotEmpty()
 
-        if (persistedEnabled != enabled) {
+        if (shouldSeedBuiltInPreset) {
+            preferences.edit()
+                .putString(KEY_CUSTOM_HOSTS, hostsText)
+                .putBoolean(KEY_ENABLED, enabled)
+                .putBoolean(KEY_FALLBACK_TO_SYSTEM_DNS, true)
+                .putInt(KEY_BUILT_IN_HOSTS_PRESET_VERSION, SteamBuiltInHostsPreset.VERSION)
+                .apply()
+            runCatching {
+                SteamDiagLogger.append(
+                    "static_hosts builtin_seeded version=${SteamBuiltInHostsPreset.VERSION} " +
+                        "hosts=${parsed.hostCount} enabled=$enabled fallback=true"
+                )
+            }
+        } else if (persistedEnabled != enabled) {
             preferences.edit().putBoolean(KEY_ENABLED, enabled).apply()
         }
 
