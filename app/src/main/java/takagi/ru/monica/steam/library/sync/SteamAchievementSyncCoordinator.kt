@@ -123,14 +123,26 @@ internal class SteamAchievementSyncCoordinator private constructor(
             WorkInfo.State.FAILED,
             WorkInfo.State.CANCELLED -> SteamAchievementSyncPhase.FAILED
         }
+        val persistedProgress = if (
+            phase == SteamAchievementSyncPhase.QUEUED ||
+            phase == SteamAchievementSyncPhase.RUNNING
+        ) {
+            repository.estimateLibraryProgress(handle)
+        } else {
+            null
+        }
+        val completedGames = data.getInt(KEY_COMPLETED, 0)
+            .coerceAtLeast(persistedProgress?.first ?: 0)
+        val totalGames = data.getInt(KEY_TOTAL, 0)
+            .coerceAtLeast(persistedProgress?.second ?: 0)
         publish(
             handle.stableKey,
             SteamAchievementSyncState(
                 accountId = handle.account.id,
                 steamId = handle.account.steamId,
                 phase = phase,
-                completedGames = data.getInt(KEY_COMPLETED, 0),
-                totalGames = data.getInt(KEY_TOTAL, 0),
+                completedGames = completedGames,
+                totalGames = totalGames,
                 currentAppId = data.getInt(KEY_CURRENT_APP_ID, 0).takeIf { it > 0 },
                 failure = data.getString(KEY_FAILURE)?.let { raw ->
                     runCatching { SteamLibraryFailureReason.valueOf(raw) }.getOrNull()

@@ -27,6 +27,16 @@ internal class SteamAchievementSyncRepository(
     private val inFlightMutex = Mutex()
     private val inFlight = mutableMapOf<String, CompletableDeferred<SteamLibraryResult<SteamGameAchievements>>>()
 
+    suspend fun estimateLibraryProgress(
+        handle: SteamAccountSessionHandle
+    ): Pair<Int, Int>? {
+        val snapshot = cacheRepository.getLibrary(handle.account.id) ?: return null
+        val selection = selectSteamAchievementSyncGames(snapshot, forceFull = false)
+        if (!selection.isFullSync) return null
+        val total = snapshot.games.distinctBy(SteamGame::appId).size
+        return (total - selection.games.size).coerceIn(0, total) to total
+    }
+
     suspend fun syncLibrary(
         handle: SteamAccountSessionHandle,
         forceFull: Boolean,

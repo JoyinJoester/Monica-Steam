@@ -36,6 +36,8 @@ internal suspend fun runSteamAchievementSync(
 ): SteamAchievementSyncRunResult {
     var completed = 0
     var firstNonBlockingFailure: SteamLibraryFailureReason? = null
+    var firstRetryableFailure: SteamLibraryFailureReason? = null
+    var consecutiveNetworkFailures = 0
     val total = games.size
     onProgress(completed, total, null)
 
@@ -45,10 +47,24 @@ internal suspend fun runSteamAchievementSync(
             is SteamLibraryResult.Success -> {
                 checkpoint(result.value)
                 completed++
+                consecutiveNetworkFailures = 0
                 onProgress(completed, total, game.appId)
             }
             is SteamLibraryResult.Failure -> when (result.reason) {
-                SteamLibraryFailureReason.NETWORK,
+                SteamLibraryFailureReason.NETWORK -> {
+                    if (firstRetryableFailure == null) {
+                        firstRetryableFailure = result.reason
+                    }
+                    consecutiveNetworkFailures++
+                    if (consecutiveNetworkFailures < MAX_CONSECUTIVE_NETWORK_FAILURES) {
+                        return@forEach
+                    }
+                    return SteamAchievementSyncRunResult.Retry(
+                        completedGames = completed,
+                        totalGames = total,
+                        failure = result.reason
+                    )
+                }
                 SteamLibraryFailureReason.RATE_LIMITED,
                 SteamLibraryFailureReason.SESSION_REQUIRED -> {
                     return SteamAchievementSyncRunResult.Retry(
@@ -73,7 +89,13 @@ internal suspend fun runSteamAchievementSync(
         }
     }
 
-    return firstNonBlockingFailure?.let { failure ->
+    return firstRetryableFailure?.let { failure ->
+        SteamAchievementSyncRunResult.Retry(
+            completedGames = completed,
+            totalGames = total,
+            failure = failure
+        )
+    } ?: firstNonBlockingFailure?.let { failure ->
         SteamAchievementSyncRunResult.PartialFailure(
             completedGames = completed,
             totalGames = total,
@@ -84,3 +106,5 @@ internal suspend fun runSteamAchievementSync(
         totalGames = total
     )
 }
+
+private const val MAX_CONSECUTIVE_NETWORK_FAILURES = 3

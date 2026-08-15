@@ -88,6 +88,47 @@ class SteamAchievementSyncRunnerTest {
         assertEquals(266, resumed.totalGames)
     }
 
+    @Test
+    fun isolatedNetworkFailureDoesNotBlockLaterGames() = runTest {
+        val games = listOf(game(10, "First"), game(20, "Offline"), game(30, "Third"))
+        val checkpoints = mutableListOf<Int>()
+
+        val result = runSteamAchievementSync(
+            games = games,
+            forceFull = false,
+            fetch = { game, _ ->
+                if (game.appId == 20) {
+                    SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
+                } else {
+                    SteamLibraryResult.Success(achievements(game, unlocked = 0, total = 0))
+                }
+            },
+            checkpoint = { checkpoints += it.appId }
+        )
+
+        assertEquals(listOf(10, 30), checkpoints)
+        assertTrue(result is SteamAchievementSyncRunResult.Retry)
+        assertEquals(2, result.completedGames)
+    }
+
+    @Test
+    fun consecutiveNetworkFailuresStopBeforeHammeringSteam() = runTest {
+        var requestCount = 0
+
+        val result = runSteamAchievementSync(
+            games = (1..10).map { game(it, "Game $it") },
+            forceFull = false,
+            fetch = { _, _ ->
+                requestCount++
+                SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
+            },
+            checkpoint = {}
+        )
+
+        assertTrue(result is SteamAchievementSyncRunResult.Retry)
+        assertEquals(3, requestCount)
+    }
+
     private fun game(appId: Int, name: String) = SteamGame(
         appId = appId,
         name = name,
