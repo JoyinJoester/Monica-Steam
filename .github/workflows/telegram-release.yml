@@ -113,14 +113,79 @@ jobs:
           echo "url_tag=$encoded_tag" >> "$GITHUB_OUTPUT"
           echo "Selected asset: $asset_name"
 
+      - name: Build caption with release notes
+        id: build_caption
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.release_apk.outputs.tag }}
+          URL_TAG: ${{ steps.release_apk.outputs.url_tag }}
+        run: |
+          set -euo pipefail
+
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --json body --jq '.body' > release-notes.md
+
+          # Convert the markdown release notes to Telegram HTML and wrap them in an
+          # expandable blockquote (collapsed by default, tap the arrow to expand).
+          # Captions are capped at 1024 UTF-16 units, so trim line by line if needed.
+          python3 - "$RELEASE_TAG" "$URL_TAG" <<'PY'
+          import html, os, re, sys
+
+          tag, url_tag = sys.argv[1], sys.argv[2]
+          repo = os.environ['GITHUB_REPOSITORY']
+          body = open('release-notes.md', encoding='utf-8').read().strip()
+
+          def convert(text):
+              t = html.escape(text, quote=False)
+              t = re.sub(r'```[^\n]*\n(.*?)```', lambda m: '<pre>' + m.group(1) + '</pre>', t, flags=re.S)
+              t = re.sub(r'`([^`\n]+)`', r'<code>\1</code>', t)
+              t = re.sub(r'\[([^\]\n]+)\]\((https?://[^)\s]+)\)', r'<a href="\2">\1</a>', t)
+              t = re.sub(r'^#{1,6}\s*(.+)$', r'<b>\1</b>', t, flags=re.M)
+              t = re.sub(r'\*\*([^*\n]+)\*\*', r'<b>\1</b>', t)
+              t = re.sub(r'^\s*[-*]\s+', '• ', t, flags=re.M)
+              return t
+
+          header = (
+              f'🚀 Monica Steam 新版本 {tag} 已发布！\n'
+              '架构：arm64\n'
+              f'仓库：{repo}\n'
+              f'下载页面：https://github.com/{repo}/releases/tag/{url_tag}'
+          )
+
+          def build(lines, truncated):
+              notes = convert('\n'.join(lines))
+              if truncated:
+                  notes += '\n\n…（日志过长已截断，完整内容见下载页面）'
+              return header + '\n\n📦 <b>更新日志</b>\n<blockquote expandable>' + notes + '</blockquote>'
+
+          def fits(caption):
+              visible = re.sub(r'<[^>]+>', '', caption)
+              return len(visible.encode('utf-16-le')) // 2 <= 1024
+
+          if not body:
+              caption = header
+          else:
+              src = body.splitlines()
+              caption = build(src, False)
+              if not fits(caption):
+                  lines = src[:]
+                  while lines and not fits(build(lines, True)):
+                      lines.pop()
+                  caption = build(lines, True) if lines else header
+
+          with open('caption.html', 'w', encoding='utf-8') as f:
+              f.write(caption)
+          visible = re.sub(r'<[^>]+>', '', caption)
+          print(f'Caption length: {len(visible.encode("utf-16-le")) // 2}/1024')
+          PY
+
       - name: Send APK to Telegram
         shell: bash
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TOPIC_ID: ${{ inputs.topic_id || secrets.TELEGRAM_TOPIC_ID }}
-          RELEASE_TAG: ${{ steps.release_apk.outputs.tag }}
-          URL_TAG: ${{ steps.release_apk.outputs.url_tag }}
           APK_PATH: ${{ steps.release_apk.outputs.path }}
         run: |
           set -euo pipefail
@@ -130,10 +195,7 @@ jobs:
             exit 1
           fi
 
-          caption="🚀 Monica Steam 新版本 ${RELEASE_TAG} 已发布！
-          架构：arm64
-          仓库：${GITHUB_REPOSITORY}
-          下载页面：https://github.com/${GITHUB_REPOSITORY}/releases/tag/${URL_TAG}"
+          caption="$(cat caption.html)"
 
           # Forum topics require message_thread_id; when unset Telegram posts to the General topic.
           thread_args=()
@@ -151,6 +213,7 @@ jobs:
             --retry-all-errors \
             --form-string "chat_id=${TELEGRAM_CHAT_ID}" \
             --form-string "caption=${caption}" \
+            --form-string "parse_mode=HTML" \
             "${thread_args[@]}" \
             --form "document=@${APK_PATH}" \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
