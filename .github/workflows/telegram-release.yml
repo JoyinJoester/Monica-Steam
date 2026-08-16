@@ -9,6 +9,10 @@ on:
         description: GitHub Release tag or title, for example V1.0.307 or V1.0.307preview
         required: true
         type: string
+      topic_id:
+        description: Optional Telegram forum topic id; falls back to the TELEGRAM_TOPIC_ID secret, then the General topic
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -114,6 +118,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TOPIC_ID: ${{ inputs.topic_id || secrets.TELEGRAM_TOPIC_ID }}
           RELEASE_TAG: ${{ steps.release_apk.outputs.tag }}
           URL_TAG: ${{ steps.release_apk.outputs.url_tag }}
           APK_PATH: ${{ steps.release_apk.outputs.path }}
@@ -130,10 +135,22 @@ jobs:
           仓库：${GITHUB_REPOSITORY}
           下载页面：https://github.com/${GITHUB_REPOSITORY}/releases/tag/${URL_TAG}"
 
+          # Forum topics require message_thread_id; when unset Telegram posts to the General topic.
+          thread_args=()
+          if [ -n "${TOPIC_ID:-}" ]; then
+            if ! [[ "$TOPIC_ID" =~ ^-?[0-9]+$ ]]; then
+              echo "::error title=Invalid topic id::Topic id must be a number, for example 12."
+              exit 1
+            fi
+            thread_args=(--form-string "message_thread_id=${TOPIC_ID}")
+            echo "Sending to topic ${TOPIC_ID}."
+          fi
+
           curl --fail-with-body --show-error --silent \
             --retry 3 \
             --retry-all-errors \
             --form-string "chat_id=${TELEGRAM_CHAT_ID}" \
             --form-string "caption=${caption}" \
+            "${thread_args[@]}" \
             --form "document=@${APK_PATH}" \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
