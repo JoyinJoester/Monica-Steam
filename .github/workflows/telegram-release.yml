@@ -1,0 +1,126 @@
+name: Send Release APK to Telegram
+
+run-name: Send ${{ inputs.release_tag }} arm64 APK to Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: GitHub Release tag, for example V1.0.307preview
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: telegram-release-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
+jobs:
+  send:
+    name: Send existing arm64 APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download arm64 APK from GitHub Release
+        id: release_apk
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          set -euo pipefail
+
+          tag="$(printf '%s' "$RELEASE_TAG" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          if [ -z "$tag" ]; then
+            echo "::error title=Release tag missing::Please enter a GitHub Release tag, for example V1.0.307preview."
+            exit 1
+          fi
+
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error title=Release not found::GitHub Release $tag does not exist."
+            exit 1
+          fi
+
+          # Release assets are named like Monica-Steam-Android-arm64-v8a-1.0.307-26081618-01.APK,
+          # so the .apk extension has to match case-insensitively and armeabi-v7a must stay excluded.
+          shopt -s nocasematch
+          arm64_assets=()
+          while IFS= read -r asset_name; do
+            if [[ "$asset_name" =~ arm64.*\.apk$ ]]; then
+              arm64_assets+=("$asset_name")
+            fi
+          done < <(
+            gh release view "$tag" \
+              --repo "$GITHUB_REPOSITORY" \
+              --json assets \
+              --jq '.assets[].name'
+          )
+          shopt -u nocasematch
+
+          if [ "${#arm64_assets[@]}" -eq 0 ]; then
+            echo "::error title=arm64 APK missing::Release $tag has no arm64 APK asset. Build and upload the arm64 APK to this Release first."
+            echo "Available assets:"
+            gh release view "$tag" \
+              --repo "$GITHUB_REPOSITORY" \
+              --json assets \
+              --jq '.assets[].name' || true
+            exit 1
+          fi
+
+          if [ "${#arm64_assets[@]}" -gt 1 ]; then
+            echo "Multiple arm64 APK assets found; the first one will be sent:"
+            printf '  %s\n' "${arm64_assets[@]}"
+          fi
+
+          asset_name="${arm64_assets[0]}"
+          rm -rf release-assets
+          mkdir -p release-assets
+          gh release download "$tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "$asset_name" \
+            --dir release-assets
+
+          apk_path="release-assets/$asset_name"
+          if [ ! -f "$apk_path" ]; then
+            echo "::error title=APK download failed::Downloaded asset was not found at $apk_path."
+            exit 1
+          fi
+
+          # Tags may contain non-ASCII characters (for example V1.0.304补丁),
+          # so percent-encode the tag for the release URL in the caption.
+          encoded_tag="$(printf '%s' "$tag" | jq -Rr '@uri')"
+
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "path=$apk_path" >> "$GITHUB_OUTPUT"
+          echo "url_tag=$encoded_tag" >> "$GITHUB_OUTPUT"
+          echo "Selected asset: $asset_name"
+
+      - name: Send APK to Telegram
+        shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RELEASE_TAG: ${{ steps.release_apk.outputs.tag }}
+          URL_TAG: ${{ steps.release_apk.outputs.url_tag }}
+          APK_PATH: ${{ steps.release_apk.outputs.path }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "::error title=Telegram secrets missing::TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is empty."
+            exit 1
+          fi
+
+          caption="🚀 Monica Steam 新版本 ${RELEASE_TAG} 已发布！
+          架构：arm64
+          仓库：${GITHUB_REPOSITORY}
+          下载页面：https://github.com/${GITHUB_REPOSITORY}/releases/tag/${URL_TAG}"
+
+          curl --fail-with-body --show-error --silent \
+            --retry 3 \
+            --retry-all-errors \
+            --form-string "chat_id=${TELEGRAM_CHAT_ID}" \
+            --form-string "caption=${caption}" \
+            --form "document=@${APK_PATH}" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument"
