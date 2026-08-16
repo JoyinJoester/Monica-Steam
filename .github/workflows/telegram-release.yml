@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: GitHub Release tag, for example V1.0.307preview
+        description: GitHub Release tag or title, for example V1.0.307 or V1.0.307preview
         required: true
         type: string
 
@@ -33,13 +33,26 @@ jobs:
 
           tag="$(printf '%s' "$RELEASE_TAG" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
           if [ -z "$tag" ]; then
-            echo "::error title=Release tag missing::Please enter a GitHub Release tag, for example V1.0.307preview."
+            echo "::error title=Release tag missing::Please enter a GitHub Release tag or title, for example V1.0.307."
             exit 1
           fi
 
           if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "::error title=Release not found::GitHub Release $tag does not exist."
-            exit 1
+            # Release titles and tags differ in this repo (title V1.0.307preview
+            # sits on tag V1.0.307), so retry the lookup by exact release title.
+            title_json="$(printf '%s' "$tag" | jq -Rr '@json')"
+            title_tag="$(
+              gh release list --repo "$GITHUB_REPOSITORY" --limit 100 \
+                --json name,tagName \
+                --jq ".[] | select(.name == ${title_json}) | .tagName" \
+              | head -n 1
+            )" || true
+            if [ -z "${title_tag:-}" ]; then
+              echo "::error title=Release not found::GitHub Release $tag does not exist."
+              exit 1
+            fi
+            echo "Input matched a release title; using tag '$title_tag'."
+            tag="$title_tag"
           fi
 
           # Release assets are named like Monica-Steam-Android-arm64-v8a-1.0.307-26081618-01.APK,
