@@ -60,7 +60,7 @@ class SteamStoreCollectionUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val detail = store
-            .substringAfter("private fun SteamStoreDetailContent(")
+            .substringAfter("internal fun SteamStoreDetailContent(")
             .substringBefore("private fun SteamStorePurchaseActions(")
 
         assertTrue(store.contains("private fun SteamStorePurchaseActions("))
@@ -68,7 +68,7 @@ class SteamStoreCollectionUiGuardTest {
 
         val actions = store
             .substringAfter("private fun SteamStorePurchaseActions(")
-            .substringBefore("private fun SteamStoreRegionalPriceSheet(")
+            .substringBefore("private fun SteamStoreDetailTags(")
         val splitButton = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/" +
                 "SteamStoreGiftPurchaseSplitButton.kt"
@@ -76,16 +76,10 @@ class SteamStoreCollectionUiGuardTest {
 
         assertTrue(actions.contains("SteamStoreGiftPurchaseSplitButton("))
         assertTrue(splitButton.contains("SplitButtonLayout("))
-        assertTrue(Regex("(?m)^\\s*OutlinedButton\\(").containsMatchIn(actions))
-        assertTrue(actions.contains("FilledTonalButton("))
-        assertFalse(actions.contains("FilledTonalIconButton("))
-        assertTrue(Regex("fillMaxWidth\\(\\)").findAll(actions).count() >= 2)
-        assertTrue(
-            Regex("heightIn\\(min = 52\\.dp\\)").findAll(actions).count() >= 2
-        )
-        assertTrue(
-            Regex("RoundedCornerShape\\(18\\.dp\\)").findAll(actions).count() >= 2
-        )
+        assertTrue(actions.contains("TextButton("))
+        assertTrue(actions.contains("SteamStoreIgnoreButton("))
+        assertTrue(actions.contains("heightIn(min = 48.dp)"))
+        assertTrue(actions.contains("RoundedCornerShape(18.dp)"))
         assertTrue(actions.contains("MaterialTheme.colorScheme.errorContainer"))
         assertTrue(actions.contains("MaterialTheme.colorScheme.onErrorContainer"))
         assertTrue(actions.contains("Icons.Default.ErrorOutline"))

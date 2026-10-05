@@ -77,6 +77,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -894,7 +895,7 @@ private fun StoreCompactPrice(game: SteamStoreItem) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SteamStoreDetailContent(
+internal fun SteamStoreDetailContent(
     detail: SteamStoreDetail,
     hints: List<SteamStoreHintKind>,
     showTags: Boolean,
@@ -979,7 +980,6 @@ private fun SteamStoreDetailContent(
         reviews.overall != null || reviews.recent != null || reviews.items.isNotEmpty()
     } == true
     val purchaseSectionIndex = 1 + listOf(
-        showTags && detail.tags.isNotEmpty(),
         hints.isNotEmpty(),
         cached,
         freeLicenseOption != null
@@ -1000,168 +1000,31 @@ private fun SteamStoreDetailContent(
             }
         }
     }
-    Box(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
+        SteamStoreDetailTopBar(detail.name, onBack, onShare,
+            onPurchase = { scrollToSection(purchaseSectionIndex) },
+            onReviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() },
+            onOfficial = onOpenOfficial)
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.weight(1f).fillMaxWidth(),
             state = listState,
-            contentPadding = PaddingValues(bottom = dockContentClearance + 32.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp)
+            contentPadding = PaddingValues(bottom = dockContentClearance + 24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
         item {
-            Box(Modifier.fillMaxWidth().height(390.dp)) {
-                SteamStoreImage(
-                    url = heroBackgroundUrl,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                    alpha = 0.24f
-                )
-                SteamStoreImage(
-                    url = detail.headerImageUrl,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxWidth()
-                        .statusBarsPadding()
-                        .clickable(enabled = heroViewerUrl.isNotBlank()) {
-                            showHeroViewer = true
-                        }
-                        .aspectRatio(460f / 215f),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = stringResource(
-                        R.string.steam_store_header_image_description
-                    )
-                )
-                Box(
-                    Modifier.matchParentSize().background(
-                        Brush.verticalGradient(
-                            0f to Color.Transparent,
-                            0.43f to Color.Transparent,
-                            0.72f to MaterialTheme.colorScheme.background.copy(alpha = 0.88f),
-                            1f to MaterialTheme.colorScheme.background
-                        )
-                    )
-                )
-                if (loading) CircularProgressIndicator(Modifier.align(Alignment.Center))
-                Surface(
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .padding(start = 12.dp, top = 8.dp)
-                        .size(48.dp),
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
-                    tonalElevation = 3.dp
-                ) {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            stringResource(R.string.back)
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .fillMaxWidth()
-                        .padding(horizontal = 18.dp, vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    SelectionContainer {
-                        Text(
-                            detail.name,
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 3,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Surface(
-                        onClick = onOpenRegionalPrices,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 48.dp),
-                        shape = RoundedCornerShape(18.dp),
-                        color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
-                        tonalElevation = 2.dp
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                modifier = Modifier.weight(1f),
-                                verticalArrangement = Arrangement.spacedBy(2.dp)
-                            ) {
-                                if (detail.availableInAccountRegion == false) {
-                                    Text(
-                                        text = stringResource(
-                                            R.string.steam_store_unavailable_account_region
-                                        ),
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.error
-                                    )
-                                    detail.priceCountryCode?.let { countryCode ->
-                                        Text(
-                                            text = stringResource(
-                                                R.string.steam_store_reference_region_price,
-                                                regionalCountryName(countryCode)
-                                            ),
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
-                                }
-                                PriceRow(
-                                    detail.discountPercent,
-                                    detail.formattedInitialPrice,
-                                    detail.formattedFinalPrice,
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                                Text(
-                                    text = stringResource(R.string.steam_store_regional_price_description),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.CompareArrows,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                                Text(
-                                    text = stringResource(R.string.steam_store_regional_price_action),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    maxLines = 1
-                                )
-                            }
-                        }
-                    }
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        if (detail.windows) AssistChip(onClick = {}, label = { Text("Windows") })
-                        if (detail.mac) AssistChip(onClick = {}, label = { Text("macOS") })
-                        if (detail.linux) AssistChip(onClick = {}, label = { Text("Linux") })
-                    }
-                }
-            }
-        }
-        if (showTags && detail.tags.isNotEmpty()) {
-            item(key = "store_tags_${detail.appId}") {
-                SteamStoreDetailTags(
-                    labels = detail.tags,
-                    filterableLabels = filterableTags,
-                    onTagClick = onFilterByTag,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-            }
+            SteamStoreDetailHeader(detail, loading, onOpenRegionalPrices,
+                onImage = { showHeroViewer = heroViewerUrl.isNotBlank() },
+                modifier = Modifier.padding(horizontal = 12.dp),
+                tags = {
+                    if (showTags && detail.tags.isNotEmpty()) SteamStoreDetailTags(
+                        labels = detail.tags, filterableLabels = filterableTags, onTagClick = onFilterByTag)
+                })
         }
         if (hints.isNotEmpty()) {
             item(key = "store_hints_${detail.appId}") {
                 SteamStoreHintBadges(
                     hints = hints,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
         }
@@ -1173,7 +1036,7 @@ private fun SteamStoreDetailContent(
                     claiming = freeLicenseClaiming,
                     result = freeLicenseClaimResult,
                     onOpenOfficial = onClaimFreeLicense,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
                 )
             }
         }
@@ -1186,15 +1049,14 @@ private fun SteamStoreDetailContent(
                 contextFailure = purchaseContextFailure,
                 selectedPackageId = selectedPackageId,
                 onSelectPackage = { selectedPackageId = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
             )
         }
         item {
             Column(
-                Modifier.padding(horizontal = 16.dp),
+                Modifier.padding(horizontal = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                SteamWorkshopEntry(detail.appId, onOpenWorkshop)
                 SteamStorePurchaseActions(
                     cartItem = cartItem,
                     inWishlist = inWishlist,
@@ -1221,37 +1083,10 @@ private fun SteamStoreDetailContent(
                     onToggleIgnored = onToggleIgnored,
                     modifier = Modifier.fillMaxWidth()
                 )
-                Surface(
-                    color = MaterialTheme.colorScheme.surfaceContainerLow,
-                    shape = RoundedCornerShape(18.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        Modifier.padding(14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Lock,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Text(
-                            stringResource(R.string.steam_store_security_note),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
+                Text(stringResource(R.string.steam_store_security_note),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
             }
-        }
-        item(key = "store_steamdb_${detail.appId}") {
-            SteamDbDetailsEntry(
-                query = SteamDbQuery(detail.appId, detail.priceCountryCode,
-                    detail.currency.takeIf { detail.finalPriceCents != null }, detail.isFree),
-                gameName = detail.name,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
-            )
         }
         if (detail.fullGame != null || detail.demos.isNotEmpty() || detail.relatedDlc.isNotEmpty()) {
             item(key = "store_related_${detail.appId}") {
@@ -1260,7 +1095,7 @@ private fun SteamStoreDetailContent(
                     demos = detail.demos,
                     relatedDlc = detail.relatedDlc,
                     onOpenApp = onOpenRelatedApp,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
         }
@@ -1287,7 +1122,7 @@ private fun SteamStoreDetailContent(
             item(key = "store_system_requirements_${detail.appId}") {
                 SteamStoreSystemRequirementsSection(
                     requirements = detail.systemRequirements,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 )
             }
         }
@@ -1297,7 +1132,7 @@ private fun SteamStoreDetailContent(
                     Text(
                         stringResource(R.string.steam_store_screenshots),
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(horizontal = 12.dp)
                     )
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -1307,7 +1142,7 @@ private fun SteamStoreDetailContent(
                             Card(
                                 onClick = { selectedScreenshotIndex = index },
                                 modifier = Modifier
-                                    .width(280.dp)
+                                    .width(240.dp)
                                     .aspectRatio(16f / 9f),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = CardDefaults.cardColors(
@@ -1345,9 +1180,20 @@ private fun SteamStoreDetailContent(
                 }
             }
         }
+        item(key = "store_steamdb_${detail.appId}") {
+            Column(Modifier.padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            SteamWorkshopEntry(detail.appId, onOpenWorkshop)
+            SteamDbDetailsEntry(
+                query = SteamDbQuery(detail.appId, detail.priceCountryCode,
+                    detail.currency.takeIf { detail.finalPriceCents != null }, detail.isFree),
+                gameName = detail.name,
+                modifier = Modifier.fillMaxWidth()
+            )
+            }
+        }
         item {
             Surface(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
                 shape = RoundedCornerShape(24.dp),
                 color = MaterialTheme.colorScheme.surfaceContainerLow
             ) {
@@ -1412,27 +1258,14 @@ private fun SteamStoreDetailContent(
                         onOpenAuthor = { steamId ->
                             onOpenWebsite("https://steamcommunity.com/profiles/$steamId/")
                         },
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
             }
         }
         }
-        SteamStoreDetailActionToolbar(
-            onOpenPurchaseOptions = { scrollToSection(purchaseSectionIndex) },
-            onOpenOfficialStore = onOpenOfficial,
-            onOpenReviews = {
-                if (hasReviews) scrollToSection(reviewSectionIndex)
-                else onOpenOfficialReviews()
-            },
-            onShare = onShare,
-            modifier = Modifier
-                .fillMaxSize()
-                .steamWindowTopPadding()
-                .steamWindowBottomPadding()
-                .padding(bottom = dockContentClearance)
-        )
     }
+
     if (showHeroViewer && heroViewerUrl.isNotBlank()) {
         SteamStoreScreenshotViewer(
             gameName = detail.name,
@@ -1528,10 +1361,10 @@ private fun SteamStorePurchaseActions(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            FilledTonalButton(
+            TextButton(
                 onClick = onToggleWishlist,
                 enabled = (purchaseAvailable || inWishlist) && wishlistAvailable && !wishlistMutating,
-                modifier = Modifier.weight(1f).heightIn(min = 52.dp),
+                modifier = Modifier.weight(1f).heightIn(min = 48.dp),
                 shape = RoundedCornerShape(18.dp)
             ) {
                 if (wishlistMutating) {
@@ -1558,7 +1391,8 @@ private fun SteamStorePurchaseActions(
                 enabled = ignoreAvailable,
                 mutating = ignoreMutating,
                 onClick = onToggleIgnored,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                compact = true
             )
         }
         if (ignoreSyncState == SteamStoreIgnoreSyncState.PENDING ||
@@ -1629,407 +1463,20 @@ private fun SteamStorePurchaseActions(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun SteamStoreDetailTags(
-    labels: List<String>,
-    filterableLabels: Set<String>,
-    onTagClick: (String) -> Boolean,
-    modifier: Modifier = Modifier
-) {
-    val distinctLabels = remember(labels) {
-        labels.map(String::trim).filter(String::isNotBlank).distinct()
-    }
-    if (distinctLabels.isEmpty()) return
-    var tagsExpanded by rememberSaveable(distinctLabels.joinToString("\u0000")) {
-        mutableStateOf(false)
-    }
-    val canExpand = distinctLabels.size > DETAIL_TAGS_COLLAPSED_COUNT
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.Label,
-                contentDescription = null,
-                modifier = Modifier.size(20.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = stringResource(R.string.steam_store_filter_tags),
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold
-            )
-            if (canExpand) {
-                TextButton(onClick = { tagsExpanded = !tagsExpanded }) {
-                    Text(
-                        stringResource(
-                            if (tagsExpanded) {
-                                R.string.steam_store_filter_collapse_tags
-                            } else {
-                                R.string.steam_store_filter_expand_tags
-                            }
-                        )
-                    )
-                    Icon(
-                        imageVector = if (tagsExpanded) {
-                            Icons.Default.ExpandLess
-                        } else {
-                            Icons.Default.ExpandMore
-                        },
-                        contentDescription = null
-                    )
-                }
-            }
-        }
-        AnimatedContent(
-            targetState = tagsExpanded,
-            label = "steam_store_detail_tags_expansion"
-        ) { expanded ->
-            val visibleLabels = if (expanded || !canExpand) {
-                distinctLabels
-            } else {
-                distinctLabels.take(DETAIL_TAGS_COLLAPSED_COUNT)
-            }
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                visibleLabels.forEach { label ->
-                    FilterChip(
-                        selected = false,
-                        onClick = { onTagClick(label) },
-                        enabled = label in filterableLabels,
-                        label = {
-                            Text(
-                                text = label,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-private const val DETAIL_TAGS_COLLAPSED_COUNT = 5
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SteamStoreRegionalPriceSheet(
-    appId: Int,
-    gameName: String,
-    historyCountryCode: String?,
-    prices: List<SteamRegionalPrice>,
-    loading: Boolean,
-    fromCache: Boolean,
-    failure: SteamLibraryFailureReason?,
-    onRetry: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    val sortedPrices = remember(prices) { sortedRegionalPricesForDisplay(prices) }
-    val preferredCountryCode = remember(historyCountryCode) {
-        historyCountryCode.orEmpty().trim().uppercase(Locale.ROOT)
-    }
-    var expandedCountryCode by rememberSaveable(appId) { mutableStateOf<String?>(null) }
-    var initialCountryApplied by rememberSaveable(appId) { mutableStateOf(false) }
-    LaunchedEffect(appId, sortedPrices, preferredCountryCode) {
-        if (!initialCountryApplied && sortedPrices.isNotEmpty()) {
-            expandedCountryCode = sortedPrices.firstOrNull {
-                it.countryCode.equals(preferredCountryCode, ignoreCase = true)
-            }?.countryCode
-            initialCountryApplied = true
-        }
-    }
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        containerColor = MaterialTheme.colorScheme.background,
-        contentColor = MaterialTheme.colorScheme.onBackground,
-        tonalElevation = 0.dp
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth().heightIn(max = 680.dp),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            item {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
-                        text = stringResource(R.string.steam_library_regional_prices),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = gameName,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-            if (loading) {
-                item { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) }
-            }
-            if (fromCache && sortedPrices.isNotEmpty()) {
-                item {
-                    Text(
-                        text = stringResource(R.string.steam_store_cached),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-            if (failure != null) {
-                item {
-                    Surface(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        color = MaterialTheme.colorScheme.errorContainer
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(14.dp),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = storeRegionalPriceFailureLabel(failure),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onErrorContainer,
-                                modifier = Modifier.weight(1f)
-                            )
-                            FilledTonalButton(
-                                onClick = onRetry,
-                                enabled = !loading,
-                                modifier = Modifier.heightIn(min = 48.dp)
-                            ) {
-                                Text(stringResource(R.string.steam_library_retry))
-                            }
-                        }
-                    }
-                }
-            }
-            if (!loading && sortedPrices.isEmpty() && failure == null) {
-                item {
-                    Text(
-                        text = stringResource(R.string.steam_library_regional_prices_empty),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(vertical = 18.dp)
-                    )
-                }
-            }
-            itemsIndexed(sortedPrices, key = ::steamStoreRegionalPriceLazyKey) { _, price ->
-                SteamStoreRegionalPriceCard(
-                    appId = appId,
-                    price = price,
-                    expanded = expandedCountryCode == price.countryCode,
-                    onToggleExpanded = {
-                        expandedCountryCode = if (expandedCountryCode == price.countryCode) {
-                            null
-                        } else {
-                            price.countryCode
-                        }
-                    },
-                )
-            }
-            item {
-                Text(
-                    text = stringResource(R.string.steam_library_regional_price_note),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
-                )
-            }
+private fun SteamStoreDetailTags(labels: List<String>, filterableLabels: Set<String>,
+    onTagClick: (String) -> Boolean, modifier: Modifier = Modifier) {
+    val distinctLabels = remember(labels) { labels.map(String::trim).filter(String::isNotBlank).distinct() }
+    LazyRow(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        items(distinctLabels, key = { it }) { label ->
+            SuggestionChip(onClick = { onTagClick(label) }, enabled = label in filterableLabels,
+                label = { Text(label, maxLines = 1) })
         }
     }
 }
 
 @Composable
-private fun SteamStoreRegionalPriceCard(
-    appId: Int,
-    price: SteamRegionalPrice,
-    expanded: Boolean,
-    onToggleExpanded: () -> Unit,
-) {
-    val reduceAnimations = LocalReduceAnimations.current
-    val discount = if (price.originalPriceMinor > price.finalPriceMinor &&
-        price.originalPriceMinor > 0L
-    ) {
-        ((price.originalPriceMinor - price.finalPriceMinor) * 100L /
-            price.originalPriceMinor).toInt()
-    } else {
-        0
-    }
-    val unavailable = stringResource(R.string.steam_library_price_unavailable)
-    val localFinal = when {
-        !price.isAvailable -> unavailable
-        price.finalPriceMinor == 0L -> stringResource(R.string.steam_library_free)
-        else -> formatStoreRegionalPrice(price.currency, price.finalPriceMinor)
-    }
-    val localOriginal = if (price.isAvailable) {
-        formatStoreRegionalPrice(price.currency, price.originalPriceMinor)
-    } else {
-        unavailable
-    }
-    val cnyFinal = price.cnyFinalPriceMinor?.let {
-        formatStoreRegionalPrice("CNY", it)
-    } ?: unavailable
-    val cnyOriginal = price.cnyOriginalPriceMinor?.let {
-        formatStoreRegionalPrice("CNY", it)
-    } ?: unavailable
-
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(22.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onToggleExpanded)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = regionalCountryName(price.countryCode),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            text = price.currency,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    if (discount > 0) {
-                        Surface(
-                            color = MaterialTheme.colorScheme.tertiaryContainer,
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text(
-                                text = stringResource(
-                                    R.string.steam_library_regional_discount,
-                                    discount
-                                ),
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                    Icon(
-                        imageVector = if (expanded) {
-                            Icons.Default.ExpandLess
-                        } else {
-                            Icons.Default.ExpandMore
-                        },
-                        contentDescription = stringResource(
-                            if (expanded) R.string.collapse else R.string.expand
-                        ),
-                        modifier = Modifier.size(30.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    SteamStoreRegionalPriceColumn(
-                        label = stringResource(R.string.steam_library_regional_local_price),
-                        finalPrice = localFinal,
-                        originalPrice = localOriginal,
-                        discounted = discount > 0,
-                        modifier = Modifier.weight(1f)
-                    )
-                    SteamStoreRegionalPriceColumn(
-                        label = stringResource(R.string.steam_library_regional_cny_price),
-                        finalPrice = cnyFinal,
-                        originalPrice = cnyOriginal,
-                        discounted = discount > 0,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
-            AnimatedVisibility(
-                visible = expanded,
-                enter = if (reduceAnimations) {
-                    EnterTransition.None
-                } else {
-                    fadeIn() + expandVertically()
-                },
-                exit = if (reduceAnimations) {
-                    ExitTransition.None
-                } else {
-                    fadeOut() + shrinkVertically()
-                }
-            ) {
-                Column {
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp))
-                    SteamDbPriceSection(
-                        query = SteamDbQuery(appId, price.countryCode, price.currency,
-                            free = price.isAvailable && price.finalPriceMinor == 0L),
-                        modifier = Modifier.padding(14.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamStoreRegionalPriceColumn(
-    label: String,
-    finalPrice: String,
-    originalPrice: String,
-    discounted: Boolean,
-    modifier: Modifier = Modifier
-) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Text(
-            text = finalPrice,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text(
-            text = stringResource(R.string.steam_store_regional_original_price, originalPrice),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textDecoration = if (discounted) TextDecoration.LineThrough else null,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-}
-
-@Composable
-private fun storeRegionalPriceFailureLabel(failure: SteamLibraryFailureReason): String {
+internal fun storeRegionalPriceFailureLabel(failure: SteamLibraryFailureReason): String {
     return stringResource(
         when (failure) {
             SteamLibraryFailureReason.SESSION_REQUIRED -> R.string.steam_library_session_required
@@ -2042,7 +1489,11 @@ private fun storeRegionalPriceFailureLabel(failure: SteamLibraryFailureReason): 
 }
 
 @Composable
-private fun regionalCountryName(countryCode: String): String {
+internal fun regionalCountryName(countryCode: String): String {
+    when (normalizedStoreCountry(countryCode)) {
+        "HK" -> return stringResource(R.string.store_region_hong_kong)
+        "TW" -> return stringResource(R.string.store_region_taiwan)
+    }
     return if (isSteamSouthAsiaPriceCountry(countryCode)) {
         stringResource(R.string.steam_region_south_asia)
     } else {
@@ -2051,28 +1502,31 @@ private fun regionalCountryName(countryCode: String): String {
     }
 }
 
-private fun formatStoreRegionalPrice(currency: String, minor: Long): String {
+internal fun formatStoreRegionalPrice(currency: String, minor: Long): String {
     val cents = minor.coerceIn(0L, Int.MAX_VALUE.toLong()).toInt()
-    return formatSteamPrice(cents, currency)
+    val formatted = formatSteamPrice(cents, currency)
+    return if (currency.equals("CNY", ignoreCase = true) && '.' in formatted) {
+        formatted.trimEnd('0').trimEnd('.')
+    } else formatted
 }
 
 @Composable
 private fun DetailTextSection(title: String, text: String) {
     var expanded by rememberSaveable(text) { mutableStateOf(false) }
     val collapsible = remember(text) {
-        text.length > 280 || text.lineSequence().count() > 6
+        text.length > 200 || text.lineSequence().count() > 4
     }
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        Text(title, style = MaterialTheme.typography.titleLarge)
+        Text(title, style = MaterialTheme.typography.titleMedium)
         SelectionContainer {
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = if (expanded) Int.MAX_VALUE else 6,
+                maxLines = if (expanded) Int.MAX_VALUE else 4,
                 overflow = TextOverflow.Ellipsis
             )
         }

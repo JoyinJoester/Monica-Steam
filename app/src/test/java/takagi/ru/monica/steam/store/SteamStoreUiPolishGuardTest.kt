@@ -18,13 +18,12 @@ class SteamStoreUiPolishGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/web/ui/SteamWebBrowserActionBar.kt"
         ).readText()
 
-        assertTrue(store.contains("ExpressiveTopBar("))
-        assertTrue(store.contains("StoreFeaturedHero("))
-        assertTrue(store.contains("StoreHeroSkeleton("))
-        assertTrue(store.contains("Brush.verticalGradient("))
-        assertTrue(store.contains("height(390.dp)"))
-        assertTrue(store.contains("heightIn(min = 52.dp)"))
-        assertTrue(store.contains("containerColor = MaterialTheme.colorScheme.background"))
+        val header = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt").readText()
+        assertTrue(store.contains("SteamStoreDetailTopBar("))
+        assertTrue(store.contains("SteamStoreDetailHeader("))
+        assertFalse(store.contains("height(390.dp)"))
+        assertTrue(header.contains("coerceAtMost(184.dp)"))
+        assertTrue(store.contains("heightIn(min = 48.dp)"))
         assertFalse(store.contains("OutlinedTextField("))
 
         assertTrue(actionBar.contains("SelectionActionBar("))

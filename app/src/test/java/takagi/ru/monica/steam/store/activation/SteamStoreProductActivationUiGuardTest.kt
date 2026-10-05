@@ -13,7 +13,7 @@ class SteamStoreProductActivationUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/activation/domain/SteamStoreProductActivation.kt"
         ).readText()
         val menu = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreBrowseMenu.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreNavigationDrawer.kt"
         ).readText()
         val screen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
@@ -25,11 +25,11 @@ class SteamStoreProductActivationUiGuardTest {
                 SteamStoreProductActivation.REGISTER_KEY_URL
             )
         )
-        assertTrue(menu.contains("onOpenProductActivation"))
+        assertTrue(menu.contains("actions.activateProduct"))
         assertTrue(menu.contains("steam_store_activate_product_code"))
         assertTrue(screen.contains("SteamStoreProductActivation.REGISTER_KEY_URL"))
         assertTrue(screen.contains("openAuthenticatedStoreWeb"))
-        assertTrue(screen.contains("steam_store_activate_product_code_note"))
+        assertTrue(screen.contains("activateProduct = { viewModel.openAuthenticatedStoreWeb(SteamStoreProductActivation.REGISTER_KEY_URL) }"))
     }
 
     private fun projectFile(path: String): File {

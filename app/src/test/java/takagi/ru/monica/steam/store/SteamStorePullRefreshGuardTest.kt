@@ -9,16 +9,16 @@ class SteamStorePullRefreshGuardTest {
     fun homeUsesRealRefreshStateExpressiveIndicatorAndSettingsMenu() {
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
-        ).readText()
+        ).readText() + projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt").readText() + projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreNavigationDrawer.kt").readText()
         val controls = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamPageRefreshControls.kt"
         ).readText()
 
-        assertTrue(store.contains("SteamPageOverflowMenu("))
-        assertTrue(store.contains("onOpenSettings = onOpenSettings"))
+        assertTrue(store.contains("SteamStoreNavigationDrawer("))
+        assertTrue(store.contains("onClick = actions.settings"))
         assertTrue(store.contains("SteamExpressivePullToRefresh("))
-        assertTrue(store.contains("val storeRefreshing = state.loadingHome || state.loadingCatalog"))
-        assertTrue(store.contains("refreshing = storeRefreshing"))
+        assertTrue(store.contains("val refreshing = if (searching) state.searching else if (catalog) state.loadingCatalog else state.loadingHome"))
+        assertTrue(store.contains("SteamExpressivePullToRefresh(refreshing, actions.refresh"))
         assertTrue(store.contains("viewModel.loadHome(force = true)"))
         assertTrue(controls.contains("PullToRefreshDefaults.LoadingIndicator("))
         assertTrue(controls.contains("state.isAnimating"))

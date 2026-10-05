@@ -55,12 +55,16 @@ fun SteamDbDetailsEntry(query: SteamDbQuery, gameName: String, modifier: Modifie
 }
 
 @Composable
-fun SteamDbPriceSection(query: SteamDbQuery, modifier: Modifier = Modifier, repository: SteamDbRepository = SteamDbRepository.shared) {
+fun SteamDbPriceSection(query: SteamDbQuery, modifier: Modifier = Modifier, repository: SteamDbRepository = SteamDbRepository.shared, compact: Boolean = false) {
     var reload by remember(query) { mutableIntStateOf(0) }
     val result = remember(query) { mutableStateOf<SteamDbResult<SteamDbLowestPrice>>(SteamDbResult.Loading) }
     LaunchedEffect(query, reload, repository) {
         result.value = SteamDbResult.Loading
         result.value = repository.price(query, force = reload > 0)
+    }
+    if (compact) {
+        SteamDbCompactPriceContent(query, result.value, onRetry = { reload++ }, modifier = modifier)
+        return
     }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -74,6 +78,32 @@ fun SteamDbPriceSection(query: SteamDbQuery, modifier: Modifier = Modifier, repo
         Text(stringResource(R.string.steamdb_price_source, query.priceRegion ?: "—"),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         SteamDbSourceButton(query.appId)
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+internal fun SteamDbCompactPriceContent(query: SteamDbQuery, result: SteamDbResult<SteamDbLowestPrice>, onRetry: () -> Unit, modifier: Modifier = Modifier) {
+    Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.store_detail_low), style = MaterialTheme.typography.labelMedium)
+                if (result is SteamDbResult.Ready) {
+                    Text(result.value.price, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                    result.value.discount?.let { Text("−$it%", style = MaterialTheme.typography.labelSmall) }
+                    result.value.occurrences?.let { Text(stringResource(R.string.steamdb_occurrences, number(it)), style = MaterialTheme.typography.labelSmall) }
+                }
+            }
+            if (result is SteamDbResult.Ready) {
+                result.value.twoYearLow?.let { Text(stringResource(R.string.steamdb_two_year_low, it), style = MaterialTheme.typography.bodySmall) }
+                result.value.lastAt?.let { Text(stringResource(R.string.store_detail_low_date, date(it)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            }
+            ResultStatus(result)
+        }
+        if (result is SteamDbResult.Failed && result.reason !in listOf(SteamDbFailure.FREE, SteamDbFailure.UNKNOWN_REGION)) {
+            IconButton(onClick = onRetry) { Icon(Icons.Default.Refresh, stringResource(R.string.steamdb_retry), Modifier.size(20.dp)) }
+        }
+        SteamDbSourceButton(query.appId, compact = true)
     }
 }
 
@@ -123,13 +153,18 @@ internal fun SteamDbPanel(query: SteamDbQuery, gameName: String, state: SteamDbS
 }
 
 @Composable
-private fun SteamDbSourceButton(appId: Int) {
+private fun SteamDbSourceButton(appId: Int, compact: Boolean = false) {
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
-    FilledTonalButton(onClick = {
+    val open = {
         try { uriHandler.openUri("https://steamdb.info/app/$appId/") }
         catch (_: ActivityNotFoundException) { Toast.makeText(context, R.string.steamdb_open_failed, Toast.LENGTH_SHORT).show() }
-    }, modifier = Modifier.fillMaxWidth()) {
+    }
+    if (compact) {
+        IconButton(onClick = open) { Icon(Icons.AutoMirrored.Filled.OpenInNew, stringResource(R.string.steamdb_open), Modifier.size(20.dp)) }
+        return
+    }
+    FilledTonalButton(onClick = open, modifier = Modifier.fillMaxWidth()) {
         Icon(Icons.AutoMirrored.Filled.OpenInNew, null, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
         Text(stringResource(R.string.steamdb_open))

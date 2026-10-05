@@ -62,42 +62,25 @@ class SteamStoreDetailInteractionGuardTest {
             detailUi.indexOf("if (cached) item")
         )
 
+        val header = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt").readText()
         assertTrue(hero.contains("var showHeroViewer"))
-        assertTrue(hero.contains(".statusBarsPadding()"))
-        assertTrue(hero.contains(".clickable(enabled = heroViewerUrl.isNotBlank())"))
-        assertTrue(hero.contains("showHeroViewer = true"))
+        assertTrue(header.contains(".statusBarsPadding()"))
+        assertTrue(header.contains(".clickable(onClick = onImage)"))
+        assertTrue(hero.contains("onImage = { showHeroViewer = heroViewerUrl.isNotBlank() }"))
         assertTrue(detailUi.contains("screenshots = listOf(heroViewerUrl)"))
     }
 
     @Test
-    fun detailActionToolbarFloatsOutsideTheScrollableHero() {
-        val detailUi = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
-        ).readText()
-        val detail = detailUi
-            .substringAfter("private fun SteamStoreDetailContent(")
+    fun fixedDetailTopBarKeepsPurchaseReviewsAndOfficialActions() {
+        val detail = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt").readText()
+            .substringAfter("internal fun SteamStoreDetailContent(")
             .substringBefore("private fun SteamStorePurchaseActions(")
-        val toolbar = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailActionToolbar.kt"
-        ).readText()
-        val hero = detail
-            .substringAfter("item {\n            Box(Modifier.fillMaxWidth().height(390.dp))")
-            .substringBefore("if (showTags && detail.tags.isNotEmpty())")
-
-        assertTrue(detail.contains("Box(modifier = modifier.fillMaxSize())"))
-        assertTrue(detail.contains("modifier = Modifier.fillMaxSize(),\n            state = listState"))
-        assertFalse(hero.contains("SteamStoreDetailActionToolbar("))
-        assertTrue(detail.contains(".steamWindowTopPadding()"))
-        assertTrue(detail.contains(".steamWindowBottomPadding()"))
-        assertTrue(detail.contains(".padding(bottom = dockContentClearance)"))
-        assertFalse(detail.contains(".padding(end = 12.dp"))
-        assertTrue(toolbar.contains("BoxWithConstraints("))
-        assertTrue(toolbar.contains("detectDragGestures("))
-        assertTrue(toolbar.contains("AUTO_COLLAPSE_MILLIS"))
-        assertTrue(toolbar.contains("SteamStoreDetailToolbarEdge.LEFT"))
-        assertTrue(toolbar.contains("SteamStoreDetailToolbarEdge.RIGHT"))
-        assertTrue(toolbar.contains("Icons.Default.MoreVert"))
-        assertTrue(toolbar.contains("dragging = dragging"))
+        assertTrue(detail.indexOf("SteamStoreDetailTopBar(") < detail.indexOf("LazyColumn("))
+        assertTrue(detail.contains("onPurchase = { scrollToSection(purchaseSectionIndex) }"))
+        assertTrue(detail.contains("onReviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() }"))
+        assertTrue(detail.contains("onOfficial = onOpenOfficial"))
+        assertTrue(detail.contains("bottom = dockContentClearance + 24.dp"))
+        assertFalse(detail.contains("SteamStoreDetailActionToolbar("))
     }
 
     @Test
@@ -161,7 +144,7 @@ class SteamStoreDetailInteractionGuardTest {
         assertTrue(websiteButton.contains("R.string.steam_store_website"))
         assertFalse(websiteButton.contains("Text(url"))
         assertTrue(aboutSection.contains("rememberSaveable(text)"))
-        assertTrue(aboutSection.contains("maxLines = if (expanded) Int.MAX_VALUE else 6"))
+        assertTrue(aboutSection.contains("maxLines = if (expanded) Int.MAX_VALUE else 4"))
         assertTrue(aboutSection.contains("R.string.steam_store_about_expand"))
         assertTrue(aboutSection.contains("R.string.steam_store_about_collapse"))
     }

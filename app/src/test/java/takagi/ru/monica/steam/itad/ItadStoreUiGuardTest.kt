@@ -14,7 +14,7 @@ class ItadStoreUiGuardTest {
     fun legacyPriceQueryIsReplacedByKeylessSteamDb() {
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
-        ).readText()
+        ).readText() + projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreRegionalPrices.kt").readText()
         val card = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/steamdb/ui/SteamDbSection.kt"
         ).readText()

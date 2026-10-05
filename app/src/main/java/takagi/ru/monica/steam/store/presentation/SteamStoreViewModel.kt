@@ -742,10 +742,12 @@ class SteamStoreViewModel internal constructor(
             )
             return
         }
+        val currentCountry = initialState.detail?.accountCountryCode ?: initialState.detail?.priceCountryCode
+        val countries = storeRegionalPriceCountries(currentCountry, REGIONAL_PRICE_COUNTRY_CODES)
         val memoryPrices = initialState.regionalPrices
             .takeIf { initialState.regionalPricesAppId == appId }
             .orEmpty()
-        if (!force && regionalPricesAreReady(memoryPrices)) return
+        if (!force && regionalPricesAreReady(memoryPrices, currentCountry)) return
         val generation = ++regionalPriceRequestGeneration
         _uiState.value = initialState.copy(
             regionalPrices = memoryPrices,
@@ -767,13 +769,13 @@ class SteamStoreViewModel internal constructor(
                     )
                 }
             }
-            if (!force && regionalPricesAreReady(availablePrices)) {
+            if (!force && regionalPricesAreReady(availablePrices, currentCountry)) {
                 _uiState.value = _uiState.value.copy(loadingRegionalPrices = false)
                 return@launch
             }
             val result = try {
                 withContext(Dispatchers.IO) {
-                    when (val prices = fetchRegionalPricesWithSessionRetry(account, appId)) {
+                    when (val prices = fetchRegionalPricesWithSessionRetry(account, appId, countries)) {
                         is SteamLibraryResult.Success -> {
                             val exchangeRates = runCatching {
                                 currencyExchangeService.fetchCnyRates()
@@ -1961,7 +1963,8 @@ class SteamStoreViewModel internal constructor(
         currentGeneration = detailRequestGeneration
     )
 
-    private fun regionalPricesAreReady(prices: List<SteamRegionalPrice>): Boolean {
+    private fun regionalPricesAreReady(prices: List<SteamRegionalPrice>, currentCountry: String?): Boolean {
+        if (!storePricesContainCurrentRegion(prices, currentCountry)) return false
         if (prices.isEmpty()) return false
         val cacheIsFresh = prices.all { price ->
             System.currentTimeMillis() - price.fetchedAt < REGIONAL_PRICE_CACHE_TTL_MILLIS
@@ -1974,13 +1977,14 @@ class SteamStoreViewModel internal constructor(
 
     private suspend fun fetchRegionalPricesWithSessionRetry(
         account: SteamAccount,
-        appId: Int
+        appId: Int,
+        countries: List<String>
     ): SteamLibraryResult<List<SteamRegionalPrice>> {
         val prepared = refreshAccountSession(account, force = false)
         val first = libraryService.fetchRegionalPrices(
             account = prepared,
             appId = appId,
-            countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+            countryCodes = countries,
             language = "schinese"
         )
         if (first !is SteamLibraryResult.Failure ||
@@ -1993,7 +1997,7 @@ class SteamStoreViewModel internal constructor(
             libraryService.fetchRegionalPrices(
                 account = refreshed,
                 appId = appId,
-                countryCodes = REGIONAL_PRICE_COUNTRY_CODES,
+                countryCodes = countries,
                 language = "schinese"
             )
         } else {

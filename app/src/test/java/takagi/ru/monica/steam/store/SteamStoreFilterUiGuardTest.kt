@@ -32,10 +32,10 @@ class SteamStoreFilterUiGuardTest {
         assertTrue(screen.contains("hintSettings.storeTagsEnabled"))
         assertTrue(screen.contains("viewModel.applyStoreFilters(selection)"))
         assertTrue(screen.contains("private fun SteamStoreDetailTags("))
-        assertTrue(screen.contains("tagsExpanded"))
-        assertTrue(screen.contains("DETAIL_TAGS_COLLAPSED_COUNT"))
+        assertTrue(screen.contains("LazyRow(modifier.fillMaxWidth()"))
+        assertTrue(screen.contains("SuggestionChip("))
         assertTrue(screen.contains("onFilterByTag = viewModel::filterByDetailTag"))
-        assertTrue(screen.contains("FilterChip("))
+        assertTrue(screen.contains("enabled = label in filterableLabels"))
 
         val viewModel = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/presentation/SteamStoreViewModel.kt"

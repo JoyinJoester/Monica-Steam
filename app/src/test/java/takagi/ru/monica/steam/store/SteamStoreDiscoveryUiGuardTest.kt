@@ -14,18 +14,17 @@ class SteamStoreDiscoveryUiGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDiscoveryContent.kt"
         ).readText()
         val menu = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreBrowseMenu.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreNavigationDrawer.kt"
         ).readText()
 
-        assertTrue(screen.contains("SteamStoreBrowseMenu("))
-        assertTrue(screen.contains("SteamStoreDiscoveryContent("))
-        assertTrue(screen.contains("viewModel::selectBrowseFilter"))
+        assertTrue(screen.contains("SteamStoreHomePage("))
+        assertTrue(screen.contains("viewModel.selectBrowseFilter(filter)"))
         assertTrue(screen.contains("viewModel::openPointsShop"))
         assertTrue(discovery.contains("SteamStoreEventSection("))
         assertTrue(discovery.contains("LazyRow("))
         assertTrue(discovery.contains("MaterialTheme.colorScheme"))
-        assertTrue(menu.contains("MonicaTopActionsDropdownMenu("))
-        assertTrue(menu.contains("DropdownMenuItem("))
+        assertTrue(menu.contains("ModalNavigationDrawer("))
+        assertTrue(menu.contains("actions.points"))
     }
 
     private fun projectFile(path: String): File {

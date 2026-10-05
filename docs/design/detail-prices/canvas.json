@@ -1,0 +1,1901 @@
+{
+  "title": "Monica Steam · 游戏详情与紧凑比价",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "blue",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "detail",
+      "name": "详情 · 当前区服价格优先",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "prices",
+      "name": "多区价格 · 默认收起",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "low",
+      "name": "单区展开 · 简洁史低",
+      "x": 880,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "top",
+      "x": 0,
+      "y": 12,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "top",
+          "kind": "topAppBar",
+          "label": "赛博朋克 2077",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "more_vert"
+        }
+      ]
+    },
+    {
+      "id": "cover",
+      "x": 12,
+      "y": 104,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "cover",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 181,
+          "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg",
+          "radius": 16
+        }
+      ]
+    },
+    {
+      "id": "meta",
+      "x": 12,
+      "y": 296,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "meta",
+          "kind": "text",
+          "label": "2020年12月10日 · Windows",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "tags",
+      "x": 12,
+      "y": 326,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "tags",
+          "kind": "chip",
+          "label": "开放世界",
+          "icon": null,
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "tags2",
+      "x": 116,
+      "y": 326,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "tags2",
+          "kind": "chip",
+          "label": "角色扮演",
+          "icon": null,
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "tags3",
+      "x": 220,
+      "y": 326,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "tags3",
+          "kind": "chip",
+          "label": "科幻",
+          "icon": null,
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "current",
+      "x": 12,
+      "y": 382,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "current",
+          "kind": "listItem",
+          "label": "¥89.40   −70%",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "中国 · 当前区服  /  原价 ¥298.00",
+          "icon2": "compare_arrows",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "purchase-title",
+      "x": 12,
+      "y": 472,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "purchase-title",
+          "kind": "text",
+          "label": "选择版本",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "editions",
+      "x": 12,
+      "y": 506,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "editions0",
+          "kind": "listItem",
+          "label": "标准版",
+          "supporting": "¥89.40",
+          "icon": "radio_button_checked",
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        },
+        {
+          "id": "editions1",
+          "kind": "listItem",
+          "label": "终极版",
+          "supporting": "本体与往日之影 · ¥178.20",
+          "icon": "radio_button_unchecked",
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "cart",
+      "x": 12,
+      "y": 666,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "cart",
+          "kind": "button",
+          "label": "加入购物车",
+          "icon": "shopping_cart",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "wish",
+      "x": 12,
+      "y": 732,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "wish",
+          "kind": "button",
+          "label": "愿望单",
+          "icon": "favorite_border",
+          "variant": "text",
+          "size": 188
+        }
+      ]
+    },
+    {
+      "id": "ignore",
+      "x": 212,
+      "y": 732,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "ignore",
+          "kind": "button",
+          "label": "忽略",
+          "icon": "visibility_off",
+          "variant": "text",
+          "size": 188
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "x": 12,
+      "y": 800,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "about",
+          "kind": "text",
+          "label": "关于这款游戏",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "description",
+      "x": 12,
+      "y": 836,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "description",
+          "kind": "text",
+          "label": "探索夜之城，自由选择你的故事。",
+          "icon": null,
+          "variant": "filled",
+          "size": 14
+        }
+      ]
+    },
+    {
+      "id": "pricessheet",
+      "x": 440,
+      "y": 16,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricessheet",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "checked": true,
+          "size": 412,
+          "size2": 864,
+          "fill": "surface",
+          "radiusTop": 28
+        }
+      ]
+    },
+    {
+      "id": "pricestitle",
+      "x": 452,
+      "y": 56,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricestitle",
+          "kind": "text",
+          "label": "多区价格",
+          "icon": null,
+          "variant": "filled",
+          "size": 22,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "pricesrefresh",
+      "x": 744,
+      "y": 44,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesrefresh",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "refresh",
+          "variant": "text"
+        }
+      ]
+    },
+    {
+      "id": "pricesclose",
+      "x": 792,
+      "y": 44,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesclose",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "close",
+          "variant": "text",
+          "action": {
+            "to": "back"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pricesgame",
+      "x": 452,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesgame",
+          "kind": "text",
+          "label": "赛博朋克 2077",
+          "icon": null,
+          "variant": "filled",
+          "size": 14
+        }
+      ]
+    },
+    {
+      "id": "pricesheading28",
+      "x": 468,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesheading28",
+          "kind": "text",
+          "label": "区服",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "pricesheading142",
+      "x": 582,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesheading142",
+          "kind": "text",
+          "label": "现价 / 折扣",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "pricesheading280",
+      "x": 720,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesheading280",
+          "kind": "text",
+          "label": "原价",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "pricescurrent",
+      "x": 452,
+      "y": 170,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrent0",
+          "kind": "listItem",
+          "label": "🇨🇳 中国",
+          "supporting": "当前区服",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "pricescurrentvalue",
+      "x": 582,
+      "y": 180,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrentvalue",
+          "kind": "text",
+          "label": "¥89.40",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "pricescurrentsale",
+      "x": 652,
+      "y": 183,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrentsale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "pricescurrentlocal",
+      "x": 582,
+      "y": 208,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrentlocal",
+          "kind": "text",
+          "label": "CNY",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "pricescurrentoriginal",
+      "x": 720,
+      "y": 180,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrentoriginal",
+          "kind": "text",
+          "label": "¥298.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "pricescurrentoriglocal",
+      "x": 720,
+      "y": 208,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricescurrentoriglocal",
+          "kind": "text",
+          "label": "CNY",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices0",
+      "x": 452,
+      "y": 244,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices00",
+          "kind": "listItem",
+          "label": "🇵🇰 南亚",
+          "supporting": "USD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "prices0value",
+      "x": 582,
+      "y": 254,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices0value",
+          "kind": "text",
+          "label": "¥60.33",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "prices0sale",
+      "x": 652,
+      "y": 257,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices0sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices0local",
+      "x": 582,
+      "y": 282,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices0local",
+          "kind": "text",
+          "label": "USD 8.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices0original",
+      "x": 720,
+      "y": 254,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices0original",
+          "kind": "text",
+          "label": "¥201.24",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "prices0origlocal",
+      "x": 720,
+      "y": 282,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices0origlocal",
+          "kind": "text",
+          "label": "USD 29.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices1",
+      "x": 452,
+      "y": 318,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices10",
+          "kind": "listItem",
+          "label": "🇯🇵 日本",
+          "supporting": "JPY",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "prices1value",
+      "x": 582,
+      "y": 328,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices1value",
+          "kind": "text",
+          "label": "¥72.16",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "prices1sale",
+      "x": 652,
+      "y": 331,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices1sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices1local",
+      "x": 582,
+      "y": 356,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices1local",
+          "kind": "text",
+          "label": "JPY 1,980",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices1original",
+      "x": 720,
+      "y": 328,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices1original",
+          "kind": "text",
+          "label": "¥240.53",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "prices1origlocal",
+      "x": 720,
+      "y": 356,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices1origlocal",
+          "kind": "text",
+          "label": "JPY 6,600",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices2",
+      "x": 452,
+      "y": 392,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices20",
+          "kind": "listItem",
+          "label": "🇨🇳 中国香港",
+          "supporting": "HKD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "prices2value",
+      "x": 582,
+      "y": 402,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices2value",
+          "kind": "text",
+          "label": "¥76.20",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "prices2sale",
+      "x": 652,
+      "y": 405,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices2sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices2local",
+      "x": 582,
+      "y": 430,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices2local",
+          "kind": "text",
+          "label": "HKD 82.50",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices2original",
+      "x": 720,
+      "y": 402,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices2original",
+          "kind": "text",
+          "label": "¥254.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "prices2origlocal",
+      "x": 720,
+      "y": 430,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices2origlocal",
+          "kind": "text",
+          "label": "HKD 275",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices3",
+      "x": 452,
+      "y": 466,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices30",
+          "kind": "listItem",
+          "label": "🇨🇳 中国台湾",
+          "supporting": "TWD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "prices3value",
+      "x": 582,
+      "y": 476,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices3value",
+          "kind": "text",
+          "label": "¥96.60",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "prices3sale",
+      "x": 652,
+      "y": 479,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices3sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices3local",
+      "x": 582,
+      "y": 504,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices3local",
+          "kind": "text",
+          "label": "TWD 450",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices3original",
+      "x": 720,
+      "y": 476,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices3original",
+          "kind": "text",
+          "label": "¥322.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "prices3origlocal",
+      "x": 720,
+      "y": 504,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices3origlocal",
+          "kind": "text",
+          "label": "TWD 1,500",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices4",
+      "x": 452,
+      "y": 540,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices40",
+          "kind": "listItem",
+          "label": "🇺🇸 美国",
+          "supporting": "USD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "prices4value",
+      "x": 582,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices4value",
+          "kind": "text",
+          "label": "¥107.10",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "prices4sale",
+      "x": 652,
+      "y": 553,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices4sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices4local",
+      "x": 582,
+      "y": 578,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices4local",
+          "kind": "text",
+          "label": "USD 14.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "prices4original",
+      "x": 720,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices4original",
+          "kind": "text",
+          "label": "¥357.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "prices4origlocal",
+      "x": 720,
+      "y": 578,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "prices4origlocal",
+          "kind": "text",
+          "label": "USD 49.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "pricesnote",
+      "x": 452,
+      "y": 642,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "pricesnote",
+          "kind": "text",
+          "label": "人民币为估算价格；结算以 Steam 为准。",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "lowsheet",
+      "x": 880,
+      "y": 16,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowsheet",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "checked": true,
+          "size": 412,
+          "size2": 864,
+          "fill": "surface",
+          "radiusTop": 28
+        }
+      ]
+    },
+    {
+      "id": "lowtitle",
+      "x": 892,
+      "y": 56,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowtitle",
+          "kind": "text",
+          "label": "多区价格",
+          "icon": null,
+          "variant": "filled",
+          "size": 22,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "lowrefresh",
+      "x": 1184,
+      "y": 44,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowrefresh",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "refresh",
+          "variant": "text"
+        }
+      ]
+    },
+    {
+      "id": "lowclose",
+      "x": 1232,
+      "y": 44,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowclose",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "close",
+          "variant": "text",
+          "action": {
+            "to": "back"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lowgame",
+      "x": 892,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowgame",
+          "kind": "text",
+          "label": "赛博朋克 2077",
+          "icon": null,
+          "variant": "filled",
+          "size": 14
+        }
+      ]
+    },
+    {
+      "id": "lowheading28",
+      "x": 908,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowheading28",
+          "kind": "text",
+          "label": "区服",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "lowheading142",
+      "x": 1022,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowheading142",
+          "kind": "text",
+          "label": "现价 / 折扣",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "lowheading280",
+      "x": 1160,
+      "y": 138,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowheading280",
+          "kind": "text",
+          "label": "原价",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "lowcurrent",
+      "x": 892,
+      "y": 170,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrent0",
+          "kind": "listItem",
+          "label": "🇨🇳 中国",
+          "supporting": "当前区服",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "lowcurrentvalue",
+      "x": 1022,
+      "y": 180,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrentvalue",
+          "kind": "text",
+          "label": "¥89.40",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "lowcurrentsale",
+      "x": 1092,
+      "y": 183,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrentsale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "lowcurrentlocal",
+      "x": 1022,
+      "y": 208,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrentlocal",
+          "kind": "text",
+          "label": "CNY",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "lowcurrentoriginal",
+      "x": 1160,
+      "y": 180,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrentoriginal",
+          "kind": "text",
+          "label": "¥298.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "lowcurrentoriglocal",
+      "x": 1160,
+      "y": 208,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lowcurrentoriglocal",
+          "kind": "text",
+          "label": "CNY",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "summary",
+      "x": 892,
+      "y": 244,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "summary0",
+          "kind": "listItem",
+          "label": "Steam 史低  ¥89.40  ·  −70%",
+          "supporting": "出现 3 次  ·  最近 2026年10月1日",
+          "icon": "query_stats",
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low0",
+      "x": 892,
+      "y": 318,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low00",
+          "kind": "listItem",
+          "label": "🇵🇰 南亚",
+          "supporting": "USD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low0value",
+      "x": 1022,
+      "y": 328,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low0value",
+          "kind": "text",
+          "label": "¥60.33",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "low0sale",
+      "x": 1092,
+      "y": 331,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low0sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low0local",
+      "x": 1022,
+      "y": 356,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low0local",
+          "kind": "text",
+          "label": "USD 8.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low0original",
+      "x": 1160,
+      "y": 328,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low0original",
+          "kind": "text",
+          "label": "¥201.24",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "low0origlocal",
+      "x": 1160,
+      "y": 356,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low0origlocal",
+          "kind": "text",
+          "label": "USD 29.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low1",
+      "x": 892,
+      "y": 392,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low10",
+          "kind": "listItem",
+          "label": "🇯🇵 日本",
+          "supporting": "JPY",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low1value",
+      "x": 1022,
+      "y": 402,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low1value",
+          "kind": "text",
+          "label": "¥72.16",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "low1sale",
+      "x": 1092,
+      "y": 405,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low1sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low1local",
+      "x": 1022,
+      "y": 430,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low1local",
+          "kind": "text",
+          "label": "JPY 1,980",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low1original",
+      "x": 1160,
+      "y": 402,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low1original",
+          "kind": "text",
+          "label": "¥240.53",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "low1origlocal",
+      "x": 1160,
+      "y": 430,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low1origlocal",
+          "kind": "text",
+          "label": "JPY 6,600",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low2",
+      "x": 892,
+      "y": 466,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low20",
+          "kind": "listItem",
+          "label": "🇨🇳 中国香港",
+          "supporting": "HKD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low2value",
+      "x": 1022,
+      "y": 476,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low2value",
+          "kind": "text",
+          "label": "¥76.20",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "low2sale",
+      "x": 1092,
+      "y": 479,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low2sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low2local",
+      "x": 1022,
+      "y": 504,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low2local",
+          "kind": "text",
+          "label": "HKD 82.50",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low2original",
+      "x": 1160,
+      "y": 476,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low2original",
+          "kind": "text",
+          "label": "¥254.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "low2origlocal",
+      "x": 1160,
+      "y": 504,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low2origlocal",
+          "kind": "text",
+          "label": "HKD 275",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low3",
+      "x": 892,
+      "y": 540,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low30",
+          "kind": "listItem",
+          "label": "🇨🇳 中国台湾",
+          "supporting": "TWD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low3value",
+      "x": 1022,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low3value",
+          "kind": "text",
+          "label": "¥96.60",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "low3sale",
+      "x": 1092,
+      "y": 553,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low3sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low3local",
+      "x": 1022,
+      "y": 578,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low3local",
+          "kind": "text",
+          "label": "TWD 450",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low3original",
+      "x": 1160,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low3original",
+          "kind": "text",
+          "label": "¥322.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "low3origlocal",
+      "x": 1160,
+      "y": 578,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low3origlocal",
+          "kind": "text",
+          "label": "TWD 1,500",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low4",
+      "x": 892,
+      "y": 614,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low40",
+          "kind": "listItem",
+          "label": "🇺🇸 美国",
+          "supporting": "USD",
+          "icon": null,
+          "iconFill": "none",
+          "icon2": "expand_more",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "low4value",
+      "x": 1022,
+      "y": 624,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low4value",
+          "kind": "text",
+          "label": "¥107.10",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "low4sale",
+      "x": 1092,
+      "y": 627,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low4sale",
+          "kind": "text",
+          "label": "−70%",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low4local",
+      "x": 1022,
+      "y": 652,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low4local",
+          "kind": "text",
+          "label": "USD 14.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "low4original",
+      "x": 1160,
+      "y": 624,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low4original",
+          "kind": "text",
+          "label": "¥357.00",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "low4origlocal",
+      "x": 1160,
+      "y": 652,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "low4origlocal",
+          "kind": "text",
+          "label": "USD 49.99",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "lownote",
+      "x": 892,
+      "y": 716,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lownote",
+          "kind": "text",
+          "label": "人民币为估算价格；结算以 Steam 为准。",
+          "icon": null,
+          "variant": "filled",
+          "size": 12
+        }
+      ]
+    }
+  ]
+}

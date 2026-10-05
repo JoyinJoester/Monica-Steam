@@ -77,10 +77,10 @@ class SteamStoreGlobalSearchTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val searchCard = source
-            .substringAfter("private fun SearchResultCard(")
+            .substringAfter("internal fun SearchResultCard(")
             .substringBefore("@OptIn(ExperimentalMaterial3Api::class)")
         val detail = source
-            .substringAfter("private fun SteamStoreDetailContent(")
+            .substringAfter("internal fun SteamStoreDetailContent(")
             .substringBefore("@Composable\nprivate fun SteamStorePurchaseActions(")
         val purchaseActions = source
             .substringAfter("private fun SteamStorePurchaseActions(")
@@ -88,12 +88,12 @@ class SteamStoreGlobalSearchTest {
 
         assertTrue(searchCard.contains("steam_store_unavailable_account_region"))
         assertTrue(searchCard.contains("steam_store_reference_region_price"))
-        assertTrue(detail.contains("steam_store_unavailable_account_region"))
+        assertTrue(projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt").readText().contains("steam_store_unavailable_account_region"))
         assertTrue(detail.contains("onOpenRegionalPrices"))
-        assertTrue(purchaseActions.contains("purchaseAvailable"))
+        assertTrue(purchaseActions.contains("if (hasPurchasablePackage)"))
         assertTrue(
             purchaseActions.contains(
-                "canAdd = purchaseAvailable && !alreadyOwned && hasPurchasablePackage"
+                "canAdd = purchaseAvailable && !alreadyOwned"
             )
         )
     }
