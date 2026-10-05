@@ -158,13 +158,13 @@ class SteamLibraryCacheRepository(
         )
     }
 
-    private fun readProtected(file: File): String? = runCatching {
+    private fun readProtected(file: File): String? = takagi.ru.monica.steam.security.SteamProtectedFileAccess.withFile(file) { runCatching {
         if (!file.exists()) return@runCatching null
         val encrypted = AtomicFile(file).readFully().toString(Charsets.UTF_8)
         securityManager.decryptDataIfMonicaCiphertext(encrypted)
-    }.getOrNull()
+    }.getOrNull() }
 
-    private fun writeProtected(file: File, payload: String) {
+    private fun writeProtected(file: File, payload: String) = takagi.ru.monica.steam.security.SteamProtectedFileAccess.withFile(file) {
         val atomicFile = AtomicFile(file)
         val stream = atomicFile.startWrite()
         try {

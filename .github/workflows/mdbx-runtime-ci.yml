@@ -1,0 +1,51 @@
+name: MDBX3 Runtime CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mdbx-engine/**'
+      - '.github/scripts/verify_mdbx3_bundled_runtime.py'
+      - '.github/workflows/mdbx-runtime-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mdbx-runtime-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  runtime-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify pinned runtime provenance
+        run: python3 .github/scripts/verify_mdbx3_bundled_runtime.py
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run bundled runtime read/write and reopen tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          disable-animations: true
+          script: chmod +x gradlew && ./gradlew :mdbx-engine:connectedDebugAndroidTest --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx6g -Dfile.encoding=UTF-8' -Pandroid.testInstrumentationRunnerArguments.class=takagi.ru.monica.mdbx.engine.MdbxEngineSmokeTest
+      - name: Upload runtime test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mdbx3-runtime-reports
+          path: mdbx-engine/build/reports/androidTests/
+          if-no-files-found: ignore

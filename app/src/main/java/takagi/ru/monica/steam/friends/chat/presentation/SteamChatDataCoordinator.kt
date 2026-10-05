@@ -25,8 +25,11 @@ internal class SteamChatDataCoordinator(
     private val updateState: (SteamChatUiState) -> Unit,
     private val isSessionsCurrent: (SteamAccount, Long) -> Boolean,
     private val isThreadCurrent: (SteamAccount, String, Long) -> Boolean,
-    private val onSessionResolved: (SteamAccount) -> Unit = {}
+    private val onSessionResolved: (SteamAccount) -> Unit = {},
+    private val isSending: (String) -> Boolean = { false }
 ) {
+    private var threadRequest = 0L
+
     fun fetchSessions(account: SteamAccount, generation: Long, silent: Boolean) {
         scope.launch {
             val result = runSteamChatCatching {
@@ -38,8 +41,6 @@ internal class SteamChatDataCoordinator(
             result.fold(
                 onSuccess = { snapshot ->
                     val reconciled = reconcileSteamChatSessions(snapshot, state().sessions)
-                    withContext(ioDispatcher) { cache.saveSessions(account.steamId, reconciled) }
-                    if (!isSessionsCurrent(account, generation)) return@launch
                     updateState(
                         state().copy(
                             sessions = reconciled,
@@ -49,6 +50,10 @@ internal class SteamChatDataCoordinator(
                             sessionsFailure = null
                         )
                     )
+                    withContext(ioDispatcher) {
+                        runSteamChatCatching { cache.saveSessions(account.steamId, reconciled) }
+                            .onFailure { logSteamChatFailure("sessions_cache", it) }
+                    }
                 },
                 onFailure = { error ->
                     logSteamChatFailure("sessions", error)
@@ -72,6 +77,7 @@ internal class SteamChatDataCoordinator(
         generation: Long,
         silent: Boolean
     ) {
+        val request = ++threadRequest
         scope.launch {
             val result = runSteamChatCatching {
                 withContext(ioDispatcher) {
@@ -81,7 +87,7 @@ internal class SteamChatDataCoordinator(
                     )
                 }
             }
-            if (!isThreadCurrent(account, partnerSteamId, generation)) return@launch
+            if (!isThreadCurrent(account, partnerSteamId, generation) || request != threadRequest) return@launch
             result.fold(
                 onSuccess = { page ->
                     val current = state().thread
@@ -89,9 +95,11 @@ internal class SteamChatDataCoordinator(
                         accountSteamId = account.steamId,
                         partnerSteamId = partnerSteamId,
                         messages = mergeSteamChatMessages(current?.messages.orEmpty(), page.messages),
-                        moreAvailable = page.moreAvailable,
+                        moreAvailable = if (current?.messages?.firstOrNull()?.timestamp?.let { oldest ->
+                            page.messages.firstOrNull()?.timestamp?.let { oldest < it }
+                        } == true) current.moreAvailable else page.moreAvailable,
                         fetchedAt = nowMillis()
-                    ).failUnresolvedVerification()
+                    ).failUnresolvedVerification(isSending)
                     persistThread(account, partnerSteamId, snapshot)
                     updateState(
                         state().copy(
@@ -102,6 +110,9 @@ internal class SteamChatDataCoordinator(
                             threadFailure = null
                         )
                     )
+                    snapshot.messages.lastOrNull()?.let { latest ->
+                        updateState(state().withChatMessage(account.steamId, partnerSteamId, latest, nowMillis()))
+                    }
                     acknowledgeLatest(account, partnerSteamId, snapshot, generation)
                 },
                 onFailure = { error ->
@@ -192,7 +203,7 @@ internal class SteamChatDataCoordinator(
             val updated = sessions.copy(
                 sessions = sessions.sessions.map { session ->
                     if (session.partnerSteamId == partnerSteamId) {
-                        session.copy(unreadCount = 0, lastViewTimestamp = timestamp)
+                        session.copy(unreadCount = 0, lastViewTimestamp = maxOf(session.lastViewTimestamp, timestamp))
                     } else session
                 }
             )

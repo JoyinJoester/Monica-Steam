@@ -3,6 +3,8 @@ package takagi.ru.monica.steam.itad.data
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.SecurePreferencesStore
 import takagi.ru.monica.steam.itad.domain.ItadApiKeyPolicy
 import takagi.ru.monica.steam.itad.domain.ItadApiKeyValidationError
 
@@ -18,8 +20,10 @@ fun interface ItadApiKeyProvider {
 
 class ItadCredentialStore(context: Context) : ItadApiKeyProvider {
     private val applicationContext = context.applicationContext
+    private val security by lazy { SecurityManager(applicationContext) }
 
     private val preferences by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        SecurePreferencesStore.preflight(applicationContext, PREFERENCES_NAME)
         val masterKey = MasterKey.Builder(applicationContext)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
@@ -33,8 +37,16 @@ class ItadCredentialStore(context: Context) : ItadApiKeyProvider {
     }
 
     override fun readApiKey(): String? {
-        val stored = preferences.getString(API_KEY, null) ?: return null
-        return ItadApiKeyPolicy.validate(stored).normalizedKey
+        return runCatching {
+            if (security.getProtectedString(MIGRATED_KEY) != null) {
+                security.getProtectedString(RECOVERABLE_KEY)
+            } else {
+                val old = preferences.getString(API_KEY, null)
+                    ?.let { ItadApiKeyPolicy.validate(it).normalizedKey }
+                security.putProtectedStrings(mapOf(RECOVERABLE_KEY to old, MIGRATED_KEY to "1"))
+                old
+            }
+        }.getOrNull()?.let { ItadApiKeyPolicy.validate(it).normalizedKey }
     }
 
     fun saveApiKey(rawKey: String): ItadCredentialSaveResult {
@@ -43,17 +55,23 @@ class ItadCredentialStore(context: Context) : ItadApiKeyProvider {
             ?: return ItadCredentialSaveResult.Invalid(
                 validation.error ?: ItadApiKeyValidationError.EMPTY
             )
-        return if (preferences.edit().putString(API_KEY, normalized).commit()) {
+        return if (runCatching {
+            security.putProtectedStrings(mapOf(RECOVERABLE_KEY to normalized, MIGRATED_KEY to "1"))
+        }.isSuccess) {
             ItadCredentialSaveResult.Saved
         } else {
             ItadCredentialSaveResult.WriteFailed
         }
     }
 
-    fun clearApiKey(): Boolean = preferences.edit().remove(API_KEY).commit()
+    fun clearApiKey(): Boolean = runCatching {
+        security.putProtectedStrings(mapOf(RECOVERABLE_KEY to null, MIGRATED_KEY to "1"))
+    }.isSuccess
 
     private companion object {
         const val PREFERENCES_NAME = "monica_itad_credentials"
         const val API_KEY = "api_key"
+        const val RECOVERABLE_KEY = "steam_itad_api_key_v1"
+        const val MIGRATED_KEY = "steam_itad_api_key_migrated_v1"
     }
 }

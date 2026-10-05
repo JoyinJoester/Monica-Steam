@@ -104,6 +104,7 @@ jobs:
       - name: Assemble APKs with Rust core
         shell: bash
         run: |
+          python3 .github/scripts/verify_mdbx3_bundled_runtime.py
           chmod +x gradlew
           free -h
           # A separate Kotlin daemon plus both R8 variants can exceed runner RAM.

@@ -407,7 +407,7 @@ fun SteamScreen(
         PasswordDatabase.getDatabase(context.applicationContext)
     }
     val mdbxDatabasesState by passwordDatabase.localMdbxDatabaseDao()
-        .getAllDatabases()
+        .getAvailableDatabases()
         .collectAsState(initial = null)
     val mdbxDatabases = mdbxDatabasesState.orEmpty().filter { database ->
         database.sourceTypeEnum == MdbxSourceType.LOCAL_INTERNAL ||

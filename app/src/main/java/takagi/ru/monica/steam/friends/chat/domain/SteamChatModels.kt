@@ -7,7 +7,8 @@ data class SteamChatSession(
     val partnerSteamId: String,
     val lastMessageTimestamp: Long = 0L,
     val lastViewTimestamp: Long = 0L,
-    val unreadCount: Int = 0
+    val unreadCount: Int = 0,
+    val lastMessage: String = ""
 )
 
 @Serializable
@@ -110,7 +111,11 @@ internal fun mergeSteamChatMessages(
             val localEcho = matchingIndices.asSequence()
                 .map(merged::get)
                 .firstOrNull { it.clientMessageId.isNotBlank() }
-            val replacement = if (localEcho != null && message.clientMessageId.isBlank()) {
+            val confirmed = matchingIndices.asSequence().map(merged::get).firstOrNull { it.isServerConfirmed() }
+            val replacement = if (confirmed != null && !message.isServerConfirmed()) {
+                // A push may confirm delivery before the send request times out.
+                confirmed
+            } else if (localEcho != null && message.clientMessageId.isBlank()) {
                 message.copy(
                     deliveryState = SteamChatDeliveryState.SENT,
                     clientMessageId = localEcho.clientMessageId,
@@ -128,6 +133,7 @@ internal fun mergeSteamChatMessages(
     return merged.sortedWith(
         compareBy<SteamChatMessage> { it.timestamp }
             .thenBy { it.ordinal }
+            .thenBy { it.localCreatedAtMillis }
             .thenBy { it.stableId }
     )
 }

@@ -1,0 +1,16 @@
+// Isolated app UID: key-loss tests must never run against a real Steam installation.
+allprojects {
+    plugins.withId('com.android.application') {
+        androidComponents.finalizeDsl { android ->
+            android.defaultConfig.applicationId = 'takagi.ru.monica.steam.recoverytest'
+            android.splits.abi.enable = false
+            android.splits.abi.reset()
+            android.defaultConfig.ndk.abiFilters.clear()
+            android.defaultConfig.ndk.abiFilters.add('x86_64')
+            android.buildTypes.debug.debuggable = true
+            android.buildTypes.debug.minifyEnabled = false
+            android.buildTypes.debug.shrinkResources = false
+            android.sourceSets.debug.manifest.srcFile(rootProject.file('scripts/recovery-test/AndroidManifest.xml'))
+        }
+    }
+}

@@ -42,11 +42,12 @@ fun MdbxEngineTypeSection(
     selectedEngine: MdbxEngineType,
     onEngineChange: (MdbxEngineType) -> Unit,
     remote: Boolean,
+    allowLegacyImport: Boolean = false,
     selectedTigaMode: MdbxTigaMode? = null,
     onTigaModeChange: ((MdbxTigaMode) -> Unit)? = null
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val engineLabel = if (selectedEngine == MdbxEngineType.KOTLIN_MDBX1) "MDBX 1" else "MDBX 2"
+    val engineLabel = if (selectedEngine == MdbxEngineType.KOTLIN_MDBX1) "MDBX1（升级）" else "MDBX 3"
     val summary = listOfNotNull(engineLabel, selectedTigaMode?.label).joinToString(" · ")
 
     Card(
@@ -85,25 +86,25 @@ fun MdbxEngineTypeSection(
                 ) {
                     HorizontalDivider()
                     Text("数据库引擎", style = MaterialTheme.typography.labelLarge)
-                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                        val engines = MdbxEngineType.entries
+                    if (allowLegacyImport) SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                        val engines = listOf(MdbxEngineType.RUST_MDBX2, MdbxEngineType.KOTLIN_MDBX1)
                         engines.forEachIndexed { index, engine ->
                             SegmentedButton(
                                 selected = selectedEngine == engine,
                                 onClick = { onEngineChange(engine) },
                                 shape = SegmentedButtonDefaults.itemShape(index, engines.size)
                             ) {
-                                Text(if (engine == MdbxEngineType.KOTLIN_MDBX1) "MDBX 1" else "MDBX 2")
+                                Text(if (engine == MdbxEngineType.KOTLIN_MDBX1) "MDBX1（升级）" else "MDBX 3")
                             }
                         }
-                    }
+                    } else Text("MDBX 3", style = MaterialTheme.typography.titleMedium)
                     Text(
                         text = when {
                             selectedEngine == MdbxEngineType.RUST_MDBX2 && remote ->
-                                "MDBX 2 使用增量同步；远端 .mdbx 仅作为加密 bootstrap"
+                                "通过加密数据库同步更改，保留本地副本以供离线使用"
                             selectedEngine == MdbxEngineType.RUST_MDBX2 ->
-                                "MDBX 2 使用 Rust 引擎与本地加密存储"
-                            else -> "MDBX 1 保持现有兼容格式与整文件同步"
+                                "数据保存在本地加密数据库中"
+                            else -> "MDBX1 已停用，仅可打开以升级；原文件保留"
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant

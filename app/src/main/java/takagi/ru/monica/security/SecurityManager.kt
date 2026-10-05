@@ -5,8 +5,6 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import takagi.ru.monica.data.PredefinedSecurityQuestions
 import java.security.KeyStore
 import java.security.MessageDigest
@@ -60,9 +58,8 @@ class SecurityManager(private val context: Context) {
         SecurityDiagLogger.append("D/$logTag $message")
     }
     
-    private val masterKey = MasterKey.Builder(context)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
+    private val secureStore = SecurePreferencesStore.open(context, SecurePreferencesStore.MONICA)
+    private val masterKey = secureStore.masterKey
 
     // Secure Data Key Alias and Prefix
     private val KEY_ALIAS_DATA = "monica_data_key_v2"
@@ -72,13 +69,8 @@ class SecurityManager(private val context: Context) {
     private val WRAPPER_PREFIX_AUTH = "AU|"
     private val WRAPPER_PREFIX_COMPAT = "CP|"
     
-    private val sharedPreferences = EncryptedSharedPreferences.create(
-        context,
-        "monica_secure_prefs",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    private val sharedPreferences = secureStore.preferences
+    private val localRecovery = LocalVaultRecovery(context)
     
     companion object {
         private const val MASTER_PASSWORD_HASH_KEY = "master_password_hash"
@@ -118,6 +110,7 @@ class SecurityManager(private val context: Context) {
 
         fun clearRuntimeUnlockCache() {
             processCachedMdk = null
+            cachedCompatDataKey = null
         }
     }
     
@@ -159,6 +152,7 @@ class SecurityManager(private val context: Context) {
                 ensureMdkInitializedWithPassword(inputPassword)
             } catch (e: Exception) {
                 android.util.Log.w("SecurityManager", "MDK init failed: ${e.message}")
+                return false
             }
         }
         return result
@@ -447,16 +441,15 @@ class SecurityManager(private val context: Context) {
     /**
      * Set the master password
      */
-    fun setMasterPassword(password: String) {
-        val (hashedPassword, salt) = hashMasterPassword(password)
-        sharedPreferences.edit()
-            .putString(MASTER_PASSWORD_HASH_KEY, hashedPassword)
-            .putString(MASTER_PASSWORD_SALT_KEY, salt.joinToString("") { "%02x".format(it) })
-            .apply()
-        try {
+    fun setMasterPassword(password: String): Boolean {
+        return try {
             ensureMdkInitializedWithPassword(password, true)
+            true
         } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "MDK init on setMasterPassword failed: ${e.message}")
+            android.util.Log.w("SecurityManager", "Master password update could not be committed")
+            clearRuntimeUnlockCache()
+            SessionManager.markLocked()
+            false
         }
     }
     
@@ -477,8 +470,7 @@ class SecurityManager(private val context: Context) {
         }
         
         // Set new password
-        setMasterPassword(newPassword)
-        return true
+        return setMasterPassword(newPassword)
     }
     
     /**
@@ -860,100 +852,48 @@ class SecurityManager(private val context: Context) {
     }
 
     private fun ensureMdkInitializedWithPassword(password: String, forceUpdate: Boolean = false) {
+        localRecovery.validate(sharedPreferences)
         val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
-        var hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
-        android.util.Log.d(
-            logTag,
-            "ensureMdkInitializedWithPassword: forceUpdate=$forceUpdate, hasPasswordBlob=$hasPasswordBlob, hasKeystoreBlob=$hasKeystoreBlob"
-        )
-        if (hasKeystoreBlob && !hasRequiredAliasForStoredWrapper()) {
-            clearKeystoreWrappedMdk("secure key alias missing; likely app clone or restored app data")
-            hasKeystoreBlob = false
-        }
-        var mdk: ByteArray? = null
-        if (!hasPasswordBlob && !hasKeystoreBlob) {
-            mdk = generateRandom(32)
-        }
-        val salt = if (forceUpdate || !sharedPreferences.contains(MDK_PASSWORD_SALT_KEY)) {
+        val hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
+        val oldSalt = sharedPreferences.getString(MDK_PASSWORD_SALT_KEY, null)
+        val salt = if (forceUpdate || oldSalt == null) generateRandom(32)
+            else oldSalt.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+        val pwKey = deriveAesKeyFromPassword(password, salt)
+        val actualMdk = if (hasPasswordBlob && !forceUpdate) {
+            aesGcmDecrypt(pwKey, checkNotNull(sharedPreferences.getString(MDK_PASSWORD_BLOB_KEY, null)))
+        } else if (!hasPasswordBlob && !hasKeystoreBlob && !sharedPreferences.getBoolean(MDK_READY_KEY, false)) {
             generateRandom(32)
         } else {
-            val saltHex = sharedPreferences.getString(MDK_PASSWORD_SALT_KEY, null)
-            saltHex?.chunked(2)?.map { it.toInt(16).toByte() }?.toByteArray() ?: generateRandom(32)
+            getOrCreateMdkBytes()
         }
-        val pwKey = deriveAesKeyFromPassword(password, salt)
-        var shouldRewritePasswordBlob = !hasPasswordBlob || forceUpdate
-        val actualMdk = if (hasPasswordBlob && !forceUpdate) {
-            val blob = sharedPreferences.getString(MDK_PASSWORD_BLOB_KEY, null)
-            val decrypted = if (blob != null) {
-                aesGcmDecrypt(pwKey, blob)
-            } else {
-                ByteArray(0)
-            }
-            if (decrypted.isNotEmpty()) {
-                decrypted
-            } else {
-                android.util.Log.w(
-                    logTag,
-                    "ensureMdkInitializedWithPassword: password-wrapped MDK is empty; attempting recovery"
-                )
-                SecurityDiagLogger.append(
-                    "W/$logTag ensureMdkInitializedWithPassword: password-wrapped MDK is empty; attempting recovery"
-                )
-                val recovered = mdk ?: getOrCreateMdkBytes()
-                shouldRewritePasswordBlob = true
-                if (recovered.isNotEmpty()) {
-                    recovered
-                } else {
-                    android.util.Log.w(
-                        logTag,
-                        "ensureMdkInitializedWithPassword: MDK recovery unavailable; generating fresh MDK"
-                    )
-                    SecurityDiagLogger.append(
-                        "W/$logTag ensureMdkInitializedWithPassword: MDK recovery unavailable; generating fresh MDK"
-                    )
-                    clearKeystoreWrappedMdk("MDK recovery unavailable after empty password blob")
-                    generateRandom(32)
-                }
-            }
-        } else {
-            val candidate = mdk ?: getOrCreateMdkBytes()
-            if (candidate.isNotEmpty()) {
-                candidate
-            } else if (forceUpdate) {
-                android.util.Log.w(
-                    logTag,
-                    "ensureMdkInitializedWithPassword: existing MDK unavailable during forceUpdate; generating fresh MDK"
-                )
-                SecurityDiagLogger.append(
-                    "W/$logTag ensureMdkInitializedWithPassword: existing MDK unavailable during forceUpdate; generating fresh MDK"
-                )
-                clearKeystoreWrappedMdk("existing MDK unavailable during forceUpdate")
-                generateRandom(32)
-            } else {
-                candidate
-            }
+        // Missing or damaged key material is never permission to generate a replacement.
+        check(actualMdk.size == 32) { "Existing vault key unavailable" }
+        val values = mutableMapOf<String, Any>()
+        if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
+            values["legacy_master_key_description_v1"] = masterKey.toString()
+        }
+        if (!hasPasswordBlob || forceUpdate) {
+            values[MDK_PASSWORD_BLOB_KEY] = aesGcmEncrypt(pwKey, actualMdk)
+            values[MDK_PASSWORD_SALT_KEY] = salt.joinToString("") { "%02x".format(it) }
+        }
+        values[MDK_READY_KEY] = true
+        if (forceUpdate) {
+            val (hash, hashSalt) = hashMasterPassword(password)
+            values[MASTER_PASSWORD_HASH_KEY] = hash
+            values[MASTER_PASSWORD_SALT_KEY] = hashSalt.joinToString("") { "%02x".format(it) }
+        }
+        try {
+            localRecovery.enroll(sharedPreferences, password, values)
+        } catch (error: Exception) {
+            // Adding recovery is best-effort for a healthy, already password-wrapped vault.
+            // A new password/key must never be reported saved when its transaction failed.
+            if (forceUpdate || !hasPasswordBlob) throw error
+            localRecovery.validate(sharedPreferences)
+            android.util.Log.w(logTag, "Local recovery enrollment deferred; original password wrapper retained")
         }
         processCachedMdk = actualMdk
-        if (shouldRewritePasswordBlob) {
-            val blob = aesGcmEncrypt(pwKey, actualMdk)
-            sharedPreferences.edit()
-                .putString(MDK_PASSWORD_BLOB_KEY, blob)
-                .putString(MDK_PASSWORD_SALT_KEY, salt.joinToString("") { "%02x".format(it) })
-                .putBoolean(MDK_READY_KEY, true)
-                .apply()
-        } else {
-            sharedPreferences.edit().putBoolean(MDK_READY_KEY, true).apply()
-        }
-        // Password unlock has the real MDK in hand, so refresh the keystore
-        // wrapper even when an old blob exists. Write the compatibility wrapper
-        // directly here: if the user recently passed biometric auth, Android may
-        // otherwise allow writing a fresh AUTH wrapper that still fails on some
-        // devices on the next biometric-only app unlock.
-        val persisted = persistCompatKeystoreWrappedMdk(actualMdk)
-        android.util.Log.d(
-            logTag,
-            "ensureMdkInitializedWithPassword: compatibility wrapper refresh after password unlock success=$persisted"
-        )
+        // Failure to restore biometric convenience must not replace the password-recoverable MDK.
+        persistCompatKeystoreWrappedMdk(actualMdk)
         mdkAuthUnavailableUntilMillis = 0L
         hasLoggedMdkAuthExpiredWarning = false
         hasLoggedMdkFallbackEncryption = false
@@ -981,6 +921,7 @@ class SecurityManager(private val context: Context) {
         val passwordBlob = sharedPreferences.getString(MDK_PASSWORD_BLOB_KEY, null)
         val keystoreBlob = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null)
         if (passwordBlob == null && keystoreBlob == null) {
+            check(!sharedPreferences.getBoolean(MDK_READY_KEY, false)) { "Existing vault key unavailable" }
             return generateRandom(32)
         }
         if (keystoreBlob == null) {
@@ -1096,7 +1037,8 @@ class SecurityManager(private val context: Context) {
             return DATA_PREFIX_MDK + android.util.Base64.encodeToString(combined, android.util.Base64.NO_WRAP)
         }
         
-        // MDK 不可用，降级到不需要生物识别窗口的兼容 Keystore 密钥。
+        check(!isMasterPasswordSet()) { "Vault key required for recoverable encryption" }
+        // Installations without a master password retain the legacy compatibility path.
         if (!hasLoggedMdkFallbackEncryption) {
             android.util.Log.d("SecurityManager", "MDK not available, using compat Keystore encryption")
             hasLoggedMdkFallbackEncryption = true
@@ -1105,11 +1047,28 @@ class SecurityManager(private val context: Context) {
     }
 
     /**
-     * Compatibility helper: force compat payload for scenarios where
-     * immediate readability is required under unstable MDK auth state.
+     * Compatibility entry point. Password-protected installations always write recoverable
+     * MDK ciphertext; installations without a master password retain device encryption.
      */
     fun encryptDataLegacyCompat(data: String): String {
-        return encryptDataCompat(data)
+        return if (isMasterPasswordSet()) encryptData(data) else encryptDataCompat(data)
+    }
+
+    internal fun migrateProtectedDeviceCiphertexts() {
+        if (!isVaultRuntimeUnlocked()) return
+        sharedPreferences.all.forEach { (name, value) ->
+            if (value !is String || (!value.startsWith("C2|") && !value.startsWith("V2|"))) return@forEach
+            if (!isVaultRuntimeUnlocked()) return
+            val replacement = runCatching {
+                val plain = decryptData(value)
+                val encrypted = encryptData(plain)
+                check(encrypted.startsWith("MDK|") && decryptData(encrypted) == plain)
+                encrypted
+            }.getOrNull() ?: return@forEach
+            if (isVaultRuntimeUnlocked()) {
+                localRecovery.compareAndSet(sharedPreferences, name, value, replacement)
+            }
+        }
     }
 
     fun looksLikeMonicaCiphertext(value: String): Boolean {
@@ -1242,7 +1201,8 @@ class SecurityManager(private val context: Context) {
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
             // Historical unprefixed V1 payloads were derived from this predictable
             // value. Keep it read-only so old local data can be opened and migrated.
-            val keyBytes = masterKey.toString().toByteArray().copyOf(32)
+            val description = sharedPreferences.getString("legacy_master_key_description_v1", null) ?: masterKey.toString()
+            val keyBytes = description.toByteArray().copyOf(32)
             val secretKey = javax.crypto.spec.SecretKeySpec(keyBytes, "AES")
             val gcmSpec = GCMParameterSpec(128, iv)
             cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec)
@@ -1523,13 +1483,20 @@ class SecurityManager(private val context: Context) {
     }
 
     fun putProtectedString(key: String, value: String?) {
-        sharedPreferences.edit().apply {
-            if (value.isNullOrEmpty()) {
-                remove(key)
-            } else {
-                putString(key, value)
+        putProtectedStrings(mapOf(key to value))
+    }
+
+    internal fun putProtectedStrings(values: Map<String, String?>) {
+        val committed = sharedPreferences.edit().apply {
+            values.forEach { (key, value) ->
+                if (value.isNullOrEmpty()) {
+                    remove(key)
+                } else {
+                    putString(key, value)
+                }
             }
-        }.apply()
+        }.commit()
+        check(committed) { "Protected value could not be saved" }
     }
 
     fun getProtectedString(key: String): String? {
@@ -1537,7 +1504,7 @@ class SecurityManager(private val context: Context) {
     }
 
     fun removeProtectedString(key: String) {
-        sharedPreferences.edit().remove(key).apply()
+        check(sharedPreferences.edit().remove(key).commit()) { "Protected value could not be removed" }
     }
     
     /**

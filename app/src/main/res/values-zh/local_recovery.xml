@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="local_recovery_action">使用主密码恢复</string>
+    <string name="local_recovery_password">Monica 主密码</string>
+    <string name="local_recovery_description">使用本机保存的加密恢复材料，无需连接云端。恢复会保留原配置文件。</string>
+    <string name="local_recovery_failed">未能完成恢复。请检查主密码后重试；如果仍失败，请保留应用数据并复制诊断信息。</string>
+    <string name="local_recovery_limits">恢复仍需保留数据库和本地文件。尚未转换的旧数据可能仍需要原设备密钥。</string>
+    <string name="local_recovery_save_failed">无法安全保存主密码，原有数据已保留。</string>
+    <string name="steam_password_recovery_group">密码与恢复</string>
+    <string name="steam_password_recovery_hint">设置主密码后，请使用主密码解锁一次以建立本地加密恢复材料。系统安全密钥不可用时，可用该主密码恢复。请妥善保管主密码。</string>
+</resources>

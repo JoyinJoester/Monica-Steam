@@ -42,10 +42,10 @@ class SteamPlayActivityRepository(
         history
     }
 
-    private fun read(accountId: Long): SteamPlayActivityHistory? {
+    private fun read(accountId: Long): SteamPlayActivityHistory? = takagi.ru.monica.steam.security.SteamProtectedFileAccess.withFile(fileFor(accountId)) {
         val file = AtomicFile(fileFor(accountId))
-        if (!file.baseFile.exists()) return null
-        return runCatching {
+        if (!file.baseFile.exists()) return@withFile null
+        runCatching {
             val encrypted = file.readFully().toString(Charsets.UTF_8)
             val payload = securityManager.decryptDataIfMonicaCiphertext(encrypted)
             json.decodeFromString(SteamPlayActivityHistory.serializer(), payload)
@@ -53,7 +53,7 @@ class SteamPlayActivityRepository(
         }.getOrNull()
     }
 
-    private fun write(history: SteamPlayActivityHistory) {
+    private fun write(history: SteamPlayActivityHistory) = takagi.ru.monica.steam.security.SteamProtectedFileAccess.withFile(fileFor(history.accountId)) {
         directory.mkdirs()
         val atomicFile = AtomicFile(fileFor(history.accountId))
         val payload = json.encodeToString(SteamPlayActivityHistory.serializer(), history)

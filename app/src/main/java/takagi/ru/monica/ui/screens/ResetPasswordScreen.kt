@@ -273,7 +273,6 @@ fun ResetPasswordScreen(
                             val resetSuccess = if (skipCurrentPassword) {
                                 // If skipping current password, directly set new password
                                 securityManager.setMasterPassword(newPassword)
-                                true
                             } else {
                                 // Normal reset with current password verification
                                 securityManager.resetMasterPassword(currentPassword, newPassword)

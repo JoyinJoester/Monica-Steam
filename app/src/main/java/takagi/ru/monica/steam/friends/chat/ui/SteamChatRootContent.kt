@@ -73,7 +73,14 @@ internal fun SteamChatRootContent(
             modifier = modifier.fillMaxSize(),
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = {
-                ExpressiveTopBar(
+                if (!addFriendOpen) SteamChatSearchBar(
+                    query = standaloneSearchQuery,
+                    showingFriends = showFriends,
+                    accountEnabled = accountSourceState.accounts.isNotEmpty() || accountSourceState.mdbxDatabases.isNotEmpty(),
+                    onQueryChange = onStandaloneSearchQueryChange,
+                    onToggleFriends = onToggleFriends,
+                    onShowAccounts = onShowAccounts
+                ) else ExpressiveTopBar(
                     title = stringResource(when {
                         addFriendOpen -> R.string.steam_friend_add_title
                         showFriends -> R.string.steam_friends_title

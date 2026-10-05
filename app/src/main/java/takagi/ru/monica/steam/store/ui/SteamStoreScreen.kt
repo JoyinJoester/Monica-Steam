@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -48,10 +47,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.CompareArrows
 import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
-import androidx.compose.material.icons.filled.SwitchAccount
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.ExpandLess
@@ -70,7 +66,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
@@ -86,15 +81,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -118,20 +113,18 @@ import takagi.ru.monica.steam.workshop.WorkshopShareCode
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.steam.foundation.ui.SteamAccountSwitcherSheet
-import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
-import takagi.ru.monica.steam.foundation.ui.SteamPageOverflowMenu
 import takagi.ru.monica.steam.library.SteamLibraryFailureReason
 import takagi.ru.monica.steam.library.SteamRegionalPrice
 import takagi.ru.monica.steam.library.isSteamSouthAsiaPriceCountry
-import takagi.ru.monica.steam.itad.ui.ItadHistoryLowSection
+import takagi.ru.monica.steam.steamdb.domain.SteamDbQuery
+import takagi.ru.monica.steam.steamdb.ui.SteamDbDetailsEntry
+import takagi.ru.monica.steam.steamdb.ui.SteamDbPriceSection
 import takagi.ru.monica.steam.store.domain.*
 import takagi.ru.monica.steam.store.interest.ui.SteamStoreIgnoreButton
 import takagi.ru.monica.steam.store.interest.domain.SteamStoreIgnoreSyncState
 import takagi.ru.monica.steam.store.freebie.ui.SteamFreebieScreen
 import takagi.ru.monica.steam.store.freebie.domain.SteamFreebieClaimResult
-import takagi.ru.monica.steam.store.filters.domain.resolveSteamStoreTagLabels
 import takagi.ru.monica.steam.store.filters.domain.findTagId
-import takagi.ru.monica.steam.store.filters.ui.SteamStoreActiveFilterSummary
 import takagi.ru.monica.steam.store.filters.ui.SteamStoreAdvancedFilterSheet
 import takagi.ru.monica.steam.store.filters.ui.SteamStoreTagBadges
 import takagi.ru.monica.steam.store.hints.data.SteamStoreHintPreferences
@@ -140,7 +133,6 @@ import takagi.ru.monica.steam.store.hints.domain.SteamStoreHintSettings
 import takagi.ru.monica.steam.store.hints.domain.resolveSteamStoreDetailHints
 import takagi.ru.monica.steam.store.hints.domain.resolveSteamStoreItemHints
 import takagi.ru.monica.steam.store.hints.ui.SteamStoreHintBadges
-import takagi.ru.monica.steam.navigation.ui.rememberSteamAdaptiveLayout
 import takagi.ru.monica.steam.store.gift.ui.SteamStoreGiftPurchaseSplitButton
 import takagi.ru.monica.steam.store.gift.ui.SteamStoreGiftRecipientSheet
 import takagi.ru.monica.steam.store.gift.data.steamStoreCheckoutAutomationFactory
@@ -162,13 +154,11 @@ import takagi.ru.monica.steam.store.ui.gallery.SteamStoreScreenshotViewer
 import takagi.ru.monica.steam.store.activation.domain.SteamStoreProductActivation
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
-import takagi.ru.monica.steam.navigation.ui.steamDockActionClearance
 import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.steam.web.ui.SteamWebBrowserScreen
 import takagi.ru.monica.steam.web.domain.SteamWebNavigationPolicy
-import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 import takagi.ru.monica.ui.navigation.easyNotesScreenExit
 import java.util.Locale
@@ -230,9 +220,6 @@ fun SteamStoreScreen(
     }
     val reduceAnimations = LocalReduceAnimations.current
     val dockContentClearance = LocalSteamDockContentClearance.current
-    val adaptiveLayout = rememberSteamAdaptiveLayout()
-    val storeColumns = if (adaptiveLayout.useTwoPaneLayout) 2 else 1
-    val storeRefreshing = state.loadingHome || state.loadingCatalog || state.searching
     val refreshStore = {
         viewModel.refreshHintSources()
         viewModel.loadStoreFilterMetadata(force = true)
@@ -247,7 +234,10 @@ fun SteamStoreScreen(
         }
     }
     var showAccounts by remember { mutableStateOf(false) }
-    var searchExpanded by remember { mutableStateOf(false) }
+    val homeListState = rememberLazyListState()
+    LaunchedEffect(state.query, state.browseFilter, state.storeFilters) {
+        homeListState.scrollToItem(0)
+    }
     var showAdvancedFilters by rememberSaveable { mutableStateOf(false) }
     var workshopAppId by rememberSaveable { mutableStateOf<Int?>(null) }
     var workshopShareCode by rememberSaveable { mutableStateOf<String?>(null) }
@@ -503,237 +493,39 @@ fun SteamStoreScreen(
                         onOpenRelatedApp = viewModel::openRelatedDetail,
                         onOpenBundle = viewModel::openStoreWeb,
                         onFilterByTag = viewModel::filterByDetailTag,
-                        onOpenItadSettings = onOpenSettings,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
             }
-            SteamStoreDestination.Home -> Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
-                    topBar = {
-                    ExpressiveTopBar(
-                        title = stringResource(R.string.steam_store_title),
-                        searchQuery = state.query,
-                        onSearchQueryChange = viewModel::updateQuery,
-                        isSearchExpanded = searchExpanded,
-                        onSearchExpandedChange = { expanded ->
-                            searchExpanded = expanded
-                            if (!expanded) viewModel.updateQuery("")
-                        },
-                        searchHint = stringResource(R.string.steam_store_search_hint),
-                        modifier = Modifier.steamWindowTopPadding(),
-                        navigationIcon = if (showNavigationBack) {
-                            {
-                                IconButton(onClick = onNavigateBack) {
-                                    Icon(
-                                        Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = stringResource(R.string.back)
-                                    )
-                                }
-                            }
-                        } else null,
-                        actions = {
-                            SteamStoreBrowseMenu(
-                                selectedFilter = state.browseFilter,
-                                activeFilterCount = state.storeFilters.activeCount,
-                                onSelectFilter = viewModel::selectBrowseFilter,
-                                onOpenAdvancedFilters = {
-                                    showAdvancedFilters = true
-                                    viewModel.loadStoreFilterMetadata()
-                                },
-                                onOpenFreebies = { freebiesOpen = true },
-                                onOpenPointsShop = viewModel::openPointsShop,
-                                onOpenWorkshopImport = { showWorkshopImport = true },
-                                onOpenProductActivation = {
-                                    viewModel.openAuthenticatedStoreWeb(
-                                        SteamStoreProductActivation.REGISTER_KEY_URL
-                                    )
-                                }
-                            )
-                            IconButton(
-                                onClick = { showAccounts = true },
-                                enabled = state.accounts.isNotEmpty() ||
-                                    state.mdbxDatabases.isNotEmpty()
-                            ) {
-                                Icon(
-                                    Icons.Default.SwitchAccount,
-                                    contentDescription = stringResource(R.string.steam_store_account)
-                                )
-                            }
-                            IconButton(onClick = { searchExpanded = true }) {
-                                Icon(
-                                    Icons.Default.Search,
-                                    contentDescription = stringResource(R.string.steam_store_search)
-                                )
-                            }
-                            SteamPageOverflowMenu(
-                                refreshing = storeRefreshing,
-                                onRefresh = refreshStore,
-                                onOpenNotifications = onOpenNotifications,
-                                onOpenSettings = onOpenSettings
-                            )
-                        }
-                    )
-                },
-                floatingActionButton = {
-                    ExtendedFloatingActionButton(
-                        onClick = viewModel::openCart,
-                        modifier = Modifier
-                            .navigationBarsPadding()
-                            .steamDockActionClearance(),
-                        icon = {
-                            Icon(
-                                Icons.Default.ShoppingCart,
-                                contentDescription = null
-                            )
-                        },
-                        text = {
-                            Text(
-                                text = stringResource(
-                                    R.string.steam_store_cart_tab,
-                                    state.cart.size
-                                )
-                            )
-                        }
-                    )
-                    }
-                ) { padding ->
-                SteamExpressivePullToRefresh(
-                    refreshing = storeRefreshing,
-                    onRefresh = refreshStore,
-                    modifier = Modifier.fillMaxSize().padding(padding)
-                ) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(bottom = dockContentClearance + 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                    if (state.storeFilters.isActive) {
-                        item(key = "store_active_filters") {
-                            SteamStoreActiveFilterSummary(
-                                selection = state.storeFilters,
-                                metadata = state.filterMetadata,
-                                onClear = viewModel::clearStoreFilters
-                            )
-                        }
-                    }
-                    if (state.searching) {
-                        item {
-                            androidx.compose.material3.LinearProgressIndicator(
-                                Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-                            )
-                        }
-                    }
-                        if (state.error != null || state.catalogError != null) {
-                        item {
-                            StoreMessage(
-                                message = state.catalogError ?: state.error.orEmpty(),
-                                onRetry = {
-                                        if (state.query.isBlank() &&
-                                            (state.browseFilter != SteamStoreBrowseFilter.ALL ||
-                                                state.storeFilters.isActive)
-                                        ) {
-                                            viewModel.loadCatalog(force = true)
-                                        } else if (state.query.isBlank()) viewModel.loadHome(force = true)
-                                        else viewModel.search()
-                                },
-                                onUnlockFamilyView = if (state.familyViewUnlockRequired) {
-                                    viewModel::openFamilyViewUnlock
-                                } else {
-                                    null
-                                },
-                            )
-                        }
-                    }
-                    if (state.query.isNotBlank() && !state.searching) {
-                        if (state.searchResults.isEmpty()) {
-                            item { StoreMessage(stringResource(R.string.steam_store_empty)) }
-                        } else {
-                            storeAdaptiveItems(
-                                games = state.searchResults,
-                                columns = storeColumns
-                            ) { item ->
-                                SearchResultCard(
-                                    game = item,
-                                    hints = itemHints(item.appId),
-                                    tagLabels = resolveSteamStoreTagLabels(
-                                        tagIds = item.tagIds,
-                                        metadata = state.filterMetadata,
-                                        enabled = hintSettings.storeTagsEnabled
-                                    ),
-                                    onClick = { viewModel.openDetail(item) }
-                                )
-                            }
-                        }
-                    } else if (state.browseFilter != SteamStoreBrowseFilter.ALL ||
-                        state.storeFilters.isActive
-                    ) {
-                        if (state.catalogFromCache) item { CachedNotice() }
-                        if (state.loadingCatalog && state.catalogPage == null) {
-                            item { StoreHeroSkeleton() }
-                        }
-                        val catalogItems = state.catalogPage?.items.orEmpty()
-                        if (!state.loadingCatalog && catalogItems.isEmpty() && state.catalogError == null) {
-                            item { StoreMessage(stringResource(R.string.steam_store_filter_empty)) }
-                        } else {
-                            storeAdaptiveItems(
-                                games = catalogItems,
-                                columns = storeColumns
-                            ) { item ->
-                                SearchResultCard(
-                                    game = item,
-                                    hints = itemHints(item.appId),
-                                    tagLabels = resolveSteamStoreTagLabels(
-                                        tagIds = item.tagIds,
-                                        metadata = state.filterMetadata,
-                                        enabled = hintSettings.storeTagsEnabled
-                                    ),
-                                    onClick = { viewModel.openDetail(item) }
-                                )
-                            }
-                            if (state.catalogPage?.hasMore == true) {
-                                item {
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        FilledTonalButton(
-                                            onClick = { viewModel.loadCatalog(loadMore = true) },
-                                            enabled = !state.loadingMoreCatalog,
-                                            modifier = Modifier.heightIn(min = 48.dp)
-                                        ) {
-                                            if (state.loadingMoreCatalog) {
-                                                CircularProgressIndicator(
-                                                    modifier = Modifier.size(20.dp),
-                                                    strokeWidth = 2.dp
-                                                )
-                                                Spacer(Modifier.width(8.dp))
-                                            }
-                                            Text(stringResource(R.string.steam_store_load_more))
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (state.homeFromCache) item { CachedNotice() }
-                        if (state.loadingHome && state.home == null) item { StoreHeroSkeleton() }
-                        state.home?.let { home ->
-                            item {
-                                SteamStoreDiscoveryContent(
-                                    home = home,
-                                    selectedFilter = state.browseFilter,
-                                    itemHints = itemHints,
-                                    onOpenGame = viewModel::openDetail,
-                                    onOpenEvent = viewModel::openStoreWeb
-                                )
-                            }
-                        }
-                    }
-                    }
-                }
-            }
+            SteamStoreDestination.Home -> SteamStoreHomePage(
+                state = state,
+                listState = homeListState,
+                accountName = selectedStoreAccount?.displayName?.ifBlank { selectedStoreAccount.accountName },
+                itemHints = itemHints,
+                showTags = hintSettings.storeTagsEnabled,
+                actions = SteamStoreHomeActions(
+                    query = viewModel::updateQuery,
+                    search = viewModel::search,
+                    filter = { filter -> viewModel.updateQuery(""); viewModel.selectBrowseFilter(filter) },
+                    clearFilters = viewModel::clearStoreFilters,
+                    advancedFilters = { showAdvancedFilters = true; viewModel.loadStoreFilterMetadata() },
+                    refresh = refreshStore,
+                    loadMore = { viewModel.loadCatalog(loadMore = true) },
+                    game = viewModel::openDetail,
+                    event = viewModel::openStoreWeb,
+                    account = { showAccounts = true },
+                    cart = viewModel::openCart,
+                    wishlist = { viewModel.openCart(); viewModel.selectCollectionTab(SteamStoreCollectionTab.WISHLIST) },
+                    freebies = { freebiesOpen = true },
+                    points = viewModel::openPointsShop,
+                    activateProduct = { viewModel.openAuthenticatedStoreWeb(SteamStoreProductActivation.REGISTER_KEY_URL) },
+                    workshopImport = { showWorkshopImport = true },
+                    notifications = onOpenNotifications,
+                    settings = onOpenSettings,
+                    unlockFamilyView = if (state.familyViewUnlockRequired) viewModel::openFamilyViewUnlock else null,
+                    back = if (showNavigationBack) onNavigateBack else null
+                )
+            )
         }
     }
 
@@ -901,76 +693,7 @@ private fun SteamStoreDetailUnavailableContent(
 }
 
 @Composable
-internal fun StoreFeaturedHero(
-    game: SteamStoreItem,
-    hints: List<SteamStoreHintKind> = emptyList(),
-    onClick: () -> Unit
-) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
-    ) {
-        Column {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(460f / 215f)
-            ) {
-                SteamStoreImage(
-                    game.headerImageUrl.ifBlank { game.imageUrl },
-                    Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit
-                )
-                Surface(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(14.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.94f),
-                    shape = RoundedCornerShape(50)
-                ) {
-                    Text(
-                        stringResource(R.string.steam_store_specials),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-                SteamStoreHintBadges(
-                    hints = hints,
-                    modifier = Modifier.align(Alignment.TopStart).padding(14.dp),
-                    compact = true
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 14.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Text(
-                    game.name,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                PriceRow(
-                    game.discountPercent,
-                    game.formattedInitialPrice,
-                    game.formattedFinalPrice,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun StoreHeroSkeleton() {
+internal fun StoreHeroSkeleton() {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -997,18 +720,21 @@ internal fun StoreSection(
     title: String,
     games: List<SteamStoreItem>,
     itemHints: (Int) -> List<SteamStoreHintKind> = { emptyList() },
-    onOpen: (Int) -> Unit
+    onOpen: (Int) -> Unit,
+    onSeeAll: (() -> Unit)? = null
 ) {
     if (games.isEmpty()) return
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Text("${games.size}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+            onSeeAll?.let { action ->
+                TextButton(onClick = action) { Text(stringResource(R.string.store_home_see_all)) }
+            }
         }
-        LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        LazyRow(contentPadding = PaddingValues(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(games, key = ::steamStoreLazyKey) { _, game ->
                 StoreGameCard(
                     game = game,
@@ -1023,7 +749,7 @@ internal fun StoreSection(
 internal fun steamStoreLazyKey(index: Int, item: SteamStoreItem): String =
     "${item.appId}-$index"
 
-private fun androidx.compose.foundation.lazy.LazyListScope.storeAdaptiveItems(
+internal fun androidx.compose.foundation.lazy.LazyListScope.storeAdaptiveItems(
     games: List<SteamStoreItem>,
     columns: Int,
     content: @Composable (SteamStoreItem) -> Unit
@@ -1063,7 +789,7 @@ private fun StoreGameCard(
         onClick = onClick,
         modifier = Modifier
             .width(SteamStoreLayoutTokens.GameCardWidth)
-            .height(SteamStoreLayoutTokens.GameCardHeight),
+            .heightIn(min = SteamStoreLayoutTokens.GameCardHeight),
         shape = RoundedCornerShape(SteamStoreLayoutTokens.CardCornerRadius),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
@@ -1081,27 +807,24 @@ private fun StoreGameCard(
         Column(
             Modifier
                 .fillMaxWidth()
-                .height(SteamStoreLayoutTokens.GameBodyHeight)
+                .heightIn(min = SteamStoreLayoutTokens.GameBodyHeight)
                 .padding(SteamStoreLayoutTokens.GameCardPadding),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Box(Modifier.fillMaxWidth().height(46.dp), contentAlignment = Alignment.TopStart) {
-                Text(game.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
-            }
-            Spacer(Modifier.weight(1f))
-            PriceRow(game.discountPercent, game.formattedInitialPrice, game.formattedFinalPrice)
+            Text(game.name, minLines = 2, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleSmall)
+            StoreCompactPrice(game)
         }
     }
 }
 
 @Composable
-private fun SearchResultCard(
+internal fun SearchResultCard(
     game: SteamStoreItem,
     hints: List<SteamStoreHintKind>,
     tagLabels: List<String>,
     onClick: () -> Unit
 ) {
-    Card(onClick = onClick, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+    Card(onClick = onClick, modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp), shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
         Column(
             Modifier.fillMaxWidth().padding(SteamStoreLayoutTokens.SearchCardPadding),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -1115,13 +838,10 @@ private fun SearchResultCard(
                         .clip(RoundedCornerShape(8.dp))
                 )
                 Spacer(Modifier.width(10.dp))
-                Text(
-                    game.name,
-                    modifier = Modifier.weight(1f),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(game.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.titleSmall)
+                    StoreCompactPrice(game)
+                }
             }
             SteamStoreHintBadges(hints = hints, compact = true)
             SteamStoreTagBadges(labels = tagLabels)
@@ -1158,13 +878,17 @@ private fun SearchResultCard(
                     )
                 }
             }
-            PriceRow(
-                game.discountPercent,
-                game.formattedInitialPrice,
-                game.formattedFinalPrice,
-                modifier = Modifier.fillMaxWidth()
-            )
+
         }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun StoreCompactPrice(game: SteamStoreItem) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(game.formattedFinalPrice, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, maxLines = 1, softWrap = false)
+        if (game.discountPercent > 0) Text("−${game.discountPercent}%", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary, maxLines = 1, softWrap = false)
     }
 }
 
@@ -1224,7 +948,6 @@ private fun SteamStoreDetailContent(
     onOpenRelatedApp: (Int) -> Unit,
     onOpenBundle: (String) -> Unit,
     onFilterByTag: (String) -> Boolean,
-    onOpenItadSettings: () -> Unit,
     modifier: Modifier
 ) {
     val dockContentClearance = LocalSteamDockContentClearance.current
@@ -1261,7 +984,7 @@ private fun SteamStoreDetailContent(
         cached,
         freeLicenseOption != null
     ).count { it }
-    val reviewSectionIndex = purchaseSectionIndex + 3 + listOf(
+    val reviewSectionIndex = purchaseSectionIndex + 4 + listOf(
         detail.fullGame != null || detail.demos.isNotEmpty() || detail.relatedDlc.isNotEmpty(),
         detail.bundles.isNotEmpty(),
         aboutText.isNotBlank(),
@@ -1522,6 +1245,14 @@ private fun SteamStoreDetailContent(
                 }
             }
         }
+        item(key = "store_steamdb_${detail.appId}") {
+            SteamDbDetailsEntry(
+                query = SteamDbQuery(detail.appId, detail.priceCountryCode,
+                    detail.currency.takeIf { detail.finalPriceCents != null }, detail.isFree),
+                gameName = detail.name,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+            )
+        }
         if (detail.fullGame != null || detail.demos.isNotEmpty() || detail.relatedDlc.isNotEmpty()) {
             item(key = "store_related_${detail.appId}") {
                 SteamStoreRelatedContentSection(
@@ -1728,7 +1459,6 @@ private fun SteamStoreDetailContent(
             fromCache = regionalPricesFromCache,
             failure = regionalPriceFailure,
             onRetry = onRetryRegionalPrices,
-            onOpenItadSettings = onOpenItadSettings,
             onDismiss = onCloseRegionalPrices
         )
     }
@@ -2004,7 +1734,6 @@ private fun SteamStoreRegionalPriceSheet(
     fromCache: Boolean,
     failure: SteamLibraryFailureReason?,
     onRetry: () -> Unit,
-    onOpenItadSettings: () -> Unit,
     onDismiss: () -> Unit
 ) {
     val sortedPrices = remember(prices) { sortedRegionalPricesForDisplay(prices) }
@@ -2111,7 +1840,6 @@ private fun SteamStoreRegionalPriceSheet(
                             price.countryCode
                         }
                     },
-                    onOpenItadSettings = onOpenItadSettings
                 )
             }
             item {
@@ -2132,7 +1860,6 @@ private fun SteamStoreRegionalPriceCard(
     price: SteamRegionalPrice,
     expanded: Boolean,
     onToggleExpanded: () -> Unit,
-    onOpenItadSettings: () -> Unit
 ) {
     val reduceAnimations = LocalReduceAnimations.current
     val discount = if (price.originalPriceMinor > price.finalPriceMinor &&
@@ -2258,14 +1985,9 @@ private fun SteamStoreRegionalPriceCard(
             ) {
                 Column {
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 14.dp))
-                    ItadHistoryLowSection(
-                        appId = appId,
-                        countryCode = price.countryCode,
-                        expectedCurrency = price.currency,
-                        currentSteamPriceMinor = price.finalPriceMinor.takeIf {
-                            price.isAvailable
-                        },
-                        onOpenSettings = onOpenItadSettings,
+                    SteamDbPriceSection(
+                        query = SteamDbQuery(appId, price.countryCode, price.currency,
+                            free = price.isAvailable && price.finalPriceMinor == 0L),
                         modifier = Modifier.padding(14.dp)
                     )
                 }
@@ -2486,10 +2208,10 @@ private fun PriceRow(discount: Int, initial: String, final: String, modifier: Mo
     }
 }
 
-@Composable private fun CachedNotice() { Text(stringResource(R.string.steam_store_cached), color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 16.dp)) }
+@Composable internal fun CachedNotice() { Text(stringResource(R.string.steam_store_cached), color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 16.dp)) }
 
 @Composable
-private fun StoreMessage(
+internal fun StoreMessage(
     message: String,
     onRetry: (() -> Unit)? = null,
     onUnlockFamilyView: (() -> Unit)? = null,

@@ -1,0 +1,823 @@
+{
+  "title": "Monica Steam · 即时聊天",
+  "brief": "紧凑搜索顶栏、消息预览、可恢复草稿和清楚的连接状态。聊天消息占据主要空间；发送不打断输入。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "blue",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "conversations",
+      "name": "会话 · 最近消息",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "thread",
+      "name": "聊天 · 连续输入",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "reconnecting",
+      "name": "聊天 · 正在重连",
+      "x": 880,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "search",
+      "x": 12,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "search",
+          "kind": "searchBar",
+          "label": "搜索聊天和好友",
+          "variant": "filled",
+          "icon": "group",
+          "size": 388,
+          "size2": 56,
+          "icon2": "account_circle"
+        }
+      ]
+    },
+    {
+      "id": "row0",
+      "x": 12,
+      "y": 104,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "row0",
+          "kind": "listItem",
+          "label": "Alex",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "今晚一起玩？",
+          "size": 388,
+          "size2": 74,
+          "icon2": null,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "time0",
+      "x": 347,
+      "y": 114,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "time0",
+          "kind": "text",
+          "label": "20:41",
+          "variant": "filled",
+          "icon": null,
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "row1",
+      "x": 12,
+      "y": 180,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "row1",
+          "kind": "listItem",
+          "label": "周末联机小队",
+          "variant": "filled",
+          "icon": "group",
+          "supporting": "小林：我已经进房间了",
+          "size": 388,
+          "size2": 74,
+          "icon2": null,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "time1",
+      "x": 347,
+      "y": 190,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "time1",
+          "kind": "text",
+          "label": "20:38",
+          "variant": "filled",
+          "icon": null,
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "row2",
+      "x": 12,
+      "y": 256,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "row2",
+          "kind": "listItem",
+          "label": "小林",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "好的，九点见。",
+          "size": 388,
+          "size2": 74,
+          "icon2": null,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "time2",
+      "x": 347,
+      "y": 266,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "time2",
+          "kind": "text",
+          "label": "20:32",
+          "variant": "filled",
+          "icon": null,
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "row3",
+      "x": 12,
+      "y": 332,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "row3",
+          "kind": "listItem",
+          "label": "Morgan",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "这个游戏支持双人合作",
+          "size": 388,
+          "size2": 74,
+          "icon2": null,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "time3",
+      "x": 347,
+      "y": 342,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "time3",
+          "kind": "text",
+          "label": "昨天",
+          "variant": "filled",
+          "icon": null,
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "row4",
+      "x": 12,
+      "y": 408,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "row4",
+          "kind": "listItem",
+          "label": "Sam",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "周末再一起玩",
+          "size": 388,
+          "size2": 74,
+          "icon2": null,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "time4",
+      "x": 347,
+      "y": 418,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "time4",
+          "kind": "text",
+          "label": "周一",
+          "variant": "filled",
+          "icon": null,
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "new",
+      "x": 270,
+      "y": 736,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new",
+          "kind": "extendedFab",
+          "label": "新建群聊",
+          "variant": "filled",
+          "icon": "add",
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "nav",
+      "x": 0,
+      "y": 804,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "nav",
+          "kind": "bottomNav",
+          "label": "",
+          "variant": "filled",
+          "icon": null,
+          "size": 412,
+          "selected": 2,
+          "tabs": [
+            {
+              "label": "商店",
+              "icon": "storefront"
+            },
+            {
+              "label": "游戏库",
+              "icon": "sports_esports"
+            },
+            {
+              "label": "聊天",
+              "icon": "chat_bubble"
+            },
+            {
+              "label": "令牌",
+              "icon": "shield"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "back1",
+      "x": 444,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "back1",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "arrow_back",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "contact1",
+      "x": 492,
+      "y": 26,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "contact1",
+          "kind": "listItem",
+          "label": "Alex",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "正在输入…",
+          "size": 244,
+          "size2": 64,
+          "fill": "surface",
+          "icon2": null
+        }
+      ]
+    },
+    {
+      "id": "1call",
+      "x": 748,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1call",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "call",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "1more_vert",
+      "x": 796,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1more_vert",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "more_vert",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "day1",
+      "x": 622,
+      "y": 114,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "day1",
+          "kind": "text",
+          "label": "今天",
+          "variant": "filled",
+          "icon": null,
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "1bubble0",
+      "x": 452,
+      "y": 160,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1bubble0",
+          "kind": "listItem",
+          "label": "今晚一起玩？",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41",
+          "size": 260,
+          "size2": 64,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 5,
+            "br": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "1bubble1",
+      "x": 580,
+      "y": 252,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1bubble1",
+          "kind": "listItem",
+          "label": "可以，九点上线。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41  ·  已发送",
+          "size": 260,
+          "size2": 64,
+          "fill": "primaryContainer",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 18,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "1bubble2",
+      "x": 452,
+      "y": 344,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1bubble2",
+          "kind": "listItem",
+          "label": "我先开个房间，等你。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41",
+          "size": 260,
+          "size2": 64,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 5,
+            "br": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "1bubble3",
+      "x": 580,
+      "y": 436,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "1bubble3",
+          "kind": "listItem",
+          "label": "好，稍等我两分钟。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41  ·  已发送",
+          "size": 260,
+          "size2": 64,
+          "fill": "primaryContainer",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 18,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "attach1",
+      "x": 444,
+      "y": 794,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "attach1",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "attach_file",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "compose1",
+      "x": 496,
+      "y": 790,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "compose1",
+          "kind": "textField",
+          "label": "发送消息",
+          "variant": "outlined",
+          "icon": null,
+          "size": 296,
+          "size2": 56,
+          "icon2": "mood"
+        }
+      ]
+    },
+    {
+      "id": "send1",
+      "x": 796,
+      "y": 794,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "send1",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "filled",
+          "icon": "send",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "back2",
+      "x": 884,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "back2",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "arrow_back",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "contact2",
+      "x": 932,
+      "y": 26,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "contact2",
+          "kind": "listItem",
+          "label": "Alex",
+          "variant": "filled",
+          "icon": "person",
+          "supporting": "连接中 · 自动重试",
+          "size": 244,
+          "size2": 64,
+          "fill": "surface",
+          "icon2": null
+        }
+      ]
+    },
+    {
+      "id": "2call",
+      "x": 1188,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2call",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "call",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "2more_vert",
+      "x": 1236,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2more_vert",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "more_vert",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "day2",
+      "x": 1062,
+      "y": 114,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "day2",
+          "kind": "text",
+          "label": "今天",
+          "variant": "filled",
+          "icon": null,
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "2bubble0",
+      "x": 892,
+      "y": 160,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2bubble0",
+          "kind": "listItem",
+          "label": "今晚一起玩？",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41",
+          "size": 260,
+          "size2": 64,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 5,
+            "br": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "2bubble1",
+      "x": 1020,
+      "y": 252,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2bubble1",
+          "kind": "listItem",
+          "label": "可以，九点上线。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41  ·  已发送",
+          "size": 260,
+          "size2": 64,
+          "fill": "primaryContainer",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 18,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "2bubble2",
+      "x": 892,
+      "y": 344,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2bubble2",
+          "kind": "listItem",
+          "label": "我先开个房间，等你。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41",
+          "size": 260,
+          "size2": 64,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 5,
+            "br": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "2bubble3",
+      "x": 1020,
+      "y": 436,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "2bubble3",
+          "kind": "listItem",
+          "label": "好，稍等我两分钟。",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "20:41  ·  已发送",
+          "size": 260,
+          "size2": 64,
+          "fill": "primaryContainer",
+          "icon2": null,
+          "corners": {
+            "tl": 18,
+            "tr": 18,
+            "bl": 18,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "attach2",
+      "x": 884,
+      "y": 794,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "attach2",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "text",
+          "icon": "attach_file",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "compose2",
+      "x": 936,
+      "y": 790,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "compose2",
+          "kind": "textField",
+          "label": "发送消息",
+          "variant": "outlined",
+          "icon": null,
+          "size": 296,
+          "size2": 56,
+          "icon2": "mood"
+        }
+      ]
+    },
+    {
+      "id": "send2",
+      "x": 1236,
+      "y": 794,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "send2",
+          "kind": "iconButton",
+          "label": "",
+          "variant": "filled",
+          "icon": "send",
+          "size2": 48
+        }
+      ]
+    }
+  ]
+}

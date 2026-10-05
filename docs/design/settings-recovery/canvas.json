@@ -1,0 +1,609 @@
+{
+  "title": "Monica Steam · 设置与主密码恢复",
+  "brief": "沿用 Monica Android 设置分组：12dp 留白，24dp 外圆角，4dp 相邻圆角，2dp 间距；保留 Steam 专属入口。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "teal",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "home",
+      "name": "设置",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "locking",
+      "name": "主密码与锁定",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "recovery",
+      "name": "系统密钥不可用",
+      "x": 880,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "0-top",
+      "x": 12,
+      "y": 8,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "top-home",
+          "kind": "topAppBar",
+          "label": "设置",
+          "supporting": "",
+          "icon": "arrow_back",
+          "icon2": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 64
+        }
+      ]
+    },
+    {
+      "id": "0-search",
+      "x": 12,
+      "y": 86,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "search",
+          "kind": "searchBar",
+          "label": "搜索设置",
+          "supporting": "",
+          "icon": "search",
+          "icon2": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "0-安全与数据-label",
+      "x": 12,
+      "y": 156,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "安全与数据-label",
+          "kind": "text",
+          "label": "安全与数据",
+          "supporting": "",
+          "icon": null,
+          "icon2": null,
+          "variant": "filled",
+          "size": 14,
+          "size2": 24
+        }
+      ]
+    },
+    {
+      "id": "0-安全与数据",
+      "x": 12,
+      "y": 186,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "lock",
+          "kind": "listItem",
+          "label": "主密码与锁定",
+          "supporting": "主密码、生物识别与自动锁定",
+          "icon": "shield",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "screenshot",
+          "kind": "listItem",
+          "label": "截屏保护",
+          "supporting": "阻止截屏与最近任务预览",
+          "icon": "security",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "checked": true,
+          "switch": true,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "data",
+          "kind": "listItem",
+          "label": "数据管理",
+          "supporting": "令牌备份、WebDAV 与 MDBX",
+          "icon": "storage",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 24,
+            "br": 24
+          },
+          "size2": 72
+        }
+      ]
+    },
+    {
+      "id": "0-界面-label",
+      "x": 12,
+      "y": 416,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "界面-label",
+          "kind": "text",
+          "label": "界面",
+          "supporting": "",
+          "icon": null,
+          "icon2": null,
+          "variant": "filled",
+          "size": 14,
+          "size2": 24
+        }
+      ]
+    },
+    {
+      "id": "0-界面",
+      "x": 12,
+      "y": 446,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "appearance",
+          "kind": "listItem",
+          "label": "外观",
+          "supporting": "主题、头像与界面缩放",
+          "icon": "palette",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "nav",
+          "kind": "listItem",
+          "label": "导航与动效",
+          "supporting": "底栏样式、顺序与动画",
+          "icon": "view_week",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 24,
+            "br": 24
+          },
+          "size2": 72
+        }
+      ]
+    },
+    {
+      "id": "0-Steam-label",
+      "x": 12,
+      "y": 602,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "Steam-label",
+          "kind": "text",
+          "label": "Steam",
+          "supporting": "",
+          "icon": null,
+          "icon2": null,
+          "variant": "filled",
+          "size": 14,
+          "size2": 24
+        }
+      ]
+    },
+    {
+      "id": "0-Steam",
+      "x": 12,
+      "y": 632,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "features",
+          "kind": "listItem",
+          "label": "Steam 功能",
+          "supporting": "链接处理、商店提示与价格数据",
+          "icon": "storefront",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "notifications",
+          "kind": "listItem",
+          "label": "通知与连接",
+          "supporting": "消息通知与后台连接",
+          "icon": "notifications",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 24,
+            "br": 24
+          },
+          "size2": 72
+        }
+      ]
+    },
+    {
+      "id": "1-top",
+      "x": 452,
+      "y": 8,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "top-lock",
+          "kind": "topAppBar",
+          "label": "主密码与锁定",
+          "supporting": "",
+          "icon": "arrow_back",
+          "icon2": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 64
+        }
+      ]
+    },
+    {
+      "id": "1-解锁与锁定-label",
+      "x": 452,
+      "y": 92,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "解锁与锁定-label",
+          "kind": "text",
+          "label": "解锁与锁定",
+          "supporting": "",
+          "icon": null,
+          "icon2": null,
+          "variant": "filled",
+          "size": 14,
+          "size2": 24
+        }
+      ]
+    },
+    {
+      "id": "1-解锁与锁定",
+      "x": 452,
+      "y": 122,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "bio",
+          "kind": "listItem",
+          "label": "生物识别解锁",
+          "supporting": "使用指纹或面部解锁",
+          "icon": "fingerprint",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "switch": true,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "token",
+          "kind": "listItem",
+          "label": "仅锁定令牌页",
+          "supporting": "访问敏感功能时验证主密码",
+          "icon": "shield",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "switch": true,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "bypass",
+          "kind": "listItem",
+          "label": "跳过启动验证",
+          "supporting": "保留现有 Steam 启动行为",
+          "icon": "lock_open",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "switch": true,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "auto",
+          "kind": "listItem",
+          "label": "自动锁定",
+          "supporting": "5 分钟",
+          "icon": "timer",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 24,
+            "br": 24
+          },
+          "size2": 72
+        }
+      ]
+    },
+    {
+      "id": "1-密码与恢复-label",
+      "x": 452,
+      "y": 428,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "密码与恢复-label",
+          "kind": "text",
+          "label": "密码与恢复",
+          "supporting": "",
+          "icon": null,
+          "icon2": null,
+          "variant": "filled",
+          "size": 14,
+          "size2": 24
+        }
+      ]
+    },
+    {
+      "id": "1-密码与恢复",
+      "x": 452,
+      "y": 458,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "questions",
+          "kind": "listItem",
+          "label": "密保问题",
+          "supporting": "用于主密码重置验证",
+          "icon": "security",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 4,
+            "br": 4
+          },
+          "size2": 72
+        },
+        {
+          "id": "reset",
+          "kind": "listItem",
+          "label": "修改主密码",
+          "supporting": "使用当前主密码验证后修改",
+          "icon": "key",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 24,
+            "br": 24
+          },
+          "size2": 72
+        }
+      ]
+    },
+    {
+      "id": "1-recovery-note",
+      "x": 452,
+      "y": 620,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "recovery-note",
+          "kind": "listItem",
+          "label": "主密码保护本地恢复材料",
+          "supporting": "系统安全密钥不可用时，可使用已设置的主密码恢复。请妥善保管主密码。",
+          "icon": "shield",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "size2": 126
+        }
+      ]
+    },
+    {
+      "id": "recovery-top",
+      "x": 880,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-topbar",
+          "kind": "topAppBar",
+          "label": "恢复本地安全存储",
+          "variant": "filled",
+          "icon": "arrow_back"
+        }
+      ]
+    },
+    {
+      "id": "recovery-intro",
+      "x": 892,
+      "y": 104,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-intro-text",
+          "kind": "listItem",
+          "label": "原有数据已保留",
+          "supporting": "使用本机加密恢复材料，无需连接云端。",
+          "icon": "shield",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "recovery-pw",
+      "x": 892,
+      "y": 234,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-password",
+          "kind": "textField",
+          "label": "Monica 主密码",
+          "icon": "lock",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "recovery-notes",
+      "x": 892,
+      "y": 328,
+      "axis": "y",
+      "items": [
+        {
+          "id": "recovery-local",
+          "kind": "listItem",
+          "label": "恢复后重新解锁",
+          "supporting": "恢复不会删除原配置或改动密码库条目。",
+          "variant": "filled",
+          "size": 388,
+          "icon": null
+        },
+        {
+          "id": "recovery-limit",
+          "kind": "listItem",
+          "label": "部分旧密钥可能仍需要原设备",
+          "supporting": "尚未转换的旧数据、硬件专用通行密钥仍可能无法读取。",
+          "variant": "filled",
+          "size": 388,
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "recovery-recover",
+      "x": 892,
+      "y": 570,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-recover-button",
+          "kind": "button",
+          "label": "使用主密码恢复",
+          "variant": "filled",
+          "size": 388,
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "recovery-retry",
+      "x": 892,
+      "y": 636,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-retry-button",
+          "kind": "button",
+          "label": "重试系统解锁",
+          "variant": "tonal",
+          "size": 388,
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "recovery-diagnostic",
+      "x": 892,
+      "y": 702,
+      "axis": "x",
+      "items": [
+        {
+          "id": "recovery-diagnostic-button",
+          "kind": "button",
+          "label": "复制诊断",
+          "variant": "tonal",
+          "size": 388,
+          "icon": null
+        }
+      ]
+    }
+  ]
+}

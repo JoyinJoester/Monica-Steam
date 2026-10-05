@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_reconnecting">连接中 · 自动重试</string>
+    <string name="steam_chat_clear_search">清除搜索</string>
+</resources>

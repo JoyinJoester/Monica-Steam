@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PasswordEntryDao {
     
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getAllPasswordEntries(): Flow<List<PasswordEntry>>
     
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND categoryId = :categoryId ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND categoryId = :categoryId) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getPasswordEntriesByCategory(categoryId: Long): Flow<List<PasswordEntry>>
 
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND categoryId IS NULL ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND categoryId IS NULL) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getUncategorizedPasswordEntries(): Flow<List<PasswordEntry>>
 
     @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND keepassDatabaseId = :databaseId ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
@@ -24,19 +24,19 @@ interface PasswordEntryDao {
     @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND keepassDatabaseId = :databaseId AND keepassGroupPath = :groupPath ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getPasswordEntriesByKeePassGroup(databaseId: Long, groupPath: String): Flow<List<PasswordEntry>>
 
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND keepassDatabaseId IS NULL ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND keepassDatabaseId IS NULL) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getPasswordEntriesWithoutKeePassDatabase(): Flow<List<PasswordEntry>>
 
     @Query("SELECT COUNT(*) FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND keepassDatabaseId = :databaseId")
     fun getPasswordCountByKeePassDatabase(databaseId: Long): Flow<Int>
 
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND isFavorite = 1 ORDER BY sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND isFavorite = 1) ORDER BY sortOrder ASC, updatedAt DESC")
     fun getFavoritePasswordEntries(): Flow<List<PasswordEntry>>
     
     @Query("UPDATE password_entries SET categoryId = NULL WHERE categoryId = :categoryId")
     suspend fun removeCategoryFromPasswords(categoryId: Long)
     
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 AND (title LIKE '%' || :query || '%' OR website LIKE '%' || :query || '%' OR username LIKE '%' || :query || '%' OR appName LIKE '%' || :query || '%' OR appPackageName LIKE '%' || :query || '%') ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND (title LIKE '%' || :query || '%' OR website LIKE '%' || :query || '%' OR username LIKE '%' || :query || '%' OR appName LIKE '%' || :query || '%' OR appPackageName LIKE '%' || :query || '%')) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun searchPasswordEntries(query: String): Flow<List<PasswordEntry>>
     
     @Query("SELECT * FROM password_entries WHERE id = :id")
@@ -348,19 +348,21 @@ interface PasswordEntryDao {
     @Query("DELETE FROM password_entries WHERE mdbx_database_id = :databaseId")
     suspend fun deleteAllByMdbxDatabaseId(databaseId: Long)
 
+    @Transaction
     @Query("SELECT * FROM password_entries WHERE mdbx_database_id = :databaseId AND isDeleted = 0 AND isArchived = 0")
     suspend fun getByMdbxDatabaseIdSync(databaseId: Long): List<PasswordEntry>
     
     /**
      * 检查是否存在相同的密码条目(根据title、username、website匹配)
      */
-    @Query("SELECT * FROM password_entries WHERE title = :title AND username = :username AND website = :website LIMIT 1")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND title = :title AND username = :username AND website = :website LIMIT 1")
     suspend fun findDuplicateEntry(title: String, username: String, website: String): PasswordEntry?
 
+    @Transaction
     @Query(
         """
         SELECT * FROM password_entries
-        WHERE isDeleted = 0
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND isDeleted = 0
           AND isArchived = 0
           AND LOWER(title) = :title
           AND LOWER(username) = :username
@@ -411,7 +413,7 @@ interface PasswordEntryDao {
     @Query(
         """
         SELECT * FROM password_entries
-        WHERE LOWER(username) = LOWER(:username)
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND LOWER(username) = LOWER(:username)
           AND isDeleted = 0
           AND isArchived = 0
           AND instr(
@@ -427,23 +429,23 @@ interface PasswordEntryDao {
      * 按网站和用户名查询密码
      * 用于自动填充保存时检测重复
      */
-    @Query("SELECT * FROM password_entries WHERE LOWER(website) LIKE '%' || LOWER(:domain) || '%' AND LOWER(username) = LOWER(:username) AND isDeleted = 0 AND isArchived = 0 LIMIT 1")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND LOWER(website) LIKE '%' || LOWER(:domain) || '%' AND LOWER(username) = LOWER(:username) AND isDeleted = 0 AND isArchived = 0 LIMIT 1")
     suspend fun findByDomainAndUsername(domain: String, username: String): PasswordEntry?
     
     /**
      * 按包名查询所有密码
      * 用于检测同一应用的多个账号
      */
+    @Transaction
     @Query(
         """
         SELECT * FROM password_entries
-        WHERE isDeleted = 0
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0
           AND isArchived = 0
           AND instr(
             '|' || LOWER(REPLACE(REPLACE(appPackageName, ',', '|'), ';', '|')) || '|',
             '|' || LOWER(:packageName) || '|'
-          ) > 0
-        ORDER BY updatedAt DESC
+          ) > 0) ORDER BY updatedAt DESC
         """
     )
     suspend fun findByPackageName(packageName: String): List<PasswordEntry>
@@ -452,7 +454,8 @@ interface PasswordEntryDao {
      * 按网站域名查询所有密码
      * 用于检测同一网站的多个账号
      */
-    @Query("SELECT * FROM password_entries WHERE LOWER(website) LIKE '%' || LOWER(:domain) || '%' AND isDeleted = 0 AND isArchived = 0 ORDER BY updatedAt DESC")
+    @Transaction
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (LOWER(website) LIKE '%' || LOWER(:domain) || '%' AND isDeleted = 0 AND isArchived = 0) ORDER BY updatedAt DESC")
     suspend fun findByDomain(domain: String): List<PasswordEntry>
     
     /**
@@ -462,7 +465,7 @@ interface PasswordEntryDao {
     @Query(
         """
         SELECT * FROM password_entries
-        WHERE LOWER(username) = LOWER(:username)
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND LOWER(username) = LOWER(:username)
           AND password = :encryptedPassword
           AND isDeleted = 0
           AND isArchived = 0
@@ -480,37 +483,37 @@ interface PasswordEntryDao {
     /**
      * 获取所有已删除的条目（回收站）
      */
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 1 ORDER BY deletedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 1) ORDER BY deletedAt DESC")
     fun getDeletedEntries(): Flow<List<PasswordEntry>>
     
     /**
      * 获取所有已删除的条目（同步版本，用于备份）
      */
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 1 ORDER BY deletedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 1) ORDER BY deletedAt DESC")
     suspend fun getDeletedEntriesSync(): List<PasswordEntry>
     
     /**
      * 获取所有未删除的密码条目（同步版本，用于KeePass导出）
      */
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     suspend fun getAllPasswordEntriesSync(): List<PasswordEntry>
     
     /**
      * 检查是否存在相同的条目（用于KeePass导入去重）
      */
-    @Query("SELECT COUNT(*) FROM password_entries WHERE title = :title AND username = :username AND website = :website")
+    @Query("SELECT COUNT(*) FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (title = :title AND username = :username AND website = :website) ")
     suspend fun countByTitleUsernameWebsite(title: String, username: String, website: String): Int
     
     /**
      * 获取所有未删除的条目（正常条目）
      */
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 0 ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getActiveEntries(): Flow<List<PasswordEntry>>
 
     /**
      * 获取归档中的密码条目
      */
-    @Query("SELECT * FROM password_entries WHERE isDeleted = 0 AND isArchived = 1 ORDER BY archivedAt DESC, updatedAt DESC")
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 1) ORDER BY archivedAt DESC, updatedAt DESC")
     fun getArchivedEntries(): Flow<List<PasswordEntry>>
 
     /**

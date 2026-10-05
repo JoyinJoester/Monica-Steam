@@ -58,7 +58,7 @@ class SteamFloatingDockGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt"
         ).readText()
         val library = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
@@ -91,7 +91,8 @@ class SteamFloatingDockGuardTest {
         assertTrue(activity.contains(".steamDockProgressiveBlur("))
         assertTrue(activity.contains("height = dockBlurHeightPx"))
         assertTrue(pageModifier.contains(".steamDockProgressiveBlur("))
-        assertFalse(pageModifier.contains(".padding("))
+        assertFalse(pageModifier.contains("bottom ="))
+        assertFalse(pageModifier.contains("SteamDockContentClearance"))
         assertTrue(blur.contains("RuntimeShader(STEAM_DOCK_BLUR_SHADER)"))
         assertTrue(blur.contains("RenderEffect.createRuntimeShaderEffect"))
         assertFalse(blur.contains("surfaceContainer.copy"))

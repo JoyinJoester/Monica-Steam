@@ -817,7 +817,7 @@ internal fun MdbxHealthRepairDialog(
         is MdbxViewModel.MdbxHealthRepairState.Applying -> {
             MdbxHealthRepairProgressDialog(
                 title = "正在安全处理",
-                message = "将处理 ${state.itemCount} 项异常。MDBX2 会先创建恢复快照，再在单个事务中完成写入和复查。"
+                message = "将处理 ${state.itemCount} 项异常。MDBX3 会先创建恢复快照，再在单个事务中完成写入和复查。"
             )
         }
         is MdbxViewModel.MdbxHealthRepairState.Reviewing -> {

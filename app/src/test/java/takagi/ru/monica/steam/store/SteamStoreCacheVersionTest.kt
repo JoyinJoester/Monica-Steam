@@ -13,7 +13,7 @@ import takagi.ru.monica.steam.store.filters.domain.SteamStoreFilterSelection
 class SteamStoreCacheVersionTest {
     @Test
     fun storeContentCachesDropLegacyEntriesThatDidNotApplyIgnoredGames() {
-        assertEquals("v3_account_7_home.json", steamStoreHomeCacheName(7L))
+        assertEquals("v3_account_7_home_games_v2.json", steamStoreHomeCacheName(7L))
         assertEquals(
             "v3_account_7_catalog_all.json",
             catalogCacheName(
@@ -23,7 +23,7 @@ class SteamStoreCacheVersionTest {
             )
         )
         assertEquals("v3_account_7_detail_620.json", steamStoreDetailCacheName(7L, 620))
-        assertEquals("v3_guest_home.json", steamStoreHomeCacheName(null))
+        assertEquals("v3_guest_home_games_v2.json", steamStoreHomeCacheName(null))
     }
 
     @Test

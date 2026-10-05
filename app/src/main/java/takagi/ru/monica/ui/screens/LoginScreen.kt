@@ -16,7 +16,8 @@ fun LoginScreen(
     settingsViewModel: SettingsViewModel? = null,
     onFirstFrameRendered: (() -> Unit)? = null,
     onForgotPassword: (() -> Unit)? = null,
-    onAuthenticationSuccess: (() -> Unit)? = null
+    onAuthenticationSuccess: (() -> Unit)? = null,
+    allowPasswordVerificationBypass: Boolean = true
 ) {
     val context = LocalContext.current
     
@@ -24,7 +25,7 @@ fun LoginScreen(
     
     // 获取设置
     val settings = settingsViewModel?.settings?.collectAsState()?.value
-    val disablePasswordVerification = settings?.disablePasswordVerification ?: false
+    val disablePasswordVerification = allowPasswordVerificationBypass && (settings?.disablePasswordVerification ?: false)
     val biometricEnabled = settings?.biometricEnabled ?: false
     val autoLockMinutes = settings?.autoLockMinutes ?: 5
 

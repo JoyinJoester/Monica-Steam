@@ -11,28 +11,28 @@ import takagi.ru.monica.steam.itad.ui.formatItadMoney
 
 class ItadStoreUiGuardTest {
     @Test
-    fun regionalPriceCardsExpandValidatedHistoryLowWithOfficialAttribution() {
+    fun legacyPriceQueryIsReplacedByKeylessSteamDb() {
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val card = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/itad/ui/ItadHistoryLowSection.kt"
+            "app/src/main/java/takagi/ru/monica/steam/steamdb/ui/SteamDbSection.kt"
+        ).readText()
+        val settings = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).readText()
 
         assertFalse(store.contains("item(key = \"itad_history_low_"))
         assertTrue(store.contains("AnimatedVisibility("))
-        assertTrue(store.contains("countryCode = price.countryCode"))
-        assertTrue(store.contains("expectedCurrency = price.currency"))
-        assertTrue(store.contains("currentSteamPriceMinor = price.finalPriceMinor"))
+        assertTrue(store.contains("SteamDbQuery(appId, price.countryCode, price.currency"))
         assertTrue(store.contains("historyCountryCode = detail.accountCountryCode"))
-        assertTrue(store.contains("onOpenItadSettings = onOpenSettings"))
-        assertTrue(card.contains("R.string.itad_history_low_source"))
-        assertTrue(card.contains("current.historicalLow.sourceUrl"))
-        assertTrue(card.contains("isthereanydeal.com"))
-        assertTrue(card.contains("value = null"))
-        assertTrue(card.contains("resolveItadHistoryLowCompatibility("))
-        assertTrue(card.contains("R.string.itad_history_low_region_mismatch"))
-        assertFalse(card.contains("ItadPriceTrendSection("))
+        assertTrue(store.contains("SteamDbPriceSection("))
+        assertFalse(store.contains("ItadHistoryLowSection("))
+        assertFalse(store.contains("onOpenItadSettings"))
+        assertTrue(card.contains("R.string.steamdb_price_source"))
+        assertTrue(card.contains("https://steamdb.info/app/"))
+        assertTrue(settings.contains("SteamDbSettingsScreen("))
+        assertFalse(settings.contains("ItadSettingsScreen("))
     }
 
     @Test

@@ -20,7 +20,8 @@ internal fun newPendingSteamChatMessage(
     body: String,
     timestamp: Long,
     clientMessageId: String,
-    replyToStableId: String? = null
+    replyToStableId: String? = null,
+    localCreatedAtMillis: Long = timestamp * 1_000L
 ) = SteamChatMessage(
     partnerSteamId = partnerSteamId,
     senderSteamId = accountSteamId,
@@ -29,7 +30,7 @@ internal fun newPendingSteamChatMessage(
     body = body,
     deliveryState = SteamChatDeliveryState.QUEUED,
     clientMessageId = clientMessageId,
-    localCreatedAtMillis = timestamp * 1_000L,
+    localCreatedAtMillis = localCreatedAtMillis,
     replyToStableId = replyToStableId
 )
 
@@ -62,7 +63,10 @@ internal fun SteamChatUiState.withChatMessage(
         lastMessageTimestamp = maxOf(
             existingSession?.lastMessageTimestamp ?: 0L,
             message.timestamp
-        )
+        ),
+        lastMessage = if (message.timestamp >= (existingSession?.lastMessageTimestamp ?: 0L)) {
+            message.body
+        } else existingSession?.lastMessage.orEmpty()
     )
     val updatedSessions = currentSessions.copy(
         sessions = (currentSessions.sessions.filterNot {
@@ -87,17 +91,22 @@ internal fun reconcileSteamChatSessions(
     val reconciledRemote = remote.sessions.map { remoteSession ->
         val localSession = localByPartner[remoteSession.partnerSteamId]
             ?: return@map remoteSession
+        // A history request can complete after a newer push/optimistic send.
+        if (localSession.lastMessageTimestamp > remoteSession.lastMessageTimestamp) return@map localSession
+        val withPreview = if (localSession.lastMessageTimestamp == remoteSession.lastMessageTimestamp) {
+            remoteSession.copy(lastMessage = remoteSession.lastMessage.ifBlank { localSession.lastMessage })
+        } else remoteSession
         val localAcknowledgementCoversRemote =
             localSession.unreadCount == 0 &&
                 localSession.lastViewTimestamp >= remoteSession.lastViewTimestamp &&
                 remoteSession.lastMessageTimestamp <= localSession.lastViewTimestamp
         if (localAcknowledgementCoversRemote) {
-            remoteSession.copy(
+            withPreview.copy(
                 lastViewTimestamp = localSession.lastViewTimestamp,
                 unreadCount = 0
             )
         } else {
-            remoteSession
+            withPreview
         }
     }
     return remote.copy(
@@ -110,10 +119,12 @@ internal fun reconcileSteamChatSessions(
     )
 }
 
-internal fun SteamChatThreadSnapshot.failUnresolvedVerification(): SteamChatThreadSnapshot = copy(
+internal fun SteamChatThreadSnapshot.failUnresolvedVerification(
+    isSending: (String) -> Boolean = { false }
+): SteamChatThreadSnapshot = copy(
     messages = messages.map { message ->
         if (message.deliveryState == SteamChatDeliveryState.VERIFYING &&
-            message.ordinal == Int.MAX_VALUE
+            message.ordinal == Int.MAX_VALUE && !isSending(message.clientMessageId)
         ) message.copy(deliveryState = SteamChatDeliveryState.FAILED_RETRYABLE) else message
     }
 )

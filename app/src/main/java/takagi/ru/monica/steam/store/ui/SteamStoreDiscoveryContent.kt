@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -43,47 +44,50 @@ import takagi.ru.monica.steam.store.domain.SteamStoreItem
 import takagi.ru.monica.steam.store.domain.visibleStoreCollections
 import takagi.ru.monica.steam.store.hints.domain.SteamStoreHintKind
 
-@Composable
-internal fun SteamStoreDiscoveryContent(
+/** Each collection is a lazy item; browsing never composes the whole home at once. */
+internal fun androidx.compose.foundation.lazy.LazyListScope.steamStoreDiscoveryItems(
     home: SteamStoreHome,
-    selectedFilter: SteamStoreBrowseFilter,
-    itemHints: (Int) -> List<SteamStoreHintKind> = { emptyList() },
+    itemHints: (Int) -> List<SteamStoreHintKind>,
     onOpenGame: (SteamStoreItem) -> Unit,
-    onOpenEvent: (String) -> Unit
+    onOpenEvent: (String) -> Unit,
+    onSeeAll: (SteamStoreBrowseFilter) -> Unit
 ) {
-    val collections = remember(home, selectedFilter) {
-        visibleStoreCollections(home, selectedFilter)
+    val specials = home.specials
+    if (specials.isNotEmpty()) item(key = "store_specials") {
+        StoreSection(
+            title = storeBrowseFilterLabel(SteamStoreBrowseFilter.SPECIALS), games = specials,
+            itemHints = itemHints,
+            onOpen = { id -> specials.firstOrNull { it.appId == id }?.let(onOpenGame) },
+            onSeeAll = { onSeeAll(SteamStoreBrowseFilter.SPECIALS) }
+        )
     }
-    Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-        if (selectedFilter == SteamStoreBrowseFilter.ALL) {
-            home.specials.firstOrNull()?.let { featured ->
-                StoreFeaturedHero(
-                    game = featured,
-                    hints = itemHints(featured.appId),
-                    onClick = { onOpenGame(featured) }
-                )
-            }
-            if (home.events.isNotEmpty()) {
-                SteamStoreEventSection(home.events, onOpenEvent)
-            }
-        }
-        collections.forEach { collection ->
-            StoreSection(
-                title = storeBrowseFilterLabel(collection.filter),
-                games = collection.items,
-                itemHints = itemHints,
-                onOpen = { appId ->
-                    collection.items.firstOrNull { it.appId == appId }?.let(onOpenGame)
+    if (home.topSellers.isNotEmpty()) {
+        item(key = "store_top_heading") {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(storeBrowseFilterLabel(SteamStoreBrowseFilter.TOP_SELLERS), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                androidx.compose.material3.TextButton(onClick = { onSeeAll(SteamStoreBrowseFilter.TOP_SELLERS) }) {
+                    Text(stringResource(R.string.store_home_see_all))
                 }
+            }
+        }
+        home.topSellers.take(3).forEachIndexed { index, game ->
+            item(key = "store_top_${game.appId}_$index") {
+                SearchResultCard(game, itemHints(game.appId), emptyList()) { onOpenGame(game) }
+            }
+        }
+    }
+    if (home.events.isNotEmpty()) item(key = "store_events") { SteamStoreEventSection(home.events, onOpenEvent) }
+    for ((filter, games) in listOf(SteamStoreBrowseFilter.NEW_RELEASES to home.newReleases, SteamStoreBrowseFilter.COMING_SOON to home.comingSoon)) {
+        if (games.isNotEmpty()) item(key = "store_collection_${filter.name}") {
+            StoreSection(
+                title = storeBrowseFilterLabel(filter), games = games, itemHints = itemHints,
+                onOpen = { id -> games.firstOrNull { it.appId == id }?.let(onOpenGame) },
+                onSeeAll = { onSeeAll(filter) }
             )
         }
-        if (collections.isEmpty()) {
-            Text(
-                text = stringResource(R.string.steam_store_filter_empty),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 28.dp)
-            )
-        }
+    }
+    if (home.specials.isEmpty() && home.topSellers.isEmpty() && home.newReleases.isEmpty() && home.comingSoon.isEmpty() && home.events.isEmpty()) item(key = "store_discovery_empty") {
+        Text(stringResource(R.string.steam_store_filter_empty), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(20.dp))
     }
 }
 
@@ -95,7 +99,7 @@ private fun SteamStoreEventSection(
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
             text = stringResource(R.string.steam_store_events),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 20.dp)
         )
@@ -114,13 +118,13 @@ private fun SteamStoreEventSection(
 private fun SteamStoreEventCard(event: SteamStoreEvent, onClick: () -> Unit) {
     Card(
         onClick = onClick,
-        modifier = Modifier.width(280.dp).height(190.dp),
+        modifier = Modifier.width(280.dp).heightIn(min = 180.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         )
     ) {
-        Column(Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxWidth()) {
             SteamStoreImage(
                 url = event.imageUrl,
                 modifier = Modifier.fillMaxWidth().height(116.dp),

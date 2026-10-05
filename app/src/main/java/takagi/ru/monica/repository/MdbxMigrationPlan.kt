@@ -84,7 +84,8 @@ enum class MdbxMigrationWarningKind {
     IMPLICIT_FOLDERS_CREATED,
     UNKNOWN_ENTRY_TYPES_COPIED,
     DELETED_ENTRIES_COPIED,
-    DELETED_ATTACHMENTS_IGNORED
+    DELETED_ATTACHMENTS_IGNORED,
+    REMOTE_LOCAL_COPY_ONLY
 }
 
 data class MdbxMigrationWarning(
@@ -147,8 +148,8 @@ object MdbxMigrationPlanner {
         if (source.engineTypeEnum != MdbxEngineType.KOTLIN_MDBX1) {
             block(MdbxMigrationBlockerKind.SOURCE_ENGINE_UNSUPPORTED)
         }
-        if (source.sourceTypeEnum !in setOf(MdbxSourceType.LOCAL_INTERNAL, MdbxSourceType.LOCAL_EXTERNAL)) {
-            block(MdbxMigrationBlockerKind.SOURCE_LOCATION_UNSUPPORTED)
+        if (source.sourceTypeEnum in setOf(MdbxSourceType.REMOTE_WEBDAV, MdbxSourceType.REMOTE_ONEDRIVE)) {
+            warn(MdbxMigrationWarningKind.REMOTE_LOCAL_COPY_ONLY)
         }
 
         folders.duplicateCountBy(MdbxStoredFolderEntry::folderId)
@@ -271,7 +272,7 @@ object MdbxMigrationPlanner {
         return MdbxMigrationPlan(
             sourceDatabaseId = source.id,
             sourceName = source.name,
-            suggestedTargetName = "${source.name} (MDBX2)",
+            suggestedTargetName = "${source.name} (MDBX3)",
             folders = folderPlans,
             entries = entryPlans,
             attachments = attachmentPlans,

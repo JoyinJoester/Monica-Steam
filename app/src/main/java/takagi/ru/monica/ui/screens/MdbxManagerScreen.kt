@@ -19,6 +19,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items as gridItems
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -77,6 +82,9 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.data.MdbxCapability
 import takagi.ru.monica.data.MdbxEngineType
+import takagi.ru.monica.data.MdbxSyncStatus
+import takagi.ru.monica.data.isUsable
+import androidx.compose.ui.platform.testTag
 import takagi.ru.monica.data.MdbxSourceType
 import takagi.ru.monica.data.MdbxTigaMode
 import takagi.ru.monica.data.supports
@@ -193,6 +201,11 @@ fun MdbxManagerScreen(
         }
     }
     LaunchedEffect(selectedDatabase?.id) {
+        if (selectedDatabase?.isUsable == false) {
+            val current = page as? MdbxManagerPage.DatabasePage
+            if (current != null) page = MdbxManagerPage.Detail(current.databaseId, current.source)
+            return@LaunchedEffect
+        }
         selectedDatabase?.let { database ->
             viewModel.activateMdbxDatabase(database.id)
         }
@@ -466,7 +479,7 @@ fun MdbxManagerScreen(
                     selectedDatabase?.let { db ->
                         MdbxVaultDetailPage(
                             database = db,
-                            isDefault = db.isDefault,
+                            isDefault = db.isDefault && db.isUsable,
                             conflictCount = conflictCounts[db.id] ?: 0,
                             diagnostics = vaultDiagnostics[db.id],
                             onSync = { viewModel.syncVault(db.id) },
@@ -495,11 +508,7 @@ fun MdbxManagerScreen(
                                 page = MdbxManagerPage.Maintenance(db.id, current.source)
                             },
                             onMigrate = if (
-                                db.engineTypeEnum == MdbxEngineType.KOTLIN_MDBX1 &&
-                                db.sourceTypeEnum in setOf(
-                                    MdbxSourceType.LOCAL_INTERNAL,
-                                    MdbxSourceType.LOCAL_EXTERNAL
-                                )
+                                db.engineTypeEnum == MdbxEngineType.KOTLIN_MDBX1
                             ) {
                                 { viewModel.prepareMdbx2Migration(db.id) }
                             } else {
@@ -720,7 +729,7 @@ fun MdbxManagerScreen(
                 healthRepairBiometricHelper.authenticate(
                     activity = activity,
                     title = "验证删除冲突项",
-                    subtitle = "确认由 MDBX2 删除当前内容并保留规范删除记录",
+                    subtitle = "确认由 MDBX3 删除当前内容并保留规范删除记录",
                     onSuccess = completeDeleteChoice,
                     onError = { message ->
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -842,7 +851,7 @@ private fun MdbxMigrationDialog(
             val passwordsMatch = password.isNotEmpty() && password == confirmPassword
             AlertDialog(
                 onDismissRequest = onDismiss,
-                title = { Text("迁移到 MDBX2") },
+                title = { Text("迁移到 MDBX3") },
                 text = {
                     Column(
                         modifier = Modifier
@@ -852,7 +861,7 @@ private fun MdbxMigrationDialog(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Text(
-                            "源数据库将保持原状，并创建一个独立的 MDBX2 本地数据库。",
+                            "源数据库将保持原状，并创建一个独立的 MDBX3 本地数据库。",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         HorizontalDivider()
@@ -1024,6 +1033,7 @@ private fun migrationWarningText(kind: MdbxMigrationWarningKind, count: Int): St
     MdbxMigrationWarningKind.IMPLICIT_FOLDERS_CREATED -> "$count 个条目引用的目录将自动补建"
     MdbxMigrationWarningKind.UNKNOWN_ENTRY_TYPES_COPIED -> "$count 个未知类型条目会保留原始数据"
     MdbxMigrationWarningKind.DELETED_ENTRIES_COPIED -> "$count 条删除记录会保留为删除状态"
+    MdbxMigrationWarningKind.REMOTE_LOCAL_COPY_ONLY -> "仅升级本机已有副本；原远端文件保留，新库需单独配置同步"
     MdbxMigrationWarningKind.DELETED_ATTACHMENTS_IGNORED -> "$count 个已删除附件不会复制"
 }
 
@@ -1046,11 +1056,11 @@ private fun migrationStageText(stage: MdbxViewModel.MdbxMigrationStage): String 
     MdbxViewModel.MdbxMigrationStage.FOLDERS -> "创建文件夹"
     MdbxViewModel.MdbxMigrationStage.ENTRIES -> "复制条目"
     MdbxViewModel.MdbxMigrationStage.ATTACHMENTS -> "复制附件"
-    MdbxViewModel.MdbxMigrationStage.VERIFYING -> "重开并校验 MDBX2 数据"
+    MdbxViewModel.MdbxMigrationStage.VERIFYING -> "重开并校验 MDBX3 数据"
     MdbxViewModel.MdbxMigrationStage.IMPORTING -> "更新 Monica 数据索引"
 }
 
-private enum class MdbxManagerSource {
+internal enum class MdbxManagerSource {
     LOCAL,
     WEBDAV,
     ONEDRIVE
@@ -1176,57 +1186,24 @@ private fun MdbxManagerHubPage(
     showWebDavSource: Boolean = true,
     showOneDriveSource: Boolean = true
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            Text(
-                "MDBX",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                "按存储位置管理 MDBX 数据库。数据库诊断、冲突、历史和快照都在数据库详情页继续进入。",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        item {
-            MdbxManagerEntryCard(
-                icon = Icons.Default.Storage,
-                title = "本地 MDBX 管理",
-                subtitle = "管理 Monica 私有目录和系统文件中的 .mdbx 数据库",
-                count = localCount,
-                color = MaterialTheme.colorScheme.primary,
-                onClick = onOpenLocal
-            )
-        }
-        if (showWebDavSource) {
-            item {
-                MdbxManagerEntryCard(
-                    icon = Icons.Default.CloudSync,
-                    title = "WebDAV MDBX 管理",
-                    subtitle = "绑定 WebDAV 后创建或打开远程 .mdbx，保留本地工作副本",
-                    count = webDavCount,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    onClick = onOpenWebDav
-                )
-            }
-        }
-        if (showOneDriveSource) {
-            item {
-                MdbxManagerEntryCard(
-                    icon = Icons.Default.Cloud,
-                    title = "OneDrive MDBX 管理",
-                    subtitle = "通过 Microsoft 账户创建或打开 OneDrive 上的 .mdbx 数据库",
-                    count = oneDriveCount,
-                    color = MaterialTheme.colorScheme.secondary,
-                    onClick = onOpenOneDrive
-                )
+    data class SourceAction(val title: String, val count: Int, val icon: ImageVector, val click: () -> Unit)
+    val sources = buildList {
+        add(SourceAction(stringResource(R.string.mdbx_manage_local), localCount, Icons.Default.Storage, onOpenLocal))
+        if (showWebDavSource) add(SourceAction("WebDAV", webDavCount, Icons.Default.CloudSync, onOpenWebDav))
+        if (showOneDriveSource) add(SourceAction("OneDrive", oneDriveCount, Icons.Default.Cloud, onOpenOneDrive))
+    }
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Text("MDBX 3", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(4.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            sources.forEachIndexed { index, source ->
+                Surface(onClick = source.click, color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    shape = RoundedCornerShape(topStart = if (index == 0) 24.dp else 5.dp, topEnd = if (index == 0) 24.dp else 5.dp,
+                        bottomStart = if (index == sources.lastIndex) 24.dp else 5.dp, bottomEnd = if (index == sources.lastIndex) 24.dp else 5.dp)) {
+                    ListItem(headlineContent = { Text(source.title) }, supportingContent = { Text(stringResource(R.string.mdbx_manage_count, source.count)) },
+                        leadingContent = { Icon(source.icon, null, tint = MaterialTheme.colorScheme.primary) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent))
+                }
             }
         }
     }
@@ -1298,7 +1275,7 @@ private fun MdbxManagerEntryCard(
 }
 
 @Composable
-private fun MdbxSourceManagementPage(
+internal fun MdbxSourceManagementPage(
     source: MdbxManagerSource,
     databases: List<LocalMdbxDatabase>,
     conflictCounts: Map<Long, Int>,
@@ -1307,44 +1284,30 @@ private fun MdbxSourceManagementPage(
     onOpenClick: () -> Unit,
     onOpenDatabase: (LocalMdbxDatabase) -> Unit
 ) {
-    val header = when (source) {
-        MdbxManagerSource.LOCAL -> Triple(Icons.Default.Storage, "本地数据库", "像 KeePass 本地管理一样直接列出已连接的 MDBX 数据库。")
-        MdbxManagerSource.WEBDAV -> Triple(Icons.Default.CloudSync, "WebDAV 工作副本", "绑定 WebDAV 账号后，可创建或手动打开远程 MDBX。同步会通过本地工作副本完成。")
-        MdbxManagerSource.ONEDRIVE -> Triple(Icons.Default.Cloud, "OneDrive 工作副本", "通过 Microsoft 账户在 OneDrive 上创建或打开 MDBX 数据库，保留本地工作副本用于离线访问。")
-    }
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 96.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            MdbxSectionHeader(
-                icon = header.first,
-                title = header.second,
-                subtitle = header.third,
-                color = when (source) {
-                    MdbxManagerSource.LOCAL -> MaterialTheme.colorScheme.primary
-                    MdbxManagerSource.WEBDAV -> MaterialTheme.colorScheme.tertiary
-                    MdbxManagerSource.ONEDRIVE -> MaterialTheme.colorScheme.secondary
-                }
-            )
-        }
+    val metrics = rememberDatabaseManagementTileMetrics()
+    val minimumWidth = 156.dp * LocalDensity.current.fontScale.coerceAtLeast(1f)
+    Column(Modifier.fillMaxSize()) {
+        MdbxSourceActions(onOpenClick, onCreateClick)
         if (databases.isEmpty()) {
-            item {
-                MdbxSourceEmptyCard(source = source, onCreateClick = onCreateClick, onOpenClick = onOpenClick)
-            }
+            Text(stringResource(R.string.mdbx_no_vaults), modifier = Modifier.padding(24.dp))
         } else {
-            items(items = databases, key = { it.id }) { db ->
-                MdbxVaultSmallCard(
-                    database = db,
-                    isDefault = db.isDefault,
-                    conflictCount = conflictCounts[db.id] ?: 0,
-                    diagnostics = diagnostics[db.id],
-                    onOpen = { onOpenDatabase(db) }
-                )
-            }
-            item {
-                MdbxQuickActionsCard(onCreateClick = onCreateClick, onOpenClick = onOpenClick)
+            LazyVerticalGrid(columns = GridCells.Adaptive(minimumWidth), modifier = Modifier.weight(1f).testTag("mdbx_database_grid"),
+                contentPadding = PaddingValues(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                gridItems(databases, key = { it.id }) { db ->
+                    Card(onClick = { onOpenDatabase(db) }, shape = RoundedCornerShape(24.dp), modifier = Modifier.testTag("mdbx_database_${db.id}"),
+                        colors = CardDefaults.cardColors(containerColor = if (db.isDefault && db.isUsable) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow)) {
+                        DatabaseManagementTileContent(name = db.name,
+                            status = if (!db.isUsable) stringResource(R.string.mdbx_legacy_unavailable_badge) else stringResource(mdbxManagerStatusLabel(diagnostics[db.id]?.lastSyncStatus ?: db.lastSyncStatus)),
+                            warning = !db.isUsable || (conflictCounts[db.id] ?: 0) > 0 || diagnostics[db.id]?.isReadable == false,
+                            metrics = metrics, sourceLabel = if (db.isUsable) "MDBX 3 · ${mdbxSourceLabel(db)}" else "MDBX 1") {
+                            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(sourceIcon(db), null, tint = MaterialTheme.colorScheme.primary)
+                                Spacer(Modifier.weight(1f))
+                                if (db.isDefault && db.isUsable) Icon(Icons.Default.Star, stringResource(R.string.mdbx_default_badge), Modifier.size(18.dp))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -1421,6 +1384,10 @@ private fun MdbxVaultDetailPage(
     onSetDefault: () -> Unit,
     onDelete: () -> Unit
 ) {
+    if (!database.isUsable) {
+        MdbxRetiredVaultPage(onMigrate = onMigrate, onDelete = onDelete)
+        return
+    }
     val context = LocalContext.current
     val tigaLabel = runCatching { MdbxTigaMode.valueOf(database.tigaMode).label }.getOrDefault(database.tigaMode)
     val supportsSync = database.supports(MdbxCapability.REMOTE_SYNC)
@@ -1432,7 +1399,7 @@ private fun MdbxVaultDetailPage(
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
@@ -1692,7 +1659,7 @@ private fun MdbxDetailActionList(
                 HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
             }
             onMigrate?.let { migrate ->
-                MdbxNavigationActionRow(Icons.Default.SwapHoriz, "迁移到 MDBX2", migrate)
+                MdbxNavigationActionRow(Icons.Default.SwapHoriz, "迁移到 MDBX3", migrate)
                 HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
             }
             MdbxNavigationActionRow(Icons.Default.ReportProblem, "诊断 / 维护", onShowMaintenance)
@@ -2648,7 +2615,7 @@ private fun MaintenanceActionPanel(
 
 private fun MdbxEngineType.displayName(): String = when (this) {
     MdbxEngineType.KOTLIN_MDBX1 -> "MDBX1"
-    MdbxEngineType.RUST_MDBX2 -> "MDBX2"
+    MdbxEngineType.RUST_MDBX2 -> "MDBX3"
 }
 
 @Composable
@@ -5357,4 +5324,14 @@ internal fun formatBytes(bytes: Long): String {
         unitIndex++
     }
     return String.format(Locale.US, "%.1f %s", value, units[unitIndex])
+}
+
+private fun mdbxManagerStatusLabel(status: String): Int = when (status) {
+    MdbxSyncStatus.IN_SYNC.name -> R.string.mdbx_status_synced
+    MdbxSyncStatus.SYNCING.name -> R.string.mdbx_status_syncing
+    MdbxSyncStatus.PENDING_UPLOAD.name -> R.string.mdbx_status_pending
+    MdbxSyncStatus.REMOTE_CHANGED.name -> R.string.mdbx_status_remote
+    MdbxSyncStatus.CONFLICT.name -> R.string.mdbx_status_conflict
+    MdbxSyncStatus.FAILED.name -> R.string.mdbx_status_failed
+    else -> R.string.mdbx_status_local
 }

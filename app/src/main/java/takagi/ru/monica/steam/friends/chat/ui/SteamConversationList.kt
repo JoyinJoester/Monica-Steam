@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CircularProgressIndicator
@@ -33,8 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import java.text.DateFormat
-import java.util.Date
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatSession
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatFailureReason
@@ -101,7 +106,8 @@ internal fun buildSteamConversationEntries(
             type = SteamConversationType.DIRECT,
             id = session.partnerSteamId,
             title = friend?.displayName ?: session.partnerSteamId,
-            subtitle = friend?.gameName?.takeIf(String::isNotBlank).orEmpty(),
+            subtitle = session.lastMessage.replace(Regex("\\s+"), " ").trim()
+                .ifBlank { friend?.gameName.orEmpty() },
             timestamp = session.lastMessageTimestamp,
             unreadCount = session.unreadCount,
             pinned = session.partnerSteamId in pinnedPartnerSteamIds,
@@ -223,7 +229,7 @@ internal fun SteamConversationList(
                 top = 8.dp,
                 bottom = dockClearance + 32.dp
             ),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             if (voiceState.isActive) {
                 item("active-voice-call") {
@@ -299,12 +305,12 @@ private fun SteamConversationRow(
     Surface(
         onClick = onClick,
         modifier = modifier.fillMaxWidth().heightIn(min = 72.dp),
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(12.dp),
         color = if (entry.unreadCount > 0) MaterialTheme.colorScheme.secondaryContainer
         else MaterialTheme.colorScheme.surfaceContainerLow
     ) {
         Row(
-            Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+            Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -317,13 +323,27 @@ private fun SteamConversationRow(
                     modifier = Modifier.size(50.dp)
                 )
                 else -> Surface(Modifier.size(50.dp), CircleShape, MaterialTheme.colorScheme.primaryContainer) {
-                    Box(contentAlignment = Alignment.Center) { Icon(Icons.Default.Groups, null) }
+                    Box(contentAlignment = Alignment.Center) { Icon(Icons.Default.Person, null) }
                 }
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(entry.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                if (entry.subtitle.isNotBlank()) {
-                    Text(entry.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(entry.title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    if (entry.timestamp > 0L) Text(
+                        compactConversationTime(entry.timestamp),
+                        modifier = Modifier.widthIn(max = 80.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(entry.subtitle, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    if (entry.unreadCount > 0) Badge { Text(entry.unreadCount.coerceAtMost(99).toString()) }
+                    if (entry.voiceActive) Icon(Icons.Default.Call, contentDescription = "语音通话中",
+                        tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                 }
                 if (entry.voiceActive) {
                     Text(
@@ -335,15 +355,20 @@ private fun SteamConversationRow(
                     )
                 }
             }
-            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                if (entry.timestamp > 0L) Text(
-                    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(entry.timestamp * 1_000L)),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                if (entry.unreadCount > 0) Badge { Text(entry.unreadCount.coerceAtMost(99).toString()) }
-                if (entry.voiceActive) Icon(Icons.Default.Call, contentDescription = "语音通话中", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
-            }
+
         }
     }
+}
+
+
+private fun compactConversationTime(timestampSeconds: Long): String {
+    val zone = ZoneId.systemDefault()
+    val date = Instant.ofEpochSecond(timestampSeconds).atZone(zone)
+    val today = java.time.LocalDate.now(zone)
+    val pattern = when {
+        date.toLocalDate() == today -> "HH:mm"
+        date.year == today.year -> "M/d"
+        else -> "yy/M/d"
+    }
+    return date.format(DateTimeFormatter.ofPattern(pattern))
 }

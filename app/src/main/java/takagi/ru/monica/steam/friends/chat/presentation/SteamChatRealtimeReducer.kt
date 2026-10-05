@@ -134,7 +134,10 @@ internal class SteamChatRealtimeReducer(
                 message.timestamp
             ),
             lastViewTimestamp = lastViewTimestamp,
-            unreadCount = unreadCount
+            unreadCount = unreadCount,
+            lastMessage = if (message.timestamp >= (existingSession?.lastMessageTimestamp ?: 0L)) {
+                message.body
+            } else existingSession?.lastMessage.orEmpty()
         )
         val updatedSessions = currentSessions.copy(
             sessions = (currentSessions.sessions.filterNot {

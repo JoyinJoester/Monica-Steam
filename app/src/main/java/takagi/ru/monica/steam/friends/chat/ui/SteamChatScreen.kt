@@ -9,6 +9,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -69,6 +70,7 @@ fun SteamChatScreen(
     val context = LocalContext.current
     val reduceAnimations = LocalReduceAnimations.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val drafts = rememberSteamChatDraftStore()
     val accountSourceRepository = remember(context) {
         SteamAccountSourceRepository.get(context)
     }
@@ -420,6 +422,7 @@ fun SteamChatScreen(
         currentSubpage: SteamChatSubpage?,
         targetModifier: Modifier
     ) {
+        CompositionLocalProvider(LocalSteamChatDraftStore provides drafts) {
         SteamChatSelectedContent(
             partnerSteamId = partnerSteamId,
             currentSubpage = currentSubpage,
@@ -460,6 +463,7 @@ fun SteamChatScreen(
             onOpenStoreApp = onOpenStoreApp,
             modifier = targetModifier
         )
+        }
     }
 
     AnimatedContent(

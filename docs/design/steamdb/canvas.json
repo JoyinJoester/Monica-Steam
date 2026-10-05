@@ -1,0 +1,794 @@
+{
+  "title": "Monica Steam · SteamDB 游戏数据",
+  "brief": "按需展开的紧凑数据面板。替换 ITAD；区分历史史低与近两年史低；价格跟随商店地区，缺失数据有独立状态。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "blue",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "data",
+      "name": "游戏数据 · 中国区",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "partial",
+      "name": "部分数据暂不可用",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "region",
+      "name": "各区价格 · 替换 ITAD",
+      "x": 880,
+      "y": 0
+    },
+    {
+      "id": "settings",
+      "name": "内置数据说明",
+      "x": 1320,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "bar0",
+      "x": 12,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "bar0",
+          "kind": "topAppBar",
+          "label": "Portal 2",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "icon2": "more_vert",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "entry0",
+      "x": 12,
+      "y": 100,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "entry0",
+          "kind": "listItem",
+          "label": "SteamDB 游戏数据",
+          "variant": "filled",
+          "icon": "query_stats",
+          "icon2": "expand_more",
+          "supporting": "在线人数 · Steam 史低 · 最近更新",
+          "size": 388,
+          "size2": 76,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "sheet0",
+      "x": 0,
+      "y": 202,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "sheet0",
+          "kind": "bottomSheet",
+          "label": "",
+          "variant": "filled",
+          "icon": null,
+          "size": 412,
+          "size2": 678
+        }
+      ]
+    },
+    {
+      "id": "title0",
+      "x": 24,
+      "y": 238,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "title0",
+          "kind": "text",
+          "label": "SteamDB 游戏数据",
+          "variant": "filled",
+          "icon": null,
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "refresh0",
+      "x": 352,
+      "y": 228,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "refresh0",
+          "kind": "iconButton",
+          "label": "刷新",
+          "variant": "filled",
+          "icon": "refresh",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "region0",
+      "x": 24,
+      "y": 278,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "region0",
+          "kind": "chip",
+          "label": "中国 · CNY",
+          "variant": "filled",
+          "icon": "public"
+        }
+      ]
+    },
+    {
+      "id": "price0",
+      "x": 24,
+      "y": 320,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "price0",
+          "kind": "listItem",
+          "label": "历史史低 ¥ 3",
+          "variant": "filled",
+          "icon": "history",
+          "supporting": "近两年史低 ¥ 4.20 · 出现 3 次",
+          "size": 364,
+          "size2": 88,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "online0",
+      "x": 24,
+      "y": 410,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "online0",
+          "kind": "listItem",
+          "label": "当前在线  5,420",
+          "variant": "filled",
+          "icon": "groups",
+          "supporting": "Steam 官方数据",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "peak0",
+      "x": 24,
+      "y": 480,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "peak0",
+          "kind": "listItem",
+          "label": "24 小时峰值  8,120   历史峰值  98,460",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "关注人数  624,180",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "score0",
+      "x": 24,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "score0",
+          "kind": "listItem",
+          "label": "SteamDB 算法评分  96.31%",
+          "variant": "filled",
+          "icon": "star",
+          "supporting": "所有语言 · Steam 购买评价 · 402,100 条",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "update0",
+      "x": 24,
+      "y": 620,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "update0",
+          "kind": "listItem",
+          "label": "最近更新  2026/9/30",
+          "variant": "filled",
+          "icon": "update",
+          "supporting": "SteamDB 记录的更新日期",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "source0",
+      "x": 24,
+      "y": 710,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "source0",
+          "kind": "button",
+          "label": "打开 SteamDB",
+          "variant": "tonal",
+          "icon": "open_in_new",
+          "size": 364,
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "foot0",
+      "x": 24,
+      "y": 775,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "foot0",
+          "kind": "text",
+          "label": "数据来自 Steam / SteamDB",
+          "variant": "filled",
+          "icon": null,
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "bar1",
+      "x": 452,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "bar1",
+          "kind": "topAppBar",
+          "label": "Portal 2",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "icon2": "more_vert",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "entry1",
+      "x": 452,
+      "y": 100,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "entry1",
+          "kind": "listItem",
+          "label": "SteamDB 游戏数据",
+          "variant": "filled",
+          "icon": "query_stats",
+          "icon2": "expand_more",
+          "supporting": "在线人数 · Steam 史低 · 最近更新",
+          "size": 388,
+          "size2": 76,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "sheet1",
+      "x": 440,
+      "y": 202,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "sheet1",
+          "kind": "bottomSheet",
+          "label": "",
+          "variant": "filled",
+          "icon": null,
+          "size": 412,
+          "size2": 678
+        }
+      ]
+    },
+    {
+      "id": "title1",
+      "x": 464,
+      "y": 238,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "title1",
+          "kind": "text",
+          "label": "SteamDB 游戏数据",
+          "variant": "filled",
+          "icon": null,
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "refresh1",
+      "x": 792,
+      "y": 228,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "refresh1",
+          "kind": "iconButton",
+          "label": "刷新",
+          "variant": "filled",
+          "icon": "refresh",
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "region1",
+      "x": 464,
+      "y": 278,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "region1",
+          "kind": "chip",
+          "label": "中国 · CNY",
+          "variant": "filled",
+          "icon": "public"
+        }
+      ]
+    },
+    {
+      "id": "price1",
+      "x": 464,
+      "y": 320,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "price1",
+          "kind": "listItem",
+          "label": "Steam 史低暂不可用",
+          "variant": "filled",
+          "icon": "history",
+          "supporting": "稍后重试，或打开 SteamDB 查看",
+          "size": 364,
+          "size2": 88,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "online1",
+      "x": 464,
+      "y": 410,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "online1",
+          "kind": "listItem",
+          "label": "当前在线  5,420",
+          "variant": "filled",
+          "icon": "groups",
+          "supporting": "Steam 官方数据",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "peak1",
+      "x": 464,
+      "y": 480,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "peak1",
+          "kind": "listItem",
+          "label": "24 小时峰值  —   历史峰值  —",
+          "variant": "filled",
+          "icon": null,
+          "supporting": "SteamDB 暂未返回数据",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "score1",
+      "x": 464,
+      "y": 550,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "score1",
+          "kind": "listItem",
+          "label": "SteamDB 算法评分  96.31%",
+          "variant": "filled",
+          "icon": "star",
+          "supporting": "所有语言 · Steam 购买评价 · 402,100 条",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "update1",
+      "x": 464,
+      "y": 620,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "update1",
+          "kind": "listItem",
+          "label": "最近更新  —",
+          "variant": "filled",
+          "icon": "update",
+          "supporting": "SteamDB 记录的更新日期",
+          "size": 364,
+          "size2": 68,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "source1",
+      "x": 464,
+      "y": 710,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "source1",
+          "kind": "button",
+          "label": "打开 SteamDB",
+          "variant": "tonal",
+          "icon": "open_in_new",
+          "size": 364,
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "foot1",
+      "x": 464,
+      "y": 775,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "foot1",
+          "kind": "text",
+          "label": "数据来自 Steam / SteamDB",
+          "variant": "filled",
+          "icon": null,
+          "size": 12
+        }
+      ]
+    },
+    {
+      "id": "regionbar",
+      "x": 892,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "regionbar",
+          "kind": "topAppBar",
+          "label": "各区价格",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "regionrow",
+      "x": 892,
+      "y": 112,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "regionrow",
+          "kind": "listItem",
+          "label": "南亚 · USD",
+          "variant": "filled",
+          "icon": "public",
+          "supporting": "当前 Steam 价格 $ 5.79",
+          "icon2": "expand_less",
+          "size": 388,
+          "size2": 76,
+          "corners": {
+            "tl": 20,
+            "tr": 20,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "regionprice",
+      "x": 892,
+      "y": 190,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "regionprice",
+          "kind": "listItem",
+          "label": "Steam 历史最低价 $0.54",
+          "variant": "filled",
+          "icon": "history",
+          "supporting": "−90% · 出现 15 次 · 2025/2/10",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 20,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "regionnote",
+      "x": 904,
+      "y": 305,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "regionnote",
+          "kind": "text",
+          "label": "SteamDB · USD-SASIA · 仅 Steam 商店价格",
+          "variant": "filled",
+          "icon": null,
+          "size": 13
+        }
+      ]
+    },
+    {
+      "id": "regionopen",
+      "x": 904,
+      "y": 348,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "regionopen",
+          "kind": "button",
+          "label": "打开 SteamDB",
+          "variant": "tonal",
+          "icon": "open_in_new",
+          "size": 364,
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "settingsbar",
+      "x": 1332,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "settingsbar",
+          "kind": "topAppBar",
+          "label": "SteamDB 游戏数据",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "size": 388,
+          "size2": 64
+        }
+      ]
+    },
+    {
+      "id": "settingssource",
+      "x": 1332,
+      "y": 120,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "settingssource",
+          "kind": "listItem",
+          "label": "内置游戏数据",
+          "variant": "filled",
+          "icon": "query_stats",
+          "supporting": "无需配置 API Key",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 5,
+            "br": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "settingshelp",
+      "x": 1332,
+      "y": 210,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "settingshelp",
+          "kind": "listItem",
+          "label": "史低跟随所选商店地区",
+          "variant": "filled",
+          "icon": "public",
+          "supporting": "从游戏详情或各区价格展开查看",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "settingscredit",
+      "x": 1344,
+      "y": 330,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "settingscredit",
+          "kind": "text",
+          "label": "数据来自 Steam / SteamDB",
+          "variant": "filled",
+          "icon": null,
+          "size": 14
+        }
+      ]
+    },
+    {
+      "id": "settingscredit2",
+      "x": 1344,
+      "y": 366,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "settingscredit2",
+          "kind": "text",
+          "label": "功能参考 Millennium（MIT）",
+          "variant": "filled",
+          "icon": null,
+          "size": 14
+        }
+      ]
+    }
+  ]
+}

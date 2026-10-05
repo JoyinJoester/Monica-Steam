@@ -136,7 +136,7 @@ fun MasterPasswordLockingSettingsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Surface(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
                 shape = MaterialTheme.shapes.extraLarge,
                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
             ) {
@@ -148,6 +148,7 @@ fun MasterPasswordLockingSettingsScreen(
                 )
             }
 
+            SettingsSection(title = stringResource(R.string.master_password_and_locking)) {
             SettingsItemWithSwitch(
                 icon = Icons.Default.Fingerprint,
                 title = stringResource(R.string.biometric_unlock),
@@ -200,6 +201,8 @@ fun MasterPasswordLockingSettingsScreen(
                 onClick = { showAutoLockDialog = true }
             )
 
+            }
+            SettingsSection(title = stringResource(R.string.steam_password_recovery_group)) {
             SettingsItem(
                 icon = Icons.Default.Security,
                 title = stringResource(R.string.security_questions),
@@ -214,6 +217,13 @@ fun MasterPasswordLockingSettingsScreen(
                 onClick = onResetPassword
             )
 
+            }
+            Text(
+                text = stringResource(R.string.steam_password_recovery_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
             Spacer(modifier = Modifier.height(20.dp + contentBottomPadding))
         }
     }

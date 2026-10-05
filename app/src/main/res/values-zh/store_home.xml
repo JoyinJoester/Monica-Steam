@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_home_search_hint">搜索 Steam</string>
+    <string name="store_home_discover">精选</string>
+    <string name="store_home_specials">特惠</string>
+    <string name="store_home_bestsellers">热销</string>
+    <string name="store_home_free">免费</string>
+    <string name="store_home_wishlist">愿望单</string>
+    <string name="store_home_tools">更多</string>
+    <string name="store_home_see_all">查看全部</string>
+    <string name="store_home_clear_search">清除搜索</string>
+    <string name="store_home_search_results">搜索结果</string>
+    <string name="store_home_load_failed">暂时无法加载商店</string>
+    <string name="store_home_retry_hint">检查网络后重试，仍可搜索或切换栏目。</string>
+    <string name="store_home_retry">重新加载</string>
+</resources>

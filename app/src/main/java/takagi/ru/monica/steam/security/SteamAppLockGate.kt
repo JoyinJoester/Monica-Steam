@@ -72,6 +72,21 @@ fun SteamAppLockGate(
     val reduceAnimations = LocalReduceAnimations.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val isAuthenticated by passwordViewModel.isAuthenticated.collectAsState()
+    val hasMasterPassword = securityManager.isMasterPasswordSet()
+    LaunchedEffect(isAuthenticated, hasMasterPassword, securityManager) {
+        if (isAuthenticated && hasMasterPassword) {
+            kotlinx.coroutines.delay(1_000)
+            withContext(Dispatchers.IO) {
+                try {
+                    SteamRecoveryMaintenance.run(context.applicationContext, securityManager)
+                } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                    throw cancelled
+                } catch (_: Exception) {
+                    takagi.ru.monica.steam.diagnostics.SteamDiagLogger.append("Local recovery maintenance deferred")
+                }
+            }
+        }
+    }
     val disablePasswordVerification =
         allowStartupVerificationBypass && settings.disablePasswordVerification
     var accessState by remember { mutableStateOf<MainAppAccessState?>(null) }
@@ -176,6 +191,7 @@ fun SteamAppLockGate(
                     SteamAppRecoveryRoute.LOGIN -> LoginScreen(
                         viewModel = passwordViewModel,
                         settingsViewModel = settingsViewModel,
+                        allowPasswordVerificationBypass = false,
                         onForgotPassword = if (securityManager.areSecurityQuestionsSet()) {
                             { recoveryRoute = SteamAppRecoveryRoute.SECURITY_QUESTIONS }
                         } else {

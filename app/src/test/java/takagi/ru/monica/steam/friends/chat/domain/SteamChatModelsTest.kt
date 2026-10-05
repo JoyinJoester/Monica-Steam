@@ -5,6 +5,23 @@ import org.junit.Test
 
 class SteamChatModelsTest {
     @Test
+    fun rapidLocalMessagesKeepComposeOrderWithinTheSameSecond() {
+        val first = message(100L, Int.MAX_VALUE, "first").copy(clientMessageId = "z", localCreatedAtMillis = 100_010L,
+            deliveryState = SteamChatDeliveryState.QUEUED)
+        val second = first.copy(body = "second", clientMessageId = "a", localCreatedAtMillis = 100_020L)
+        assertEquals(listOf("first", "second"), mergeSteamChatMessages(listOf(first), listOf(second)).map { it.body })
+    }
+
+    @Test
+    fun lateSendFailureCannotDowngradeAnAlreadyConfirmedRealtimeEcho() {
+        val sent = message(100L, 1, "hello").copy(clientMessageId = "client-echo")
+        val lateFailure = sent.copy(ordinal = Int.MAX_VALUE, deliveryState = SteamChatDeliveryState.FAILED_RETRYABLE)
+        val merged = mergeSteamChatMessages(listOf(sent), listOf(lateFailure))
+        assertEquals(SteamChatDeliveryState.SENT, merged.single().deliveryState)
+        assertEquals(1, merged.single().ordinal)
+    }
+
+    @Test
     fun mergingHistoryPagesRemovesDuplicatesAndKeepsChronologicalOrder() {
         val first = message(timestamp = 100L, ordinal = 1, body = "First")
         val duplicate = first.copy(body = "First updated")

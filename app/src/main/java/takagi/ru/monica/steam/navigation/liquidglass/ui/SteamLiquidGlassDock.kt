@@ -264,19 +264,13 @@ internal fun SteamLiquidGlassDock(
         }
         val selectedColor = MaterialTheme.colorScheme.primary
         val unselectedColor = MaterialTheme.colorScheme.onSurface
+        val shellBackdrop = rememberLayerBackdrop()
         val tabsBackdrop = rememberLayerBackdrop()
         val combinedBackdrop = rememberSteamCombinedBackdrop(
-            backdrop.delegate,
+            shellBackdrop,
             tabsBackdrop
         )
-        val shellHighlight = rememberGravityRotatedHighlight(
-            base = SteamLiquidGlassIndicatorHighlight,
-            extraDegrees = -45f
-        )
-        val pillHighlight = rememberGravityRotatedHighlight(
-            base = SteamLiquidGlassIndicatorHighlight,
-            extraDegrees = 90f
-        )
+        val (shellHighlight, pillHighlight) = rememberGravityRotatedHighlights(runtimeSupported)
         val dragScaleProgress = rememberIndicatorDragScaleProgress(
             isDragging = motionState.isDragging,
             reduceAnimations = reduceAnimations
@@ -288,7 +282,7 @@ internal fun SteamLiquidGlassDock(
                 .height(64.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { translationX = panelOffsetPx }
@@ -300,6 +294,7 @@ internal fun SteamLiquidGlassDock(
                             alpha = if (isDarkTheme) 0.2f else 0.1f
                         )
                     )
+                    .then(if (runtimeSupported) Modifier.layerBackdrop(shellBackdrop) else Modifier)
                     .then(
                         if (runtimeSupported) {
                             Modifier.drawBackdrop(
@@ -313,7 +308,7 @@ internal fun SteamLiquidGlassDock(
                                         refractionAmount = 24.dp.toPx()
                                     )
                                 },
-                                highlight = { shellHighlight.copy(alpha = 0.75f) },
+                                highlight = { shellHighlight().copy(alpha = 0.75f) },
                                 layerBlock = {
                                     val width = size.width.coerceAtLeast(1f)
                                     val scale = lerp(
@@ -330,7 +325,10 @@ internal fun SteamLiquidGlassDock(
                             Modifier.background(shellContainerColor, shellShape)
                         }
                     )
-                    .padding(4.dp)
+            )
+            Row(
+                modifier = Modifier.fillMaxSize().padding(4.dp)
+                    .graphicsLayer { translationX = panelOffsetPx }
                     .clearAndSetSemantics {},
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -364,19 +362,7 @@ internal fun SteamLiquidGlassDock(
                         .liquidGlassCaptureLayer()
                         .layerBackdrop(tabsBackdrop)
                         .graphicsLayer { translationX = panelOffsetPx }
-                        .drawBackdrop(
-                            backdrop = backdrop.delegate,
-                            shape = { shellShape },
-                            effects = {
-                                liquidGlassVibrancy()
-                                blur(4.dp.toPx(), 4.dp.toPx())
-                                liquidGlassLens(
-                                    refractionHeight = 24.dp.toPx(),
-                                    refractionAmount = 24.dp.toPx()
-                                )
-                            },
-                            onDrawSurface = { drawRect(shellContainerColor) }
-                        )
+
                 ) {
                     Row(
                         modifier = Modifier
@@ -427,7 +413,7 @@ internal fun SteamLiquidGlassDock(
                                             )
                                         },
                                         highlight = {
-                                            pillHighlight.copy(alpha = motionState.pressProgress)
+                                            pillHighlight().copy(alpha = motionState.pressProgress)
                                         },
                                         onDrawSurface = {
                                             val progress = motionState.pressProgress
@@ -503,12 +489,13 @@ private fun RowScope.SteamLiquidGlassDockItemVisual(
     scale: () -> Float
 ) {
     val label = tab.liquidGlassLabel()
-    val tint = contentColor()
     Column(
         modifier = Modifier
             .width(itemWidth)
             .fillMaxHeight()
             .graphicsLayer {
+                // Tint the cached glyph layer; animation must not recompose text.
+                colorFilter = ColorFilter.tint(contentColor())
                 val itemScale = scale()
                 scaleX = itemScale
                 scaleY = itemScale
@@ -520,7 +507,7 @@ private fun RowScope.SteamLiquidGlassDockItemVisual(
             Icon(
                 imageVector = tab.liquidGlassIcon(selected = false),
                 contentDescription = null,
-                tint = tint,
+                tint = Color.White,
                 modifier = Modifier
                     .size(24.dp)
                     .graphicsLayer { alpha = 1f - selectedAlpha().coerceIn(0f, 1f) }
@@ -528,7 +515,7 @@ private fun RowScope.SteamLiquidGlassDockItemVisual(
             Icon(
                 imageVector = tab.liquidGlassIcon(selected = true),
                 contentDescription = null,
-                tint = tint,
+                tint = Color.White,
                 modifier = Modifier
                     .size(24.dp)
                     .graphicsLayer { alpha = selectedAlpha().coerceIn(0f, 1f) }
@@ -536,7 +523,7 @@ private fun RowScope.SteamLiquidGlassDockItemVisual(
         }
         Text(
             text = label,
-            color = tint,
+            color = Color.White,
             fontSize = MaterialTheme.typography.labelSmall.fontSize,
             lineHeight = MaterialTheme.typography.labelMedium.lineHeight,
             fontWeight = FontWeight.Medium,
@@ -630,38 +617,39 @@ private fun rememberIndicatorDragScaleProgress(
 }
 
 @Composable
-private fun rememberGravityRotatedHighlight(
-    base: Highlight,
-    extraDegrees: Float
-): Highlight {
-    val tilt by rememberDeviceTilt()
-    val baseStyle = base.style as BloomStroke
-    val rotatedPrimary = remember(tilt, baseStyle.primaryLight, extraDegrees) {
-        val gravityX = tilt.gravityX
-        val gravityY = tilt.gravityY
-        val magnitudeSquared = gravityX * gravityX + gravityY * gravityY
-        val (lightX, lightY) = if (magnitudeSquared > GRAVITY_DIRECTION_THRESHOLD_SQUARED) {
-            val inverseMagnitude = 1f / sqrt(magnitudeSquared)
-            gravityX * inverseMagnitude to gravityY * inverseMagnitude
-        } else {
-            0f to -1f
+private fun rememberGravityRotatedHighlights(enabled: Boolean): Pair<() -> Highlight, () -> Highlight> {
+    // One subscription, and only while the GPU effects are actually in use.
+    val tilt = if (enabled) rememberDeviceTilt() else null
+    return remember(tilt) {
+        val shell = derivedStateOf {
+            val value = tilt?.value
+            rotatedDockHighlight(value?.gravityX ?: 0f, value?.gravityY ?: -1f, extraDegrees = -45f)
         }
-        val radians = extraDegrees * PI / 180.0
-        val cosine = cos(radians).toFloat()
-        val sine = sin(radians).toFloat()
-        val rotatedX = cosine * lightX - sine * lightY
-        val rotatedY = sine * lightX + cosine * lightY
-        baseStyle.primaryLight.copy(
-            position = LightPosition(
-                x = LIGHT_REFERENCE_X + rotatedX,
-                y = LIGHT_REFERENCE_Y + rotatedY,
-                z = baseStyle.primaryLight.position.z
-            )
-        )
+        val pill = derivedStateOf {
+            val value = tilt?.value
+            rotatedDockHighlight(value?.gravityX ?: 0f, value?.gravityY ?: -1f, extraDegrees = 90f)
+        }
+        // Read tilt in the draw callback, never in the Dock's composition.
+        Pair({ shell.value }, { pill.value })
     }
-    return remember(base, rotatedPrimary) {
-        base.copy(style = baseStyle.copy(primaryLight = rotatedPrimary))
-    }
+}
+
+private fun rotatedDockHighlight(gravityX: Float, gravityY: Float, extraDegrees: Float): Highlight {
+    val base = SteamLiquidGlassIndicatorHighlight
+    val style = base.style as BloomStroke
+    val magnitudeSquared = gravityX * gravityX + gravityY * gravityY
+    val inverseMagnitude = if (magnitudeSquared > GRAVITY_DIRECTION_THRESHOLD_SQUARED) 1f / sqrt(magnitudeSquared) else 0f
+    val lightX = gravityX * inverseMagnitude
+    val lightY = if (inverseMagnitude == 0f) -1f else gravityY * inverseMagnitude
+    val radians = extraDegrees * PI / 180.0
+    val cosine = cos(radians).toFloat()
+    val sine = sin(radians).toFloat()
+    val position = LightPosition(
+        x = LIGHT_REFERENCE_X + cosine * lightX - sine * lightY,
+        y = LIGHT_REFERENCE_Y + sine * lightX + cosine * lightY,
+        z = style.primaryLight.position.z
+    )
+    return base.copy(style = style.copy(primaryLight = style.primaryLight.copy(position = position)))
 }
 
 private fun BackdropEffectScope.liquidGlassVibrancy() {

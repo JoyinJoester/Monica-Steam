@@ -55,29 +55,6 @@ class SteamStoreCollectionUiGuardTest {
     }
 
     @Test
-    fun storeMovesCartFromTopPillToFabAndAddsWishlistDetailAction() {
-        val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
-        ).readText()
-        val home = store
-            .substringAfter("SteamStoreDestination.Home -> Scaffold(")
-            .substringBefore("if (showAccounts)")
-        val topBar = home
-            .substringAfter("topBar = {")
-            .substringBefore("floatingActionButton =")
-        val detail = store
-            .substringAfter("private fun SteamStoreDetailContent(")
-            .substringBefore("@Composable private fun DetailTextSection")
-
-        assertTrue(home.contains("ExtendedFloatingActionButton("))
-        assertTrue(home.contains("onClick = viewModel::openCart"))
-        assertFalse(topBar.contains("viewModel::openCart"))
-        assertFalse(topBar.contains("BadgedBox("))
-        assertTrue(detail.contains("onToggleWishlist"))
-        assertTrue(detail.contains("Icons.Default.Favorite"))
-    }
-
-    @Test
     fun storeDetailUsesOnePrimaryPurchaseActionAndSemanticErrorFeedback() {
         val store = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"

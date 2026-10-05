@@ -190,6 +190,7 @@ object SteamStoreParser {
         return category.array("items").mapNotNull { entry ->
             val item = entry as? JsonObject ?: return@mapNotNull null
             val appId = item.int("id") ?: return@mapNotNull null
+            if (appId <= 0 || item.int("type")?.let { it != 0 } == true) return@mapNotNull null
             SteamStoreItem(
                 appId = appId,
                 name = item.string("name").orEmpty(),
@@ -198,13 +199,16 @@ object SteamStoreParser {
                 headerImageUrl = item.string("header_image").orEmpty(),
                 currency = item.string("currency") ?: steamStoreCurrencyForCountry(countryCode),
                 initialPriceCents = item.int("original_price"),
-                finalPriceCents = item.int("final_price"),
+                // Unpriced hardware/preorders can carry a zero final_price.
+                finalPriceCents = item.int("final_price")?.takeUnless {
+                    it == 0 && item.int("original_price") == null && item.bool("is_free") != true
+                },
                 discountPercent = item.int("discount_percent") ?: 0,
                 windows = item.bool("windows_available") == true,
                 mac = item.bool("mac_available") == true,
                 linux = item.bool("linux_available") == true
             )
-        }
+        }.distinctBy(SteamStoreItem::appId)
     }
 
     private fun stripHtml(value: String): String = value

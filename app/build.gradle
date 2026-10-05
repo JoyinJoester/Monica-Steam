@@ -73,7 +73,7 @@ android {
 
     def previewVersionSuffix = project.findProperty('previewVersionSuffix')?.toString()?.trim()
     def appVersionCode = 18 // Intentionally fixed; releases advance through versionName.
-    def baseVersionName = previewVersionSuffix ? "1.0.308-${previewVersionSuffix}" : "1.0.308"
+    def baseVersionName = previewVersionSuffix ? "1.0.309-${previewVersionSuffix}" : "1.0.309"
     def normalizeTwoDigits = { raw ->
         def value = raw?.toString()?.trim()?.replaceAll('\\D', '')
         if (!value) {

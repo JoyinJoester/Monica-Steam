@@ -72,7 +72,7 @@ class SteamAccountSourceRepository private constructor(
             }
         }
         scope.launch {
-            databaseDao.getAllDatabases().collect { databases ->
+            databaseDao.getAvailableDatabases().collect { databases ->
                 val supported = databases.filter(LocalMdbxDatabase::supportsSteamAccounts)
                 val currentSource = _state.value.storageSource
                 _state.update { it.copy(mdbxDatabases = supported) }
@@ -272,7 +272,7 @@ class SteamAccountSourceRepository private constructor(
                 origin = SteamAccountSessionOrigin(SteamStorageSource.Local)
             ).also { handle -> accountOrigins[account.id] = handle.origin }
         }
-        val mdbxHandles = databaseDao.getAllDatabases().first()
+        val mdbxHandles = databaseDao.getAvailableDatabases().first()
             .filter(LocalMdbxDatabase::supportsSteamAccounts)
             .flatMap { database ->
                 runCatching { mdbxAccountStore.loadAccounts(database.id) }

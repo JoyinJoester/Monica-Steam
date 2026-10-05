@@ -45,6 +45,103 @@ class SteamChatRealtimeViewModelTest {
     }
 
     @Test
+    fun incomingPushDuringCacheHydrationIsNeverOverwritten() = runTest(scheduler) {
+        val realtime = FakeRealtimeGateway()
+        val cache = MemoryCache()
+        val viewModel = createViewModel(dispatcher, realtime, cache = cache)
+        val account = account(1L, ACCOUNT)
+        cache.saveThread(ACCOUNT, PARTNER, SteamChatThreadSnapshot(ACCOUNT, PARTNER,
+            listOf((incoming("old", 90L, 1) as SteamChatRealtimeEvent.Message).message), false, 0L))
+        viewModel.selectAccount(account)
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        cache.onThreadLoad = { realtime.emitNow(account, incoming("arrived while loading", 100L, 2)) }
+        viewModel.openThread(PARTNER)
+        runCurrent()
+        viewModel.setForeground(false)
+        assertEquals(listOf("old", "arrived while loading"), viewModel.uiState.value.thread?.messages?.map { it.body })
+    }
+
+    @Test
+    fun savingAnOlderSessionResponseCannotEraseIncomingPush() = runTest(scheduler) {
+        val realtime = FakeRealtimeGateway()
+        val cache = MemoryCache()
+        val viewModel = createViewModel(dispatcher, realtime, cache = cache)
+        val account = account(1L, ACCOUNT)
+        viewModel.selectAccount(account)
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        cache.onSessionSave = { realtime.emitNow(account, incoming("new preview", 100L, 1)) }
+        viewModel.refreshSessions()
+        runCurrent()
+        viewModel.setForeground(false)
+        assertEquals("new preview", viewModel.uiState.value.sessions?.sessions?.single()?.lastMessage)
+        assertEquals(1, viewModel.uiState.value.unreadCount)
+    }
+
+    @Test
+    fun losingAHealthyConnectionSwitchesToShortPollingImmediately() = runTest(scheduler) {
+        val realtime = FakeRealtimeGateway()
+        val gateway = FakeGateway()
+        val viewModel = createViewModel(dispatcher, realtime, gateway)
+        val account = account(1L, ACCOUNT)
+        viewModel.selectAccount(account)
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        realtime.emit(account, SteamChatRealtimeEvent.ConnectionChanged(true))
+        runCurrent()
+        advanceTimeBy(1_500L)
+        runCurrent()
+        val beforeDisconnect = gateway.sessionFetches
+        realtime.emit(account, SteamChatRealtimeEvent.ConnectionChanged(false))
+        runCurrent()
+        advanceTimeBy(15_000L)
+        runCurrent()
+        viewModel.setForeground(false)
+        assertEquals(beforeDisconnect + 1, gateway.sessionFetches)
+    }
+
+    @Test
+    fun disconnectedRealtimeFallsBackWithoutWaitingThreeMinutes() = runTest(scheduler) {
+        val gateway = FakeGateway()
+        val realtime = FakeRealtimeGateway()
+        val viewModel = createViewModel(dispatcher, realtime, gateway)
+        viewModel.selectAccount(account(1L, ACCOUNT))
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        val initialFetches = gateway.sessionFetches
+
+        advanceTimeBy(15_000L)
+        runCurrent()
+
+        viewModel.setForeground(false)
+        assertEquals(initialFetches + 1, gateway.sessionFetches)
+    }
+
+    @Test
+    fun returningToForegroundRefreshesMissedMessagesImmediately() = runTest(scheduler) {
+        val gateway = FakeGateway()
+        val realtime = FakeRealtimeGateway()
+        val viewModel = createViewModel(dispatcher, realtime, gateway)
+        viewModel.selectAccount(account(1L, ACCOUNT))
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        viewModel.setForeground(false)
+        val beforeResume = gateway.sessionFetches
+
+        viewModel.setForeground(true)
+        runCurrent()
+
+        viewModel.setForeground(false)
+        assertEquals(beforeResume + 1, gateway.sessionFetches)
+    }
+
+    @Test
     fun foregroundThreadUpdatesImmediatelyWithoutWaitingForPolling() = runTest(scheduler) {
         val realtime = FakeRealtimeGateway()
         val viewModel = createViewModel(dispatcher, realtime)
@@ -115,6 +212,11 @@ class SteamChatRealtimeViewModelTest {
             runCurrent()
             viewModel.setForeground(true)
             runCurrent()
+            realtime.emit(account, SteamChatRealtimeEvent.ConnectionChanged(true))
+            runCurrent()
+            advanceTimeBy(1_500L)
+            runCurrent()
+            val healthyFetches = gateway.sessionFetches
             realtime.emit(
                 account,
                 SteamChatRealtimeEvent.Typing(PARTNER, localEcho = false)
@@ -125,21 +227,22 @@ class SteamChatRealtimeViewModelTest {
             advanceTimeBy(6_000L)
             runCurrent()
             assertEquals(emptySet<String>(), viewModel.uiState.value.typingPartnerSteamIds)
-            assertEquals(1, gateway.sessionFetches)
+            assertEquals(healthyFetches, gateway.sessionFetches)
 
             advanceTimeBy(174_000L)
             runCurrent()
-            assertEquals(2, gateway.sessionFetches)
+            assertEquals(healthyFetches + 1, gateway.sessionFetches)
             viewModel.setForeground(false)
         }
 
     private fun createViewModel(
         dispatcher: CoroutineDispatcher,
         realtime: FakeRealtimeGateway,
-        gateway: FakeGateway = FakeGateway()
+        gateway: FakeGateway = FakeGateway(),
+        cache: MemoryCache = MemoryCache()
     ) = SteamChatViewModel(
         gateway = gateway,
-        cache = MemoryCache(),
+        cache = cache,
         ioDispatcher = dispatcher,
         nowMillis = { 100_000L },
         clientMessageId = { "client-1" },
@@ -189,12 +292,18 @@ private class FakeRealtimeGateway : SteamChatRealtimeGateway {
     override fun events(account: SteamAccount): Flow<SteamChatRealtimeEvent> =
         flows.getOrPut(account.id) { MutableSharedFlow(extraBufferCapacity = 16) }
 
+    fun emitNow(account: SteamAccount, event: SteamChatRealtimeEvent) {
+        check(flows.getOrPut(account.id) { MutableSharedFlow(extraBufferCapacity = 16) }.tryEmit(event))
+    }
+
     suspend fun emit(account: SteamAccount, event: SteamChatRealtimeEvent) {
         flows.getOrPut(account.id) { MutableSharedFlow(extraBufferCapacity = 16) }.emit(event)
     }
 }
 
 private class MemoryCache : SteamChatCache {
+    var onThreadLoad: () -> Unit = {}
+    var onSessionSave: () -> Unit = {}
     private val sessions = mutableMapOf<String, SteamChatSessionsSnapshot>()
     private val threads = mutableMapOf<Pair<String, String>, SteamChatThreadSnapshot>()
 
@@ -202,10 +311,18 @@ private class MemoryCache : SteamChatCache {
 
     override fun saveSessions(accountSteamId: String, snapshot: SteamChatSessionsSnapshot) {
         sessions[accountSteamId] = snapshot
+        val action = onSessionSave
+        onSessionSave = {}
+        action()
     }
 
-    override fun loadThread(accountSteamId: String, partnerSteamId: String) =
-        threads[accountSteamId to partnerSteamId]
+    override fun loadThread(accountSteamId: String, partnerSteamId: String): SteamChatThreadSnapshot? {
+        val cached = threads[accountSteamId to partnerSteamId]
+        val action = onThreadLoad
+        onThreadLoad = {}
+        action()
+        return cached
+    }
 
     override fun saveThread(
         accountSteamId: String,

@@ -509,6 +509,10 @@ class MdbxVaultStoreInstrumentedCompatibilityTest {
         private var nextId = 1L
 
         override fun getAllDatabases(): Flow<List<LocalMdbxDatabase>> = flow
+        override fun getAvailableDatabases(): Flow<List<LocalMdbxDatabase>> =
+            MutableStateFlow(databases.values.filter { it.engineType == "RUST_MDBX2" })
+        override suspend fun getAvailableDatabasesSnapshot(): List<LocalMdbxDatabase> =
+            databases.values.filter { it.engineType == "RUST_MDBX2" }
         override suspend fun getAllDatabasesSnapshot(): List<LocalMdbxDatabase> = databases.values.toList()
         override suspend fun getDatabaseById(id: Long): LocalMdbxDatabase? = databases[id]
         override suspend fun getDefaultDatabase(): LocalMdbxDatabase? = databases.values.firstOrNull { it.isDefault }

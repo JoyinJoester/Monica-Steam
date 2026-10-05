@@ -1,0 +1,10 @@
+<resources>
+    <string name="secure_startup_title">安全存储暂不可用</string>
+    <string name="secure_startup_preserved">原有数据已保留</string>
+    <string name="secure_startup_description">Android 目前无法验证此安装中的加密配置。应用已停止正常启动，没有清除配置或替换密钥。</string>
+    <string name="secure_startup_restart">先重启手机，使用系统锁屏凭据解锁，再重试。</string>
+    <string name="secure_startup_environment">如果此前恢复过应用数据、刷机或修改系统，请检查能否恢复原系统和密钥环境。仅凭此错误无法确定具体诱因。</string>
+    <string name="secure_startup_no_reset">不要清除应用数据或卸载 Monica，请保留原文件。如有 Monica 导出的备份，可先在另一安装中验证恢复。永久丢失的系统密钥无法通过重试重新找回。</string>
+    <string name="secure_startup_retry">重试</string>
+    <string name="secure_startup_diagnostic">复制诊断信息</string>
+</resources>

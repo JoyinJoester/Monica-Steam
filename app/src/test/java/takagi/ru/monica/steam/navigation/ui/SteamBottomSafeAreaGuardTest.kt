@@ -31,7 +31,7 @@ class SteamBottomSafeAreaGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt"
         ).readText()
         val store = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt"
         ).readText()
 
         assertTrue(groupList.contains("LocalSteamDockContentClearance.current"))

@@ -57,7 +57,7 @@ class SteamStoreIgnoredGamesServiceTest {
 
         assertEquals(listOf(620), home.specials.map(SteamStoreItem::appId))
         assertEquals(
-            listOf("/api/featuredcategories", "/"),
+            listOf("/api/featuredcategories", "/search/results/", "/"),
             requests.map { it.url.encodedPath }
         )
     }

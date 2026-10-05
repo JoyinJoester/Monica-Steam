@@ -24,6 +24,9 @@ import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CallEnd
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -170,6 +173,7 @@ internal fun SteamChatThread(
             friend = friend,
             partnerSteamId = state.selectedPartnerSteamId.orEmpty(),
             typing = state.typingPartnerSteamIds.contains(state.selectedPartnerSteamId),
+            connected = state.realtimeConnected,
             refreshing = state.threadRefreshing,
             onNavigateBack = onNavigateBack,
             onOpenInfo = onOpenInfo,
@@ -339,6 +343,7 @@ private fun ChatThreadHeader(
     friend: SteamFriend?,
     partnerSteamId: String,
     typing: Boolean,
+    connected: Boolean,
     refreshing: Boolean,
     onNavigateBack: () -> Unit,
     onOpenInfo: () -> Unit,
@@ -348,6 +353,7 @@ private fun ChatThreadHeader(
     onStartVoice: () -> Unit,
     onStopVoice: () -> Unit
 ) {
+    var menuOpen by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxWidth().steamWindowTopPadding()
             .padding(horizontal = 4.dp, vertical = 4.dp),
@@ -384,7 +390,8 @@ private fun ChatThreadHeader(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = if (typing) stringResource(R.string.steam_chat_typing)
+                text = if (!connected) stringResource(R.string.steam_chat_reconnecting)
+                else if (typing) stringResource(R.string.steam_chat_typing)
                 else friend?.let { it.personaState.label() }
                     ?: stringResource(R.string.steam_chat_conversation),
                 style = MaterialTheme.typography.labelMedium,
@@ -406,8 +413,18 @@ private fun ChatThreadHeader(
                 }
             )
         }
-        IconButton(onClick = onRefresh, enabled = !refreshing) {
-            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
+        Box {
+            IconButton(onClick = { menuOpen = true }) {
+                Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options))
+            }
+            DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.refresh)) },
+                    leadingIcon = { Icon(Icons.Default.Refresh, null) },
+                    enabled = !refreshing,
+                    onClick = { menuOpen = false; onRefresh() }
+                )
+            }
         }
     }
 }

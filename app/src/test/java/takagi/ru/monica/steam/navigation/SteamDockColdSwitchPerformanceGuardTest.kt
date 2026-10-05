@@ -25,23 +25,16 @@ class SteamDockColdSwitchPerformanceGuardTest {
     }
 
     @Test
-    fun dockRootPagesShareOneAnimatedContentKey() {
+    fun dockRootPagesHaveDistinctAnimatedContentKeys() {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val pageHost = source
             .substringAfter("label = \"monica_steam_page_transition\"")
             .substringBefore(") { page ->")
-        val keyPolicy = source
-            .substringAfter("private fun MonicaSteamPage.transitionContentKey(")
-            .substringBefore("private fun MonicaSteamPage.toDockTab()")
-
-        assertTrue(
-            pageHost.contains("contentKey = { page -> page.transitionContentKey(dockStyle) }")
-        )
-        assertTrue(keyPolicy.contains("MONICA_STEAM_DOCK_CONTENT_KEY"))
-        assertTrue(keyPolicy.contains("if (isDockPage(style))"))
-        assertTrue(keyPolicy.contains("else this"))
+        assertTrue(pageHost.contains("contentKey = { page -> page }"))
+        assertFalse(source.contains("MONICA_STEAM_DOCK_CONTENT_KEY"))
+        assertTrue(pageHost.contains("steamDockPageTransition("))
         assertTrue(pageHost.contains("easyNotesScreenEnter(settings.reduceAnimations)"))
         assertTrue(pageHost.contains("easyNotesScreenExit(settings.reduceAnimations)"))
     }

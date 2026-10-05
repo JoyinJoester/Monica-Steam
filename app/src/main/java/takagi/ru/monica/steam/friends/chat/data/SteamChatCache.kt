@@ -130,7 +130,7 @@ private class SharedPreferencesSteamChatStore(
     override fun get(key: String): String? = preferences.getString(key, null)
 
     override fun put(key: String, value: String) {
-        preferences.edit().putString(key, value).apply()
+        synchronized(preferences) { preferences.edit().putString(key, value).apply() }
     }
 }
 

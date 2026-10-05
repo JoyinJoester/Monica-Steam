@@ -56,12 +56,13 @@ fun SteamPageOverflowMenu(
     onRefresh: () -> Unit,
     onOpenNotifications: () -> Unit,
     onOpenSettings: () -> Unit,
-    additionalActions: List<SteamPageOverflowAction> = emptyList()
+    additionalActions: List<SteamPageOverflowAction> = emptyList(),
+    icon: ImageVector = Icons.Default.MoreVert
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { expanded = true }) {
-            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options))
+            Icon(icon, contentDescription = stringResource(R.string.more_options))
         }
         MonicaTopActionsDropdownMenu(
             expanded = expanded,

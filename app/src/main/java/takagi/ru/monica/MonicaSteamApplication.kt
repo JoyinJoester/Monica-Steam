@@ -23,6 +23,7 @@ class MonicaSteamApplication : Application() {
         SteamNetworkResolverSettingsRuntime.initialize(this)
         applicationScope.launch {
             try {
+                takagi.ru.monica.security.SecureStorageStartup.awaitReadyForMaintenance(this@MonicaSteamApplication)
                 SteamChatBackground.syncService(this@MonicaSteamApplication)
             } catch (cancelled: CancellationException) {
                 throw cancelled

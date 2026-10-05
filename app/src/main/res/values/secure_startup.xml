@@ -1,0 +1,10 @@
+<resources>
+    <string name="secure_startup_title">Secure storage unavailable</string>
+    <string name="secure_startup_preserved">Existing data preserved</string>
+    <string name="secure_startup_description">Android cannot currently verify this installation’s encrypted settings. Normal startup has been stopped. Monica has not cleared the settings or replaced the keys.</string>
+    <string name="secure_startup_restart">Restart the phone, unlock it with the system screen-lock credential, then retry.</string>
+    <string name="secure_startup_environment">If this began after restoring app data, flashing a ROM or modifying the system, check whether the original system and key environment can be restored. This error alone does not establish the cause.</string>
+    <string name="secure_startup_no_reset">Do not clear app data or uninstall Monica. Keep the original files. If you have a Monica-exported backup, verify it in another installation. A permanently lost system key cannot be recreated by retrying.</string>
+    <string name="secure_startup_retry">Retry</string>
+    <string name="secure_startup_diagnostic">Copy diagnostic information</string>
+</resources>

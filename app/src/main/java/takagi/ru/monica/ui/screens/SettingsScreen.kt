@@ -10,6 +10,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -2473,6 +2477,33 @@ private fun PasswordBatchTransferProgressCard(
     }
 }
 
+private val LocalSettingsSectionContent = compositionLocalOf { false }
+
+internal data class SettingsSectionCornerRadii(
+    val top: Int,
+    val bottom: Int
+)
+
+internal fun settingsSectionCornerRadii(
+    index: Int,
+    totalItems: Int
+): SettingsSectionCornerRadii = when {
+    totalItems <= 1 -> SettingsSectionCornerRadii(top = 24, bottom = 24)
+    index == 0 -> SettingsSectionCornerRadii(top = 24, bottom = 4)
+    index == totalItems - 1 -> SettingsSectionCornerRadii(top = 4, bottom = 24)
+    else -> SettingsSectionCornerRadii(top = 4, bottom = 4)
+}
+
+internal fun settingsSectionItemShape(index: Int, totalItems: Int): RoundedCornerShape {
+    val radii = settingsSectionCornerRadii(index, totalItems)
+    return RoundedCornerShape(
+        topStart = radii.top.dp,
+        topEnd = radii.top.dp,
+        bottomStart = radii.bottom.dp,
+        bottomEnd = radii.bottom.dp
+    )
+}
+
 @Composable
 fun SettingsSection(
     title: String,
@@ -2485,7 +2516,12 @@ fun SettingsSection(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp)
         )
-        content()
+        CompositionLocalProvider(LocalSettingsSectionContent provides true) {
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp).clip(RoundedCornerShape(24.dp)),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) { content() }
+        }
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
@@ -2501,13 +2537,15 @@ fun SettingsItem(
     trailingContent: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
+    val isInSection = LocalSettingsSectionContent.current
     Card(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+            .padding(horizontal = if (isInSection) 0.dp else 12.dp, vertical = if (isInSection) 0.dp else 4.dp),
+        shape = if (isInSection) RoundedCornerShape(4.dp) else RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         )
     ) {
         Row(
@@ -2537,6 +2575,7 @@ fun SettingsItem(
                 )
             }
             
+            Spacer(modifier = Modifier.width(12.dp))
             if (trailingContent != null) {
                 trailingContent()
             } else {
@@ -2563,13 +2602,15 @@ fun SettingsItemWithSwitch(
     onCheckedChange: (Boolean) -> Unit,
     iconTint: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary
 ) {
+    val isInSection = LocalSettingsSectionContent.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+            .padding(horizontal = if (isInSection) 0.dp else 12.dp, vertical = if (isInSection) 0.dp else 4.dp),
+        shape = if (isInSection) RoundedCornerShape(4.dp) else RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (enabled) {
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                MaterialTheme.colorScheme.surfaceContainer
             } else {
                 MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.1f)
             }
@@ -2578,6 +2619,7 @@ fun SettingsItemWithSwitch(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -2613,8 +2655,9 @@ fun SettingsItemWithSwitch(
             
             Switch(
                 checked = checked,
-                onCheckedChange = onCheckedChange,
-                enabled = enabled
+                onCheckedChange = null,
+                enabled = enabled,
+                modifier = Modifier.padding(start = 12.dp)
             )
         }
     }

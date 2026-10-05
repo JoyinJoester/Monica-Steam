@@ -2353,10 +2353,11 @@ class PasswordViewModel(
         restoreAuthenticatedUiState()
     }
     
-    fun setMasterPassword(password: String) {
-        securityManager.setMasterPassword(password)
+    fun setMasterPassword(password: String): Boolean {
+        if (!securityManager.setMasterPassword(password)) return false
         _isAuthenticated.value = true
         securityManager.markVaultAuthenticated()
+        return true
     }
     
     fun isMasterPasswordSet(): Boolean {
@@ -3722,7 +3723,7 @@ class PasswordViewModel(
             }
             
             // 4. 设置新密码
-            securityManager.setMasterPassword(newPassword)
+            if (!securityManager.setMasterPassword(newPassword)) return@launch
             
             // 5. 使用新密码重新加密所有数据
             decryptedPasswords.forEach { entry ->

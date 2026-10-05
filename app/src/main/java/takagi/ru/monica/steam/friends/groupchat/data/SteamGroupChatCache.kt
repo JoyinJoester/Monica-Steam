@@ -66,7 +66,9 @@ class SteamGroupChatPreferencesCache(context: Context) : SteamGroupChatCache {
 
     private fun save(key: String, value: String) {
         runCatching {
-            preferences.edit().putString(key, security.encryptDataLegacyCompat(value)).apply()
+            synchronized(preferences) {
+                preferences.edit().putString(key, security.encryptDataLegacyCompat(value)).apply()
+            }
         }
     }
 

@@ -69,7 +69,7 @@ fun MdbxWebDavOpenScreen(
     var unlockMethod by remember { mutableStateOf(MdbxUnlockMethod.MASTER_PASSWORD) }
     var keyFile by remember { mutableStateOf<MdbxKeyFileSelection?>(null) }
     var keyFileError by remember { mutableStateOf<String?>(null) }
-    var selectedEngine by remember { mutableStateOf(MdbxEngineType.KOTLIN_MDBX1) }
+    var selectedEngine by remember { mutableStateOf(MdbxEngineType.RUST_MDBX2) }
     var submitted by remember { mutableStateOf(false) }
 
     val passwordRequired = selectedEngine == MdbxEngineType.RUST_MDBX2 ||
@@ -416,6 +416,7 @@ fun MdbxWebDavOpenScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     MdbxEngineTypeSection(
+                    allowLegacyImport = true,
                         selectedEngine = selectedEngine,
                         onEngineChange = { selectedEngine = it },
                         remote = true

@@ -79,10 +79,10 @@ internal fun SteamChatComposer(
     onOpenStoreApp: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    var text by rememberSaveable(draftKey) { mutableStateOf("") }
-    var pendingGameShare by rememberSaveable(draftKey) {
-        mutableStateOf<SteamStoreGameShare?>(null)
-    }
+    val drafts = LocalSteamChatDraftStore.current ?: rememberSteamChatDraftStore()
+    val draft = drafts[draftKey]
+    val text = draft.text
+    val pendingGameShare = draft.gameShare
     var showRichPicker by rememberSaveable(draftKey) { mutableStateOf(false) }
     var showAttachmentPicker by rememberSaveable(draftKey) { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -93,14 +93,13 @@ internal fun SteamChatComposer(
         val body = pendingGameShare?.messageBody(text).orEmpty().ifBlank { text.trim() }
         if (body.isNotEmpty()) {
             onSend(body)
-            text = ""
-            pendingGameShare = null
+            drafts[draftKey] = SteamChatDraft()
         }
     }
 
     LaunchedEffect(draftKey, initialGameShare) {
         val share = initialGameShare ?: return@LaunchedEffect
-        pendingGameShare = share
+        drafts[draftKey] = drafts[draftKey].copy(gameShare = share)
         onConsumeInitialGameShare()
     }
 
@@ -163,7 +162,7 @@ internal fun SteamChatComposer(
                     SteamChatGameShareDraftPreview(
                         share = share,
                         onOpenStoreApp = onOpenStoreApp,
-                        onRemove = { pendingGameShare = null },
+                        onRemove = { drafts[draftKey] = draft.copy(gameShare = null) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp, vertical = 6.dp)
@@ -171,7 +170,7 @@ internal fun SteamChatComposer(
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.Bottom
             ) {
                 IconButton(
@@ -181,7 +180,7 @@ internal fun SteamChatComposer(
                         if (showAttachmentPicker) focusManager.clearFocus(force = true)
                     },
                     enabled = !richMediaState.attachmentPreparing && !richMediaState.attachmentUploading,
-                    modifier = Modifier.padding(end = 8.dp, bottom = 2.dp).size(48.dp)
+                    modifier = Modifier.padding(end = 2.dp, bottom = 2.dp).size(48.dp)
                 ) {
                     Icon(
                         Icons.Default.AttachFile,
@@ -201,7 +200,7 @@ internal fun SteamChatComposer(
                 }
                 OutlinedTextField(
                     value = text,
-                    onValueChange = { text = it },
+                    onValueChange = { drafts[draftKey] = draft.copy(text = it) },
                     modifier = Modifier
                         .weight(1f)
                         .heightIn(min = 52.dp, max = 144.dp)
@@ -249,7 +248,7 @@ internal fun SteamChatComposer(
                 FilledIconButton(
                     onClick = send,
                     enabled = canSend,
-                    modifier = Modifier.padding(start = 8.dp, bottom = 2.dp).size(48.dp),
+                    modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).size(48.dp),
                     shape = CircleShape,
                     colors = IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
@@ -312,13 +311,11 @@ internal fun SteamChatComposer(
                 SteamChatRichMediaPickerPanel(
                     state = richMediaState,
                     onDismiss = { showRichPicker = false },
-                    onEmojiSelected = { emoji -> text += emoji },
+                    onEmojiSelected = { emoji -> drafts[draftKey] = draft.copy(text = text + emoji) },
                     onEmoticonSelected = { emoticon ->
-                        text += if (text.isBlank() || text.endsWith(' ')) {
-                            emoticon.messageCode
-                        } else {
-                            " ${emoticon.messageCode}"
-                        }
+                        drafts[draftKey] = draft.copy(text = text +
+                            if (text.isBlank() || text.endsWith(' ')) emoticon.messageCode
+                            else " ${emoticon.messageCode}")
                     },
                     onStickerSelected = { sticker ->
                         onSend(sticker.messageCode)

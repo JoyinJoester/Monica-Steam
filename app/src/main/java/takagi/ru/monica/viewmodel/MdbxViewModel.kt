@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ import takagi.ru.monica.data.MdbxCapability
 import takagi.ru.monica.data.MdbxRemoteSource
 import takagi.ru.monica.data.MdbxRemoteSourceDao
 import takagi.ru.monica.data.MdbxEngineType
+import takagi.ru.monica.data.isUsable
 import takagi.ru.monica.data.MdbxSourceType
 import takagi.ru.monica.data.MdbxStorageLocation
 import takagi.ru.monica.data.MdbxSyncStatus
@@ -200,7 +202,16 @@ class MdbxViewModel(
     val allDatabasesLoaded: StateFlow<Boolean> = _allDatabasesLoaded.asStateFlow()
 
     val allDatabases: StateFlow<List<LocalMdbxDatabase>> = databaseDao.getAllDatabases()
-        .onEach { _allDatabasesLoaded.value = true }
+        .onEach { databases ->
+            _allDatabasesLoaded.value = true
+            _activeMdbxDatabaseId.value?.let { id ->
+                if (databases.none { it.id == id && it.isUsable }) forgetActiveMdbxDatabaseIf(id)
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val availableDatabases: StateFlow<List<LocalMdbxDatabase>> = allDatabases
+        .map { databases -> databases.filter { it.isUsable } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     init {
@@ -280,14 +291,19 @@ class MdbxViewModel(
     )
 
     fun activateMdbxDatabase(databaseId: Long) {
-        if (_activeMdbxDatabaseId.value != databaseId) {
-            _activeMdbxDatabaseId.value = databaseId
-            activeVaultPrefs.edit().putLong(ACTIVE_VAULT_ID_KEY, databaseId).apply()
+        viewModelScope.launch {
+            val database = withContext(Dispatchers.IO) { databaseDao.getDatabaseById(databaseId) }
+            if (database?.isUsable != true) {
+                forgetActiveMdbxDatabaseIf(databaseId)
+                return@launch
+            }
+            if (_activeMdbxDatabaseId.value != databaseId) {
+                _activeMdbxDatabaseId.value = databaseId
+                activeVaultPrefs.edit().putLong(ACTIVE_VAULT_ID_KEY, databaseId).apply()
+            }
+            withContext(Dispatchers.IO) { databaseDao.updateLastAccessedTime(databaseId) }
+            preloadActiveMdbxDatabase(databaseId)
         }
-        viewModelScope.launch(Dispatchers.IO) {
-            databaseDao.updateLastAccessedTime(databaseId)
-        }
-        preloadActiveMdbxDatabase(databaseId)
     }
 
     fun forgetActiveMdbxDatabaseIf(databaseId: Long) {
@@ -324,6 +340,7 @@ class MdbxViewModel(
                 val diagnostic = withContext(Dispatchers.IO) {
                     val database = databaseDao.getDatabaseById(databaseId)
                         ?: return@withContext null
+                    if (!database.isUsable) return@withContext null
                     if (database.engineTypeEnum == MdbxEngineType.RUST_MDBX2) {
                         importEntriesFromVault(database.id)
                     }
@@ -436,6 +453,10 @@ class MdbxViewModel(
         customDirectoryUri: Uri? = null,
         engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2
     ) {
+        if (engineType != MdbxEngineType.RUST_MDBX2) {
+            _operationState.value = OperationState.Error(context.getString(R.string.mdbx_legacy_creation_disabled))
+            return
+        }
         viewModelScope.launch {
             _operationState.value = OperationState.Loading("Creating local MDBX vault...")
             val requestedName = name.trim()
@@ -486,12 +507,7 @@ class MdbxViewModel(
                     }
                     val localVaultFile = customDirVault?.localCopy ?: run {
                         when (engineType) {
-                            MdbxEngineType.KOTLIN_MDBX1 -> legacyVaultStore.createInitializedVaultFile(
-                                displayName = displayName,
-                                tigaMode = tigaMode.name,
-                                unlockMethod = unlockMethod,
-                                credential = credential
-                            )
+                            MdbxEngineType.KOTLIN_MDBX1 -> error(context.getString(R.string.mdbx_legacy_creation_disabled))
                             MdbxEngineType.RUST_MDBX2 -> mdbx2Repository.createInitializedVaultFile(
                                 tigaMode = tigaMode,
                                 credential = credential
@@ -579,8 +595,11 @@ class MdbxViewModel(
     }
 
     fun prepareMdbx2Migration(databaseId: Long) {
+        if (_migrationState.value is MdbxMigrationState.Running || _migrationState.value is MdbxMigrationState.Preparing) return
+        // Clear the previous result before launching, so retry observers cannot
+        // mistake the old failure for the result of the new attempt.
+        _migrationState.value = MdbxMigrationState.Preparing(databaseId)
         viewModelScope.launch {
-            _migrationState.value = MdbxMigrationState.Preparing(databaseId)
             var sensitivePlan: MdbxMigrationPlan? = null
             try {
                 val currentPlan = withContext(Dispatchers.IO) { buildMigrationPlan(databaseId) }
@@ -603,6 +622,7 @@ class MdbxViewModel(
         targetPassword: String
     ) {
         if (_migrationState.value is MdbxMigrationState.Running) return
+        _migrationState.value = MdbxMigrationState.Running(sourceDatabaseId, targetName.trim(), MdbxMigrationStage.PREFLIGHT, 0, 1)
         viewModelScope.launch {
             var sensitivePlan: MdbxMigrationPlan? = null
             var preview: MdbxMigrationPreview? = null
@@ -739,12 +759,23 @@ class MdbxViewModel(
     private suspend fun buildMigrationPlan(databaseId: Long): MdbxMigrationPlan {
         val source = databaseDao.getDatabaseById(databaseId)
             ?: throw IllegalStateException("Source vault not found")
-        return MdbxMigrationPlanner.build(
+        check(source.engineTypeEnum == MdbxEngineType.KOTLIN_MDBX1) { "Only MDBX1 vaults require this upgrade" }
+        val fingerprint = fingerprintSourceVault(source)
+            ?: error(context.getString(R.string.mdbx_legacy_local_copy_required))
+        // Deliberate read-only access: ordinary repository routing rejects MDBX1.
+        val plan = MdbxMigrationPlanner.build(
             source = source,
-            folders = vaultStore.listFolders(databaseId),
-            entries = vaultStore.readStoredEntries(databaseId),
-            attachments = vaultStore.readStoredAttachments(databaseId)
+            folders = legacyVaultStore.listFolders(databaseId),
+            entries = legacyVaultStore.readStoredEntries(databaseId),
+            attachments = legacyVaultStore.readStoredAttachments(databaseId)
         )
+        try {
+            checkSourceVaultUnchanged(source, fingerprint)
+            return plan
+        } catch (error: Throwable) {
+            plan.clearAttachmentBlobs()
+            throw error
+        }
     }
 
     private suspend fun createMdbx2MigrationTarget(
@@ -924,7 +955,7 @@ class MdbxViewModel(
                         )
                     ).also { databaseId ->
                         vaultStore.flushWorkingCopy(databaseId)
-                        importEntriesFromVault(databaseId)
+                        if (databaseDao.getDatabaseById(databaseId)?.isUsable == true) importEntriesFromVault(databaseId)
                     }
                 }
 
@@ -950,6 +981,10 @@ class MdbxViewModel(
         description: String?,
         engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2
     ) {
+        if (engineType != MdbxEngineType.RUST_MDBX2) {
+            _operationState.value = OperationState.Error(context.getString(R.string.mdbx_legacy_creation_disabled))
+            return
+        }
         viewModelScope.launch {
             _operationState.value = OperationState.Loading("Creating MDBX vault on WebDAV...")
 
@@ -1071,7 +1106,7 @@ class MdbxViewModel(
         webDavPassword: String,
         remoteFilePath: String,
         description: String?,
-        engineType: MdbxEngineType = MdbxEngineType.KOTLIN_MDBX1
+        engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2
     ) {
         val displayName = remoteVaultDisplayName(remoteFilePath)
         viewModelScope.launch {
@@ -1236,6 +1271,10 @@ class MdbxViewModel(
         description: String?,
         engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2
     ) {
+        if (engineType != MdbxEngineType.RUST_MDBX2) {
+            _operationState.value = OperationState.Error(context.getString(R.string.mdbx_legacy_creation_disabled))
+            return
+        }
         viewModelScope.launch {
             _operationState.value = OperationState.Loading("Creating MDBX vault on OneDrive...")
 
@@ -1349,7 +1388,7 @@ class MdbxViewModel(
         accountLabel: String,
         remoteFilePath: String,
         description: String?,
-        engineType: MdbxEngineType = MdbxEngineType.KOTLIN_MDBX1
+        engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2
     ) {
         val displayName = remoteVaultDisplayName(remoteFilePath)
         viewModelScope.launch {
@@ -1767,6 +1806,7 @@ class MdbxViewModel(
             val database = withContext(Dispatchers.IO) {
                 databaseDao.getDatabaseById(databaseId)
             }
+            if (database?.isUsable != true) return@launch
             if (database != null && !database.supports(MdbxCapability.REMOTE_SYNC)) {
                 refreshSingleVaultState(databaseId)
                 return@launch
@@ -1864,6 +1904,7 @@ class MdbxViewModel(
             )
             return SyncTaskAwaitResult.Skipped("missing_vault")
         }
+        if (!database.isUsable) return SyncTaskAwaitResult.Skipped("mdbx1_upgrade_required")
 
         val detail = "operation=$operationName source=${database.sourceType} status=${database.lastSyncStatus} throttleMs=$throttleMs"
         SyncDiagnostics.queued(taskId, targetLog, triggerLog, detail)
@@ -2393,6 +2434,7 @@ class MdbxViewModel(
     }
 
     private suspend fun refreshSingleVaultState(databaseId: Long) = withContext(Dispatchers.IO) {
+        if (databaseDao.getDatabaseById(databaseId)?.isUsable != true) return@withContext
         val diagnostic = vaultStore.getVaultDiagnostics(databaseId)
         applyVaultDiagnostic(databaseId, diagnostic)
     }
@@ -2428,7 +2470,8 @@ class MdbxViewModel(
     ): Boolean {
         if (database.supports(capability)) return true
         _operationState.value = OperationState.Error(
-            "$action is not available for ${database.engineTypeEnum.name} vaults"
+            if (!database.isUsable) context.getString(R.string.mdbx_legacy_unavailable_description)
+            else "$action is not available for ${database.engineTypeEnum.name} vaults"
         )
         return false
     }
@@ -2471,7 +2514,7 @@ class MdbxViewModel(
             val removedIds = withContext(Dispatchers.IO) {
                 databaseDao.getAllDatabasesSnapshot()
                     .filter { database ->
-                        val shouldPrune =
+                        val shouldPrune = database.isUsable &&
                             database.sourceTypeEnum != MdbxSourceType.REMOTE_WEBDAV &&
                                 !database.hasAccessibleLocalSource()
                         if (shouldPrune) {
@@ -2521,7 +2564,7 @@ class MdbxViewModel(
     fun refreshVaultDiagnostics(databases: List<LocalMdbxDatabase>) {
         viewModelScope.launch {
             val diagnostics = withContext(Dispatchers.IO) {
-                databases.associate { database ->
+                databases.filter { it.isUsable }.associate { database ->
                     database.id to vaultStore.getVaultDiagnostics(database.id)
                 }
             }
@@ -3124,6 +3167,11 @@ class MdbxViewModel(
     fun setAsDefault(databaseId: Long) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+                val database = databaseDao.getDatabaseById(databaseId)
+                if (database?.isUsable != true) {
+                    _operationState.value = OperationState.Error(context.getString(R.string.mdbx_legacy_unavailable_description))
+                    return@withContext
+                }
                 databaseDao.clearDefaultDatabase()
                 databaseDao.setDefaultDatabase(databaseId)
             }
@@ -3246,12 +3294,7 @@ class MdbxViewModel(
         }
 
         val localVaultFile = when (engineType) {
-            MdbxEngineType.KOTLIN_MDBX1 -> legacyVaultStore.createInitializedVaultFile(
-                displayName = displayName,
-                tigaMode = tigaMode,
-                unlockMethod = credential.unlockMethod,
-                credential = credential
-            )
+            MdbxEngineType.KOTLIN_MDBX1 -> error(context.getString(R.string.mdbx_legacy_creation_disabled))
             MdbxEngineType.RUST_MDBX2 -> mdbx2Repository.createInitializedVaultFile(
                 tigaMode = MdbxTigaMode.fromName(tigaMode),
                 credential = credential

@@ -1,0 +1,1592 @@
+{
+  "title": "Monica Steam · 紧凑商店主页",
+  "brief": "按用户反馈：Gmail 式一体搜索顶栏，只保留一行栏目与筛选；取消标题行、工具行和大幅首卡；两张特惠封面与紧凑连续热销列表。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "blue",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "discovery",
+      "name": "商店 · 紧凑精选",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "browse",
+      "name": "商店 · 热销",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "offline",
+      "name": "商店 · 离线",
+      "x": 880,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "discovery-search",
+      "x": 12,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "discovery-search",
+          "kind": "searchBar",
+          "label": "搜索 Steam",
+          "icon": "menu",
+          "variant": "filled",
+          "size": 388,
+          "size2": 56,
+          "icon2": "account_circle"
+        }
+      ]
+    },
+    {
+      "id": "discovery-tabs",
+      "x": 12,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "discovery-tabs",
+          "kind": "tabs",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 330,
+          "size2": 40,
+          "selected": 0,
+          "tabs": [
+            {
+              "label": "精选",
+              "icon": null
+            },
+            {
+              "label": "热销",
+              "icon": null
+            },
+            {
+              "label": "特惠",
+              "icon": null
+            },
+            {
+              "label": "新品",
+              "icon": null
+            },
+            {
+              "label": "免费",
+              "icon": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "discovery-filter",
+      "x": 352,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "discovery-filter",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "tune",
+          "variant": "text",
+          "size2": 40
+        }
+      ]
+    },
+    {
+      "id": "discovery-nav",
+      "x": 0,
+      "y": 804,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "discovery-nav",
+          "kind": "bottomNav",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 412,
+          "tabs": [
+            {
+              "label": "商店",
+              "icon": "storefront"
+            },
+            {
+              "label": "游戏库",
+              "icon": "sports_esports"
+            },
+            {
+              "label": "聊天",
+              "icon": "chat_bubble"
+            },
+            {
+              "label": "令牌",
+              "icon": "shield"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "browse-search",
+      "x": 452,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "browse-search",
+          "kind": "searchBar",
+          "label": "搜索 Steam",
+          "icon": "menu",
+          "variant": "filled",
+          "size": 388,
+          "size2": 56,
+          "icon2": "account_circle"
+        }
+      ]
+    },
+    {
+      "id": "browse-tabs",
+      "x": 452,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "browse-tabs",
+          "kind": "tabs",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 330,
+          "size2": 40,
+          "selected": 1,
+          "tabs": [
+            {
+              "label": "精选",
+              "icon": null
+            },
+            {
+              "label": "热销",
+              "icon": null
+            },
+            {
+              "label": "特惠",
+              "icon": null
+            },
+            {
+              "label": "新品",
+              "icon": null
+            },
+            {
+              "label": "免费",
+              "icon": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "browse-filter",
+      "x": 792,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "browse-filter",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "tune",
+          "variant": "text",
+          "size2": 40
+        }
+      ]
+    },
+    {
+      "id": "browse-nav",
+      "x": 440,
+      "y": 804,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "browse-nav",
+          "kind": "bottomNav",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 412,
+          "tabs": [
+            {
+              "label": "商店",
+              "icon": "storefront"
+            },
+            {
+              "label": "游戏库",
+              "icon": "sports_esports"
+            },
+            {
+              "label": "聊天",
+              "icon": "chat_bubble"
+            },
+            {
+              "label": "令牌",
+              "icon": "shield"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline-search",
+      "x": 892,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-search",
+          "kind": "searchBar",
+          "label": "搜索 Steam",
+          "icon": "menu",
+          "variant": "filled",
+          "size": 388,
+          "size2": 56,
+          "icon2": "account_circle"
+        }
+      ]
+    },
+    {
+      "id": "offline-tabs",
+      "x": 892,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-tabs",
+          "kind": "tabs",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 330,
+          "size2": 40,
+          "selected": 0,
+          "tabs": [
+            {
+              "label": "精选",
+              "icon": null
+            },
+            {
+              "label": "热销",
+              "icon": null
+            },
+            {
+              "label": "特惠",
+              "icon": null
+            },
+            {
+              "label": "新品",
+              "icon": null
+            },
+            {
+              "label": "免费",
+              "icon": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline-filter",
+      "x": 1232,
+      "y": 94,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-filter",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "tune",
+          "variant": "text",
+          "size2": 40
+        }
+      ]
+    },
+    {
+      "id": "offline-nav",
+      "x": 880,
+      "y": 804,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-nav",
+          "kind": "bottomNav",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 412,
+          "tabs": [
+            {
+              "label": "商店",
+              "icon": "storefront"
+            },
+            {
+              "label": "游戏库",
+              "icon": "sports_esports"
+            },
+            {
+              "label": "聊天",
+              "icon": "chat_bubble"
+            },
+            {
+              "label": "令牌",
+              "icon": "shield"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deals",
+      "x": 16,
+      "y": 150,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deals",
+          "kind": "text",
+          "label": "特别优惠",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "deals-more",
+      "x": 304,
+      "y": 144,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deals-more",
+          "kind": "button",
+          "label": "全部",
+          "icon": null,
+          "variant": "text",
+          "size2": 32
+        }
+      ]
+    },
+    {
+      "id": "deal0-image",
+      "x": 12,
+      "y": 184,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deal0-image",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 190,
+          "size2": 89,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1304930/65fbdba4ad0f1a7ed7a362a086c87042fa40fadc/header_alt_assets_3.jpg?t=1784123708",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 0,
+            "br": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "deal0-text",
+      "x": 12,
+      "y": 273,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deal0-text",
+          "kind": "listItem",
+          "label": "The Outlast Trials",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 13.6   −90%",
+          "size": 190,
+          "size2": 72,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 0,
+            "tr": 0,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "deal1-image",
+      "x": 210,
+      "y": 184,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deal1-image",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 190,
+          "size2": 89,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/4e88035f3a75e69e0ef2005fc611a7fafcb227e1/header_schinese.jpg?t=1784714077",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 0,
+            "br": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "deal1-text",
+      "x": 210,
+      "y": 273,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "deal1-text",
+          "kind": "listItem",
+          "label": "赛博朋克 2077",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 89.4   −70%",
+          "size": 190,
+          "size2": 72,
+          "fill": "surfaceContainerLow",
+          "icon2": null,
+          "corners": {
+            "tl": 0,
+            "tr": 0,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "tops",
+      "x": 16,
+      "y": 364,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "tops",
+          "kind": "text",
+          "label": "热销商品",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "tops-more",
+      "x": 304,
+      "y": 358,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "tops-more",
+          "kind": "button",
+          "label": "全部",
+          "icon": null,
+          "variant": "text",
+          "size2": 32
+        }
+      ]
+    },
+    {
+      "id": "home-rank-0-bg",
+      "x": 12,
+      "y": 398,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-0-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-0-text",
+      "x": 118,
+      "y": 400,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-0-row",
+          "kind": "listItem",
+          "label": "The Outlast Trials",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 13.6   −90%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-0-img",
+      "x": 24,
+      "y": 414,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-0-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1304930/65fbdba4ad0f1a7ed7a362a086c87042fa40fadc/header_alt_assets_3.jpg?t=1784123708",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-1-bg",
+      "x": 12,
+      "y": 476,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-1-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-1-text",
+      "x": 118,
+      "y": 478,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-1-row",
+          "kind": "listItem",
+          "label": "赛博朋克 2077",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 89.4   −70%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-1-img",
+      "x": 24,
+      "y": 492,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-1-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/4e88035f3a75e69e0ef2005fc611a7fafcb227e1/header_schinese.jpg?t=1784714077",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-2-bg",
+      "x": 12,
+      "y": 554,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-2-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-2-text",
+      "x": 118,
+      "y": 556,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-2-row",
+          "kind": "listItem",
+          "label": "渔力全开",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 20.46   −38%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "home-rank-2-img",
+      "x": 24,
+      "y": 570,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "home-rank-2-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4001890/45c4ddff4901e32c4b8b643e1b97d0d01898d299/header.jpg?t=1788788717",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "new",
+      "x": 16,
+      "y": 650,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new",
+          "kind": "text",
+          "label": "新品",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "new-more",
+      "x": 304,
+      "y": 644,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new-more",
+          "kind": "button",
+          "label": "全部",
+          "icon": null,
+          "variant": "text",
+          "size2": 32
+        }
+      ]
+    },
+    {
+      "id": "new-0-bg",
+      "x": 12,
+      "y": 684,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new-0-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-0-text",
+      "x": 118,
+      "y": 686,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new-0-row",
+          "kind": "listItem",
+          "label": "Hexcavate",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 17.4   −40%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-0-img",
+      "x": 24,
+      "y": 700,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "new-0-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5239340/763a61c3e9cd9e244e3121eb8c7b372857cd9cbc/header.jpg?t=1791155586",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-0-bg",
+      "x": 452,
+      "y": 150,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-0-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-0-text",
+      "x": 558,
+      "y": 152,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-0-row",
+          "kind": "listItem",
+          "label": "The Outlast Trials",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 13.6   −90%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 16,
+            "tr": 16,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-0-img",
+      "x": 464,
+      "y": 166,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-0-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1304930/65fbdba4ad0f1a7ed7a362a086c87042fa40fadc/header_alt_assets_3.jpg?t=1784123708",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-1-bg",
+      "x": 452,
+      "y": 228,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-1-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-1-text",
+      "x": 558,
+      "y": 230,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-1-row",
+          "kind": "listItem",
+          "label": "赛博朋克 2077",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 89.4   −70%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-1-img",
+      "x": 464,
+      "y": 244,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-1-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/4e88035f3a75e69e0ef2005fc611a7fafcb227e1/header_schinese.jpg?t=1784714077",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-2-bg",
+      "x": 452,
+      "y": 306,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-2-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-2-text",
+      "x": 558,
+      "y": 308,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-2-row",
+          "kind": "listItem",
+          "label": "渔力全开",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 20.46   −38%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-2-img",
+      "x": 464,
+      "y": 322,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-2-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4001890/45c4ddff4901e32c4b8b643e1b97d0d01898d299/header.jpg?t=1788788717",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-3-bg",
+      "x": 452,
+      "y": 384,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-3-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-3-text",
+      "x": 558,
+      "y": 386,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-3-row",
+          "kind": "listItem",
+          "label": "《赛博朋克 2077：终极版》",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 164.5   −60%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-3-img",
+      "x": 464,
+      "y": 400,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-3-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/bundles/32470/5htp7gjbzhjufq5c/d27752ef0c3c2eafe700bc2c8b8fcc17aa7a6828/header_ratio_schinese.jpg?t=1746520128",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-4-bg",
+      "x": 452,
+      "y": 462,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-4-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-4-text",
+      "x": 558,
+      "y": 464,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-4-row",
+          "kind": "listItem",
+          "label": "Grand Theft Auto V 增强版",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 74.5   −50%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-4-img",
+      "x": 464,
+      "y": 478,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-4-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3240220/header_schinese.jpg?t=1781187782",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-5-bg",
+      "x": 452,
+      "y": 540,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-5-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-5-text",
+      "x": 558,
+      "y": 542,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-5-row",
+          "kind": "listItem",
+          "label": "Grand Theft Auto V 增强版",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 74.5   −50%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-5-img",
+      "x": 464,
+      "y": 556,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-5-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3240220/header_schinese.jpg?t=1781187782",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-6-bg",
+      "x": 452,
+      "y": 618,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-6-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-6-text",
+      "x": 558,
+      "y": 620,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-6-row",
+          "kind": "listItem",
+          "label": "Stardew Valley",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 33.6   −30%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-6-img",
+      "x": 464,
+      "y": 634,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-6-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg?t=1786554168",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-7-bg",
+      "x": 452,
+      "y": 696,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-7-bg",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 76,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-7-text",
+      "x": 558,
+      "y": 698,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-7-row",
+          "kind": "listItem",
+          "label": "Ori and the Will of the Wisps",
+          "icon": null,
+          "variant": "filled",
+          "supporting": "¥ 9   −90%",
+          "size": 282,
+          "size2": 72,
+          "icon2": null,
+          "fill": "surfaceContainerLow",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 16,
+            "br": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank-7-img",
+      "x": 464,
+      "y": 712,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "rank-7-img",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 94,
+          "size2": 44,
+          "src": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1057090/header.jpg?t=1759530749",
+          "corners": {
+            "tl": 6,
+            "tr": 6,
+            "bl": 6,
+            "br": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "offline-message",
+      "x": 892,
+      "y": 184,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-message",
+          "kind": "listItem",
+          "label": "暂时无法加载商店",
+          "icon": "cloud_off",
+          "variant": "filled",
+          "supporting": "检查网络后重试。",
+          "size": 388,
+          "icon2": null
+        }
+      ]
+    },
+    {
+      "id": "offline-retry",
+      "x": 904,
+      "y": 280,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-retry",
+          "kind": "button",
+          "label": "重新加载",
+          "icon": null,
+          "variant": "filled",
+          "size2": 40
+        }
+      ]
+    },
+    {
+      "id": "discovery-cart",
+      "x": 278,
+      "y": 738,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "discovery-cart",
+          "kind": "extendedFab",
+          "label": "购物车",
+          "icon": "shopping_cart",
+          "variant": "filled",
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "browse-cart",
+      "x": 718,
+      "y": 738,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "browse-cart",
+          "kind": "extendedFab",
+          "label": "购物车",
+          "icon": "shopping_cart",
+          "variant": "filled",
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "offline-cart",
+      "x": 1158,
+      "y": 738,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offline-cart",
+          "kind": "extendedFab",
+          "label": "购物车",
+          "icon": "shopping_cart",
+          "variant": "filled",
+          "size2": 56
+        }
+      ]
+    }
+  ]
+}

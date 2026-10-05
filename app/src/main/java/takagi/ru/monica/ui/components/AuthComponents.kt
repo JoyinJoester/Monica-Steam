@@ -38,7 +38,7 @@ fun PasswordVerificationContent(
     autoLockMinutes: Int = 5,
     persistVaultUnlockToSession: Boolean = true,
     onVerifyPassword: (String) -> Boolean,
-    onSetPassword: (String) -> Unit = {},
+    onSetPassword: (String) -> Boolean = { false },
     onSuccess: () -> Unit,
     onForgotPassword: (() -> Unit)? = null
 ) {
@@ -267,8 +267,11 @@ fun PasswordVerificationContent(
                             internalIsConfirming = false
                             return@Button
                         }
-                        onSetPassword(masterPassword)
-                        completeAuthentication()
+                        if (onSetPassword(masterPassword)) {
+                            completeAuthentication()
+                        } else {
+                            errorMessage = context.getString(R.string.local_recovery_save_failed)
+                        }
                     }
                 } else {
                     // 验证密码

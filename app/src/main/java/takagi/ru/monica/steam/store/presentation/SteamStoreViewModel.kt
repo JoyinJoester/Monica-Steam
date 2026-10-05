@@ -333,7 +333,11 @@ class SteamStoreViewModel internal constructor(
             _uiState.value.selectedAccountId == accountId
 
     fun updateQuery(value: String) {
-        _uiState.value = _uiState.value.copy(query = value)
+        _uiState.value = _uiState.value.copy(
+            query = value,
+            searchResults = emptyList(),
+            searching = value.isNotBlank()
+        )
         searchDebounceJob?.cancel()
         searchRequestJob?.cancel()
         if (value.isBlank()) {

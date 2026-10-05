@@ -19,7 +19,7 @@ class MdbxMigrationPlannerTest {
         )
 
         assertTrue(plan.isEligible)
-        assertEquals("Personal (MDBX2)", plan.suggestedTargetName)
+        assertEquals("Personal (MDBX3)", plan.suggestedTargetName)
         assertEquals(1, plan.activeEntryCount)
         assertEquals(0, plan.deletedEntryCount)
     }
@@ -93,7 +93,8 @@ class MdbxMigrationPlannerTest {
 
         assertFalse(plan.isEligible)
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.SOURCE_ENGINE_UNSUPPORTED))
-        assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.SOURCE_LOCATION_UNSUPPORTED))
+        assertFalse(plan.hasBlocker(MdbxMigrationBlockerKind.SOURCE_LOCATION_UNSUPPORTED))
+        assertTrue(plan.warnings.any { it.kind == MdbxMigrationWarningKind.REMOTE_LOCAL_COPY_ONLY })
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.DUPLICATE_ENTRY_ID))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.ATTACHMENT_TOO_LARGE))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.ATTACHMENT_KEY_MISSING))

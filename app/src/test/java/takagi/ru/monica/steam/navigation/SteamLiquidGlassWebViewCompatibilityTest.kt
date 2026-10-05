@@ -43,7 +43,7 @@ class SteamLiquidGlassWebViewCompatibilityTest {
         assertTrue(activity.contains("dockVisible = shouldShowSteamDock("))
         assertTrue(activity.contains("platformViewActive = isPlatformViewActive"))
         assertTrue(activity.contains("imeVisible = imeVisible"))
-        assertTrue(activity.contains("if (!imeVisible)"))
+        assertTrue(activity.contains("val useNavigationRail = adaptiveLayout.useNavigationRail && !imeVisible"))
     }
 
     @Test

@@ -743,6 +743,10 @@ class SteamGroupChatViewModel(
         foreground = active
         restartRealtime()
         restartPolling()
+        if (active) {
+            refreshGroups()
+            refreshThread()
+        }
     }
 
     private fun restartRealtime() {
@@ -766,6 +770,10 @@ class SteamGroupChatViewModel(
                                     realtimeConnected = event.connected
                                 )
                                 restartPolling()
+                                if (event.connected) {
+                                    refreshGroups()
+                                    refreshThread()
+                                }
                             }
                         }
                         is SteamGroupChatRealtimeEvent.Message ->

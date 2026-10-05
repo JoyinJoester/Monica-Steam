@@ -23,6 +23,8 @@ internal class SteamChatOutgoingCoordinator(
 ) {
     private val jobs = mutableMapOf<String, Job>()
 
+    fun isSending(clientMessageId: String): Boolean = jobs[clientMessageId]?.isActive == true
+
     fun dispatch(
         account: SteamAccount,
         partnerSteamId: String,

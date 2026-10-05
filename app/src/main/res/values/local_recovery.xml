@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="local_recovery_action">Recover with master password</string>
+    <string name="local_recovery_password">Monica master password</string>
+    <string name="local_recovery_description">Use the encrypted recovery material saved on this device. No cloud connection is needed. Original configuration files are preserved.</string>
+    <string name="local_recovery_failed">Recovery could not be completed. Check your master password and try again. If the problem persists, keep your app data and copy the diagnostic information.</string>
+    <string name="local_recovery_limits">Recovery requires the database and local files. Legacy data not yet converted may still require the original device keys.</string>
+    <string name="local_recovery_save_failed">Could not safely save the master password. Original data has been preserved.</string>
+    <string name="steam_password_recovery_group">Password and recovery</string>
+    <string name="steam_password_recovery_hint">After setting a master password, unlock once with it to prepare encrypted local recovery. If Android security keys become unavailable, use that password to recover. Keep your master password safe.</string>
+</resources>

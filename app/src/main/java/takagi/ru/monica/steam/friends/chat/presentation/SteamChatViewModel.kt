@@ -12,6 +12,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.collectLatest
+import takagi.ru.monica.steam.friends.chat.domain.SteamChatThreadSnapshot
+import takagi.ru.monica.steam.friends.chat.domain.mergeSteamChatMessages
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,8 +68,8 @@ class SteamChatViewModel(
             }
         },
         reconcile = {
-            refreshSessions()
-            if (_uiState.value.selectedPartnerSteamId != null) refreshThread()
+            refreshSessions(silent = true)
+            if (_uiState.value.selectedPartnerSteamId != null) refreshThread(silent = true)
         }
     )
     private val dataCoordinator = SteamChatDataCoordinator(
@@ -78,7 +83,8 @@ class SteamChatViewModel(
         updateState = { _uiState.value = it },
         isSessionsCurrent = ::isSessionsCurrent,
         isThreadCurrent = ::isThreadCurrent,
-        onSessionResolved = ::onSessionResolved
+        onSessionResolved = ::onSessionResolved,
+        isSending = { outgoingCoordinator.isSending(it) }
     )
     private val outgoingCoordinator = SteamChatOutgoingCoordinator(
         scope = viewModelScope,
@@ -124,7 +130,7 @@ class SteamChatViewModel(
             val cached = withContext(ioDispatcher) { cache.loadSessions(account.steamId) }
             if (!isSessionsCurrent(account, generation)) return@launch
             _uiState.value = _uiState.value.copy(
-                sessions = cached,
+                sessions = cached?.let { reconcileSteamChatSessions(it, _uiState.value.sessions) } ?: _uiState.value.sessions,
                 sessionsLoading = cached == null,
                 sessionsRefreshing = cached != null,
                 sessionsFromCache = cached != null
@@ -143,6 +149,7 @@ class SteamChatViewModel(
             thread = null,
             threadLoading = true,
             threadRefreshing = false,
+            loadingOlder = false,
             threadFromCache = false,
             threadFailure = null
         )
@@ -151,11 +158,13 @@ class SteamChatViewModel(
                 cache.loadThread(account.steamId, partnerSteamId)
             }
             if (!isThreadCurrent(account, partnerSteamId, generation)) return@launch
+            val live = _uiState.value.thread
+            val hydrated = cached?.copy(messages = mergeSteamChatMessages(cached.messages, live?.messages.orEmpty())) ?: live
             _uiState.value = _uiState.value.copy(
-                thread = cached,
-                threadLoading = cached == null,
-                threadRefreshing = cached != null,
-                threadFromCache = cached != null
+                thread = hydrated,
+                threadLoading = hydrated == null,
+                threadRefreshing = hydrated != null,
+                threadFromCache = cached != null && live == null
             )
             recoverPendingSteamChatOutbox(
                 outbox = outbox,
@@ -190,26 +199,30 @@ class SteamChatViewModel(
             threadFailure = null
         )
     }
-    fun refreshSessions() {
+    fun refreshSessions() = refreshSessions(silent = false)
+
+    private fun refreshSessions(silent: Boolean) {
         val account = activeAccount ?: return
         val generation = requestGuard.nextSessions()
         _uiState.value = _uiState.value.copy(
             sessionsLoading = _uiState.value.sessions == null,
-            sessionsRefreshing = _uiState.value.sessions != null,
+            sessionsRefreshing = !silent && _uiState.value.sessions != null,
             sessionsFailure = null
         )
-        dataCoordinator.fetchSessions(account, generation, silent = false)
+        dataCoordinator.fetchSessions(account, generation, silent = silent)
     }
-    fun refreshThread() {
+    fun refreshThread() = refreshThread(silent = false)
+
+    private fun refreshThread(silent: Boolean) {
         val account = activeAccount ?: return
         val partnerSteamId = _uiState.value.selectedPartnerSteamId ?: return
-        val generation = requestGuard.selectThread(partnerSteamId)
+        val generation = requestGuard.currentThreadGeneration()
         _uiState.value = _uiState.value.copy(
             threadLoading = _uiState.value.thread == null,
-            threadRefreshing = _uiState.value.thread != null,
+            threadRefreshing = !silent && _uiState.value.thread != null,
             threadFailure = null
         )
-        dataCoordinator.fetchThread(account, partnerSteamId, generation, silent = false)
+        dataCoordinator.fetchThread(account, partnerSteamId, generation, silent = silent)
     }
 
     fun loadOlder() {
@@ -230,11 +243,13 @@ class SteamChatViewModel(
         val account = activeAccount ?: return
         val partnerSteamId = _uiState.value.selectedPartnerSteamId ?: return
         val id = clientMessageId()
+        val createdAt = nowMillis()
         val optimistic = newPendingSteamChatMessage(
             accountSteamId = account.steamId,
             partnerSteamId = partnerSteamId,
             body = normalized,
-            timestamp = nowMillis() / 1000L,
+            timestamp = createdAt / 1000L,
+            localCreatedAtMillis = createdAt,
             clientMessageId = id,
             replyToStableId = replyToStableId
         )
@@ -265,6 +280,10 @@ class SteamChatViewModel(
         foreground = active
         restartPolling()
         realtimeCoordinator.setForeground(active)
+        if (active) {
+            refreshSessions(silent = true)
+            refreshThread(silent = true)
+        }
     }
 
     fun clearThreadFailure() {
@@ -278,7 +297,6 @@ class SteamChatViewModel(
         verifyBeforeSend: Boolean = false,
         forceRetry: Boolean = false
     ) {
-        val generation = requestGuard.currentThreadGeneration()
         outgoingCoordinator.dispatch(
             account = account,
             partnerSteamId = partnerSteamId,
@@ -286,7 +304,8 @@ class SteamChatViewModel(
             pending = pending,
             verifyBeforeSend = verifyBeforeSend,
             forceRetry = forceRetry,
-            isCurrent = { isThreadCurrent(account, partnerSteamId, generation) },
+            // Delivery belongs to the account/conversation, not to the currently visible page.
+            isCurrent = { true },
             onSessionRefreshed = { refreshedAccount ->
                 if (activeAccount?.id == account.id && activeAccount?.steamId == account.steamId) {
                     activeAccount = refreshedAccount
@@ -303,7 +322,19 @@ class SteamChatViewModel(
         partnerSteamId: String,
         message: SteamChatMessage
     ) {
-        if (activeAccount?.id != account.id || _uiState.value.selectedPartnerSteamId != partnerSteamId) {
+        if (activeAccount?.id != account.id || activeAccount?.steamId != account.steamId ||
+            _uiState.value.selectedPartnerSteamId != partnerSteamId
+        ) {
+            viewModelScope.launch(ioDispatcher) {
+                runSteamChatCatching {
+                    val cached = cache.loadThread(account.steamId, partnerSteamId)
+                        ?: SteamChatThreadSnapshot(account.steamId, partnerSteamId, emptyList(), false, nowMillis())
+                    cache.saveThread(account.steamId, partnerSteamId, cached.copy(
+                        messages = mergeSteamChatMessages(cached.messages, listOf(message)),
+                        fetchedAt = nowMillis()
+                    ))
+                }.onFailure { logSteamChatFailure("outgoing_cache", it) }
+            }
             return
         }
         val updatedState = _uiState.value.withChatMessage(
@@ -340,16 +371,19 @@ class SteamChatViewModel(
         pollingJob?.cancel()
         pollingJob = null
         if (!foreground || activeAccount == null) return
-        val interval = if (!realtimeCoordinator.enabled) LEGACY_POLL_INTERVAL_MILLIS
-        else REALTIME_RECONCILIATION_INTERVAL_MILLIS
         pollingJob = viewModelScope.launch {
-            while (isActive) {
-                delay(interval)
-                refreshSessions()
-                if (_uiState.value.selectedPartnerSteamId != null) refreshThread()
+            uiState.map { it.realtimeConnected }.distinctUntilChanged().collectLatest { connected ->
+                val interval = if (connected) REALTIME_RECONCILIATION_INTERVAL_MILLIS
+                else LEGACY_POLL_INTERVAL_MILLIS
+                while (isActive) {
+                    delay(interval)
+                    refreshSessions(silent = true)
+                    refreshThread(silent = true)
+                }
             }
         }
     }
+
     private fun isSessionsCurrent(account: SteamAccount, generation: Long): Boolean =
         requestGuard.isSessionsCurrent(account, generation)
     private fun isThreadCurrent(

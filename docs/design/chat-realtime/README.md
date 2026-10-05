@@ -1,0 +1,36 @@
+# Monica Steam 聊天交互与实时更新
+
+本轮聚焦即时聊天的基本操作：进入会话、连续输入、收发消息、切换会话、后台恢复与历史阅读。使用合成账号、消息和可注入网关验证，未使用附件中的 maFile，未向真实好友发送消息。
+
+## 可编辑设计
+
+[打开本地 M3E Canvas](http://127.0.0.1:5186/#docz=5Vldc9NGFP0rGT3nwVorjuO30hlmOi194bHDZNb2GmuQJY-0DqFMZmwGghNiTPgKhPBRmkCgk4ZpaTBOQmb6U4olO0_5C72rlWzJtY2kAJ2WJ1mbvVf3nnN379nNRYHKVCFCSjilqXIGj52mBBfG_nwzZtZ-t1Z2OpVFc_2FMC6kdZnkYFr79XPz6rJ1Y639-unhTzvWk_r7csXaqVqV7cOnlzvPq_Bq1retylNzvdapLbQ3D8ybS1bjirWx2l693Dl4ZF3faC_uWOXK-_Il7p6bm7UnVu3XVmO386zSftE8XHl9tPfArC8fliutRs1auGXd3eq8u2Ve2QBDiCin4wILvJjXVALvRQXTnKYXYAirWV2Ts2wQK4RS8i25AMNppcQm0jxhhheFLNbPCakcVgwCCWo0f0rLEkNIUb0EA0YeF5l_XSupWcKc5TSV2gMwV4P3gkZlTYURMlvUiWHIM0SYcwIDNz9cFCCGlJDR1BmiG5hNNsBM5XG39lY72w8Z1NZauXOwzFGAv88Kqdi4AAHH5sYdFzSvE5zt2XLcmC0A2t51cOG2ktRvrRMIQSUZKqtnB_mwtn421zYPr9bAGfeRTLo-zowLZwGBoicfg2A9k-cTRWTPi8MDz8owCd7AAheFFAzJlBQGGZ6T1d77CazDkILTRIExXlk8Nigcc2PfrF-Dv89gXcY2_DlZUWw65IwNvh0evBryj5BWPJnkP5GQmkjwSYiVRCYDPNLpjKxnoN7nzvTQ0c7HfMmIMSlINo6dk4siG_QbmOBJ5SuFzI6MvAhVAT8g3lKxqOk2PVAXu4vW_dVWo9z54037-oujvccDk5uUusmpJUUZhzLTVXDICpvC5xEwSHX-TMP7BFvD8JjzpE7lAnFyj0uTPHkxUPKupZM9JbPUkzmKpSRxVOo8Yp6UKPrJEP1ksEoMRIY4kgxzedNa-6VTuW2tNc1X9cN7j4MVlZcZsLMerRztrVrVZfPNb-3deufggVU9gK2q1ZyPxNIEJ2liNEdiH0dTgTBxLYdyFE9G5Qj5OEJsoQXiCI3myMY3wpKBXQJ6y9HeUuvtw_alt53nFd4iPhUfyM8HSgTK37UczgeKykfcvxsH244du-F8nNL0s1iNwEfn4H6r8dJqNKxq3bq9bS2BJFhqNZvmjWprf-0TEhP3ExOXAgHhWg4mxrq3ySVQJGYkHzNSLBmQGWkkM6dxIcoysfdAc77WbS4fgQq7v9h9pp8MyU-GJAbK3bUcTAakAMFHIkMl53lAaJKLm8l4oGXL7ZxwIBrC1OBJnPaWyN1X5m6z_W4ddMtIXnA2K3jkiTc6POOVfslgGoRbObGBKqVa4Xt7yI0sKFISK1CDKCASYQb7EsVp_qEu9HfmzeZKLxeDajrJ6UwTsyy6WNir3mze8sxkJWhME_70ze6eL5ypmTym0-lSOs00mmdea3e9vbDkcZmXiZJlMq4HYRpnzomuBpZC6FLX0MGRfeJECbBUhwHpFKVLqg7rdZo56XErJT2BwTSKM9SNbcrpmoGqz2P70ZUm1_387PBX-Vl3M0AMPSeRBPxk3hjmJT2HM0Tw7Q6eNMUMhnl2jpNSMgT-rmFE_B3rQciLBajRaTh9USeuqUSYuLzWEYPzuhgUYRZfcOoigVAYBe4YDt4m4QwRpmchL2R89TnHAmnCCSoRSHJ6jIdX68ADzocC9date7xwqpWFNrRav2brR4b29Z12Xhjd11h_Yo2NPT0iQ0zO_RMeh7MJ55yMJoIVVM94hAqub7d2N7pittVYbDcPuJ4NDdIYO96PwVmF36N8CLOiLhewfqGLWUjA7Ge_LHNyRv56ikuBitxjPBwwdhq7UjX3ykxz2qcxAK-9tdDafxIRtn-3tuL-2pKCyRSP8Yja2thn2GzWAB6ArdVYN6vzhzcf_3fLC1Noj_m-tj85Fai6erZRO7_tYBrSI0Nbf6GoGaTb-hNOfIF2U4-xZ5s_aSsf737BsO_eHvZi1UpUAZgH7_mIhTLgnqygaVnv7ZgBclf0N8-A6LqWgbHtFy3MwRBYmdhydpRkMqzUQ8cgPKDUc2KbikeQeqM3u4hSj9-7txpb9p3x1Zfmon3fu33nuKIP9USfKCbDqD70yVQf6lN9IoqHkX3o88g-9w4tlgir-4ZfIh1D9yGf7ktOhdJ96H-v-5BP94kxFEr4oS9Q-CGf8HMLKqDwQ1-U8EM-4dctroDKD33Jyq9PBYRSfscRAkGVX1cJRFF-fRv951d-3f_zxENLv1DgBpB-Z-b-Bg)。源文件：`canvas.json`。本地编辑器运行于 `http://127.0.0.1:5186/`，启动脚本在工作区 `.tools/start-m3e-canvas.ps1`。
+
+沿用应用 Material 3 动态配色。Canvas 用蓝色基准（主色 #0B57D0、主色容器 #D3E3FD、背景 #F8F9FF、表面 #F0F1F9、正文 #1F1F1F）；原生随主题变化。标题用 titleMedium，正文 bodyLarge，预览 bodySmall，时间 labelSmall。采用应用原有字体，不引入字体下载。
+
+会话页为单行搜索与好友、账号入口，下方连续消息列表；会话线程保留返回、联系人、语音与更多菜单。消息正文获得主要空间，连接恢复状态放在联系人副标题。输入框保留附件、表情和发送，减少左右额外间距。时间在标题同行，预览使用下一行，避免长日期挤压整个内容列。
+
+## 已定位与修复
+
+- 历史刷新曾递增会话选择代数，使发送回执和分页结果失效；现在刷新请求与会话选择分离。
+- 有实时网关时固定每三分钟补拉，即使未连接；现在根据实际连接状态切换，断线时每十五秒尝试补拉，在线保留三分钟校验。
+- 返回前台只启动定时器；现在立即同步。群聊连接成功也补取当前会话和群列表。
+- 磁盘加载与网络会话结果可能覆盖更晚的推送；现在合并已经呈现的新消息，并先更新界面再保存会话快照。
+- 同秒待发送消息以随机标识排序；现在保留本地毫秒创建时间。已收到服务端确认的消息不会被较晚失败结果降级。
+- 输入状态只属于短暂存在的输入框；现在由聊天页按账号与会话保存文字、分享草稿，并支持 Android 保存状态恢复。
+
+## 验证范围
+
+失败复现、修复后单元测试、原生 UI 测试与构建日志保存在 `.codex-temp/chat-realtime/`。使用公共 AVD `Monica_Issue136_API_32` 和独立测试包，检查连续发送、切换会话、草稿恢复、新消息呈现、搜索预览及 1.5 倍字体。测试回调不访问 Steam。
+
+真实 Steam 网络端到端延迟、好友对端送达及系统长期后台保活未在本轮模拟验证中测量。已保留既有发送重试、长连接传输与阅读位置逻辑。
+
+
+验证结果：88 项聊天、群聊与 CM 传输单元测试通过；5 项原生交互测试通过。测试 Activity 的 manifest 与正式 Activity 一样显式配置 adjustResize，避免测试窗口默认平移造成错误的可见性结论。
+
+原生截图：
+- [聊天列表](native-chat-conversations.png)
+- [输入过程中的消息与重连状态](native-chat-thread-reconnecting.png)
+- [深色主题与 1.5 倍字体](native-chat-thread-large-dark.png)
+
+生产 Release 构建通过，包名 `takagi.ru.monica.steamapp`，版本 `1.0.308` / `18`。最终日志：`release-final.log`、`unit-and-debug-final.log`、`device-tests.log`。

@@ -50,6 +50,29 @@ class SteamGroupChatViewModelTest {
     @After fun teardown() = Dispatchers.resetMain()
 
     @Test
+    fun resumeAndReconnectImmediatelyRecoverMissedGroupHistory() = runTest(dispatcher.scheduler) {
+        val gateway = FakeGateway()
+        val realtime = FakeRealtime()
+        val viewModel = viewModel(gateway, realtime = realtime)
+        viewModel.selectAccount(account())
+        runCurrent()
+        viewModel.openRoom("8", "9")
+        runCurrent()
+        viewModel.setForeground(true)
+        runCurrent()
+        viewModel.setForeground(false)
+        val beforeResume = gateway.historyCalls
+        viewModel.setForeground(true)
+        runCurrent()
+        val afterResume = gateway.historyCalls
+        realtime.emit(ACCOUNT_ID, SteamGroupChatRealtimeEvent.ConnectionChanged(true))
+        runCurrent()
+        viewModel.setForeground(false)
+        assertEquals(beforeResume + 1, afterResume)
+        assertEquals(afterResume + 1, gateway.historyCalls)
+    }
+
+    @Test
     fun timeoutWithServerEchoKeepsOneConfirmedMessage() = runTest(dispatcher.scheduler) {
         val gateway = FakeGateway().apply {
             send = { _, _, _ -> throw SocketTimeoutException("lost response") }

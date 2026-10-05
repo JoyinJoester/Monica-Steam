@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -42,11 +40,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -55,6 +56,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import takagi.ru.monica.steam.navigation.SteamDockPreferences
 import takagi.ru.monica.steam.navigation.SteamDockStyle
 import takagi.ru.monica.steam.navigation.SteamDockTab
+import takagi.ru.monica.steam.navigation.steamDockPageTransition
 import takagi.ru.monica.steam.navigation.icon
 import takagi.ru.monica.steam.navigation.label
 import takagi.ru.monica.steam.navigation.shouldEnableSteamLiquidGlassRuntimeEffects
@@ -143,7 +145,6 @@ private enum class MonicaSteamPage {
 }
 
 private const val MONICA_BACK_EXIT_TIMEOUT_MS = 2_000L
-private const val MONICA_STEAM_DOCK_CONTENT_KEY = "monica_steam_dock_root"
 private const val STEAM_AUTO_BACKUP_PREFS_NAME = "webdav_config"
 private const val STEAM_AUTO_BACKUP_ENABLED_KEY = "auto_backup_enabled"
 private const val STEAM_LAST_BACKUP_TIME_KEY = "last_backup_time"
@@ -174,10 +175,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
         consumeExternalSteamLinkIntent(intent)
         consumeWorkshopTaskIntent(intent)
 
-        lifecycleScope.launch {
-            SteamAlerts.sync(this@MonicaSteamActivity)
-        }
-        initializeWebDavAutoBackupDeferred()
 
         setSteamUiScaledContent steamContent@{
             val loadedSettings by settingsManager.settingsFlow.collectAsState(
@@ -200,6 +197,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
             val dockOrder = dockConfiguration.m3eOrder
             val liquidGlassDockOrder = dockConfiguration.liquidGlassOrder
             val fixedDockOrder = dockConfiguration.fixedOrder
+            val layoutDirection = LocalLayoutDirection.current
             val activeDockOrder = when (dockStyle) {
                 SteamDockStyle.M3E -> dockOrder
                 SteamDockStyle.LIQUID_GLASS -> liquidGlassDockOrder
@@ -223,14 +221,19 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 customNeutralColor = settings.customNeutralColor,
                 customNeutralVariantColor = settings.customNeutralVariantColor
             ) {
+                val securityManager = takagi.ru.monica.steam.security.rememberSteamSecureStorage(
+                    onRecovered = { recreate() },
+                    onExit = { finish() }
+                ) ?: return@MonicaTheme
+                LaunchedEffect(securityManager) {
+                    SteamAlerts.sync(this@MonicaSteamActivity)
+                    initializeWebDavAutoBackupDeferred()
+                }
                 val steamSettingsViewModel: SettingsViewModel = viewModel {
                     SettingsViewModel(settingsManager)
                 }
                 val passwordDatabase = remember {
                     PasswordDatabase.getDatabase(this@MonicaSteamActivity.applicationContext)
-                }
-                val securityManager = remember {
-                    SecurityManager(this@MonicaSteamActivity.applicationContext)
                 }
                 val chatNotificationRequest by pendingChatNotificationRequest.collectAsState()
                 val externalSteamLink by pendingExternalSteamLink.collectAsState()
@@ -314,6 +317,16 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val imeVisible = WindowInsets.ime.getBottom(density) > 0
                 val adaptiveLayout = rememberSteamAdaptiveLayout()
                 val useNavigationRail = adaptiveLayout.useNavigationRail && !imeVisible
+                val transitionDockOrder = when (dockStyle) {
+                    SteamDockStyle.M3E -> {
+                        val tabs = SteamDockTab.completeOrder(dockOrder)
+                        // The rail leads with Token; the floating toolbar places its FAB at the end.
+                        if (useNavigationRail) listOf(SteamDockTab.TOKEN) + tabs
+                        else tabs + SteamDockTab.TOKEN
+                    }
+                    SteamDockStyle.LIQUID_GLASS -> SteamDockTab.completeLiquidGlassOrder(liquidGlassDockOrder)
+                    SteamDockStyle.FIXED -> SteamDockTab.completeFixedOrder(fixedDockOrder)
+                }
                 val dockBlurHeightPx = with(density) { 130.dp.toPx() }
                 val dockVisible = shouldShowSteamDock(
                     hasConfiguration = true,
@@ -490,6 +503,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                                     start = if (useNavigationRail) 80.dp else 0.dp
                                                 )
                                                 .steamWindowHorizontalPadding()
+                                                .clipToBounds()
                                                 .steamDockProgressiveBlur(
                                                     enabled = dockStyle == SteamDockStyle.M3E &&
                                                         dockVisible,
@@ -502,15 +516,19 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                                 ),
                                             targetState = currentPage,
                                             label = "monica_steam_page_transition",
-                                            contentKey = { page -> page.transitionContentKey(dockStyle) },
+                                            contentKey = { page -> page },
                                             transitionSpec = {
                                                 if (
                                                     initialState.isDockPage(dockStyle) &&
                                                     targetState.isDockPage(dockStyle)
                                                 ) {
-                                                    // Monica Android's SimpleMainScreen swaps top-level tabs
-                                                    // directly; only the NavigationBar selection animates.
-                                                    EnterTransition.None togetherWith ExitTransition.None
+                                                    steamDockPageTransition(
+                                                        order = transitionDockOrder,
+                                                        from = initialState.toDockTab(),
+                                                        to = targetState.toDockTab(),
+                                                        isRtl = layoutDirection == LayoutDirection.Rtl,
+                                                        reduceAnimations = settings.reduceAnimations
+                                                    )
                                                 } else {
                                                     // Every secondary route in Monica Android uses the
                                                     // EasyNotes scale/fade transition for both push and pop.
@@ -977,9 +995,6 @@ private fun MonicaSteamPage.isDockPage(style: SteamDockStyle): Boolean = when (t
     MonicaSteamPage.MDBX_ONEDRIVE_CREATE,
     MonicaSteamPage.MDBX_ONEDRIVE_OPEN -> false
 }
-
-private fun MonicaSteamPage.transitionContentKey(style: SteamDockStyle): Any =
-    if (isDockPage(style)) MONICA_STEAM_DOCK_CONTENT_KEY else this
 
 private fun MonicaSteamPage.toDockTab(): SteamDockTab = when (this) {
     MonicaSteamPage.LIBRARY -> SteamDockTab.LIBRARY

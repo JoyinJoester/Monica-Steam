@@ -1,0 +1,694 @@
+{
+  "title": "Monica Steam · 导航与 MDBX3",
+  "brief": "搜索顶栏与单行栏目保持紧凑；贴边抽屉分组入口；数据库复用验证器磁贴与连续圆角操作组。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "blue",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "home",
+      "name": "商店 · 紧凑首页",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "menu",
+      "name": "左侧抽屉 · 单手可达",
+      "x": 440,
+      "y": 0
+    },
+    {
+      "id": "mdbx",
+      "name": "MDBX3 · 本地数据库",
+      "x": 880,
+      "y": 0
+    },
+    {
+      "id": "legacy",
+      "name": "旧库 · 安全升级入口",
+      "x": 1320,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "search",
+      "x": 12,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "search",
+          "kind": "searchBar",
+          "label": "搜索 Steam 游戏",
+          "variant": "filled",
+          "icon": "menu",
+          "icon2": "account_circle",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "filter0",
+      "x": 12,
+      "y": 96,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "filter0",
+          "kind": "chip",
+          "label": "发现",
+          "variant": "filled",
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "filter1",
+      "x": 90,
+      "y": 96,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "filter1",
+          "kind": "chip",
+          "label": "优惠",
+          "variant": "outlined",
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "filter2",
+      "x": 168,
+      "y": 96,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "filter2",
+          "kind": "chip",
+          "label": "热销",
+          "variant": "outlined",
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "filter3",
+      "x": 246,
+      "y": 96,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "filter3",
+          "kind": "chip",
+          "label": "新品",
+          "variant": "outlined",
+          "icon": null
+        }
+      ]
+    },
+    {
+      "id": "filter4",
+      "x": 324,
+      "y": 96,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "filter4",
+          "kind": "chip",
+          "label": "筛选",
+          "variant": "outlined",
+          "icon": "tune"
+        }
+      ]
+    },
+    {
+      "id": "offers",
+      "x": 16,
+      "y": 150,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offers",
+          "kind": "text",
+          "label": "特别优惠",
+          "variant": "filled",
+          "icon": null,
+          "size": 20
+        }
+      ]
+    },
+    {
+      "id": "offer",
+      "x": 12,
+      "y": 188,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "offer",
+          "kind": "listItem",
+          "label": "The Outlast Trials",
+          "variant": "filled",
+          "icon": "sports_esports",
+          "supporting": "−90%    ₹ 160",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "top",
+      "x": 16,
+      "y": 304,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "top",
+          "kind": "text",
+          "label": "热销游戏",
+          "variant": "filled",
+          "icon": null,
+          "size": 20
+        }
+      ]
+    },
+    {
+      "id": "cart",
+      "x": 340,
+      "y": 714,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "cart",
+          "kind": "fab",
+          "label": "购物车",
+          "variant": "filled",
+          "icon": "shopping_cart",
+          "size": 56
+        }
+      ]
+    },
+    {
+      "id": "dock",
+      "x": 20,
+      "y": 800,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "dock",
+          "kind": "bottomNav",
+          "label": "",
+          "variant": "filled",
+          "icon": null,
+          "size": 372,
+          "size2": 68,
+          "items": [
+            "商店",
+            "游戏库",
+            "令牌",
+            "聊天",
+            "设置"
+          ],
+          "labels": [
+            "商店",
+            "游戏库",
+            "令牌",
+            "聊天",
+            "设置"
+          ],
+          "icons": [
+            "storefront",
+            "sports_esports",
+            "shield",
+            "chat",
+            "settings"
+          ],
+          "activeIndex": 0,
+          "tabs": [
+            {
+              "label": "商店",
+              "icon": "storefront"
+            },
+            {
+              "label": "游戏库",
+              "icon": "sports_esports"
+            },
+            {
+              "label": "令牌",
+              "icon": "shield"
+            },
+            {
+              "label": "聊天",
+              "icon": "chat"
+            },
+            {
+              "label": "设置",
+              "icon": "settings"
+            }
+          ],
+          "selected": 0
+        }
+      ]
+    },
+    {
+      "id": "menutitle",
+      "x": 460,
+      "y": 42,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "menutitle",
+          "kind": "topAppBar",
+          "label": "Steam 商店",
+          "variant": "filled",
+          "icon": null,
+          "icon2": "close",
+          "size": 292,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "mdbxbar",
+      "x": 892,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "mdbxbar",
+          "kind": "topAppBar",
+          "label": "本地数据库",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "open",
+      "x": 892,
+      "y": 132,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "open",
+          "kind": "button",
+          "label": "打开数据库",
+          "variant": "tonal",
+          "icon": "folder_open",
+          "size": 190,
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "create",
+      "x": 1090,
+      "y": 132,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "create",
+          "kind": "button",
+          "label": "新建数据库",
+          "variant": "filled",
+          "icon": "add",
+          "size": 190,
+          "size2": 48
+        }
+      ]
+    },
+    {
+      "id": "vault",
+      "x": 892,
+      "y": 196,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "vault",
+          "kind": "listItem",
+          "label": "Steam 账号",
+          "variant": "filled",
+          "icon": "storage",
+          "supporting": "MDBX 3 · 本地 · 默认",
+          "icon2": "more_vert",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "oldvault",
+      "x": 892,
+      "y": 280,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "oldvault",
+          "kind": "listItem",
+          "label": "旧版账号库",
+          "variant": "filled",
+          "icon": "upgrade",
+          "supporting": "MDBX 1 · 需要升级",
+          "icon2": "chevron_right",
+          "size": 388,
+          "size2": 88,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "oldbar",
+      "x": 1332,
+      "y": 32,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "oldbar",
+          "kind": "topAppBar",
+          "label": "旧版账号库",
+          "variant": "filled",
+          "icon": "arrow_back",
+          "size": 388,
+          "size2": 56
+        }
+      ]
+    },
+    {
+      "id": "oldinfo",
+      "x": 1332,
+      "y": 136,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "oldinfo",
+          "kind": "listItem",
+          "label": "此数据库需要升级",
+          "variant": "filled",
+          "icon": "upgrade",
+          "supporting": "MDBX1 已停用，原文件保留",
+          "size": 388,
+          "size2": 96,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "menurow-group",
+      "x": 452,
+      "y": 140,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "menurow0",
+          "kind": "listItem",
+          "label": "愿望单",
+          "variant": "filled",
+          "icon": "favorite_border",
+          "size": 300,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "menurow1",
+          "kind": "listItem",
+          "label": "免费领取",
+          "variant": "filled",
+          "icon": "redeem",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "menurow2",
+          "kind": "listItem",
+          "label": "点数商店",
+          "variant": "filled",
+          "icon": "card_giftcard",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "menurow3",
+          "kind": "listItem",
+          "label": "激活产品",
+          "variant": "filled",
+          "icon": "key",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "menurow4",
+          "kind": "listItem",
+          "label": "导入创意工坊",
+          "variant": "filled",
+          "icon": "extension",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "utility-group",
+      "x": 452,
+      "y": 528,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "utility0",
+          "kind": "listItem",
+          "label": "通知",
+          "variant": "filled",
+          "icon": "notifications",
+          "size": 300,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "utility1",
+          "kind": "listItem",
+          "label": "刷新",
+          "variant": "filled",
+          "icon": "refresh",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "utility2",
+          "kind": "listItem",
+          "label": "设置",
+          "variant": "filled",
+          "icon": "settings",
+          "size": 300,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "game-group",
+      "x": 12,
+      "y": 344,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "game0",
+          "kind": "listItem",
+          "label": "Counter-Strike 2",
+          "variant": "filled",
+          "icon": "sports_esports",
+          "supporting": "免费开玩",
+          "size": 388,
+          "size2": 74,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "game1",
+          "kind": "listItem",
+          "label": "Dota 2",
+          "variant": "filled",
+          "icon": "sports_esports",
+          "supporting": "免费开玩",
+          "size": 388,
+          "size2": 74,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "game2",
+          "kind": "listItem",
+          "label": "PUBG: BATTLEGROUNDS",
+          "variant": "filled",
+          "icon": "sports_esports",
+          "supporting": "免费开玩",
+          "size": 388,
+          "size2": 74,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "game3",
+          "kind": "listItem",
+          "label": "The Outlast Trials",
+          "variant": "filled",
+          "icon": "sports_esports",
+          "supporting": "−90%    ₹ 160",
+          "size": 388,
+          "size2": 74,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "legacy-actions",
+      "x": 1332,
+      "y": 226,
+      "axis": "y",
+      "gap": 2,
+      "items": [
+        {
+          "id": "upgrade",
+          "kind": "listItem",
+          "label": "升级到 MDBX3",
+          "variant": "filled",
+          "icon": "upgrade",
+          "supporting": "创建新副本并校验条目与附件",
+          "icon2": "chevron_right",
+          "size": 388,
+          "size2": 80,
+          "corners": {
+            "tl": 24,
+            "tr": 24,
+            "bl": 5,
+            "br": 5
+          }
+        },
+        {
+          "id": "remove",
+          "kind": "listItem",
+          "label": "移除数据库",
+          "variant": "filled",
+          "icon": "remove_circle_outline",
+          "supporting": "仅移除关联，保留原始文件",
+          "icon2": "chevron_right",
+          "size": 388,
+          "size2": 80,
+          "corners": {
+            "tl": 5,
+            "tr": 5,
+            "bl": 24,
+            "br": 24
+          }
+        }
+      ]
+    }
+  ]
+}

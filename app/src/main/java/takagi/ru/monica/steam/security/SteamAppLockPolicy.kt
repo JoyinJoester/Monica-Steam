@@ -22,8 +22,11 @@ object SteamAppLockPolicy {
         autoLockMinutes: Int,
         disablePasswordVerification: Boolean
     ): MainAppAccessState {
-        return resolveUnconfiguredState(securityManager.isMasterPasswordSet())
-            ?: MainAppLockPolicy.resolveAccessState(
+        resolveUnconfiguredState(securityManager.isMasterPasswordSet())?.let { return it }
+        if (disablePasswordVerification && !securityManager.canAccessVaultMaterialNow()) {
+            return MainAppAccessState(false, false, false, "steam_password_reentry_required")
+        }
+        return MainAppLockPolicy.resolveAccessState(
                 securityManager = securityManager,
                 context = context,
                 autoLockMinutes = autoLockMinutes,

@@ -21,7 +21,7 @@ class SteamSettingsVersionLabelGuardTest {
         ).map(::projectFile)
 
         assertTrue(gradle.contains("def appVersionCode = 18"))
-        assertTrue(gradle.contains('"' + "1.0.307" + '"'))
+        assertTrue(gradle.contains('"' + "1.0.309" + '"'))
         assertTrue(screen.contains("val settingsVersionNumber = context.getString("))
         assertTrue(
             screen.contains(

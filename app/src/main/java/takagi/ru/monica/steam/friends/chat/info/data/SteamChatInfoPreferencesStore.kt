@@ -24,7 +24,9 @@ class SteamChatInfoPreferencesStore(context: Context) {
     fun save(id: SteamChatConversationId, value: SteamChatConversationPreferences) {
         runCatching {
             val encoded = json.encodeToString(SteamChatConversationPreferences.serializer(), value)
-            preferences.edit().putString(key(id), security.encryptDataLegacyCompat(encoded)).apply()
+            synchronized(preferences) {
+                preferences.edit().putString(key(id), security.encryptDataLegacyCompat(encoded)).apply()
+            }
         }
     }
 

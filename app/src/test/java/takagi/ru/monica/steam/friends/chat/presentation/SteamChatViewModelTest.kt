@@ -44,6 +44,87 @@ class SteamChatViewModelTest {
     }
 
     @Test
+    fun cachedOrphanedVerificationBecomesRetryableAfterHistoryLoads() = runTest(mainDispatcher.scheduler) {
+        val account = account(1L, "76561198000000001")
+        val partner = "76561198000000003"
+        val cache = MemoryCache()
+        cache.saveThread(account.steamId, partner, SteamChatThreadSnapshot(account.steamId, partner,
+            listOf(newPendingSteamChatMessage(account.steamId, partner, "orphan", 100L, "orphan")
+                .copy(deliveryState = SteamChatDeliveryState.VERIFYING)), false, 0L))
+        val viewModel = SteamChatViewModel(FakeGateway(), cache, ioDispatcher = mainDispatcher)
+        viewModel.selectAccount(account)
+        runCurrent()
+        viewModel.openThread(partner)
+        runCurrent()
+        assertEquals(SteamChatDeliveryState.FAILED_RETRYABLE,
+            viewModel.uiState.value.thread?.messages?.single()?.deliveryState)
+    }
+
+    @Test
+    fun switchingConversationDuringSendPersistsConfirmationForTheOriginalConversation() = runTest(mainDispatcher.scheduler) {
+        val gateway = FakeGateway()
+        val viewModel = createViewModel(gateway)
+        val account = account(1L, "76561198000000001")
+        val original = "76561198000000003"
+        viewModel.selectAccount(account)
+        runCurrent()
+        viewModel.openThread(original)
+        runCurrent()
+        gateway.sendBlock = { current, partner, body, clientId ->
+            viewModel.openThread("76561198000000004")
+            SteamChatMessage(partner, current.steamId, 100L, 1, body, clientMessageId = clientId)
+        }
+        viewModel.sendMessage("original conversation")
+        runCurrent()
+        assertEquals(emptyList<SteamChatMessage>(), viewModel.uiState.value.thread?.messages)
+        viewModel.openThread(original)
+        runCurrent()
+        assertEquals(SteamChatDeliveryState.SENT, viewModel.uiState.value.thread?.messages?.single()?.deliveryState)
+    }
+
+    @Test
+    fun refreshDuringSendDoesNotDiscardDeliveryConfirmation() = runTest(mainDispatcher.scheduler) {
+        val gateway = FakeGateway()
+        val viewModel = createViewModel(gateway)
+        viewModel.selectAccount(account(1L, "76561198000000001"))
+        runCurrent()
+        viewModel.openThread("76561198000000003")
+        runCurrent()
+        gateway.sendBlock = { account, partner, body, clientId ->
+            // A reconnect/history refresh starts while the send request is in flight.
+            viewModel.refreshThread()
+            SteamChatMessage(partner, account.steamId, 100L, 1, body, clientMessageId = clientId)
+        }
+
+        viewModel.sendMessage("hello")
+        runCurrent()
+
+        assertEquals(SteamChatDeliveryState.SENT,
+            viewModel.uiState.value.thread?.messages?.single()?.deliveryState)
+    }
+
+    @Test
+    fun refreshDuringOlderPageLoadDoesNotLeavePaginationStuck() = runTest(mainDispatcher.scheduler) {
+        val gateway = FakeGateway()
+        val viewModel = createViewModel(gateway)
+        gateway.fetchMessagesBlock = { _, partner, before ->
+            if (before != null) viewModel.refreshThread()
+            SteamChatPage(listOf(SteamChatMessage(partner, partner,
+                if (before == null) 100L else 50L, 1, "history")), true)
+        }
+        viewModel.selectAccount(account(1L, "76561198000000001"))
+        runCurrent()
+        viewModel.openThread("76561198000000003")
+        runCurrent()
+
+        viewModel.loadOlder()
+        runCurrent()
+
+        assertEquals(false, viewModel.uiState.value.loadingOlder)
+        assertEquals(listOf(50L, 100L), viewModel.uiState.value.thread?.messages?.map { it.timestamp })
+    }
+
+    @Test
     fun requestGuardRejectsLateAccountAndThreadResponses() {
         val guard = SteamChatRequestGuard()
         val accountA = account(1L, "76561198000000001")

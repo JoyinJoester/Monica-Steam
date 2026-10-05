@@ -1,0 +1,36 @@
+<resources>
+    <string name="steamdb_open_failed">No app can open this link.</string>
+    <string name="steamdb_two_year_low">2-year low: %1$s</string>
+    <string name="steamdb_retry">Retry</string>
+    <string name="steamdb_settings_description">Built-in game data · no API key required</string>
+    <string name="steamdb_settings_help">Open SteamDB game data from a game detail page to view player counts, ratings and updates. Expand a region in the price comparison to see its Steam historical low. Prices follow the selected store region. Free games skip price history queries. Cached results and unavailable data are labelled separately.</string>
+    <string name="steamdb_title">SteamDB game data</string>
+    <string name="steamdb_entry_summary">Players · Steam lowest price · Latest update</string>
+    <string name="steamdb_refresh">Refresh game data</string>
+    <string name="steamdb_region">%1$s · %2$s</string>
+    <string name="steamdb_low_title">Steam historical low</string>
+    <string name="steamdb_price_source">SteamDB · %1$s · Steam store prices only</string>
+    <string name="steamdb_players">Players online</string>
+    <string name="steamdb_players_official">Steam official data</string>
+    <string name="steamdb_players_fallback">SteamDB record</string>
+    <string name="steamdb_peak_today">24-hour peak</string>
+    <string name="steamdb_peak_all">All-time peak</string>
+    <string name="steamdb_followers">Followers</string>
+    <string name="steamdb_rating">SteamDB algorithm rating</string>
+    <string name="steamdb_rating_scope">All languages · Steam purchases · %1$s reviews</string>
+    <string name="steamdb_updated">Latest update</string>
+    <string name="steamdb_updated_scope">Update date recorded by SteamDB</string>
+    <string name="steamdb_occurrences">%1$s occurrences</string>
+    <string name="steamdb_last_low">Last recorded: %1$s</string>
+    <string name="steamdb_loading">Loading data…</string>
+    <string name="steamdb_cached">Cached · %1$s</string>
+    <string name="steamdb_stale">Last available data · %1$s</string>
+    <string name="steamdb_network_error">Network unavailable. Try again or open SteamDB.</string>
+    <string name="steamdb_service_error">This data source is temporarily unavailable. Try again later.</string>
+    <string name="steamdb_rate_limited">Too many requests. Please try again later.</string>
+    <string name="steamdb_no_data">No data available for this item.</string>
+    <string name="steamdb_unknown_region">Price history requires a supported store region and currency.</string>
+    <string name="steamdb_free">Free game · no price history requested</string>
+    <string name="steamdb_open">Open SteamDB</string>
+    <string name="steamdb_attribution">Data from Steam / SteamDB. Monica Steam is an independent app. Inspired by Millennium (MIT).</string>
+</resources>
