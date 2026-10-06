@@ -91,6 +91,7 @@ internal fun MonicaSteamSharedSettingsHost(
     var showPlainAvatarShapeSheet by remember { mutableStateOf(false) }
     var showFramedAvatarShapeSheet by remember { mutableStateOf(false) }
     var showProgressBarStyleDialog by remember { mutableStateOf(false) }
+    var showAppLauncherIconSheet by remember { mutableStateOf(false) }
     val dockContentClearance = LocalSteamDockContentClearance.current
     val inlineAppSupportItems = screenMode == SettingsScreenMode.COMPACT_HOME
 
@@ -246,6 +247,10 @@ internal fun MonicaSteamSharedSettingsHost(
                 ),
                 onClick = { showProgressBarStyleDialog = true }
             )
+            AppLauncherIconSettingsItem(
+                currentIcon = settings.appLauncherIcon,
+                onClick = { showAppLauncherIconSheet = true }
+            )
         },
         additionalAppearanceSearchTexts = listOf(
             context.getString(R.string.interface_scale_title),
@@ -259,6 +264,12 @@ internal fun MonicaSteamSharedSettingsHost(
             context.getString(R.string.validator_progress_bar_style),
             context.getString(R.string.progress_bar_style_linear),
             context.getString(R.string.progress_bar_style_wave),
+            context.getString(R.string.icon_settings_app_icon_title),
+            context.getString(R.string.icon_settings_app_icon_modern_title),
+            context.getString(R.string.icon_settings_app_icon_classic_title),
+            context.getString(R.string.icon_settings_app_icon_classic_subtitle),
+            "桌面图标",
+            "launcher icon",
             "DPI"
         ),
         contentBottomPadding = dockContentClearance + 16.dp,
@@ -306,6 +317,16 @@ internal fun MonicaSteamSharedSettingsHost(
                 showProgressBarStyleDialog = false
             },
             onDismiss = { showProgressBarStyleDialog = false }
+        )
+    }
+    if (showAppLauncherIconSheet) {
+        AppLauncherIconSelectionSheet(
+            currentIcon = settings.appLauncherIcon,
+            onIconSelected = { icon ->
+                settingsViewModel.updateAppLauncherIcon(icon)
+                showAppLauncherIconSheet = false
+            },
+            onDismiss = { showAppLauncherIconSheet = false }
         )
     }
 }

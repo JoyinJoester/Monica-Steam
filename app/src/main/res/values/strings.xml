@@ -3847,9 +3847,11 @@
     <string name="icon_settings_master_switch">Enable icon cards</string>
     <string name="icon_settings_app_icon_title">Main app icon</string>
     <string name="icon_settings_app_icon_modern_title">New icon</string>
-    <string name="icon_settings_app_icon_modern_subtitle">Use the current Monica colorful icon as the launcher icon.</string>
+    <string name="icon_settings_app_icon_modern_subtitle">The Steam girl illustration. This is the default icon on a fresh install.</string>
     <string name="icon_settings_app_icon_classic_title">Classic</string>
-    <string name="icon_settings_app_icon_classic_subtitle">Switch back to the previous Monica classic launcher icon.</string>
+    <string name="icon_settings_app_icon_classic_subtitle">The colourful Monica padlock and key. Switch back anytime.</string>
+    <string name="icon_settings_app_icon_current">Current: %1$s</string>
+    <string name="icon_settings_app_icon_refresh_hint">Your launcher may take a few seconds to refresh the icon.</string>
     <string name="icon_settings_page_switches_title">Page-level icon switches</string>
     <string name="icon_settings_page_switches_desc">Configure icon visibility for each page independently.</string>
     <string name="icon_settings_password_page_title">Password page</string>

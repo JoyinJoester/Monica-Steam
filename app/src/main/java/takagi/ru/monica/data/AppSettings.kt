@@ -588,7 +588,8 @@ data class AppSettings(
 )
 
 enum class AppLauncherIcon {
-    MODERN
+    MODERN,
+    CLASSIC
 }
 
 enum class AppLauncherLabel {

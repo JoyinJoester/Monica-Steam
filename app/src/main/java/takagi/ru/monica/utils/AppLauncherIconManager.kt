@@ -7,41 +7,62 @@ import android.os.Build
 import android.util.Log
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppLauncherIcon
-import takagi.ru.monica.data.AppLauncherLabel
 
 object AppLauncherIconManager {
     private const val TAG = "AppLauncherIconManager"
-    private const val STANDALONE_MAIN_ACTIVITY = "takagi.ru.monica.MonicaSteamActivity"
-    private const val LEGACY_MAIN_ACTIVITY = "takagi.ru.monica.MainActivity"
-    private const val COMPAT_MODERN_ALIAS = "takagi.ru.monica.ModernLauncherAlias"
-    private const val COMPAT_CLASSIC_ALIAS = "takagi.ru.monica.LockLauncherAlias"
-    private const val HOME_MODERN_ALIAS = "takagi.ru.monica.ModernHomeLauncherAlias"
-    private const val HOME_CLASSIC_ALIAS = "takagi.ru.monica.ClassicHomeLauncherAlias"
-    private const val VISIBLE_MODERN_PASS_ALIAS = "takagi.ru.monica.ModernVisibleLauncherAlias"
-    private const val VISIBLE_CLASSIC_PASS_ALIAS = "takagi.ru.monica.ClassicVisibleLauncherAlias"
-    private const val VISIBLE_MODERN_MONICA_ALIAS = "takagi.ru.monica.ModernVisibleLauncherAliasMonica"
-    private const val VISIBLE_CLASSIC_MONICA_ALIAS = "takagi.ru.monica.ClassicVisibleLauncherAliasMonica"
+    private const val MAIN_ACTIVITY = "takagi.ru.monica.MonicaSteamActivity"
+    private const val MODERN_ALIAS = "takagi.ru.monica.ModernVisibleLauncherAlias"
+    private const val CLASSIC_ALIAS = "takagi.ru.monica.ClassicVisibleLauncherAlias"
 
-    fun apply(context: Context, icon: AppLauncherIcon, label: AppLauncherLabel) {
-        repairCompatibilityLaunchTargets(context)
-        applyVisibleLauncherSelection(context, label)
+    internal fun aliasFor(icon: AppLauncherIcon): String = when (icon) {
+        AppLauncherIcon.MODERN -> MODERN_ALIAS
+        AppLauncherIcon.CLASSIC -> CLASSIC_ALIAS
     }
 
-    fun repairLegacyDisabledComponents(context: Context) {
-        repairCompatibilityLaunchTargets(context)
+    // The enabled flags the manifest declares, used to read back a component
+    // that never received a runtime override.
+    internal val manifestDeclaredStates: Map<String, Int> = mapOf(
+        MODERN_ALIAS to PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+        CLASSIC_ALIAS to PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+    )
+
+    /**
+     * Alias class name to enabled state, with the incoming entry ordered first:
+     * launchers below API 33 apply these one by one and must never observe a
+     * moment without a home-screen icon.
+     */
+    internal fun launcherStatesFor(icon: AppLauncherIcon): Map<String, Int> = linkedMapOf(
+        aliasFor(icon) to PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+        aliasFor(oppositeOf(icon)) to PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+    )
+
+    fun apply(context: Context, icon: AppLauncherIcon) {
+        repairLaunchTarget(context)
+        applyVisibleLauncherSelection(context, icon)
+    }
+
+    fun applyIfStale(context: Context, icon: AppLauncherIcon) {
+        if (isSelectionStale(context, icon)) apply(context, icon)
     }
 
     fun repairLaunchEntryPointsAfterUpgrade(
         context: Context,
-        icon: AppLauncherIcon,
-        label: AppLauncherLabel
-    ) {
-        repairCompatibilityLaunchTargets(context)
-        applyVisibleLauncherSelection(context, label)
-    }
+        icon: AppLauncherIcon
+    ) = apply(context, icon)
 
-    fun getCurrentSelection(context: Context): AppLauncherIcon {
-        return AppLauncherIcon.MODERN
+    internal fun isSelectionStale(context: Context, icon: AppLauncherIcon): Boolean {
+        val packageManager = context.packageManager
+        return launcherStatesFor(icon).any { (alias, expected) ->
+            val launchComponent = component(context, alias)
+            if (!packageManager.hasDeclaredActivity(launchComponent)) return@any false
+            val override = packageManager.getComponentEnabledSetting(launchComponent)
+            val effective = if (override == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+                manifestDeclaredStates[alias] ?: override
+            } else {
+                override
+            }
+            effective != expected
+        }
     }
 
     fun resolveBrandingIconRes(context: Context): Int {
@@ -69,21 +90,11 @@ object AppLauncherIconManager {
         }
     }
 
-    private fun repairCompatibilityLaunchTargets(context: Context) {
+    private fun repairLaunchTarget(context: Context) {
         val packageManager = context.packageManager
-        val components = listOf(
-            component(context, STANDALONE_MAIN_ACTIVITY),
-            component(context, LEGACY_MAIN_ACTIVITY),
-            component(context, COMPAT_MODERN_ALIAS),
-            component(context, COMPAT_CLASSIC_ALIAS),
-            component(context, HOME_MODERN_ALIAS),
-            component(context, HOME_CLASSIC_ALIAS)
-        )
-
-        filterDeclaredLauncherComponents(components) { launchComponent ->
-            packageManager.hasDeclaredActivity(launchComponent)
-        }
-            .forEach { launchComponent ->
+        component(context, MAIN_ACTIVITY)
+            .takeIf { packageManager.hasDeclaredActivity(it) }
+            ?.let { launchComponent ->
                 packageManager.setComponentEnabledSettingSafely(
                     launchComponent,
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -94,22 +105,12 @@ object AppLauncherIconManager {
 
     private fun applyVisibleLauncherSelection(
         context: Context,
-        label: AppLauncherLabel
+        icon: AppLauncherIcon
     ) {
         val packageManager = context.packageManager
-        val states = mapOf(
-            component(context, VISIBLE_MODERN_PASS_ALIAS) to componentStateFor(
-                label == AppLauncherLabel.MONICA_PASS
-            ),
-            component(context, VISIBLE_CLASSIC_PASS_ALIAS) to
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            component(context, VISIBLE_MODERN_MONICA_ALIAS) to componentStateFor(
-                label == AppLauncherLabel.MONICA
-            ),
-            component(context, VISIBLE_CLASSIC_MONICA_ALIAS) to
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-        ).filterKeys { launchComponent ->
-            packageManager.hasDeclaredActivity(launchComponent)
+        val states = launcherStatesFor(icon).mapNotNull { (alias, state) ->
+            val launchComponent = component(context, alias)
+            launchComponent.takeIf { packageManager.hasDeclaredActivity(it) }?.let { it to state }
         }
 
         if (states.isEmpty()) return
@@ -136,29 +137,16 @@ object AppLauncherIconManager {
         }
     }
 
-    private fun componentStateFor(shouldEnable: Boolean): Int {
-        return if (shouldEnable) {
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-        } else {
-            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-        }
+    private fun oppositeOf(icon: AppLauncherIcon): AppLauncherIcon = when (icon) {
+        AppLauncherIcon.MODERN -> AppLauncherIcon.CLASSIC
+        AppLauncherIcon.CLASSIC -> AppLauncherIcon.MODERN
     }
 
     private fun component(context: Context, className: String): ComponentName =
         ComponentName(context.packageName, className)
 
-    /**
-     * The standalone APK intentionally omits Monica's legacy launcher aliases.
-     * Keep the filtering separate so a missing component can never reach the
-     * PackageManager binder (Android 16 throws instead of ignoring it).
-     */
-    internal fun <T> filterDeclaredLauncherComponents(
-        components: List<T>,
-        isDeclared: (T) -> Boolean
-    ): List<T> = components.filter { component ->
-        runCatching { isDeclared(component) }.getOrDefault(false)
-    }
-
+    // An undeclared component must never reach the PackageManager binder
+    // (Android 16 throws instead of ignoring it), hence the guarded lookup.
     private fun PackageManager.hasDeclaredActivity(component: ComponentName): Boolean =
         runCatching {
             getActivityInfo(component, PackageManager.MATCH_DISABLED_COMPONENTS)

@@ -3627,9 +3627,11 @@
     <string name="icon_settings_master_switch">启用图标卡片</string>
     <string name="icon_settings_app_icon_title">主应用图标</string>
     <string name="icon_settings_app_icon_modern_title">新图标</string>
-    <string name="icon_settings_app_icon_modern_subtitle">使用当前这套 Monica 彩色图标作为桌面主应用图标。</string>
+    <string name="icon_settings_app_icon_modern_subtitle">Steam 少女插画，全新安装时的默认桌面图标。</string>
     <string name="icon_settings_app_icon_classic_title">经典</string>
-    <string name="icon_settings_app_icon_classic_subtitle">切换回之前的 Monica 经典桌面图标。</string>
+    <string name="icon_settings_app_icon_classic_subtitle">Monica 彩色挂锁与钥匙图标，随时可以切回。</string>
+    <string name="icon_settings_app_icon_current">当前：%1$s</string>
+    <string name="icon_settings_app_icon_refresh_hint">桌面可能需要几秒刷新图标。</string>
     <string name="icon_settings_page_switches_title">页面级图标开关</string>
     <string name="icon_settings_page_switches_desc">按页面分别控制图标显示，不影响其他页面。</string>
     <string name="icon_settings_password_page_title">密码页面</string>

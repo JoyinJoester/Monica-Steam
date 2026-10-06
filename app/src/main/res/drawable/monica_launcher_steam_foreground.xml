@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="8.3333%">
+    <bitmap
+        android:gravity="fill"
+        android:src="@drawable/monica_launcher_steam" />
+</inset>

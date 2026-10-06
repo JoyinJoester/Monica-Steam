@@ -1075,16 +1075,13 @@ class SettingsManager(private val context: Context) {
         dataStore.edit { preferences ->
             preferences[APP_LAUNCHER_ICON_KEY] = icon.name
         }
-        val label = settingsFlow.first().appLauncherLabel
-        AppLauncherIconManager.apply(this.context, icon, label)
+        AppLauncherIconManager.apply(this.context, icon)
     }
 
     suspend fun updateAppLauncherLabel(label: AppLauncherLabel) {
         dataStore.edit { preferences ->
             preferences[APP_LAUNCHER_LABEL_KEY] = label.name
         }
-        val icon = settingsFlow.first().appLauncherIcon
-        AppLauncherIconManager.apply(this.context, icon, label)
     }
 
     suspend fun updatePasswordPageIconEnabled(enabled: Boolean) {
@@ -1567,10 +1564,7 @@ class SettingsManager(private val context: Context) {
         val appliedIcon = runCatching {
             AppLauncherIcon.valueOf(snapshot.appLauncherIcon.trim())
         }.getOrDefault(AppLauncherIcon.MODERN)
-        val appliedLabel = runCatching {
-            AppLauncherLabel.valueOf(snapshot.appLauncherLabel.trim())
-        }.getOrDefault(AppLauncherLabel.MONICA_PASS)
-        AppLauncherIconManager.apply(context, appliedIcon, appliedLabel)
+        AppLauncherIconManager.apply(context, appliedIcon)
     }
     
     // ==================== 预设自定义字段管理 ====================

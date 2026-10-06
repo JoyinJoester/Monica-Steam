@@ -3292,9 +3292,11 @@
     <string name="icon_settings_master_switch">Включить иконки карточек</string>
     <string name="icon_settings_app_icon_title">Иконка приложения</string>
     <string name="icon_settings_app_icon_modern_title">Новая иконка</string>
-    <string name="icon_settings_app_icon_modern_subtitle">Использовать текущую цветную иконку Monica.</string>
+    <string name="icon_settings_app_icon_modern_subtitle">Иллюстрация девушки Steam. Иконка по умолчанию при чистой установке.</string>
     <string name="icon_settings_app_icon_classic_title">Классическая</string>
-    <string name="icon_settings_app_icon_classic_subtitle">Вернуть предыдущую классическую иконку Monica.</string>
+    <string name="icon_settings_app_icon_classic_subtitle">Прежняя цветная иконка Monica с замком и ключом. Вернуться можно в любой момент.</string>
+    <string name="icon_settings_app_icon_current">Текущая: %1$s</string>
+    <string name="icon_settings_app_icon_refresh_hint">Обновление иконки может занять несколько секунд.</string>
     <string name="icon_settings_page_switches_title">Настройки по страницам</string>
     <string name="icon_settings_page_switches_desc">Настройте видимость иконок для каждой страницы.</string>
     <string name="icon_settings_password_page_title">Страница паролей</string>

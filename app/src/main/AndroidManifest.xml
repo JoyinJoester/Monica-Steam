@@ -61,10 +61,6 @@
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Monica">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -89,6 +85,37 @@
                 <data android:scheme="monica" android:host="workshop" android:pathPrefix="/v1/" />
             </intent-filter>
         </activity>
+
+        <!-- The launcher entry lives entirely in these aliases so AppLauncherIconManager
+             can swap the home-screen icon without a second entry ever appearing.
+             Exactly one is enabled at runtime; the new icon is the default. -->
+        <activity-alias
+            android:name=".ModernVisibleLauncherAlias"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:targetActivity=".MonicaSteamActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".ClassicVisibleLauncherAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_classic"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_classic_round"
+            android:targetActivity=".MonicaSteamActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <receiver
             android:name=".steam.quickaccess.SteamAccountStatsWidgetProvider"
@@ -156,6 +183,16 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- An update resets component state for aliases that did not exist before,
+             so re-assert the saved launcher icon choice once the new APK is in place. -->
+        <receiver
+            android:name=".receiver.LauncherEntryRepairReceiver"
+            android:exported="false">
+            <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>

@@ -3323,9 +3323,11 @@ Làm mới hoặc đồng bộ hóa cơ sở dữ liệu KeePass này, sau đó 
     <string name="icon_settings_master_switch">Kích hoạt thẻ biểu tượng</string>
     <string name="icon_settings_app_icon_title">Biểu tượng ứng dụng chính</string>
     <string name="icon_settings_app_icon_modern_title">Biểu tượng mới</string>
-    <string name="icon_settings_app_icon_modern_subtitle">Sử dụng biểu tượng đầy màu sắc Monica hiện tại làm biểu tượng trình khởi chạy.</string>
+    <string name="icon_settings_app_icon_modern_subtitle">Minh họa cô gái Steam, biểu tượng mặc định khi cài mới.</string>
     <string name="icon_settings_app_icon_classic_title">Cổ điển</string>
-    <string name="icon_settings_app_icon_classic_subtitle">Chuyển về biểu tượng trình khởi chạy cổ điển Monica trước đó.</string>
+    <string name="icon_settings_app_icon_classic_subtitle">Ổ khóa nhiều màu của Monica. Bạn có thể đổi lại bất cứ lúc nào.</string>
+    <string name="icon_settings_app_icon_current">Hiện tại: %1$s</string>
+    <string name="icon_settings_app_icon_refresh_hint">Trình khởi chạy có thể mất vài giây để cập nhật biểu tượng.</string>
     <string name="icon_settings_page_switches_title">Chuyển đổi biểu tượng cấp trang</string>
     <string name="icon_settings_page_switches_desc">Định cấu hình khả năng hiển thị biểu tượng cho từng trang một cách độc lập.</string>
     <string name="icon_settings_password_page_title">Trang mật khẩu</string>
