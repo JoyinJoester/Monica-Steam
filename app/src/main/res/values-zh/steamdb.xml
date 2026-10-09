@@ -1,0 +1,36 @@
+<resources>
+    <string name="steamdb_open_failed">没有可打开此链接的应用。</string>
+    <string name="steamdb_two_year_low">近两年史低：%1$s</string>
+    <string name="steamdb_retry">重试</string>
+    <string name="steamdb_settings_description">内置游戏数据，无需配置 API Key</string>
+    <string name="steamdb_settings_help">在游戏详情打开“SteamDB 游戏数据”，可查看在线人数、评分与更新日期；展开各区价格可查看对应地区的 Steam 史低。价格跟随所选商店地区，免费游戏不查询史低。缓存和不可用数据会单独标明。</string>
+    <string name="steamdb_title">SteamDB 游戏数据</string>
+    <string name="steamdb_entry_summary">在线人数 · Steam 史低 · 最近更新</string>
+    <string name="steamdb_refresh">刷新游戏数据</string>
+    <string name="steamdb_region">%1$s · %2$s</string>
+    <string name="steamdb_low_title">Steam 历史最低价</string>
+    <string name="steamdb_price_source">SteamDB · %1$s · 仅 Steam 商店价格</string>
+    <string name="steamdb_players">当前在线</string>
+    <string name="steamdb_players_official">Steam 官方数据</string>
+    <string name="steamdb_players_fallback">SteamDB 记录</string>
+    <string name="steamdb_peak_today">24 小时峰值</string>
+    <string name="steamdb_peak_all">历史峰值</string>
+    <string name="steamdb_followers">关注人数</string>
+    <string name="steamdb_rating">SteamDB 算法评分</string>
+    <string name="steamdb_rating_scope">所有语言 · Steam 购买评价 · %1$s 条</string>
+    <string name="steamdb_updated">最近更新</string>
+    <string name="steamdb_updated_scope">SteamDB 记录的更新日期</string>
+    <string name="steamdb_occurrences">出现 %1$s 次</string>
+    <string name="steamdb_last_low">最近出现：%1$s</string>
+    <string name="steamdb_loading">正在加载数据…</string>
+    <string name="steamdb_cached">缓存 · %1$s</string>
+    <string name="steamdb_stale">上次可用数据 · %1$s</string>
+    <string name="steamdb_network_error">网络不可用，请重试或打开 SteamDB。</string>
+    <string name="steamdb_service_error">此数据来源暂不可用，请稍后重试。</string>
+    <string name="steamdb_rate_limited">请求过于频繁，请稍后重试。</string>
+    <string name="steamdb_no_data">暂无此项数据。</string>
+    <string name="steamdb_unknown_region">史低查询需要可识别的商店地区和币种。</string>
+    <string name="steamdb_free">免费游戏，无需查询史低</string>
+    <string name="steamdb_open">打开 SteamDB</string>
+    <string name="steamdb_attribution">数据来自 Steam / SteamDB。Monica Steam 为独立应用，功能参考 Millennium（MIT）。</string>
+</resources>

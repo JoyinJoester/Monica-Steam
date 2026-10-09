@@ -4,24 +4,38 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import takagi.ru.monica.steam.session.SteamTemporaryAccounts
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.importer.SteamMaFilePayload
 
 class SteamAccountRepository(
     private val dao: SteamAccountDao,
-    private val securityManager: SecurityManager
+    private val securityManager: SecurityManager,
+    private val temporaryAccounts: SteamTemporaryAccounts = SteamTemporaryAccounts.shared
 ) {
     fun observeAccounts(): Flow<List<SteamAccount>> {
         return dao.observeAccounts()
             .map { accounts -> accounts.map(::decryptEntity) }
+            .combine(temporaryAccounts.accounts) { saved, temporary ->
+                val temporarySelected = temporary.any { it.selected }
+                saved.map { if (temporarySelected) it.copy(selected = false) else it } + temporary
+            }
             .flowOn(Dispatchers.Default)
     }
 
-    suspend fun getAccounts(): List<SteamAccount> = dao.getAccounts().map(::decryptEntity)
+    suspend fun getAccounts(): List<SteamAccount> {
+        val saved = dao.getAccounts().map(::decryptEntity)
+        val temporary = temporaryAccounts.accounts.value
+        return saved.map { if (temporary.any { account -> account.selected }) it.copy(selected = false) else it } + temporary
+    }
 
-    suspend fun getAccount(id: Long): SteamAccount? = dao.getById(id)?.let(::decryptEntity)
+    suspend fun getAccount(id: Long): SteamAccount? = temporaryAccounts.get(id) ?: dao.getById(id)?.let(::decryptEntity)
+
+    fun addTemporaryAccount(payload: SteamMaFilePayload): SteamAccount = temporaryAccounts.add(payload)
 
     suspend fun getSelectedAccount(): SteamAccount? {
+        temporaryAccounts.accounts.value.firstOrNull { it.selected }?.let { return it }
         return dao.getSelected()?.let(::decryptEntity)
             ?: dao.getAccounts().firstOrNull()?.let(::decryptEntity)
     }
@@ -67,6 +81,10 @@ class SteamAccountRepository(
     }
 
     suspend fun updateDisplayName(id: Long, displayName: String) {
+        if (temporaryAccounts.get(id) != null) {
+            temporaryAccounts.update(id) { it.copy(displayName = displayName.trim().ifBlank { it.accountName }) }
+            return
+        }
         val existing = dao.getById(id) ?: return
         val existingPlain = decryptEntity(existing)
         dao.update(
@@ -78,6 +96,10 @@ class SteamAccountRepository(
     }
 
     suspend fun replaceAccount(account: SteamAccount): Long {
+        if (account.isTemporary) {
+            temporaryAccounts.update(account.id) { account }
+            return account.id
+        }
         val existing = dao.getById(account.id) ?: return 0L
         val duplicate = findExistingBySteamId(account.steamId)
             ?.takeIf { it.id != account.id }
@@ -113,6 +135,7 @@ class SteamAccountRepository(
     }
 
     suspend fun delete(id: Long) {
+        if (temporaryAccounts.get(id) != null) { temporaryAccounts.remove(id); return }
         val wasSelected = dao.getById(id)?.selected == true
         dao.deleteById(id)
         if (wasSelected) {
@@ -121,6 +144,10 @@ class SteamAccountRepository(
     }
 
     suspend fun select(id: Long) {
+        val isTemporary = temporaryAccounts.get(id) != null
+        if (!isTemporary && dao.getById(id) == null) return
+        temporaryAccounts.select(id)
+        if (isTemporary) return
         dao.selectAccount(id)
     }
 
@@ -183,6 +210,12 @@ class SteamAccountRepository(
         refreshToken: String?,
         steamLoginSecure: String?
     ) {
+        if (temporaryAccounts.get(id) != null) {
+            temporaryAccounts.update(id) { it.copy(accessToken = accessToken,
+                refreshToken = refreshToken ?: it.refreshToken,
+                steamLoginSecure = steamLoginSecure ?: it.steamLoginSecure) }
+            return
+        }
         val existing = dao.getById(id) ?: return
         dao.update(
             existing.copy(

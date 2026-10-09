@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -114,6 +115,13 @@ private suspend fun loadSteamAvatar(context: Context, steamId: String): ImageBit
 
         freshAvatar ?: cachedAvatar
     }
+
+/** Shared with RemoteViews: the avatar visible in the app is immediately available to widgets. */
+internal fun readCachedSteamAvatarBitmap(context: Context, steamId: String): android.graphics.Bitmap? =
+    readSteamAvatarCache(steamAvatarCacheFile(context, steamId))?.asAndroidBitmap()
+
+internal suspend fun refreshSteamAvatarBitmap(context: Context, steamId: String): android.graphics.Bitmap? =
+    loadSteamAvatar(context, steamId)?.asAndroidBitmap()
 
 private fun fetchSteamAvatarUrl(steamId: String): String? {
     val normalizedSteamId = steamId.trim()

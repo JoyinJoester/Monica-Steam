@@ -98,6 +98,7 @@ fun SteamWebBrowserScreen(
     expectedSteamId: String? = null,
     title: String? = null,
     requireAuthenticatedSession: Boolean = false,
+    temporarySession: Boolean = false,
     clientMode: SteamWebClientMode = SteamWebClientMode.DEFAULT,
     automationFactory: ((String) -> SteamWebPageAutomation)? = null,
     onDownloadRequested: ((String) -> Unit)? = null,
@@ -111,11 +112,12 @@ fun SteamWebBrowserScreen(
         SteamWebClientMode.COMMUNITY_DESKTOP -> Color(0xFF1B2838)
         SteamWebClientMode.DEFAULT -> MaterialTheme.colorScheme.background
     }
-    val sessionDecision = remember(expectedSteamId, steamLoginSecure, requireAuthenticatedSession) {
+    val sessionDecision = remember(expectedSteamId, steamLoginSecure, requireAuthenticatedSession, temporarySession) {
         SteamWebAccountSessionPolicy.decide(
             expectedSteamId = expectedSteamId,
             steamLoginSecure = steamLoginSecure,
             requireAuthenticatedSession = requireAuthenticatedSession,
+            temporarySession = temporarySession,
         )
     }
     val sessionScopeKey = remember(

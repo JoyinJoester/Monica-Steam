@@ -1,0 +1,168 @@
+{
+  "title": "Monica Steam · 临时登录",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "phone",
+      "name": "临时登录",
+      "x": 0,
+      "y": 0,
+      "w": 412,
+      "h": 780
+    }
+  ],
+  "groups": [
+    {
+      "id": "top",
+      "x": 0,
+      "y": 20,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bar",
+          "kind": "topAppBar",
+          "label": "登录 Steam",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "size": 412
+        }
+      ]
+    },
+    {
+      "id": "modes",
+      "x": 24,
+      "y": 110,
+      "axis": "x",
+      "items": [
+        {
+          "id": "migrate",
+          "kind": "button",
+          "label": "迁移验证器",
+          "icon": null,
+          "variant": "outlined",
+          "size": 180,
+          "h": 40
+        },
+        {
+          "id": "login",
+          "kind": "button",
+          "label": "仅登录账号",
+          "icon": null,
+          "variant": "filled",
+          "size": 180,
+          "h": 40
+        }
+      ]
+    },
+    {
+      "id": "fields",
+      "x": 24,
+      "y": 178,
+      "axis": "y",
+      "items": [
+        {
+          "id": "name",
+          "kind": "textField",
+          "label": "Steam 账号",
+          "icon": null,
+          "variant": "outlined",
+          "size": 364,
+          "h": 56
+        },
+        {
+          "id": "password",
+          "kind": "textField",
+          "label": "密码",
+          "icon": null,
+          "variant": "outlined",
+          "size": 364,
+          "h": 56,
+          "icon2": "visibility_off"
+        },
+        {
+          "id": "remark",
+          "kind": "textField",
+          "label": "备注（可选）",
+          "icon": null,
+          "variant": "outlined",
+          "size": 364,
+          "h": 56
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "x": 24,
+      "y": 388,
+      "axis": "y",
+      "items": [
+        {
+          "id": "temporary",
+          "kind": "listItem",
+          "label": "临时登录",
+          "icon": null,
+          "variant": "filled",
+          "size": 364,
+          "supporting": "不保存本次登录凭据",
+          "switch": true,
+          "checked": true,
+          "h": 80,
+          "fill": "primaryContainer"
+        },
+        {
+          "id": "scope",
+          "kind": "listItem",
+          "label": "退出后自动移除",
+          "icon": "schedule",
+          "variant": "filled",
+          "size": 364,
+          "supporting": "后台切换保留；结束应用或进程后移除",
+          "h": 80,
+          "fill": "surfaceContainerLow"
+        }
+      ]
+    },
+    {
+      "id": "hint",
+      "x": 28,
+      "y": 575,
+      "axis": "x",
+      "items": [
+        {
+          "id": "web",
+          "kind": "listItem",
+          "label": "部分功能不可用",
+          "supporting": "内置网页登录、小组件和账号导出",
+          "icon": "info",
+          "variant": "filled",
+          "size": 356,
+          "h": 70
+        }
+      ]
+    },
+    {
+      "id": "submit",
+      "x": 24,
+      "y": 682,
+      "axis": "x",
+      "items": [
+        {
+          "id": "submitButton",
+          "kind": "button",
+          "label": "临时登录",
+          "icon": "login",
+          "variant": "filled",
+          "size": 364,
+          "h": 56
+        }
+      ]
+    }
+  ]
+}

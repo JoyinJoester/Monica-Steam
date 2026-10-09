@@ -123,7 +123,19 @@ class SteamStoreService(
             steamLoginSecure = steamLoginSecure,
             countryCode = countryCode
         )
-        val featured = SteamStoreParser.parseFeatured(body, countryCode)
+        // Featured categories mixes hardware SKUs (even with type=0) into this
+        // ranking. The game catalog applies Steam's category1=998 server-side.
+        val topGames = runCatching {
+            catalogService.page(
+                filter = SteamStoreBrowseFilter.TOP_SELLERS,
+                filters = SteamStoreFilterSelection(), start = 0, count = 12,
+                language = language, countryCode = countryCode,
+                steamLoginSecure = steamLoginSecure
+            ).items
+        }.onFailure { error ->
+            SteamDiagLogger.append("store_home top_games_failed type=${error.javaClass.simpleName}")
+        }.getOrDefault(emptyList())
+        val featured = SteamStoreParser.parseFeatured(body, countryCode).copy(topSellers = topGames)
         val events = runCatching {
             SteamStoreParser.parseDiscoveryEvents(
                 get(

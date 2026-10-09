@@ -11,6 +11,7 @@ object SteamMaFileBackupCodec {
     private val json = Json { ignoreUnknownKeys = true }
 
     fun encode(account: SteamAccount): String {
+        require(!account.isTemporary) { "Temporary login credentials cannot be exported" }
         val root = runCatching {
             json.parseToJsonElement(account.rawSteamGuardJson).jsonObject.toMutableMap()
         }.getOrElse {

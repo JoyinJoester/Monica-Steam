@@ -27,6 +27,21 @@ class SteamMiniProfileDecorRepository private constructor(
     )
     private val accountLocks = ConcurrentHashMap<String, Mutex>()
 
+    fun loadCached(steamId: String): SteamMiniProfileDecor? {
+        val cached = read(steamId) ?: return null
+        val summary = cached.summary
+        val fresh = System.currentTimeMillis() - cached.fetchedAt <= CURRENT_GAME_MAX_STALE_MILLIS
+        return SteamMiniProfileDecor(
+            personaName = summary.personaName,
+            level = summary.level,
+            avatarFrameUrl = summary.avatarFrameUrl,
+            avatarUrl = summary.avatarUrl,
+            currentGameName = summary.currentGameName.takeIf { fresh },
+            currentGameAppId = summary.currentGameAppId.takeIf { fresh },
+            currentGameImageUrl = summary.currentGameImageUrl.takeIf { fresh }
+        )
+    }
+
     suspend fun load(steamId: String): SteamMiniProfileDecor? {
         if (SteamMiniProfileBackgroundService.steamIdToAccountId(steamId) == null) return null
         val lock = accountLocks.getOrPut(steamId) { Mutex() }

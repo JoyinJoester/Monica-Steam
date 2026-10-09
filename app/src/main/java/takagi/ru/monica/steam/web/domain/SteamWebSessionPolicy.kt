@@ -31,6 +31,7 @@ data class SteamWebCookieWrite(
 )
 
 enum class SteamWebSessionProblem {
+    TEMPORARY_SESSION,
     AUTHENTICATED_SESSION_REQUIRED,
     INVALID_SESSION,
     EXPECTED_ACCOUNT_REQUIRED,
@@ -49,7 +50,12 @@ object SteamWebAccountSessionPolicy {
         expectedSteamId: String?,
         steamLoginSecure: String?,
         requireAuthenticatedSession: Boolean,
+        temporarySession: Boolean = false,
     ): SteamWebSessionDecision {
+        if (temporarySession) return SteamWebSessionDecision(
+            canLoad = false, installAuthenticatedCookie = false,
+            problem = SteamWebSessionProblem.TEMPORARY_SESSION,
+        )
         val expectedId = expectedSteamId?.trim().orEmpty()
         val loginSecure = steamLoginSecure?.trim().orEmpty()
         if (loginSecure.isEmpty()) {

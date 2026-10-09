@@ -40,7 +40,7 @@ import takagi.ru.monica.steam.navigation.reorderFixedDockOrder
 import takagi.ru.monica.steam.navigation.reorderLiquidGlassDockOrder
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.rememberSteamAdaptiveLayout
-import takagi.ru.monica.steam.itad.ui.ItadSettingsScreen
+import takagi.ru.monica.steam.steamdb.ui.SteamDbSettingsScreen
 import takagi.ru.monica.steam.notifications.settings.ui.SteamNotificationSettingsScreen
 import takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationAutoScreen
 import takagi.ru.monica.steam.network.optimization.ui.SteamNetworkResolverSettingsScreen
@@ -199,7 +199,7 @@ fun MonicaSteamSettingsScreen(
             onOpenExtensions = { child = SteamSettingsChild.EXTENSIONS },
             onOpenNetworkOptimization = { child = SteamSettingsChild.NETWORK_OPTIMIZATION },
             onOpenStoreHints = { child = SteamSettingsChild.STORE_HINTS },
-            onOpenItad = { child = SteamSettingsChild.PRICE_DATA },
+            onOpenPriceData = { child = SteamSettingsChild.PRICE_DATA },
             onOpenDataManagement = { child = SteamSettingsChild.DATA_MANAGEMENT },
             onOpenAppearance = { child = SteamSettingsChild.APPEARANCE },
             onOpenSteamFeatures = { child = SteamSettingsChild.STEAM_FEATURES },
@@ -423,7 +423,7 @@ fun MonicaSteamSettingsScreen(
                     onNavigateBack = { child = SteamSettingsChild.STEAM_FEATURES },
                     modifier = Modifier.fillMaxSize()
                 )
-                SteamSettingsChild.PRICE_DATA -> ItadSettingsScreen(
+                SteamSettingsChild.PRICE_DATA -> SteamDbSettingsScreen(
                     onNavigateBack = { child = SteamSettingsChild.STEAM_FEATURES },
                     modifier = Modifier.fillMaxSize()
                 )

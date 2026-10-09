@@ -44,6 +44,7 @@ internal fun SteamOfficialAddFriendDialog(
                         }
                 },
                 expectedSteamId = account?.steamId,
+                temporarySession = account?.isTemporary == true,
                 title = stringResource(R.string.steam_friend_add_on_steam),
                 requireAuthenticatedSession = true,
                 onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,

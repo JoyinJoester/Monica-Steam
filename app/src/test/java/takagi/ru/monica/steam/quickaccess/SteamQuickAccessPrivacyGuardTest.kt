@@ -71,7 +71,7 @@ class SteamQuickAccessPrivacyGuardTest {
     @Test
     fun recentWidgetUsesHeightToChooseOneOrTwoRows() {
         assertFalse(SteamRecentGamesWidgetProvider.shouldShowTwoGames(60))
-        assertTrue(SteamRecentGamesWidgetProvider.shouldShowTwoGames(160))
+        assertTrue(SteamRecentGamesWidgetProvider.shouldShowTwoGames(200))
     }
 
     @Test

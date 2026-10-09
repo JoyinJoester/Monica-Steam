@@ -141,6 +141,8 @@
                 android:resource="@xml/steam_recent_games_widget_info" />
         </receiver>
 
+        <receiver android:name=".steam.quickaccess.SteamWidgetPinReceiver" android:exported="false" />
+
         <activity
             android:name=".steam.quickaccess.SteamWidgetConfigureActivity"
             android:excludeFromRecents="true"

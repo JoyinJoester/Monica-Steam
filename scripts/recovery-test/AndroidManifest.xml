@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Only included by recovery-test.gradle in the isolated test application. -->
+    <application>
+        <activity android:name="androidx.activity.ComponentActivity" android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
+</manifest>

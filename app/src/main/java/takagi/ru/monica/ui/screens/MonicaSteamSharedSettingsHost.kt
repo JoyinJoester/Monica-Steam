@@ -31,7 +31,7 @@ import takagi.ru.monica.steam.quickaccess.SteamQuickAccessInstaller
 import takagi.ru.monica.steam.foundation.ui.SteamUiScalePreferences
 import takagi.ru.monica.steam.foundation.ui.SteamAvatarShapeOption
 import takagi.ru.monica.steam.foundation.ui.SteamAvatarShapePreferences
-import takagi.ru.monica.steam.itad.ui.ItadSettingsEntry
+import takagi.ru.monica.steam.steamdb.ui.SteamDbSettingsEntry
 import takagi.ru.monica.steam.network.optimization.ui.components.SteamNetworkOptimizationPullCard
 import takagi.ru.monica.steam.network.optimization.ui.components.SteamNetworkOptimizationPullMaxDistance
 import takagi.ru.monica.steam.network.optimization.ui.components.SteamNetworkOptimizationPullTriggerDistance
@@ -64,7 +64,7 @@ internal fun MonicaSteamSharedSettingsHost(
     onOpenExtensions: () -> Unit,
     onOpenNetworkOptimization: () -> Unit,
     onOpenStoreHints: () -> Unit,
-    onOpenItad: () -> Unit,
+    onOpenPriceData: () -> Unit,
     onOpenDataManagement: () -> Unit,
     onOpenAppearance: () -> Unit,
     onOpenSteamFeatures: () -> Unit,
@@ -180,8 +180,8 @@ internal fun MonicaSteamSharedSettingsHost(
         additionalSettingsEntrySearchTexts = listOf(
             context.getString(R.string.steam_store_hint_settings_title),
             context.getString(R.string.steam_store_hint_settings_description),
-            context.getString(R.string.itad_settings_title),
-            context.getString(R.string.itad_settings_description),
+            context.getString(R.string.steamdb_title),
+            context.getString(R.string.steamdb_settings_description),
             context.getString(R.string.steam_link_handling_title),
             context.getString(R.string.steam_link_handling_description)
         ),
@@ -206,7 +206,7 @@ internal fun MonicaSteamSharedSettingsHost(
                 SteamSettingsAdditionalGroup.STEAM_EXPERIENCE -> {
                     SteamLinkHandlingSettingsEntry()
                     SteamStoreHintSettingsEntry(onClick = onOpenStoreHints)
-                    ItadSettingsEntry(onClick = onOpenItad)
+                    SteamDbSettingsEntry(onClick = onOpenPriceData)
                 }
             }
         },

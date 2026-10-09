@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.quickaccess
 
 import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import takagi.ru.monica.MonicaSteamActivity
@@ -28,4 +29,12 @@ object SteamQuickAccessContract {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
+
+    fun configureIntent(context: Context, widgetId: Int): PendingIntent = PendingIntent.getActivity(
+        context, widgetId,
+        Intent(context, SteamWidgetConfigureActivity::class.java)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+            .setData(android.net.Uri.parse("monica-widget://configure/$widgetId")),
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
 }

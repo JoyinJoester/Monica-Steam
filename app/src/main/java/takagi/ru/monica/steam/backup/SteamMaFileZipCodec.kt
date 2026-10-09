@@ -21,13 +21,14 @@ class SteamMaFileZipCodec(
     private val parser: SteamMaFileParser = SteamMaFileParser()
 ) {
     fun encode(accounts: List<SteamAccount>): ByteArray {
-        require(accounts.isNotEmpty()) { "No Steam accounts to export" }
-        require(accounts.size <= MAX_ENTRIES) { "Too many Steam accounts" }
+        val savedAccounts = accounts.filterNot { it.isTemporary }
+        require(savedAccounts.isNotEmpty()) { "No saved Steam accounts to export" }
+        require(savedAccounts.size <= MAX_ENTRIES) { "Too many Steam accounts" }
 
         val output = ByteArrayOutputStream()
         ZipOutputStream(output).use { zip ->
             val usedNames = mutableSetOf<String>()
-            accounts.forEach { account ->
+            savedAccounts.forEach { account ->
                 val entryName = uniqueName(SteamMaFileBackupCodec.fileName(account), usedNames)
                 val content = SteamMaFileBackupCodec.encode(account).toByteArray(Charsets.UTF_8)
                 require(content.size <= MAX_ENTRY_BYTES) { "maFile entry is too large" }

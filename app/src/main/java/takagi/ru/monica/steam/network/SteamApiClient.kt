@@ -327,7 +327,8 @@ class SteamApiClient(
             return if (target?.encodedPath?.startsWith("/login/") == true) {
                 SteamApiException(
                     message = "Steam community session expired",
-                    httpStatusCode = response.code
+                    httpStatusCode = response.code,
+                    authenticationRequired = true
                 )
             } else {
                 SteamApiException(
@@ -338,7 +339,8 @@ class SteamApiClient(
         }
         return SteamApiException(
             message = "Steam community request failed: ${response.code}",
-            httpStatusCode = response.code
+            httpStatusCode = response.code,
+            authenticationRequired = response.code == 401
         )
     }
 
@@ -356,5 +358,6 @@ class SteamApiClient(
 class SteamApiException(
     message: String,
     val eResult: Int? = null,
-    val httpStatusCode: Int? = null
+    val httpStatusCode: Int? = null,
+    val authenticationRequired: Boolean = false
 ) : Exception(message)

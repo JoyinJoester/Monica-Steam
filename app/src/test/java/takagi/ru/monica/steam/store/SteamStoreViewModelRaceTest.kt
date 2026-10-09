@@ -51,7 +51,7 @@ class SteamStoreViewModelRaceTest {
         ).readText()
 
         assertTrue(source.contains("fun loadMoreReviews()"))
-        assertTrue(source.contains("reviewRequestIsCurrent(accountId, appId, generation)"))
+        assertTrue(source.contains("reviewRequestIsCurrent(accountId, appId, generation, filters)"))
         assertTrue(source.contains("mergePage(terminalPage)"))
         assertTrue(source.contains("cache.writeDetail(accountId, updatedDetail)"))
         assertTrue(SteamStoreUiState::class.java.declaredFields.any { it.name == "loadingMoreReviews" })

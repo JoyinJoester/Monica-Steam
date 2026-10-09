@@ -26,6 +26,8 @@ import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.core.SteamTotp
 import takagi.ru.monica.steam.confirmations.SteamConfirmationRiskEvaluator
+import takagi.ru.monica.steam.confirmations.fetchSteamConfirmationsWithSessionRecovery
+import takagi.ru.monica.steam.network.SteamApiException
 import takagi.ru.monica.steam.analytics.SteamInventoryValuation
 import takagi.ru.monica.steam.analytics.SteamListingAnalysis
 import takagi.ru.monica.steam.analytics.SteamMarketAnalytics
@@ -248,6 +250,7 @@ class SteamViewModel(
     private val _uiState = MutableStateFlow(SteamUiState())
     val uiState: StateFlow<SteamUiState> = _uiState.asStateFlow()
     private var pendingLoginPollJob: Job? = null
+    private var pendingLoginRequestJob: Job? = null
     private val mdbxAccountStore = mdbxRepository?.let { SteamMdbxAccountStore(it, parser) }
     private var localAccounts: List<SteamAccount> = emptyList()
     private var mdbxAccountRecords: List<SteamMdbxAccountRecord> = emptyList()
@@ -530,17 +533,19 @@ class SteamViewModel(
         userName: String,
         password: String,
         displayName: String = "",
-        sessionOnly: Boolean = false
+        sessionOnly: Boolean = false,
+        temporary: Boolean = false
     ) {
-        viewModelScope.launch {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = viewModelScope.launch {
             pendingLoginPollJob?.cancel()
             clearPendingLoginTarget()
             pendingLoginDisplayName = displayName.trim().takeIf { it.isNotBlank() }
             setLoading(true)
             _uiState.value = _uiState.value.copy(pendingQrLoginChallenge = null)
             when (val result = withContext(Dispatchers.IO) {
-                if (sessionOnly) {
-                    loginImportService.beginSessionLogin(userName, password)
+                if (sessionOnly || temporary) {
+                    loginImportService.beginSessionLogin(userName, password, temporary = temporary)
                 } else {
                     loginImportService.beginLogin(userName, password)
                 }
@@ -579,7 +584,8 @@ class SteamViewModel(
     ) {
         val account = accountById(accountId) ?: return
         if (account.hasRealSteamId) return
-        viewModelScope.launch {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = viewModelScope.launch {
             pendingLoginPollJob?.cancel()
             pendingLoginCompletionAccountId = accountId
             pendingLoginRebindAccount = false
@@ -620,7 +626,8 @@ class SteamViewModel(
         password: String
     ) {
         accountById(accountId) ?: return
-        viewModelScope.launch {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = viewModelScope.launch {
             pendingLoginPollJob?.cancel()
             pendingLoginCompletionAccountId = accountId
             pendingLoginRebindAccount = true
@@ -657,9 +664,11 @@ class SteamViewModel(
 
     fun beginSteamQrLogin(
         sessionOnly: Boolean = false,
-        displayName: String = ""
+        displayName: String = "",
+        temporary: Boolean = false
     ) {
-        viewModelScope.launch {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = viewModelScope.launch {
             pendingLoginPollJob?.cancel()
             clearPendingLoginTarget()
             pendingLoginDisplayName = displayName.trim().takeIf { it.isNotBlank() }
@@ -669,7 +678,7 @@ class SteamViewModel(
                 pendingQrLoginChallenge = null
             )
             when (val result = withContext(Dispatchers.IO) {
-                loginImportService.beginQrLogin(sessionOnly = sessionOnly)
+                loginImportService.beginQrLogin(sessionOnly = sessionOnly, temporary = temporary)
             }) {
                 is SteamLoginImportService.QrLoginResult.ChallengeRequired -> {
                     _uiState.value = _uiState.value.copy(
@@ -705,7 +714,8 @@ class SteamViewModel(
     fun submitSteamLoginCode(code: String) {
         val challenge = _uiState.value.pendingLoginChallenge ?: return
         if (!challenge.requiresCode) return
-        viewModelScope.launch {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = viewModelScope.launch {
             pendingLoginPollJob?.cancel()
             setLoading(true)
             when (val result = withContext(Dispatchers.IO) {
@@ -738,6 +748,8 @@ class SteamViewModel(
     }
 
     fun cancelSteamLoginChallenge() {
+        pendingLoginRequestJob?.cancel()
+        pendingLoginRequestJob = null
         pendingLoginPollJob?.cancel()
         pendingLoginPollJob = null
         _uiState.value.pendingLoginChallenge?.pendingSessionId?.let { sessionId ->
@@ -752,6 +764,7 @@ class SteamViewModel(
         )
         pendingLoginDisplayName = null
         clearPendingLoginTarget()
+        setLoading(false)
     }
 
     fun deleteAccount(id: Long) {
@@ -778,6 +791,9 @@ class SteamViewModel(
             setLoading(true)
             runCatching {
                 val accounts = accountIds.distinct().mapNotNull(::accountById)
+                require(accounts.none { it.isTemporary }) {
+                    appContext.getString(R.string.steam_temporary_export_unavailable)
+                }
                 require(accounts.isNotEmpty()) {
                     appContext.getString(R.string.steam_transfer_mafile_failed)
                 }
@@ -862,7 +878,23 @@ class SteamViewModel(
                 }
                 val freshAccount = ensureSteamSession(account)
                     ?: throw IllegalStateException(account.confirmationUnavailableMessage())
-                withContext(Dispatchers.IO) { confirmationService.fetch(freshAccount) }
+                withContext(Dispatchers.IO) {
+                    fetchSteamConfirmationsWithSessionRecovery(
+                        account = freshAccount,
+                        forceRefresh = { expired ->
+                            if (!confirmationRequestIsCurrent(account.id, accountGeneration, loadGeneration)) {
+                                throw CancellationException("Confirmation account changed")
+                            }
+                            ensureSteamSession(expired, forceRefresh = true)
+                        },
+                        fetch = { current ->
+                            if (!confirmationRequestIsCurrent(account.id, accountGeneration, loadGeneration)) {
+                                throw CancellationException("Confirmation account changed")
+                            }
+                            confirmationService.fetch(current)
+                        }
+                    )
+                }
             }.onSuccess { confirmations ->
                 if (!confirmationRequestIsCurrent(account.id, accountGeneration, loadGeneration)) {
                     return@onSuccess
@@ -888,8 +920,14 @@ class SteamViewModel(
                 if (!confirmationRequestIsCurrent(account.id, accountGeneration, loadGeneration)) {
                     return@onFailure
                 }
-                val message = error.message
-                    ?: appContext.getString(R.string.steam_cannot_refresh_confirmations)
+                if (error is CancellationException) throw error
+                val message = when {
+                    error is SteamApiException && error.authenticationRequired ->
+                        appContext.getString(R.string.steam_confirmation_session_expired)
+                    error.message.orEmpty().trim().startsWith("Oh no", ignoreCase = true) ->
+                        appContext.getString(R.string.steam_confirmation_request_rejected)
+                    else -> error.message ?: appContext.getString(R.string.steam_cannot_refresh_confirmations)
+                }
                 _uiState.value = _uiState.value.copy(
                     confirmations = if (clearExistingOnFailure) {
                         emptyList()
@@ -2174,6 +2212,15 @@ class SteamViewModel(
         result: SteamLoginImportService.LoginResult.ReadyForImport,
         displayNameOverride: String? = pendingLoginDisplayName
     ): Int {
+        if (result.payload.temporary) {
+            val account = repository.addTemporaryAccount(result.toLoginOnlyAccountPayload(displayNameOverride))
+            // Temporary accounts always use the process-local source, never the selected MDBX vault.
+            localAccounts = repository.getAccounts()
+            selectStorageSource(SteamStorageSource.Local, forceRefresh = true)
+            SteamAccountSourceRepository.get(appContext).selectStorageSource(SteamStorageSource.Local)
+            selectRuntimeAccount(account.id)
+            return R.string.steam_temporary_login_done
+        }
         val completionAccountId = pendingLoginCompletionAccountId
         if (completionAccountId != null) {
             val isRebind = pendingLoginRebindAccount
@@ -2216,7 +2263,7 @@ class SteamViewModel(
         }
         if (result.payload.sessionOnly) {
             val existingAccount = _uiState.value.accounts.firstOrNull {
-                it.steamId == result.steamId
+                it.steamId == result.steamId && !it.isTemporary
             }
             val payload = result.toLoginOnlyAccountPayload(
                 displayNameOverride = displayNameOverride,
@@ -2803,7 +2850,7 @@ class SteamViewModel(
         )
     }
 
-    private suspend fun ensureSteamSession(account: SteamAccount): SteamAccount? = withContext(Dispatchers.IO) {
+    private suspend fun ensureSteamSession(account: SteamAccount, forceRefresh: Boolean = false): SteamAccount? = withContext(Dispatchers.IO) {
         val source = _uiState.value.storageSource
         val sourceGeneration = storageSourceLoadGeneration
         if (!account.hasRealSteamId) {
@@ -2815,8 +2862,9 @@ class SteamViewModel(
             return@withContext null
         }
         val resolved = runCatching {
-            sessionResolver.resolveOrKeep(account)
+            sessionResolver.resolveOrKeep(account, forceRefresh = forceRefresh)
         }.onFailure { error ->
+            if (error is CancellationException) throw error
             SteamDiagLogger.append(
                 "session_resolve failed type=${error::class.java.simpleName}"
             )
@@ -2852,7 +2900,8 @@ class SteamViewModel(
     ) {
         val previous = _uiState.value
         val previousSelected = previous.selectedAccountId
-        val selected = accounts.firstOrNull { it.id == previousSelected }
+        val selected = accounts.firstOrNull { it.isTemporary && it.selected }
+            ?: accounts.firstOrNull { it.id == previousSelected }
             ?: accounts.firstOrNull { it.selected }
             ?: accounts.firstOrNull()
         val selectedChanged = previous.selectedAccountId != selected?.id

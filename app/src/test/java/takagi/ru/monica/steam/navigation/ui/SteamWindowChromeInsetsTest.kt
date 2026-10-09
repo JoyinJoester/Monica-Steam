@@ -60,7 +60,7 @@ class SteamWindowChromeInsetsTest {
     fun topLevelPagesUseTheSharedWindowChromeInset() {
         listOf(
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt",
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt",
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt",
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).forEach { path ->

@@ -31,6 +31,7 @@ import takagi.ru.monica.steam.web.domain.SteamWebSessionProblem
 internal fun SteamWebSessionError(problem: SteamWebSessionProblem?) {
     val message = stringResource(
         when (problem) {
+            SteamWebSessionProblem.TEMPORARY_SESSION -> R.string.steam_temporary_web_unavailable
             SteamWebSessionProblem.IDENTITY_MISMATCH ->
                 R.string.steam_web_session_identity_mismatch
             SteamWebSessionProblem.INVALID_SESSION -> R.string.steam_web_session_invalid

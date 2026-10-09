@@ -1,0 +1,18 @@
+<resources>
+    <string name="store_detail_region_unavailable">Unavailable</string>
+    <string name="store_region_hong_kong">Hong Kong, China</string>
+    <string name="store_region_taiwan">Taiwan, China</string>
+    <string name="store_detail_current_region">Current region</string>
+    <string name="store_detail_region">Region</string>
+    <string name="store_detail_current_discount">Price / discount</string>
+    <string name="store_detail_original">Original</string>
+    <string name="store_detail_compare">Compare prices</string>
+    <string name="store_detail_purchase">Purchase options</string>
+    <string name="store_detail_reviews">Reviews</string>
+    <string name="store_detail_official">Open in Steam</string>
+    <string name="store_detail_region_loading">Updating price for %1$s</string>
+    <string name="store_detail_region_missing">No price available for %1$s</string>
+    <string name="store_detail_local_currency">Local currency</string>
+    <string name="store_detail_low">Steam low</string>
+    <string name="store_detail_low_date">Last: %1$s</string>
+</resources>

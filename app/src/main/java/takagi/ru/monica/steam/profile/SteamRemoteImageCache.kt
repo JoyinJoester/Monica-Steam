@@ -28,6 +28,13 @@ class SteamRemoteImageCache private constructor(context: Context) {
     private val locks = ConcurrentHashMap<String, Mutex>()
     private val pruneLock = Mutex()
 
+    /** Widgets must publish library data even while Steam/CDN requests are unavailable. */
+    suspend fun loadCached(url: String): Bitmap? = withContext(Dispatchers.IO) {
+        if (!isAllowedSteamImageUrl(url)) return@withContext null
+        // A miss returns immediately; do not wait for an in-flight download's mutex.
+        read(File(directory, "${imageCacheKey(url)}.img"))
+    }
+
     suspend fun load(url: String): Bitmap? {
         if (!isAllowedSteamImageUrl(url)) return null
         return downloadSlots.withPermit {

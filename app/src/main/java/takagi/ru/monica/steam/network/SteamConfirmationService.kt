@@ -10,6 +10,7 @@ import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import takagi.ru.monica.steam.core.SteamTotp
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.health.SteamServerTimeService
 
 data class SteamConfirmation(
     val id: String,
@@ -29,16 +30,20 @@ data class SteamBatchResult(
 )
 
 class SteamConfirmationService(
-    private val api: SteamApiClient = SteamApiClient()
+    private val api: SteamApiClient = SteamApiClient(),
+    private val serverTimeSeconds: () -> Long = SteamServerTimeService(api)::queryServerTimeSeconds
 ) {
-    fun fetch(account: SteamAccount, nowSeconds: Long = System.currentTimeMillis() / 1000L): List<SteamConfirmation> {
+    fun fetch(account: SteamAccount, nowSeconds: Long = serverTimeSeconds()): List<SteamConfirmation> {
         require(account.canUseConfirmations) { "Steam account has no identity secret or access token" }
-        val query = baseQuery(account, nowSeconds, "list") + ("tag" to "list")
+        val query = baseQuery(account, nowSeconds, "conf") + ("tag" to "conf")
         val payload = api.communityGetJson(
             path = "/mobileconf/getlist",
             query = query,
             cookies = cookies(account)
         )
+        if (payload.bool("needauth") == true || payload.bool("needsauth") == true) {
+            throw SteamApiException("Steam confirmation session expired", authenticationRequired = true)
+        }
         if (payload.bool("success") != true) {
             val message = payload.stringAny("message", "error", "detail")
                 ?: "Steam confirmation request failed"
@@ -52,7 +57,7 @@ class SteamConfirmationService(
         account: SteamAccount,
         confirmation: SteamConfirmation,
         accept: Boolean,
-        nowSeconds: Long = System.currentTimeMillis() / 1000L
+        nowSeconds: Long = serverTimeSeconds()
     ): Boolean {
         require(account.canUseConfirmations) { "Steam account has no identity secret, real SteamID, or access token" }
         val op = if (accept) "allow" else "cancel"
@@ -74,12 +79,13 @@ class SteamConfirmationService(
         account: SteamAccount,
         confirmations: List<SteamConfirmation>,
         accept: Boolean,
-        nowSeconds: Long = System.currentTimeMillis() / 1000L
+        nowSeconds: Long? = null
     ): SteamBatchResult {
         if (confirmations.isEmpty()) return SteamBatchResult(ok = 0, failed = 0)
         require(account.canUseConfirmations) { "Steam account has no identity secret, real SteamID, or access token" }
+        val signingTime = nowSeconds ?: serverTimeSeconds()
         val op = if (accept) "allow" else "cancel"
-        val form = baseQuery(account, nowSeconds, op)
+        val form = baseQuery(account, signingTime, op)
             .mapValues { listOf(it.value) }
             .toMutableMap()
         form["tag"] = listOf(op)
@@ -101,7 +107,7 @@ class SteamConfirmationService(
         var ok = 0
         var failed = 0
         confirmations.forEach { confirmation ->
-            if (runCatching { respond(account, confirmation, accept, nowSeconds) }.getOrDefault(false)) {
+            if (runCatching { respond(account, confirmation, accept, signingTime) }.getOrDefault(false)) {
                 ok++
             } else {
                 failed++

@@ -80,7 +80,7 @@ class SteamStabilityBoundaryGuardTest {
         ).readText()
 
         assertTrue(token.contains("SteamAccountSessionResolver"))
-        assertTrue(token.contains("sessionResolver.resolveOrKeep(account)"))
+        assertTrue(token.contains("sessionResolver.resolveOrKeep(account, forceRefresh = forceRefresh)"))
         assertTrue(token.contains("sessionResolver = accountSourceRepository.sessionResolver()"))
         assertFalse(token.contains("SteamSessionRefreshService"))
         assertFalse(token.contains("persistRefreshedSession"))

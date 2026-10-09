@@ -122,6 +122,7 @@ fun SteamCommunityScreen(
                     "${selectedAccount.steamId}||$token"
                 },
             expectedSteamId = selectedAccount?.steamId,
+            temporarySession = selectedAccount?.isTemporary == true,
             requireAuthenticatedSession = false,
             onClose = { communityWebUrl = null },
             modifier = modifier.fillMaxSize()

@@ -14,6 +14,7 @@ import takagi.ru.monica.steam.session.domain.SteamAccountSessionRefresher
 import takagi.ru.monica.steam.session.domain.SteamAccountSessionStore
 import takagi.ru.monica.steam.session.domain.SteamSessionResolution
 import takagi.ru.monica.steam.session.domain.SteamSessionTokens
+import takagi.ru.monica.steam.session.SteamTemporaryAccounts
 
 /**
  * Account-scoped session coordinator.
@@ -28,7 +29,8 @@ class SteamAccountSessionManager(
         SteamSessionRefreshServiceRefresher(),
     private val store: SteamAccountSessionStore,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val nowSeconds: () -> Long = { System.currentTimeMillis() / 1_000L }
+    private val nowSeconds: () -> Long = { System.currentTimeMillis() / 1_000L },
+    private val temporaryAccounts: SteamTemporaryAccounts = SteamTemporaryAccounts.shared
 ) {
     private val mutex = Mutex()
     private val inFlight = mutableMapOf<String, CompletableDeferred<Result<SteamSessionResolution>>>()
@@ -41,7 +43,7 @@ class SteamAccountSessionManager(
         val key = handle.stableKey
         val decision = mutex.withLock {
             val known = latestAccounts[key]
-            val candidate = known ?: handle.account
+            val candidate = if (handle.account.isTemporary) activeTemporaryAccount(handle.account) else known ?: handle.account
             if (!forceRefresh && !refresher.shouldRefresh(candidate, nowSeconds())) {
                 FlightDecision.Immediate(
                     SteamSessionResolution(
@@ -65,7 +67,7 @@ class SteamAccountSessionManager(
             }
         }
 
-        return when (decision) {
+        val resolution = when (decision) {
             is FlightDecision.Immediate -> decision.resolution
             is FlightDecision.Wait -> decision.deferred.await().getOrThrow()
             is FlightDecision.Own -> {
@@ -86,6 +88,8 @@ class SteamAccountSessionManager(
                 }
             }
         }
+        if (handle.account.isTemporary) activeTemporaryAccount(handle.account)
+        return resolution
     }
 
     suspend fun clear(handle: SteamAccountSessionHandle) {
@@ -116,10 +120,11 @@ class SteamAccountSessionManager(
             refreshToken = tokens.refreshToken ?: account.refreshToken,
             steamLoginSecure = "${account.steamId}||${tokens.accessToken}"
         )
+        if (account.isTemporary) activeTemporaryAccount(account)
         if (hasSessionChanged(account, refreshed)) {
             store.persist(handle.copy(account = refreshed))
         }
-        mutex.withLock { latestAccounts[handle.stableKey] = refreshed }
+        if (!account.isTemporary) mutex.withLock { latestAccounts[handle.stableKey] = refreshed }
         return SteamSessionResolution(
             account = refreshed,
             refreshed = hasSessionChanged(account, refreshed),
@@ -132,6 +137,9 @@ class SteamAccountSessionManager(
             previous.refreshToken != current.refreshToken ||
             previous.steamLoginSecure != current.steamLoginSecure
     }
+
+    private fun activeTemporaryAccount(account: SteamAccount): SteamAccount =
+        checkNotNull(temporaryAccounts.get(account.id)) { "Temporary Steam session has ended" }
 
     private sealed interface FlightDecision {
         data class Immediate(val resolution: SteamSessionResolution) : FlightDecision

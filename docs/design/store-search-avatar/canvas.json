@@ -1,0 +1,160 @@
+{
+  "title": "Monica Steam · 搜索栏账号头像",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "phone",
+      "name": "搜索栏账号头像",
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "phonesearch",
+      "x": 16,
+      "y": 40,
+      "axis": "x",
+      "items": [
+        {
+          "id": "phonesearchitem",
+          "icon": "menu",
+          "variant": "filled",
+          "kind": "searchBar",
+          "label": "搜索 Steam",
+          "size": 380
+        }
+      ]
+    },
+    {
+      "id": "phonetitle",
+      "x": 16,
+      "y": 140,
+      "axis": "x",
+      "items": [
+        {
+          "id": "phonetitleitem",
+          "icon": null,
+          "variant": "filled",
+          "kind": "text",
+          "label": "特别优惠",
+          "size": 22,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "phonecarousel",
+      "x": 0,
+      "y": 184,
+      "axis": "x",
+      "items": [
+        {
+          "id": "phonecarouselitem",
+          "icon": null,
+          "variant": "filled",
+          "kind": "carousel",
+          "label": "",
+          "layout": "hero",
+          "count": 6,
+          "size": 412,
+          "size2": 208,
+          "tabs": [
+            {
+              "icon": "",
+              "label": "The Outlast Trials",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1304930/header.jpg"
+            },
+            {
+              "icon": "",
+              "label": "赛博朋克 2077",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg"
+            },
+            {
+              "icon": "",
+              "label": "Counter-Strike 2",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg"
+            },
+            {
+              "icon": "",
+              "label": "Dota 2",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/570/header.jpg"
+            },
+            {
+              "icon": "",
+              "label": "ELDEN RING",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
+            },
+            {
+              "icon": "",
+              "label": "Baldur’s Gate 3",
+              "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg"
+            }
+          ],
+          "note": "封面铺满卡片；标题和实际价格叠在底部。16dp 圆角、8dp 间距。官方遮罩随滚动展开收缩；点击游戏打开详情。不显示来自家庭库。参考游戏仅用于设计稿。"
+        }
+      ]
+    },
+    {
+      "id": "phonelisttitle",
+      "x": 16,
+      "y": 426,
+      "axis": "x",
+      "items": [
+        {
+          "id": "phonelisttitleitem",
+          "icon": null,
+          "variant": "filled",
+          "kind": "text",
+          "label": "热销商品",
+          "size": 22,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "phonelist",
+      "x": 16,
+      "y": 470,
+      "axis": "x",
+      "items": [
+        {
+          "id": "phonelistitem",
+          "icon": "sports_esports",
+          "variant": "filled",
+          "kind": "listItem",
+          "label": "Counter-Strike 2",
+          "supporting": "免费",
+          "size": 380
+        }
+      ]
+    },
+    {
+      "id": "searchavatar",
+      "x": 348,
+      "y": 52,
+      "axis": "x",
+      "items": [
+        {
+          "id": "accountavatar",
+          "kind": "image",
+          "icon": null,
+          "variant": "filled",
+          "label": "当前 Steam 账号头像",
+          "size": 32,
+          "size2": 32,
+          "radiusTop": 16,
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMzY1Yjk2Ii8+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMTkiIGZpbGw9IiNmM2Q0YTEiLz48Y2lyY2xlIGN4PSI0MiIgY3k9IjIzIiByPSIxOSIgZmlsbD0iIzM2NWI5NiIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDQiIHI9IjMiIGZpbGw9IiNhNmQ5ZTIiLz48L3N2Zz4=",
+          "note": "32dp正圆形账号头像，48dp点击区域；固定圆形，不随全局头像形状改变。点击打开账号切换。示例图仅用于设计。"
+        }
+      ]
+    }
+  ]
+}

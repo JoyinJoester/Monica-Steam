@@ -1,0 +1,18 @@
+<resources>
+    <string name="store_detail_region_unavailable">该区不可用</string>
+    <string name="store_region_hong_kong">中国香港</string>
+    <string name="store_region_taiwan">中国台湾</string>
+    <string name="store_detail_current_region">当前区服</string>
+    <string name="store_detail_region">区服</string>
+    <string name="store_detail_current_discount">现价 / 折扣</string>
+    <string name="store_detail_original">原价</string>
+    <string name="store_detail_compare">多区比价</string>
+    <string name="store_detail_purchase">购买选项</string>
+    <string name="store_detail_reviews">玩家评测</string>
+    <string name="store_detail_official">打开 Steam</string>
+    <string name="store_detail_region_loading">正在更新%1$s的价格</string>
+    <string name="store_detail_region_missing">暂无%1$s的价格</string>
+    <string name="store_detail_local_currency">当地币种</string>
+    <string name="store_detail_low">Steam 史低</string>
+    <string name="store_detail_low_date">最近：%1$s</string>
+</resources>

@@ -10,6 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.ConcurrentHashMap
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 abstract class SteamBaseWidgetProvider : AppWidgetProvider() {
@@ -31,33 +34,50 @@ abstract class SteamBaseWidgetProvider : AppWidgetProvider() {
     }
 
     final override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { SteamWidgetPreferences.remove(context, it) }
+        appWidgetIds.forEach {
+            SteamWidgetPreferences.remove(context, it)
+            SteamWidgetImageWorker.cancel(context, it)
+        }
     }
 
     internal fun refresh(
         context: Context,
         manager: AppWidgetManager,
         ids: IntArray,
-        pendingResult: BroadcastReceiver.PendingResult? = null
+        pendingResult: BroadcastReceiver.PendingResult? = null,
+        refreshImages: Boolean = true
     ) {
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             try {
                 ids.forEach { widgetId ->
-                    runCatching {
-                        val accountId = SteamWidgetPreferences.accountId(context, widgetId)
-                        val snapshot = accountId?.let {
-                            runCatching { SteamWidgetDataLoader.load(context, it) }.getOrNull()
+                    widgetLocks.getOrPut(widgetId) { Mutex() }.withLock {
+                        runCatching {
+                            val accountId = SteamWidgetPreferences.accountId(context, widgetId)
+                            val databaseId = SteamWidgetPreferences.databaseId(context, widgetId)
+                            val snapshot = accountId?.let {
+                                runCatching {
+                                    SteamWidgetDataLoader.load(context, it, databaseId)
+                                }.onFailure { error ->
+                                    SteamDiagLogger.append("widget_data failed id=$widgetId type=${error::class.java.simpleName}")
+                                }.getOrNull()
+                            }
+                            if (accountId == SteamWidgetPreferences.accountId(context, widgetId) &&
+                                databaseId == SteamWidgetPreferences.databaseId(context, widgetId)) {
+                                manager.updateAppWidget(widgetId, render(context, manager, widgetId, snapshot))
+                                if (refreshImages && accountId != null && snapshot != null) {
+                                    SteamWidgetImageWorker.enqueue(context, widgetId, accountId, databaseId)
+                                }
+                            }
+                        }.onFailure { error ->
+                            SteamDiagLogger.append(
+                                "widget_refresh failed id=$widgetId type=${error::class.java.simpleName}"
+                            )
+                            android.util.Log.e(
+                                "MonicaSteamWidget",
+                                "Steam widget refresh failed for $widgetId",
+                                error
+                            )
                         }
-                        manager.updateAppWidget(widgetId, render(context, manager, widgetId, snapshot))
-                    }.onFailure { error ->
-                        SteamDiagLogger.append(
-                            "widget_refresh failed id=$widgetId type=${error::class.java.simpleName}"
-                        )
-                        android.util.Log.e(
-                            "MonicaSteamWidget",
-                            "Steam widget refresh failed for $widgetId",
-                            error
-                        )
                     }
                 }
             } catch (error: Throwable) {
@@ -77,6 +97,10 @@ abstract class SteamBaseWidgetProvider : AppWidgetProvider() {
         widgetId: Int,
         snapshot: SteamWidgetSnapshot?
     ): android.widget.RemoteViews
+
+    private companion object {
+        val widgetLocks = ConcurrentHashMap<Int, Mutex>()
+    }
 }
 
 class SteamAccountStatsWidgetProvider : SteamBaseWidgetProvider() {
@@ -98,7 +122,8 @@ class SteamRecentGamesWidgetProvider : SteamBaseWidgetProvider() {
         context = context,
         widgetId = widgetId,
         snapshot = snapshot,
-        showSecondGame = shouldShowTwoGames(manager.getAppWidgetOptions(widgetId))
+        showSecondGame = shouldShowTwoGames(manager.getAppWidgetOptions(widgetId)),
+        narrow = manager.getAppWidgetOptions(widgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 0) < 250
     )
 
     companion object {
@@ -109,7 +134,7 @@ class SteamRecentGamesWidgetProvider : SteamBaseWidgetProvider() {
         }
 
         internal fun shouldShowTwoGames(minHeightDp: Int): Boolean {
-            return minHeightDp >= 120
+            return minHeightDp >= 200
         }
     }
 }
@@ -132,7 +157,7 @@ object SteamWidgetUpdater {
         }
     }
 
-    fun refresh(context: Context, widgetId: Int) {
+    fun refresh(context: Context, widgetId: Int, refreshImages: Boolean = true) {
         val manager = AppWidgetManager.getInstance(context)
         val info = manager.getAppWidgetInfo(widgetId) ?: return
         val provider = when (info.provider.className) {
@@ -140,6 +165,6 @@ object SteamWidgetUpdater {
             SteamRecentGamesWidgetProvider::class.java.name -> SteamRecentGamesWidgetProvider()
             else -> return
         }
-        provider.refresh(context.applicationContext, manager, intArrayOf(widgetId))
+        provider.refresh(context.applicationContext, manager, intArrayOf(widgetId), refreshImages = refreshImages)
     }
 }

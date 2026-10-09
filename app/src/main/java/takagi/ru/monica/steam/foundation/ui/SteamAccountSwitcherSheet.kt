@@ -19,6 +19,9 @@ import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,6 +33,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +48,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.data.SteamStorageSource
+import takagi.ru.monica.steam.session.SteamTemporaryAccounts
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,6 +66,24 @@ internal fun SteamAccountSwitcherSheet(
     onRefresh: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    var endingAccount by remember { mutableStateOf<SteamAccount?>(null) }
+    endingAccount?.let { account ->
+        AlertDialog(
+            onDismissRequest = { endingAccount = null },
+            title = { Text(stringResource(R.string.steam_temporary_logout)) },
+            text = { Text(stringResource(R.string.steam_temporary_logout_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    SteamTemporaryAccounts.shared.remove(account.id)
+                    endingAccount = null
+                    onDismiss()
+                }) { Text(stringResource(R.string.steam_temporary_logout)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { endingAccount = null }) { Text(stringResource(R.string.cancel)) }
+            }
+        )
+    }
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.background,
@@ -164,7 +190,8 @@ internal fun SteamAccountSwitcherSheet(
                         SteamSwitcherAccountCard(
                             account = account,
                             selected = account.id == selectedAccountId,
-                            onClick = { onSelectAccount(account.id) }
+                            onClick = { onSelectAccount(account.id) },
+                            onEndTemporary = { endingAccount = account }
                         )
                     }
                 }
@@ -185,19 +212,27 @@ internal fun SteamAccountSwitcherSheet(
 private fun SteamSwitcherAccountCard(
     account: SteamAccount,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onEndTemporary: () -> Unit
 ) {
     SteamSwitcherCard(
         headline = account.displayName.ifBlank {
             account.accountName.ifBlank { account.visibleSteamId }
         },
-        supporting = listOf(account.accountName, account.visibleSteamId)
+        supporting = listOf(
+            if (account.isTemporary) stringResource(R.string.steam_temporary_login) else "",
+            account.accountName, account.visibleSteamId)
             .filter(String::isNotBlank)
             .distinct()
             .joinToString(" · "),
         leadingContent = { SteamAvatarImage(account = account, size = 48.dp) },
         trailingContent = {
-            if (selected) {
+            if (account.isTemporary) {
+                IconButton(onClick = onEndTemporary) {
+                    Icon(Icons.AutoMirrored.Filled.Logout,
+                        contentDescription = stringResource(R.string.steam_temporary_logout))
+                }
+            } else if (selected) {
                 Icon(
                     Icons.Default.CheckCircle,
                     contentDescription = stringResource(R.string.steam_selected_account_marker),

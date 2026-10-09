@@ -209,6 +209,11 @@ class SteamAccountSourceRepository private constructor(
     }
 
     fun sessionHandle(account: SteamAccount): SteamAccountSessionHandle? {
+        if (account.isTemporary) {
+            val active = takagi.ru.monica.steam.session.SteamTemporaryAccounts.shared.get(account.id)
+                ?: return null
+            return SteamAccountSessionHandle(active, SteamAccountSessionOrigin(SteamStorageSource.Local))
+        }
         val origin = accountOrigins[account.id] ?: currentOriginFor(account.id) ?: return null
         return SteamAccountSessionHandle(account = account, origin = origin)
     }
@@ -244,7 +249,10 @@ class SteamAccountSourceRepository private constructor(
         account: SteamAccount,
         forceRefresh: Boolean = false
     ): SteamAccount {
-        val handle = sessionHandle(account) ?: return account
+        val handle = sessionHandle(account) ?: run {
+            check(!account.isTemporary) { "Temporary Steam session has ended" }
+            return account
+        }
         return sessionManager.resolve(handle, forceRefresh).account
     }
 
@@ -255,9 +263,7 @@ class SteamAccountSourceRepository private constructor(
      */
     fun sessionResolver(): SteamAccountSessionResolver =
         SteamAccountSessionResolver { account, forceRefresh ->
-            sessionHandle(account)?.let { handle ->
-                sessionManager.resolve(handle, forceRefresh).account
-            } ?: account
+            resolveSession(account, forceRefresh)
         }
 
     /**
@@ -266,7 +272,7 @@ class SteamAccountSourceRepository private constructor(
      * origin that owns any future token rotation.
      */
     suspend fun loadAllSessionHandles(): List<SteamAccountSessionHandle> {
-        val localHandles = localRepository.observeAccounts().first().map { account ->
+        val localHandles = localRepository.observeAccounts().first().filterNot { it.isTemporary }.map { account ->
             SteamAccountSessionHandle(
                 account = account,
                 origin = SteamAccountSessionOrigin(SteamStorageSource.Local)
@@ -290,12 +296,23 @@ class SteamAccountSourceRepository private constructor(
         return (localHandles + mdbxHandles).distinctBy(SteamAccountSessionHandle::stableKey)
     }
 
+    /** Resolve the widget's saved source without changing the app's active account/database. */
+    suspend fun loadWidgetAccount(accountId: Long, databaseId: Long?): SteamAccount? {
+        if (accountId > 0L) return localRepository.getAccount(accountId)?.takeUnless { it.isTemporary }
+        if (databaseId != null) {
+            return mdbxAccountStore.loadAccounts(databaseId)
+                .firstOrNull { it.account.id == accountId }?.account
+        }
+        return loadAllSessionHandles().firstOrNull { it.account.id == accountId }?.account
+    }
+
     private fun publishLocalAccounts(accounts: List<SteamAccount>) {
         accounts.forEach { account ->
             accountOrigins[account.id] = SteamAccountSessionOrigin(SteamStorageSource.Local)
         }
         val previousId = _state.value.selectedAccountId
-        val selected = accounts.firstOrNull { it.id == previousId }
+        val selected = accounts.firstOrNull { it.isTemporary && it.selected }
+            ?: accounts.firstOrNull { it.id == previousId }
             ?: accounts.firstOrNull(SteamAccount::selected)
             ?: accounts.firstOrNull()
         _state.update { current ->

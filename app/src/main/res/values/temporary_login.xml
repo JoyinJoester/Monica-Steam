@@ -1,0 +1,10 @@
+<resources>
+    <string name="steam_temporary_login">Temporary login</string>
+    <string name="steam_temporary_login_summary">Do not save this login</string>
+    <string name="steam_temporary_login_description">Kept while the app is in the background; removed when you exit or the process ends. Saved accounts are unchanged. Signed-in web pages, widgets and account export are unavailable.</string>
+    <string name="steam_temporary_login_done">Temporarily signed in. Login credentials have not been saved.</string>
+    <string name="steam_temporary_logout">End temporary login</string>
+    <string name="steam_temporary_logout_message">Remove this temporary account and its login credentials from this session? Saved accounts will be kept.</string>
+    <string name="steam_temporary_export_unavailable">Temporary accounts cannot be exported or transferred.</string>
+    <string name="steam_temporary_web_unavailable">Signed-in web pages are unavailable for temporary accounts because the embedded browser saves login cookies. You can still use the native store, library and chat.</string>
+</resources>

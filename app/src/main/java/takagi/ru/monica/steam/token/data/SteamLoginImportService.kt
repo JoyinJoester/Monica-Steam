@@ -169,7 +169,8 @@ class SteamLoginImportService(
 
     private enum class LoginPurpose {
         IMPORT_AUTHENTICATOR,
-        SESSION_ONLY
+        SESSION_ONLY,
+        TEMPORARY_SESSION
     }
 
     private enum class FormRequestProfile {
@@ -282,7 +283,8 @@ class SteamLoginImportService(
         val deviceId: String,
         val steamGuardJson: String,
         val sessionOnly: Boolean = false,
-        val accountName: String? = null
+        val accountName: String? = null,
+        val temporary: Boolean = false
     )
 
     suspend fun beginLogin(
@@ -296,11 +298,12 @@ class SteamLoginImportService(
 
     suspend fun beginSessionLogin(
         userName: String,
-        password: String
+        password: String,
+        temporary: Boolean = false
     ): LoginResult = beginLoginInternal(
         userName = userName,
         password = password,
-        purpose = LoginPurpose.SESSION_ONLY
+        purpose = if (temporary) LoginPurpose.TEMPORARY_SESSION else LoginPurpose.SESSION_ONLY
     )
 
     suspend fun revokeAuthorizedDevice(
@@ -438,7 +441,8 @@ class SteamLoginImportService(
             val protobufBeginSession = beginAuthSessionViaCredentialsWithProtobuf(
                 userName = userName.trim(),
                 encryptedPassword = encryptedPassword,
-                encryptionTimestamp = rsaKey.timestamp
+                encryptionTimestamp = rsaKey.timestamp,
+                persistent = purpose != LoginPurpose.TEMPORARY_SESSION
             )
             if (protobufBeginSession != null) {
                 logDiag("begin auth protobuf ok challenges=${protobufBeginSession.challenges.map { it.confirmationType }.joinToString(",")}")
@@ -478,8 +482,8 @@ class SteamLoginImportService(
                     "account_name" to userName.trim(),
                     "encrypted_password" to encryptedPassword,
                     "encryption_timestamp" to rsaKey.timestamp,
-                    "persistence" to "1",
-                    "remember_login" to "true",
+                    "persistence" to if (purpose == LoginPurpose.TEMPORARY_SESSION) "0" else "1",
+                    "remember_login" to (purpose != LoginPurpose.TEMPORARY_SESSION).toString(),
                     "website_id" to STEAM_WEBSITE_ID,
                     "device_friendly_name" to DEVICE_FRIENDLY_NAME,
                     "platform_type" to SteamMobileAuthRequestProfile.platformType.toString(),
@@ -640,7 +644,7 @@ class SteamLoginImportService(
         }
     }
 
-    suspend fun beginQrLogin(sessionOnly: Boolean = false): QrLoginResult = withContext(Dispatchers.IO) {
+    suspend fun beginQrLogin(sessionOnly: Boolean = false, temporary: Boolean = false): QrLoginResult = withContext(Dispatchers.IO) {
         runCatching {
             logDiag("begin qr login start")
             val qrSession = beginAuthSessionViaQrWithProtobuf()
@@ -648,7 +652,9 @@ class SteamLoginImportService(
             val pendingSessionId = UUID.randomUUID().toString()
             pendingSessions[pendingSessionId] = PendingAuthSession(
                 flow = AuthFlow.AUTH_API_QR,
-                purpose = if (sessionOnly) LoginPurpose.SESSION_ONLY else LoginPurpose.IMPORT_AUTHENTICATOR,
+                purpose = when { temporary -> LoginPurpose.TEMPORARY_SESSION
+                    sessionOnly -> LoginPurpose.SESSION_ONLY
+                    else -> LoginPurpose.IMPORT_AUTHENTICATOR },
                 userName = "",
                 clientId = qrSession.clientId,
                 requestId = qrSession.requestId,
@@ -708,7 +714,8 @@ class SteamLoginImportService(
         userName: String,
         encryptedPassword: String,
         encryptionTimestamp: String,
-        throwApiErrors: Boolean = false
+        throwApiErrors: Boolean = false,
+        persistent: Boolean = true
     ): BeginAuthSessionData? {
         val timestamp = encryptionTimestamp.toLongOrNull()
             ?: throw IllegalStateException("Steam returned an invalid RSA timestamp")
@@ -719,7 +726,7 @@ class SteamLoginImportService(
             writeUint64(4, timestamp)
             writeBool(5, false)
             writeVarint(6, SteamMobileAuthRequestProfile.platformType)
-            writeVarint(7, 1L)
+            writeVarint(7, if (persistent) 1L else 0L)
             writeString(8, STEAM_WEBSITE_ID)
             writeMessage(9, buildAuthApiDeviceDetails())
             writeString(10, "")
@@ -830,7 +837,7 @@ class SteamLoginImportService(
         val requestId = fields.firstOrNull { it.number == 3 }
             ?.bytes
             ?.takeIf { it.isNotEmpty() }
-            ?.let { Base64.encodeToString(it, Base64.NO_WRAP) }
+            ?.let { java.util.Base64.getEncoder().encodeToString(it) }
 
         if (clientId.isNullOrBlank() || challengeUrl.isNullOrBlank() || requestId.isNullOrBlank()) {
             android.util.Log.w(
@@ -1344,7 +1351,7 @@ class SteamLoginImportService(
         refreshToken: String?,
         purpose: LoginPurpose
     ): LoginResult {
-        if (purpose == LoginPurpose.SESSION_ONLY) {
+        if (purpose != LoginPurpose.IMPORT_AUTHENTICATOR) {
             val resolvedSteamId = steamId.takeIf { it.isNotBlank() && it.toLongOrNull() != null }
                 ?: return LoginResult.Failure("Steam 登录成功但无法识别 SteamID，无法继续补全")
             logDiag("session only login ready")
@@ -1352,7 +1359,8 @@ class SteamLoginImportService(
                 steamId = resolvedSteamId,
                 userName = userName,
                 accessToken = accessToken,
-                refreshToken = refreshToken
+                refreshToken = refreshToken,
+                temporary = purpose == LoginPurpose.TEMPORARY_SESSION
             )
         }
         return resolveGuardPayloadAfterLogin(
@@ -1367,7 +1375,8 @@ class SteamLoginImportService(
         steamId: String,
         userName: String,
         accessToken: String,
-        refreshToken: String?
+        refreshToken: String?,
+        temporary: Boolean = false
     ): LoginResult.ReadyForImport {
         val accountName = userName.trim().takeIf { it.isNotBlank() } ?: steamId
         val payload = buildJsonObject {
@@ -1384,7 +1393,8 @@ class SteamLoginImportService(
                 deviceId = "",
                 steamGuardJson = payload.toString(),
                 sessionOnly = true,
-                accountName = accountName
+                accountName = accountName,
+                temporary = temporary
             ),
             accessToken = accessToken,
             refreshToken = refreshToken
@@ -2107,7 +2117,7 @@ class SteamLoginImportService(
                 "captcha_text" to if (isCaptchaChallengeType(challengeType ?: 0)) code.orEmpty() else "",
                 "emailsteamid" to emailSteamId.orEmpty(),
                 "rsatimestamp" to rsaTimestamp,
-                "remember_login" to "true",
+                "remember_login" to (purpose != LoginPurpose.TEMPORARY_SESSION).toString(),
                 "donotcache" to System.currentTimeMillis().toString(),
                 "oauth_client_id" to LEGACY_OAUTH_CLIENT_ID,
                 "oauth_scope" to LEGACY_OAUTH_SCOPE

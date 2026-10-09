@@ -100,7 +100,7 @@ internal fun catalogCacheName(
 }
 
 internal fun steamStoreHomeCacheName(accountId: Long?): String =
-    "${storeContentCacheScope(accountId)}_home.json"
+    "${storeContentCacheScope(accountId)}_home_games_v2.json"
 
 internal fun steamStoreDetailCacheName(accountId: Long?, appId: Int): String =
     "${storeContentCacheScope(accountId)}_detail_$appId.json"

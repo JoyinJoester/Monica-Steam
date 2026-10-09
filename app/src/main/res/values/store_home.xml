@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_home_search_hint">Search Steam</string>
+    <string name="store_home_discover">Discover</string>
+    <string name="store_home_specials">Deals</string>
+    <string name="store_home_bestsellers">Top sellers</string>
+    <string name="store_home_free">Free</string>
+    <string name="store_home_wishlist">Wishlist</string>
+    <string name="store_home_tools">More</string>
+    <string name="store_home_see_all">See all</string>
+    <string name="store_home_clear_search">Clear search</string>
+    <string name="store_home_search_results">Search results</string>
+    <string name="store_home_load_failed">Couldn’t load the store</string>
+    <string name="store_home_retry_hint">Check your connection and try again. You can still search or browse other categories.</string>
+    <string name="store_home_retry">Reload</string>
+</resources>

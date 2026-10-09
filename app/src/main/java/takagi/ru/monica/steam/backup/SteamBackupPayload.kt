@@ -73,7 +73,7 @@ object SteamBackupPayloadCodec {
         return json.encodeToString(
             SteamBackupPayload(
                 createdAt = createdAt,
-                accounts = accounts.map(SteamBackupAccount::fromAccount)
+                accounts = accounts.filterNot { it.isTemporary }.map(SteamBackupAccount::fromAccount)
             )
         )
     }

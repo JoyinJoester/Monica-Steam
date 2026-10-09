@@ -7,22 +7,21 @@ import org.junit.Test
 
 class SteamStoreBrowseMenuUiGuardTest {
     @Test
-    fun browseCategoriesReuseTheCommonTopActionsMenuInsteadOfADrawer() {
+    fun homeUsesAnEdgeDrawerWithGroupedActions() {
         val menu = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreBrowseMenu.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreNavigationDrawer.kt"
         ).readText()
         val screen = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt"
         ).readText()
 
-        assertTrue(menu.contains("MonicaTopActionsDropdownMenu("))
-        assertTrue(menu.contains("DropdownMenuItem("))
-        assertTrue(menu.contains("Icons.Default.Check"))
-        assertTrue(menu.contains("onOpenPointsShop"))
-        assertFalse(menu.contains("ModalNavigationDrawer("))
-        assertFalse(menu.contains("ModalDrawerSheet("))
-        assertTrue(screen.contains("SteamStoreBrowseMenu("))
-        assertFalse(screen.contains("SteamStoreBrowseDrawer("))
+        assertTrue(menu.contains("ModalNavigationDrawer("))
+        assertTrue(menu.contains("ModalDrawerSheet("))
+        assertTrue(menu.contains("actions.points"))
+        assertTrue(menu.contains("actions.activateProduct"))
+        assertTrue(menu.contains("close(action.onClick)"))
+        assertTrue(screen.contains("SteamStoreNavigationDrawer("))
+
     }
 
     private fun projectFile(path: String): File {

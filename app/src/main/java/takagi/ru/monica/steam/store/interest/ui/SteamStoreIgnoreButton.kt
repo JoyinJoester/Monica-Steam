@@ -13,6 +13,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,7 +26,8 @@ internal fun SteamStoreIgnoreButton(
     enabled: Boolean,
     mutating: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    compact: Boolean = false
 ) {
     val content: @Composable () -> Unit = {
         if (mutating) {
@@ -44,7 +46,11 @@ internal fun SteamStoreIgnoreButton(
             )
         }
     }
-    val buttonModifier = modifier.heightIn(min = 52.dp)
+    val buttonModifier = modifier.heightIn(min = if (compact) 48.dp else 52.dp)
+    if (compact) {
+        TextButton(onClick = onClick, enabled = enabled && !mutating, modifier = buttonModifier) { content() }
+        return
+    }
     if (ignored) {
         FilledTonalButton(
             onClick = onClick,

@@ -46,6 +46,7 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.security.SecurityManager
@@ -71,7 +72,9 @@ fun SteamMaFileTransferScreen(
         )
     }
     val codec = remember { SteamMaFileZipCodec() }
-    val accounts by repository.observeAccounts().collectAsState(initial = emptyList())
+    val accounts by remember(repository) {
+        repository.observeAccounts().map { accounts -> accounts.filterNot { it.isTemporary } }
+    }.collectAsState(initial = emptyList())
     var isWorking by remember { mutableStateOf(false) }
     var statusMessage by remember { mutableStateOf<String?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }

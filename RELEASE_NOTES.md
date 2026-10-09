@@ -1,27 +1,21 @@
-# Monica Steam 第五个公开测试版本
+# Monica Steam 1.0.310 发行说明
 
-> 测试版本，并非正式版。
+## 中文
 
-版本：`1.0.308`
+- 商店首页合并搜索与顶栏，显示圆形账号头像；特别优惠改为突出主卡片的滑动轮播，热销榜只展示游戏。
+- 游戏详情采用紧凑布局，多区价格优先显示当前地区；用 SteamDB 替换 ITAD 价格查询入口。
+- 桌面小组件修复账号绑定、MDBX 来源和缓存读取，显示真实头像与游戏封面，并采用外缘大圆角、相邻小圆角的自适应分组卡片。
+- 新增临时登录：密码、验证码和扫码登录均可选择不保存本次凭据，退出应用或进程结束后移除临时账号；不会覆盖原有账号。临时账号不支持内置网页登录、小组件或账号导出。
+- 修复商店侧边栏在点击遮罩、拖拽或中断关闭动画后可能留下黑色遮罩、阻挡主页操作的问题。
+- 修正确认列表请求的签名标签，并使用 Steam 服务器时间签名，避免手机时间偏差导致确认刷新失败。
+- 确认列表明确返回会话失效时，更新账号会话并最多重试读取一次；失败提示提供重新登录指引，不再将刷新失败显示为“暂无待确认项目”。
 
-## 新增
+## English
 
-- 游戏库和商店详情新增创意工坊入口，支持浏览作品、搜索、排序、标签筛选，以及查看当前账号的全部订阅。
-- 创意工坊作品详情支持预览图、作者、说明和依赖作品，可选择仅订阅当前作品或连同依赖一起订阅，并可打开 Steam 官方页面。
-- 创意工坊支持按游戏创建例如“二次元 MOD”“写实 MOD”预设，可从全部订阅、分享清单或导入分享码保存，并支持重命名、更新、删除与分享。
-- 预设切换前预览新增、取消和保留数量，确认后在后台完成切换；保留共同作品，新增订阅确认成功后再移除多余项目，支持中断恢复与重试。
-- 创意工坊支持多选、批量订阅与取消订阅，显示逐项进度和结果，可停止剩余任务或重试未完成项。
-- 支持分享所选作品或当前游戏的全部订阅，生成包含游戏与作品清单的 Monica 专属工坊分享码及分享链接。
-- 支持从工坊或商店菜单导入分享码，自动定位游戏、预览作品清单，一键全部订阅或勾选部分作品订阅。
-- 创意工坊批量导入支持后台继续：退出页面或切换应用后仍可执行，通过页面进度入口或通知查看结果、停止剩余任务。
-- 创意工坊页面提供浏览、我的订阅和预设分栏，搜索框内可筛选作品；管理操作集中在菜单，多选与导入使用底部操作栏。
-
-## 修复
-
-- 统一横屏缺口与侧边系统栏的安全区域，页面内容不再被遮挡。
-- 横屏手机与大屏窗口改用侧边导航，游戏库列表采用双列布局；竖屏 Dock 样式保持不变。
-- 聊天页横屏保留会话列表并在右侧打开线程，设置与商店筛选结果同步采用双列布局。
-- 修复手势导航栏区域未沉浸的问题，底栏背景现在延伸到系统小白条区域。
-- 优化桌面插件布局：游戏封面比例、双游戏卡片、账户统计信息和点击区域统一调整。
-- 交易确认详情支持懒加载显示对方 Steam 等级与注册日期，资料不可用时安全降级。
-- 修复部分账号游戏库刷新失败：兼容 MDBX/远程账号的游戏库与成就缓存写入。
+- Integrated store search into the top bar with a circular account avatar, a focused offer carousel and a games-only top-sellers section.
+- Made game details and regional prices more compact, placed the current region first, and replaced ITAD price lookup with SteamDB.
+- Fixed widget account binding, MDBX source lookup and cached data loading. Widgets use real avatars and game covers with adaptive grouped cards and smaller adjoining corners.
+- Added temporary sign-in for password, verification-code and QR flows. Credentials remain in memory and the temporary account is removed when the app exits or its process ends, without replacing saved accounts. Signed-in web pages, widgets and account export are unavailable for temporary accounts.
+- Fixed the store drawer leaving a dim overlay and blocking the home screen when dismissal animations were interrupted.
+- Corrected the confirmation-list signature tag and use Steam server time for confirmation signatures instead of the phone clock.
+- Retry confirmation reads once with refreshed credentials after an explicit authentication failure. Expired sessions now show sign-in guidance, and failed refreshes are no longer presented as an empty confirmation list.

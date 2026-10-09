@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_confirmation_session_expired">The Steam confirmation session has expired. Sign in to this account again, then refresh.</string>
+    <string name="steam_confirmation_request_rejected">Steam could not read the confirmation list. Retry; if this continues, sign in again and check that this authenticator is still valid.</string>
+    <string name="steam_confirmation_list_unavailable">Confirmation list unavailable</string>
+</resources>

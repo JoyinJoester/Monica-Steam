@@ -1,0 +1,77 @@
+{
+  "title": "Monica Steam · 小组件账号选择",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "phone",
+      "name": "桌面小组件",
+      "x": 0,
+      "y": 0,
+      "w": 412,
+      "h": 640
+    }
+  ],
+  "groups": [
+    {
+      "id": "configTop",
+      "x": 0,
+      "y": 20,
+      "axis": "x",
+      "items": [
+        {
+          "id": "configBar",
+          "kind": "topAppBar",
+          "label": "选择 Steam 账号",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "size": 412
+        }
+      ]
+    },
+    {
+      "id": "configLocal",
+      "x": 12,
+      "y": 100,
+      "axis": "x",
+      "items": [
+        {
+          "id": "configLocalRow",
+          "kind": "listItem",
+          "label": "Alex",
+          "supporting": "alex · 本地",
+          "icon": "account_circle",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "fill": "surfaceContainerLow"
+        }
+      ]
+    },
+    {
+      "id": "configMdbx",
+      "x": 12,
+      "y": 176,
+      "axis": "x",
+      "items": [
+        {
+          "id": "configMdbxRow",
+          "kind": "listItem",
+          "label": "Alex · 游戏账号",
+          "supporting": "alex-games · MDBX",
+          "icon": "account_circle",
+          "icon2": "chevron_right",
+          "variant": "filled",
+          "size": 388,
+          "fill": "surfaceContainerLow"
+        }
+      ]
+    }
+  ]
+}

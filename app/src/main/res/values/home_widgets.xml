@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_widget_tap_configure">Tap to choose or reconnect an account</string>
+    <string name="steam_widget_unavailable">Account temporarily unavailable</string>
+    <string name="steam_widget_updated">Library · Updated %1$s</string>
+    <string name="steam_widget_recent_time">Last 2 weeks · %1$s</string>
+    <string name="steam_widget_local_account">Local</string>
+    <string name="steam_widget_playing_time">Playing · %1$s / 2 weeks</string>
+    <string name="steam_widget_total_playtime">Playtime</string>
+    <string name="steam_widget_library_value">Library value</string>
+</resources>

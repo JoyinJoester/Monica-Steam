@@ -158,7 +158,7 @@ class SteamStoreReviewTest {
         val reviewsIndex = detailUi.lastIndexOf("SteamStoreReviewsSection(")
         assertTrue(informationIndex >= 0)
         assertTrue(reviewsIndex > informationIndex)
-        assertFalse(detailUi.contains("openStoreWeb(detail.reviewsUrl)"))
+        assertTrue(detailUi.contains("onReviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() }"))
     }
 
     @Test

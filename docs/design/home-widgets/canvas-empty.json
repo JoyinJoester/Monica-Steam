@@ -1,0 +1,304 @@
+{
+  "title": "Monica Steam · 小组件未配置",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": false,
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "phone",
+      "name": "真实头像与游戏封面",
+      "x": 0,
+      "y": 0,
+      "w": 412,
+      "h": 636
+    }
+  ],
+  "groups": [
+    {
+      "id": "cwg1",
+      "x": 16,
+      "y": 24,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi1",
+          "kind": "text",
+          "label": "Monica Steam",
+          "icon": null,
+          "variant": "filled",
+          "size": 24,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "cwg2",
+      "x": 16,
+      "y": 68,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi2",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 380,
+          "size2": 144,
+          "radiusTop": 28,
+          "radiusBottom": 28,
+          "fill": "surfaceContainerLow"
+        }
+      ]
+    },
+    {
+      "id": "cwg3",
+      "x": 28,
+      "y": 80,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi3",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "account_circle",
+          "variant": "tonal",
+          "size": 36,
+          "size2": 36,
+          "radiusTop": 18
+        }
+      ]
+    },
+    {
+      "id": "cwg4",
+      "x": 74,
+      "y": 78,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi4",
+          "kind": "text",
+          "label": "选择 Steam 账号",
+          "icon": null,
+          "variant": "filled",
+          "size": 16,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "cwg5",
+      "x": 74,
+      "y": 102,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi5",
+          "kind": "text",
+          "label": "点按选择或重新连接账号",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "cwg6",
+      "x": 352,
+      "y": 80,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi6",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "tune",
+          "variant": "text",
+          "size": 32
+        }
+      ]
+    },
+    {
+      "id": "cwg7",
+      "x": 28,
+      "y": 132,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi7",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 116,
+          "size2": 64,
+          "radiusTop": 16,
+          "radiusBottom": 16,
+          "fill": "primaryContainer",
+          "corners": {
+            "tl": 20,
+            "tr": 4,
+            "bl": 20,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "cwg8",
+      "x": 40,
+      "y": 143,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi8",
+          "kind": "text",
+          "label": "—",
+          "icon": null,
+          "variant": "filled",
+          "size": 21,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "cwg9",
+      "x": 40,
+      "y": 176,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi9",
+          "kind": "text",
+          "label": "总时长",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "cwg10",
+      "x": 148,
+      "y": 132,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi10",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 116,
+          "size2": 64,
+          "radiusTop": 16,
+          "radiusBottom": 16,
+          "fill": "surfaceContainerHigh",
+          "corners": {
+            "tl": 4,
+            "tr": 4,
+            "bl": 4,
+            "br": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "cwg11",
+      "x": 160,
+      "y": 143,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi11",
+          "kind": "text",
+          "label": "—",
+          "icon": null,
+          "variant": "filled",
+          "size": 21,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "cwg12",
+      "x": 160,
+      "y": 176,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi12",
+          "kind": "text",
+          "label": "库存",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    },
+    {
+      "id": "cwg13",
+      "x": 268,
+      "y": 132,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi13",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 116,
+          "size2": 64,
+          "radiusTop": 16,
+          "radiusBottom": 16,
+          "fill": "surfaceContainerHigh",
+          "corners": {
+            "tl": 4,
+            "tr": 20,
+            "bl": 4,
+            "br": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "cwg14",
+      "x": 280,
+      "y": 143,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi14",
+          "kind": "text",
+          "label": "—",
+          "icon": null,
+          "variant": "filled",
+          "size": 21,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "cwg15",
+      "x": 280,
+      "y": 176,
+      "axis": "x",
+      "items": [
+        {
+          "id": "cwi15",
+          "kind": "text",
+          "label": "游戏估值",
+          "icon": null,
+          "variant": "filled",
+          "size": 11
+        }
+      ]
+    }
+  ]
+}

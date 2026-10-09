@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_confirmation_session_expired">Steam 确认会话已失效，请重新登录此账号后刷新。</string>
+    <string name="steam_confirmation_request_rejected">Steam 暂时无法读取确认列表。请刷新重试；若持续失败，请重新登录此账号，并确认验证器仍然有效。</string>
+    <string name="steam_confirmation_list_unavailable">暂时无法读取待确认项目</string>
+</resources>

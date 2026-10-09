@@ -16,21 +16,21 @@ class SteamStoreDetailRegionalPriceGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt"
         ).readText()
         val detail = store
-            .substringAfter("private fun SteamStoreDetailContent(")
+            .substringAfter("internal fun SteamStoreDetailContent(")
             .substringBefore("@Composable private fun DetailTextSection")
 
-        assertTrue(detail.contains("contentScale = ContentScale.Fit"))
-        assertTrue(detail.contains("onOpenRegionalPrices"))
-        assertTrue(detail.contains("heightIn(min = 48.dp)"))
+        val header = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt").readText()
+        val prices = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreRegionalPrices.kt").readText()
+        assertTrue(header.contains("contentScale = ContentScale.Fit"))
+        assertTrue(detail.contains("SteamStoreDetailHeader(detail, loading, onOpenRegionalPrices"))
         assertTrue(detail.contains("SteamStoreRegionalPriceSheet("))
-        assertTrue(detail.contains("sortedRegionalPricesForDisplay("))
-        assertTrue(detail.contains("appId = detail.appId"))
-        assertTrue(detail.contains("historyCountryCode = detail.accountCountryCode"))
-        assertTrue(detail.contains("onOpenItadSettings = onOpenItadSettings"))
-        assertFalse(detail.contains("SteamStoreRegionalPriceHeader("))
-        assertTrue(detail.contains("SteamStoreRegionalPriceColumn("))
-        assertTrue(detail.contains("Arrangement.spacedBy(16.dp)"))
-        assertTrue(detail.contains("onToggleExpanded"))
+        assertTrue(detail.contains("historyCountryCode = detail.accountCountryCode ?: detail.priceCountryCode"))
+        assertTrue(prices.contains("sortedStoreRegionalPrices(prices, current)"))
+        assertTrue(prices.contains("SteamDbPriceSection("))
+        assertTrue(prices.contains("compact = true"))
+        assertFalse(prices.contains("ItadHistoryLowSection("))
+        assertTrue(prices.contains("SteamStoreRegionalPriceHeader("))
+
     }
 
     @Test

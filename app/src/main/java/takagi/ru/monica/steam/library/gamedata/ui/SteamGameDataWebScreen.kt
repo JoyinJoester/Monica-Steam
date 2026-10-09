@@ -31,6 +31,7 @@ internal fun SteamGameDataWebScreen(
         steamLoginSecure = account.steamLoginSecure
             ?: account.accessToken?.let { token -> "${account.steamId}||$token" },
         expectedSteamId = account.steamId,
+        temporarySession = account.isTemporary,
         title = stringResource(R.string.steam_library_game_data_title),
         requireAuthenticatedSession = true,
         clientMode = SteamWebClientMode.COMMUNITY_DESKTOP,

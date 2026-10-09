@@ -977,8 +977,8 @@ fun SteamScreen(
                 viewModel.cancelSteamLoginChallenge()
                 addAccountMethod = null
             },
-            onRestart = { sessionOnly ->
-                viewModel.beginSteamQrLogin(sessionOnly = sessionOnly)
+            onRestart = { sessionOnly, temporary ->
+                viewModel.beginSteamQrLogin(sessionOnly = sessionOnly, temporary = temporary)
             },
             onSubmitLoginCode = viewModel::submitSteamLoginCode
         )
@@ -994,7 +994,7 @@ fun SteamScreen(
                 viewModel.cancelSteamLoginChallenge()
                 steamIdCompletionAccountId = null
             },
-            onBeginLogin = { userName, password, _, _ ->
+            onBeginLogin = { userName, password, _, _, _ ->
                 viewModel.beginSteamIdCompletionLogin(account.id, userName, password)
             },
             onSubmitLoginCode = viewModel::submitSteamLoginCode,
@@ -1013,7 +1013,7 @@ fun SteamScreen(
                 viewModel.cancelSteamLoginChallenge()
                 steamAccountRebindAccountId = null
             },
-            onBeginLogin = { userName, password, _, _ ->
+            onBeginLogin = { userName, password, _, _, _ ->
                 viewModel.beginSteamAccountRebindLogin(account.id, userName, password)
             },
             onSubmitLoginCode = viewModel::submitSteamLoginCode,
@@ -1650,6 +1650,7 @@ fun SteamScreen(
                             "${selectedAccount?.steamId}||$token"
                         },
                     expectedSteamId = selectedAccount?.steamId,
+                    temporarySession = selectedAccount?.isTemporary == true,
                     title = stringResource(R.string.steam_gift_inbox_title),
                     requireAuthenticatedSession = true,
                     clientMode = SteamWebClientMode.COMMUNITY_DESKTOP,
@@ -3788,6 +3789,7 @@ private fun SteamConfirmationsContent(
                                     account == null || !account.canUseConfirmations -> {
                                         steamConfirmationUnavailableText(account)
                                     }
+                                    confirmationRefreshError != null -> stringResource(R.string.steam_confirmation_list_unavailable)
                                     hasSearchQuery || confirmations.isNotEmpty() -> stringResource(R.string.no_results)
                                     else -> stringResource(R.string.steam_no_confirmations)
                                 }
@@ -5284,7 +5286,7 @@ private fun SteamQrLoginImportDialog(
     availableCodeAccounts: List<SteamAccount>,
     loading: Boolean,
     onDismissRequest: () -> Unit,
-    onRestart: (Boolean) -> Unit,
+    onRestart: (Boolean, Boolean) -> Unit,
     onSubmitLoginCode: (String) -> Unit
 ) {
     val context = LocalContext.current
@@ -5296,6 +5298,7 @@ private fun SteamQrLoginImportDialog(
     var challengeCode by remember { mutableStateOf("") }
     var showMonicaCodePicker by remember { mutableStateOf(false) }
     var sessionOnly by rememberSaveable { mutableStateOf(true) }
+    var temporary by rememberSaveable { mutableStateOf(false) }
     var started by rememberSaveable { mutableStateOf(false) }
     val waitingForCode = pendingChallenge != null
     val requiresCode = pendingChallenge?.requiresCode == true
@@ -5400,7 +5403,10 @@ private fun SteamQrLoginImportDialog(
                         )
                         SteamLoginModeSelector(
                             sessionOnly = sessionOnly,
-                            onSessionOnlyChange = { sessionOnly = it }
+                            onSessionOnlyChange = { sessionOnly = it; if (!it) temporary = false }
+                        )
+                        if (sessionOnly) SteamTemporaryLoginOption(
+                            checked = temporary, onCheckedChange = { temporary = it }, enabled = !loading
                         )
                     }
                     if (pendingQrChallenge != null) {
@@ -5449,7 +5455,7 @@ private fun SteamQrLoginImportDialog(
                 TextButton(
                     onClick = {
                         started = true
-                        onRestart(sessionOnly)
+                        onRestart(sessionOnly, sessionOnly && temporary)
                     },
                     enabled = !loading
                 ) {
@@ -5887,12 +5893,12 @@ private fun createSteamQrLoginBitmap(content: String, size: Int = 768): ImageBit
 }
 
 @Composable
-private fun SteamLoginImportDialog(
+internal fun SteamLoginImportDialog(
     pendingChallenge: SteamLoginChallengeUi?,
     availableCodeAccounts: List<SteamAccount>,
     loading: Boolean,
     onDismissRequest: () -> Unit,
-    onBeginLogin: (String, String, String, Boolean) -> Unit,
+    onBeginLogin: (String, String, String, Boolean, Boolean) -> Unit,
     onSubmitLoginCode: (String) -> Unit,
     @StringRes titleRes: Int = R.string.steam_login_title,
     @StringRes descriptionRes: Int? = null,
@@ -5911,6 +5917,7 @@ private fun SteamLoginImportDialog(
     var challengeCode by remember { mutableStateOf("") }
     var showMonicaCodePicker by remember { mutableStateOf(false) }
     var sessionOnly by rememberSaveable { mutableStateOf(allowSessionOnlyMode) }
+    var temporary by rememberSaveable { mutableStateOf(false) }
     val waitingForCode = pendingChallenge != null
     val requiresCode = pendingChallenge?.requiresCode == true
     val hasLegacySteamCode = remember(legacyTotpItems, pickerSecurityManager, pendingChallenge?.pendingSessionId) {
@@ -5955,7 +5962,7 @@ private fun SteamLoginImportDialog(
                     if (allowSessionOnlyMode) {
                         SteamLoginModeSelector(
                             sessionOnly = sessionOnly,
-                            onSessionOnlyChange = { sessionOnly = it }
+                            onSessionOnlyChange = { sessionOnly = it; if (!it) temporary = false }
                         )
                     }
                     descriptionRes?.let { resId ->
@@ -5988,6 +5995,9 @@ private fun SteamLoginImportDialog(
                             singleLine = true
                         )
                     }
+                    if (allowSessionOnlyMode && sessionOnly) SteamTemporaryLoginOption(
+                        checked = temporary, onCheckedChange = { temporary = it }, enabled = !loading
+                    )
                 } else {
                     if (pendingChallenge.canPoll) {
                         Row(
@@ -6054,7 +6064,8 @@ private fun SteamLoginImportDialog(
                         if (waitingForCode) {
                             onSubmitLoginCode(challengeCode)
                         } else {
-                            onBeginLogin(loginName, loginPassword, loginDisplayName, sessionOnly)
+                            onBeginLogin(loginName, loginPassword, loginDisplayName, sessionOnly,
+                                allowSessionOnlyMode && sessionOnly && temporary)
                         }
                     },
                     enabled = if (waitingForCode) {
@@ -6073,6 +6084,8 @@ private fun SteamLoginImportDialog(
                             stringResource(
                                 if (waitingForCode) {
                                     R.string.steam_submit_code_button
+                                } else if (temporary && sessionOnly && allowSessionOnlyMode) {
+                                    R.string.steam_temporary_login
                                 } else if (sessionOnly && allowSessionOnlyMode) {
                                     R.string.steam_login_session_only_button
                                 } else {

@@ -161,6 +161,10 @@ private fun SteamStartupSurface() {
 }
 
 class MonicaSteamActivity : BaseMonicaActivity() {
+    override fun onDestroy() {
+        if (isFinishing) takagi.ru.monica.steam.session.SteamTemporaryAccounts.shared.clear()
+        super.onDestroy()
+    }
     private val pendingChatNotificationRequest =
         MutableStateFlow<SteamChatNotificationTarget?>(null)
     private val pendingExternalSteamLink = MutableStateFlow<SteamExternalLinkTarget?>(null)

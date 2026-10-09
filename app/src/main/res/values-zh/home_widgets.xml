@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_widget_tap_configure">点按选择或重新连接账号</string>
+    <string name="steam_widget_unavailable">账号暂时不可用</string>
+    <string name="steam_widget_updated">游戏库 · 更新于 %1$s</string>
+    <string name="steam_widget_recent_time">近两周 · %1$s</string>
+    <string name="steam_widget_local_account">本地</string>
+    <string name="steam_widget_playing_time">正在游玩 · 近两周 %1$s</string>
+    <string name="steam_widget_total_playtime">总时长</string>
+    <string name="steam_widget_library_value">游戏估值</string>
+</resources>

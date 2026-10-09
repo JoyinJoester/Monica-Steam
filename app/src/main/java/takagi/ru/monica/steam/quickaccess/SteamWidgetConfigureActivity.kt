@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.quickaccess
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.content.ComponentName
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,10 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
-import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.steam.data.SteamAccount
-import takagi.ru.monica.steam.data.SteamAccountRepository
-import takagi.ru.monica.steam.data.SteamDatabase
+import takagi.ru.monica.steam.data.SteamAccountSourceRepository
+import takagi.ru.monica.steam.data.SteamStorageSource
+import takagi.ru.monica.steam.session.domain.SteamAccountSessionHandle
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class SteamWidgetConfigureActivity : ComponentActivity() {
@@ -50,7 +50,7 @@ class SteamWidgetConfigureActivity : ComponentActivity() {
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             AppWidgetManager.INVALID_APPWIDGET_ID
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
-        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID && !SteamWidgetPinReceiver.isWidgetProvider(intent.getStringExtra(SteamWidgetPinReceiver.EXTRA_PROVIDER))) {
             finish()
             return
         }
@@ -65,16 +65,23 @@ class SteamWidgetConfigureActivity : ComponentActivity() {
         }
     }
 
-    private suspend fun loadAccounts(): List<SteamAccount> {
-        val database = SteamDatabase.getDatabase(applicationContext)
-        return SteamAccountRepository(
-            database.steamAccountDao(),
-            SecurityManager(applicationContext)
-        ).getAccounts()
-    }
+    private suspend fun loadAccounts(): List<SteamAccountSessionHandle> =
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            SteamAccountSourceRepository.get(applicationContext).loadAllSessionHandles()
+        }
 
-    private fun completeConfiguration(accountId: Long) {
-        SteamWidgetPreferences.setAccountId(applicationContext, widgetId, accountId)
+    private fun completeConfiguration(handle: SteamAccountSessionHandle) {
+        val databaseId = (handle.origin.source as? SteamStorageSource.Mdbx)?.databaseId
+        val provider = intent.getStringExtra(SteamWidgetPinReceiver.EXTRA_PROVIDER)
+        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID && SteamWidgetPinReceiver.isWidgetProvider(provider)) {
+            AppWidgetManager.getInstance(this).requestPinAppWidget(
+                ComponentName(this, requireNotNull(provider)), null,
+                SteamWidgetPinReceiver.callback(this, provider, handle.account.id, databaseId)
+            )
+            finish()
+            return
+        }
+        SteamWidgetPreferences.setAccountId(applicationContext, widgetId, handle.account.id, databaseId)
         SteamWidgetUpdater.refresh(applicationContext, widgetId)
         setResult(
             Activity.RESULT_OK,
@@ -87,11 +94,12 @@ class SteamWidgetConfigureActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SteamWidgetConfigureScreen(
-    loadAccounts: suspend () -> List<SteamAccount>,
-    onSelect: (Long) -> Unit
+    loadAccounts: suspend () -> List<SteamAccountSessionHandle>,
+    onSelect: (SteamAccountSessionHandle) -> Unit
 ) {
-    var accounts by remember { mutableStateOf<List<SteamAccount>?>(null) }
-    LaunchedEffect(Unit) { accounts = runCatching { loadAccounts() }.getOrDefault(emptyList()) }
+    var failed by remember { mutableStateOf(false) }
+    var accounts by remember { mutableStateOf<List<SteamAccountSessionHandle>?>(null) }
+    LaunchedEffect(Unit) { accounts = runCatching { loadAccounts() }.onFailure { failed = true }.getOrDefault(emptyList()) }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.steam_widget_choose_account)) }) }
@@ -111,18 +119,19 @@ private fun SteamWidgetConfigureScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.steam_widget_no_accounts),
+                    text = stringResource(if (failed) R.string.steam_widget_unavailable else R.string.steam_widget_no_accounts),
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
             else -> LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                items(current, key = SteamAccount::id) { account ->
+                items(current, key = { it.stableKey }) { handle ->
+                    val account = handle.account
                     Card(
-                        onClick = { onSelect(account.id) },
+                        onClick = { onSelect(handle) },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         androidx.compose.foundation.layout.Row(
@@ -141,7 +150,7 @@ private fun SteamWidgetConfigureScreen(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 Text(
-                                    text = account.accountName,
+                                    text = account.accountName + " · " + if (handle.origin.source is SteamStorageSource.Mdbx) "MDBX" else stringResource(R.string.steam_widget_local_account),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )

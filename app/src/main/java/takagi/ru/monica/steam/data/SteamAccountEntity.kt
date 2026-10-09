@@ -65,7 +65,8 @@ data class SteamAccount(
     val accentArgb: Long? = null,
     val note: String = "",
     val pinned: Boolean = false,
-    val lastHealthCheckAt: Long? = null
+    val lastHealthCheckAt: Long? = null,
+    val isTemporary: Boolean = false
 ) {
     val hasRealSteamId: Boolean
         get() = steamId.matches(Regex("""7656119\d{10}"""))

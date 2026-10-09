@@ -1,0 +1,10 @@
+<resources>
+    <string name="steam_temporary_login">临时登录</string>
+    <string name="steam_temporary_login_summary">不保存本次登录凭据</string>
+    <string name="steam_temporary_login_description">切到后台仍保留，退出应用或进程结束后自动移除，不影响已保存账号。内置网页登录、小组件和账号导出不可用。</string>
+    <string name="steam_temporary_login_done">已临时登录，未保存登录凭据</string>
+    <string name="steam_temporary_logout">退出临时登录</string>
+    <string name="steam_temporary_logout_message">从本次会话中移除临时账号和登录凭据？已保存的账号会保留。</string>
+    <string name="steam_temporary_export_unavailable">临时账号不支持导出或转移</string>
+    <string name="steam_temporary_web_unavailable">内置浏览器会保存登录 Cookie，临时账号暂不支持内置网页登录。你仍可使用原生商店、游戏库和聊天。</string>
+</resources>

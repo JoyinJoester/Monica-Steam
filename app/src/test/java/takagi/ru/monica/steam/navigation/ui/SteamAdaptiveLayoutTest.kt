@@ -49,7 +49,7 @@ class SteamAdaptiveLayoutTest {
         listOf(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt",
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
-            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt",
+            "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt",
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt",
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).forEach { path ->
