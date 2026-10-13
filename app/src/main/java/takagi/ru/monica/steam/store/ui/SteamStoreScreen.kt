@@ -122,6 +122,7 @@ import takagi.ru.monica.steam.library.SteamLibraryFailureReason
 import takagi.ru.monica.steam.library.SteamRegionalPrice
 import takagi.ru.monica.steam.library.isSteamSouthAsiaPriceCountry
 import takagi.ru.monica.steam.steamdb.domain.SteamDbQuery
+import takagi.ru.monica.steam.steamdb.data.SteamDbRepository
 import takagi.ru.monica.steam.steamdb.ui.SteamDbDetailsEntry
 import takagi.ru.monica.steam.steamdb.ui.SteamDbPriceSection
 import takagi.ru.monica.steam.store.domain.*
@@ -984,7 +985,8 @@ internal fun SteamStoreDetailContent(
     onOpenRelatedApp: (Int) -> Unit,
     onOpenBundle: (String) -> Unit,
     onFilterByTag: (String) -> Boolean,
-    modifier: Modifier
+    modifier: Modifier,
+    steamDbRepository: SteamDbRepository = SteamDbRepository.shared
 ) {
     val dockContentClearance = LocalSteamDockContentClearance.current
     val reduceAnimations = LocalReduceAnimations.current
@@ -1050,6 +1052,7 @@ internal fun SteamStoreDetailContent(
             SteamStoreDetailHeader(detail, loading, onOpenRegionalPrices,
                 onImage = { showHeroViewer = heroViewerUrl.isNotBlank() },
                 modifier = Modifier.padding(horizontal = 12.dp),
+                steamDbRepository = steamDbRepository,
                 tags = {
                     if (showTags && detail.tags.isNotEmpty()) SteamStoreDetailTags(
                         labels = detail.tags, filterableLabels = filterableTags, onTagClick = onFilterByTag)
@@ -1222,7 +1225,8 @@ internal fun SteamStoreDetailContent(
                 query = SteamDbQuery(detail.appId, detail.priceCountryCode,
                     detail.currency.takeIf { detail.finalPriceCents != null }, detail.isFree),
                 gameName = detail.name,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                repository = steamDbRepository
             )
             }
         }

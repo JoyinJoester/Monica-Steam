@@ -9,6 +9,7 @@
     <string name="steamdb_refresh">Refresh game data</string>
     <string name="steamdb_region">%1$s · %2$s</string>
     <string name="steamdb_low_title">Steam historical low</string>
+    <string name="steamdb_low_short">SteamDB low</string>
     <string name="steamdb_price_source">SteamDB · %1$s · Steam store prices only</string>
     <string name="steamdb_players">Players online</string>
     <string name="steamdb_players_official">Steam official data</string>

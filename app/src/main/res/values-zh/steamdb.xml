@@ -9,6 +9,7 @@
     <string name="steamdb_refresh">刷新游戏数据</string>
     <string name="steamdb_region">%1$s · %2$s</string>
     <string name="steamdb_low_title">Steam 历史最低价</string>
+    <string name="steamdb_low_short">SteamDB 史低</string>
     <string name="steamdb_price_source">SteamDB · %1$s · 仅 Steam 商店价格</string>
     <string name="steamdb_players">当前在线</string>
     <string name="steamdb_players_official">Steam 官方数据</string>

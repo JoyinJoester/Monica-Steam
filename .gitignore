@@ -18,6 +18,7 @@
 **/build/
 /releases/
 /captures
+/docs/design/
 .externalNativeBuild
 .cxx
 local.properties

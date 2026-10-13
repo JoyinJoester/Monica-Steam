@@ -21,6 +21,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.store.domain.SteamStoreDetail
+import takagi.ru.monica.steam.steamdb.data.SteamDbRepository
+import takagi.ru.monica.steam.steamdb.domain.SteamDbQuery
+import takagi.ru.monica.steam.steamdb.ui.SteamDbPriceSection
 
 @Composable
 internal fun SteamStoreDetailTopBar(name: String, onBack: () -> Unit, onShare: () -> Unit,
@@ -48,6 +51,7 @@ internal fun SteamStoreDetailTopBar(name: String, onBack: () -> Unit, onShare: (
 @Composable
 internal fun SteamStoreDetailHeader(detail: SteamStoreDetail, loading: Boolean,
     onRegionalPrices: () -> Unit, onImage: () -> Unit, modifier: Modifier = Modifier,
+    steamDbRepository: SteamDbRepository = SteamDbRepository.shared,
     tags: @Composable () -> Unit = {}) {
     Column(modifier.fillMaxWidth().testTag("store_detail_header"), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         if (detail.headerImageUrl.isNotBlank()) {
@@ -62,36 +66,54 @@ internal fun SteamStoreDetailHeader(detail: SteamStoreDetail, loading: Boolean,
         if (metadata.isNotEmpty()) Text(metadata.joinToString(" · "), style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
         tags()
-        Surface(onClick = onRegionalPrices, shape = RoundedCornerShape(20.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth().testTag("store_detail_current_price")) {
-            Row(Modifier.heightIn(min = 76.dp).padding(horizontal = 14.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                    val region = detail.accountCountryCode ?: detail.priceCountryCode
-                    Text(listOfNotNull(region?.let { regionalCountryName(it) }, stringResource(R.string.store_detail_current_region)).joinToString(" · "),
-                        style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    if (detail.availableInAccountRegion == false) {
-                        Text(stringResource(R.string.steam_store_unavailable_account_region), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
-                        detail.priceCountryCode?.let {
-                            Text(stringResource(R.string.steam_store_reference_region_price, regionalCountryName(it)) + " · " + detail.formattedFinalPrice,
-                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    } else {
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(2.dp),
-                            itemVerticalAlignment = Alignment.CenterVertically) {
-                            Text(if (detail.isFree) stringResource(R.string.steam_library_free) else detail.formattedFinalPrice,
-                                style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                            if (detail.discountPercent > 0) {
-                                SteamStoreDiscountBadge(detail.discountPercent)
-                                Text(detail.formattedInitialPrice, style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant, textDecoration = TextDecoration.LineThrough)
+        // Only compare the game's actual local price; a fallback region or a free
+        // license must not look like a historical price for the account's region.
+        val showHistory = !detail.isFree && detail.availableInAccountRegion != false && detail.finalPriceCents != null
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.testTag("store_detail_price_group")) {
+            Surface(onClick = onRegionalPrices,
+                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp,
+                    bottomStart = if (showHistory) 4.dp else 20.dp, bottomEnd = if (showHistory) 4.dp else 20.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth().testTag("store_detail_current_price")) {
+                Row(Modifier.heightIn(min = 76.dp).padding(horizontal = 14.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                        val region = detail.accountCountryCode ?: detail.priceCountryCode
+                        Text(listOfNotNull(region?.let { regionalCountryName(it) }, stringResource(R.string.store_detail_current_region)).joinToString(" · "),
+                            style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        if (detail.availableInAccountRegion == false) {
+                            Text(stringResource(R.string.steam_store_unavailable_account_region), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
+                            detail.priceCountryCode?.let {
+                                Text(stringResource(R.string.steam_store_reference_region_price, regionalCountryName(it)) + " · " + detail.formattedFinalPrice,
+                                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        } else {
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(2.dp),
+                                itemVerticalAlignment = Alignment.CenterVertically) {
+                                Text(if (detail.isFree) stringResource(R.string.steam_library_free) else detail.formattedFinalPrice,
+                                    style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                                if (detail.discountPercent > 0) {
+                                    SteamStoreDiscountBadge(detail.discountPercent)
+                                    Text(detail.formattedInitialPrice, style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant, textDecoration = TextDecoration.LineThrough)
+                                }
                             }
                         }
                     }
+                    Column(horizontalAlignment = Alignment.End) {
+                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.store_detail_compare), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    }
                 }
-                Column(horizontalAlignment = Alignment.End) {
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.primary)
-                    Text(stringResource(R.string.store_detail_compare), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            if (showHistory) {
+                Surface(shape = RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp, bottomStart = 20.dp, bottomEnd = 20.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    modifier = Modifier.fillMaxWidth().testTag("store_detail_history_price")) {
+                    SteamDbPriceSection(
+                        query = SteamDbQuery(detail.appId, detail.priceCountryCode, detail.currency),
+                        repository = steamDbRepository, compact = true,
+                        modifier = Modifier.padding(start = 14.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)
+                    )
                 }
             }
         }

@@ -54,7 +54,7 @@ class SteamStoreDetailPricesUiTest {
         override fun rating(appId: Int): SteamDbResult<SteamDbRating> = SteamDbResult.Failed(SteamDbFailure.NO_DATA)
         override fun price(appId: Int, region: String): SteamDbResult<SteamDbLowestPrice> {
             calls += "$appId:$region"
-            return SteamDbResult.Ready(SteamDbLowestPrice("$ 8.99", 70, null, 3, 1790812800), System.currentTimeMillis())
+            return SteamDbResult.Ready(SteamDbLowestPrice(if (region == "CNY") "¥59.60" else "$ 8.99", 70, null, 3, 1790812800), System.currentTimeMillis())
         }
     }
     private val repository = SteamDbRepository(api, scope)
@@ -128,7 +128,7 @@ class SteamStoreDetailPricesUiTest {
             loadingRegionalPrices = false, regionalPriceFailure = null, showRegionalPrices = false, onAddToCart = {}, onAddAsGift = {},
             onClaimFreeLicense = {}, onRemoveFromCart = {}, onOpenCart = {}, onToggleWishlist = {}, onToggleIgnored = {},
             onOpenRegionalPrices = { compared++ }, onCloseRegionalPrices = {}, onRetryRegionalPrices = {}, onOpenRelatedApp = {},
-            onOpenBundle = {}, onFilterByTag = { true }, modifier = Modifier.fillMaxSize())
+            onOpenBundle = {}, onFilterByTag = { true }, modifier = Modifier.fillMaxSize(), steamDbRepository = repository)
     }
     private fun screenshot(name: String) {
         compose.waitForIdle()
@@ -188,6 +188,9 @@ class SteamStoreDetailPricesUiTest {
     }
     @Test fun detailShowsGameBeforePriceAndKeepsNavigationActionsReachable() {
         launch(detail = true)
+        compose.waitUntil(5_000) { compose.onAllNodesWithText("¥59.60").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithText("¥59.60").assertIsDisplayed()
+        compose.runOnIdle { assertEquals(listOf("1091500:CNY"), calls.toList()) }
         compose.onNodeWithTag("store_detail_current_price").assertIsDisplayed().performClick()
         val price = compose.onNodeWithTag("store_detail_current_price").fetchSemanticsNode().boundsInRoot
         compose.waitUntil(5_000) { compose.onAllNodesWithContentDescription(label(R.string.steam_store_header_image_description)).fetchSemanticsNodes().isNotEmpty() }
@@ -200,7 +203,7 @@ class SteamStoreDetailPricesUiTest {
         compose.onNodeWithText(label(R.string.steam_store_reviews_title)).assertIsDisplayed()
         compose.onNodeWithTag("store_detail_topbar").assertIsDisplayed()
         compose.onNodeWithContentDescription(label(R.string.more_options)).performClick()
-        compose.onNodeWithText(label(R.string.store_detail_purchase)).performClick()
+        compose.onNode(hasText(label(R.string.store_detail_purchase)) and hasClickAction()).performClick()
         compose.onNodeWithText("标准版").assertIsDisplayed()
         compose.onNodeWithContentDescription(label(R.string.more_options)).performClick()
         compose.onNodeWithText(label(R.string.store_detail_official)).performClick()

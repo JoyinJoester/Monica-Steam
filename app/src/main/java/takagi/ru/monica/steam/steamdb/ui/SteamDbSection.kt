@@ -87,7 +87,7 @@ internal fun SteamDbCompactPriceContent(query: SteamDbQuery, result: SteamDbResu
     Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.store_detail_low), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.steamdb_low_short), style = MaterialTheme.typography.labelMedium)
                 if (result is SteamDbResult.Ready) {
                     Text(result.value.price, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                     result.value.discount?.let { Text("−$it%", style = MaterialTheme.typography.labelSmall) }
