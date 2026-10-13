@@ -72,8 +72,12 @@ internal fun SteamStoreNavigationDrawer(
         SteamPageOverflowAction(stringResource(R.string.store_home_wishlist), Icons.Default.FavoriteBorder, onClick = actions.wishlist),
         SteamPageOverflowAction(stringResource(R.string.steam_store_freebies), Icons.Default.Redeem, onClick = actions.freebies),
         SteamPageOverflowAction(stringResource(R.string.steam_store_points_shop), Icons.Default.CardGiftcard, onClick = actions.points),
-        SteamPageOverflowAction(stringResource(R.string.steam_store_activate_product_code), Icons.Default.Key, onClick = actions.activateProduct),
         SteamPageOverflowAction(stringResource(R.string.workshop_import_share), Icons.Default.Extension, onClick = actions.workshopImport)
+    )
+    val wallet = listOf(
+        SteamPageOverflowAction(stringResource(R.string.steam_store_activate_product_code), Icons.Default.Key, onClick = actions.activateProduct),
+        SteamPageOverflowAction(stringResource(R.string.steam_store_redeem_gift_card), Icons.Default.Redeem, onClick = actions.redeemGiftCard),
+        SteamPageOverflowAction(stringResource(R.string.steam_store_wallet_balance), Icons.Default.AccountBalanceWallet, onClick = actions.walletBalance)
     )
     val utilities = listOf(
         SteamPageOverflowAction(stringResource(R.string.steam_notifications_title), Icons.Default.Notifications, onClick = actions.notifications),
@@ -110,7 +114,7 @@ internal fun SteamStoreNavigationDrawer(
                             IconButton(onClick = { close() }, modifier = Modifier.testTag("store_drawer_close")) { Icon(Icons.Default.Close, closeLabel) }
                         }
                         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                            listOf(shopping, utilities).forEach { group ->
+                            listOf(shopping, wallet, utilities).forEach { group ->
                                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                                     group.forEachIndexed { index, action ->
                                         Surface(

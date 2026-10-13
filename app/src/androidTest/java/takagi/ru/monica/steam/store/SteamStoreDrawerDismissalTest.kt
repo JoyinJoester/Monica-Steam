@@ -41,6 +41,7 @@ class SteamStoreDrawerDismissalTest {
                             query = {}, search = {}, filter = {}, clearFilters = {}, advancedFilters = {},
                             refresh = {}, loadMore = {}, game = {}, event = {}, account = {}, cart = {},
                             wishlist = { actions++ }, freebies = {}, points = {}, activateProduct = {},
+                            redeemGiftCard = {}, walletBalance = {},
                             workshopImport = {}, notifications = {}, settings = {}
                         ),
                         drawer = drawer,

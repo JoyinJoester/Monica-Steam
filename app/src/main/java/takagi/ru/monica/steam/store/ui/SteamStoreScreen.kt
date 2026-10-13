@@ -158,6 +158,7 @@ import takagi.ru.monica.steam.store.share.ui.SteamStoreGameShareSheet
 import takagi.ru.monica.steam.store.bundle.ui.SteamStoreBundleSection
 import takagi.ru.monica.steam.store.ui.gallery.SteamStoreScreenshotViewer
 import takagi.ru.monica.steam.store.activation.domain.SteamStoreProductActivation
+import takagi.ru.monica.steam.store.wallet.domain.SteamStoreWalletLinks
 import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
@@ -340,10 +341,11 @@ fun SteamStoreScreen(
             )
             is SteamStoreDestination.Web -> SteamWebBrowserScreen(
                 url = destination.url,
-                title = if (destination.url == SteamStoreProductActivation.REGISTER_KEY_URL) {
-                    stringResource(R.string.steam_store_activate_product_code)
-                } else {
-                    null
+                title = when (destination.url) {
+                    SteamStoreProductActivation.REGISTER_KEY_URL -> stringResource(R.string.steam_store_activate_product_code)
+                    SteamStoreWalletLinks.REDEEM_GIFT_CARD_URL -> stringResource(R.string.steam_store_redeem_gift_card)
+                    SteamStoreWalletLinks.WALLET_BALANCE_URL -> stringResource(R.string.steam_store_wallet_balance)
+                    else -> null
                 },
                 steamLoginSecure = selectedStoreAccount?.steamLoginSecure
                     ?: selectedStoreAccount?.accessToken?.let { token ->
@@ -526,6 +528,8 @@ fun SteamStoreScreen(
                     freebies = { freebiesOpen = true },
                     points = viewModel::openPointsShop,
                     activateProduct = { viewModel.openAuthenticatedStoreWeb(SteamStoreProductActivation.REGISTER_KEY_URL) },
+                    redeemGiftCard = { viewModel.openAuthenticatedStoreWeb(SteamStoreWalletLinks.REDEEM_GIFT_CARD_URL) },
+                    walletBalance = { viewModel.openAuthenticatedStoreWeb(SteamStoreWalletLinks.WALLET_BALANCE_URL) },
                     workshopImport = { showWorkshopImport = true },
                     notifications = onOpenNotifications,
                     settings = onOpenSettings,

@@ -65,6 +65,7 @@ class SteamStoreHomeUiTest {
         account = { events += "account" }, cart = { events += "cart" }, wishlist = { events += "wishlist" },
         freebies = { events += "freebies" }, points = { events += "points" },
         activateProduct = { events += "activate" }, workshopImport = { events += "workshop" },
+        redeemGiftCard = { events += "redeem" }, walletBalance = { events += "wallet" },
         notifications = { events += "notifications" }, settings = { events += "settings" }
     )
     private fun launch(
@@ -315,6 +316,42 @@ class SteamStoreHomeUiTest {
         compose.onNodeWithContentDescription(label(R.string.close)).performClick()
         compose.onNodeWithTag("store_home_drawer").assertDoesNotExist()
         compose.runOnIdle { assertEquals(listOf("settings"), events) }
+    }
+
+    private fun checkWalletShortcuts(screenshotName: String) {
+        val shortcuts = listOf(
+            R.string.steam_store_activate_product_code to "activate",
+            R.string.steam_store_redeem_gift_card to "redeem",
+            R.string.steam_store_wallet_balance to "wallet"
+        )
+        shortcuts.forEach { (text, event) ->
+            openMenu()
+            compose.onNodeWithText(label(text)).performScrollTo().assertIsDisplayed()
+            if (event == "wallet") {
+                val bitmap = compose.onNodeWithTag("store_home_drawer").captureToImage().asAndroidBitmap()
+                val context = InstrumentationRegistry.getInstrumentation().targetContext
+                File(context.filesDir, "$screenshotName.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                bitmap.recycle()
+            }
+            compose.onNodeWithText(label(text)).performClick()
+            compose.onNodeWithTag("store_home_drawer").assertDoesNotExist()
+            compose.onNode(isDialog()).assertDoesNotExist()
+            compose.runOnIdle { assertEquals(event, events.last()) }
+        }
+        compose.runOnIdle { assertEquals(listOf("activate", "redeem", "wallet"), events) }
+        compose.onNodeWithTag("store_home_account").performTouchInput { click() }
+        compose.runOnIdle { assertEquals("account", events.last()) }
+    }
+
+    @Test fun walletShortcutsCloseDrawerAndDispatchTheirOwnActions() {
+        launch()
+        checkWalletShortcuts("store-wallet-shortcuts-light")
+    }
+
+    @Test fun largeTextWalletShortcutsStayReachableAndCloseDrawer() {
+        dark = true; fontScale = 1.5f
+        launch()
+        checkWalletShortcuts("store-wallet-shortcuts-large-dark")
     }
 
     @Test fun repeatedScrimAndSwipeDismissalsLeaveHomeTouchable() {

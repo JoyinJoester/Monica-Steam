@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_redeem_gift_card">Redeem a Steam gift card</string>
+    <string name="steam_store_wallet_balance">Steam wallet balance</string>
+</resources>

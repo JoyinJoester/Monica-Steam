@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_redeem_gift_card">兑换 Steam 礼品卡</string>
+    <string name="steam_store_wallet_balance">Steam 钱包余额</string>
+</resources>

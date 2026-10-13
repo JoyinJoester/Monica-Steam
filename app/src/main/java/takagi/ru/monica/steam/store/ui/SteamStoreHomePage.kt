@@ -61,6 +61,8 @@ internal data class SteamStoreHomeActions(
     val freebies: () -> Unit,
     val points: () -> Unit,
     val activateProduct: () -> Unit,
+    val redeemGiftCard: () -> Unit,
+    val walletBalance: () -> Unit,
     val workshopImport: () -> Unit,
     val notifications: () -> Unit,
     val settings: () -> Unit,

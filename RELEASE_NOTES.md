@@ -2,6 +2,7 @@
 
 ## 中文
 
+- 商店侧边栏新增“兑换 Steam 礼品卡”和“Steam 钱包余额”，与产品代码激活组成紧凑操作组；使用当前选中账号的应用内 Steam 官方页面处理兑换、查看余额及充值。
 - 游戏详情顶部将当前区服价格与 SteamDB 史低合为紧凑分组，直接对照现价、历史折扣和最近史低日期，并保留多区比价与来源入口；史低加载失败不影响现价，免费或本区不可售的游戏不显示误导性的价格对照。
 - 修复 Steam 更新创意工坊网页数据格式后，正常作品列表被误报为“无法识别的数据”的问题；兼容新旧格式，保留分页、搜索和标签筛选。
 - maFile 本地备份和 WebDAV 备份入口纳入令牌锁保护；设置主密码后，每次导出明文 ZIP 都需在选择保存位置后通过主密码或已启用的指纹验证，取消、失败或离开验证页面均不写出令牌数据。
@@ -16,6 +17,7 @@
 
 ## English
 
+- Added Steam gift-card redemption and wallet-balance shortcuts beside product activation in the store drawer. They open Steam's official pages inside the app with the selected account's authenticated session for redemption, balance and funding.
 - Game details now group the current regional price with its SteamDB historical low for direct comparison, including the historical discount and last occurrence. Regional comparison and source links remain accessible; history failures leave the current price usable, and free or locally unavailable games do not show a misleading comparison.
 - Fixed Workshop browsing reporting an invalid response after Steam changed its page hydration format. Both current and older formats are supported while preserving pagination, search and tag filters.
 - Token locking now also protects local maFile and WebDAV backup pages. With a master password configured, each plain ZIP export requires fresh password or enabled fingerprint verification after choosing a destination; cancelling, failing or leaving verification does not write token data.
