@@ -1,8 +1,7 @@
 package takagi.ru.monica.steam.backup.ui
 
+import android.net.Uri
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -58,9 +59,11 @@ import takagi.ru.monica.steam.io.SteamSafWriter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SteamMaFileTransferScreen(
+internal fun SteamMaFileTransferScreen(
     onNavigateBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    biometricEnabled: Boolean = false,
+    transferState: SteamMaFileTransferState = rememberSteamMaFileTransferState()
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -72,13 +75,14 @@ fun SteamMaFileTransferScreen(
         )
     }
     val codec = remember { SteamMaFileZipCodec() }
-    val accounts by remember(repository) {
-        repository.observeAccounts().map { accounts -> accounts.filterNot { it.isTemporary } }
-    }.collectAsState(initial = emptyList())
+    // The transfer page only needs a count. Decrypt credentials after export authorization.
+    val accountCount by remember(context) {
+        SteamDatabase.getDatabase(context.applicationContext).steamAccountDao()
+            .observeAccounts().map { it.size }
+    }.collectAsState(initial = 0)
     var isWorking by remember { mutableStateOf(false) }
     var statusMessage by remember { mutableStateOf<String?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    var pendingExport by remember { mutableStateOf<ByteArray?>(null) }
 
     fun showError(error: Throwable?) {
         errorMessage = error?.message?.takeIf(String::isNotBlank)
@@ -92,51 +96,73 @@ fun SteamMaFileTransferScreen(
         decoded
     }
 
-    val exportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/zip")
-    ) { uri ->
-        val bytes = pendingExport
-        pendingExport = null
-        if (uri != null && bytes != null) {
-            scope.launch {
-                isWorking = true
-                val result = withContext(Dispatchers.IO) {
-                    runCatching { SteamSafWriter.writeBytes(context, uri, bytes) }
-                        .mapCatching { saved -> check(saved) { "Cannot open export destination" } }
+    fun exportTo(uri: Uri) {
+        scope.launch {
+            isWorking = true
+            try {
+                withContext(Dispatchers.IO) {
+                    val bytes = codec.encode(repository.getAccounts().filterNot { it.isTemporary })
+                    try {
+                        check(SteamSafWriter.writeBytes(context, uri, bytes)) {
+                            "Cannot open export destination"
+                        }
+                    } finally {
+                        bytes.fill(0)
+                    }
                 }
+                statusMessage = context.getString(R.string.steam_mafile_exported)
+                errorMessage = null
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                showError(error)
+            } finally {
                 isWorking = false
-                result.onSuccess {
-                    statusMessage = context.getString(R.string.steam_mafile_exported)
-                    errorMessage = null
-                }.onFailure(::showError)
             }
         }
     }
-    val importLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.OpenDocument()
-    ) { uri ->
-        if (uri != null) {
-            scope.launch {
-                isWorking = true
-                val result = runCatching {
-                    val bytes = withContext(Dispatchers.IO) {
-                        context.contentResolver.openInputStream(uri)?.use {
-                            it.readBytesLimited(SteamMaFileZipCodec.MAX_ARCHIVE_BYTES)
-                        } ?: throw IOException("Cannot open mafile ZIP")
-                    }
-                    importZip(bytes)
+
+    LaunchedEffect(transferState.importSource) {
+        transferState.importSource?.let { uri ->
+            isWorking = true
+            try {
+                val bytes = withContext(Dispatchers.IO) {
+                    context.contentResolver.openInputStream(uri)?.use {
+                        it.readBytesLimited(SteamMaFileZipCodec.MAX_ARCHIVE_BYTES)
+                    } ?: throw IOException("Cannot open mafile ZIP")
                 }
+                val imported = try { importZip(bytes) } finally { bytes.fill(0) }
+                statusMessage = context.getString(
+                    R.string.steam_mafile_imported,
+                    imported.payloads.size,
+                    imported.skippedEntries
+                )
+                errorMessage = null
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                showError(error)
+            } finally {
+                transferState.importSource = null
                 isWorking = false
-                result.onSuccess { imported ->
-                    statusMessage = context.getString(
-                        R.string.steam_mafile_imported,
-                        imported.payloads.size,
-                        imported.skippedEntries
-                    )
-                    errorMessage = null
-                }.onFailure(::showError)
             }
         }
+    }
+
+    transferState.exportDestination?.let { destination ->
+        SteamMaFileExportAuthentication(
+            securityManager = securityManager,
+            biometricEnabled = biometricEnabled,
+            onAuthorized = {
+                transferState.exportDestination = null
+                exportTo(destination)
+            },
+            onDismiss = { transferState.exportDestination = null },
+            onUnavailable = {
+                transferState.exportDestination = null
+                showError(null)
+            }
+        )
     }
 
     BackHandler(onBack = onNavigateBack)
@@ -184,27 +210,17 @@ fun SteamMaFileTransferScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
-                            text = stringResource(R.string.steam_backup_accounts, accounts.size),
+                            text = stringResource(R.string.steam_backup_accounts, accountCount),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Button(
                             onClick = {
-                                scope.launch {
-                                    isWorking = true
-                                    val result = withContext(Dispatchers.Default) {
-                                        runCatching { codec.encode(accounts) }
-                                    }
-                                    isWorking = false
-                                    result.onSuccess {
-                                        pendingExport = it
-                                        exportLauncher.launch(
-                                            "steam_mafiles_${System.currentTimeMillis()}.zip"
-                                        )
-                                    }.onFailure(::showError)
-                                }
+                                statusMessage = null
+                                errorMessage = null
+                                transferState.launchExport()
                             },
-                            enabled = !isWorking && accounts.isNotEmpty(),
+                            enabled = !isWorking && transferState.exportDestination == null && accountCount > 0,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Icon(Icons.Default.UploadFile, contentDescription = null)
@@ -213,9 +229,7 @@ fun SteamMaFileTransferScreen(
                         }
                         OutlinedButton(
                             onClick = {
-                                importLauncher.launch(
-                                    arrayOf("application/zip", "application/octet-stream")
-                                )
+                                transferState.launchImport()
                             },
                             enabled = !isWorking,
                             modifier = Modifier.fillMaxWidth()

@@ -88,6 +88,7 @@ import takagi.ru.monica.steam.security.shouldProtectSteamSensitiveSurface
 import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
 import takagi.ru.monica.steam.community.ui.SteamCommunityScreen
 import takagi.ru.monica.steam.backup.ui.SteamMaFileTransferScreen
+import takagi.ru.monica.steam.backup.ui.rememberSteamMaFileTransferState
 import takagi.ru.monica.steam.health.ui.SteamHealthScreen
 import takagi.ru.monica.steam.friends.chat.ui.SteamChatScreen
 import takagi.ru.monica.steam.library.ui.SteamLibraryScreen
@@ -431,6 +432,10 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                     navigateTo(MonicaSteamPage.STEAM)
                 }
 
+                val maFileTransferState = rememberSteamMaFileTransferState(
+                    enabled = currentPage == MonicaSteamPage.MAFILE_TRANSFER
+                )
+
                 CompositionLocalProvider(
                     LocalReduceAnimations provides settings.reduceAnimations
                 ) {
@@ -676,20 +681,35 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                             )
                         }
 
-                        MonicaSteamPage.MAFILE_TRANSFER -> {
-                            SteamMaFileTransferScreen(
-                                onNavigateBack = { navigateBack() },
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-
+                        MonicaSteamPage.MAFILE_TRANSFER,
                         MonicaSteamPage.WEBDAV_BACKUP -> {
-                            WebDavBackupScreen(
-                                passwordRepository = passwordRepository,
-                                secureItemRepository = secureItemRepository,
-                                onNavigateBack = { navigateBack() },
-                                steamMaFileOnly = true
-                            )
+                            SteamAppLockGate(
+                                enabled = shouldProtectSteamSensitiveSurface(
+                                    tokenPageOnly = settings.steamLockTokenPageOnly,
+                                    startupVerificationBypass = settings.disablePasswordVerification
+                                ),
+                                allowStartupVerificationBypass = false,
+                                settings = settings,
+                                settingsViewModel = steamSettingsViewModel,
+                                passwordViewModel = passwordViewModel,
+                                securityManager = securityManager
+                            ) {
+                                if (page == MonicaSteamPage.MAFILE_TRANSFER) {
+                                    SteamMaFileTransferScreen(
+                                        onNavigateBack = { navigateBack() },
+                                        biometricEnabled = settings.biometricEnabled,
+                                        transferState = maFileTransferState,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                } else {
+                                    WebDavBackupScreen(
+                                        passwordRepository = passwordRepository,
+                                        secureItemRepository = secureItemRepository,
+                                        onNavigateBack = { navigateBack() },
+                                        steamMaFileOnly = true
+                                    )
+                                }
+                            }
                         }
 
                         MonicaSteamPage.MDBX -> {

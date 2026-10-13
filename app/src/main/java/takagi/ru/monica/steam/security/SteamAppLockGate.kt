@@ -176,6 +176,7 @@ fun SteamAppLockGate(
                     SteamAppRecoveryRoute.LOGIN -> LoginScreen(
                         viewModel = passwordViewModel,
                         settingsViewModel = settingsViewModel,
+                        allowStartupVerificationBypass = allowStartupVerificationBypass,
                         onForgotPassword = if (securityManager.areSecurityQuestionsSet()) {
                             { recoveryRoute = SteamAppRecoveryRoute.SECURITY_QUESTIONS }
                         } else {

@@ -741,7 +741,7 @@
     <string name="master_password_and_locking">主密码与锁定</string>
     <string name="master_password_and_locking_description">管理指纹解锁、自动锁定、密保问题与主密码重设。</string>
     <string name="steam_lock_token_page_only">仅锁定令牌页面</string>
-    <string name="steam_lock_token_page_only_description">开启后进入 Monica Steam 不再验证；令牌页面以及主密码相关安全设置仍会要求主密码或生物识别。</string>
+    <string name="steam_lock_token_page_only_description">开启后进入 Monica Steam 不再验证；令牌页面、maFile 备份以及主密码相关安全设置仍会要求主密码或生物识别。</string>
     <string name="auto_lock">自动锁定</string>
     <string name="auto_lock_summary">闲置后锁定应用</string>
     <string name="about">关于</string>

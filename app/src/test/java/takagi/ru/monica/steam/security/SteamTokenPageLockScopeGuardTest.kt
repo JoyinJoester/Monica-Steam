@@ -46,7 +46,7 @@ class SteamTokenPageLockScopeGuardTest {
     }
 
     @Test
-    fun activityUsesMutuallyExclusiveStartupAndTokenPageGates() {
+    fun activityProtectsTokenAndBackupRoutesWhenStartupGateIsBypassed() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -57,10 +57,25 @@ class SteamTokenPageLockScopeGuardTest {
         assertTrue(gate.contains("enabled: Boolean = true"))
         assertTrue(gate.contains("if (!enabled)"))
         assertTrue(gate.contains("allowStartupVerificationBypass: Boolean = true"))
+        assertTrue(gate.contains("allowStartupVerificationBypass = allowStartupVerificationBypass"))
+        val login = projectFile("app/src/main/java/takagi/ru/monica/ui/screens/LoginScreen.kt").readText()
+        assertTrue(login.contains("allowStartupVerificationBypass && (settings?.disablePasswordVerification ?: false)"))
         assertTrue(activity.contains("enabled = !settings.steamLockTokenPageOnly"))
         assertTrue(activity.contains("enabled = shouldProtectSteamSensitiveSurface("))
         assertTrue(activity.contains("allowStartupVerificationBypass = false"))
-        assertEquals(2, activity.windowed("SteamAppLockGate(".length)
+        val backupRoutes = activity.substring(
+            activity.indexOf("MonicaSteamPage.MAFILE_TRANSFER,"),
+            activity.indexOf("MonicaSteamPage.MDBX ->")
+        )
+        assertTrue(backupRoutes.contains("MonicaSteamPage.WEBDAV_BACKUP ->"))
+        assertTrue(backupRoutes.contains("SteamAppLockGate("))
+        assertTrue(backupRoutes.contains("allowStartupVerificationBypass = false"))
+        assertTrue(backupRoutes.contains("SteamMaFileTransferScreen("))
+        assertTrue(backupRoutes.contains("transferState = maFileTransferState"))
+        assertTrue(backupRoutes.contains("WebDavBackupScreen("))
+        assertTrue(activity.indexOf("val maFileTransferState = rememberSteamMaFileTransferState(") in
+            0 until activity.indexOf("SteamAppLockGate("))
+        assertEquals(3, activity.windowed("SteamAppLockGate(".length)
             .count { it == "SteamAppLockGate(" })
     }
 
