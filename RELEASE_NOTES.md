@@ -2,6 +2,7 @@
 
 ## 中文
 
+- 修复 Steam 更新创意工坊网页数据格式后，正常作品列表被误报为“无法识别的数据”的问题；兼容新旧格式，保留分页、搜索和标签筛选。
 - maFile 本地备份和 WebDAV 备份入口纳入令牌锁保护；设置主密码后，每次导出明文 ZIP 都需在选择保存位置后通过主密码或已启用的指纹验证，取消、失败或离开验证页面均不写出令牌数据。
 - 修复“关闭启动密码验证”仍影响敏感页面登录控件的问题，令牌、备份与主密码安全设置不再继承启动免验证。
 - 商店首页合并搜索与顶栏，显示圆形账号头像；特别优惠改为突出主卡片的滑动轮播，热销榜只展示游戏。
@@ -14,6 +15,7 @@
 
 ## English
 
+- Fixed Workshop browsing reporting an invalid response after Steam changed its page hydration format. Both current and older formats are supported while preserving pagination, search and tag filters.
 - Token locking now also protects local maFile and WebDAV backup pages. With a master password configured, each plain ZIP export requires fresh password or enabled fingerprint verification after choosing a destination; cancelling, failing or leaving verification does not write token data.
 - Fixed the startup password-verification bypass leaking into sensitive login controls. Token, backup and master-password security pages no longer inherit the startup bypass.
 - Integrated store search into the top bar with a circular account avatar, a focused offer carousel and a games-only top-sellers section.

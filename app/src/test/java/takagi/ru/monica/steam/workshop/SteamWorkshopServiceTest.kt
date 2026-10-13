@@ -17,6 +17,20 @@ import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
 
 class SteamWorkshopServiceTest {
+    @Test fun publicBrowseAcceptsTheCurrentValveResponseWithoutAccountCredentials() = runTest {
+        val fixture = requireNotNull(javaClass.getResource("/workshop/browse-valve-ssr-data.html")).readBytes()
+        val service = SteamWorkshopService(api { request ->
+            assertEquals("/workshop/browse/", request.url.encodedPath)
+            assertEquals("550", request.url.queryParameter("appid"))
+            assertEquals("lastupdated", request.url.queryParameter("browsesort"))
+            assertEquals("Campaigns", request.url.queryParameter("requiredtags[0]"))
+            assertNull(request.header("Cookie"))
+            fixture
+        }, StandardTestDispatcher(testScheduler), cm { error("Public browsing must not need account authentication") })
+        val batch = service.browse(null, 550, WorkshopQuery(sort = WorkshopSort.UPDATED, tags = setOf("Campaigns")), 1)
+        assertEquals(listOf("1001", "1002"), batch.items.map { it.id })
+    }
+
     @Test fun supportDetectionDistinguishesUnsupportedFromFailureAndDoesNotCacheFailures() = runTest {
         var attempts = 0
         val service = SteamWorkshopService(api { request ->

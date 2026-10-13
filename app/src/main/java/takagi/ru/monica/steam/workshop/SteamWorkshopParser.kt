@@ -9,11 +9,18 @@ internal object SteamWorkshopParser {
 
     fun browse(html: String, appId: Int, page: Int): WorkshopBatch {
         val document = Jsoup.parse(html)
-        val script = document.select("script").asSequence().map { it.data() }
-            .firstOrNull { it.contains("window.SSR.renderContext=JSON.parse(") }
-            ?: throw WorkshopException(WorkshopFailure.INVALID_RESPONSE)
-        val encoded = jsonStringAfter(script, "window.SSR.renderContext=JSON.parse(")
-        val context = json.parseToJsonElement(encoded).jsonObject
+        // Steam now embeds hydration in an inert JSON block. Keep support for
+        // cached/older pages without evaluating either format's bootstrap script.
+        val context = document.selectFirst("script#valve-ssr-data[type=application/json]")?.let {
+            json.parseToJsonElement(it.data()).jsonObject["renderContext"] as? JsonObject
+                ?: throw WorkshopException(WorkshopFailure.INVALID_RESPONSE)
+        } ?: run {
+            val script = document.select("script").asSequence().map { it.data() }
+                .firstOrNull { it.contains("window.SSR.renderContext=JSON.parse(") }
+                ?: throw WorkshopException(WorkshopFailure.INVALID_RESPONSE)
+            val encoded = jsonStringAfter(script, "window.SSR.renderContext=JSON.parse(")
+            json.parseToJsonElement(encoded).jsonObject
+        }
         val queries = json.parseToJsonElement(context.text("queryData")).jsonObject.array("queries")
         fun query(prefix: String): JsonObject? = queries.mapNotNull { it as? JsonObject }
             .firstOrNull { row ->

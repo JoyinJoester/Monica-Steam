@@ -8,6 +8,46 @@ import takagi.ru.monica.steam.network.SteamProtoWriter
 class SteamWorkshopParserTest {
     private fun fixture() = requireNotNull(javaClass.getResource("/workshop/browse-ssr.html")).readText()
 
+    @Test fun parsesCurrentValveJsonDataBlockWithoutJavaScript() {
+        val html = requireNotNull(javaClass.getResource("/workshop/browse-valve-ssr-data.html")).readText()
+        val batch = SteamWorkshopParser.browse(html, 550, 1)
+        assertEquals(listOf("1001", "1002"), batch.items.map { it.id })
+        assertTrue(batch.items.all { it.appId == 550 })
+        assertTrue(batch.hasMore)
+        assertTrue(batch.total > batch.items.size)
+        assertEquals(listOf("Campaigns"), batch.items.first().tags)
+    }
+
+    @Test fun valveJsonFormatPreservesGamePageTagAndItemValidation() {
+        val legacyContext = Json.parseToJsonElement(SteamWorkshopParser.jsonStringAfter(
+            fixture(), "window.SSR.renderContext=JSON.parse("
+        )).jsonObject
+        val html = valveHtml(legacyContext)
+        val batch = SteamWorkshopParser.browse(html, 294100, 1)
+        assertEquals(SteamWorkshopParser.browse(fixture(), 294100, 1), batch)
+        assertThrows(WorkshopException::class.java) { SteamWorkshopParser.browse(html, 550, 1) }
+        assertThrows(WorkshopException::class.java) { SteamWorkshopParser.browse(html, 294100, 2) }
+    }
+
+    @Test fun malformedNewDataCannotFallBackToStaleLegacyDataOrBecomeAnEmptySuccess() {
+        listOf("{", "[]", "{}", """{"renderContext":null}""", """{"renderContext":{"queryData":"{}"}}""").forEach { invalid ->
+            val html = "<script type=\"application/json\" id=\"valve-ssr-data\">$invalid</script>" + fixture()
+            assertTrue(runCatching { SteamWorkshopParser.browse(html, 294100, 1) }.isFailure)
+        }
+    }
+
+    @Test fun valveJsonBlockMustHaveTheExpectedIdAndType() {
+        val html = requireNotNull(javaClass.getResource("/workshop/browse-valve-ssr-data.html")).readText()
+        listOf(html.replace("valve-ssr-data", "unrelated-data"),
+            html.replace("application/json", "text/plain")).forEach { unrelated ->
+            assertThrows(WorkshopException::class.java) { SteamWorkshopParser.browse(unrelated, 550, 1) }
+        }
+    }
+
+    private fun valveHtml(context: JsonObject): String =
+        "<script type=\"application/json\" id=\"valve-ssr-data\">" +
+            buildJsonObject { put("renderContext", context) } + "</script>"
+
     @Test fun parsesCurrentSteamHydrationAndGameSpecificTags() {
         val batch = SteamWorkshopParser.browse(fixture(), 294100, 1)
         assertEquals(2, batch.items.size)
