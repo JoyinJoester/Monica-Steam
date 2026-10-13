@@ -53,6 +53,7 @@ internal interface SteamWorkshopGateway {
     suspend fun supportsWorkshop(appId: Int): Boolean
     suspend fun browse(account: SteamAccount?, appId: Int, query: WorkshopQuery, page: Int): WorkshopBatch
     suspend fun details(account: SteamAccount, appId: Int, id: String): WorkshopItem
+    suspend fun publicDetails(appId: Int, id: String): WorkshopItem = throw WorkshopException(WorkshopFailure.LOGIN)
     suspend fun inspectItems(account: SteamAccount, appId: Int, ids: List<String>): List<WorkshopItem> =
         ids.mapNotNull { id ->
             try { details(account, appId, id) }

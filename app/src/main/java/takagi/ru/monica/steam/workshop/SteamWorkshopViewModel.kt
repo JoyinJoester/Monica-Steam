@@ -264,7 +264,8 @@ internal class SteamWorkshopViewModel(
             actionFailure = null, actionSucceeded = false) }
         detailJob = viewModelScope.launch {
             try {
-                val detail = authenticated { gateway.details(it, appId, item.id) }
+                val detail = if (account == null) gateway.publicDetails(appId, item.id)
+                    else authenticated { gateway.details(it, appId, item.id) }
                 if (version == detailGeneration) mutableState.update { current ->
                     val resolved = if ((confirmationVersions[item.id] ?: 0L) > requestVersion)
                         detail.copy(subscribed = confirmed[item.id]) else detail

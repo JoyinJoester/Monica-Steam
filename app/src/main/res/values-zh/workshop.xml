@@ -44,7 +44,7 @@
     <string name="workshop_only_item">仅订阅此作品</string>
     <string name="workshop_with_dependencies">连同依赖一起订阅</string>
     <string name="workshop_synced">订阅已更新</string>
-    <string name="workshop_sync_hint">订阅将同步到你的 Steam 账号，下载和安装由电脑上的 Steam 完成。</string>
+    <string name="workshop_sync_hint">订阅会同步到电脑上的 Steam；保存到手机请使用上方“下载原文件”，两者独立操作。</string>
     <string name="workshop_unavailable_item">此作品无法在这里订阅，可在 Steam 中查看。</string>
     <string name="workshop_incompatible">作者将此作品标记为不兼容，订阅前请检查使用要求。</string>
     <string name="workshop_open_steam">在 Steam 中查看</string>

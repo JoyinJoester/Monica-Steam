@@ -91,6 +91,9 @@ internal class SteamWorkshopService(
         item.copy(subscribed = subscribed, dependencies = dependencies)
     }
 
+    override suspend fun publicDetails(appId: Int, id: String): WorkshopItem =
+        takagi.ru.monica.steam.workshop.download.WorkshopDownloadClient().details(appId, id).item
+
     override suspend fun setSubscription(account: SteamAccount, item: WorkshopItem, subscribe: Boolean, dependencies: Boolean) = withContext(io) {
         require(item.id.toULongOrNull()?.let { it > 0uL } == true && item.appId > 0)
         if (subscribe && (!item.canSubscribe || item.banned || item.fileType != 0)) {

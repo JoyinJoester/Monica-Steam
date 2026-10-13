@@ -26,7 +26,8 @@ import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 @Composable
 internal fun SteamWorkshopDetail(
     state: WorkshopUiState, subscribe: (Boolean, Boolean) -> Unit, retry: () -> Unit,
-    accountName: String, onDependency: (WorkshopItem) -> Unit, modifier: Modifier = Modifier
+    accountName: String, onDependency: (WorkshopItem) -> Unit, modifier: Modifier = Modifier,
+    onDownload: (() -> Unit)? = null
 ) {
     val item = state.selected ?: return
     val uri = LocalUriHandler.current
@@ -48,10 +49,20 @@ internal fun SteamWorkshopDetail(
                 if (item.tags.isNotEmpty()) Text(item.tags.joinToString(" · "), style = MaterialTheme.typography.labelLarge)
             }
         }
+        if (onDownload != null && item.fileType == 0 && !item.banned) item {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = onDownload, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.wallpaper_download_original))
+                }
+                Text(stringResource(R.string.wallpaper_original_hint), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
         item {
             Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = MaterialTheme.shapes.large) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.workshop_account, accountName), style = MaterialTheme.typography.labelLarge)
+                Text(if (accountName.isBlank()) stringResource(R.string.wallpaper_anonymous)
+                    else stringResource(R.string.workshop_account, accountName), style = MaterialTheme.typography.labelLarge)
                 Text(stringResource(R.string.workshop_sync_hint), style = MaterialTheme.typography.bodySmall)
                 if (item.incompatible) Text(stringResource(R.string.workshop_incompatible), color = MaterialTheme.colorScheme.error)
                 if (state.loadingDetail) WorkshopLoading(stringResource(R.string.workshop_loading))

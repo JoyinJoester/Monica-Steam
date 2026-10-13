@@ -58,6 +58,7 @@ import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 import takagi.ru.monica.steam.session.domain.SteamAccountSessionResolver
 import takagi.ru.monica.ui.common.selection.SelectionActionBar
 import takagi.ru.monica.ui.common.selection.SelectionActionBarAction
+import takagi.ru.monica.steam.workshop.download.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -120,6 +121,11 @@ internal fun SteamWorkshopScreen(
         }
     }
     val model: SteamWorkshopViewModel = viewModel(key = scopeKey, factory = factory)
+    val downloads = remember(context) { WorkshopDownloads.get(context.applicationContext) }
+    val downloadRows by downloads.rows.collectAsStateWithLifecycle()
+    var showDownloads by rememberSaveable { mutableStateOf(false) }
+    var downloadItem by remember { mutableStateOf<WorkshopItem?>(null) }
+    var retryDownload by remember { mutableStateOf<WorkshopDownloadRecord?>(null) }
     val state by model.state.collectAsStateWithLifecycle()
     val presetState by model.presets.state.collectAsStateWithLifecycle()
     var menu by remember(scopeKey, state.selected?.id, state.imported?.share, presetState.visible) { mutableStateOf(false) }
@@ -148,6 +154,7 @@ internal fun SteamWorkshopScreen(
     LaunchedEffect(state.query) { listState.scrollToItem(0) }
     val back = {
         when {
+            showDownloads -> showDownloads = false
             state.selected != null -> model.closeDetail()
             state.imported != null -> { model.closeImport(); shareCode = null }
             state.selectionMode -> model.endSelection()
@@ -173,24 +180,33 @@ internal fun SteamWorkshopScreen(
     } }
     BackHandler(onBack = back)
 
-    Box(modifier.fillMaxSize()) {
+    if (showDownloads) WorkshopDownloadsScreen(downloadRows, { showDownloads = false }, downloads::cancel,
+        { record ->
+            retryDownload = record
+            downloadItem = WorkshopItem(record.itemId, record.appId, record.title, preview = record.preview)
+        }, modifier)
+    else Box(modifier.fillMaxSize()) {
         Scaffold(
             modifier = Modifier.fillMaxSize(), contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = { Column {
                 TopAppBar(
                     modifier = Modifier.steamWindowTopPadding(), windowInsets = WindowInsets(0, 0, 0, 0),
                     title = { Column {
-                        Text(stringResource(when {
+                        Text(if (activeAppId == WALLPAPER_ENGINE_APP_ID && state.selected == null) "Wallpaper Engine" else stringResource(when {
                             state.selected != null -> R.string.workshop_detail_title
                             state.imported != null -> R.string.workshop_import_title
                             else -> R.string.workshop_title
                         }), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        if (activeAppId != WALLPAPER_ENGINE_APP_ID || state.selected != null)
+                            Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     } },
                     navigationIcon = { IconButton(onClick = back) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.workshop_back))
                     } },
                     actions = {
+                        IconButton(onClick = { showDownloads = true }) {
+                            Icon(Icons.Default.Download, stringResource(R.string.wallpaper_downloads))
+                        }
                         if ((rootPage && presetState.visible) || (state.selected == null && state.imported != null)) {
                             IconButton(onClick = refresh, enabled = if (presetState.visible && rootPage) !presetState.library.loading else canRefresh) {
                                 Icon(Icons.Default.Refresh, stringResource(R.string.workshop_refresh))
@@ -254,7 +270,8 @@ internal fun SteamWorkshopScreen(
                     SteamWorkshopDetail(state, model::subscribe, { model.open(requireNotNull(state.selected)) },
                         account?.displayName?.ifBlank { account.accountName }.orEmpty(),
                         model::openDependency,
-                        Modifier.padding(padding).fillMaxSize())
+                        Modifier.padding(padding).fillMaxSize(),
+                        onDownload = { retryDownload = null; downloadItem = state.selected })
                 }
             } else if (state.imported != null) {
                 WorkshopImportPreview(requireNotNull(state.imported), accountName, model::toggleImported, model::selectImported,
@@ -313,7 +330,14 @@ internal fun SteamWorkshopScreen(
                         }
                     }
                     if (state.loading) item { WorkshopLoading(stringResource(R.string.workshop_loading)) }
-                    items(state.items, key = { it.id }) { item -> WorkshopItemCard(item,
+                    if (activeAppId == WALLPAPER_ENGINE_APP_ID && !selecting) {
+                        items(state.items.chunked(2), key = { it.first().id }) { pair ->
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                pair.forEach { item -> WallpaperTile(item, { model.open(item) }, Modifier.weight(1f)) }
+                                if (pair.size == 1) Spacer(Modifier.weight(1f))
+                            }
+                        }
+                    } else items(state.items, key = { it.id }) { item -> WorkshopItemCard(item,
                         selecting = state.selectionMode, checked = item.id in state.selectedIds,
                         onSelect = { model.toggleSelection(item.id) },
                         onClick = { if (state.selectionMode) model.toggleSelection(item.id) else model.open(item) }) }
@@ -357,6 +381,14 @@ internal fun SteamWorkshopScreen(
                 }
             )
         }
+    }
+    downloadItem?.let { item ->
+        WorkshopDownloadDialog(item, handle?.takeUnless { it.account.isTemporary }, retryDownload,
+            onDismiss = { downloadItem = null; retryDownload = null },
+            onQueued = {
+                downloadItem = null; retryDownload = null; showDownloads = true
+                startBackgroundTask { }
+            })
     }
     if (filters) WorkshopFilters(state.query, state.tags, { filters = false }) {
         filters = false

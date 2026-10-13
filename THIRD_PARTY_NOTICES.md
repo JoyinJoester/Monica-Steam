@@ -1,5 +1,25 @@
 # Third-Party Notices
 
+## Workshop-Native and Steam content downloads
+
+The Wallpaper Engine download workflow was informed by
+[Workshop-Native](https://github.com/cjtestuse/Workshop-Native), revision
+`f25129d62bb86d610a723a338ef25f7b134cbf9d` (GPL-3.0).
+The relevant references are `SteamSessionManager.kt`, `WorkshopDownloadWorker.kt`
+and the public-download storage implementation. Monica uses its own CM,
+WorkManager and Storage Access Framework integration; it does not include the
+upstream app, authentication store, PKG extractor or TEX converter.
+
+Steam manifest layout, filename encryption and ZIP/LZMA/Zstandard chunk framing
+were cross-checked against [JavaSteam](https://github.com/Longi94/JavaSteam)
+1.8.0 (MIT, Copyright (c) 2018 Long Tran). Its license is retained at
+`licenses/JavaSteam-MIT.txt`. Monica uses its existing protobuf implementation;
+JavaSteam is not a runtime dependency.
+
+Download decompression uses [XZ for Java](https://tukaani.org/xz/java.html)
+1.10 (0BSD) and [zstd-jni](https://github.com/luben/zstd-jni) 1.5.7-3
+(BSD-2-Clause, including Zstandard's BSD-3-Clause components).
+
 ## SteamRoute / SteamBolt
 
 Parts of Monica Steam's network optimization target coverage, recovery strategy,

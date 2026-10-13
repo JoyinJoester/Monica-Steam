@@ -2,6 +2,9 @@
 
 ## 中文
 
+- 商店菜单新增 Wallpaper Engine 专用入口，以真实壁纸预览双列浏览，并保留搜索、筛选和分页；公开作品详情无需先登录。
+- 创意工坊新增原文件下载与“我的下载”：支持 Steam 内容清单及分块下载、文件校验、手机文件夹保存、后台进度、取消和重新下载。匿名与当前账号下载由用户明确选择，账号任务绑定原存储来源；权限不足、网络失败与保存失败分别提示。下载不自动订阅，也不自动设置为手机动态壁纸；场景、网页和 PKG 仍需兼容播放器。
+
 - 商店侧边栏新增“兑换 Steam 礼品卡”和“Steam 钱包余额”，与产品代码激活组成紧凑操作组；使用当前选中账号的应用内 Steam 官方页面处理兑换、查看余额及充值。
 - 游戏详情顶部将当前区服价格与 SteamDB 史低合为紧凑分组，直接对照现价、历史折扣和最近史低日期，并保留多区比价与来源入口；史低加载失败不影响现价，免费或本区不可售的游戏不显示误导性的价格对照。
 - 修复 Steam 更新创意工坊网页数据格式后，正常作品列表被误报为“无法识别的数据”的问题；兼容新旧格式，保留分页、搜索和标签筛选。
@@ -16,6 +19,9 @@
 - 确认列表明确返回会话失效时，更新账号会话并最多重试读取一次；失败提示提供重新登录指引，不再将刷新失败显示为“暂无待确认项目”。
 
 ## English
+
+- Added a dedicated Wallpaper Engine entry in the store drawer, with a two-column gallery using actual previews, search, filters and pagination. Public item details can be viewed without signing in.
+- Added original-file Workshop downloads and My downloads, including Steam manifests and chunks, integrity checks, folder selection, background progress, cancellation and retry. Anonymous or selected-account access is an explicit choice; account tasks stay bound to their original storage source. Permission, connection and storage failures have separate messages. Downloading neither subscribes nor sets an Android live wallpaper; scene, web and PKG content still requires a compatible player.
 
 - Added Steam gift-card redemption and wallet-balance shortcuts beside product activation in the store drawer. They open Steam's official pages inside the app with the selected account's authenticated session for redemption, balance and funding.
 - Game details now group the current regional price with its SteamDB historical low for direct comparison, including the historical discount and last occurrence. Regional comparison and source links remain accessible; history failures leave the current price usable, and free or locally unavailable games do not show a misleading comparison.

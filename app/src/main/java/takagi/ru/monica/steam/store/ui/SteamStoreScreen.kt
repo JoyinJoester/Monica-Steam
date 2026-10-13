@@ -531,6 +531,7 @@ fun SteamStoreScreen(
                     redeemGiftCard = { viewModel.openAuthenticatedStoreWeb(SteamStoreWalletLinks.REDEEM_GIFT_CARD_URL) },
                     walletBalance = { viewModel.openAuthenticatedStoreWeb(SteamStoreWalletLinks.WALLET_BALANCE_URL) },
                     workshopImport = { showWorkshopImport = true },
+                    wallpapers = { workshopAppId = 431960 },
                     notifications = onOpenNotifications,
                     settings = onOpenSettings,
                     unlockFamilyView = if (state.familyViewUnlockRequired) viewModel::openFamilyViewUnlock else null,

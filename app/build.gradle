@@ -379,6 +379,10 @@ configurations.named('testCompileOnly') {
 }
 
 dependencies {
+    // SteamPipe compressed content; keep Monica's existing CM/network stack.
+    implementation 'org.tukaani:xz:1.10'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'com.github.luben:zstd-jni:1.5.7-3@aar'
     implementation project(':mdbx-engine')
 
     constraints {

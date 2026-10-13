@@ -44,7 +44,7 @@
     <string name="workshop_only_item">Only this item</string>
     <string name="workshop_with_dependencies">Include dependencies</string>
     <string name="workshop_synced">Subscription updated</string>
-    <string name="workshop_sync_hint">Subscriptions sync to your Steam account. Steam on your computer handles downloading and installation.</string>
+    <string name="workshop_sync_hint">Subscriptions sync to Steam on your computer. Use Download original files above to save this item to your phone separately.</string>
     <string name="workshop_unavailable_item">This item cannot be subscribed to here. You can view it on Steam.</string>
     <string name="workshop_incompatible">The author marked this item as incompatible. Check its requirements before subscribing.</string>
     <string name="workshop_open_steam">View on Steam</string>

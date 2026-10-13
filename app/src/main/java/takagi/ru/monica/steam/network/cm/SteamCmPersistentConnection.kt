@@ -39,7 +39,8 @@ internal class SteamCmPersistentConnection(
     private val steamId: Long,
     private val webLogonToken: String,
     private val timeoutMillis: Long,
-    private val eventSink: (SteamCmEnvelope) -> Unit = {}
+    private val eventSink: (SteamCmEnvelope) -> Unit = {},
+    private val logonBody: () -> ByteArray = { SteamCmProtocol.webLogonBody(webLogonToken) }
 ) : WebSocketListener(), Closeable {
     private val stateLock = Any()
     private val noJobLock = ReentrantLock()
@@ -245,7 +246,7 @@ internal class SteamCmPersistentConnection(
                 eMsg = SteamCmProtocol.EMSG_CLIENT_LOGON,
                 steamId = steamId,
                 sessionId = 0,
-                body = SteamCmProtocol.webLogonBody(webLogonToken)
+                body = logonBody()
             )
             check(webSocket.send(login.toByteStringNoSpread())) { "Steam CM logon send failed" }
         }.onFailure { failConnection(webSocket, it) }

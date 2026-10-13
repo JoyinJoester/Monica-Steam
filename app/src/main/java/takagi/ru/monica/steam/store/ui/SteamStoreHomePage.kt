@@ -66,6 +66,7 @@ internal data class SteamStoreHomeActions(
     val workshopImport: () -> Unit,
     val notifications: () -> Unit,
     val settings: () -> Unit,
+    val wallpapers: () -> Unit = {},
     val unlockFamilyView: (() -> Unit)? = null,
     val back: (() -> Unit)? = null
 )

@@ -69,6 +69,7 @@ internal fun SteamStoreNavigationDrawer(
         }
     }
     val shopping = listOf(
+        SteamPageOverflowAction("Wallpaper Engine", Icons.Default.Wallpaper, onClick = actions.wallpapers),
         SteamPageOverflowAction(stringResource(R.string.store_home_wishlist), Icons.Default.FavoriteBorder, onClick = actions.wishlist),
         SteamPageOverflowAction(stringResource(R.string.steam_store_freebies), Icons.Default.Redeem, onClick = actions.freebies),
         SteamPageOverflowAction(stringResource(R.string.steam_store_points_shop), Icons.Default.CardGiftcard, onClick = actions.points),
