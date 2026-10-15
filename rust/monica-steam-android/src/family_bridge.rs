@@ -6,7 +6,7 @@ use jni::{
 use monica_steam_core::family::{parse_shared_library_apps, FamilySharedGame};
 use std::ptr;
 
-const FAMILY_SHARED_APPS_BRIDGE_MAGIC: &[u8; 4] = b"MSF1";
+const FAMILY_SHARED_APPS_BRIDGE_MAGIC: &[u8; 4] = b"MSF2";
 
 fn write_required_string(out: &mut Vec<u8>, value: &str) -> Option<()> {
     let bytes = value.as_bytes();
@@ -24,6 +24,7 @@ fn serialize_family_shared_apps(games: &[FamilySharedGame]) -> Option<Vec<u8>> {
     for game in games {
         out.extend_from_slice(&game.app_id.to_le_bytes());
         out.extend_from_slice(&game.playtime_forever_minutes.to_le_bytes());
+        out.extend_from_slice(&game.last_played_at.to_le_bytes());
         write_required_string(&mut out, &game.name)?;
         write_required_string(&mut out, &game.icon_hash)?;
         let owner_count = u32::try_from(game.owner_steam_ids.len()).ok()?;
@@ -65,14 +66,16 @@ mod tests {
             app_id: 20,
             name: "Shared game".to_string(),
             playtime_forever_minutes: 7_200,
+            last_played_at: 4_000_000_000,
             icon_hash: "icon-20".to_string(),
             owner_steam_ids: vec!["76561198000000002".to_string()],
         }])
         .unwrap();
 
-        assert_eq!(&encoded[0..4], b"MSF1");
+        assert_eq!(&encoded[0..4], b"MSF2");
         assert_eq!(u32::from_le_bytes(encoded[4..8].try_into().unwrap()), 1);
         assert_eq!(i32::from_le_bytes(encoded[8..12].try_into().unwrap()), 20);
         assert_eq!(i32::from_le_bytes(encoded[12..16].try_into().unwrap()), 7_200);
+        assert_eq!(i64::from_le_bytes(encoded[16..24].try_into().unwrap()), 4_000_000_000);
     }
 }

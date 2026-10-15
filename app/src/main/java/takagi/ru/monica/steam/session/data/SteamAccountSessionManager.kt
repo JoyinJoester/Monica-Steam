@@ -33,7 +33,7 @@ class SteamAccountSessionManager(
     private val temporaryAccounts: SteamTemporaryAccounts = SteamTemporaryAccounts.shared
 ) {
     private val mutex = Mutex()
-    private val inFlight = mutableMapOf<String, CompletableDeferred<Result<SteamSessionResolution>>>()
+    private val inFlight = mutableMapOf<String, FlightDecision.Own>()
     private val latestAccounts = mutableMapOf<String, SteamAccount>()
 
     suspend fun resolve(
@@ -41,9 +41,12 @@ class SteamAccountSessionManager(
         forceRefresh: Boolean = false
     ): SteamSessionResolution {
         val key = handle.stableKey
+        // Login writes to Room/MDBX independently of this manager. Never let a cached
+        // refresh result or an old screen handle override that authoritative session.
+        val stored = loadCurrent(handle)
         val decision = mutex.withLock {
             val known = latestAccounts[key]
-            val candidate = if (handle.account.isTemporary) activeTemporaryAccount(handle.account) else known ?: handle.account
+            val candidate = stored ?: known ?: handle.account
             if (!forceRefresh && !refresher.shouldRefresh(candidate, nowSeconds())) {
                 FlightDecision.Immediate(
                     SteamSessionResolution(
@@ -54,21 +57,19 @@ class SteamAccountSessionManager(
                 )
             } else {
                 val existing = inFlight[key]
-                if (existing != null) {
-                    FlightDecision.Wait(existing)
+                if (existing != null && !hasSessionChanged(existing.account, candidate)) {
+                    FlightDecision.Wait(existing.deferred)
                 } else {
                     FlightDecision.Own(
-                        CompletableDeferred<Result<SteamSessionResolution>>().also {
-                            inFlight[key] = it
-                        },
+                        CompletableDeferred<Result<SteamSessionResolution>>(),
                         candidate
-                    )
+                    ).also { inFlight[key] = it }
                 }
             }
         }
 
         val resolution = when (decision) {
-            is FlightDecision.Immediate -> decision.resolution
+            is FlightDecision.Immediate -> return decision.resolution
             is FlightDecision.Wait -> decision.deferred.await().getOrThrow()
             is FlightDecision.Own -> {
                 val ownerHandle = handle.copy(account = decision.account)
@@ -81,15 +82,16 @@ class SteamAccountSessionManager(
                     throw cancelled
                 } finally {
                     mutex.withLock {
-                        if (inFlight[key] === decision.deferred) {
+                        if (inFlight[key] === decision) {
                             inFlight.remove(key)
                         }
                     }
                 }
             }
         }
-        if (handle.account.isTemporary) activeTemporaryAccount(handle.account)
-        return resolution
+        // A login can also finish while this caller is waiting for another refresh.
+        val current = loadCurrent(handle)
+        return if (current != null) resolution.copy(account = current) else resolution
     }
 
     suspend fun clear(handle: SteamAccountSessionHandle) {
@@ -107,10 +109,24 @@ class SteamAccountSessionManager(
             return SteamSessionResolution(account, refreshed = false, refreshAttempted = false)
         }
 
-        val tokens = withContext(ioDispatcher) {
-            refresher.refresh(account, forceRefresh)
-        } ?: return SteamSessionResolution(
-            account = account,
+        val tokens = try {
+            withContext(ioDispatcher) { refresher.refresh(account, forceRefresh) }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            val current = loadCurrent(handle)
+            if (current != null && hasSessionChanged(account, current)) {
+                return SteamSessionResolution(current, refreshed = false, refreshAttempted = true)
+            }
+            throw error
+        }
+        val current = loadCurrent(handle)
+        if (current != null && hasSessionChanged(account, current)) {
+            // Discard a rotation started before a successful re-login.
+            return SteamSessionResolution(current, refreshed = false, refreshAttempted = true)
+        }
+        if (tokens == null) return SteamSessionResolution(
+            account = current ?: account,
             refreshed = false,
             refreshAttempted = true
         )
@@ -136,6 +152,15 @@ class SteamAccountSessionManager(
         return previous.accessToken != current.accessToken ||
             previous.refreshToken != current.refreshToken ||
             previous.steamLoginSecure != current.steamLoginSecure
+    }
+
+    private suspend fun loadCurrent(handle: SteamAccountSessionHandle): SteamAccount? {
+        val current = if (handle.account.isTemporary) activeTemporaryAccount(handle.account)
+            else withContext(ioDispatcher) { store.load(handle) }
+        check(current == null || (current.id == handle.account.id && current.steamId == handle.account.steamId)) {
+            "Steam session storage identity changed"
+        }
+        return current
     }
 
     private fun activeTemporaryAccount(account: SteamAccount): SteamAccount =

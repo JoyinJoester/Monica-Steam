@@ -80,6 +80,11 @@ It brings Steam Guard, account management, mobile confirmations, library, store,
 3. Import a `maFile` or sign in to Steam to initialize tokens and sessions.
 4. **Back up existing `maFile` / authenticator data first.** Never treat a test build as your only copy.
 
+### Keeping Steam Guard in both apps
+
+The [Millennium](https://github.com/Good-Joe2049/Millennium) module lets Monica Pass and the main Steam app use the same Steam Guard authenticator alongside each other.
+It provides Steam Guard and `maFile` import, export, and restoration. You can also import the exported `maFile` into Monica Steam to reuse the same authenticator data. See the [Millennium documentation](https://github.com/Good-Joe2049/Millennium#mafile) for module installation, activation, and restoration steps.
+
 ### Known limitations
 - Still a public test build; APIs and UI may change.
 - Some features depend on Steam web pages or non-public mobile endpoints and may break when Steam changes them.
@@ -174,21 +179,15 @@ If Monica Steam / the Monica projects help you, support is welcome.
 <img src="image/support_author.jpg" alt="Support Monica Steam" width="320"/>
 <br/>
 <sub>WeChat / Alipay QR</sub>
-<br/><br/>
-
-<form action="https://www.paypal.com/ncp/payment/BHSYWK73CA8FW" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
-  <input style="text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:&quot;Helvetica Neue&quot;,Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;" type="submit" value="Support Monica" />
-  <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
-  <section style="font-size: 0.75rem;"> Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
-</form>
+</div>
 
 <br/>
-<p>
+
+<p align="center">
   <a href="https://www.paypal.com/ncp/payment/BHSYWK73CA8FW">
-    <img src="https://img.shields.io/badge/PayPal-Support%20Monica-FFD140?style=for-the-badge&logo=paypal&logoColor=003087" alt="PayPal Support Monica" />
+    <img src="https://img.shields.io/badge/PayPal-Support%20Monica-FFD140?style=for-the-badge&amp;logo=paypal&amp;logoColor=003087" alt="Support Monica with PayPal" />
   </a>
 </p>
-</div>
 
 Support is prioritized for:
 - Steam protocol adaptation and risk-control mitigation.

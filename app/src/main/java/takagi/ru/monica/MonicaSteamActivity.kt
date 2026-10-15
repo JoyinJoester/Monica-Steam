@@ -12,21 +12,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.SportsEsports
-import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -44,7 +31,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
@@ -55,7 +41,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import takagi.ru.monica.steam.navigation.SteamDockPreferences
 import takagi.ru.monica.steam.navigation.SteamDockStyle
 import takagi.ru.monica.steam.navigation.SteamDockTab
-import takagi.ru.monica.steam.navigation.icon
 import takagi.ru.monica.steam.navigation.label
 import takagi.ru.monica.steam.navigation.shouldEnableSteamLiquidGlassRuntimeEffects
 import takagi.ru.monica.steam.navigation.shouldShowSteamDock
@@ -63,14 +48,10 @@ import takagi.ru.monica.steam.navigation.liquidglass.render.rememberSteamLiquidG
 import takagi.ru.monica.steam.navigation.liquidglass.render.steamLiquidGlassBackdropSource
 import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamLiquidGlassDock
 import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamLiquidGlassDockVisibility
-import takagi.ru.monica.steam.navigation.ui.SteamEssentialsFloatingToolbar
 import takagi.ru.monica.steam.navigation.ui.SteamAdaptiveNavigationRail
 import takagi.ru.monica.steam.navigation.ui.SteamFixedBottomBar
 import takagi.ru.monica.steam.navigation.ui.SteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
-import takagi.ru.monica.steam.navigation.ui.SteamToolbarItem
-import takagi.ru.monica.steam.navigation.ui.steamDockSwipe
-import takagi.ru.monica.steam.navigation.ui.steamDockProgressiveBlur
 import takagi.ru.monica.steam.navigation.ui.steamWindowHorizontalPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowStartPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
@@ -202,11 +183,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
             }
 
             val dockStyle = dockConfiguration.style
-            val dockOrder = dockConfiguration.m3eOrder
             val liquidGlassDockOrder = dockConfiguration.liquidGlassOrder
             val fixedDockOrder = dockConfiguration.fixedOrder
             val activeDockOrder = when (dockStyle) {
-                SteamDockStyle.M3E -> dockOrder
                 SteamDockStyle.LIQUID_GLASS -> liquidGlassDockOrder
                 SteamDockStyle.FIXED -> fixedDockOrder
             }
@@ -319,7 +298,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val imeVisible = WindowInsets.ime.getBottom(density) > 0
                 val adaptiveLayout = rememberSteamAdaptiveLayout()
                 val useNavigationRail = adaptiveLayout.useNavigationRail && !imeVisible
-                val dockBlurHeightPx = with(density) { 130.dp.toPx() }
                 val dockVisible = shouldShowSteamDock(
                     hasConfiguration = true,
                     isDockPage = currentPage.isDockPage(dockStyle),
@@ -499,12 +477,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                                     start = if (useNavigationRail) 80.dp else 0.dp
                                                 )
                                                 .steamWindowHorizontalPadding()
-                                                .steamDockProgressiveBlur(
-                                                    enabled = dockStyle == SteamDockStyle.M3E &&
-                                                        dockVisible,
-                                                    blurRadius = 40f,
-                                                    height = dockBlurHeightPx
-                                                )
                                                 .steamLiquidGlassBackdropSource(
                                                     backdrop = liquidGlassBackdrop,
                                                     enabled = liquidGlassEffectsEnabled
@@ -565,10 +537,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 dockStyle = dockStyle,
                                 onDockStyleChange = { style ->
                                     composeScope.launch { dockPreferences.updateStyle(style) }
-                                },
-                                dockOrder = dockOrder,
-                                onDockOrderChange = { order ->
-                                    composeScope.launch { dockPreferences.updateOrder(order) }
                                 },
                                 liquidGlassDockOrder = liquidGlassDockOrder,
                                 onLiquidGlassDockOrderChange = { order ->
@@ -851,24 +819,11 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         .steamWindowBottomOnlyPadding()
                                         .zIndex(2f),
                                     order = when (dockStyle) {
-                                        SteamDockStyle.M3E -> listOf(SteamDockTab.TOKEN) +
-                                            SteamDockTab.completeOrder(dockOrder)
                                         SteamDockStyle.LIQUID_GLASS ->
                                             SteamDockTab.completeLiquidGlassOrder(liquidGlassDockOrder)
                                         SteamDockStyle.FIXED ->
                                             SteamDockTab.completeFixedOrder(fixedDockOrder)
                                     },
-                                    selected = currentPage.toDockTab(),
-                                    onSelected = { tab ->
-                                        pageHistory = emptyList()
-                                        currentPage = tab.toPage()
-                                    }
-                                )
-                            }
-                            if (!useNavigationRail && dockStyle == SteamDockStyle.M3E && dockVisible) {
-                                SteamStandaloneDock(
-                                    modifier = Modifier.align(Alignment.BottomCenter),
-                                    order = dockOrder,
                                     selected = currentPage.toDockTab(),
                                     onSelected = { tab ->
                                         pageHistory = emptyList()
@@ -1029,72 +984,3 @@ internal fun initialSteamDockPage(order: List<SteamDockTab>): String =
         SteamDockTab.CHAT -> "CHAT"
         SteamDockTab.SETTINGS -> "SETTINGS"
     }
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-private fun SteamStandaloneDock(
-    modifier: Modifier = Modifier,
-    order: List<SteamDockTab>,
-    selected: SteamDockTab,
-    onSelected: (SteamDockTab) -> Unit
-) {
-    val tabs = SteamDockTab.sanitizeOrder(order)
-        .filterNot { it == SteamDockTab.TOKEN }
-    val tokenSelected = selected == SteamDockTab.TOKEN
-    val tokenLabel = SteamDockTab.TOKEN.label()
-
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .steamDockSwipe(
-                order = tabs,
-                selected = selected,
-                thresholdPx = with(LocalDensity.current) { 56.dp.toPx() },
-                onSelected = onSelected
-            ),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        SteamEssentialsFloatingToolbar(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .zIndex(1f),
-            selectedIndex = tabs.indexOf(selected),
-            items = tabs.map { tab ->
-                SteamToolbarItem(
-                    icon = tab.icon(),
-                    label = tab.label(),
-                    onClick = { onSelected(tab) }
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { onSelected(SteamDockTab.TOKEN) },
-                    modifier = Modifier.size(56.dp),
-                    containerColor = if (tokenSelected) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.primaryContainer
-                    },
-                    contentColor = if (tokenSelected) {
-                        MaterialTheme.colorScheme.onPrimary
-                    } else {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    },
-                    shape = MaterialTheme.shapes.large,
-                    elevation = FloatingActionButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        focusedElevation = 0.dp,
-                        hoveredElevation = 0.dp
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Security,
-                        contentDescription = tokenLabel,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        )
-    }
-}

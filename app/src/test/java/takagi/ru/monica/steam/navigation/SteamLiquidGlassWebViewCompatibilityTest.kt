@@ -91,7 +91,7 @@ class SteamLiquidGlassWebViewCompatibilityTest {
         )
         assertFalse(
             shouldEnableSteamLiquidGlassRuntimeEffects(
-                dockStyle = SteamDockStyle.M3E,
+                dockStyle = SteamDockStyle.FIXED,
                 dockVisible = true,
                 platformViewActive = false
             )

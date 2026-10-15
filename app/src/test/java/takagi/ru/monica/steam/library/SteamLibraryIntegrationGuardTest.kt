@@ -183,7 +183,7 @@ class SteamLibraryIntegrationGuardTest {
             .substringBefore("private fun SteamGameDetailHero(")
         val achievementFilter = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementFilterSplitButton.kt"
-        ).readText()
+        ).readText().replace("\r\n", "\n")
         assertTrue(detail.contains("SteamGameDetailHero("))
         assertTrue(detail.contains("SteamAchievementFilterSplitButton("))
         assertFalse(detail.contains("SingleChoiceSegmentedButtonRow("))

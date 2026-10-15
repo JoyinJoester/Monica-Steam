@@ -293,13 +293,56 @@ class SteamWorkshopViewModelTest {
         }
     }
 
+    @Test fun personalSessionFailureStillLoadsPublicWallpaperDetailsWithoutEnablingSubscription() = runTest(scheduler) {
+        var writes = 0
+        val gateway = FakeGateway().apply {
+            detail = { _, _ -> throw SteamApiException("expired", httpStatusCode = 401) }
+            publicDetail = { id -> item(id).copy(description = "Public description", preview = "https://example.com/preview.jpg") }
+            mutate = { _, _, _, _ -> writes++ }
+        }
+        val vm = SteamWorkshopViewModel(294100, account(), gateway, processingDispatcher = dispatcher)
+        vm.open(item()); advanceUntilIdle()
+        assertEquals("Public description", vm.state.value.selected?.description)
+        assertEquals(WorkshopFailure.LOGIN, vm.state.value.detailFailure)
+        assertNull(vm.state.value.selected?.subscribed)
+        vm.subscribe(true); advanceUntilIdle()
+        assertEquals(0, writes)
+    }
+
+    @Test fun failedPublicFallbackPreservesTheOriginalPersonalFailure() = runTest(scheduler) {
+        val gateway = FakeGateway().apply {
+            detail = { _, _ -> throw SteamApiException("forbidden", eResult = 15) }
+            publicDetail = { throw java.io.IOException() }
+        }
+        val vm = SteamWorkshopViewModel(294100, account(), gateway, processingDispatcher = dispatcher)
+        vm.open(item()); advanceUntilIdle()
+        assertEquals(WorkshopFailure.UNAVAILABLE, vm.state.value.detailFailure)
+        assertEquals("123", vm.state.value.selected?.id)
+        assertFalse(vm.state.value.loadingDetail)
+    }
+
+    @Test fun closingDetailsCancelsPublicFallback() = runTest(scheduler) {
+        val gate = CompletableDeferred<WorkshopItem>()
+        val gateway = FakeGateway().apply {
+            detail = { _, _ -> throw SteamApiException("expired", httpStatusCode = 401) }
+            publicDetail = { gate.await() }
+        }
+        val vm = SteamWorkshopViewModel(294100, account(), gateway, processingDispatcher = dispatcher)
+        vm.open(item()); runCurrent()
+        vm.closeDetail(); gate.complete(item().copy(description = "late")); advanceUntilIdle()
+        assertNull(vm.state.value.selected)
+        assertNull(vm.state.value.detailFailure)
+    }
+
     private class FakeGateway : SteamWorkshopGateway {
         var browse: suspend (SteamAccount?, WorkshopQuery, Int) -> WorkshopBatch = { _, _, page -> WorkshopBatch(emptyList(), page, false, 0) }
         var detail: suspend (SteamAccount, String) -> WorkshopItem = { _, id -> item(id) }
+        var publicDetail: suspend (String) -> WorkshopItem = { throw WorkshopException(WorkshopFailure.LOGIN) }
         var mutate: suspend (SteamAccount, WorkshopItem, Boolean, Boolean) -> Unit = { _, _, _, _ -> }
         override suspend fun supportsWorkshop(appId: Int) = true
         override suspend fun browse(account: SteamAccount?, appId: Int, query: WorkshopQuery, page: Int) = browse(account, query, page)
         override suspend fun details(account: SteamAccount, appId: Int, id: String) = detail(account, id)
+        override suspend fun publicDetails(appId: Int, id: String) = publicDetail(id)
         override suspend fun setSubscription(account: SteamAccount, item: WorkshopItem, subscribe: Boolean, dependencies: Boolean) = mutate(account, item, subscribe, dependencies)
     }
 

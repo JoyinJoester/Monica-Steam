@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SteamStandaloneNavigationGuardTest {
     @Test
-    fun standaloneUsesConfigurableSortableTabsAndIndependentTokenAction() {
+    fun standaloneUsesConfigurableFiveTabNavigation() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -17,6 +17,9 @@ class SteamStandaloneNavigationGuardTest {
         val dock = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
+        val fixedBar = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamFixedBottomBar.kt"
+        ).readText()
         val steamScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt"
         ).readText()
@@ -24,13 +27,14 @@ class SteamStandaloneNavigationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
         ).readText()
 
-        assertTrue(activity.contains("SteamEssentialsFloatingToolbar("))
+        assertTrue(activity.contains("SteamFixedBottomBar("))
+        assertFalse(activity.contains("SteamStandaloneDock("))
         assertTrue(activity.contains("Box(modifier = Modifier.fillMaxSize())"))
-        assertTrue(activity.contains("modifier = Modifier.align(Alignment.BottomCenter)"))
+        assertTrue(activity.contains(".align(Alignment.BottomCenter)"))
         assertFalse(activity.contains("bottomBar ="))
-        assertTrue(activity.contains("selectedIndex = tabs.indexOf(selected)"))
-        assertTrue(activity.contains("floatingActionButton ="))
-        assertTrue(activity.contains("onSelected(SteamDockTab.TOKEN)"))
+        assertTrue(fixedBar.contains("SteamDockTab.completeFixedOrder(order)"))
+        assertTrue(fixedBar.contains("selected = selected == tab"))
+        assertTrue(fixedBar.contains("onClick = { onSelected(tab) }"))
         assertTrue(activity.contains("zIndex(1f)"))
         assertFalse(activity.contains("SteamAccountPickerSheet("))
         assertFalse(activity.contains("SteamAvatarImage("))
@@ -41,23 +45,22 @@ class SteamStandaloneNavigationGuardTest {
         assertFalse(activity.contains("showProgress"))
         assertTrue(libraryScreen.contains("LocalSteamDockContentClearance.current"))
         assertTrue(dock.contains("listOf(STORE, LIBRARY, CHAT)"))
-        assertTrue(activity.contains("steamDockSwipe("))
         assertTrue(settings.contains("SteamDockOrderScreen("))
         assertTrue(settings.contains("rememberReorderableLazyListState"))
         val dockOrderScreen = settings
-            .substringAfter("private fun SteamDockOrderScreen(")
+            .substringAfter("internal fun SteamDockOrderScreen(")
             .substringBefore("private fun SteamSettingsSection(")
         val dragCallback = dockOrderScreen
             .substringAfter("rememberReorderableLazyListState(listState)")
             .substringBefore("LaunchedEffect(reorderableState.isAnyItemDragging)")
         val reorderableList = dockOrderScreen.substringAfter("LazyColumn(")
-        assertTrue(dockOrderScreen.contains("reorderDockOrder(localOrder, from.index, to.index)"))
+        assertTrue(dockOrderScreen.contains("reorderFixedDockOrder(localOrder, from.index, to.index)"))
         assertTrue(dockOrderScreen.contains("LaunchedEffect(reorderableState.isAnyItemDragging)"))
-        assertTrue(dockOrderScreen.contains("showSwitch = style == SteamDockStyle.M3E"))
-        assertTrue(dockOrderScreen.contains("tab in enabledTabs"))
+        assertTrue(dockOrderScreen.contains("showSwitch = false"))
+        assertFalse(dockOrderScreen.contains("enabledTabs"))
         assertFalse(dragCallback.contains("onOrderChange("))
         assertFalse(reorderableList.substringBefore("items(localOrder").contains("steam_dock_order_hint"))
-        assertTrue(steamScreen.contains("Modifier.statusBarsPadding()"))
+        assertTrue(steamScreen.contains("Modifier.steamWindowTopPadding()"))
 
         val menu = steamScreen
             .substringAfter("private fun SteamTopActionsMenu(")

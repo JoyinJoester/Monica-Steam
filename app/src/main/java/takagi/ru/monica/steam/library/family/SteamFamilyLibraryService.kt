@@ -58,6 +58,7 @@ internal class SteamFamilyLibraryService(
                             writeString(5, language)
                             writeVarint(6, MAX_SHARED_APPS.toLong())
                             writeBool(7, false)
+                            // Scope playtime and last-played fields to the selected account.
                             writeFixed64(8, steamId)
                         },
                         accessToken = accessToken,
@@ -143,7 +144,9 @@ internal class SteamFamilyLibraryService(
                             ?.asString
                             .orEmpty(),
                         ownership = SteamGameOwnership.FAMILY_SHARED,
-                        ownerSteamIds = ownerSteamIds
+                        ownerSteamIds = ownerSteamIds,
+                        lastPlayedAt = fields.firstOrNull { it.number == 12 }
+                            ?.asLong?.coerceAtLeast(0L) ?: 0L
                     )
                 }
                 .distinctBy(SteamGame::appId)

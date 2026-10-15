@@ -35,7 +35,6 @@ import takagi.ru.monica.plus.PlusActivationUiResult
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.navigation.SteamDockStyle
 import takagi.ru.monica.steam.navigation.SteamDockTab
-import takagi.ru.monica.steam.navigation.reorderDockOrder
 import takagi.ru.monica.steam.navigation.reorderFixedDockOrder
 import takagi.ru.monica.steam.navigation.reorderLiquidGlassDockOrder
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
@@ -120,10 +119,8 @@ fun MonicaSteamSettingsScreen(
     onOpenMaFileTransfer: () -> Unit = {},
     onOpenWebDavBackup: () -> Unit = {},
     onOpenMdbx: () -> Unit = {},
-    dockStyle: SteamDockStyle = SteamDockStyle.M3E,
+    dockStyle: SteamDockStyle = SteamDockStyle.FIXED,
     onDockStyleChange: (SteamDockStyle) -> Unit = {},
-    dockOrder: List<SteamDockTab> = SteamDockTab.DEFAULT_ORDER,
-    onDockOrderChange: (List<SteamDockTab>) -> Unit = {},
     liquidGlassDockOrder: List<SteamDockTab> = SteamDockTab.LIQUID_GLASS_DEFAULT_ORDER,
     onLiquidGlassDockOrderChange: (List<SteamDockTab>) -> Unit = {},
     fixedDockOrder: List<SteamDockTab> = SteamDockTab.FIXED_DEFAULT_ORDER,
@@ -264,8 +261,6 @@ fun MonicaSteamSettingsScreen(
                     additionalGroup = SteamSettingsAdditionalGroup.NAVIGATION
                 )
                 SteamSettingsChild.DOCK -> SteamDockOrderScreen(
-                    order = dockOrder,
-                    onOrderChange = onDockOrderChange,
                     style = dockStyle,
                     onStyleChange = onDockStyleChange,
                     liquidGlassOrder = liquidGlassDockOrder,
@@ -456,12 +451,10 @@ private fun SteamSensitiveSettingsGate(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SteamDockOrderScreen(
-    order: List<SteamDockTab>,
-    onOrderChange: (List<SteamDockTab>) -> Unit,
+internal fun SteamDockOrderScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    style: SteamDockStyle = SteamDockStyle.M3E,
+    style: SteamDockStyle = SteamDockStyle.FIXED,
     onStyleChange: (SteamDockStyle) -> Unit = {},
     liquidGlassOrder: List<SteamDockTab> = SteamDockTab.LIQUID_GLASS_DEFAULT_ORDER,
     onLiquidGlassOrderChange: (List<SteamDockTab>) -> Unit = {},
@@ -526,7 +519,6 @@ private fun SteamDockOrderScreen(
                         Text(
                             text = stringResource(
                                 when (candidate) {
-                                    SteamDockStyle.M3E -> R.string.steam_dock_style_m3e
                                     SteamDockStyle.LIQUID_GLASS ->
                                         R.string.steam_dock_style_liquid_glass
                                     SteamDockStyle.FIXED -> R.string.steam_dock_style_fixed
@@ -542,12 +534,10 @@ private fun SteamDockOrderScreen(
                 SteamDockSortableList(
                     style = selectedStyle,
                     order = when (selectedStyle) {
-                        SteamDockStyle.M3E -> order
                         SteamDockStyle.LIQUID_GLASS -> liquidGlassOrder
                         SteamDockStyle.FIXED -> fixedOrder
                     },
                     onOrderChange = when (selectedStyle) {
-                        SteamDockStyle.M3E -> onOrderChange
                         SteamDockStyle.LIQUID_GLASS -> onLiquidGlassOrderChange
                         SteamDockStyle.FIXED -> onFixedOrderChange
                     },
@@ -572,29 +562,14 @@ private fun SteamDockSortableList(
     var localOrder by remember(style, order) {
         mutableStateOf(
             when (style) {
-                SteamDockStyle.M3E -> SteamDockTab.completeOrder(order)
                 SteamDockStyle.LIQUID_GLASS -> SteamDockTab.completeLiquidGlassOrder(order)
                 SteamDockStyle.FIXED -> SteamDockTab.completeFixedOrder(order)
-            }
-        )
-    }
-    var enabledTabs by remember(style, order) {
-        mutableStateOf(
-            if (style == SteamDockStyle.M3E) {
-                SteamDockTab.sanitizeOrder(order).toSet()
-            } else {
-                when (style) {
-                    SteamDockStyle.LIQUID_GLASS -> SteamDockTab.LIQUID_GLASS_DEFAULT_ORDER.toSet()
-                    SteamDockStyle.FIXED -> SteamDockTab.FIXED_DEFAULT_ORDER.toSet()
-                    SteamDockStyle.M3E -> emptySet()
-                }
             }
         )
     }
     var reorderDirty by remember { mutableStateOf(false) }
     val reorderableState = rememberReorderableLazyListState(listState) { from, to ->
         val reordered = when (style) {
-            SteamDockStyle.M3E -> reorderDockOrder(localOrder, from.index, to.index)
             SteamDockStyle.LIQUID_GLASS ->
                 reorderLiquidGlassDockOrder(localOrder, from.index, to.index)
             SteamDockStyle.FIXED -> reorderFixedDockOrder(localOrder, from.index, to.index)
@@ -609,7 +584,6 @@ private fun SteamDockSortableList(
             reorderDirty = false
             onOrderChange(
                 when (style) {
-                    SteamDockStyle.M3E -> localOrder.filter { it in enabledTabs }
                     SteamDockStyle.LIQUID_GLASS ->
                         SteamDockTab.completeLiquidGlassOrder(localOrder)
                     SteamDockStyle.FIXED -> SteamDockTab.completeFixedOrder(localOrder)
@@ -621,7 +595,6 @@ private fun SteamDockSortableList(
     Text(
         text = stringResource(
             when (style) {
-                SteamDockStyle.M3E -> R.string.steam_dock_m3e_order_hint
                 SteamDockStyle.LIQUID_GLASS -> R.string.steam_dock_liquid_glass_order_hint
                 SteamDockStyle.FIXED -> R.string.steam_dock_fixed_order_hint
             }
@@ -661,15 +634,10 @@ private fun SteamDockSortableList(
                         SteamDockTab.SETTINGS -> stringResource(R.string.settings_title)
                     },
                     subtitle = stringResource(R.string.steam_dock_drag_hint),
-                    checked = style != SteamDockStyle.M3E || tab in enabledTabs,
-                    switchEnabled = style == SteamDockStyle.M3E,
-                    onCheckedChange = { checked ->
-                        if (style == SteamDockStyle.M3E) {
-                            enabledTabs = if (checked) enabledTabs + tab else enabledTabs - tab
-                            onOrderChange(localOrder.filter { it in enabledTabs })
-                        }
-                    },
-                    showSwitch = style == SteamDockStyle.M3E,
+                    checked = true,
+                    switchEnabled = false,
+                    onCheckedChange = {},
+                    showSwitch = false,
                     dragHandleModifier = Modifier.longPressDraggableHandle(),
                     modifier = Modifier.shadow(elevation)
                 )

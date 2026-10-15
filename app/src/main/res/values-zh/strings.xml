@@ -4378,14 +4378,12 @@
     <string name="steam_dock_library_label">游戏库</string>
     <string name="steam_dock_chat_label">聊天</string>
     <string name="steam_dock_order_title">底部导航栏</string>
-    <string name="steam_dock_order_description">选择 M3E、液态玻璃或固定 Material 3 底栏，并分别调整显示顺序。</string>
+    <string name="steam_dock_order_description">选择固定底栏或液态玻璃，并分别调整显示顺序。</string>
     <string name="steam_dock_order_hint">长按拖动把手，即可调整 Dock 中的显示顺序。</string>
     <string name="steam_dock_style_title">Dock 样式</string>
-    <string name="steam_dock_style_description">M3E 保留独立令牌按钮；液态玻璃和固定底栏将五个顶层页面放在同一组导航中。</string>
-    <string name="steam_dock_style_m3e">M3E</string>
+    <string name="steam_dock_style_description">默认使用固定底栏；两种样式均显示商店、游戏库、聊天、令牌和设置。</string>
     <string name="steam_dock_style_liquid_glass">液态玻璃</string>
     <string name="steam_dock_style_fixed">固定底栏</string>
-    <string name="steam_dock_m3e_order_hint">调整商店、游戏库和聊天的顺序，也可关闭无需显示的项目；令牌保持独立按钮。</string>
     <string name="steam_dock_liquid_glass_order_hint">调整商店、游戏库、聊天、令牌和设置的顺序；液态玻璃样式固定启用全部五项。</string>
     <string name="steam_dock_fixed_order_hint">调整商店、游戏库、聊天、令牌和设置的顺序；固定 Material 3 底栏始终显示在屏幕底部。</string>
     <string name="steam_dock_drag_hint">长按把手调整顺序。</string>

@@ -34,8 +34,10 @@ internal object RustFamilySharedAppsParser {
             require(buffer.remaining() >= MIN_ITEM_BYTES) { "Rust family game is truncated" }
             val appId = buffer.int
             val playtime = buffer.int
+            val lastPlayedAt = buffer.long
             require(appId > 0) { "Rust family app id is invalid" }
             require(playtime >= 0) { "Rust family playtime is invalid" }
+            require(lastPlayedAt >= 0L) { "Rust family last-played time is invalid" }
             val name = readString(buffer)
             val iconHash = readString(buffer)
             require(buffer.remaining() >= Int.SIZE_BYTES) { "Rust family owner count is truncated" }
@@ -52,7 +54,8 @@ internal object RustFamilySharedAppsParser {
                 playtimeRecentMinutes = 0,
                 iconHash = iconHash,
                 ownership = SteamGameOwnership.FAMILY_SHARED,
-                ownerSteamIds = owners
+                ownerSteamIds = owners,
+                lastPlayedAt = lastPlayedAt
             )
         }
         require(!buffer.hasRemaining()) { "Rust family bridge has trailing bytes" }
@@ -66,11 +69,12 @@ internal object RustFamilySharedAppsParser {
         return ByteArray(length).also(buffer::get).toString(Charsets.UTF_8)
     }
 
+    // MSF1 omitted last-played time. Reject it so older native builds use the Kotlin fallback.
     private val MAGIC = byteArrayOf(
-        'M'.code.toByte(), 'S'.code.toByte(), 'F'.code.toByte(), '1'.code.toByte()
+        'M'.code.toByte(), 'S'.code.toByte(), 'F'.code.toByte(), '2'.code.toByte()
     )
     private const val HEADER_BYTES = 8
-    private const val MIN_ITEM_BYTES = 20
+    private const val MIN_ITEM_BYTES = 28
     private const val MAX_ITEMS = 100_000
     private const val MAX_OWNERS_PER_APP = 1_024
 }

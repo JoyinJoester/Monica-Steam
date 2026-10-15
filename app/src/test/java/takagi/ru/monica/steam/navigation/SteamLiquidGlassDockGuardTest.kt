@@ -39,7 +39,7 @@ class SteamLiquidGlassDockGuardTest {
     }
 
     @Test
-    fun activityUsesSeparateM3eAndLiquidGlassCompositionPaths() {
+    fun activityUsesOnlyFixedAndLiquidGlassCompositionPaths() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -47,16 +47,19 @@ class SteamLiquidGlassDockGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).readText()
 
-        assertTrue(activity.contains("SteamStandaloneDock("))
+        assertFalse(activity.contains("SteamStandaloneDock("))
+        assertTrue(activity.contains("SteamFixedBottomBar("))
         assertTrue(activity.contains("SteamLiquidGlassDock("))
         assertTrue(activity.contains("steamLiquidGlassBackdropSource("))
-        assertTrue(activity.contains("dockStyle == SteamDockStyle.M3E"))
+        assertTrue(activity.contains("dockStyle == SteamDockStyle.FIXED"))
+        assertFalse(activity.contains("steamDockProgressiveBlur("))
         assertTrue(activity.contains("dockStyle == SteamDockStyle.LIQUID_GLASS"))
         assertTrue(activity.contains("currentPage.isDockPage(dockStyle)"))
         assertTrue(activity.contains("LaunchedEffect(currentPage, dockStyle)"))
         assertTrue(settings.contains("SingleChoiceSegmentedButtonRow("))
         assertTrue(settings.contains("SteamDockStyle.entries.forEachIndexed"))
-        assertTrue(settings.contains("showSwitch = style == SteamDockStyle.M3E"))
+        assertTrue(settings.contains("showSwitch = false"))
+        assertFalse(settings.contains("SteamDockStyle.M3E"))
         assertTrue(settings.contains("LocalSteamDockContentClearance.current"))
         assertTrue(settings.contains("bottom = dockContentClearance + 16.dp"))
         assertFalse(settings.contains("showSwitch = style == SteamDockStyle.LIQUID_GLASS"))

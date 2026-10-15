@@ -73,4 +73,7 @@ interface SteamAccountSessionRefresher {
 
 fun interface SteamAccountSessionStore {
     suspend fun persist(handle: SteamAccountSessionHandle)
+
+    /** Read from the handle's original source; null is for stores without read support. */
+    suspend fun load(handle: SteamAccountSessionHandle): SteamAccount? = null
 }

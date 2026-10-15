@@ -2,6 +2,11 @@
 
 ## 中文
 
+- Dock 移除 M3E 样式，默认改为“固定底栏”；旧 M3E 配置自动使用固定底栏并保留原有页面顺序，液态玻璃及已设置的固定底栏顺序保持不变。
+- 修复游戏库“近期活跃”遗漏家庭共享游戏的问题：保留当前账号的最近游玩时间，将近 14 天玩过的共享游戏纳入分组及筛选，并避免重复归入“未游玩”；不估算或虚增近两周时长。
+- 修复 README 赞助区的 PayPal 按钮和标志显示异常，改用与 Monica Android 一致的链接徽章。
+- README 新增 [Millennium 模块](https://github.com/Good-Joe2049/Millennium)说明：可以通过这个模块来实现 Monica Pass 与 Steam 主应用令牌共存，并通过 `maFile` 导入、导出及恢复复用令牌数据。
+- 修复重新登录后工坊仍可能提示需要登录的问题：会话解析读取原账号存储中的最新凭据，避免旧缓存遮盖新登录；旧刷新晚返回时重新核对会话。订阅认证失败时仍可加载公开作品详情，保留原有错误提示与下载入口。
 - 商店菜单新增 Wallpaper Engine 专用入口，以真实壁纸预览双列浏览，并保留搜索、筛选和分页；公开作品详情无需先登录。
 - 创意工坊新增原文件下载与“我的下载”：支持 Steam 内容清单及分块下载、文件校验、手机文件夹保存、后台进度、取消和重新下载。匿名与当前账号下载由用户明确选择，账号任务绑定原存储来源；权限不足、网络失败与保存失败分别提示。下载不自动订阅，也不自动设置为手机动态壁纸；场景、网页和 PKG 仍需兼容播放器。
 
@@ -20,6 +25,11 @@
 
 ## English
 
+- Removed the M3E Dock option and made Fixed the default. Existing M3E configurations use Fixed with their previous tab order, while Liquid Glass selections and existing Fixed orders are preserved.
+- Fixed family-shared games missing from the library's Recently active section. The selected account's last-played time now includes shared games played within the past 14 days in sections and filters without also classifying them as unplayed or inventing two-week playtime.
+- Fixed the PayPal button and oversized logo in the README sponsorship section by using the same linked badge as Monica Android.
+- Documented the [Millennium module](https://github.com/Good-Joe2049/Millennium), which lets Monica Pass and the main Steam app keep the same Steam Guard authenticator through `maFile` import, export, and restoration.
+- Fixed Workshop continuing to request sign-in after a successful re-login: session resolution reads current credentials from the original account store instead of masking them with an older cached session, and rechecks sessions when a previous refresh returns. Public item details remain readable when subscription authentication fails, with the original error and download entry preserved.
 - Added a dedicated Wallpaper Engine entry in the store drawer, with a two-column gallery using actual previews, search, filters and pagination. Public item details can be viewed without signing in.
 - Added original-file Workshop downloads and My downloads, including Steam manifests and chunks, integrity checks, folder selection, background progress, cancellation and retry. Anonymous or selected-account access is an explicit choice; account tasks stay bound to their original storage source. Permission, connection and storage failures have separate messages. Downloading neither subscribes nor sets an Android live wallpaper; scene, web and PKG content still requires a compatible player.
 

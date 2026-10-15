@@ -80,6 +80,11 @@ Monica Steam 是一款专注 Steam 的独立 Android 客户端，源自 [Monica 
 3. 导入 `maFile` 或登录 Steam 账号，完成令牌与会话初始化。
 4. **使用前务必备份现有 `maFile` / 令牌数据。** 测试版不应作为唯一备份。
 
+### 与 Steam 主应用令牌共存
+
+可以通过 [Millennium](https://github.com/Good-Joe2049/Millennium) 模块来实现 Monica Pass 与 Steam 主应用令牌共存。
+该模块提供 Steam Guard 和 `maFile` 导入、导出及恢复功能；导出的 `maFile` 也可导入 Monica Steam，复用同一份令牌数据。模块安装、启用与恢复步骤请参阅 [Millennium 项目文档](https://github.com/Good-Joe2049/Millennium#mafile)。
+
 ### 已知限制
 - 仍为公开测试版，接口与布局可能随时调整。
 - 部分能力依赖 Steam 网页或非公开移动接口，Steam 变更后可能暂时失效。
@@ -174,21 +179,15 @@ Monica Steam 从 Monica Android 的 Steam 功能中独立出来，作为单独�
 <img src="image/support_author.jpg" alt="Support Monica Steam" width="320"/>
 <br/>
 <sub>微信 / 支付宝扫码支持</sub>
-<br/><br/>
-
-<form action="https://www.paypal.com/ncp/payment/BHSYWK73CA8FW" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
-  <input style="text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:&quot;Helvetica Neue&quot;,Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;" type="submit" value="Support Monica" />
-  <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
-  <section style="font-size: 0.75rem;"> 技术支持提供方： <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
-</form>
+</div>
 
 <br/>
-<p>
+
+<p align="center">
   <a href="https://www.paypal.com/ncp/payment/BHSYWK73CA8FW">
-    <img src="https://img.shields.io/badge/PayPal-Support%20Monica-FFD140?style=for-the-badge&logo=paypal&logoColor=003087" alt="PayPal Support Monica" />
+    <img src="https://img.shields.io/badge/PayPal-Support%20Monica-FFD140?style=for-the-badge&amp;logo=paypal&amp;logoColor=003087" alt="通过 PayPal 支持 Monica" />
   </a>
 </p>
-</div>
 
 你的支持将优先用于：
 - Steam 协议适配与风控风险降低。

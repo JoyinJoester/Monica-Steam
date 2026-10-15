@@ -10,6 +10,7 @@ pub struct FamilySharedGame {
     pub app_id: i32,
     pub name: String,
     pub playtime_forever_minutes: i32,
+    pub last_played_at: i64,
     pub icon_hash: String,
     pub owner_steam_ids: Vec<String>,
 }
@@ -101,6 +102,7 @@ pub fn parse_shared_library_apps(
                 app_id,
                 name,
                 playtime_forever_minutes: playtime,
+                last_played_at: first_field(&app, 12).map(kotlin_as_long).unwrap_or(0).max(0),
                 icon_hash: first_kotlin_string(&app, 9),
                 owner_steam_ids,
             }))
@@ -218,8 +220,23 @@ mod tests {
         assert_eq!(games[0].app_id, 20);
         assert_eq!(games[0].name, "Shared game");
         assert_eq!(games[0].playtime_forever_minutes, 7_200);
+        assert_eq!(games[0].last_played_at, 0);
         assert_eq!(games[0].icon_hash, "icon-20");
         assert_eq!(games[0].owner_steam_ids, vec![OWNER.to_string()]);
+    }
+
+    #[test]
+    fn last_played_preserves_unsigned_seconds_and_clamps_negative_values() {
+        for (raw, expected) in [(4_000_000_000, 4_000_000_000), (-1, 0), (0, 0)] {
+            let mut app = shared_app(20, "Shared", 60, 0);
+            app.write_varint(12, raw).unwrap();
+            app.write_varint(12, 123).unwrap();
+            let mut response = ProtoWriter::new();
+            response.write_message(1, &app).unwrap();
+            let game = &parse_shared_library_apps(response.as_bytes()).unwrap()[0];
+            assert_eq!(game.last_played_at, expected);
+            assert_eq!(game.playtime_forever_minutes, 60);
+        }
     }
 
     #[test]

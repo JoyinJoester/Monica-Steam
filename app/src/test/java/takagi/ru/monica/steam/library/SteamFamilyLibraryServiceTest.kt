@@ -9,9 +9,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.util.Base64
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.library.family.SteamFamilyLibraryService
+import takagi.ru.monica.steam.library.filter.domain.SteamLibraryFilterSelection
+import takagi.ru.monica.steam.library.ui.SteamLibraryGameSectionType
+import takagi.ru.monica.steam.library.ui.buildSteamLibrarySections
 import takagi.ru.monica.steam.network.SteamApiClient
+import takagi.ru.monica.steam.network.SteamProtoReader
 import takagi.ru.monica.steam.network.SteamProtoWriter
 
 class SteamFamilyLibraryServiceTest {
@@ -52,6 +57,8 @@ class SteamFamilyLibraryServiceTest {
 
     @Test
     fun libraryFetchMergesFamilyGamesAndPrefersOwnedDuplicate() {
+        val nowSeconds = 1_800_000_000L
+        val lastPlayedAt = nowSeconds - 60L
         val requests = mutableListOf<Pair<String, String>>()
         val ownedResponse = SteamProtoWriter().apply {
             writeVarint(1, 1L)
@@ -65,12 +72,18 @@ class SteamFamilyLibraryServiceTest {
             writeVarint(1, 42L)
         }.toByteArray()
         val familyAppsResponse = SteamProtoWriter().apply {
-            writeMessage(1, sharedApp(10, "Duplicate shared game", 600L))
-            writeMessage(1, sharedApp(20, "Family game", 7_200L))
+            writeMessage(1, sharedApp(10, "Duplicate shared game", 600L, lastPlayedAt = lastPlayedAt))
+            writeMessage(1, sharedApp(20, "Family game", 7_200L, lastPlayedAt = lastPlayedAt))
         }.toByteArray()
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request()
+                if (request.url.encodedPath.contains("GetSharedLibraryApps")) {
+                    val fields = SteamProtoReader(Base64.getDecoder().decode(
+                        request.url.queryParameter("input_protobuf_encoded")
+                    )).parseAll()
+                    assertEquals(account().steamId, fields.single { it.number == 8 }.asFixed64UnsignedString)
+                }
                 requests += request.method to request.url.encodedPath
                 val body = when {
                     request.url.encodedPath.contains("GetOwnedGames") -> ownedResponse
@@ -102,6 +115,13 @@ class SteamFamilyLibraryServiceTest {
         assertEquals(1, result.value.gameCount)
         assertEquals(1, result.value.sharedGameCount)
         assertEquals(42L, result.value.familyGroupId)
+        val recent = buildSteamLibrarySections(
+            result.value.games, "", SteamLibraryFilterSelection(), nowSeconds
+        ).single { it.type == SteamLibraryGameSectionType.RECENT }
+        assertEquals(listOf(20), recent.games.map(SteamGame::appId))
+        assertEquals(lastPlayedAt, result.value.sharedGames.single().lastPlayedAt)
+        assertEquals(0, result.value.sharedGames.single().playtimeRecentMinutes)
+        assertEquals(0L, result.value.ownedGames.single().lastPlayedAt)
         assertTrue(
             requests.filter { it.second.contains("IFamilyGroupsService") }
                 .all { it.first == "GET" }
@@ -112,13 +132,15 @@ class SteamFamilyLibraryServiceTest {
         appId: Int,
         name: String,
         playtimeMinutes: Long,
-        excludeReason: Int = 0
+        excludeReason: Int = 0,
+        lastPlayedAt: Long = 0L
     ): SteamProtoWriter = SteamProtoWriter().apply {
         writeVarint(1, appId.toLong())
         writeFixed64(2, FAMILY_OWNER_STEAM_ID)
         writeString(6, name)
         writeString(9, "icon-$appId")
         writeVarint(10, excludeReason.toLong())
+        writeVarint(12, lastPlayedAt)
         writeVarint(13, playtimeMinutes)
         writeVarint(14, 1L)
     }

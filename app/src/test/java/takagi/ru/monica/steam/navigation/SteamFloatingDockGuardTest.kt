@@ -7,31 +7,29 @@ import org.junit.Test
 
 class SteamFloatingDockGuardTest {
     @Test
-    fun dockUsesConfigurableContentToolbarWithIndependentTokenAction() {
+    fun retiredToolbarIsNotComposedAndFixedBarIncludesToken() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
-        val dock = activity
-            .substringAfter("private fun SteamStandaloneDock(")
-            .substringBefore("private fun SteamDockTab.icon()")
+        val dock = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamFixedBottomBar.kt"
+        ).readText()
         val settings = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/SteamDockSettings.kt"
         ).readText()
         val notices = projectFile("THIRD_PARTY_NOTICES.md").readText()
-        assertTrue(activity.contains("SteamEssentialsFloatingToolbar("))
-        assertTrue(activity.contains("ExperimentalMaterial3ExpressiveApi"))
+        assertFalse(activity.contains("SteamEssentialsFloatingToolbar("))
+        assertFalse(activity.contains("SteamStandaloneDock("))
         assertTrue(activity.contains("Box(modifier = Modifier.fillMaxSize())"))
-        assertTrue(activity.contains("modifier = Modifier.align(Alignment.BottomCenter)"))
-        assertTrue(activity.contains("selectedIndex = tabs.indexOf(selected)"))
+        assertTrue(activity.contains(".align(Alignment.BottomCenter)"))
+        assertTrue(dock.contains("selected = selected == tab"))
         assertTrue(activity.contains("zIndex(1f)"))
         assertFalse(activity.contains("bottomBar ="))
         assertTrue(settings.contains("DEFAULT_ORDER: List<SteamDockTab> = listOf(STORE, LIBRARY, CHAT)"))
-        assertTrue(dock.contains("filterNot { it == SteamDockTab.TOKEN }"))
-        assertTrue(dock.contains("steamDockSwipe("))
-        assertTrue(dock.contains("thresholdPx = with(LocalDensity.current)"))
-        assertTrue(dock.contains("floatingActionButton ="))
-        assertTrue(dock.contains("FloatingActionButton("))
-        assertTrue(dock.contains("onSelected(SteamDockTab.TOKEN)"))
+        assertTrue(dock.contains("SteamDockTab.completeFixedOrder(order)"))
+        assertTrue(dock.contains("NavigationBarItem("))
+        assertTrue(dock.contains("onClick = { onSelected(tab) }"))
+        assertFalse(dock.contains("FloatingActionButton("))
         assertFalse(dock.contains("SteamAvatarImage"))
         assertFalse(dock.contains("SteamAccountPickerSheet"))
         assertFalse(dock.contains("Icons.Default.QrCodeScanner"))
@@ -74,35 +72,21 @@ class SteamFloatingDockGuardTest {
     }
 
     @Test
-    fun dockBlursTheUnderlyingPageWhileKeepingControlsAboveTheEffect() {
+    fun fixedBarDoesNotEnableTheRetiredProgressiveBlur() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
-        val blur = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamDockProgressiveBlur.kt"
-        ).readText()
-        val dock = activity
-            .substringAfter("private fun SteamStandaloneDock(")
-            .substringBefore("private fun SteamDockTab.icon()")
         val pageModifier = activity
             .substringAfter("AnimatedContent(")
             .substringBefore("targetState = currentPage")
 
-        assertTrue(activity.contains(".steamDockProgressiveBlur("))
-        assertTrue(activity.contains("height = dockBlurHeightPx"))
-        assertTrue(pageModifier.contains(".steamDockProgressiveBlur("))
+        assertFalse(activity.contains(".steamDockProgressiveBlur("))
+        assertFalse(activity.contains("dockBlurHeightPx"))
+        assertTrue(pageModifier.contains(".steamLiquidGlassBackdropSource("))
+        assertTrue(pageModifier.contains("enabled = liquidGlassEffectsEnabled"))
         assertFalse(pageModifier.contains("bottom ="))
         assertFalse(pageModifier.contains("SteamDockContentClearance"))
-        assertTrue(blur.contains("RuntimeShader(STEAM_DOCK_BLUR_SHADER)"))
-        assertTrue(blur.contains("RenderEffect.createRuntimeShaderEffect"))
-        assertFalse(blur.contains("surfaceContainer.copy"))
-        assertFalse(blur.contains("Brush.verticalGradient"))
-        assertFalse(blur.contains("drawRect("))
-        assertTrue(blur.contains("Build.VERSION_CODES.TIRAMISU"))
-        assertFalse(blur.contains("isPowerSaveMode"))
-        assertFalse(blur.contains("PowerManager"))
-        assertTrue(dock.contains("zIndex(1f)"))
-        assertFalse(dock.contains("steamDockProgressiveBlur"))
+        assertTrue(activity.contains("zIndex(1f)"))
     }
 
     @Test

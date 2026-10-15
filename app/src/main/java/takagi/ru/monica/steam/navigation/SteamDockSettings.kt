@@ -10,13 +10,12 @@ import kotlinx.coroutines.flow.map
 import kotlin.math.abs
 
 enum class SteamDockStyle {
-    M3E,
-    LIQUID_GLASS,
-    FIXED;
+    FIXED,
+    LIQUID_GLASS;
 
     companion object {
         fun fromStoredValue(value: String?): SteamDockStyle =
-            entries.firstOrNull { it.name == value } ?: M3E
+            entries.firstOrNull { it.name == value } ?: FIXED
     }
 }
 
@@ -68,7 +67,6 @@ enum class SteamDockTab {
 
 data class SteamDockConfiguration(
     val style: SteamDockStyle,
-    val m3eOrder: List<SteamDockTab>,
     val liquidGlassOrder: List<SteamDockTab>,
     val fixedOrder: List<SteamDockTab>
 )
@@ -168,7 +166,7 @@ class SteamDockPreferences(context: Context) {
 
     val configuration: Flow<SteamDockConfiguration> = dataStore.data.map { preferences ->
         val storedM3eOrder = preferences[ORDER_KEY]
-        val m3eOrder = if (storedM3eOrder == null) {
+        val legacyOrder = if (storedM3eOrder == null) {
             SteamDockTab.DEFAULT_ORDER
         } else {
             resolveStoredDockOrder(
@@ -178,18 +176,17 @@ class SteamDockPreferences(context: Context) {
         }
         SteamDockConfiguration(
             style = SteamDockStyle.fromStoredValue(preferences[STYLE_KEY]),
-            m3eOrder = m3eOrder,
             liquidGlassOrder = SteamDockTab.completeLiquidGlassOrder(
                 preferences[LIQUID_GLASS_ORDER_KEY].parseDockTabs()
             ),
-            fixedOrder = SteamDockTab.completeFixedOrder(
-                preferences[FIXED_ORDER_KEY].parseDockTabs()
+            fixedOrder = resolveFixedDockOrder(
+                stored = preferences[FIXED_ORDER_KEY]?.parseDockTabs(),
+                legacyOrder = legacyOrder
             )
         )
     }
 
     val style: Flow<SteamDockStyle> = configuration.map { it.style }
-    val order: Flow<List<SteamDockTab>> = configuration.map { it.m3eOrder }
     val liquidGlassOrder: Flow<List<SteamDockTab>> =
         configuration.map { it.liquidGlassOrder }
     val fixedOrder: Flow<List<SteamDockTab>> =
@@ -198,14 +195,6 @@ class SteamDockPreferences(context: Context) {
     suspend fun updateStyle(style: SteamDockStyle) {
         dataStore.edit { preferences ->
             preferences[STYLE_KEY] = style.name
-        }
-    }
-
-    suspend fun updateOrder(order: List<SteamDockTab>) {
-        val sanitized = SteamDockTab.sanitizeOrder(order)
-        dataStore.edit { preferences ->
-            preferences[ORDER_KEY] = sanitized.joinToString(",") { it.name }
-            preferences[CHAT_MIGRATION_KEY] = true
         }
     }
 
@@ -231,6 +220,12 @@ class SteamDockPreferences(context: Context) {
         val CHAT_MIGRATION_KEY = booleanPreferencesKey("chat_tab_migrated")
     }
 }
+
+/** Preserve existing fixed orders; otherwise carry the old toolbar order into all five tabs. */
+internal fun resolveFixedDockOrder(
+    stored: List<SteamDockTab>?,
+    legacyOrder: List<SteamDockTab>
+): List<SteamDockTab> = SteamDockTab.completeFixedOrder(stored ?: legacyOrder)
 
 private fun String?.parseDockTabs(): List<SteamDockTab> =
     this

@@ -274,8 +274,16 @@ internal class SteamWorkshopViewModel(
                 }
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (error: Exception) {
+                // Personal subscription access may fail even though the work itself
+                // is public. Keep the original failure and do not invent a subscription state.
+                val publicDetail = if (account != null) try {
+                    gateway.publicDetails(appId, item.id).takeIf { it.id == item.id && it.appId == appId }
+                        ?.copy(subscribed = null)
+                } catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { null } else null
                 if (version == detailGeneration) mutableState.update {
-                    it.copy(loadingDetail = false, detailFailure = error.workshopFailure())
+                    it.copy(selected = publicDetail ?: it.selected, loadingDetail = false,
+                        detailFailure = error.workshopFailure())
                 }
             }
         }

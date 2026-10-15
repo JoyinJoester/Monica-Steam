@@ -4548,14 +4548,12 @@
     <string name="steam_dock_library_label">Library</string>
     <string name="steam_dock_chat_label">Chat</string>
     <string name="steam_dock_order_title">Bottom navigation</string>
-    <string name="steam_dock_order_description">Choose M3E, Liquid Glass, or the fixed Material 3 navigation bar, then arrange its destinations.</string>
+    <string name="steam_dock_order_description">Choose Fixed or Liquid Glass, then arrange its destinations.</string>
     <string name="steam_dock_order_hint">Long press the handle, then drag an item to change the Dock order.</string>
     <string name="steam_dock_style_title">Dock style</string>
-    <string name="steam_dock_style_description">M3E keeps the separate token action; Liquid Glass and Fixed NavigationBar show all five top-level destinations together.</string>
-    <string name="steam_dock_style_m3e">M3E</string>
+    <string name="steam_dock_style_description">Fixed is the default. Both styles keep Store, Game Library, Chat, Tokens and Settings together.</string>
     <string name="steam_dock_style_liquid_glass">Liquid Glass</string>
     <string name="steam_dock_style_fixed">Fixed</string>
-    <string name="steam_dock_m3e_order_hint">Arrange Store, Game Library, and Chat. Disabled destinations stay available from their page menus; Tokens remain a separate action.</string>
     <string name="steam_dock_liquid_glass_order_hint">Arrange Store, Game Library, Chat, Tokens, and Settings. All five destinations remain enabled in this style.</string>
     <string name="steam_dock_fixed_order_hint">Arrange Store, Game Library, Chat, Tokens, and Settings. The fixed Material 3 navigation bar remains visible at the bottom.</string>
     <string name="steam_dock_drag_hint">Long press the handle to reorder.</string>

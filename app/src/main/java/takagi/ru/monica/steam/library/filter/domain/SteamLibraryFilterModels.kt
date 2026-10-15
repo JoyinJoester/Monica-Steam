@@ -2,6 +2,8 @@ package takagi.ru.monica.steam.library.filter.domain
 
 import java.util.Locale
 import takagi.ru.monica.steam.library.SteamGame
+import takagi.ru.monica.steam.library.hasBeenPlayed
+import takagi.ru.monica.steam.library.wasRecentlyPlayed
 
 internal enum class SteamLibraryOwnershipFilter {
     ALL,
@@ -68,9 +70,10 @@ internal data class SteamLibraryFilterSelection(
 internal fun filterSteamLibraryGames(
     games: List<SteamGame>,
     query: String,
-    selection: SteamLibraryFilterSelection
-): List<SteamGame> = steamLibraryFilterSequence(games, query, selection)
-    .sortedWith(selection.sortOrder.comparator())
+    selection: SteamLibraryFilterSelection,
+    nowSeconds: Long = System.currentTimeMillis() / 1000L
+): List<SteamGame> = steamLibraryFilterSequence(games, query, selection, nowSeconds)
+    .sortedWith(selection.sortOrder.comparator(nowSeconds))
     .toList()
 
 /**
@@ -81,13 +84,15 @@ internal fun filterSteamLibraryGames(
 internal fun countSteamLibraryGames(
     games: List<SteamGame>,
     query: String,
-    selection: SteamLibraryFilterSelection
-): Int = steamLibraryFilterSequence(games, query, selection).count()
+    selection: SteamLibraryFilterSelection,
+    nowSeconds: Long = System.currentTimeMillis() / 1000L
+): Int = steamLibraryFilterSequence(games, query, selection, nowSeconds).count()
 
 private fun steamLibraryFilterSequence(
     games: List<SteamGame>,
     query: String,
-    selection: SteamLibraryFilterSelection
+    selection: SteamLibraryFilterSelection,
+    nowSeconds: Long
 ): Sequence<SteamGame> {
     val normalizedQuery = query.trim()
     return games.asSequence()
@@ -96,7 +101,7 @@ private fun steamLibraryFilterSequence(
             normalizedQuery.isBlank() || game.name.contains(normalizedQuery, ignoreCase = true)
         }
         .filter { game -> selection.ownership.matches(game) }
-        .filter { game -> selection.playStatus.matches(game) }
+        .filter { game -> selection.playStatus.matches(game, nowSeconds) }
         .filter { game -> selection.achievementStatus.matches(game) }
         .filter { game -> selection.playtime.matches(game) }
         .filter { game -> !selection.requiresSteamCloud || game.supportsSteamCloud == true }
@@ -108,11 +113,11 @@ private fun SteamLibraryOwnershipFilter.matches(game: SteamGame): Boolean = when
     SteamLibraryOwnershipFilter.FAMILY_SHARED -> game.isFamilyShared
 }
 
-private fun SteamLibraryPlayStatusFilter.matches(game: SteamGame): Boolean = when (this) {
+private fun SteamLibraryPlayStatusFilter.matches(game: SteamGame, nowSeconds: Long): Boolean = when (this) {
     SteamLibraryPlayStatusFilter.ALL -> true
-    SteamLibraryPlayStatusFilter.UNPLAYED -> game.playtimeForeverMinutes == 0
-    SteamLibraryPlayStatusFilter.PLAYED -> game.playtimeForeverMinutes > 0
-    SteamLibraryPlayStatusFilter.RECENT -> game.playtimeRecentMinutes > 0
+    SteamLibraryPlayStatusFilter.UNPLAYED -> !game.hasBeenPlayed
+    SteamLibraryPlayStatusFilter.PLAYED -> game.hasBeenPlayed
+    SteamLibraryPlayStatusFilter.RECENT -> game.wasRecentlyPlayed(nowSeconds)
 }
 
 private fun SteamLibraryAchievementStatusFilter.matches(game: SteamGame): Boolean = when (this) {
@@ -134,8 +139,9 @@ private fun SteamLibraryPlaytimeFilter.matches(game: SteamGame): Boolean = when 
         game.playtimeForeverMinutes >= TWENTY_HOURS_MINUTES
 }
 
-private fun SteamLibrarySortOrder.comparator(): Comparator<SteamGame> = when (this) {
-    SteamLibrarySortOrder.SMART -> compareByDescending<SteamGame> { it.playtimeRecentMinutes }
+private fun SteamLibrarySortOrder.comparator(nowSeconds: Long): Comparator<SteamGame> = when (this) {
+    SteamLibrarySortOrder.SMART -> compareByDescending<SteamGame> { it.wasRecentlyPlayed(nowSeconds) }
+        .thenByDescending { it.playtimeRecentMinutes }
         .thenByDescending { it.playtimeForeverMinutes }
         .thenBy { it.name.lowercase(Locale.ROOT) }
     SteamLibrarySortOrder.RECENT_PLAYTIME ->

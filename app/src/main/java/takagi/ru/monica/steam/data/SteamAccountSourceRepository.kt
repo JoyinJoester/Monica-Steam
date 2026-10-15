@@ -173,13 +173,9 @@ class SteamAccountSourceRepository private constructor(
                 steamLoginSecure = steamLoginSecure
             )
             is SteamStorageSource.Mdbx -> {
-                val record = mdbxRecords.firstOrNull {
+                val record = mdbxAccountStore.loadAccounts(source.databaseId).firstOrNull {
                     it.account.id == id && it.entryId == origin.entryId
-                } ?: runCatching {
-                    mdbxAccountStore.loadAccounts(source.databaseId).firstOrNull {
-                        it.account.id == id && it.entryId == origin.entryId
-                    }
-                }.getOrNull() ?: return
+                } ?: return
                 val updatedAccount = record.account.copy(
                     accessToken = accessToken,
                     refreshToken = refreshToken ?: record.account.refreshToken,
@@ -206,6 +202,18 @@ class SteamAccountSourceRepository private constructor(
                 }
             }
         }
+    }
+
+    /** Reads the original source even when another account or database is now selected. */
+    suspend fun loadSessionAccount(handle: SteamAccountSessionHandle): SteamAccount {
+        val current = when (val source = handle.origin.source) {
+            SteamStorageSource.Local -> localRepository.getAccount(handle.account.id)
+            is SteamStorageSource.Mdbx -> mdbxAccountStore.loadAccounts(source.databaseId)
+                .firstOrNull { it.entryId == handle.origin.entryId }?.account
+        }
+        return checkNotNull(current?.takeIf {
+            it.id == handle.account.id && it.steamId == handle.account.steamId
+        }) { "Steam session account is no longer available in its original source" }
     }
 
     fun sessionHandle(account: SteamAccount): SteamAccountSessionHandle? {

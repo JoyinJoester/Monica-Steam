@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Test
 import takagi.ru.monica.steam.importer.SteamMaFileParser
 import takagi.ru.monica.steam.library.RustOwnedGamesParser
+import takagi.ru.monica.steam.library.family.RustFamilySharedAppsParser
 import takagi.ru.monica.steam.network.SteamProtoWriter
 import takagi.ru.monica.steam.network.cm.SteamCmProtocol
 
@@ -49,6 +50,24 @@ class SteamNativeIntegrationTest {
         val decoded = SteamCmProtocol.decodeMessages(message).single()
         assertEquals(151, decoded.eMsg)
         assertArrayEquals(body, decoded.body)
+    }
+
+    @Test
+    fun sharedGameLastPlayedCrossesJniWithoutInventingRecentMinutes() {
+        val response = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 20)
+                writeFixed64(2, 76561198000000002L)
+                writeString(6, "共享游戏 🎮")
+                writeVarint(12, 4_000_000_000L)
+                writeVarint(13, 120)
+            })
+        }.toByteArray()
+        val parsed = requireNotNull(RustFamilySharedAppsParser.parseOrNull(response)).single()
+        assertEquals(4_000_000_000L, parsed.lastPlayedAt)
+        assertEquals(120, parsed.playtimeForeverMinutes)
+        assertEquals(0, parsed.playtimeRecentMinutes)
+        assertEquals("共享游戏 🎮", parsed.name)
     }
 
     @Test
