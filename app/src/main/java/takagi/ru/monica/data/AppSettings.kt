@@ -511,7 +511,7 @@ data class AppSettings(
     val useDraggableBottomNav: Boolean = false, // 使用可拖拽底部导航栏
     val autoHideBottomNavWhenSingleTab: Boolean = false, // 仅启用一个底栏项时自动隐藏导航栏
     val disablePasswordVerification: Boolean = false, // 启动时跳过主密码验证
-    val steamLockTokenPageOnly: Boolean = false, // Monica Steam 仅在进入令牌页面时验证
+    val steamLockTokenPageOnly: Boolean = true, // Monica Steam 默认仅在进入令牌页面时验证
     val passkeyHyperOsBiometricBypassEnabled: Boolean = false, // 开发者选项：HyperOS Passkey 生物识别兼容旁路
     val bitwardenSyncForensicsEnabled: Boolean = false, // 开发者选项：Bitwarden 同步脱敏取证
     val bitwardenSyncForensicsDirectoryUri: String? = null, // 取证日志外部镜像目录（SAF tree uri）

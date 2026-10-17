@@ -75,6 +75,14 @@ class SteamFamilyLibraryServiceTest {
             writeMessage(1, sharedApp(10, "Duplicate shared game", 600L, lastPlayedAt = lastPlayedAt))
             writeMessage(1, sharedApp(20, "Family game", 7_200L, lastPlayedAt = lastPlayedAt))
         }.toByteArray()
+        val playtimeResponse = SteamProtoWriter().apply {
+            writeMessage(1, SteamProtoWriter().apply {
+                writeVarint(1, 20L)
+                writeVarint(2, lastPlayedAt)
+                writeVarint(3, 135L)
+                writeVarint(4, 7_335L)
+            })
+        }.toByteArray()
         val httpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request()
@@ -84,11 +92,19 @@ class SteamFamilyLibraryServiceTest {
                     )).parseAll()
                     assertEquals(account().steamId, fields.single { it.number == 8 }.asFixed64UnsignedString)
                 }
+                if (request.url.encodedPath.contains("ClientGetLastPlayedTimes")) {
+                    assertEquals("access-token", request.url.queryParameter("access_token"))
+                    val fields = SteamProtoReader(Base64.getDecoder().decode(
+                        request.url.queryParameter("input_protobuf_encoded")
+                    )).parseAll()
+                    assertEquals(0L, fields.single { it.number == 1 }.asLong)
+                }
                 requests += request.method to request.url.encodedPath
                 val body = when {
                     request.url.encodedPath.contains("GetOwnedGames") -> ownedResponse
                     request.url.encodedPath.contains("GetFamilyGroupForUser") -> familyGroupResponse
                     request.url.encodedPath.contains("GetSharedLibraryApps") -> familyAppsResponse
+                    request.url.encodedPath.contains("ClientGetLastPlayedTimes") -> playtimeResponse
                     request.url.encodedPath.contains("GetItems") -> ByteArray(0)
                     request.url.encodedPath.contains("GetAchievementsProgress") -> ByteArray(0)
                     else -> error("Unexpected request: ${request.url}")
@@ -120,7 +136,10 @@ class SteamFamilyLibraryServiceTest {
         ).single { it.type == SteamLibraryGameSectionType.RECENT }
         assertEquals(listOf(20), recent.games.map(SteamGame::appId))
         assertEquals(lastPlayedAt, result.value.sharedGames.single().lastPlayedAt)
-        assertEquals(0, result.value.sharedGames.single().playtimeRecentMinutes)
+        assertEquals(135, result.value.sharedGames.single().playtimeRecentMinutes)
+        assertEquals(7_335, result.value.sharedGames.single().playtimeForeverMinutes)
+        assertEquals(135L, result.value.recentPlaytimeMinutes)
+        assertEquals(1, requests.count { it.second.contains("ClientGetLastPlayedTimes") })
         assertEquals(0L, result.value.ownedGames.single().lastPlayedAt)
         assertTrue(
             requests.filter { it.second.contains("IFamilyGroupsService") }

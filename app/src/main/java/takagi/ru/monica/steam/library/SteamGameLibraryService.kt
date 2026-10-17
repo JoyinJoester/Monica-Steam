@@ -67,6 +67,10 @@ class SteamGameLibraryService internal constructor(
             ownedGames = ownedGamesFetch.games,
             sharedGames = familyLibrary.games
         )
+        val sharedPlaytime = SteamLibraryPlaytimeService(ownedGamesFetch.api).fetch(
+            account,
+            games.filter(SteamGame::isFamilyShared).mapTo(hashSetOf(), SteamGame::appId)
+        )
         val storeMetadata = fetchStoreMetadata(
             client = ownedGamesFetch.api,
             appIds = games.map(SteamGame::appId),
@@ -76,7 +80,11 @@ class SteamGameLibraryService internal constructor(
         )
         val enrichedGames = games.map { game ->
             val metadata = storeMetadata.items[game.appId]
+            val playtime = sharedPlaytime.items[game.appId]
             game.copy(
+                playtimeRecentMinutes = playtime?.recentMinutes ?: game.playtimeRecentMinutes,
+                playtimeForeverMinutes = playtime?.totalMinutes ?: game.playtimeForeverMinutes,
+                lastPlayedAt = maxOf(game.lastPlayedAt, playtime?.lastPlayedAt ?: 0L),
                 headerImageUrl = metadata?.headerImageUrl.orEmpty(),
                 price = metadata?.price,
                 supportsSteamCloud = metadata?.supportsSteamCloud
@@ -92,7 +100,8 @@ class SteamGameLibraryService internal constructor(
                     ?: currencyForCountry(countryCode),
                 priceFailure = storeMetadata.failure,
                 familyGroupId = familyLibrary.familyGroupId,
-                familyShareFailure = familyLibrary.failure
+                familyShareFailure = familyLibrary.failure,
+                recentPlaytimeUnavailableAppIds = sharedPlaytime.unavailableAppIds
             )
         )
     }

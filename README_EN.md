@@ -85,6 +85,13 @@ It brings Steam Guard, account management, mobile confirmations, library, store,
 The [Millennium](https://github.com/Good-Joe2049/Millennium) module lets Monica Pass and the main Steam app use the same Steam Guard authenticator alongside each other.
 It provides Steam Guard and `maFile` import, export, and restoration. You can also import the exported `maFile` into Monica Steam to reuse the same authenticator data. See the [Millennium documentation](https://github.com/Good-Joe2049/Millennium#mafile) for module installation, activation, and restoration steps.
 
+Monica Steam encrypts its internal storage, but the ZIP from **maFile import and export** contains **single-account plaintext `.maFile` JSON files**. Identity verification before export does not encrypt the exported files.
+
+- **Monica Steam → Millennium:** export the maFile ZIP, extract it, then select the account's `.maFile` in Millennium's maFile import page. Millennium currently accepts single-account plaintext files up to 1 MB, not ZIP archives or encrypted database backups.
+- **Consented direct handoff (in development):** a compatible module can offer **Get from Monica Steam** on the same device. Unlock Monica Steam for each request, select one account, confirm the handoff, then preview and confirm import in the module. A master password is required. The transfer is bound to Steam's UID, expires after 60 seconds and allows one open without a plaintext temporary file. The recipient can still retain credentials it has read. Both apps must support [maFile handoff protocol v1](docs/interop/monica-mafile-handoff.md); older versions retain file import.
+- **Millennium → Monica Steam:** export a `.maFile` in the module, then add an account from Monica Steam's token page using the maFile import option.
+- **Directly opening Monica is a separate feature:** Millennium's current source targets the regular Monica app (`takagi.ru.monica`) with a code-generation URI. This does not import a complete maFile into Monica Steam (`takagi.ru.monica.steamapp`); the URI does not contain full confirmation secrets or login sessions.
+
 ### Known limitations
 - Still a public test build; APIs and UI may change.
 - Some features depend on Steam web pages or non-public mobile endpoints and may break when Steam changes them.

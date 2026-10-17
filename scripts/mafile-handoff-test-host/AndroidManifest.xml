@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Disposable emulator fixture only. NEVER install over a real Steam installation. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.valvesoftware.android.steam.community">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="32" />
+    <application android:label="Monica maFile test host" android:debuggable="true" android:allowBackup="false"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name="com.monica.handofftest.HostActivity" android:exported="true" />
+    </application>
+</manifest>

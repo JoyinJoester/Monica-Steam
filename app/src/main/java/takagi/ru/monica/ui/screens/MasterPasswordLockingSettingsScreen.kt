@@ -148,71 +148,73 @@ fun MasterPasswordLockingSettingsScreen(
                 )
             }
 
-            SettingsItemWithSwitch(
-                icon = Icons.Default.Fingerprint,
-                title = stringResource(R.string.biometric_unlock),
-                subtitle = biometricSubtitle,
-                checked = biometricSwitchState,
-                enabled = isBiometricAvailable,
-                onCheckedChange = { newState ->
-                    if (newState) {
-                        if (biometricHelper.isWeakBiometricOnly()) {
-                            showWeakBiometricWarning = true
-                        } else {
-                            startBiometricEnable()
-                        }
-                    } else {
-                        biometricSwitchState = false
-                        viewModel.updateBiometricEnabled(false)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.biometric_unlock_disabled),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            )
-
-            if (showSteamTokenPageLockOption) {
+            SettingsGroup {
                 SettingsItemWithSwitch(
+                    icon = Icons.Default.Fingerprint,
+                    title = stringResource(R.string.biometric_unlock),
+                    subtitle = biometricSubtitle,
+                    checked = biometricSwitchState,
+                    enabled = isBiometricAvailable,
+                    onCheckedChange = { newState ->
+                        if (newState) {
+                            if (biometricHelper.isWeakBiometricOnly()) {
+                                showWeakBiometricWarning = true
+                            } else {
+                                startBiometricEnable()
+                            }
+                        } else {
+                            biometricSwitchState = false
+                            viewModel.updateBiometricEnabled(false)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.biometric_unlock_disabled),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                )
+
+                if (showSteamTokenPageLockOption) {
+                    SettingsItemWithSwitch(
+                        icon = Icons.Default.Security,
+                        title = stringResource(R.string.steam_lock_token_page_only),
+                        subtitle = stringResource(R.string.steam_lock_token_page_only_description),
+                        checked = settings.steamLockTokenPageOnly,
+                        onCheckedChange = viewModel::updateSteamLockTokenPageOnly
+                    )
+                }
+
+                SettingsItemWithSwitch(
+                    icon = Icons.Default.LockOpen,
+                    title = stringResource(R.string.disable_password_verification),
+                    subtitle = stringResource(R.string.disable_password_verification_desc),
+                    checked = settings.disablePasswordVerification,
+                    onCheckedChange = { disabled ->
+                        viewModel.updateDisablePasswordVerification(disabled)
+                    }
+                )
+
+                SettingsItem(
+                    icon = Icons.Default.Timer,
+                    title = stringResource(R.string.auto_lock),
+                    subtitle = getAutoLockDisplayName(settings.autoLockMinutes, context),
+                    onClick = { showAutoLockDialog = true }
+                )
+
+                SettingsItem(
                     icon = Icons.Default.Security,
-                    title = stringResource(R.string.steam_lock_token_page_only),
-                    subtitle = stringResource(R.string.steam_lock_token_page_only_description),
-                    checked = settings.steamLockTokenPageOnly,
-                    onCheckedChange = viewModel::updateSteamLockTokenPageOnly
+                    title = stringResource(R.string.security_questions),
+                    subtitle = stringResource(R.string.security_questions_description),
+                    onClick = onSecurityQuestions
+                )
+
+                SettingsItem(
+                    icon = Icons.Default.VpnKey,
+                    title = stringResource(R.string.reset_master_password),
+                    subtitle = stringResource(R.string.reset_password_description),
+                    onClick = onResetPassword
                 )
             }
-
-            SettingsItemWithSwitch(
-                icon = Icons.Default.LockOpen,
-                title = stringResource(R.string.disable_password_verification),
-                subtitle = stringResource(R.string.disable_password_verification_desc),
-                checked = settings.disablePasswordVerification,
-                onCheckedChange = { disabled ->
-                    viewModel.updateDisablePasswordVerification(disabled)
-                }
-            )
-
-            SettingsItem(
-                icon = Icons.Default.Timer,
-                title = stringResource(R.string.auto_lock),
-                subtitle = getAutoLockDisplayName(settings.autoLockMinutes, context),
-                onClick = { showAutoLockDialog = true }
-            )
-
-            SettingsItem(
-                icon = Icons.Default.Security,
-                title = stringResource(R.string.security_questions),
-                subtitle = stringResource(R.string.security_questions_description),
-                onClick = onSecurityQuestions
-            )
-
-            SettingsItem(
-                icon = Icons.Default.VpnKey,
-                title = stringResource(R.string.reset_master_password),
-                subtitle = stringResource(R.string.reset_password_description),
-                onClick = onResetPassword
-            )
 
             Spacer(modifier = Modifier.height(20.dp + contentBottomPadding))
         }

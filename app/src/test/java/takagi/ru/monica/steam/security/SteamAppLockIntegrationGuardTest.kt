@@ -8,7 +8,7 @@ import org.junit.Test
 /** Source-level guard for reusing Monica's authentication surfaces in Steam. */
 class SteamAppLockIntegrationGuardTest {
     @Test
-    fun activityUsesOptionalMonicaStartupAuthenticationGate() {
+    fun activityRequiresSetupBeforeApplyingTheConfiguredLockScope() {
         val activity = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -16,6 +16,7 @@ class SteamAppLockIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/security/SteamAppLockGate.kt"
         ).readText()
 
+        assertTrue(activity.contains("SteamStartupGate("))
         assertTrue(activity.contains("SteamAppLockGate("))
         assertTrue(activity.contains("PasswordViewModel"))
         assertTrue(gate.contains("SteamAppLockPolicy.resolveAccessState"))
@@ -44,7 +45,7 @@ class SteamAppLockIntegrationGuardTest {
     }
 
     @Test
-    fun optionalSteamPolicyExistsAlongsideMonicaPolicy() {
+    fun requiredSteamSetupExistsAlongsideMonicaPolicy() {
         val policy = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/security/SteamAppLockPolicy.kt"
         )
@@ -52,8 +53,8 @@ class SteamAppLockIntegrationGuardTest {
         assertTrue(policy.exists())
         val source = policy.readText()
         assertTrue(source.contains("MainAppLockPolicy.resolveAccessState"))
-        assertTrue(source.contains("steam_lock_not_configured"))
-        assertTrue(source.contains("isFirstTime = false"))
+        assertTrue(source.contains("steam_master_password_setup_required"))
+        assertTrue(source.contains("isFirstTime = true"))
     }
 
     private fun projectFile(path: String): File {

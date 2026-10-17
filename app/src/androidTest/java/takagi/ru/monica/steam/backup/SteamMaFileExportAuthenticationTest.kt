@@ -195,12 +195,15 @@ class SteamMaFileExportAuthenticationTest {
         assertEquals(0L, destination.length())
     }
 
-    @Test fun optionalPasswordUnconfiguredStillAllowsExport() {
+    @Test fun missingMasterPasswordRejectsExportWithoutWritingBytes() {
         openScreen(passwordProtected = false)
         selectDestination()
-        compose.waitUntil(10_000) { destination.length() > 0L }
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithText(context.getString(R.string.steam_mafile_operation_failed))
+                .fetchSemanticsNodes().isNotEmpty()
+        }
         compose.onNodeWithText(context.getString(R.string.verify_identity)).assertDoesNotExist()
-        assertEquals(1, SteamMaFileZipCodec().decode(destination.readBytes()).payloads.size)
+        assertEquals(0L, destination.length())
     }
 
     @Test fun sensitiveGateIgnoresStartupBypassAndRelocksOnReturn() {

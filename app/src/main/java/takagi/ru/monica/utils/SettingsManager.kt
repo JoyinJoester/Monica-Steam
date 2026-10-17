@@ -546,7 +546,7 @@ class SettingsManager(private val context: Context) {
             autoHideBottomNavWhenSingleTab =
                 preferences[AUTO_HIDE_BOTTOM_NAV_WHEN_SINGLE_TAB_KEY] ?: false,
             disablePasswordVerification = preferences[DISABLE_PASSWORD_VERIFICATION_KEY] ?: false,
-            steamLockTokenPageOnly = preferences[STEAM_LOCK_TOKEN_PAGE_ONLY_KEY] ?: false,
+            steamLockTokenPageOnly = preferences[STEAM_LOCK_TOKEN_PAGE_ONLY_KEY] ?: true,
             passkeyHyperOsBiometricBypassEnabled =
                 preferences[PASSKEY_HYPEROS_BIOMETRIC_BYPASS_ENABLED_KEY] ?: false,
             bitwardenSyncForensicsEnabled =
@@ -845,6 +845,14 @@ class SettingsManager(private val context: Context) {
     suspend fun updateSteamLockTokenPageOnly(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[STEAM_LOCK_TOKEN_PAGE_ONLY_KEY] = enabled
+        }
+    }
+
+    /** Called only while no master password exists, before first-time setup. */
+    suspend fun prepareSteamMasterPasswordSetup() {
+        dataStore.edit { preferences ->
+            preferences[STEAM_LOCK_TOKEN_PAGE_ONLY_KEY] = true
+            preferences[DISABLE_PASSWORD_VERIFICATION_KEY] = false
         }
     }
 

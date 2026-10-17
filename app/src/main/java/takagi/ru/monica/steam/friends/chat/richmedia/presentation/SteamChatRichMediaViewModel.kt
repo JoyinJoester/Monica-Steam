@@ -8,7 +8,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +20,15 @@ import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUpl
 import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatUploadException
 import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatUploadFailure
 import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogService
+import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCache
+import takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogPreferencesCache
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentGateway
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentTarget
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCatalogGateway
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatEmoticon
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatEffect
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatPendingAttachment
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaCatalog
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatSticker
 import takagi.ru.monica.steam.session.domain.SteamAccountSessionResolver
 import takagi.ru.monica.steam.session.domain.resolveOrKeep
@@ -51,7 +53,8 @@ class SteamChatRichMediaViewModel(
     private val attachmentGateway: SteamChatAttachmentGateway,
     private val sessionResolver: SteamAccountSessionResolver? = null,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val nowMillis: () -> Long = System::currentTimeMillis
+    private val nowMillis: () -> Long = System::currentTimeMillis,
+    private val catalogCache: SteamChatCatalogCache? = null
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamChatRichMediaUiState())
     val uiState: StateFlow<SteamChatRichMediaUiState> = _uiState.asStateFlow()
@@ -59,6 +62,8 @@ class SteamChatRichMediaViewModel(
     private var account: SteamAccount? = null
     private var attachmentTarget: SteamChatAttachmentTarget? = null
     private var catalogGeneration = 0L
+    private var catalogJob: Job? = null
+    private var catalogAvailable = false
     private var attachmentGeneration = 0L
     private var attachmentPreparationJob: Job? = null
     private var attachmentUploadJob: Job? = null
@@ -68,10 +73,24 @@ class SteamChatRichMediaViewModel(
             this.account = account
             return
         }
+        val cachedCatalog = account?.let { selected ->
+            if (sameRichMediaAccountIdentity(this.account, selected) && catalogAvailable) {
+                _uiState.value.let { SteamChatRichMediaCatalog(it.emoticons, it.stickers, it.effects) }
+            } else {
+                catalogCache?.peek(selected)
+            }
+        }
         invalidateAttachmentRequests()
+        catalogJob?.cancel()
         this.account = account
         catalogGeneration++
-        _uiState.value = SteamChatRichMediaUiState(catalogLoading = account != null)
+        catalogAvailable = cachedCatalog != null
+        _uiState.value = SteamChatRichMediaUiState(
+            emoticons = cachedCatalog?.emoticons.orEmpty(),
+            stickers = cachedCatalog?.stickers.orEmpty(),
+            effects = cachedCatalog?.effects.orEmpty(),
+            catalogLoading = account != null
+        )
         if (account != null) loadCatalogs(account, catalogGeneration)
     }
 
@@ -99,8 +118,9 @@ class SteamChatRichMediaViewModel(
 
     fun refreshCatalogs() {
         val current = account ?: return
+        if (catalogJob?.isActive == true) return
         catalogGeneration++
-        _uiState.value = _uiState.value.copy(catalogLoading = true, catalogFailure = false)
+        _uiState.update { it.copy(catalogLoading = true, catalogFailure = false) }
         loadCatalogs(current, catalogGeneration)
     }
 
@@ -226,27 +246,51 @@ class SteamChatRichMediaViewModel(
     }
 
     private fun loadCatalogs(account: SteamAccount, generation: Long) {
-        viewModelScope.launch {
-            val catalogResult = async(ioDispatcher) {
-                suspendResult {
+        catalogJob = viewModelScope.launch {
+            if (!catalogAvailable) {
+                val cached = suspendResult {
+                    withContext(ioDispatcher) { catalogCache?.load(account) }
+                }.getOrNull()
+                if (!isCurrentCatalogRequest(account, generation)) return@launch
+                if (cached != null) publishCatalog(cached, refreshing = true)
+            }
+            val catalogResult = suspendResult {
+                withContext(ioDispatcher) {
                     catalogGateway.loadCatalog(sessionResolver.resolveOrKeep(account))
                 }
-            }.await()
-            if (generation != catalogGeneration ||
-                !sameRichMediaAccount(this@SteamChatRichMediaViewModel.account, account)
-            ) {
-                return@launch
             }
+            if (!isCurrentCatalogRequest(account, generation)) return@launch
             val catalog = catalogResult.getOrNull()
-            _uiState.value = _uiState.value.copy(
-                emoticons = catalog?.emoticons.orEmpty(),
-                stickers = catalog?.stickers.orEmpty(),
-                effects = catalog?.effects.orEmpty(),
-                catalogLoading = false,
-                catalogFailure = catalogResult.isFailure
+            if (catalog != null) {
+                // A successful empty response replaces old ownership, too.
+                publishCatalog(catalog, refreshing = false)
+                suspendResult {
+                    withContext(ioDispatcher) { catalogCache?.save(account, catalog) }
+                }
+            } else {
+                // Background failures must not remove usable cached items or flash an error banner.
+                _uiState.update {
+                    it.copy(catalogLoading = false, catalogFailure = !catalogAvailable)
+                }
+            }
+        }
+    }
+
+    private fun publishCatalog(catalog: SteamChatRichMediaCatalog, refreshing: Boolean) {
+        catalogAvailable = true
+        _uiState.update {
+            it.copy(
+                emoticons = catalog.emoticons,
+                stickers = catalog.stickers,
+                effects = catalog.effects,
+                catalogLoading = refreshing,
+                catalogFailure = false
             )
         }
     }
+
+    private fun isCurrentCatalogRequest(expected: SteamAccount, generation: Long): Boolean =
+        generation == catalogGeneration && sameRichMediaAccount(account, expected)
 
     private fun invalidateAttachmentRequests() {
         attachmentGeneration++
@@ -316,7 +360,8 @@ class SteamChatRichMediaViewModel(
                         attachmentGateway = SteamChatAttachmentUploader(appContext),
                         sessionResolver = SteamAccountSourceRepository
                             .get(appContext)
-                            .sessionResolver()
+                            .sessionResolver(),
+                        catalogCache = SteamChatCatalogPreferencesCache.get(appContext)
                     ) as T
             }
         }
@@ -332,10 +377,12 @@ private suspend fun <T> suspendResult(block: suspend () -> T): Result<T> = try {
 }
 
 private fun sameRichMediaAccount(left: SteamAccount?, right: SteamAccount?): Boolean =
-    left?.id == right?.id &&
-        left?.steamId == right?.steamId &&
+    sameRichMediaAccountIdentity(left, right) &&
         left?.accessToken == right?.accessToken &&
         left?.steamLoginSecure == right?.steamLoginSecure
+
+private fun sameRichMediaAccountIdentity(left: SteamAccount?, right: SteamAccount?): Boolean =
+    left?.id == right?.id && left?.steamId == right?.steamId && left?.isTemporary == right?.isTemporary
 
 private fun Throwable.userFacingMessage(): String = message
     .let { raw ->

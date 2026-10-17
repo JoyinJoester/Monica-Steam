@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.library.filter.domain
 import java.util.Locale
 import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.library.hasBeenPlayed
+import takagi.ru.monica.steam.library.steamGameActivityComparator
 import takagi.ru.monica.steam.library.wasRecentlyPlayed
 
 internal enum class SteamLibraryOwnershipFilter {
@@ -140,10 +141,7 @@ private fun SteamLibraryPlaytimeFilter.matches(game: SteamGame): Boolean = when 
 }
 
 private fun SteamLibrarySortOrder.comparator(nowSeconds: Long): Comparator<SteamGame> = when (this) {
-    SteamLibrarySortOrder.SMART -> compareByDescending<SteamGame> { it.wasRecentlyPlayed(nowSeconds) }
-        .thenByDescending { it.playtimeRecentMinutes }
-        .thenByDescending { it.playtimeForeverMinutes }
-        .thenBy { it.name.lowercase(Locale.ROOT) }
+    SteamLibrarySortOrder.SMART -> steamGameActivityComparator(nowSeconds)
     SteamLibrarySortOrder.RECENT_PLAYTIME ->
         compareByDescending<SteamGame> { it.playtimeRecentMinutes }
             .thenByDescending { it.playtimeForeverMinutes }

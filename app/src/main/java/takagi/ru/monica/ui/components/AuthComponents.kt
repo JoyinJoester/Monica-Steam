@@ -40,7 +40,8 @@ fun PasswordVerificationContent(
     onVerifyPassword: (String) -> Boolean,
     onSetPassword: (String) -> Unit = {},
     onSuccess: () -> Unit,
-    onForgotPassword: (() -> Unit)? = null
+    onForgotPassword: (() -> Unit)? = null,
+    setupDescription: String? = null
 ) {
     val context = LocalContext.current
     val activity = context as? FragmentActivity
@@ -172,6 +173,16 @@ fun PasswordVerificationContent(
             modifier = Modifier.padding(vertical = 16.dp)
         )
         
+        if (isFirstTime && setupDescription != null) {
+            Text(
+                text = setupDescription,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+        }
+
         if (isFirstTime && !internalIsConfirming) {
             Text(
                 text = stringResource(R.string.password_min_6_digits),
@@ -267,8 +278,14 @@ fun PasswordVerificationContent(
                             internalIsConfirming = false
                             return@Button
                         }
-                        onSetPassword(masterPassword)
-                        completeAuthentication()
+                        try {
+                            onSetPassword(masterPassword)
+                            completeAuthentication()
+                        } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                            throw cancelled
+                        } catch (_: Exception) {
+                            errorMessage = context.getString(R.string.steam_master_password_setup_failed)
+                        }
                     }
                 } else {
                     // 验证密码

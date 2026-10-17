@@ -1092,6 +1092,15 @@ internal fun mergeLibraryDashboardSnapshot(
     val gamesWithCachedStoreFallback = fresh.games.map { game ->
         val previous = cachedGames[game.appId]
         game.copy(
+            playtimeRecentMinutes = if (
+                cached?.accountId == fresh.accountId && game.isFamilyShared &&
+                previous?.isFamilyShared == true &&
+                game.appId in fresh.recentPlaytimeUnavailableAppIds
+            ) {
+                previous.playtimeRecentMinutes
+            } else {
+                game.playtimeRecentMinutes
+            },
             headerImageUrl = if (fresh.priceFailure != null) {
                 game.headerImageUrl.ifBlank { previous?.headerImageUrl.orEmpty() }
             } else {

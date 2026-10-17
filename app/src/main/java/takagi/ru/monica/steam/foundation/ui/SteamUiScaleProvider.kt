@@ -12,10 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import takagi.ru.monica.data.InterfaceScale
-
-private val LocalSteamUiScale = staticCompositionLocalOf {
-    InterfaceScale.DEFAULT_PERCENT
-}
+import takagi.ru.monica.ui.scale.ProvideMonicaInterfaceScale
 
 internal val LocalSteamUiChromeDensity = staticCompositionLocalOf<Density?> {
     null
@@ -34,50 +31,10 @@ internal fun ProvideSteamUiScale(content: @Composable () -> Unit) {
     val scalePercent by preferences.scale.collectAsState(
         initial = InterfaceScale.DEFAULT_PERCENT
     )
-    val baseDensity = LocalDensity.current
-    val appDensity = remember(baseDensity.density, baseDensity.fontScale, scalePercent) {
-        Density(
-            density = InterfaceScale.calculateDensity(baseDensity.density, scalePercent),
-            fontScale = baseDensity.fontScale
-        )
+    ProvideMonicaInterfaceScale(scalePercent) {
+        val appDensity = LocalDensity.current
+        CompositionLocalProvider(LocalSteamUiChromeDensity provides appDensity) {
+            ProvideSteamAvatarShape(content)
+        }
     }
-
-    CompositionLocalProvider(
-        LocalDensity provides appDensity,
-        LocalSteamUiScale provides scalePercent,
-        LocalSteamUiChromeDensity provides appDensity
-    ) {
-        ProvideSteamAvatarShape(content)
-    }
-}
-
-/**
- * Keeps high-density page content readable when the large scale is selected.
- * Navigation surfaces intentionally stay outside this provider so their touch
- * targets can retain the user's preferred larger size.
- */
-@Composable
-internal fun ProvideSteamContentDensity(content: @Composable () -> Unit) {
-    val scalePercent = LocalSteamUiScale.current
-    val appDensity = LocalDensity.current
-    val contentDensity = remember(appDensity.density, appDensity.fontScale, scalePercent) {
-        Density(
-            density = calculateSteamContentDensity(appDensity.density, scalePercent),
-            fontScale = appDensity.fontScale
-        )
-    }
-
-    CompositionLocalProvider(LocalDensity provides contentDensity) {
-        content()
-    }
-}
-
-internal fun calculateSteamContentDensity(
-    scaledDensity: Float,
-    scalePercent: Int
-): Float {
-    val normalizedPercent = InterfaceScale.normalizePercent(scalePercent)
-    val scaleFactor = normalizedPercent / InterfaceScale.DEFAULT_PERCENT.toFloat()
-    val contentFactor = scaleFactor.coerceAtMost(1f)
-    return (scaledDensity / scaleFactor * contentFactor).coerceAtLeast(0.1f)
 }

@@ -131,7 +131,8 @@ data class SteamLibrarySnapshot(
     val inventoryFetchedAt: Long? = null,
     val inventoryFailure: SteamLibraryFailureReason? = null,
     val achievementProgressFullSyncAt: Long? = null,
-    val achievementSyncPlan: SteamAchievementSyncPlan? = null
+    val achievementSyncPlan: SteamAchievementSyncPlan? = null,
+    val recentPlaytimeUnavailableAppIds: Set<Int> = emptySet()
 ) {
     val ownedGames: List<SteamGame> get() = games.filterNot(SteamGame::isFamilyShared)
     val sharedGames: List<SteamGame> get() = games.filter(SteamGame::isFamilyShared)

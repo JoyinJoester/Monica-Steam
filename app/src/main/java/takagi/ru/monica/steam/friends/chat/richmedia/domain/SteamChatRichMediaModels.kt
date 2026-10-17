@@ -4,7 +4,9 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.net.URI
 import java.nio.charset.StandardCharsets
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SteamChatEmoticon(
     val name: String,
     val appId: Int = 0,
@@ -16,6 +18,7 @@ data class SteamChatEmoticon(
         "https://steamcommunity.com/economy/emoticonlarge/${encodeSteamChatPath(name)}"
 }
 
+@Serializable
 data class SteamChatSticker(
     val name: String,
     val title: String = name,
@@ -30,6 +33,7 @@ data class SteamChatSticker(
 }
 
 /** A Steam chat-room effect owned by the account. */
+@Serializable
 data class SteamChatEffect(
     val name: String,
     val appId: Int = 0,
@@ -40,6 +44,7 @@ data class SteamChatEffect(
     val messageCode: String get() = "/roomeffect $name"
 }
 
+@Serializable
 data class SteamChatRichMediaCatalog(
     val emoticons: List<SteamChatEmoticon> = emptyList(),
     val stickers: List<SteamChatSticker> = emptyList(),

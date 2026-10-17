@@ -218,25 +218,27 @@ fun SteamNotificationSettingsScreen(
                         enabled = alertSettings.enabled,
                         onCheckedChange = { syncAlerts { alertPreferences.setDevicesEnabled(it) } }
                     )
-                    Text(
-                        text = context.getString(R.string.steam_alerts_interval),
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 8.dp)
-                    )
-                    SingleChoiceSegmentedButtonRow(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
-                    ) {
-                        SteamAlertSettings.allowedIntervals.sorted().forEachIndexed { index, hours ->
-                            SegmentedButton(
-                                selected = alertSettings.normalizedIntervalHours == hours,
-                                onClick = { syncAlerts { alertPreferences.setIntervalHours(hours) } },
-                                enabled = alertSettings.enabled,
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = index,
-                                    count = SteamAlertSettings.allowedIntervals.size
-                                )
-                            ) {
-                                Text(context.getString(R.string.steam_alerts_interval_compact, hours))
-                            }
+                }
+            }
+            item {
+                Text(
+                    text = context.getString(R.string.steam_alerts_interval),
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 8.dp)
+                )
+                SingleChoiceSegmentedButtonRow(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+                ) {
+                    SteamAlertSettings.allowedIntervals.sorted().forEachIndexed { index, hours ->
+                        SegmentedButton(
+                            selected = alertSettings.normalizedIntervalHours == hours,
+                            onClick = { syncAlerts { alertPreferences.setIntervalHours(hours) } },
+                            enabled = alertSettings.enabled,
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = SteamAlertSettings.allowedIntervals.size
+                            )
+                        ) {
+                            Text(context.getString(R.string.steam_alerts_interval_compact, hours))
                         }
                     }
                 }

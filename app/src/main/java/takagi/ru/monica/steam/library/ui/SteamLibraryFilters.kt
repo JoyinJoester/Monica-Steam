@@ -5,6 +5,7 @@ import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.library.filter.domain.SteamLibraryFilterSelection
 import takagi.ru.monica.steam.library.filter.domain.filterSteamLibraryGames
 import takagi.ru.monica.steam.library.hasBeenPlayed
+import takagi.ru.monica.steam.library.steamGameActivityComparator
 import takagi.ru.monica.steam.library.wasRecentlyPlayed
 
 internal enum class SteamLibraryGameFilter {
@@ -63,9 +64,13 @@ internal fun buildSteamLibrarySections(
             SteamLibraryGameSection(
                 type = SteamLibraryGameSectionType.RESULTS,
                 games = scoped.sortedWith(
-                    compareByDescending<SteamGame> { it.playtimeRecentMinutes }
-                        .thenByDescending { it.playtimeForeverMinutes }
-                        .thenBy { it.name.lowercase(Locale.ROOT) }
+                    if (filter == SteamLibraryGameFilter.RECENT) {
+                        steamGameActivityComparator(nowSeconds)
+                    } else {
+                        compareByDescending<SteamGame> { it.playtimeRecentMinutes }
+                            .thenByDescending { it.playtimeForeverMinutes }
+                            .thenBy { it.name.lowercase(Locale.ROOT) }
+                    }
                 )
             )
         )
@@ -80,10 +85,7 @@ private fun buildActivitySections(
     SteamLibraryGameSection(
         type = SteamLibraryGameSectionType.RECENT,
         games = games.filter { it.wasRecentlyPlayed(nowSeconds) }
-            .sortedWith(
-                compareByDescending<SteamGame> { it.playtimeRecentMinutes }
-                    .thenByDescending { it.lastPlayedAt }
-            )
+            .sortedWith(steamGameActivityComparator(nowSeconds))
     ),
     SteamLibraryGameSection(
         type = SteamLibraryGameSectionType.PLAYED,

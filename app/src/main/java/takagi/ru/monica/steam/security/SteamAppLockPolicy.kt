@@ -7,13 +7,8 @@ import takagi.ru.monica.security.lock.MainAppLockPolicy
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
 
 /**
- * Steam's opt-in adapter around Monica's main-app lock policy.
- *
- * Monica's full password vault requires first-time password setup. Steam is a
- * standalone companion and must remain usable without a local master password,
- * so the unconfigured state is explicitly treated as an unlocked optional
- * feature. Once a password exists, every decision is delegated to Monica's
- * shared policy and its session/keystore checks.
+ * Steam requires first-time password setup, then delegates authentication to
+ * Monica's shared session/keystore policy. Lock scope is selected by the caller.
  */
 object SteamAppLockPolicy {
     fun resolveAccessState(
@@ -37,10 +32,10 @@ object SteamAppLockPolicy {
         if (masterPasswordSet) return null
 
         return MainAppAccessState(
-            isFirstTime = false,
-            bypassEnabled = true,
+            isFirstTime = true,
+            bypassEnabled = false,
             canRestoreSession = false,
-            reason = "steam_lock_not_configured"
+            reason = "steam_master_password_setup_required"
         )
     }
 

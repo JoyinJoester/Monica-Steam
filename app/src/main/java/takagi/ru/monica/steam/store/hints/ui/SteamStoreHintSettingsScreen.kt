@@ -41,14 +41,12 @@ import takagi.ru.monica.ui.screens.SettingsSection
 @Composable
 fun SteamStoreHintSettingsEntry(onClick: () -> Unit) {
     val context = LocalContext.current
-    SettingsSection(title = context.getString(R.string.steam_store_hint_settings_section)) {
-        SettingsItem(
-            icon = Icons.Default.TipsAndUpdates,
-            title = context.getString(R.string.steam_store_hint_settings_title),
-            subtitle = context.getString(R.string.steam_store_hint_settings_description),
-            onClick = onClick
-        )
-    }
+    SettingsItem(
+        icon = Icons.Default.TipsAndUpdates,
+        title = context.getString(R.string.steam_store_hint_settings_title),
+        subtitle = context.getString(R.string.steam_store_hint_settings_description),
+        onClick = onClick
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

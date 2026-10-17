@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_handoff_title">Authorize maFile handoff</string>
+    <string name="steam_handoff_recipient">Receiving app · Steam</string>
+    <string name="steam_handoff_scope">Only the account you select</string>
+    <string name="steam_handoff_scope_detail">Includes authenticator secrets and available login credentials</string>
+    <string name="steam_handoff_warning">Steam and code running inside it can permanently save these credentials. Revoking access cannot recover copies already read. Android cannot identify which injected module receives them. Continue only if you trust this request.</string>
+    <string name="steam_handoff_unlock">Unlock and choose an account</string>
+    <string name="steam_handoff_choose">Choose one account</string>
+    <string name="steam_handoff_confirm">Confirm handoff to Steam</string>
+    <string name="steam_handoff_preview_hint">Return to Steam to preview the account. You must still confirm import in the module.</string>
+    <string name="steam_handoff_password_required">Set a master password in Monica Steam settings before using this handoff. Then request again from Steam.</string>
+    <string name="steam_handoff_auth_unavailable">Identity verification is unavailable. Check your master password settings and try again.</string>
+    <string name="steam_handoff_no_accounts">No available saved authenticators. This handoff requires a real SteamID and an authenticator secret. Temporary accounts and locked or unavailable MDBX databases are excluded.</string>
+    <string name="steam_handoff_load_failed">Could not load accounts. Unlock again to retry.</string>
+    <string name="steam_handoff_export_failed">Handoff failed. The account or its storage may have changed. Unlock again to retry.</string>
+</resources>

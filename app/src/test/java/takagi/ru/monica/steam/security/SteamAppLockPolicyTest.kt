@@ -8,13 +8,14 @@ import org.junit.Test
 
 class SteamAppLockPolicyTest {
     @Test
-    fun unconfiguredSteamLockRemainsOptional() {
+    fun unconfiguredSteamLockRequiresPasswordSetup() {
         val state = requireNotNull(SteamAppLockPolicy.resolveUnconfiguredState(false))
 
-        assertFalse(state.isFirstTime)
-        assertTrue(state.bypassEnabled)
-        assertTrue(state.canEnterMainApp)
-        assertEquals("steam_lock_not_configured", state.reason)
+        assertTrue(state.isFirstTime)
+        assertFalse(state.bypassEnabled)
+        assertFalse(state.canRestoreSession)
+        assertFalse(state.canEnterMainApp)
+        assertEquals("steam_master_password_setup_required", state.reason)
     }
 
     @Test

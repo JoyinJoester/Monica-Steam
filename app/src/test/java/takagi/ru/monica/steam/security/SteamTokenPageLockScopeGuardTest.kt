@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SteamTokenPageLockScopeGuardTest {
     @Test
-    fun steamLockScopeIsPersistedWithStartupLockAsTheSafeDefault() {
+    fun steamLockScopeDefaultsToTokensAndRemainsConfigurable() {
         val appSettings = projectFile(
             "app/src/main/java/takagi/ru/monica/data/AppSettings.kt"
         ).readText()
@@ -19,7 +19,8 @@ class SteamTokenPageLockScopeGuardTest {
             "app/src/main/java/takagi/ru/monica/viewmodel/SettingsViewModel.kt"
         ).readText()
 
-        assertTrue(appSettings.contains("val steamLockTokenPageOnly: Boolean = false"))
+        assertTrue(appSettings.contains("val steamLockTokenPageOnly: Boolean = true"))
+        assertTrue(settingsManager.contains("steamLockTokenPageOnly = preferences[STEAM_LOCK_TOKEN_PAGE_ONLY_KEY] ?: true"))
         assertTrue(settingsManager.contains("steam_lock_token_page_only"))
         assertTrue(settingsManager.contains("steamLockTokenPageOnly ="))
         assertTrue(settingsManager.contains("updateSteamLockTokenPageOnly"))
@@ -60,7 +61,16 @@ class SteamTokenPageLockScopeGuardTest {
         assertTrue(gate.contains("allowStartupVerificationBypass = allowStartupVerificationBypass"))
         val login = projectFile("app/src/main/java/takagi/ru/monica/ui/screens/LoginScreen.kt").readText()
         assertTrue(login.contains("allowStartupVerificationBypass && (settings?.disablePasswordVerification ?: false)"))
-        assertTrue(activity.contains("enabled = !settings.steamLockTokenPageOnly"))
+        val startup = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/security/SteamStartupGate.kt"
+        ).readText()
+        assertTrue(activity.contains("SteamStartupGate("))
+        assertTrue(startup.contains("enabled = !settings.steamLockTokenPageOnly"))
+        assertTrue(startup.contains("preparation == SteamStartupPreparation.READY"))
+        assertTrue(startup.contains("isFirstTime = true"))
+        assertTrue(startup.contains("disablePasswordVerification = false"))
+        assertFalse(startup.contains("markAuthenticatedForBypass"))
+        assertFalse(startup.contains("restoreAuthenticatedUiState"))
         assertTrue(activity.contains("enabled = shouldProtectSteamSensitiveSurface("))
         assertTrue(activity.contains("allowStartupVerificationBypass = false"))
         val backupRoutes = activity.substring(
@@ -74,8 +84,8 @@ class SteamTokenPageLockScopeGuardTest {
         assertTrue(backupRoutes.contains("transferState = maFileTransferState"))
         assertTrue(backupRoutes.contains("WebDavBackupScreen("))
         assertTrue(activity.indexOf("val maFileTransferState = rememberSteamMaFileTransferState(") in
-            0 until activity.indexOf("SteamAppLockGate("))
-        assertEquals(3, activity.windowed("SteamAppLockGate(".length)
+            0 until activity.indexOf("SteamStartupGate("))
+        assertEquals(2, activity.windowed("SteamAppLockGate(".length)
             .count { it == "SteamAppLockGate(" })
     }
 
@@ -105,7 +115,7 @@ class SteamTokenPageLockScopeGuardTest {
         ))
         assertTrue(
             activity.indexOf("SteamStartupSurface()") in
-                0 until activity.indexOf("SteamAppLockGate(")
+                0 until activity.indexOf("SteamStartupGate(")
         )
     }
 

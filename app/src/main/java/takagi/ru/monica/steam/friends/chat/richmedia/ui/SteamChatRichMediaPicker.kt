@@ -29,7 +29,6 @@ import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -128,9 +127,6 @@ internal fun SteamChatRichMediaPickerPanel(
                         }
                     }
                 )
-            }
-            if (state.catalogLoading) {
-                LinearProgressIndicator(Modifier.fillMaxWidth())
             }
             if (state.catalogFailure && page != RichPickerPage.EMOJI) {
                 Surface(

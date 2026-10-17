@@ -65,6 +65,7 @@ import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.security.SteamAppLockGate
+import takagi.ru.monica.steam.security.SteamStartupGate
 import takagi.ru.monica.steam.security.shouldProtectSteamSensitiveSurface
 import takagi.ru.monica.steam.scanner.ui.SteamQrScannerScreen
 import takagi.ru.monica.steam.community.ui.SteamCommunityScreen
@@ -78,7 +79,6 @@ import takagi.ru.monica.steam.links.domain.SteamExternalLinkTarget
 import takagi.ru.monica.steam.workshop.SteamWorkshopBulkNotifications
 import takagi.ru.monica.steam.workshop.SteamWorkshopTaskProgressHost
 import takagi.ru.monica.steam.token.ui.SteamScreen
-import takagi.ru.monica.steam.foundation.ui.ProvideSteamContentDensity
 import takagi.ru.monica.steam.foundation.ui.setSteamUiScaledContent
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.steam.store.ui.SteamStoreScreen
@@ -219,7 +219,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val chatNotificationRequest by pendingChatNotificationRequest.collectAsState()
                 val externalSteamLink by pendingExternalSteamLink.collectAsState()
                 val workshopTaskKey by pendingWorkshopTask.collectAsState()
-                SteamWorkshopTaskProgressHost(workshopTaskKey) { pendingWorkshopTask.value = null }
                 val mdbxRepository: MdbxRepository = remember(passwordDatabase, securityManager) {
                     MdbxRepositoryFactory.create(
                         context = this@MonicaSteamActivity.applicationContext,
@@ -417,13 +416,14 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 CompositionLocalProvider(
                     LocalReduceAnimations provides settings.reduceAnimations
                 ) {
-                    SteamAppLockGate(
-                        enabled = !settings.steamLockTokenPageOnly,
+                    SteamStartupGate(
                         settings = settings,
+                        settingsManager = settingsManager,
                         settingsViewModel = steamSettingsViewModel,
                         passwordViewModel = passwordViewModel,
                         securityManager = securityManager
                     ) {
+                    SteamWorkshopTaskProgressHost(workshopTaskKey) { pendingWorkshopTask.value = null }
                     BackHandler(enabled = true) {
                         if (pageHistory.isNotEmpty()) {
                             navigateBack()
@@ -462,7 +462,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 contentWindowInsets = WindowInsets(0, 0, 0, 0)
                             ) {
-                                ProvideSteamContentDensity {
                                     CompositionLocalProvider(
                                         LocalSteamDockContentClearance provides if (dockVisible) {
                                             SteamDockContentClearance
@@ -807,7 +806,6 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                             }
                                         }
                                     }
-                                }
                     }
 
                             if (useNavigationRail && dockVisible) {

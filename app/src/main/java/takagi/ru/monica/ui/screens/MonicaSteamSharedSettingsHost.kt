@@ -188,7 +188,9 @@ internal fun MonicaSteamSharedSettingsHost(
         additionalSettingsContent = {
             when (additionalGroup) {
                 SteamSettingsAdditionalGroup.NONE -> Unit
-                SteamSettingsAdditionalGroup.NAVIGATION -> {
+                SteamSettingsAdditionalGroup.NAVIGATION -> SettingsSection(
+                    title = context.getString(R.string.steam_settings_navigation_title)
+                ) {
                     SettingsItem(
                         icon = Icons.Default.ViewList,
                         title = context.getString(R.string.bottom_nav_settings),
@@ -203,7 +205,9 @@ internal fun MonicaSteamSharedSettingsHost(
                         onCheckedChange = settingsViewModel::updateReduceAnimations
                     )
                 }
-                SteamSettingsAdditionalGroup.STEAM_EXPERIENCE -> {
+                SteamSettingsAdditionalGroup.STEAM_EXPERIENCE -> SettingsSection(
+                    title = context.getString(R.string.steam_settings_features_title)
+                ) {
                     SteamLinkHandlingSettingsEntry()
                     SteamStoreHintSettingsEntry(onClick = onOpenStoreHints)
                     SteamDbSettingsEntry(onClick = onOpenPriceData)

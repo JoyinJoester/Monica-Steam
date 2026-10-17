@@ -85,6 +85,13 @@ Monica Steam 是一款专注 Steam 的独立 Android 客户端，源自 [Monica 
 可以通过 [Millennium](https://github.com/Good-Joe2049/Millennium) 模块来实现 Monica Pass 与 Steam 主应用令牌共存。
 该模块提供 Steam Guard 和 `maFile` 导入、导出及恢复功能；导出的 `maFile` 也可导入 Monica Steam，复用同一份令牌数据。模块安装、启用与恢复步骤请参阅 [Millennium 项目文档](https://github.com/Good-Joe2049/Millennium#mafile)。
 
+Monica Steam 的应用内存储会加密，但“maFile 导入与导出”页面导出的 ZIP 内是**单账号明文 `.maFile`（JSON）**。导出时要求验证身份，不代表导出的文件已加密。
+
+- **Monica Steam → Millennium：** 导出 maFile ZIP，先解压，再在 Millennium 的 maFile 导入页面选择对应账号的 `.maFile`。Millennium 当前支持不超过 1 MB 的单账号明文文件，不支持直接导入 ZIP 或加密数据库备份。
+- **授权直接获取（开发中）：** 配套模块提供“从 Monica Steam 获取”后，可在同一手机上打开 Monica Steam，每次解锁、选择一个账号并确认交付，再返回模块预览和确认导入。需要已配置主密码；交付绑定 Steam 的 UID，60 秒有效且仅可打开一次，不落地明文临时文件。接收方仍可永久保存已读取的凭据。需要双方支持 [maFile 交付协议 v1](docs/interop/monica-mafile-handoff.md)，旧版继续使用文件导入。
+- **Millennium → Monica Steam：** 在模块中导出 `.maFile`，到 Monica Steam 的令牌页添加账号，选择 maFile 文件导入。
+- **“直接打开 Monica”是另一种入口：** 按 Millennium 当前源码，该入口面向普通版 Monica（`takagi.ru.monica`），传递验证码 URI；它不是向 Monica Steam（`takagi.ru.monica.steamapp`）导入完整 maFile，验证码 URI 也不包含完整的交易确认密钥与登录会话。
+
 ### 已知限制
 - 仍为公开测试版，接口与布局可能随时调整。
 - 部分能力依赖 Steam 网页或非公开移动接口，Steam 变更后可能暂时失效。

@@ -8,6 +8,7 @@
     <uses-sdk tools:overrideLibrary="top.yukonga.miuix.kmp.blur" />
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.HIDE_OVERLAY_WINDOWS" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -39,6 +40,10 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
+
+    <queries>
+        <package android:name="com.valvesoftware.android.steam.community" />
+    </queries>
 
     <application
         android:name=".MonicaSteamApplication"
@@ -198,6 +203,19 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".steam.backup.share.SteamMaFileExportActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:label="@string/steam_handoff_title"
+            android:theme="@style/Theme.Monica" />
+
+        <provider
+            android:name=".steam.backup.share.SteamMaFileShareProvider"
+            android:authorities="${applicationId}.mafile-handoff"
+            android:exported="false"
+            android:grantUriPermissions="true" />
 
         <!-- Share generated support logs and other cache attachments safely. -->
         <provider

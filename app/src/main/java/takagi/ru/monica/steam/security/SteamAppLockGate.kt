@@ -49,8 +49,8 @@ internal fun shouldProtectSteamSensitiveSurface(
 ): Boolean = tokenPageOnly || startupVerificationBypass
 
 /**
- * Monica's startup/foreground authentication gate adapted to Steam's optional
- * master-password model. All credential, biometric and session work remains in
+ * Monica's authentication gate for Steam's selected lock scope.
+ * All credential, biometric and session work remains in
  * Monica's existing components; this composable only selects the active page.
  */
 @Composable

@@ -189,6 +189,7 @@ class SteamChatIntegrationGuardTest {
         assertTrue(remoteImage.contains("setAutoPlay(true)"))
         assertTrue(remoteImage.contains("startSteamAnimation"))
         assertTrue(picker.contains("catalogFailure"))
+        assertFalse(picker.contains("LinearProgressIndicator"))
         assertFalse(picker.contains("ModalBottomSheet"))
         assertFalse(picker.contains("SingleChoiceSegmentedButtonRow"))
         assertTrue(picker.contains("SteamChatRichMediaPickerPanel"))

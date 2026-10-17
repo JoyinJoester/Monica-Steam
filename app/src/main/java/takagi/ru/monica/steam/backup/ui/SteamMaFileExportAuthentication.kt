@@ -74,8 +74,11 @@ internal fun SteamMaFileExportAuthentication(
             lifecycle.withResumed {
                 if (active) {
                     requiresAuthentication = required
-                    // Steam remains usable without an optional master password.
-                    if (!required) authorize()
+                    // First-time setup is mandatory; no-password export is never authorized.
+                    if (!required) {
+                        active = false
+                        onUnavailable()
+                    }
                 }
             }
         } catch (cancelled: CancellationException) {

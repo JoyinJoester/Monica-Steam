@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_handoff_title">授权交付 maFile</string>
+    <string name="steam_handoff_recipient">接收应用 · Steam</string>
+    <string name="steam_handoff_scope">仅交付你选中的一个账号</string>
+    <string name="steam_handoff_scope_detail">包含验证器密钥和可用的登录凭据</string>
+    <string name="steam_handoff_warning">Steam 及其中运行的代码可以永久保存这些凭据，撤销访问无法收回已读取的副本。Android 无法识别具体接收数据的注入模块，请仅在信任此次请求时继续。</string>
+    <string name="steam_handoff_unlock">解锁并选择账号</string>
+    <string name="steam_handoff_choose">选择一个账号</string>
+    <string name="steam_handoff_confirm">确认交给 Steam</string>
+    <string name="steam_handoff_preview_hint">返回 Steam 后先预览账号，仍需在模块中确认导入。</string>
+    <string name="steam_handoff_password_required">请先在 Monica Steam 设置中配置主密码，再从 Steam 重新发起请求。</string>
+    <string name="steam_handoff_auth_unavailable">暂时无法验证身份，请检查主密码设置后重试。</string>
+    <string name="steam_handoff_no_accounts">没有可用的已保存验证器。此交付需要真实 SteamID 和验证器密钥，不包含临时账号、已锁定或无法读取的 MDBX 数据库。</string>
+    <string name="steam_handoff_load_failed">无法加载账号，请重新解锁后重试。</string>
+    <string name="steam_handoff_export_failed">交付失败，账号或存储状态可能已改变，请重新解锁后重试。</string>
+</resources>

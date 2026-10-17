@@ -6,7 +6,6 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.data.InterfaceScale
-import takagi.ru.monica.steam.foundation.ui.calculateSteamContentDensity
 import takagi.ru.monica.steam.foundation.ui.calculateSteamUiDensity
 
 class SteamUiScaleSettingsTest {
@@ -28,17 +27,23 @@ class SteamUiScaleSettingsTest {
         assertTrue(preferences.contains("name = \"monica_steam_ui_scale\""))
         assertTrue(preferences.contains("Flow<Int>"))
         assertTrue(preferences.contains("InterfaceScale.normalizePercent("))
-        assertTrue(launcher.contains("setSteamUiScaledContent {"))
+        assertTrue(Regex("""setSteamUiScaledContent\s+(?:\w+@)?\s*\{""").containsMatchIn(launcher))
+        assertFalse(launcher.contains("ProvideSteamContentDensity"))
         assertTrue(providerFile.exists())
         val provider = providerFile.readText()
         assertTrue(provider.contains("ComponentActivity.setSteamUiScaledContent"))
         assertTrue(provider.contains("ProvideSteamUiScale(content)"))
         assertTrue(provider.contains("SteamUiScalePreferences"))
         assertTrue(provider.contains("CompositionLocalProvider("))
-        assertTrue(provider.contains("LocalDensity provides appDensity"))
         assertTrue(provider.contains("InterfaceScale.DEFAULT_PERCENT"))
-        assertTrue(provider.contains("InterfaceScale.calculateDensity("))
-        assertTrue(provider.contains("fontScale = baseDensity.fontScale"))
+        assertTrue(provider.contains("ProvideMonicaInterfaceScale(scalePercent)"))
+        assertFalse(provider.contains("coerceAtMost(1f)"))
+        val sharedProvider = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/scale/InterfaceScaleProvider.kt"
+        ).readText()
+        assertTrue(sharedProvider.contains("LocalDensity provides appDensity"))
+        assertTrue(sharedProvider.contains("InterfaceScale.calculateDensity("))
+        assertTrue(sharedProvider.contains("fontScale = baseDensity.fontScale"))
     }
 
     @Test
@@ -74,7 +79,7 @@ class SteamUiScaleSettingsTest {
     }
 
     @Test
-    fun popupMenusUseRootScaledDensityInsteadOfCappedPageDensity() {
+    fun popupMenusKeepTheSameRootScaledDensityAsPages() {
         val provider = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamUiScaleProvider.kt"
         ).readText()
@@ -102,16 +107,6 @@ class SteamUiScaleSettingsTest {
         assertEquals(
             3.6f,
             calculateSteamUiDensity(3f, InterfaceScale.MAX_PERCENT),
-            0.0001f
-        )
-        assertEquals(
-            3f,
-            calculateSteamContentDensity(3.6f, InterfaceScale.MAX_PERCENT),
-            0.0001f
-        )
-        assertEquals(
-            2.4f,
-            calculateSteamContentDensity(2.4f, InterfaceScale.MIN_PERCENT),
             0.0001f
         )
         assertEquals(528, InterfaceScale.calculateEffectiveDpi(440, 120))
