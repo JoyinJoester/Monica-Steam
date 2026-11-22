@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.steamdb.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll

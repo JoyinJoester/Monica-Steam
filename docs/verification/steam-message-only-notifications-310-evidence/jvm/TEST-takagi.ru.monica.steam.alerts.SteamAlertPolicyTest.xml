@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:32:44.127Z" hostname="JOYIN" time="0.017">
+  <properties/>
+  <testcase name="enabledTypesProduceOnlyRequestedAlertKinds" classname="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" time="0.013"/>
+  <testcase name="wishlistDiscountsRequireABaselineAndADeeperDiscount" classname="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" time="0.003"/>
+  <testcase name="deviceBaselineDoesNotAlertOnFirstSuccessfulCheck" classname="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" time="0.0"/>
+  <testcase name="identicalAlertIsSuppressedForTwentyFourHours" classname="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" time="0.001"/>
+  <testcase name="intervalIsRestrictedToBatterySafeChoices" classname="takagi.ru.monica.steam.alerts.SteamAlertPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

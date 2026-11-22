@@ -1,0 +1,274 @@
+{
+  "metrics": {
+    "result-baseline03": {
+      "variant": "baseline03",
+      "frames": 513,
+      "callbacks": 30,
+      "mounts": {
+        "STORE": 10,
+        "LIBRARY": 10,
+        "CHAT": 10
+      },
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 128.444466,
+      "commitP95Ms": 196.273847,
+      "totalP95Ms": 130.43689,
+      "drawP95Ms": 60.31311
+    },
+    "result-five-baseline07": {
+      "variant": "baselineFive",
+      "frames": 505,
+      "callbacks": 30,
+      "mounts": {
+        "STORE": 6,
+        "CHAT": 6,
+        "TOKEN": 6,
+        "SETTINGS": 6,
+        "LIBRARY": 6
+      },
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 116.107083,
+      "commitP95Ms": 204.550693,
+      "totalP95Ms": 116.028761,
+      "drawP95Ms": 23.854356
+    },
+    "result-fixed-five08": {
+      "variant": "finalFive",
+      "frames": 505,
+      "callbacks": 30,
+      "mounts": {},
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 17.621567,
+      "commitP95Ms": 38.826774,
+      "totalP95Ms": 18.031958,
+      "drawP95Ms": 3.537792
+    },
+    "result-fixed-five09": {
+      "variant": "finalFive",
+      "frames": 506,
+      "callbacks": 30,
+      "mounts": {},
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 18.008576,
+      "commitP95Ms": 39.564344,
+      "totalP95Ms": 18.122008,
+      "drawP95Ms": 3.769806
+    },
+    "result-fixed-five17": {
+      "variant": "finalFive",
+      "frames": 512,
+      "callbacks": 30,
+      "mounts": {},
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 20.672781,
+      "commitP95Ms": 44.642923,
+      "totalP95Ms": 19.823239,
+      "drawP95Ms": 4.074231
+    },
+    "result-install-baseline02": {
+      "variant": "baseline02",
+      "frames": 522,
+      "callbacks": 30,
+      "mounts": {
+        "STORE": 10,
+        "LIBRARY": 10,
+        "CHAT": 10
+      },
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 151.556508,
+      "commitP95Ms": 241.103609,
+      "totalP95Ms": 155.114876,
+      "drawP95Ms": 70.61814
+    },
+    "result-reverse06": {
+      "variant": "reverse06",
+      "frames": 509,
+      "callbacks": 30,
+      "mounts": {
+        "STORE": 10,
+        "LIBRARY": 10,
+        "CHAT": 10
+      },
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 143.83637,
+      "commitP95Ms": 194.142597,
+      "totalP95Ms": 145.470572,
+      "drawP95Ms": 72.43535
+    },
+    "result-warm04": {
+      "variant": "warmAll",
+      "frames": 513,
+      "callbacks": 30,
+      "mounts": {},
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 17.560906,
+      "commitP95Ms": 35.832852,
+      "totalP95Ms": 18.12999,
+      "drawP95Ms": 3.60144
+    },
+    "result-warm05": {
+      "variant": "warmAll",
+      "frames": 519,
+      "callbacks": 30,
+      "mounts": {},
+      "hiddenChatSubscriptions": 0,
+      "lostMetrics": 0,
+      "commitMedianMs": 18.627584,
+      "commitP95Ms": 40.195407,
+      "totalP95Ms": 18.730484,
+      "drawP95Ms": 3.851786
+    }
+  },
+  "devices": {
+    "device-baseline03": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-five-baseline07": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-fixed-five08": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-fixed-five09": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-fixed-five17": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-fixed-token06": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-install-baseline01": {
+      "passed": null,
+      "failures": 1
+    },
+    "device-install-baseline02": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-install-fixed05": {
+      "passed": 25,
+      "failures": null
+    },
+    "device-install-lock10": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-install-red03": {
+      "passed": null,
+      "failures": 2
+    },
+    "device-install-social11": {
+      "passed": null,
+      "failures": 6
+    },
+    "device-install-social12": {
+      "passed": null,
+      "failures": 3
+    },
+    "device-install-social13": {
+      "passed": null,
+      "failures": 2
+    },
+    "device-install-social14": {
+      "passed": null,
+      "failures": 2
+    },
+    "device-install-social15": {
+      "passed": 2,
+      "failures": null
+    },
+    "device-red-token04": {
+      "passed": null,
+      "failures": 1
+    },
+    "device-reverse06": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-social16": {
+      "passed": 22,
+      "failures": null
+    },
+    "device-warm04": {
+      "passed": 1,
+      "failures": null
+    },
+    "device-warm05": {
+      "passed": 1,
+      "failures": null
+    }
+  },
+  "sources": {
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "dd325b044c84d34784db640a60c1f8e2324747ce3e1caeace86a1bf79327edce",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "014bfe2f41176932956c864c7bcd1086d97dd8163fb72fe658cc55016303066f",
+    "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt": "aed7f0509379d7235144fc4a21dd8a078b14074551d99d703dd19eda3787cc9d",
+    "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "1df331fc92f73226e1bc943adb63063495b47fd7286fedb94fdab884faf673fe",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/SteamTabPageHost.kt": "3578509fd3325a0f723435c79fc338993a0927c02f0264410faf82e160b3c20a",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "e999e496597f958e330743a6e9444f58723cb6a62b327542b8271551a1bc30c3",
+    "app/src/main/java/takagi/ru/monica/steam/security/SteamAppLockGate.kt": "1746e4f8dc8276d1a041270e8abf91a4f867df74ba452828a41fbb66bb3e43c6",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpacePlayingHeader.kt": "3dfa82636e380daaacd499fc0009c9d31f1d402e0cbe9d6801c799f7b6aab051",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt": "0f1971c8ff60316feb12bded389996e7e2b1803d06fec4869783351dec6a5cd4",
+    "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt": "26795817e329c7e867e82055fed8bba42fc34905d75e5285ac22f6c484104d10",
+    "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt": "a7af6adf2400990e7d6b17cf1b86b0981c6a7e0ee1f76ed4c2c4d5b3061fc10e",
+    "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "d2b4df2b30c01032c0e11fb2905a7c333788b761ce40426816b5ff49e99813ac",
+    "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt": "648b1da0417e440f941c7ef1d715b8813cd27feaf403983ea6a279c596ec8f13",
+    "app/src/main/res/values-ja/steam_space_strings.xml": "cb7484caef6f0b1f65476004caec0069b65fda574c5251908d18c7323d2f3be4",
+    "app/src/main/res/values-ru/steam_space_strings.xml": "905959ee720c84ba0803069e03e2431d61688ca573a8e7ff4ac029c4866b81d8",
+    "app/src/main/res/values-vi/steam_space_strings.xml": "670455a65e195b594093a48e0deea1f5e43c133b0430d64a1bff00889f0826b7",
+    "app/src/main/res/values-zh/steam_space_strings.xml": "e7e11e7c80bdca8abfcf523a52862586d41603428b3642c6bea8dcdb5e8924a4",
+    "app/src/main/res/values/steam_space_strings.xml": "fe5bc360661e134eb9279aa49b7e603c4181968b28fad70654d564b569f7c993",
+    "docs/releases/Monica-Steam-Unreleased.md": "d245b228fc593f930582c4d789ecc7605b408c45492aa96c96fda3eda8c60bca"
+  },
+  "productionBuild": {
+    "exit": 0,
+    "seconds": 599.8691964999889,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=48",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261115-all-dock-jank\\production.gradle",
+      ":app:assembleDebug",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "takagi.ru.monica.steam.space.*",
+      "--tests",
+      "takagi.ru.monica.steam.store.SteamStoreFilter*",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111518-48.APK": "ec1752c3db618f66af9e0ce4707881cd7b6010fd71ee7d37f7bec8b443e55f49"
+    }
+  },
+  "unitTests": {
+    "tests": 101,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "scope": "Offline synthetic API35/x86_64 fixtures; actual screen composables and lock gate. No vivo X100 or real-account validation."
+}

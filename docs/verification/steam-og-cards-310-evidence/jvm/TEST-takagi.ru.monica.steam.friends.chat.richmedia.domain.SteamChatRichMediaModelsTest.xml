@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:47:46.636Z" hostname="JOYIN" time="0.022">
+  <properties/>
+  <testcase name="keepsOrdinaryTextUntouched" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesCurrentSteamImageTagWithResponsiveAttributes" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.004"/>
+  <testcase name="keepsMultipleBbcodeLinksAndPlainUrlsInOneMessage" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesSelfClosingTradeAndAdditionalSteamNotificationFamilies" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="parsesSteamJoinLobbyInviteBeforeGenericLinks" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesSteamBbcodeGameInviteArgumentsAndOtherSystemTags" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="parsesSteamImageAndLinkedArchiveBbcode" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesOfficialStickerSlashCommand" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.002"/>
+  <testcase name="parsesCurrentSteamImageTagWhenClosingTagIsOmitted" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="usesOfficialHighResolutionEmoticonsAndAnimatedStickerEndpoint" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="keepsUnknownSelfClosingSteamSystemMessagesReadable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="richMediaCommandsUseSteamOfficialSyntax" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="keepsUnknownBbcodeSchemesReadableWithoutMakingThemClickable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesGiftInventoryRemotePlayAndBroadcastNotificationsAsTypedMessages" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="recognizesExtensionlessSteamUgcImageLinks" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="keepsUnrecognizedLinksAsOrdinaryTextLinks" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="convertsSteamBbcodeLinksIntoInlineTextLinks" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="normalizesOfficialEmoticonBbcodeTagForInlineRendering" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="preservesSteamSpoilerImagesAndDecodesEscapedQueryParameters" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesOfficialStickerBbcodeTag" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="keepsUnknownSteamSpecialMessageReadable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesPlainSteamTradeOfferLinksAsTypedMessages" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesSteamSelfLabeledUrlTag" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="parsesOfficialSelfClosingStickerAndRoomEffectTags" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="parsesSteamStoreLinksAsNativeGameShares" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.002"/>
+  <testcase name="parsesSteamMeActionsAsAFirstClassMessage" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <testcase name="buildsOfficialGameInviteUrlsForConnectAndRemotePlayArguments" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="normalizesMultipleOfficialEmoticonTagsWithoutLeakingBbcode" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.001"/>
+  <testcase name="parsesOfficialRoomEffectBbcodeTag" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

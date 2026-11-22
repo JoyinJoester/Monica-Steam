@@ -14,10 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.PersonSearch
 import androidx.compose.material.icons.filled.Search
@@ -28,7 +25,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
@@ -49,6 +44,7 @@ import takagi.ru.monica.steam.friends.domain.SteamFriend
 import takagi.ru.monica.steam.friends.domain.SteamFriendRelationship
 import takagi.ru.monica.steam.friends.presentation.SteamFriendsUiState
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
+import takagi.ru.monica.steam.foundation.ui.SteamListSearchField
 
 @Composable
 internal fun SteamAddFriendScreen(
@@ -82,7 +78,7 @@ internal fun SteamAddFriendScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item(key = "add-friend-search") {
-            OutlinedTextField(
+            SteamListSearchField(
                 value = query,
                 onValueChange = { value ->
                     val nextQuery = value.take(MAX_QUERY_LENGTH)
@@ -90,34 +86,10 @@ internal fun SteamAddFriendScreen(
                     query = nextQuery
                 },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(28.dp),
-                label = { Text(stringResource(R.string.steam_friend_add_search_label)) },
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.steam_friend_add_search_hint),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                leadingIcon = { Icon(Icons.Default.PersonSearch, contentDescription = null) },
-                trailingIcon = {
+                placeholder = stringResource(R.string.steam_friend_add_search_hint),
+                showClear = !discovery.searching,
+                trailingContent = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (query.isNotBlank() && !discovery.searching) {
-                            IconButton(
-                                onClick = {
-                                    query = ""
-                                    onSearch("")
-                                }
-                            ) {
-                                Icon(
-                                    Icons.Default.Close,
-                                    contentDescription = stringResource(
-                                        R.string.steam_friend_clear_search
-                                    )
-                                )
-                            }
-                        }
                         IconButton(
                             onClick = { submitSearch() },
                             enabled = query.isNotBlank() && !discovery.searching
@@ -138,8 +110,7 @@ internal fun SteamAddFriendScreen(
                         }
                     }
                 },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(onSearch = { submitSearch() })
+                onSearch = { submitSearch() }
             )
         }
 

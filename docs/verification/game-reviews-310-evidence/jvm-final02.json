@@ -1,0 +1,23 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.store.SteamStoreReviewServiceTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.SteamStoreReviewTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

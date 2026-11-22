@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.246Z" hostname="JOYIN" time="0.045">
+  <properties/>
+  <testcase name="recoveredInFlightWriteIsVerifiedWithoutDuplicateSend" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest" time="0.024"/>
+  <testcase name="timeoutIsReconciledBeforeOutboxCompletes" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest" time="0.012"/>
+  <testcase name="exhaustedOutboxBecomesPermanentInsteadOfRetryingForever" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest" time="0.004"/>
+  <testcase name="explicitRetryBypassesBackoffAndUsesTheExistingRequestId" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+{
+  "ui/Components/FilterTabsView.java": "25e2f34494903fedc86375632c769570083135ddb093bb5868f97f2cd02ae87c",
+  "ui/Components/glass/GlassTabsView.java": "2a9978dc9789fee694928702a53986d597d461fb7450f46c29d7d75105b525e9",
+  "ui/Components/voip/VoIPToggleButton.java": "aad9d7b1d85b14275802772418fce9ab866082b898f10d96da15e66d4ad1f066",
+  "ui/Components/voip/VoIPStatusTextView.java": "79aeee37dce362430a353cc918b82529a317ec96299388cb09f6d1b3098ebba8",
+  "ui/Components/voip/VoipBlobDrawable.java": "9f6d7123d8225aa9c1e8325f08d5ca0eecaed99bff7f493ce4851fefc149e9b9",
+  "ui/Cells/GroupCallUserCell.java": "123f303c1fb96a219dcb3293c66d1bfa88b3e1aa7d29bf21ae8774504b1be38f",
+  "ui/Components/ButtonBounce.java": "f7b5188cb84ce4f392d138ef9dd764911c19d227cf03e2a5c573eb6e7943acc6"
+}

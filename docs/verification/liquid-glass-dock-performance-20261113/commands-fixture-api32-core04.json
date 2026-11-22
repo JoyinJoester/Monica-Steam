@@ -1,0 +1,54 @@
+[
+  {
+    "args": [
+      "install",
+      "--user",
+      "0",
+      "-r",
+      "-t",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-final\\main.apk"
+    ],
+    "exit": 0,
+    "output": "Performing Streamed Install\nSuccess\n"
+  },
+  {
+    "args": [
+      "install",
+      "--user",
+      "0",
+      "-r",
+      "-t",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-final\\test.apk"
+    ],
+    "exit": 0,
+    "output": "Performing Streamed Install\nSuccess\n"
+  },
+  {
+    "args": [
+      "shell",
+      "input",
+      "keyevent",
+      "KEYCODE_WAKEUP"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "wm",
+      "dismiss-keyguard"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "pull",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-shadow-validation",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\shadow-fixture-api32-core04"
+    ],
+    "exit": 0,
+    "output": "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-shadow-validation/: 3 files pulled, 0 skipped. 0.1 MB/s (8846 bytes in 0.089s)\n"
+  }
+]

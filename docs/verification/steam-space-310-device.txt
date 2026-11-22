@@ -1,0 +1,393 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.space.SteamSpaceUiTest:
+INSTRUMENTATION_STATUS: test=largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedPresenceIsMarkedAsLastKnownWhenRefreshFails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedPresenceIsMarkedAsLastKnownWhenRefreshFails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=loginEmptyAndNetworkStatesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=loginEmptyAndNetworkStatesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backDismissesSheetFirstAndAccountSwitchRevokesIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backDismissesSheetFirstAndAccountSwitchRevokesIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=originalActivityAndSensitiveMediaUseReadOnlyActions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=originalActivityAndSensitiveMediaUseReadOnlyActions
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=partialFeedWithoutCursorNeverClaimsAllActivityWasShown
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=partialFeedWithoutCursorNeverClaimsAllActivityWasShown
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=playingStripScrollsAndSheetUsesExactGameAndMessageTargets
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=playingStripScrollsAndSheetUsesExactGameAndMessageTargets
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest:
+INSTRUMENTATION_STATUS: test=stopClearsAndStartReloadsSameAccountWithoutSourceChange
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stopClearsAndStartReloadsSameAccountWithoutSourceChange
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=removingAndRemountingThePageRevokesThenReloadsWithoutAnActivityRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=removingAndRemountingThePageRevokesThenReloadsWithoutAnActivityRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest:
+INSTRUMENTATION_STATUS: test=selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deleteRequiresConfirmationAndCancelPreservesTheSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deleteRequiresConfirmationAndCancelPreservesTheSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 47.644
+
+OK (25 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+collapse-frame-times.txt
+sequence=0 phase=expanded uptimeMs=4441672 fraction=0.0 header=Rect(0, 231 - 1080, 732) avatar=Rect(61, 369 - 255, 563) target=Rect(42, 358 - 273, 732)
+sequence=1 phase=drag-up-0.15 uptimeMs=4442071 fraction=0.15282376 header=Rect(0, 231 - 1080, 678) avatar=Rect(61, 350 - 255, 544) target=Rect(42, 339 - 273, 678)
+sequence=2 phase=drag-up-0.35 uptimeMs=4442302 fraction=0.35282597 header=Rect(0, 231 - 1080, 607) avatar=Rect(61, 324 - 255, 518) target=Rect(42, 313 - 273, 607)
+sequence=3 phase=drag-up-0.55 uptimeMs=4442536 fraction=0.5528254 header=Rect(0, 231 - 1080, 536) avatar=Rect(61, 299 - 255, 493) target=Rect(42, 288 - 273, 536)
+sequence=4 phase=drag-up-0.75 uptimeMs=4442755 fraction=0.75282484 header=Rect(0, 231 - 1080, 466) avatar=Rect(61, 273 - 255, 466) target=Rect(42, 262 - 273, 466)
+sequence=5 phase=drag-up-1.0 uptimeMs=4442987 fraction=1.0 header=Rect(0, 231 - 1080, 378) avatar=Rect(61, 242 - 255, 378) target=Rect(42, 231 - 273, 378)
+sequence=6 phase=compact-feed-scrolled uptimeMs=4444287 fraction=1.0 header=Rect(0, 231 - 1080, 378) avatar=Rect(61, 242 - 255, 378) target=Rect(42, 231 - 273, 378)
+sequence=7 phase=drag-down-half-expanded uptimeMs=4447587 fraction=0.49717507 header=Rect(0, 231 - 1080, 556) avatar=Rect(61, 306 - 255, 500) target=Rect(42, 295 - 273, 556)
+sequence=8 phase=drag-down-expanded uptimeMs=4447970 fraction=0.0 header=Rect(0, 231 - 1080, 732) avatar=Rect(61, 369 - 255, 563) target=Rect(42, 358 - 273, 732)
+
+collapse-settle-normal.txt
+uptimeMs=4431902 fraction=0.6228234 header=Rect(0, 231 - 1080, 512) avatar=Rect(61, 290 - 255, 484) target=Rect(42, 279 - 273, 512)
+uptimeMs=4431922 fraction=0.6228234 header=Rect(0, 231 - 1080, 512) avatar=Rect(61, 290 - 255, 484) target=Rect(42, 279 - 273, 512)
+uptimeMs=4431941 fraction=0.7644841 header=Rect(0, 231 - 1080, 417) avatar=Rect(61, 248 - 255, 394) target=Rect(42, 233 - 273, 383)
+uptimeMs=4432028 fraction=1.0 header=Rect(0, 231 - 1080, 378) avatar=Rect(61, 242 - 255, 378) target=Rect(42, 231 - 273, 378)
+
+dark-top-app-bar-surface.txt
+point=(1,89)
+expected=ff0e1419
+samples=fff8fbfe, ff959a9e, ff141a1f, ff0e1419, ff0e1419, ff0e1419, ff0e1419, ff0e1419, ff0e1419, ff0e1419, ff0e1419
+
+expanded-initial-top-app-bar-surface.txt
+point=(1,89)
+expected=fff8fbfe
+samples=fff8f8fd, fff7fafe, fff7fafe, fff7fafe, fff8fbfe, fff8fbfe, fff8fbfe, fff8fbfe, fff8fbfe
+
+light-normal-top-app-bar-surface.txt
+point=(1,89)
+expected=fff8fbfe
+samples=fff8f8fc, fff8fafd, fff8fafd, fff9fbfe, fff8fafe, fff8fbfe, fff8fbfe, fff8fbfe, fff8fbfe

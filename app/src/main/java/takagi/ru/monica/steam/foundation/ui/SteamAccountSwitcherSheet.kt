@@ -1,5 +1,11 @@
 package takagi.ru.monica.steam.foundation.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -20,7 +29,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +37,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +56,7 @@ import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.session.SteamTemporaryAccounts
-import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
+import takagi.ru.monica.steam.foundation.ui.SteamListChoiceChip as MonicaExpressiveFilterChip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,136 +93,140 @@ internal fun SteamAccountSwitcherSheet(
     }
     ModalBottomSheet(
         onDismissRequest = onDismiss,
+        sheetState = androidx.compose.material3.rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground,
         tonalElevation = 0.dp
     ) {
-        Text(
-            text = stringResource(R.string.steam_switch_account),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
-        )
+        Column(Modifier.fillMaxWidth().heightIn(max = androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp * .86f)) {
+            SteamSheetHeader(stringResource(R.string.steam_switch_account), onDismiss)
 
-        if (mdbxDatabases.isNotEmpty()) {
-            Text(
-                text = stringResource(R.string.category_selection_menu_databases),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 8.dp)
-            )
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(horizontal = 24.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item(key = "local") {
-                    MonicaExpressiveFilterChip(
-                        selected = storageSource is SteamStorageSource.Local,
-                        onClick = { onSelectStorageSource(SteamStorageSource.Local) },
-                        label = stringResource(R.string.category_selection_menu_local_database),
-                        leadingIcon = Icons.Default.Smartphone
-                    )
-                }
-                items(mdbxDatabases, key = LocalMdbxDatabase::id) { database ->
-                    MonicaExpressiveFilterChip(
-                        selected = storageSource is SteamStorageSource.Mdbx &&
-                            storageSource.databaseId == database.id,
-                        onClick = {
-                            onSelectStorageSource(SteamStorageSource.Mdbx(database.id))
-                        },
-                        label = database.name.ifBlank { "MDBX" },
-                        leadingIcon = Icons.Default.Storage,
-                        statusDotColor = Color(0xFF22C55E)
-                    )
-                }
-            }
-        }
-
-        when {
-            loading -> {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 112.dp)
-                        .padding(horizontal = 24.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.padding(top = 28.dp))
-                }
-            }
-            !errorMessage.isNullOrBlank() -> {
-                ListItem(
-                    headlineContent = {
-                        Text(stringResource(R.string.steam_cannot_load_mdbx_accounts))
-                    },
-                    supportingContent = {
-                        Text(
-                            text = errorMessage,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    },
-                    trailingContent = {
-                        IconButton(onClick = onRefresh) {
-                            Icon(
-                                imageVector = Icons.Default.Refresh,
-                                contentDescription = stringResource(R.string.refresh)
-                            )
-                        }
-                    },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
-            }
-            accounts.isEmpty() -> {
+            if (mdbxDatabases.isNotEmpty()) {
                 Text(
-                    text = stringResource(R.string.steam_store_no_account),
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(R.string.category_selection_menu_databases),
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 28.dp)
+                    modifier = Modifier.padding(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 8.dp)
                 )
-            }
-            else -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 520.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(
-                        items = accounts,
-                        key = SteamAccount::id
-                    ) { account ->
-                        SteamSwitcherAccountCard(
-                            account = account,
-                            selected = account.id == selectedAccountId,
-                            onClick = { onSelectAccount(account.id) },
-                            onEndTemporary = { endingAccount = account }
+                    item(key = "local") {
+                        MonicaExpressiveFilterChip(
+                            selected = storageSource is SteamStorageSource.Local,
+                            onClick = { onSelectStorageSource(SteamStorageSource.Local) },
+                            label = stringResource(R.string.category_selection_menu_local_database),
+                            leadingIcon = Icons.Default.Smartphone
+                        )
+                    }
+                    items(mdbxDatabases, key = LocalMdbxDatabase::id) { database ->
+                        MonicaExpressiveFilterChip(
+                            selected = storageSource is SteamStorageSource.Mdbx &&
+                                storageSource.databaseId == database.id,
+                            onClick = {
+                                onSelectStorageSource(SteamStorageSource.Mdbx(database.id))
+                            },
+                            label = database.name.ifBlank { "MDBX" },
+                            leadingIcon = Icons.Default.Storage,
+                            statusDotColor = Color(0xFF22C55E)
                         )
                     }
                 }
             }
-        }
 
-        SteamSwitcherAddAccountCard(
-            onClick = {
-                onDismiss()
-                onAddAccount()
-            },
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
+            when {
+                loading -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 112.dp)
+                            .padding(horizontal = 24.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier.padding(top = 28.dp))
+                    }
+                }
+                !errorMessage.isNullOrBlank() -> {
+                    ListItem(
+                        headlineContent = {
+                            Text(stringResource(R.string.steam_cannot_load_mdbx_accounts))
+                        },
+                        supportingContent = {
+                            Text(
+                                text = errorMessage,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
+                        trailingContent = {
+                            IconButton(onClick = onRefresh) {
+                                Icon(
+                                    imageVector = Icons.Default.Refresh,
+                                    contentDescription = stringResource(R.string.refresh)
+                                )
+                            }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+                accounts.isEmpty() -> {
+                    Text(
+                        text = stringResource(R.string.steam_store_no_account),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 28.dp)
+                    )
+                }
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f, fill = false),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        itemsIndexed(
+                            items = accounts,
+                            key = { _, account -> account.id }
+                        ) { index, account ->
+                            SteamSwitcherAccountCard(
+                                account = account,
+                                shape = steamSheetRowShape(index, accounts.size),
+                                selected = account.id == selectedAccountId,
+                                onClick = { onSelectAccount(account.id) },
+                                onEndTemporary = { endingAccount = account }
+                            )
+                        }
+                    }
+                }
+            }
+
+            SteamSheetFooter {
+                androidx.compose.material3.FilledTonalButton(
+                    onClick = { onDismiss(); onAddAccount() },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Icon(Icons.Default.PersonAdd, contentDescription = null)
+                    Text(stringResource(R.string.steam_add_account_title), Modifier.padding(start = 8.dp))
+                }
+            }
+        }
     }
 }
 
 @Composable
 private fun SteamSwitcherAccountCard(
     account: SteamAccount,
+    shape: androidx.compose.ui.graphics.Shape,
     selected: Boolean,
     onClick: () -> Unit,
     onEndTemporary: () -> Unit
 ) {
     SteamSwitcherCard(
+        selected = selected, shape = shape,
         headline = account.displayName.ifBlank {
             account.accountName.ifBlank { account.visibleSteamId }
         },
@@ -232,7 +243,8 @@ private fun SteamSwitcherAccountCard(
                     Icon(Icons.AutoMirrored.Filled.Logout,
                         contentDescription = stringResource(R.string.steam_temporary_logout))
                 }
-            } else if (selected) {
+            }
+            if (selected) {
                 Icon(
                     Icons.Default.CheckCircle,
                     contentDescription = stringResource(R.string.steam_selected_account_marker),
@@ -245,45 +257,22 @@ private fun SteamSwitcherAccountCard(
 }
 
 @Composable
-private fun SteamSwitcherAddAccountCard(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    SteamSwitcherCard(
-        headline = stringResource(R.string.steam_add_account_title),
-        supporting = stringResource(R.string.steam_add_account_switcher_summary),
-        leadingContent = {
-            Surface(
-                modifier = Modifier.size(48.dp),
-                shape = RoundedCornerShape(14.dp),
-                color = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(imageVector = Icons.Default.PersonAdd, contentDescription = null)
-                }
-            }
-        },
-        trailingContent = {},
-        onClick = onClick,
-        modifier = modifier
-    )
-}
-
-@Composable
 private fun SteamSwitcherCard(
     headline: String,
     supporting: String,
     leadingContent: @Composable () -> Unit,
     trailingContent: @Composable () -> Unit,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selected: Boolean = false,
+    shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(24.dp)
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth().heightIn(min = 72.dp),
-        shape = RoundedCornerShape(18.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow
+        modifier = modifier.fillMaxWidth().heightIn(min = 80.dp).semantics { this.selected = selected },
+        shape = shape,
+        color = if (selected) MaterialTheme.colorScheme.secondaryContainer else steamSheetGroupColor(),
+        contentColor = if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),
@@ -299,7 +288,7 @@ private fun SteamSwitcherCard(
                     text = headline,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
-                    maxLines = 1,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (supporting.isNotBlank()) {
@@ -307,7 +296,7 @@ private fun SteamSwitcherCard(
                         text = supporting,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
+                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
                 }

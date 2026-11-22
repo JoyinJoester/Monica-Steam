@@ -1,8 +1,6 @@
 package takagi.ru.monica.utils
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -12,7 +10,7 @@ import androidx.fragment.app.FragmentActivity
 /**
  * 生物识别辅助类
  * 
- * 封装 Android BiometricPrompt API，仅提供指纹识别功能。
+ * 封装 Android BiometricPrompt API，在指纹设备上使用系统强生物认证。
  * 
  * ## 功能特性
  * - ✅ 检测设备生物识别支持情况
@@ -48,36 +46,22 @@ import androidx.fragment.app.FragmentActivity
  */
 class BiometricHelper(private val context: Context) {
 
-    private val biometricManager = BiometricManager.from(context)
-
     /**
      * 检查设备是否支持生物识别
      * 
-     * @return true 如果设备支持且已注册指纹
+     * @return true 如果指纹设备上有可用的已注册强生物认证
      */
     fun isBiometricAvailable(): Boolean {
-        if (!hasFingerprintHardware() || !hasEnrolledFingerprint()) {
-            return false
-        }
-        return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> true
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> false
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> false
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> false
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> false
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> false
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> false
-            else -> false
-        }
+        return fingerprintBiometricStatus(context) == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     /**
      * 检查是否已注册生物识别
      * 
-     * @return true 如果用户已注册指纹
+     * @return true 如果指纹设备上有可用的已注册强生物认证
      */
     fun hasBiometricEnrolled(): Boolean {
-        return hasEnrolledFingerprint()
+        return isBiometricAvailable()
     }
 
     /**
@@ -86,13 +70,7 @@ class BiometricHelper(private val context: Context) {
      * @return 描述不可用原因的字符串
      */
     fun getBiometricStatusMessage(): String {
-        if (!hasFingerprintHardware()) {
-            return "设备不支持指纹识别"
-        }
-        if (!hasEnrolledFingerprint()) {
-            return "未注册指纹，请在系统设置中添加指纹"
-        }
-        return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+        return when (fingerprintBiometricStatus(context)) {
             BiometricManager.BIOMETRIC_SUCCESS -> 
                 "指纹识别可用"
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> 
@@ -191,19 +169,6 @@ class BiometricHelper(private val context: Context) {
      */
     fun isVersionSupported(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-    }
-
-    private fun hasFingerprintHardware(): Boolean {
-        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun hasEnrolledFingerprint(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return false
-        }
-        val fingerprintManager = context.getSystemService(FingerprintManager::class.java) ?: return false
-        return fingerprintManager.isHardwareDetected && fingerprintManager.hasEnrolledFingerprints()
     }
 
     companion object {

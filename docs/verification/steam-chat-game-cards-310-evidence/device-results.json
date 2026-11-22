@@ -1,0 +1,1002 @@
+{
+  "finalDistinctPassed": 26,
+  "batchAllPassed": false,
+  "history": [
+    {
+      "stage": "device01",
+      "total": 22,
+      "passed": 21,
+      "runnerSeconds": 29.63,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device02",
+      "total": 25,
+      "passed": 22,
+      "runnerSeconds": 32.051,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device03",
+      "total": 25,
+      "passed": 25,
+      "runnerSeconds": 33.609,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device04",
+      "total": 26,
+      "passed": 24,
+      "runnerSeconds": 32.668,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "scrolledPreviewReturnsToItsCoverWhenClosing",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device05",
+      "total": 26,
+      "passed": 25,
+      "runnerSeconds": 43.285,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "scrolledPreviewReturnsToItsCoverWhenClosing",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device06",
+      "total": 3,
+      "passed": 3,
+      "runnerSeconds": null,
+      "systemAborted": true,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device07",
+      "total": 26,
+      "passed": 25,
+      "runnerSeconds": 48.553,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "reducedMotionHasNoIntermediateExpansionAndBackdropClosesImmediately",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "backDuringOpeningReversesWithoutJumpAndScopeChangeDropsPreview",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "tapExpandsFromExactCardBoundsAndCloseReturnsContinuously",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamGameCardExpansionDeviceTest",
+          "name": "scrolledPreviewReturnsToItsCoverWhenClosing",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "receivedInviteHasArtworkAndRetainsStoreAndPreviewDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatGameShareCardUiTest",
+          "name": "sentStoreShareWithLargeFontRetainsArtworkCopyAndStoreNavigation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "largeFontOpenGraphProfileStillHasReachableDetails",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInM3eThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "receivedOpenGraphProfileUsesTheSameParser",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": -2,
+          "passed": false
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteRequiresConfirmationAndCancelKeepsMessage",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "glassDarkThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "tradeOfferOpenAndCopyUseExactParsedOffer",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "m3eLightThreadAndAttachments",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "sentOpenGraphProfileIsACardInGlassThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unsupportedCardRetainsOriginalMessageWithoutActionButton",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "gameInvitationKeepsSteamActionSeparateFromStore",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "changingPreviewScopeImmediatelyDropsTheOldCard",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+          "name": "nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device08-composer",
+      "total": 1,
+      "passed": 1,
+      "runnerSeconds": 0.96,
+      "systemAborted": false,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "name": "actualComposerSendsCardOnlyThroughExistingSendButton",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

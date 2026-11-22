@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "seconds": 56.48705080000218,
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamSheetImeDeviceTest",
+    "takagi.ru.monica.steamapp.sheetdesign.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

@@ -34,7 +34,8 @@ internal data class SteamPointsShopUiState(
 
 internal class SteamPointsShopViewModel(
     private val cache: SteamPointsShopCache,
-    private val service: SteamPointsShopService = SteamPointsShopService()
+    private val service: SteamPointsShopService = SteamPointsShopService(),
+    private val appId: Int? = null
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamPointsShopUiState())
     val uiState: StateFlow<SteamPointsShopUiState> = _uiState.asStateFlow()
@@ -49,10 +50,12 @@ internal class SteamPointsShopViewModel(
             account?.accessToken == value?.accessToken &&
             account?.steamLoginSecure == value?.steamLoginSecure
         ) return
+        generation++
+        loadJob?.cancel()
         accountAttached = true
         account = value
         _uiState.value = _uiState.value.copy(
-            pointsBalance = null,
+            pointsBalance = null, loading = false, loadingMore = false,
             signedIn = value?.hasRealSteamId == true &&
                 (!value.accessToken.isNullOrBlank() || !value.steamLoginSecure.isNullOrBlank())
         )
@@ -80,7 +83,7 @@ internal class SteamPointsShopViewModel(
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
             if (!force && !loadMore && _uiState.value.items.isEmpty()) {
-                val cached = withContext(Dispatchers.IO) { cache.read(category) }
+                val cached = withContext(Dispatchers.IO) { cache.read(category, appId) }
                 if (requestIsCurrent(category, requestGeneration) && cached != null) {
                     _uiState.value = _uiState.value.copy(
                         items = cached.items,
@@ -90,6 +93,7 @@ internal class SteamPointsShopViewModel(
                     )
                 }
             }
+            if (!requestIsCurrent(category, requestGeneration)) return@launch
             val existing = _uiState.value
             _uiState.value = existing.copy(
                 loading = !loadMore,
@@ -98,7 +102,7 @@ internal class SteamPointsShopViewModel(
             )
             val pageResult = runCatching {
                 withContext(Dispatchers.IO) {
-                    service.page(category, if (loadMore) existing.nextCursor else null)
+                    service.page(category, if (loadMore) existing.nextCursor else null, appId = appId)
                 }
             }
             val balanceResult = if (!loadMore && selectedAccount != null) {
@@ -109,7 +113,8 @@ internal class SteamPointsShopViewModel(
                 val merged = if (loadMore) {
                     page.copy(items = (existing.items + page.items).distinctBy(SteamPointsShopItem::definitionId))
                 } else page
-                withContext(Dispatchers.IO) { cache.write(merged) }
+                withContext(Dispatchers.IO) { cache.write(merged, appId) }
+                if (!requestIsCurrent(category, requestGeneration)) return@launch
                 _uiState.value = _uiState.value.copy(
                     items = merged.items,
                     totalCount = merged.totalCount,
@@ -134,11 +139,11 @@ internal class SteamPointsShopViewModel(
         generation == requestGeneration && _uiState.value.category == category
 
     companion object {
-        fun factory(context: Context): ViewModelProvider.Factory =
+        fun factory(context: Context, appId: Int? = null): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(modelClass: Class<T>): T =
-                    SteamPointsShopViewModel(SteamPointsShopCache(context)) as T
+                    SteamPointsShopViewModel(SteamPointsShopCache(context), appId = appId) as T
             }
     }
 }

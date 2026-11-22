@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_history_all">Все</string>
+    <string name="steam_history_text">Текст</string>
+    <string name="steam_history_media">Медиа</string>
+    <string name="steam_history_files">Файлы</string>
+    <string name="steam_history_links">Ссылки</string>
+    <string name="steam_history_invites">Приглашения</string>
+    <string name="steam_history_stickers">Стикеры</string>
+    <string name="steam_history_any_time">За всё время</string>
+    <string name="steam_history_today">Сегодня</string>
+    <string name="steam_history_last_week">Последние 7 дней</string>
+    <string name="steam_history_last_month">Последние 30 дней</string>
+    <string name="steam_thread_search">Поиск сообщений</string>
+    <string name="steam_thread_search_filters">Фильтры поиска</string>
+    <string name="steam_thread_all_senders">Все отправители</string>
+    <string name="steam_thread_older_match">Предыдущее совпадение</string>
+    <string name="steam_thread_newer_match">Следующее совпадение</string>
+    <string name="steam_thread_no_matches">Совпадений нет</string>
+    <string name="steam_thread_results_list">Показать результаты</string>
+    <string name="steam_thread_shared_content">Содержимое чата</string>
+    <string name="steam_thread_no_shared_content">В чате пока нет содержимого</string>
+    <string name="steam_chat_content_image">Изображение</string>
+    <string name="steam_chat_content_video">Видео</string>
+    <string name="steam_chat_content_spoiler">Спойлер</string>
+    <string name="steam_thread_open_shared_message">Открыть сообщение: %1$s</string>
+</resources>

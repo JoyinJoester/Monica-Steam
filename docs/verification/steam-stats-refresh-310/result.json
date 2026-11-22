@@ -1,0 +1,25 @@
+{
+  "sourceFiles": 41,
+  "sourceHashesMatch": true,
+  "scopedDiffCheck": true,
+  "addedLinesWhitespaceCheck": true,
+  "jvmPassed": 18,
+  "devicePassed": 27,
+  "deviceRunnerSeconds": 42.089,
+  "cleanup": {
+    "baselineChecks": {
+      "current": true,
+      "size": true,
+      "density": true,
+      "font": true,
+      "userIdentitiesAndFlagsRetained": true,
+      "originalPackagesRetained": true,
+      "taskPackagesAbsent": true
+    },
+    "taskPackagesUninstalled": true,
+    "taskStartedInstanceStopped": false,
+    "preExistingMuMu0Preserved": true,
+    "configurationAndDataDiskRetained": true,
+    "userRuntimeRunningFlagsChanged": false
+  }
+}

@@ -2654,7 +2654,7 @@
     <!-- Saison Plus Copy -->
     <string name="plus_title">Monica Plus</string>
     <string name="plus_subtitle_active">已激活</string>
-    <string name="plus_subtitle_inactive">支持开发</string>
+    <string name="plus_subtitle_inactive">Support development</string>
     <string name="plus_description">求各位股东入资，月收益10块，买不起token了，要饿死了😭😭😭😭</string>
     <string name="plus_activation_title">Plus 状态</string>
     <string name="plus_status_activated">已激活</string>
@@ -4548,15 +4548,12 @@
     <string name="steam_dock_library_label">Library</string>
     <string name="steam_dock_chat_label">Chat</string>
     <string name="steam_dock_order_title">Bottom navigation</string>
-    <string name="steam_dock_order_description">Choose Fixed or Liquid Glass, then arrange its destinations.</string>
+    <string name="steam_dock_order_description">Long press a handle and drag to reorder the destinations for the current design style.</string>
     <string name="steam_dock_order_hint">Long press the handle, then drag an item to change the Dock order.</string>
-    <string name="steam_dock_style_title">Dock style</string>
-    <string name="steam_dock_style_description">Fixed is the default. Both styles keep Store, Game Library, Chat, Tokens and Settings together.</string>
-    <string name="steam_dock_style_liquid_glass">Liquid Glass</string>
-    <string name="steam_dock_style_fixed">Fixed</string>
     <string name="steam_dock_liquid_glass_order_hint">Arrange Store, Game Library, Chat, Tokens, and Settings. All five destinations remain enabled in this style.</string>
     <string name="steam_dock_fixed_order_hint">Arrange Store, Game Library, Chat, Tokens, and Settings. The fixed Material 3 navigation bar remains visible at the bottom.</string>
     <string name="steam_dock_drag_hint">Long press the handle to reorder.</string>
+    <string name="steam_dock_entry_subtitle">Reorder the destinations in the bottom navigation</string>
     <string name="interface_scale_title">Interface scale</string>
     <string name="interface_scale_current">%1$d%% · %2$d DPI</string>
     <string name="interface_scale_description">Adjust Monica Steam’s interface size without changing the system display or font settings.</string>
@@ -5188,6 +5185,11 @@
     <string name="steam_chat_rich_picker_effects">Chat effects</string>
     <string name="steam_chat_rich_picker_search">Search</string>
     <string name="steam_chat_rich_picker_clear_search">Clear search</string>
+    <string name="steam_chat_rich_picker_empty">Nothing here yet</string>
+    <string name="steam_chat_rich_picker_tab_emoji">Emoji</string>
+    <string name="steam_chat_rich_picker_tab_steam">Steam</string>
+    <string name="steam_chat_rich_picker_tab_stickers">Stickers</string>
+    <string name="steam_chat_rich_picker_tab_effects">Effects</string>
     <string name="steam_chat_rich_picker_catalog_unavailable">Steam-owned stickers and effects are temporarily unavailable.</string>
     <string name="steam_chat_rich_picker_catalog_unavailable_summary">Only resources returned for this account can be sent. Refresh after signing in again.</string>
     <string name="steam_chat_attachment_title">Send attachment</string>
@@ -5200,7 +5202,6 @@
     <string name="steam_chat_attachment_gallery">Gallery</string>
     <string name="steam_chat_attachment_gallery_summary">Photos and videos</string>
     <string name="steam_chat_attachment_file">File</string>
-    <string name="steam_chat_attachment_file_summary">Image, video or ZIP</string>
     <string name="steam_chat_image_description">Chat image %1$d</string>
     <string name="steam_chat_image_viewer_close">Close image viewer</string>
     <string name="steam_chat_image_viewer_previous">Previous chat image</string>
@@ -5380,16 +5381,11 @@
     <string name="steam_library_context_dlc_not_owned">Not owned</string>
     <string name="steam_library_context_dlc_unknown">Unknown</string>
     <string name="steam_chat_background_section">Steam chat</string>
-    <string name="steam_chat_background_title">Background chat notifications</string>
-    <string name="steam_chat_background_description">Keeps the selected Steam account connected and shows incoming messages in real time. This may increase battery and network usage.</string>
-    <string name="steam_chat_background_permission_required">Notification permission is required for background chat alerts.</string>
-    <string name="steam_chat_background_start_failed">Unable to start background Steam chat.</string>
+    <string name="steam_chat_background_title">Chat message notifications</string>
+    <string name="steam_chat_background_description">Notifies you when friends send chat messages, without connection status notifications. Reopen the app to resume receiving messages after the system ends its process.</string>
+    <string name="steam_chat_background_permission_required">Notification permission is required for chat message alerts.</string>
+    <string name="steam_chat_background_start_failed">Unable to enable chat message notifications.</string>
     <string name="steam_chat_background_target_unavailable">The Steam account for this notification is no longer available.</string>
-    <string name="steam_chat_background_waiting">Waiting for a selected Steam account</string>
-    <string name="steam_chat_background_connecting">Connecting as %1$s…</string>
-    <string name="steam_chat_background_reconnecting">Reconnecting as %1$s…</string>
-    <string name="steam_chat_background_channel_name">Steam background connection (silent)</string>
-    <string name="steam_chat_background_channel_description">Maintains the realtime connection only; incoming messages appear in the Steam chat messages channel</string>
     <string name="steam_chat_message_channel_name">Steam chat messages</string>
     <string name="steam_chat_message_channel_description">Incoming private Steam chat messages</string>
     <string name="steam_chat_notification_public_title">New Steam message</string>
@@ -5566,4 +5562,9 @@
     <string name="wallpaper_error_storage">Cannot save. Check folder permission and available storage, then retry.</string>
     <string name="wallpaper_error_invalid">Content format or checksum failed. Download was not marked complete.</string>
     <string name="wallpaper_error_network">Could not connect to Steam content servers. Check your connection and retry.</string>
+
+    <string name="steam_store_price_buy">%1$s · Buy</string>
+    <string name="steam_store_offer_days">%1$d days left</string>
+    <string name="steam_store_offer_hours">%1$d hours left</string>
+    <string name="steam_store_offer_minutes">%1$d min left</string>
 </resources>

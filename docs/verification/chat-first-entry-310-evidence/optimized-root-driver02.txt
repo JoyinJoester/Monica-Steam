@@ -1,0 +1,22 @@
+UI dump attempt 1 failed: 139
+UI dump attempt 2 failed: 139
+UI dump attempt 3 failed: 139
+Traceback (most recent call last):
+  File "C:\Users\joyins\Desktop\Monica-all\.codex-tasks\20261120-steam-chat-first-entry\measure_optimized_root.py", line 43, in <module>
+    ui()
+    ~~^^
+  File "C:\Users\joyins\Desktop\Monica-all\.codex-tasks\20261120-steam-chat-first-entry\measure_optimized_root.py", line 16, in ui
+    shell('uiautomator', 'dump', '/sdcard/monica-gamedetail-ui.xml')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joyins\Desktop\Monica-all\.codex-tasks\20261120-steam-chat-first-entry\measure_optimized_root.py", line 12, in shell
+    return subprocess.check_output(adb + ['shell', *args], text=True, encoding='utf-8', errors='replace')
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['D:/AndroidSDK/platform-tools/adb.exe', '-s', '127.0.0.1:16384', 'shell', 'uiautomator', 'dump', '/sdcard/monica-gamedetail-ui.xml']' returned non-zero exit status 139.

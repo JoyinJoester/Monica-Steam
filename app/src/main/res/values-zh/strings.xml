@@ -4378,15 +4378,12 @@
     <string name="steam_dock_library_label">游戏库</string>
     <string name="steam_dock_chat_label">聊天</string>
     <string name="steam_dock_order_title">底部导航栏</string>
-    <string name="steam_dock_order_description">选择固定底栏或液态玻璃，并分别调整显示顺序。</string>
+    <string name="steam_dock_order_description">长按把手拖动，调整当前设计风格下的显示顺序。</string>
     <string name="steam_dock_order_hint">长按拖动把手，即可调整 Dock 中的显示顺序。</string>
-    <string name="steam_dock_style_title">Dock 样式</string>
-    <string name="steam_dock_style_description">默认使用固定底栏；两种样式均显示商店、游戏库、聊天、令牌和设置。</string>
-    <string name="steam_dock_style_liquid_glass">液态玻璃</string>
-    <string name="steam_dock_style_fixed">固定底栏</string>
     <string name="steam_dock_liquid_glass_order_hint">调整商店、游戏库、聊天、令牌和设置的顺序；液态玻璃样式固定启用全部五项。</string>
     <string name="steam_dock_fixed_order_hint">调整商店、游戏库、聊天、令牌和设置的顺序；固定 Material 3 底栏始终显示在屏幕底部。</string>
     <string name="steam_dock_drag_hint">长按把手调整顺序。</string>
+    <string name="steam_dock_entry_subtitle">调整底部导航栏中各页面的顺序</string>
     <string name="interface_scale_title">界面缩放</string>
     <string name="interface_scale_current">%1$d%% · %2$d DPI</string>
     <string name="interface_scale_description">调整 Monica Steam 内的界面大小，不会修改 Android 系统显示或字体设置。</string>
@@ -5011,6 +5008,11 @@
     <string name="steam_chat_rich_picker_effects">聊天特效</string>
     <string name="steam_chat_rich_picker_search">搜索</string>
     <string name="steam_chat_rich_picker_clear_search">清除搜索</string>
+    <string name="steam_chat_rich_picker_empty">暂无内容</string>
+    <string name="steam_chat_rich_picker_tab_emoji">表情</string>
+    <string name="steam_chat_rich_picker_tab_steam">Steam</string>
+    <string name="steam_chat_rich_picker_tab_stickers">贴纸</string>
+    <string name="steam_chat_rich_picker_tab_effects">特效</string>
     <string name="steam_chat_attachment_title">发送附件</string>
     <string name="steam_chat_attachment_spoiler">标记为剧透</string>
     <string name="steam_chat_attachment_spoiler_summary">收件人点击后显示内容</string>
@@ -5021,7 +5023,6 @@
     <string name="steam_chat_attachment_gallery">相册</string>
     <string name="steam_chat_attachment_gallery_summary">选择图片或视频</string>
     <string name="steam_chat_attachment_file">文件</string>
-    <string name="steam_chat_attachment_file_summary">图片、视频或 ZIP</string>
     <string name="steam_chat_image_description">聊天图片 %1$d</string>
     <string name="steam_chat_image_viewer_close">关闭图片查看器</string>
     <string name="steam_chat_image_viewer_previous">上一张聊天图片</string>
@@ -5207,16 +5208,11 @@
     <string name="steam_library_context_dlc_not_owned">未拥有</string>
     <string name="steam_library_context_dlc_unknown">状态未知</string>
     <string name="steam_chat_background_section">Steam 聊天</string>
-    <string name="steam_chat_background_title">后台聊天通知</string>
-    <string name="steam_chat_background_description">保持所选 Steam 账号连接，并在收到新消息时实时通知。可能增加电量和流量消耗。</string>
-    <string name="steam_chat_background_permission_required">后台聊天提醒需要通知权限。</string>
-    <string name="steam_chat_background_start_failed">无法启动 Steam 后台聊天。</string>
+    <string name="steam_chat_background_title">聊天消息通知</string>
+    <string name="steam_chat_background_description">收到好友聊天消息时通知，不显示连接状态通知。系统结束应用进程后，重新打开应用可恢复接收。</string>
+    <string name="steam_chat_background_permission_required">聊天消息提醒需要通知权限。</string>
+    <string name="steam_chat_background_start_failed">无法启用聊天消息通知。</string>
     <string name="steam_chat_background_target_unavailable">这条通知对应的 Steam 账号已不可用。</string>
-    <string name="steam_chat_background_waiting">正在等待选择 Steam 账号</string>
-    <string name="steam_chat_background_connecting">正在以 %1$s 连接…</string>
-    <string name="steam_chat_background_reconnecting">正在重新连接 %1$s…</string>
-    <string name="steam_chat_background_channel_name">Steam 后台连接（静默）</string>
-    <string name="steam_chat_background_channel_description">仅维持实时连接；收到的消息会通过 Steam 聊天消息频道单独显示</string>
     <string name="steam_chat_message_channel_name">Steam 聊天消息</string>
     <string name="steam_chat_message_channel_description">收到的 Steam 私聊消息</string>
     <string name="steam_chat_notification_public_title">新的 Steam 消息</string>
@@ -5393,4 +5389,9 @@
     <string name="wallpaper_error_storage">无法保存，请检查文件夹权限和手机空间后重试。</string>
     <string name="wallpaper_error_invalid">文件格式或校验不通过，未标记为下载完成。</string>
     <string name="wallpaper_error_network">连接 Steam 内容服务器失败，请检查网络后重试。</string>
+
+    <string name="steam_store_price_buy">%1$s 购买</string>
+    <string name="steam_store_offer_days">剩余 %1$d 天</string>
+    <string name="steam_store_offer_hours">剩余 %1$d 小时</string>
+    <string name="steam_store_offer_minutes">剩余 %1$d 分钟</string>
 </resources>

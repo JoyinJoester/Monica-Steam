@@ -1,0 +1,145 @@
+{
+  "total": 23,
+  "passed": 23,
+  "runnerSeconds": 49.436,
+  "cases": [
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "gameActivityPreservesNamesAndMissingAppIds",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "loginEmptyAndNetworkStatesRemainDistinct",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "backDismissesSheetFirstAndAccountSwitchRevokesIt",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "originalActivityAndSensitiveMediaUseReadOnlyActions",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "contentFilters_hideOnlyAchievementsAndRestoreAll",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "publishingRequiresExplicitClickAndKeepsTheCurrentFeedInBothSizes",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+      "name": "expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest",
+      "name": "liveFeedColorReachesBothGlassMaterialsAndFallbackRemainsUsable",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest",
+      "name": "cachedAchievementOldUrlLoadsActualImageThroughCanonicalCacheKey",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest",
+      "name": "narrowLargeTextMeasuresHeaderAndKeepsAllActionsClearOfFeed",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest",
+      "name": "activeFilterIsAnnouncedAndLoadingNeverDispatchesRefresh",
+      "passed": true,
+      "code": 0
+    },
+    {
+      "className": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest",
+      "name": "floatingHeaderKeepsBackFiltersRefreshAndPublishInBothStyles",
+      "passed": true,
+      "code": 0
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_collections_title">Коллекции Steam</string>
+    <string name="steam_collections_unfiled">Без категории</string>
+    <string name="steam_collections_all">Все игры</string>
+    <string name="steam_collections_create">Создать коллекцию</string>
+    <string name="steam_collections_rename">Переименовать</string>
+    <string name="steam_collections_delete">Удалить коллекцию</string>
+    <string name="steam_collections_name">Название коллекции</string>
+    <string name="steam_collections_edit_games">Изменить игры</string>
+    <string name="steam_collections_actions">Действия с коллекцией</string>
+    <string name="steam_collections_refresh">Обновить коллекции</string>
+    <string name="steam_collections_count">Игр: %1$d</string>
+    <string name="steam_collections_sync_hint">Организуйте библиотеку Steam. Коллекции без вложенности; игра может входить в несколько коллекций.</string>
+    <string name="steam_collections_dynamic">Динамическая коллекция · управление в Steam на ПК</string>
+    <string name="steam_collections_readonly">Только чтение · управление в Steam на ПК</string>
+    <string name="steam_collections_delete_hint">Удалить «%1$s» из Steam? Игры останутся в библиотеке.</string>
+    <string name="steam_collections_members_hint">Можно выбирать свои игры и игры семейного доступа. Остальные участники сохранятся.</string>
+    <string name="steam_collections_search">Поиск игр</string>
+    <string name="steam_collections_save">Сохранить в Steam</string>
+    <string name="steam_collections_cancel">Отмена</string>
+    <string name="steam_collections_saving">Сохранение и проверка в Steam…</string>
+    <string name="steam_collections_loading">Загрузка коллекций Steam…</string>
+    <string name="steam_collections_saved">Сохранено и проверено в Steam.</string>
+    <string name="steam_collections_error_login">Войдите снова для доступа к коллекциям.</string>
+    <string name="steam_collections_error_unavailable">Steam не разрешил доступ к коллекциям в этом сеансе.</string>
+    <string name="steam_collections_error_conflict">Коллекция изменена на другом устройстве. Закройте редактор, обновите и проверьте снова.</string>
+    <string name="steam_collections_error_unknown">Результат сохранения неизвестен. Закройте редактор и обновите перед новым изменением.</string>
+    <string name="steam_collections_error_invalid">Проверьте название или данные коллекции.</string>
+    <string name="steam_collections_error_network">Не удалось загрузить коллекции. Проверьте сеть и обновите.</string>
+    <string name="steam_collections_search_folders">Поиск коллекций</string>
+    <string name="steam_collections_manage">Управление коллекциями</string>
+    <string name="steam_collections_select_visible">Выбрать все видимые игры</string>
+    <string name="steam_collections_clear_visible">Снять выбор видимых игр</string>
+    <string name="steam_collections_discard_title">Отменить изменения?</string>
+    <string name="steam_collections_discard_message">Изменения ещё не сохранены в Steam.</string>
+    <string name="steam_collections_discard_confirm">Отменить изменения</string>
+    <string name="steam_collections_empty">Нет подходящих игр или коллекций.</string>
+    <string name="steam_collections_folders">Папки</string>
+    <string name="steam_collections_games">Игры</string>
+    <string name="steam_collections_sort_ascending">Имя: А–Я</string>
+    <string name="steam_collections_sort_descending">Имя: Я–А</string>
+    <string name="steam_collections_about">О папках игр</string>
+    <string name="steam_collections_add_to">Добавить в папку</string>
+    <string name="steam_collections_remove_from">Убрать из папки</string>
+    <string name="steam_collections_remove_hint">Убрать %1$d игр из «%2$s»? Они останутся в вашей библиотеке Steam.</string>
+</resources>

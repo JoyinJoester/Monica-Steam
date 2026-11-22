@@ -1,0 +1,35 @@
+{
+  "before": {
+    "entryMs": [
+      1282,
+      386,
+      342,
+      370,
+      327,
+      321,
+      303,
+      322
+    ],
+    "warmMedianEntryMs": 327,
+    "allMedianEntryMs": 334.5,
+    "frameCount": 70,
+    "p95FrameMs": 281.462282
+  },
+  "after": {
+    "entryMs": [
+      1445,
+      490,
+      481,
+      525,
+      464,
+      444,
+      397,
+      494
+    ],
+    "warmMedianEntryMs": 481,
+    "allMedianEntryMs": 485.5,
+    "frameCount": 64,
+    "p95FrameMs": 418.188327
+  },
+  "limitation": "Two same-AVD synthetic instrumentation samples, not controlled phone benchmark; fixtures have no p95 threshold. No phone smoothness certification."
+}

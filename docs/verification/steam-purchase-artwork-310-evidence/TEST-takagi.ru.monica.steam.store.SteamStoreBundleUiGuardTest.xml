@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreBundleUiGuardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-21T07:53:55.605Z" hostname="JOYIN" time="0.014">
+  <properties/>
+  <testcase name="purchaseOptionsAndBundlesUseNativeResponsiveComponents" classname="takagi.ru.monica.steam.store.SteamStoreBundleUiGuardTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_options">Chat options</string>
+    <string name="steam_chat_create_group">New group chat</string>
+    <string name="steam_chat_search">Search chats</string>
+    <string name="steam_chat_close_search">Close search</string>
+    <string name="steam_chat_filter_all">All</string>
+    <string name="steam_chat_filter_direct">Direct</string>
+    <string name="steam_chat_filter_group">Groups</string>
+    <string name="steam_chat_filter_pinned">Pinned</string>
+    <string name="steam_chat_filter_archived">Archived</string>
+    <string name="steam_chat_unread">Unread</string>
+    <string name="steam_chat_no_unread">No unread chats</string>
+    <string name="steam_chat_no_conversations">No chats yet</string>
+    <string name="steam_chat_no_archived">Nothing archived</string>
+    <string name="steam_chat_no_pinned">No pinned chats</string>
+    <string name="steam_chat_no_messages">No messages</string>
+    <string name="steam_chat_new_chat">New chat</string>
+    <string name="steam_contacts_search_hint">Search contacts</string>
+    <string name="steam_friends_refresh">Refresh contacts</string>
+
+    <string name="steam_chat_pin">Pin</string>
+    <string name="steam_chat_unpin">Unpin</string>
+    <string name="steam_chat_archive">Archive</string>
+    <string name="steam_chat_unarchive">Unarchive</string>
+    <string name="steam_chat_delete">Delete chat</string>
+    <string name="steam_chat_delete_title">Delete this chat?</string>
+    <string name="steam_chat_delete_keep_messages">Keep messages</string>
+    <string name="steam_chat_delete_keep_messages_hint">Hides the chat here only. Messages stay in this account.</string>
+    <string name="steam_chat_delete_with_messages">Delete messages</string>
+    <string name="steam_chat_delete_with_messages_hint">Also clears the messages cached on this device.</string>
+    <string name="steam_chat_delete_title_many">Delete %1$d chats?</string>
+    <string name="steam_chat_delete_cancel">Cancel</string>
+    <string name="steam_chat_selection_count">%1$d selected</string>
+    <string name="steam_chat_selection_cancel">Cancel selection</string>
+    <string name="steam_chat_selection_hint">Swipe a chat right to select several</string>
+</resources>

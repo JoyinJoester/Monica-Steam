@@ -1,0 +1,8 @@
+<resources>
+    <string name="steam_chat_wallpaper_title">聊天背景</string>
+    <string name="steam_chat_wallpaper_pattern">TG 图案</string>
+    <string name="steam_chat_wallpaper_soft">TG 柔和图案</string>
+    <string name="steam_chat_wallpaper_plain">主题纯色</string>
+    <string name="steam_chat_wallpaper_apply">完成</string>
+    <string name="steam_chat_wallpaper_preview">聊天预览</string>
+</resources>

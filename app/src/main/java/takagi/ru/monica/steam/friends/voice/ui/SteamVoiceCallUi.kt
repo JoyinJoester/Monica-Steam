@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.friends.voice.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +23,6 @@ import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
@@ -30,6 +30,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import takagi.ru.monica.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,7 +82,13 @@ internal fun SteamVoiceStatusBanner(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Icon(
+            val partner = state.target?.partnerSteamId
+            if (partner != null && localCall) {
+                SteamVoiceAvatar(partner, LocalSteamVoiceFriends.current[partner],
+                    enabled = state.isConnected && !state.outputMuted &&
+                        state.participants.none { it.steamId == partner && (!it.joined || it.micMuted || it.hasNoMic) },
+                    avatarSize = 28)
+            } else Icon(
                 if (emphasized) Icons.Default.Call else Icons.Default.Headset,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary
@@ -92,37 +100,34 @@ internal fun SteamVoiceStatusBanner(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
+                SteamVoiceStatusText(
                     text = when {
-                        state.isConnected -> "正在语音聊天 · ${participantCount.coerceAtLeast(1)} 人"
-                        state.state == SteamVoiceConnectionState.WAITING_FOR_ACCEPT -> "等待对方接听"
-                        state.state == SteamVoiceConnectionState.RECONNECTING -> "正在重新连接"
-                        localCall -> "正在连接语音聊天"
-                        participantCount > 0 -> "$participantCount 人正在语音聊天"
-                        else -> "语音频道"
+                        state.isConnected -> stringResource(R.string.steam_voice_status_connected, participantCount.coerceAtLeast(1))
+                        state.state == SteamVoiceConnectionState.WAITING_FOR_ACCEPT -> stringResource(R.string.steam_voice_status_waiting)
+                        state.state == SteamVoiceConnectionState.RECONNECTING -> stringResource(R.string.steam_voice_status_reconnecting)
+                        localCall -> stringResource(R.string.steam_voice_status_connecting)
+                        participantCount > 0 -> stringResource(R.string.steam_voice_status_members, participantCount)
+                        else -> stringResource(R.string.steam_voice_status_channel)
                     },
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
             if (localCall && onToggleMicrophone != null) {
-                FilledTonalIconButton(onClick = onToggleMicrophone, modifier = Modifier.size(40.dp)) {
-                    Icon(
-                        if (state.microphoneMuted) Icons.Default.MicOff else Icons.Default.Mic,
-                        contentDescription = if (state.microphoneMuted) "打开麦克风" else "静音"
-                    )
-                }
+                SteamVoiceControl(
+                    icon = if (state.microphoneMuted) Icons.Default.MicOff else Icons.Default.Mic,
+                    description = if (state.microphoneMuted) "打开麦克风" else "静音",
+                    onClick = onToggleMicrophone,
+                    emphasized = state.microphoneMuted
+                )
             }
             if (localCall && onToggleOutput != null) {
                 VoiceOutputMenu(state, onToggleOutput, onSelectAudioRoute)
             }
             when {
-                localCall && onLeave != null -> FilledTonalIconButton(
-                    onClick = onLeave,
-                    modifier = Modifier.size(40.dp)
-                ) {
-                    Icon(Icons.Default.CallEnd, contentDescription = "离开语音")
-                }
+                localCall && onLeave != null -> SteamVoiceControl(
+                    icon = Icons.Default.CallEnd, description = "离开语音",
+                    onClick = onLeave, destructive = true
+                )
                 onJoin != null -> FilledTonalButton(onClick = onJoin) { Text("加入") }
             }
         }
@@ -183,14 +188,15 @@ internal fun SteamVoiceChannelPanel(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        Text(
+        SteamVoiceStatusText(
             text = when {
-                localRoom && state.isConnected -> "已经加入语音聊天"
-                localRoom -> "正在连接语音聊天"
-                memberIds.isNotEmpty() -> "${memberIds.size} 人正在语音聊天"
-                else -> "当前没有成员加入"
+                localRoom && state.isConnected -> stringResource(R.string.steam_voice_status_joined)
+                localRoom && state.state == SteamVoiceConnectionState.RECONNECTING -> stringResource(R.string.steam_voice_status_reconnecting)
+                localRoom -> stringResource(R.string.steam_voice_status_connecting)
+                memberIds.isNotEmpty() -> stringResource(R.string.steam_voice_status_members, memberIds.size)
+                else -> stringResource(R.string.steam_voice_status_empty)
             },
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            style = MaterialTheme.typography.bodyMedium
         )
         if (callElsewhere) {
             Text(
@@ -246,8 +252,12 @@ internal fun SteamVoiceChannelPanel(
                         VoiceParticipantRow(
                             steamId = steamId,
                             friend = friendsById[steamId],
-                            participant = participantsById[steamId],
-                            isSelf = steamId == accountSteamId
+                            participant = if (localRoom && steamId == accountSteamId) {
+                                (participantsById[steamId] ?: SteamVoiceParticipant(steamId)).copy(micMuted = state.microphoneMuted)
+                            } else participantsById[steamId],
+                            isSelf = steamId == accountSteamId,
+                            speakingEnabled = localRoom && state.isConnected &&
+                                (if (steamId == accountSteamId) !state.microphoneMuted else !state.outputMuted)
                         )
                     }
                 }
@@ -264,15 +274,11 @@ private fun VoiceOutputMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
-        FilledTonalIconButton(
-            onClick = { expanded = true },
-            modifier = Modifier.size(40.dp)
-        ) {
-            Icon(
-                if (state.outputMuted) Icons.Default.VolumeOff else routeIcon(state.audioRoute),
-                contentDescription = "声音与播放设备"
-            )
-        }
+        SteamVoiceControl(
+            icon = if (state.outputMuted) Icons.Default.VolumeOff else routeIcon(state.audioRoute),
+            description = "声音与播放设备", onClick = { expanded = true },
+            emphasized = state.outputMuted
+        )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -336,7 +342,8 @@ private fun VoiceParticipantRow(
     steamId: String,
     friend: SteamFriend?,
     participant: SteamVoiceParticipant?,
-    isSelf: Boolean
+    isSelf: Boolean,
+    speakingEnabled: Boolean
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -348,15 +355,8 @@ private fun VoiceParticipantRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            if (friend != null) {
-                FriendAvatar(friend, 42)
-            } else {
-                Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
-                    Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) {
-                        Icon(Icons.Default.Groups, contentDescription = null)
-                    }
-                }
-            }
+            SteamVoiceAvatar(steamId, friend, enabled = speakingEnabled &&
+                participant?.micMuted != true && participant?.hasNoMic != true && participant?.joined != false)
             Column(Modifier.weight(1f)) {
                 Text(
                     text = when {

@@ -73,6 +73,14 @@ Monica Steam 是一款专注 Steam 的独立 Android 客户端，源自 [Monica 
 - 好友、私聊/群聊、通知、实验性语音通话等社区能力。
 - 主密码 / 生物识别保护，以及 WebDAV / ZIP 形式的 Steam 账号备份。
 
+收到好友聊天消息时通知；移除“正在以……连接”、等待账号及重连常驻通知。系统结束应用进程后，需重新打开应用恢复接收；升级会清理旧连接通知，保留消息频道设置。
+
+修复发送个人资料链接后，Steam 返回的 `[og]` 预览被显示为原始文字的问题；识别标题、简介和预览图，已有资料、库存及直播消息复用卡片显示，长按仍可查看详情和原文。
+
+聊天图片采用 TG 风格的紧凑气泡：单图按实际比例显示，同一条消息内的多张图片拼成相册，纯图片的时间和发送状态叠在右下角；有说明时放在图片下方。保留点图展开、关闭回落、相册翻页、长按消息操作和发送失败重试。
+
+修复 Steam 图片标签内嵌 `[url]…[/url]` 时显示原始文字的问题，兼容响应式图片属性，保留图片比例、说明和相册顺序；内外地址不一致或含额外内容时仍保留文字。
+
 ### 快速安装
 
 1. 从 [Releases](https://github.com/JoyinJoester/Monica-Steam/releases) 下载最新 APK。
@@ -82,15 +90,16 @@ Monica Steam 是一款专注 Steam 的独立 Android 客户端，源自 [Monica 
 
 ### 与 Steam 主应用令牌共存
 
-可以通过 [Millennium](https://github.com/Good-Joe2049/Millennium) 模块来实现 Monica Pass 与 Steam 主应用令牌共存。
-该模块提供 Steam Guard 和 `maFile` 导入、导出及恢复功能；导出的 `maFile` 也可导入 Monica Steam，复用同一份令牌数据。模块安装、启用与恢复步骤请参阅 [Millennium 项目文档](https://github.com/Good-Joe2049/Millennium#mafile)。
+可以通过 [SteamNova（原 Millennium）](https://github.com/GoodJoe-2049/Steam-Nova) 模块来实现 Monica Pass 与 Steam 主应用令牌共存。
+该模块提供 Steam Guard 和 `maFile` 导入、导出及恢复功能；导出的 `maFile` 也可导入 Monica Steam，复用同一份令牌数据。模块安装、启用与恢复步骤请参阅 [SteamNova 项目文档](https://github.com/GoodJoe-2049/Steam-Nova#mafile)。
+SteamDB 游戏数据中的地区映射、评分计算与请求方式也参考了该项目（MIT）；实际数据来源仍为 Steam / SteamDB。
 
 Monica Steam 的应用内存储会加密，但“maFile 导入与导出”页面导出的 ZIP 内是**单账号明文 `.maFile`（JSON）**。导出时要求验证身份，不代表导出的文件已加密。
 
-- **Monica Steam → Millennium：** 导出 maFile ZIP，先解压，再在 Millennium 的 maFile 导入页面选择对应账号的 `.maFile`。Millennium 当前支持不超过 1 MB 的单账号明文文件，不支持直接导入 ZIP 或加密数据库备份。
+- **Monica Steam → SteamNova：** 导出 maFile ZIP，先解压，再在 SteamNova 的 maFile 导入页面选择对应账号的 `.maFile`。SteamNova 当前支持不超过 1 MB 的单账号明文文件，不支持直接导入 ZIP 或加密数据库备份。
 - **授权直接获取（开发中）：** 配套模块提供“从 Monica Steam 获取”后，可在同一手机上打开 Monica Steam，每次解锁、选择一个账号并确认交付，再返回模块预览和确认导入。需要已配置主密码；交付绑定 Steam 的 UID，60 秒有效且仅可打开一次，不落地明文临时文件。接收方仍可永久保存已读取的凭据。需要双方支持 [maFile 交付协议 v1](docs/interop/monica-mafile-handoff.md)，旧版继续使用文件导入。
-- **Millennium → Monica Steam：** 在模块中导出 `.maFile`，到 Monica Steam 的令牌页添加账号，选择 maFile 文件导入。
-- **“直接打开 Monica”是另一种入口：** 按 Millennium 当前源码，该入口面向普通版 Monica（`takagi.ru.monica`），传递验证码 URI；它不是向 Monica Steam（`takagi.ru.monica.steamapp`）导入完整 maFile，验证码 URI 也不包含完整的交易确认密钥与登录会话。
+- **SteamNova → Monica Steam：** 在模块中导出 `.maFile`，到 Monica Steam 的令牌页添加账号，选择 maFile 文件导入。
+- **“直接打开 Monica”是另一种入口：** 按 SteamNova 当前源码，该入口面向普通版 Monica（`takagi.ru.monica`），传递验证码 URI；它不是向 Monica Steam（`takagi.ru.monica.steamapp`）导入完整 maFile，验证码 URI 也不包含完整的交易确认密钥与登录会话。
 
 ### 已知限制
 - 仍为公开测试版，接口与布局可能随时调整。
@@ -142,11 +151,13 @@ Monica Steam 从 Monica Android 的 Steam 功能中独立出来，作为单独�
 - 商城浏览、搜索、多区价格、汇率换算与账号地区筛选。
 - 购买选项、版本、DLC、捆绑包、配置要求、截图与评价。
 - 原生购物车与愿望单；最终结算由 Steam 官方流程完成。
+- 购物车独立显示一条结算区：M3E 实色栏或液态玻璃悬浮胶囊；图片从缩略图展开，关闭时回落。
 - 在 Steam 提供兼容数据时显示活动内容与点数商城。
 
 ### 好友、聊天与通知
 - 好友列表、好友详情、私聊与群聊统一会话。
 - 文字、表情、贴纸、图片、回应、举报与聊天搜索（支持范围内）。
+- 消息卡片长按浮起并模糊背景，展开详情和操作；蒸蒸空间按日期浏览好友动态，复用游戏库缓存并补查 Steam 公开商店显示游戏名称；右下 FAB 打开原生文字发布页，保留官方网页入口，结果不明时不自动重发。
 - 群组频道、角色权限、邀请链接等管理能力。
 - 独立通知页、未读状态、礼物/确认相关操作。
 - 实验性私聊/群组语音通话。
@@ -210,8 +221,8 @@ Monica Steam 从 Monica Android 的 Steam 功能中独立出来，作为单独�
 ### 环境要求
 - Android Studio 最新稳定版。
 - JDK 17+。
-- `compileSdk 35`，`targetSdk 34`，`minSdk 26`（Android 8.0+）。
-- 构建基线：AGP `8.7.3`，Kotlin `2.0.21`，Compose BOM `2026.03.00`（以 `gradle/libs.versions.toml` 为准）。
+- `compileSdk 37`，`targetSdk 34`，`minSdk 26`（Android 8.0+）。
+- 构建基线：AGP `9.3.2`，Kotlin `2.4.21`，Compose BOM `2026.09.00`（Gradle `9.5.0`，compileSdk `37`，以 `gradle/libs.versions.toml` 为准）。
 
 ### 常用命令
 

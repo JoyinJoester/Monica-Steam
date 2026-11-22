@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_collections_title">Steam コレクション</string>
+    <string name="steam_collections_unfiled">未分類</string>
+    <string name="steam_collections_all">すべてのゲーム</string>
+    <string name="steam_collections_create">コレクションを作成</string>
+    <string name="steam_collections_rename">名前を変更</string>
+    <string name="steam_collections_delete">コレクションを削除</string>
+    <string name="steam_collections_name">コレクション名</string>
+    <string name="steam_collections_edit_games">ゲームを編集</string>
+    <string name="steam_collections_actions">コレクションの操作</string>
+    <string name="steam_collections_refresh">更新</string>
+    <string name="steam_collections_count">%1$d 本のゲーム</string>
+    <string name="steam_collections_sync_hint">Steam ライブラリを整理できます。階層はなく、同じゲームを複数のコレクションに追加できます。</string>
+    <string name="steam_collections_dynamic">動的コレクション · PC 版 Steam で管理</string>
+    <string name="steam_collections_readonly">読み取り専用 · PC 版 Steam で管理</string>
+    <string name="steam_collections_delete_hint">Steam から「%1$s」を削除しますか？ゲームはライブラリに残ります。</string>
+    <string name="steam_collections_members_hint">所有するゲームとファミリー共有のゲームを選択できます。表示されない既存メンバーは保持されます。</string>
+    <string name="steam_collections_search">ゲームを検索</string>
+    <string name="steam_collections_save">Steam に保存</string>
+    <string name="steam_collections_cancel">キャンセル</string>
+    <string name="steam_collections_saving">Steam に保存して確認中…</string>
+    <string name="steam_collections_loading">Steam コレクションを読み込み中…</string>
+    <string name="steam_collections_saved">Steam で保存と確認が完了しました。</string>
+    <string name="steam_collections_error_login">コレクションにアクセスするには再度ログインしてください。</string>
+    <string name="steam_collections_error_unavailable">このセッションでは Steam がアクセスを許可しませんでした。</string>
+    <string name="steam_collections_error_conflict">別の端末で変更されました。編集画面を閉じ、更新してから再確認してください。</string>
+    <string name="steam_collections_error_unknown">保存結果を確認できませんでした。編集画面を閉じて更新してから編集してください。</string>
+    <string name="steam_collections_error_invalid">名前またはデータを確認してください。</string>
+    <string name="steam_collections_error_network">読み込めませんでした。接続を確認して更新してください。</string>
+    <string name="steam_collections_search_folders">コレクションを検索</string>
+    <string name="steam_collections_manage">コレクションを管理</string>
+    <string name="steam_collections_select_visible">表示中のゲームをすべて選択</string>
+    <string name="steam_collections_clear_visible">表示中の選択を解除</string>
+    <string name="steam_collections_discard_title">変更を破棄しますか？</string>
+    <string name="steam_collections_discard_message">変更はまだ Steam に保存されていません。</string>
+    <string name="steam_collections_discard_confirm">破棄</string>
+    <string name="steam_collections_empty">一致するゲームやコレクションはありません。</string>
+    <string name="steam_collections_folders">フォルダー</string>
+    <string name="steam_collections_games">ゲーム</string>
+    <string name="steam_collections_sort_ascending">名前：A–Z</string>
+    <string name="steam_collections_sort_descending">名前：Z–A</string>
+    <string name="steam_collections_about">ゲームの分類について</string>
+    <string name="steam_collections_add_to">フォルダーに追加</string>
+    <string name="steam_collections_remove_from">フォルダーから外す</string>
+    <string name="steam_collections_remove_hint">%1$d 本のゲームを「%2$s」から外しますか？Steam ライブラリには残ります。</string>
+</resources>

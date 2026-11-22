@@ -1,0 +1,51 @@
+{
+  "Record View#draw()": {
+    "n": 631,
+    "wallMedianMs": 3.555,
+    "wallP95Ms": 21.622,
+    "cpuMedianMs": 3.508,
+    "cpuP95Ms": 20.424
+  },
+  "SteamProbeSource:267464235": {
+    "n": 20,
+    "wallMedianMs": 6.111,
+    "wallP95Ms": 12.433,
+    "cpuMedianMs": 6.111,
+    "cpuP95Ms": 12.111
+  },
+  "SteamProbeSource:51598970": {
+    "n": 39,
+    "wallMedianMs": 0.205,
+    "wallP95Ms": 0.673,
+    "cpuMedianMs": 0.205,
+    "cpuP95Ms": 0.673
+  },
+  "SteamProbeSource:196856146": {
+    "n": 19,
+    "wallMedianMs": 11.349,
+    "wallP95Ms": 20.081,
+    "cpuMedianMs": 10.737,
+    "cpuP95Ms": 20.081
+  },
+  "SteamProbeSource:218716600": {
+    "n": 212,
+    "wallMedianMs": 3.433,
+    "wallP95Ms": 5.425,
+    "cpuMedianMs": 3.321,
+    "cpuP95Ms": 5.095
+  },
+  "SteamProbeDialog": {
+    "n": 120,
+    "wallMedianMs": 0.191,
+    "wallP95Ms": 0.367,
+    "cpuMedianMs": 0.191,
+    "cpuP95Ms": 0.345
+  },
+  "SteamProbeAvatar": {
+    "n": 114,
+    "wallMedianMs": 0.026,
+    "wallP95Ms": 0.071,
+    "cpuMedianMs": 0.026,
+    "cpuP95Ms": 0.071
+  }
+}

@@ -6,6 +6,7 @@ package takagi.ru.monica.steam.navigation.liquidglass.render
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
@@ -81,21 +82,35 @@ private class LiquidGlassInnerShadowNode(
     private val paint = Paint()
     private val clipPath = Path()
     private var previousRadius = Float.NaN
+    private var previousOutline: Outline? = null
+    private var previousSize = Size.Unspecified
+    private var previousColor = Color.Unspecified
+    private var previousOffsetX = Float.NaN
+    private var previousOffsetY = Float.NaN
+    private var shadowRecorded = false
 
     override fun ContentDrawScope.draw() {
         drawContent()
         val resolvedShadow = shadow() ?: return
-        val layer = shadowLayer ?: return
+        if (resolvedShadow.alpha <= 0f) return
+        val layer = shadowLayer ?: requireGraphicsContext().createGraphicsLayer().apply {
+            compositingStrategy = CompositingStrategy.Offscreen
+            shadowLayer = this
+        }
         val radius = resolvedShadow.radius.toPx()
         val offsetX = resolvedShadow.offset.x.toPx()
         val offsetY = resolvedShadow.offset.y.toPx()
 
         val outline = shape.createOutline(size, layoutDirection, this)
-        clipPath.reset()
-        when (outline) {
-            is Outline.Rectangle -> clipPath.addRect(outline.rect)
-            is Outline.Rounded -> clipPath.addRoundRect(outline.roundRect)
-            is Outline.Generic -> clipPath.addPath(outline.path)
+        // Generic outlines may wrap a mutable Path; do not reuse its old mask.
+        val outlineChanged = previousOutline != outline || previousSize != size || outline is Outline.Generic
+        if (outlineChanged) {
+            clipPath.reset()
+            when (outline) {
+                is Outline.Rectangle -> clipPath.addRect(outline.rect)
+                is Outline.Rounded -> clipPath.addRoundRect(outline.roundRect)
+                is Outline.Generic -> clipPath.addPath(outline.path)
+            }
         }
 
         paint.color = resolvedShadow.color
@@ -110,16 +125,28 @@ private class LiquidGlassInnerShadowNode(
             previousRadius = radius
         }
 
-        layer.record {
-            drawContext.canvas.let { canvas ->
-                canvas.save()
-                canvas.clipPath(clipPath)
-                canvas.drawOutline(outline, paint)
-                canvas.translate(offsetX, offsetY)
-                canvas.drawOutline(outline, ShadowMaskPaint)
-                canvas.translate(-offsetX, -offsetY)
-                canvas.restore()
+        // Moving the Dock, changing highlight direction or fading this shadow
+        // can reuse the mask. Only geometry, offset and color require recording.
+        if (!shadowRecorded || outlineChanged || previousColor != resolvedShadow.color ||
+            previousOffsetX != offsetX || previousOffsetY != offsetY
+        ) {
+            layer.record {
+                drawContext.canvas.let { canvas ->
+                    canvas.save()
+                    canvas.clipPath(clipPath)
+                    canvas.drawOutline(outline, paint)
+                    canvas.translate(offsetX, offsetY)
+                    canvas.drawOutline(outline, ShadowMaskPaint)
+                    canvas.translate(-offsetX, -offsetY)
+                    canvas.restore()
+                }
             }
+            previousOutline = outline
+            previousSize = size
+            previousColor = resolvedShadow.color
+            previousOffsetX = offsetX
+            previousOffsetY = offsetY
+            shadowRecorded = true
         }
 
         drawContext.canvas.let { canvas ->
@@ -130,17 +157,14 @@ private class LiquidGlassInnerShadowNode(
         }
     }
 
-    override fun onAttach() {
-        shadowLayer = requireGraphicsContext().createGraphicsLayer().apply {
-            compositingStrategy = CompositingStrategy.Offscreen
-        }
-    }
-
     override fun onDetach() {
         shadowLayer?.let { layer ->
             requireGraphicsContext().releaseGraphicsLayer(layer)
             shadowLayer = null
         }
+        previousRadius = Float.NaN
+        previousOutline = null
+        shadowRecorded = false
     }
 }
 

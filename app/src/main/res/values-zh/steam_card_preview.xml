@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_preview_open">预览</string>
+    <string name="steam_preview_close">关闭预览</string>
+    <string name="steam_preview_message_actions">消息操作</string>
+    <string name="steam_space_publish">发布动态</string>
+    <string name="steam_space_event_details">查看更多动态详情</string>
+</resources>

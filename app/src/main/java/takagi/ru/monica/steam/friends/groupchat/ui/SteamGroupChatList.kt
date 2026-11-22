@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.friends.groupchat.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassExtendedFloatingActionButton as ExtendedFloatingActionButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,6 @@ import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface

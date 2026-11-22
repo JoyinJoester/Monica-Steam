@@ -1,0 +1,57 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "72076d4ca748d60a069b4fb0f20611a2c0fa29504b3c2c1eb651c62bceaab645",
+    "normalizedSha256": "a0248e7d251485ee89601c53b3e4d471eb6e524a851709a6bbd8dbc3b2ef7ce7"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "62417c764c7f6ef32ae105a733aa56436a718c9e319c988d9b688de4740cd293",
+    "normalizedSha256": "1c01790ec2b2ae906a5e9ee5b0beeec59085c86a8016f2e4bf7aa7e52ade657d"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "f4250296711189e173e0e0f044f3fb197109fb1ace9f0319ffa51622819186da",
+    "normalizedSha256": "f4250296711189e173e0e0f044f3fb197109fb1ace9f0319ffa51622819186da"
+  },
+  {
+    "file": "device02.txt",
+    "rawSha256": "e7b8f371f596fbba6d9de88c7444493a1501b52acf135346bb15d90688ebd13b",
+    "normalizedSha256": "e7b8f371f596fbba6d9de88c7444493a1501b52acf135346bb15d90688ebd13b"
+  },
+  {
+    "file": "device01.json",
+    "rawSha256": "da4f6e3c19366f5d9b6e7b32612939bcee25dd9150f9d4aedd19aebef5b6cbe5",
+    "normalizedSha256": "da4f6e3c19366f5d9b6e7b32612939bcee25dd9150f9d4aedd19aebef5b6cbe5"
+  },
+  {
+    "file": "device02.json",
+    "rawSha256": "c02ed7560b5ccaa30892ccb164a18f71a8f56c2a55e957e828a15c2e0ab5ccaa",
+    "normalizedSha256": "c02ed7560b5ccaa30892ccb164a18f71a8f56c2a55e957e828a15c2e0ab5ccaa"
+  },
+  {
+    "file": "final-source-sha256.json",
+    "rawSha256": "40a763b36b9f741fd2af091aadade1faa00bbcff4425ccd11437167d5c1b290d",
+    "normalizedSha256": "40a763b36b9f741fd2af091aadade1faa00bbcff4425ccd11437167d5c1b290d"
+  },
+  {
+    "file": "source-audit.json",
+    "rawSha256": "a9bf87caff24ef20b53a04133372061542289100edad8f34aeaa98d0f7810104",
+    "normalizedSha256": "a9bf87caff24ef20b53a04133372061542289100edad8f34aeaa98d0f7810104"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "e11053279a9cee6d69db7b2a07e9298259565e320eeb79a6f4770cf0fb142d8f",
+    "normalizedSha256": "e11053279a9cee6d69db7b2a07e9298259565e320eeb79a6f4770cf0fb142d8f"
+  },
+  {
+    "file": "cleanup-attempt01.txt",
+    "rawSha256": "68dad98ed6467811077b56bf5415667c3d8408f2e53300e785bd3b756eb9b0c4",
+    "normalizedSha256": "68dad98ed6467811077b56bf5415667c3d8408f2e53300e785bd3b756eb9b0c4"
+  },
+  {
+    "file": "visual-check.json",
+    "rawSha256": "67ba101975af18f47436fbcab5fe2655421d3f4cc9519597221d63aef35f500f",
+    "normalizedSha256": "67ba101975af18f47436fbcab5fe2655421d3f4cc9519597221d63aef35f500f"
+  }
+]

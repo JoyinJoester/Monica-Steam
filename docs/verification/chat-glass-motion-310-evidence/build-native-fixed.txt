@@ -1,0 +1,53 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/.gradle-user-home/wrapper/dists/gradle-9.7.0-bin/d4tj7w02tcgubx9zk9hbippn6/gradle-9.7.0/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :telegram-chat-ui:preBuild UP-TO-DATE
+> Task :telegram-chat-ui:preDebugBuild UP-TO-DATE
+> Task :telegram-chat-ui:generateDebugResources UP-TO-DATE
+> Task :telegram-chat-ui:packageDebugResources UP-TO-DATE
+> Task :telegram-chat-ui:processDebugNavigationResources UP-TO-DATE
+> Task :telegram-chat-ui:parseDebugLocalResources UP-TO-DATE
+> Task :telegram-chat-ui:generateDebugRFile UP-TO-DATE
+> Task :telegram-chat-ui:compileDebugKotlin NO-SOURCE
+> Task :telegram-chat-ui:javaPreCompileDebug UP-TO-DATE
+
+> Task :telegram-chat-ui:compileDebugJavaWithJavac
+C:\Users\joyins\Desktop\Monica-all\Monica Steam\telegram-chat-ui\src\main\java\com\monica\telegramchat\TelegramGlassSource.java:24: 错误: 可能尚未初始化变量source
+        boolean changed = source.isDirty() || source.isLayoutRequested() || source.hasTransientState();
+                          ^
+注: C:\Users\joyins\Desktop\Monica-all\Monica Steam\telegram-chat-ui\src\main\java\com\monica\telegramchat\TelegramPopupLayout.java使用或覆盖了已过时的 API。
+注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+1 个错误
+
+> Task :telegram-chat-ui:compileDebugJavaWithJavac FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':telegram-chat-ui:compileDebugJavaWithJavac' (registered by plugin 'com.android.internal.library').
+> Compilation failed; see the compiler output below.
+  注: C:\Users\joyins\Desktop\Monica-all\Monica Steam\telegram-chat-ui\src\main\java\com\monica\telegramchat\TelegramPopupLayout.java使用或覆盖了已过时的 API。
+  C:\Users\joyins\Desktop\Monica-all\Monica Steam\telegram-chat-ui\src\main\java\com\monica\telegramchat\TelegramGlassSource.java:24: 错误: 可能尚未初始化变量source
+          boolean changed = source.isDirty() || source.isLayoutRequested() || source.hasTransientState();
+                            ^
+  注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+  1 个错误
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 25s
+7 actionable tasks: 1 executed, 6 up-to-date

@@ -1,0 +1,206 @@
+[
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "am",
+      "get-current-user"
+    ],
+    "exit": 0,
+    "output": "0"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "wm",
+      "density",
+      "reset"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "put",
+      "system",
+      "font_scale",
+      "1.0"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "ime",
+      "set",
+      "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME"
+    ],
+    "exit": 0,
+    "output": "Input method com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME selected for user #0"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "put",
+      "global",
+      "animator_duration_scale",
+      "0.5"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "put",
+      "global",
+      "transition_animation_scale",
+      "0.5"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "put",
+      "global",
+      "window_animation_scale",
+      "0.5"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "wm",
+      "density"
+    ],
+    "exit": 0,
+    "output": "Physical density: 280"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "get",
+      "system",
+      "font_scale"
+    ],
+    "exit": 0,
+    "output": "1.0"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "get",
+      "secure",
+      "default_input_method"
+    ],
+    "exit": 0,
+    "output": "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "get",
+      "global",
+      "animator_duration_scale"
+    ],
+    "exit": 0,
+    "output": "0.5"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "get",
+      "global",
+      "transition_animation_scale"
+    ],
+    "exit": 0,
+    "output": "0.5"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "settings",
+      "get",
+      "global",
+      "window_animation_scale"
+    ],
+    "exit": 0,
+    "output": "0.5"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "uninstall",
+      "takagi.ru.monica.steamapp.searchfilters.test"
+    ],
+    "exit": 0,
+    "output": "Success"
+  },
+  {
+    "command": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "pm",
+      "path",
+      "takagi.ru.monica.steamapp.searchfilters.test"
+    ],
+    "exit": 1,
+    "output": ""
+  }
+]

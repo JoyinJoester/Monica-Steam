@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-13T18:17:28.554Z" hostname="JOYIN" time="0.039">
+  <properties/>
+  <testcase name="rootPagesConsumeHorizontalSafeDrawingInsetsOnce" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.004"/>
+  <testcase name="landscapeNavigationRailConsumesItsOwnSafeEdges" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.002"/>
+  <testcase name="sharedInsetReadsSafeDrawingAndMultiWindowState" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.001"/>
+  <testcase name="topLevelPagesUseTheSharedWindowChromeInset" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.029"/>
+  <testcase name="multiWindowKeepsInsetsStableDuringTransientZeroFrames" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.002"/>
+  <testcase name="normalWindowFollowsCurrentInsetsWithoutRetainingOldValues" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.001"/>
+  <testcase name="multiWindowUsesFallbackWhenWindowInsetsAreMissing" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.0"/>
+  <testcase name="imeSuppressesExtraBottomPaddingWithoutChangingStableInset" classname="takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

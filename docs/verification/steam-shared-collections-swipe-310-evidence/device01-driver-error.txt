@@ -1,0 +1,1 @@
+Instrumentation completed:35 methods,34 passed and1 failed. Screenshot pull then failed because the new design parent folder was missing (mkdir without parents=True). The instrumentation receipt/log and raw APK copies were already saved. Recovered the screenshots with adb pull without rerunning tests.

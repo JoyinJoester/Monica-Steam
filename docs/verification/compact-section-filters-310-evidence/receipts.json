@@ -1,0 +1,62 @@
+[
+  {
+    "path": "build01.txt",
+    "rawSha256": "940ad330d9c0def8a504ba6f3420ce4b8ed778b632779316eb3f00557218e708",
+    "normalizedSha256": "d7cf342314baba0cb243889d78c788be179ea3b56b7a5a8b6c52cd5dac03fbf2"
+  },
+  {
+    "path": "build01.json",
+    "rawSha256": "bc1a51bacd4441dbbd19b2b2fc19270feb3e4b2c0a6d03e8864a322174f8d82e",
+    "normalizedSha256": "bc1a51bacd4441dbbd19b2b2fc19270feb3e4b2c0a6d03e8864a322174f8d82e"
+  },
+  {
+    "path": "device01.txt",
+    "rawSha256": "9ee06254a28e543b0ff7d83e209472323e277cf683287c182c04ab4bb22d4ec9",
+    "normalizedSha256": "9ee06254a28e543b0ff7d83e209472323e277cf683287c182c04ab4bb22d4ec9"
+  },
+  {
+    "path": "device01.json",
+    "rawSha256": "3f2605ceaa025ee5a9099eb34c02fc2b924aeb6c48b5c53497ef290229163241",
+    "normalizedSha256": "3f2605ceaa025ee5a9099eb34c02fc2b924aeb6c48b5c53497ef290229163241"
+  },
+  {
+    "path": "regression01.txt",
+    "rawSha256": "414f0be62d58e9b94c087c7c14012fe8b21c90bef8af193ab63d1df0bdc2f5c0",
+    "normalizedSha256": "414f0be62d58e9b94c087c7c14012fe8b21c90bef8af193ab63d1df0bdc2f5c0"
+  },
+  {
+    "path": "regression01.json",
+    "rawSha256": "5a48e72d5fbcf4dda0cb1a6f4d1d85a4cf787b956abecf26438cb8433c190398",
+    "normalizedSha256": "5a48e72d5fbcf4dda0cb1a6f4d1d85a4cf787b956abecf26438cb8433c190398"
+  },
+  {
+    "path": "jvm-results.json",
+    "rawSha256": "1a772e232b9e79875121062e977a544e4dd568f7ac632f3700dd659100f2009b",
+    "normalizedSha256": "1a772e232b9e79875121062e977a544e4dd568f7ac632f3700dd659100f2009b"
+  },
+  {
+    "path": "device-results.json",
+    "rawSha256": "cbabfc7643bbc5103313a460627cb1f8bdc3f1c12e4ac36deb6db4c3f80a3688",
+    "normalizedSha256": "cbabfc7643bbc5103313a460627cb1f8bdc3f1c12e4ac36deb6db4c3f80a3688"
+  },
+  {
+    "path": "frozen-apks.json",
+    "rawSha256": "79d579e9c0295cd875156baf06a63f629d948f043fa23df3f8fe9645e8c235ed",
+    "normalizedSha256": "79d579e9c0295cd875156baf06a63f629d948f043fa23df3f8fe9645e8c235ed"
+  },
+  {
+    "path": "source-hashes-build01.json",
+    "rawSha256": "f771cb9efe1e6c36384edc2f8b6fec4d8096be810c8cf1603065484c49f00562",
+    "normalizedSha256": "f771cb9efe1e6c36384edc2f8b6fec4d8096be810c8cf1603065484c49f00562"
+  },
+  {
+    "path": "cleanup.json",
+    "rawSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924",
+    "normalizedSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924"
+  },
+  {
+    "path": "TEST-takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoIntegrationGuardTest.xml",
+    "rawSha256": "b40f63ffe66e6c253b598baff6a1f37bcb7f42a48ee84830eba5d0e65deb909b",
+    "normalizedSha256": "b40f63ffe66e6c253b598baff6a1f37bcb7f42a48ee84830eba5d0e65deb909b"
+  }
+]

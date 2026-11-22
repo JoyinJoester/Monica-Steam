@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.library.filter.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -132,56 +134,31 @@ internal fun SteamLibraryFilterSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.86f)
-                .navigationBarsPadding()
+
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text(
-                        text = stringResource(R.string.steam_library_filter_title),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = stringResource(
-                            R.string.steam_library_filter_result_count,
-                            previewCount,
-                            totalCount
-                        ),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                TextButton(
-                    onClick = { pending = SteamLibraryFilterSelection() },
-                    enabled = pending != SteamLibraryFilterSelection(),
-                    modifier = Modifier.heightIn(min = 48.dp)
-                ) {
-                    Text(stringResource(R.string.steam_library_filter_reset))
-                }
-            }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            SteamSheetHeader(
+                title = stringResource(R.string.steam_library_filter_title),
+                subtitle = stringResource(R.string.steam_library_filter_result_count, previewCount, totalCount),
+                onDismiss = onDismiss
+            )
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 6.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp)
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 item(key = "ownership") {
                     SteamLibraryChoiceGroup(
                         title = stringResource(R.string.steam_library_filter_group_ownership)
                     ) {
-                        SteamLibraryOwnershipFilter.entries.forEach { option ->
+                        SteamLibraryOwnershipFilter.entries.forEachIndexed { index, option ->
                             SteamLibraryChoiceChip(
                                 selected = pending.ownership == option,
                                 label = steamLibraryOwnershipLabel(option),
-                                onClick = { pending = pending.copy(ownership = option) }
+                                onClick = { pending = pending.copy(ownership = option) },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = steamSheetRowShape(index, SteamLibraryOwnershipFilter.entries.size)
                             )
                         }
                     }
@@ -236,7 +213,8 @@ internal fun SteamLibraryFilterSheet(
                                 pending = pending.copy(
                                     requiresSteamCloud = !pending.requiresSteamCloud
                                 )
-                            }
+                            },
+                            role = androidx.compose.ui.semantics.Role.Checkbox
                         )
                     }
                 }
@@ -254,24 +232,16 @@ internal fun SteamLibraryFilterSheet(
                     }
                 }
             }
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceContainer,
-                tonalElevation = 2.dp
-            ) {
-                Button(
-                    onClick = { onApply(pending) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 10.dp)
-                        .heightIn(min = 48.dp),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Text(
-                        stringResource(
-                            R.string.steam_library_filter_apply,
-                            previewCount
-                        )
-                    )
+            SteamSheetFooter {
+                TextButton(
+                    onClick = { pending = SteamLibraryFilterSelection() },
+                    enabled = pending != SteamLibraryFilterSelection(),
+                    modifier = Modifier.align(Alignment.End).heightIn(min = 48.dp)
+                ) { Text(stringResource(R.string.steam_library_filter_reset)) }
+                Button(onClick = { onApply(pending) },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                    shape = RoundedCornerShape(28.dp)) {
+                    Text(stringResource(R.string.steam_library_filter_apply, previewCount))
                 }
             }
         }
@@ -284,23 +254,9 @@ private fun SteamLibraryChoiceGroup(
     title: String,
     content: @Composable FlowRowScope.() -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.Medium
-        )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
-            content = content
-        )
+    SteamSheetSection(title) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp), content = content)
     }
 }
 
@@ -308,22 +264,13 @@ private fun SteamLibraryChoiceGroup(
 private fun SteamLibraryChoiceChip(
     selected: Boolean,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(20.dp),
+    role: androidx.compose.ui.semantics.Role = androidx.compose.ui.semantics.Role.RadioButton
 ) {
-    FilterChip(
-        selected = selected,
-        onClick = onClick,
-        label = { Text(label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-        leadingIcon = if (selected) {
-            {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = null,
-                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-                )
-            }
-        } else null
-    )
+    SteamSheetChoice(label, selected, onClick, modifier, shape,
+        role = role)
 }
 
 @Composable

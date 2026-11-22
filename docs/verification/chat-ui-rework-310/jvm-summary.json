@@ -1,0 +1,82 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatEmoticonSizingTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.023"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatFriendPickerTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.027"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.095"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMediaRenderingRegressionTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.01"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMenuPopupGuardTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.003"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.029"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupAvatarRetryTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.131"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupMemberAvatarGridTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.007"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.groupchat.ui.SteamGroupChatIntegrationTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.028"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.groupchat.ui.TelegramGroupMessageRowsTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.021"
+  }
+]

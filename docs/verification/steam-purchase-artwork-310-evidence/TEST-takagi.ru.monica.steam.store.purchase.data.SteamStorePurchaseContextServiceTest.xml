@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-21T07:53:55.731Z" hostname="JOYIN" time="0.195">
+  <properties/>
+  <testcase name="failedFamilySnapshotIsRetriedAfterTheSessionIsRefreshed" classname="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" time="0.185"/>
+  <testcase name="storeInterestStateMarksOwnedDlcMissingFromOwnedGames" classname="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" time="0.002"/>
+  <testcase name="parserRejectsMismatchedOwnedGameCounts" classname="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" time="0.0"/>
+  <testcase name="familySharedAppKeepsOwnerIdsAndCachesTheFamilySnapshot" classname="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" time="0.005"/>
+  <testcase name="filteredOwnedGamesMarksTheAppOwnedWithoutLoadingFamilyData" classname="takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

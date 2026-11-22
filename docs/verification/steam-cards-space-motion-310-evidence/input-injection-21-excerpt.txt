@@ -1,0 +1,6 @@
+Device-21 input rejection evidence (system InputDispatcher):
+11-19 01:05:38.652   833  2786 E InputDispatcher: Inconsistent event: MotionEvent { action=DOWN, id[0]=0, x[0]=68, y[0]=214, toolType[0]=UNKNOWN, eventTime=5622907000000, downTime=5622907000000, deviceId=0, source=TOUCHSCREEN, displayId=0, eventId=0xf6912c8f}, reason: Injection on 0: Invalid DOWN event - pointers already down for device DeviceId(-1): {DeviceId(-1): {0}}
+11-19 01:05:39.969   833  1228 E InputDispatcher: Inconsistent event: MotionEvent { action=DOWN, id[0]=0, x[0]=68, y[0]=214, toolType[0]=UNKNOWN, eventTime=5624219000000, downTime=5624218000000, deviceId=0, source=TOUCHSCREEN, displayId=0, eventId=0xc29bbdca}, reason: Injection on 0: Invalid DOWN event - pointers already down for device DeviceId(-1): {DeviceId(-1): {0}}
+11-19 01:05:40.603   833  3658 E InputDispatcher: Inconsistent event: MotionEvent { action=DOWN, id[0]=0, x[0]=76.5, y[0]=217.5, toolType[0]=UNKNOWN, eventTime=5624935000000, downTime=5624934000000, deviceId=0, source=TOUCHSCREEN, displayId=0, eventId=0xf5ec375b}, reason: Injection on 0: Invalid DOWN event - pointers already down for device DeviceId(-1): {DeviceId(-1): {0}}
+Recovery command: adb -s 127.0.0.1:16384 shell input touchscreen motionevent CANCEL 540 960
+Same APK native composer test: device-22, 1/1 passed, 2.006 seconds.

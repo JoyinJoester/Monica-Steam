@@ -42,7 +42,8 @@ data class SteamDbState(
 )
 
 // Regional USD markets are distinct Steam price histories. Never infer them from device language.
-// Mapping and rating formula adapted from Millennium; see assets/licenses/millennium.txt.
+// Mapping and rating formula adapted from SteamNova (formerly Millennium, MIT).
+// https://github.com/GoodJoe-2049/Steam-Nova ; see assets/licenses/steam-nova.txt.
 fun steamDbPriceRegion(country: String?, currency: String?): String? {
     val region = country?.trim()?.uppercase(Locale.ROOT)?.takeIf { it in countries } ?: return null
     val code = currency?.trim()?.uppercase(Locale.ROOT)?.takeIf { it in currencies } ?: return null

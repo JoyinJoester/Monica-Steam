@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -57,6 +58,7 @@ fun SwipeActions(
     modifier: Modifier = Modifier,
     allowSwipeLeft: Boolean = true,
     allowSwipeRight: Boolean = true,
+    contentShape: Shape? = null,
     content: @Composable () -> Unit
 ) {
     // 使用非动画状态记录实时拖动偏移，避免高频创建协程
@@ -109,7 +111,7 @@ fun SwipeActions(
     val maxSwipeDistance = 300f
     
     // 统一圆角形状
-    val componentShape = remember { RoundedCornerShape(16.dp) }
+    val componentShape = contentShape ?: remember { RoundedCornerShape(16.dp) }
     
     // 弹性物理模型
     val springSpec = spring<Float>(
@@ -244,6 +246,13 @@ fun SwipeActions(
 
                                 if (absX > horizontalTouchSlop && absX > absY * 1.5f) {
                                     if ((drag.x < 0f && !allowSwipeLeft) || (drag.x > 0f && !allowSwipeRight)) {
+                                        // A rejected horizontal swipe is still a gesture.
+                                        // Consume through release so the child's click cannot open details.
+                                        change.consume()
+                                        do {
+                                            val rejectedEvent = awaitPointerEvent()
+                                            rejectedEvent.changes.forEach { it.consume() }
+                                        } while (rejectedEvent.changes.any { it.pressed })
                                         return@awaitEachGesture
                                     }
                                     horizontalLocked = true
@@ -266,6 +275,7 @@ fun SwipeActions(
                                     wasCancelled = true
                                     dragEnded = true
                                 } else if (!change.pressed) {
+                                    change.consume()
                                     dragEnded = true
                                 } else {
                                     val dragAmount = change.positionChange().x

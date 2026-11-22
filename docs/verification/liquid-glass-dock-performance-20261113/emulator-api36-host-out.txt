@@ -1,0 +1,104 @@
+INFO         | Android emulator version 37.1.11.0 (build_id 15917651) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+INFO         | Found systemPath D:\AndroidSDK\system-images\android-36.1\google_apis\x86_64\
+INFO         | Guest usage of host flag 'VulkanVirtualQueue' will be ignored.
+INFO         | IPv4 server found: 198.18.0.2
+INFO         | Ignore IPv6 address: 90e5:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: 90e5:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: 90e5:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d0ed:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d0ed:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d0ed:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: c0f3:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: c0f3:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: c0f3:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: b8f9:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: b8f9:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: b8f9:7252:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d801:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d801:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: d801:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: f809:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: f809:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: f809:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a019:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a019:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a019:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a01f:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a01f:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: a01f:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: 8825:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: 8825:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Ignore IPv6 address: 8825:7352:ae00:0:d0da:7252:ae00:0
+INFO         | Guest GLES Driver: Auto (ext controls)
+INFO         | emuglConfig_init: vulkan_mode_selected:host gles_mode_selected:host
+INFO         | emuglConfig_get_vulkan_hardware_gpu_support_info: Found physical GPU 'NVIDIA GeForce RTX 4070 Laptop GPU', type: VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, apiVersion: 1.4.357, driverVersion: 621.1
+
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `Monica_LiveUpdates_API_36_1_4K` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `Monica_LiveUpdates_API_36_1_4K` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU requirements to run avd: `Monica_LiveUpdates_API_36_1_4K` are passed
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `Monica_LiveUpdates_API_36_1_4K` are met
+INFO         | Storing crashdata in: C:\Users\joyins\AppData\Local\Temp\\AndroidEmulator\emu-crash-37.1.11.db, detection is enabled for process: 8132
+INFO         | Initializing gfxstream backend
+INFO         | startOpenglesRendererImpl: gpu info
+INFO         | GPU #1
+  Make: 10de
+  Model: NVIDIA GeForce RTX 4070 Laptop GPU
+  Device ID: 2820
+
+INFO         | Graphics Adapter Vendor Google (NVIDIA Corporation)
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2)
+INFO         | Graphics API Version OpenGL ES 3.0 (4.5.0 NVIDIA 621.01)
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_multiview_texture_multisample GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_texture_buffer
+INFO         | Graphics Device Extensions N/A
+INFO         | Sending adb public key [QAAAAMeTJDIJwnZhSk9NNQjaswfzexUUDv/Qg8hNPS1w+dMh9EROU6emWrate8+3VP4JNiEiG+pDetheZmU1KK+3Ajh/jeYQQfdsN+K8H146qVrdxU9PbQ7HoHIz3ZxQDYe69csy7dY1JKxSzjMagkIBs0SFKwE9nWT5VPFBsAhIaf0XdFKupQ3l0C48HV8eNrEA0m3W+SYCX/PjANfmwYcoBPhC8h4u5ta2MgGy/xMbeN65deRrLN2AdofeLCIUVzazzGesTy1fhhcoAu1Q8o4CxMlqfKSfmebe8ZGT6ycDc+Bi/DRomuNoG7d/lT0LfJDaE/V8LN6qfTTyEoWbZ/eOe415JrSz8BVv6AdsbhaqHUc9szFFPT2eWvXg+QgSI7GwmwafP5X4bBPizCw4am2bZuU6EsxhioHPzmpi7Vx7mjLYpKTYX2dtUSU4QI8lam4kjLtmNkx7GgJ4XSh2FMX7c4ZdR9BFELmhoXIQwoOoPd7BLEPkfThEXQALU1/l5gTVsb2S3eQgS01gbCytIwJymw4Q/1tyJdGMG2qgtmwk7OAdYREPJAd5v2m07U18yZLB6eeAZdXGg2QQLJyD9uDjpY+EDA1pBEGctS8/LsY34+iKHV5SgkE692mgJe2g9nAFDUNzz/UCtcEQzFpP+QdEB5IP23/hO2J91rMtILYypkj8zSuffwEAAQA= @unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
+INFO         |   androidboot.dalvik.vm.heapsize=512m
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=131072
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAMeTJDIJwnZhSk9NNQjaswfzexUUDv/Qg8hNPS1w+dMh9EROU6emWrate8+3VP4JNiEiG+pDetheZmU1KK+3Ajh/jeYQQfdsN+K8H146qVrdxU9PbQ7HoHIz3ZxQDYe69csy7dY1JKxSzjMagkIBs0SFKwE9nWT5VPFBsAhIaf0XdFKupQ3l0C48HV8eNrEA0m3W+SYCX/PjANfmwYcoBPhC8h4u5ta2MgGy/xMbeN65deRrLN2AdofeLCIUVzazzGesTy1fhhcoAu1Q8o4CxMlqfKSfmebe8ZGT6ycDc+Bi/DRomuNoG7d/lT0LfJDaE/V8LN6qfTTyEoWbZ/eOe415JrSz8BVv6AdsbhaqHUc9szFFPT2eWvXg+QgSI7GwmwafP5X4bBPizCw4am2bZuU6EsxhioHPzmpi7Vx7mjLYpKTYX2dtUSU4QI8lam4kjLtmNkx7GgJ4XSh2FMX7c4ZdR9BFELmhoXIQwoOoPd7BLEPkfThEXQALU1/l5gTVsb2S3eQgS01gbCytIwJymw4Q/1tyJdGMG2qgtmwk7OAdYREPJAd5v2m07U18yZLB6eeAZdXGg2QQLJyD9uDjpY+EDA1pBEGctS8/LsY34+iKHV5SgkE692mgJe2g9nAFDUNzz/UCtcEQzFpP+QdEB5IP23/hO2J91rMtILYypkj8zSuffwEAAQA= @unknown
+INFO         |   androidboot.qemu.avd_name=Monica_LiveUpdates_API_36_1_4K
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.cpuvulkan.version=4202496
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.skin=1080x2400
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR37X1X11X0
+INFO         |   androidboot.vbmeta.digest=bfe3f95f17d2d67ea81b07d4846e4fe2c540e4ae1d6d915fdb211c48ced53ba5
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6720
+WHPX on Windows 10.0.27919 detected.
+Windows Hypervisor Platform accelerator is operational
+INFO         | Monitoring duration of emulator setup.
+INFO         | Activated packet streamer for uwb emulation
+INFO         | Activated packet streamer for bluetooth emulation
+INFO         | Successfully initialized netsim WiFi
+INFO         | Setting display: 0 configuration to: 1080x2400, dpi: 420x420
+INFO         | setDisplayActiveConfig: id:0, 1080x2400
+INFO         | emulatorSetupEnvironment: Environment scene is not required
+USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+INFO         | GPU Vendor=[Google (NVIDIA Corporation)]
+INFO         | GPU Renderer=[Android Emulator OpenGL ES Translator (NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2)]
+INFO         | GPU Version=[OpenGL ES 3.0 (4.5.0 NVIDIA 621.01)]
+INFO         | Wait for emulator (pid 8132) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+WARNING      | Not saving state: RAM not mapped as shared
+INFO         | Saving snapshot 'default_boot' using 2 ms
+WARNING      | Emulator client has not yet been configured.. Call configure me first!
+INFO         | removeAll
+WARNING      | Netsim Wifi dns:///localhost:57452 is gone due to CANCELLED

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_preview_open">Preview</string>
+    <string name="steam_preview_close">Close preview</string>
+    <string name="steam_preview_message_actions">Message actions</string>
+    <string name="steam_space_publish">Post an update</string>
+    <string name="steam_space_event_details">More activity details</string>
+</resources>

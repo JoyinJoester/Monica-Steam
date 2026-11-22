@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.friends.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -21,9 +25,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -60,36 +65,30 @@ internal fun SteamFriendAccountSheet(
     onDismissRequest: () -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = onDismissRequest) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 28.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.steam_friends_switch_account),
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
-            )
-            accounts.forEach { account ->
-                FriendAccountRow(
-                    account = account,
-                    selected = account.id == selectedAccountId,
-                    onClick = { onSelectAccount(account.id) }
-                )
+        Column(Modifier.fillMaxWidth().heightIn(max = androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp * .86f)) {
+            SteamSheetHeader(stringResource(R.string.steam_friends_switch_account), onDismissRequest)
+            androidx.compose.foundation.lazy.LazyColumn(
+                modifier = Modifier.fillMaxWidth().weight(1f, fill = false),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(4.dp)
+            ) {
+                itemsIndexed(accounts, key = { _, account -> account.id }) { index, account ->
+                    FriendAccountRow(account, account.id == selectedAccountId,
+                        { onSelectAccount(account.id) }, steamSheetRowShape(index, accounts.size))
+                }
             }
         }
     }
 }
 
 @Composable
-private fun FriendAccountRow(account: SteamAccount, selected: Boolean, onClick: () -> Unit) {
+private fun FriendAccountRow(account: SteamAccount, selected: Boolean, onClick: () -> Unit, shape: androidx.compose.ui.graphics.Shape) {
     ListItem(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 64.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick),
+            .clip(shape)
+            .selectable(selected, role = androidx.compose.ui.semantics.Role.RadioButton, onClick = onClick),
         headlineContent = {
             Text(
                 account.displayName.ifBlank { account.accountName }.ifBlank { account.visibleSteamId },
@@ -133,13 +132,13 @@ private fun FriendAccountRow(account: SteamAccount, selected: Boolean, onClick: 
             }
         },
         colors = ListItemDefaults.colors(
-            containerColor = androidx.compose.ui.graphics.Color.Transparent
+            containerColor = if (selected) MaterialTheme.colorScheme.secondaryContainer else steamSheetGroupColor()
         )
     )
 }
 
 @Composable
-internal fun FriendAvatar(friend: SteamFriend, size: Int) {
+internal fun FriendAvatar(friend: SteamFriend, size: Int, showStatus: Boolean = true) {
     val avatar = rememberSteamFriendAvatar(friend.avatarUrl)
     Box(modifier = Modifier.size(size.dp)) {
         Surface(
@@ -168,7 +167,7 @@ internal fun FriendAvatar(friend: SteamFriend, size: Int) {
                 }
             }
         }
-        Surface(
+        if (showStatus) Surface(
             modifier = Modifier
                 .size((size / 4).coerceAtLeast(10).dp)
                 .align(Alignment.BottomEnd),

@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailActionToolbar.kt": "934d1b5fb3504d3710eee7813a7aa2b6646663f8a8aa2005545131d52904602e",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamToolbarTensionShape.kt": "6e2c2e74e330ec6ec621990ffa7230f34b9af8d9a127450de49a2be8b8b48344",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSurface.kt": "30bf43144965852a8344207d53244876dd0aadc74fd4857599cc51fadb870f6b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamToolbarTensionUiTest.kt": "4d280793390b28b7d0232fe8ac9073310d2ec28d3af77b1923e3d088b78aa358",
+  "app/src/test/java/takagi/ru/monica/steam/store/ui/SteamToolbarTensionTest.kt": "109d66f5d9a9b5b9fe2c68ef074a47e4031142581702f136353a9996ddd26772",
+  "RELEASE_NOTES.md": "7dfb78c8a008f54bc16d2f38fd04f1aba4aa047c9c9ec76c3a380af0301d7f54",
+  "docs/releases/Monica-Steam-Unreleased.md": "448e3a7118a5f441c0bf8e76a20e03924e05bde7e87ec8254aeeddb2e745445d"
+}

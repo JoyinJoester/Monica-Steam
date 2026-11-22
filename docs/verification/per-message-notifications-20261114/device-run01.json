@@ -1,0 +1,54 @@
+{
+  "stage": "run01",
+  "serial": "emulator-5556",
+  "records": [
+    {
+      "args": [
+        "install",
+        "-r",
+        "-t",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-47.APK"
+      ],
+      "exit": 0,
+      "seconds": 1.1208676000242122,
+      "output": "Performing Streamed Install\r\nSuccess\r\n"
+    },
+    {
+      "args": [
+        "install",
+        "-r",
+        "-t",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk"
+      ],
+      "exit": 0,
+      "seconds": 0.4166851000045426,
+      "output": "Performing Streamed Install\r\nSuccess\r\n"
+    },
+    {
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest",
+        "takagi.ru.monica.steamapp.messagenotifications.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "exit": 0,
+      "seconds": 19.100522900000215,
+      "output": "INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=1\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\ntakagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest:\r\nINSTRUMENTATION_STATUS: test=replayUsesPersistentDedupAndDoesNotResurrectDismissedMessage\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=1\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=replayUsesPersistentDedupAndDoesNotResurrectDismissedMessage\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=2\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\nINSTRUMENTATION_STATUS: test=oldestMessagesAreBoundedWithoutRemovingServiceOrOtherNotifications\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=2\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=oldestMessagesAreBoundedWithoutRemovingServiceOrOtherNotifications\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=3\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\nINSTRUMENTATION_STATUS: test=eachChildKeepsPrivatePublicVersionAndImmutableConversationRoute\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=3\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=eachChildKeepsPrivatePublicVersionAndImmutableConversationRoute\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=4\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\nINSTRUMENTATION_STATUS: test=recreatedPublisherCancelsOnlyTheExactSourceAndConversationIncludingLegacy\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=4\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=recreatedPublisherCancelsOnlyTheExactSourceAndConversationIncludingLegacy\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=5\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\nINSTRUMENTATION_STATUS: test=consecutiveMessagesKeepSeparateContentAndCanBeRemovedIndividually\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=5\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=consecutiveMessagesKeepSeparateContentAndCanBeRemovedIndividually\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=6\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=\r\nINSTRUMENTATION_STATUS: test=systemShadeShowsIndependentMessageNotifications\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nINSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest\r\nINSTRUMENTATION_STATUS: current=6\r\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\r\nINSTRUMENTATION_STATUS: numtests=6\r\nINSTRUMENTATION_STATUS: stream=.\r\nINSTRUMENTATION_STATUS: test=systemShadeShowsIndependentMessageNotifications\r\nINSTRUMENTATION_STATUS_CODE: 0\r\nINSTRUMENTATION_RESULT: stream=\r\n\r\nTime: 13.934\r\n\r\nOK (6 tests)\r\n\r\n\r\nINSTRUMENTATION_CODE: -1\r\ns_glBindAttribLocation: bind attrib 0 name position\r\ns_glBindAttribLocation: bind attrib 1 name localCoord\r\n"
+    },
+    {
+      "args": [
+        "pull",
+        "/sdcard/Android/data/takagi.ru.monica.steamapp.messagenotifications/files/notification-shade.png",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\docs\\design\\per-message-notifications-20261114\\notification-shade.png"
+      ],
+      "exit": 0,
+      "seconds": 0.05942820000927895,
+      "output": "/sdcard/Android/data/takagi.ru.monica.steamapp.messagenotifications/files/notification-shade.png: 1 file pulled, 0 skipped. 22.2 MB/s (140922 bytes in 0.006s)\r\n"
+    }
+  ]
+}

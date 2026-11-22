@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.library.SteamGame
+import takagi.ru.monica.steam.library.ui.SteamAchievementSetSelector
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.profile.viewer.domain.SteamAchievementComparisonEntry
 import takagi.ru.monica.steam.profile.viewer.domain.SteamAchievementComparisonFilter
@@ -75,7 +76,10 @@ internal fun SteamProfileAchievementComparisonScreen(
     }
     val filter = SteamAchievementComparisonFilter.entries.firstOrNull { it.name == filterName }
         ?: SteamAchievementComparisonFilter.ALL
+    var selectedSetId by rememberSaveable(game.appId) { mutableStateOf<Long?>(null) }
+    val effectiveSetId = selectedSetId.takeIf { id -> comparison?.targetSets?.any { it.groupId == id } == true }
     val visible = comparison?.filtered(filter).orEmpty()
+        .filter { effectiveSetId == null || it.groupId == effectiveSetId }
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -132,6 +136,14 @@ internal fun SteamProfileAchievementComparisonScreen(
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
+        if (comparison.targetSets.isNotEmpty()) item(key = "comparison_sets") {
+            SteamAchievementSetSelector(comparison.targetSets, effectiveSetId, { selectedSetId = it },
+                progress = { set ->
+                    val members = comparison.achievements.filter { it.groupId == set.groupId && !it.archived }
+                    val total = set.completionAchievements ?: members.size
+                    (set.completedAchievements ?: members.count { it.targetAchieved }).coerceIn(0, total) to total
+                }, modifier = Modifier.padding(horizontal = 16.dp))
+        }
         if (comparison.total == 0) {
             item(key = "comparison_empty") {
                 SteamProfileAchievementStateCard(
@@ -158,6 +170,7 @@ internal fun SteamProfileAchievementComparisonScreen(
             ) { achievement ->
                 SteamProfileAchievementComparisonRow(
                     achievement = achievement,
+                    appId = game.appId,
                     targetName = targetName,
                     selfProfile = selfProfile,
                     modifier = Modifier.padding(horizontal = 16.dp)
@@ -295,17 +308,20 @@ private fun SteamProfileAchievementMetric(
 @Composable
 private fun SteamProfileAchievementComparisonRow(
     achievement: SteamAchievementComparisonEntry,
+    appId: Int,
     targetName: String,
     selfProfile: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val image = rememberSteamProfileViewerImage(
-        if (achievement.viewerAchieved || achievement.targetAchieved) {
-            achievement.iconUrl
-        } else {
-            achievement.lockedIconUrl ?: achievement.iconUrl
-        }
-    )
+    val displayName = if (achievement.hidden && !achievement.viewerAchieved && !achievement.targetAchieved) {
+        stringResource(R.string.steam_achievement_hidden)
+    } else achievement.displayName
+    val revealDetails = !achievement.hidden || achievement.viewerAchieved || achievement.targetAchieved
+    val rawIcon = if (achievement.viewerAchieved || achievement.targetAchieved) achievement.iconUrl
+        else achievement.lockedIconUrl ?: achievement.iconUrl
+    val image = rememberSteamProfileViewerImage(if (revealDetails)
+        takagi.ru.monica.steam.space.data.SteamSpaceLinks.achievementIcon(appId, rawIcon) else null)
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(18.dp),
@@ -324,10 +340,10 @@ private fun SteamProfileAchievementComparisonRow(
                     shape = RoundedCornerShape(14.dp),
                     color = MaterialTheme.colorScheme.surfaceContainerHighest
                 ) {
-                    if (image != null) {
+                    if (revealDetails && image != null) {
                         Image(
                             bitmap = image,
-                            contentDescription = achievement.displayName,
+                            contentDescription = displayName,
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
@@ -339,11 +355,11 @@ private fun SteamProfileAchievementComparisonRow(
                 }
                 Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                     Text(
-                        text = achievement.displayName,
+                        text = displayName,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
-                    achievement.description.takeIf(String::isNotBlank)?.let { description ->
+                    achievement.description.takeIf { revealDetails && it.isNotBlank() }?.let { description ->
                         Text(
                             text = description,
                             style = MaterialTheme.typography.bodyMedium,

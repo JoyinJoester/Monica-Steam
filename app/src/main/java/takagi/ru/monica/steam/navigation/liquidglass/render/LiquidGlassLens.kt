@@ -15,10 +15,11 @@ internal fun BackdropEffectScope.liquidGlassLens(
     refractionHeight: Float,
     refractionAmount: Float,
     depthEffect: Boolean = false,
-    chromaticAberration: Float = 0f
+    chromaticAberration: Float = 0f,
+    retainZeroRefraction: Boolean = false
 ) {
     if (!isRuntimeShaderSupported()) return
-    if (refractionHeight <= 0f || refractionAmount <= 0f) return
+    if (!retainZeroRefraction && (refractionHeight <= 0f || refractionAmount <= 0f)) return
 
     if (padding < refractionAmount) {
         padding = refractionAmount
@@ -41,8 +42,8 @@ internal fun BackdropEffectScope.liquidGlassLens(
     val scaledSizeWidth = size.width / scaleFactor
     val scaledSizeHeight = size.height / scaleFactor
     val scaledPadding = padding / scaleFactor
-    val scaledRefractionHeight = refractionHeight / scaleFactor
-    val scaledRefractionAmount = refractionAmount / scaleFactor
+    val scaledRefractionHeight = refractionHeight.coerceAtLeast(0f) / scaleFactor
+    val scaledRefractionAmount = refractionAmount.coerceAtLeast(0f) / scaleFactor
     val scaledRadii = FloatArray(radii.size) { radii[it] / scaleFactor }
 
     runtimeShaderEffect(
@@ -141,6 +142,7 @@ float circleMap(float x) {
 }
 
 half4 main(float2 coord) {
+    if (refractionHeight <= 0.0 || refractionAmount == 0.0) return content.eval(coord);
     float2 halfSize = size * 0.5;
     float2 centeredCoord = (coord + offset) - halfSize;
     float radius = radiusAt(coord, cornerRadii);
@@ -181,6 +183,7 @@ float circleMap(float x) {
 }
 
 half4 main(float2 coord) {
+    if (refractionHeight <= 0.0 || refractionAmount == 0.0) return content.eval(coord);
     float2 halfSize = size * 0.5;
     float2 centeredCoord = (coord + offset) - halfSize;
     float radius = radiusAt(coord, cornerRadii);

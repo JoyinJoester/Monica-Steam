@@ -1,0 +1,1253 @@
+{
+  "repository": "https://github.com/DrKLO/Telegram",
+  "version": "13.0.3",
+  "source_snapshot": "local Telegram-master archive; no commit metadata available",
+  "files": [
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/MessageBackgroundDrawable.java",
+      "sha256": "956b8330fc5743a77fd5f62fcee0448639f8cc83750f8e4e5aa752fa872ca419",
+      "local": "src/main/java/com/monica/telegramchat/upstream/MessageBackgroundDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Drawing, interpolation and animation implementation preserved."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/CubicBezierInterpolator.java",
+      "sha256": "747f7b8f511249f14bc1b567088d7e0da3639729263a6f56243eb61c2ba19387",
+      "local": "src/main/java/com/monica/telegramchat/upstream/CubicBezierInterpolator.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Drawing, interpolation and animation implementation preserved."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ButtonBounce.java",
+      "sha256": "f7b5188cb84ce4f392d138ef9dd764911c19d227cf03e2a5c573eb6e7943acc6",
+      "local": "src/main/java/com/monica/telegramchat/upstream/ButtonBounce.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Drawing, interpolation and animation implementation preserved."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/AnimatedFloat.java",
+      "sha256": "6e744c109b675b42b53faada749f3ffb38cc5ea3f25347ce8f2b39e10d306bb9",
+      "local": "src/main/java/com/monica/telegramchat/upstream/AnimatedFloat.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Drawing, interpolation and animation implementation preserved."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/BackDrawable.java",
+      "sha256": "c8aae99ed4b7e34296dc1e75db32d1e15ef6db6d34ec323444ee7ca930277d88",
+      "local": "src/main/java/com/monica/telegramchat/upstream/BackDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Only unused Utilities import removed; original animation and vector drawing preserved."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/MenuDrawable.java",
+      "sha256": "eeb00d618d6d7a54b3408da2c2c1cc8ddaeb6e812fedc44ad1708dd94a5e5cc2",
+      "local": "src/main/java/com/monica/telegramchat/upstream/MenuDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Theme globals replaced by explicit iconColor/backColor; download angle wrapping uses remainder. Original morph/path/time code retained."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/utils/NinePatchBuilder.java",
+      "sha256": "388517934de66691c25e5c5eadfddd80a6cba19192035cbe412dde78761f2cc7",
+      "local": "src/main/java/com/monica/telegramchat/upstream/NinePatchBuilder.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Resources passed through TelegramUi; bitmap generation and serialized nine-patch chunk unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/MessageDrawable.java",
+      "sha256": "52a96c6ab720229d560bf408ff1ddd2e19c183f024537a23ead63a4d216946e6",
+      "local": "src/main/java/com/monica/telegramchat/upstream/MessageDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original generatePath, makePath, draw/drawCached, grouping, shadow and nine-patch rendering retained.",
+        "Telegram Theme and SharedConfig replaced with BubblePalette and per-instance radius.",
+        "Removed MotionBackgroundDrawable animated wallpaper/theme preview shader setup from setTop; standalone bubbles use explicit solid color.",
+        "Added null guard for optional failed nine-patch allocation in setAlpha."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/TypingDotsDrawable.java",
+      "sha256": "41a848330b4644d45963a759e7588b57c853a171d4e5ef23ee0f58f5e2e3171a",
+      "local": "src/main/java/com/monica/telegramchat/upstream/TypingDotsDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Removed account selection and global notification animation locks; drawable owns its paint and follows start/stop lifecycle. Original dot pulse rendering/timing retained."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/StatusDrawable.java",
+      "sha256": "1a48effd022298c026e1856fde86b725360d8348fc053d70594ae28d8fec0284",
+      "local": "src/main/java/com/monica/telegramchat/upstream/StatusDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "30 fps invalidation uses Drawable.Callback scheduling instead of Telegram global Choreographer service."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/LiquidGlassEffect.java",
+      "sha256": "d27cc91404f76a6e7e020cbc5ac133287d147deea5d59e68532d1276134e32ab",
+      "local": "src/main/java/com/monica/telegramchat/upstream/LiquidGlassEffect.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Only raw-resource loader/package imports changed; AGSL uniforms, radius constraints and RenderEffect creation unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/RecyclerItemsEnterAnimator.java",
+      "sha256": "99bb9092bf18365e2f787097b3e5b9c789fc71de4471a70adae92e6050a76ff2",
+      "local": "src/main/java/com/monica/telegramchat/upstream/RecyclerItemsEnterAnimator.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "RecyclerListView dependency changed to standard RecyclerView; host calls dispatchDraw/onDetached.",
+        "Telegram FlickerLoadingView progress-row detection removed. Original staggered position-based alpha animation retained."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/EditTextBoldCursor.java",
+      "sha256": "c21489bfbd0b79d7a69e733f319c0038a2f1e56b5c34bea0c8b09d07be7ae4d5",
+      "local": "src/main/java/com/monica/telegramchat/upstream/EditTextBoldCursor.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Extracted actual cursor construction/drawing/position/clamping and watcher suppression methods.",
+        "Base changed from Telegram EditTextEffects to Android EditText. Platform IME, accessibility, selection and hint rendering retained.",
+        "Removed private Editor reflection, premium/custom floating toolbar, animated hints and global account/theme services.",
+        "Public text cursor API29+; API26-28 safely retain platform cursor. Corrected dp-of-pixel intrinsic-height expression."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_send.webp",
+      "sha256": "dabf91255165966a99c6b949e1e5c61a14aa2bdfae79dd043569af439a233c67",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_send.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/input_attach.webp",
+      "sha256": "73b65a0c4f58a2753e7c2aa41317e745912e4901f39dd353baebdd9ae97258b5",
+      "local": "src/main/res/drawable-mdpi/telegram_input_attach.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_input_gift.webp",
+      "sha256": "af93e3d3977ddc50057e1066925a17bbb203f93179434e77aef53f73a4f316ed",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_input_gift.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_send.webp",
+      "sha256": "b308996b401bf5322f3f80fd9e8ecf30392727d785520bbee40405d287f59bd5",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_send.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/input_attach.webp",
+      "sha256": "4d8e907be543fd39ad4f087aeea3b3b3354f7fd37dbe76fb8a079fa8a6ce0cd2",
+      "local": "src/main/res/drawable-hdpi/telegram_input_attach.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_input_gift.webp",
+      "sha256": "e62d4e4c21f416389f1825e27774942faa7c3c6c0300a04aa2e4788721336ac1",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_input_gift.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_send.webp",
+      "sha256": "d0333af3b7db3394e4985d3f98449db9b43403086bf60a415b181c4a87a22328",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_send.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/input_attach.webp",
+      "sha256": "c34261e64aa235b75b0df94694032dfffaa7d0600ae32471c1e03aacef3fe592",
+      "local": "src/main/res/drawable-xhdpi/telegram_input_attach.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_input_gift.webp",
+      "sha256": "be8d0a9cb82e41ecc5125818b11120013201058bf82bda0e75705c51e260ffc1",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_input_gift.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_send.webp",
+      "sha256": "2b6366c5fab9ddb398e3a623a6cb4cf5b690a849ff96ede8b90212cc24e899eb",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_send.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/input_attach.webp",
+      "sha256": "1aaf75a8c0dc1e9247e572d26790a73fabbbaed29b0e79badec278741727e896",
+      "local": "src/main/res/drawable-xxhdpi/telegram_input_attach.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_input_gift.webp",
+      "sha256": "9fdffe96ba3bb1c94f28ea3628ac67c78a23973cc1ac1b30df774f0e685491f4",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_input_gift.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Resource renamed with telegram_ prefix; binary content unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/liquid_glass_shader.agsl",
+      "sha256": "d463a9536eb8ae6ca26e06710c3a755071d5c5edc90d9b2eb972112184878221",
+      "local": "src/main/res/raw/liquid_glass_shader.agsl",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original AGSL source."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/messenger/MessageObject.java",
+      "sha256": "31d08d6290f9f7cd8f07b7c20c0b2baac84fc1432703080e782af4e03b2299c5",
+      "local": "src/main/java/com/monica/telegramchat/upstream/MessageTextLayout.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Full makeStaticLayout overload extracted unchanged, including high-quality layout, no hyphenation, no fallback line spacing, overflow fallback to simple break strategy."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/MsgClockDrawable.java",
+      "sha256": "de9eb4f672f25a5d5ea62e5e69fc3edd08ccd38e700fcb00d8b73e98708e8132",
+      "local": "src/main/java/com/monica/telegramchat/upstream/MsgClockDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original pending-message clock drawing and timing unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawable.java",
+      "sha256": "e129faa58b1dd878db97217cbb3078ad8052c461b7778eef584bbcea7f888d3e",
+      "local": "src/main/java/com/monica/telegramchat/upstream/GlassStroke.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original drawStroke method extracted unchanged; host supplies palette, bounds, radii and stroke paints."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAvatarContainer.java",
+      "sha256": "d5d38480fc0941630765748fe7c977f30729c309e60b0fd5b4e832238a7a627a",
+      "local": "src/main/java/com/monica/telegramchat/upstream/ChatAvatarLayout.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Extracted avatar/text measure and glass-mode layout arithmetic, 42dp minus 2px avatar, 17.5/13.5dp text, 49.66dp text inset, 23.66dp subtitle offset.",
+        "Account-backed BackupImageView and SimpleTextView replaced with native ImageView/TextView; profile/story/timer/width-fade logic excluded. Custom avatar view is a host adapter at the same measured bounds. Status bar inset belongs to host. Native TextView compound drawable hosts original TypingDotsDrawable with attach/detach lifecycle."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/input_smile.webp",
+      "sha256": "8964287638b183760ac005cb2a75c163328e433c61ff2ef3e566d46459a0dabf",
+      "local": "src/main/res/drawable-mdpi/telegram_input_smile.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/input_bot2.webp",
+      "sha256": "563602da47cb64646110d5f556125ee503ba161be81bd33032730d95d7971ffb",
+      "local": "src/main/res/drawable-mdpi/telegram_input_bot2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/ic_ab_other.webp",
+      "sha256": "1753372e5d4e9da59a39e0828271be283828cc2f09e319ed01e170c6e2b71ee3",
+      "local": "src/main/res/drawable-mdpi/telegram_ic_ab_other.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_input_attach2.webp",
+      "sha256": "e0e2dcb08a8ae7f22e2140e31f4e7cfa2dd4ff630b49bd01de0f70a07eb47c59",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_input_attach2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_check_s.webp",
+      "sha256": "b05519f6b842646374058982664e247fe81f1bb63bbeac42cdc8a3e6de94b65e",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_check_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_halfcheck_s.webp",
+      "sha256": "3acd0e67c8d5222bc28320ce2cbb4be2b2c4f67838992ac6c26bb1dcb6cfa9a1",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_halfcheck_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/input_smile.webp",
+      "sha256": "d459cfda5a5745ed294597515aedb236fe03aad8fe17dc14b0959adad2c46a84",
+      "local": "src/main/res/drawable-hdpi/telegram_input_smile.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/input_bot2.webp",
+      "sha256": "85c2c0aaed4e3f8ec1aaa9bb22e6b3720b6c650fc6e4d1d70d37714a0f8b588d",
+      "local": "src/main/res/drawable-hdpi/telegram_input_bot2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/ic_ab_other.webp",
+      "sha256": "b6a2c9b85adaab7c63b9f4ab1b5e5e87c50aed1302ec0fc4b1faa0fd65d97780",
+      "local": "src/main/res/drawable-hdpi/telegram_ic_ab_other.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_input_attach2.webp",
+      "sha256": "7062f038427b347a77e3bdaa480e84b299923b37555d7b78ff49fb96c15b478c",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_input_attach2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_check_s.webp",
+      "sha256": "93fcde2c8d2b035d83cf85d69191288906d2078261c0797edcfb728ec952c41e",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_check_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_halfcheck_s.webp",
+      "sha256": "ecaa68b31a758eab045a048eddc603916be9865da489c18581c1367ab761b805",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_halfcheck_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/input_smile.webp",
+      "sha256": "3cbb1dc6112686543b232e672c4f466c18f0a7926b15c8292260f968be720190",
+      "local": "src/main/res/drawable-xhdpi/telegram_input_smile.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/input_bot2.webp",
+      "sha256": "59fc9012bc66d3c8ea788132a916d41205a31ed216778de481ebfeda9289bbef",
+      "local": "src/main/res/drawable-xhdpi/telegram_input_bot2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/ic_ab_other.webp",
+      "sha256": "0e61b9b1b27198c178f407ee78590dbfa9e624bf4a59131394c5f25b9cbde9ec",
+      "local": "src/main/res/drawable-xhdpi/telegram_ic_ab_other.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_input_attach2.webp",
+      "sha256": "fd4ac7af34d46cbae30b57a1d1b3c7455b95f314f525c88a648894016b119b01",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_input_attach2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_check_s.webp",
+      "sha256": "998595a8dce4dd261d6cffa6d5de3fa410be81bf5cb6eaabdf5204076fd34460",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_check_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_halfcheck_s.webp",
+      "sha256": "4922d672b1f0feaf42a75926de84d37292c64ddc36bb864f52dd576e671b8391",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_halfcheck_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/input_smile.webp",
+      "sha256": "075531cfca55fac7be94a853f3934332c935273a733eea8aa99775da5aadd783",
+      "local": "src/main/res/drawable-xxhdpi/telegram_input_smile.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/input_bot2.webp",
+      "sha256": "fd665a74ef186e7529e50272c0529b49f503a959b76ee875f53b599f878f1446",
+      "local": "src/main/res/drawable-xxhdpi/telegram_input_bot2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/ic_ab_other.webp",
+      "sha256": "0ec992659736897f869e2fa5baad353cb1c4d0f4b0f35ef3cf94de3c067cb499",
+      "local": "src/main/res/drawable-xxhdpi/telegram_ic_ab_other.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_input_attach2.webp",
+      "sha256": "bcee24a5d053e77b5b3c3a75db048ec4f726730fcf2056a6ed33d1c1e5907e32",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_input_attach2.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_check_s.webp",
+      "sha256": "53e6f7f8835e316ec652b674020c9ceac0ad6ca32c194e3d93d28dc3cba2aa4f",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_check_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_halfcheck_s.webp",
+      "sha256": "4e54d795bb0d852fe173dd1f3ad99db95529342663418c47987c60b5e5c8292e",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_halfcheck_s.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original Telegram resource bytes preserved; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/default_pattern.svg",
+      "sha256": "30e6db943765f576843a349e00d4d2db8074666d4a475675e5b916e84033007c",
+      "local": "src/main/res/raw/telegram_default_pattern.svg",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original SVG; AndroidSVG replaces Telegram SvgHelper/native image pipeline. Rendered by source width, not screenshot imagery."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ThemeColors.java",
+      "sha256": "49f27ef5f1a33844ca8818feb4b737a96df8d8d4eaef50a20b11225c46c2000d",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatColors.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Relevant source colors preserved as immutable DAY/NIGHT/DARK_BLUE values; glass-tab keys resolve original fallbacks. Public constructor allows the Steam host to supply its current application theme instead of selecting a Telegram preset; outgoing and accent text roles preserve foreground contrast."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java",
+      "sha256": "b2cc15c52f4b82ca79cee15c3e3d62f93c4b4e91e578e6da850fd279a1591e90",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatColors.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Relevant source colors preserved as immutable DAY/NIGHT/DARK_BLUE values; glass-tab keys resolve original fallbacks. Public constructor allows the Steam host to supply its current application theme instead of selecting a Telegram preset; outgoing and accent text roles preserve foreground contrast."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/assets/night.attheme",
+      "sha256": "c93fb2934d2684888a5d9e72a36361c0789d6bc745db23043da7eb88155c5469",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatColors.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Relevant source colors preserved as immutable DAY/NIGHT/DARK_BLUE values; glass-tab keys resolve original fallbacks. Public constructor allows the Steam host to supply its current application theme instead of selecting a Telegram preset; outgoing and accent text roles preserve foreground contrast."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/assets/darkblue.attheme",
+      "sha256": "5f3f87ff46198d82eecd78c975fdba849f6ed43561e6e7ebd58d16f40841fe39",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatColors.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Relevant source colors preserved as immutable DAY/NIGHT/DARK_BLUE values; glass-tab keys resolve original fallbacks. Public constructor allows the Steam host to supply its current application theme instead of selecting a Telegram preset; outgoing and accent text roles preserve foreground contrast."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBar.java",
+      "sha256": "a81d922150733e57760386831614694ccbbfe32941709d072779dd03b21b00bb",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatHeaderView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "ActionBar.setupGlass and dispatchDraw visible glass geometry retained: 46dp islands, 6dp drawable padding, 23dp radius, 56dp row. Account/navigation/search state replaced by explicit host callbacks."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java",
+      "sha256": "33c4835fa621c74bcbfe83174f2aab1f2b4856833e88bce12a4fa588e84fb098",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatComposerView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Native input setup and 44dp controls, 52dp text inset, 22dp bubble radius, 7dp horizontal inset, 9dp bottom offset retained. Steam menu occupies unavailable Telegram audio/bot services. Text/IME and span state uses native EditText."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/chat/ChatInputViewsContainer.java",
+      "sha256": "f66a372120f731f83529f3ab4b808d2dd63aad84bae8fef6f6d7d92cda5d9145",
+      "local": "src/main/java/com/monica/telegramchat/TelegramChatComposerView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Native input setup and 44dp controls, 52dp text inset, 22dp bubble radius, 7dp horizontal inset, 9dp bottom offset retained. Steam menu occupies unavailable Telegram audio/bot services. Text/IME and span state uses native EditText."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/BlurredBackgroundDrawableRenderNode.java",
+      "sha256": "a6177c41d320192554350208550a3f87616b3cab6e82e2dabc444bafef5af744",
+      "local": "src/main/java/com/monica/telegramchat/TelegramGlassView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Source-view RenderNode capture adapter; original AGSL, stroke routine, shader thickness/intensity/index, chat top/bottom palette/stroke settings retained. Process-wide blur source factories/downscale caches replaced with target-sized capture plus RenderEffect."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/blur3/drawable/color/impl/BlurredBackgroundProviderImpl.java",
+      "sha256": "cd8ef046d1c210a7ac6d0dbdce37d39263f8099fa86eca4903681a1f0e2939ca",
+      "local": "src/main/java/com/monica/telegramchat/TelegramGlassView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Source-view RenderNode capture adapter; original AGSL, stroke routine, shader thickness/intensity/index, chat top/bottom palette/stroke settings retained. Process-wide blur source factories/downscale caches replaced with target-sized capture plus RenderEffect."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java",
+      "sha256": "b2cc15c52f4b82ca79cee15c3e3d62f93c4b4e91e578e6da850fd279a1591e90",
+      "local": "src/main/java/com/monica/telegramchat/TelegramWallpaperDrawable.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original default_pattern SVG; ByWidth scale from createDefaultWallpaper; AndroidSVG replaces SvgHelper. Dark pattern tint is host-adapted for the solid Night wallpaper; dynamic four-color wallpaper shader excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/ChatMessageCell.java",
+      "sha256": "1b4be42317b197b4a016fa8f9f6ace2bcc153986c952330ba36cf4f4bd9d8ec3",
+      "local": "src/main/java/com/monica/telegramchat/TelegramMessageTextView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Source text/time paint sizes, original makeStaticLayout and MessageDrawable; last-line time collision adapted to standalone text-only cell, 31dp horizontal budget, native URLSpan touch handling. Telegram account/reply/media/reaction machinery excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/Theme.java",
+      "sha256": "b2cc15c52f4b82ca79cee15c3e3d62f93c4b4e91e578e6da850fd279a1591e90",
+      "local": "src/main/java/com/monica/telegramchat/TelegramMessageTextView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Source text/time paint sizes, original makeStaticLayout and MessageDrawable; last-line time collision adapted to standalone text-only cell, 31dp horizontal budget, native URLSpan touch handling. Telegram account/reply/media/reaction machinery excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/messenger/AndroidUtilities.java",
+      "sha256": "6acc294fa98d5628c0e669f31cf5235e655d79934d06e684d3b4ea6d6f7de4cb",
+      "local": "src/main/java/com/monica/telegramchat/upstream/PopupCascade.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original cascade timing method extracted unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarPopupWindow.java",
+      "sha256": "4f4ccd178f82abf4e9cb1cdff330b57d34df9340bf23a2d86d75e1fe429a05c3",
+      "local": "src/main/java/com/monica/telegramchat/upstream/PopupEnterAnimator.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original static startAnimation with 150+16ms per visible row, cascading alpha and -6dp entry retained.",
+        "Layout type routed to explicit portable TelegramPopupLayout. Unused gap/swipe-back branches excluded; Telegram notification/account services excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarPopupWindow.java",
+      "sha256": "4f4ccd178f82abf4e9cb1cdff330b57d34df9340bf23a2d86d75e1fe429a05c3",
+      "local": "src/main/java/com/monica/telegramchat/TelegramPopupLayout.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Native host for extracted popup animation properties and background reveal. Original 150ms dismiss translation/fade retained; composition owns popup positioning and lifecycle."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/ActionBar/ActionBarMenuSubItem.java",
+      "sha256": "c3e9b530875ca77a70a628adb533de6ba059ce57184ed3a24249f5b2034ed271",
+      "local": "src/main/java/com/monica/telegramchat/TelegramMenuRow.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Native row constructor geometry retained: 48dp row, 18dp horizontal padding, 40dp icon area, 43dp label offset, 16sp single-line text.",
+        "RLottieImageView and account-backed emoji label replaced by native ImageView/TextView; no checkboxes, account or swipe-back service."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_copy.webp",
+      "sha256": "f2c12012e8974a3ca52123044e5240543723b5af4efa832ce3959dce512fee50",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_reactions.webp",
+      "sha256": "399f6d16793572a8e46829adefb8868a53ccbf5cf2b46dd9b9590b5348298031",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_reactions.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_report.webp",
+      "sha256": "8914c7faa580ae23c6c0b25679e82d8637b410231d148bb0850b00d0c600e7e8",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_report.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_delete.webp",
+      "sha256": "0701b4a4ebca6417762be23462cc3e5625a6cfd5bd0f40b44f2d193f567c4ae2",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_delete.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/popup_fixed_alert2.9.png",
+      "sha256": "8ab86f9766f8b4501f3d2e29bc6d29c88efd03307d424d04d15ba42cf3824e22",
+      "local": "src/main/res/drawable-mdpi/telegram_popup_fixed_alert2.9.png",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_copy.webp",
+      "sha256": "4bf576bbaed88c0fd95473a0a712de1615363b694e6bd2f0b4780c15f99783d6",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_reactions.webp",
+      "sha256": "47ef6201f0ded243eee3aad647c5c8df1826fd23ad92800f00ffb53273f2d1ef",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_reactions.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_report.webp",
+      "sha256": "9df4693ff62c93de0082a33bac9a1d44a0784b9ea4e2a6146994a0ddb978831b",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_report.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_delete.webp",
+      "sha256": "c7c5aaf309ce1202ab691edb91373ae7f2449e4ab8caf22a0905f2f598768b51",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_delete.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/popup_fixed_alert2.9.png",
+      "sha256": "84aa21dbbb203d43f751faf1ffa628af3db468265e882fe790f30b240d3bab49",
+      "local": "src/main/res/drawable-hdpi/telegram_popup_fixed_alert2.9.png",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_copy.webp",
+      "sha256": "44f3da840d0b029d85d02818cd88bc536943ff2d6312e49d61608e8272842d67",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_reactions.webp",
+      "sha256": "04b99a9ad73e70059ba50024451a447fb754e3d613bee60c88d9125d0532f3b6",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_reactions.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_report.webp",
+      "sha256": "4beee6167a9164fd2fe90d986d54342bd5e5c372845b89f6ce867942474d6592",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_report.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_delete.webp",
+      "sha256": "53ad74f3c566461a3072a411f32c293899ab2572e48a937cbe79ef09d9fb16a7",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_delete.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/popup_fixed_alert2.9.png",
+      "sha256": "561ff08468cbf8745e2622358809904466b5c72748fef97a742fdde83e0e3bfa",
+      "local": "src/main/res/drawable-xhdpi/telegram_popup_fixed_alert2.9.png",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_copy.webp",
+      "sha256": "9818796f4fac8d2a1e1ae09ad923ac012d35426cafd5566c8fd7062c6c5e605d",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_reactions.webp",
+      "sha256": "74387aa6923880f94d64c7ed855a56af4f85f64878d9f309ffd1f2762ad6de76",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_reactions.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_report.webp",
+      "sha256": "d0d565c1c699ac6828c99088ed7590e6ee058d3775c54b4b87ced7a80c603efe",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_report.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/popup_fixed_alert2.9.png",
+      "sha256": "c0cf9ea52108442f76d39cc736f991e0c8a1ffd7615cf80d5f03db38d6453811",
+      "local": "src/main/res/drawable-xxhdpi/telegram_popup_fixed_alert2.9.png",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original menu resource bytes retained; resource name prefixed telegram_."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ChatActivityEnterView.java",
+      "sha256": "33c4835fa621c74bcbfe83174f2aab1f2b4856833e88bce12a4fa588e84fb098",
+      "local": "src/main/java/com/monica/telegramchat/upstream/ComposerActionAnimator.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original animateSendButton interpolation and 0.1 scale retained; View supplied explicitly.",
+        "Custom Telegram SendButton.appear() branch excluded; native host combines both actions using original checkSendButton 220ms EASE_OUT_QUINT / 150ms timing."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/glass/GlassTabView.java",
+      "sha256": "71b7595b3e4f240970ac633cb468e06d220f288f14e525016cbfcd6b398c52f7",
+      "local": "src/main/java/com/monica/telegramchat/upstream/GlassAttachTab.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original attachment 24dp icon/4dp top and 11dp medium label/28.33dp top geometry, text-width/padding measurement and theme blending retained.",
+        "Telegram RLottie renderer replaced by Airbnb Lottie using unmodified source JSON; account bots/counters/main-tabs interface excluded.",
+        "Original 320ms decelerating selection uses the already-extracted AnimatedFloat instead of vkryl BoolAnimator. Explicit host colors/lifecycle; parent reserves accessible 56dp touch area and adapts overflow width."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/tab_gallery.json",
+      "sha256": "b6311da83e377be90e65d4b7a40d05459e817f3156951ef8d3585fd50be72e94",
+      "local": "src/main/res/raw/telegram_tab_gallery.json",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original Telegram attachment Lottie JSON; rendered through portable Airbnb Lottie."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/tab_gallery_reverse.json",
+      "sha256": "ac58a176dec4dbbabdb5672218554858e03bd9c5360b38415334461b0d635890",
+      "local": "src/main/res/raw/telegram_tab_gallery_reverse.json",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original Telegram attachment Lottie JSON; rendered through portable Airbnb Lottie."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/tab_files.json",
+      "sha256": "12c063040d94f76905a19f6cbc95fe9deee0bcaf2459a8329d0871248ffdf628",
+      "local": "src/main/res/raw/telegram_tab_files.json",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original Telegram attachment Lottie JSON; rendered through portable Airbnb Lottie."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/raw/tab_files_reverse.json",
+      "sha256": "b872b510bce00830addcb139b877ff644295a30df32a9746394faf0d6d2035f9",
+      "local": "src/main/res/raw/telegram_tab_files_reverse.json",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Unmodified original Telegram attachment Lottie JSON; rendered through portable Airbnb Lottie."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ChatAttachAlert.java",
+      "sha256": "e4079bcb1484ac5134b3c5370974b4cab599d0f167f87382c19b589b52e846bf",
+      "local": "src/main/java/com/monica/telegramchat/TelegramAttachmentTabsView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Native host for source GlassTabView attachment-only subset, original tab assets and existing TelegramGlassView background.",
+        "Steam provides two supported actions: system gallery and system document picker. Does not claim full original ChatAttachAlert media grid, permission service or album layout."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/messenger/EmojiData.java",
+      "sha256": "39033f1ba0b2f27b106b685083944c00e0ac3aba684be858279a51baa3b610d1",
+      "local": "src/main/java/com/monica/telegramchat/upstream/EmojiData.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Complete official Unicode categories, aliases and skin-tone tables retained."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/messenger/EmojiPack.java",
+      "sha256": "9675a48f36f24f6917ab2b1040673f27ec6aa20a377b6652976ca47c920a0457",
+      "local": "src/main/java/com/monica/telegramchat/upstream/EmojiPack.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original EPK3 decoder and bounded root cache unchanged; application assets obtained through TelegramUi."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/assets/emoji.pack",
+      "sha256": "c4200fd8b0efbf2267297c084f23f8f490d03a1c55d76c87ea2f844328769652",
+      "local": "src/main/assets/emoji.pack",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original complete emoji.pack, byte-identical; packaged uncompressed for source memory mapping."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/EmojiView.java",
+      "sha256": "5ffdac8686ba644b2c549af516a8294f3fd63425a4b586b3c243a9f675e794c2",
+      "local": "src/main/java/com/monica/telegramchat/upstream/ImageViewEmoji.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original square cell measurement, accessibility and 350ms overshoot pressed animation retained.",
+        "Premium animated emoji/account fields excluded; host supplies original pack bitmap. Refresh rate uses the view Display; clamp uses Math. Detach cancels animator."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/CheckBoxBase.java",
+      "sha256": "ad07ed5e2ea0f975a8126d66ca271e710b7da786e132424b29a91b4bcf98fbe6",
+      "local": "src/main/java/com/monica/telegramchat/upstream/CheckBoxBase.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original circular selection drawing and animation retained; theme/account utilities supplied explicitly by PickerTheme and java Function. No Telegram service globals."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/CheckBox2.java",
+      "sha256": "d9fee48f2fa057d12cb3299c260c837e274da130a895c23bab036e3844a9756c",
+      "local": "src/main/java/com/monica/telegramchat/upstream/CheckBox2.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original circular selection drawing and animation retained; theme/account utilities supplied explicitly by PickerTheme and java Function. No Telegram service globals."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/PhotoAttachPhotoCell.java",
+      "sha256": "45265a5e8b7e3e0e104d30f8de3de04e8d12ee040bdac0bda36ce04e38a93c8e",
+      "local": "src/main/java/com/monica/telegramchat/upstream/PhotoAttachPhotoCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original setItemSize, square grid measurement/3dp gap and 200ms 0.787 selection zoom retained.",
+        "ImageReceiver replaced by host-fed ImageView bitmap; original CheckBox2 drawing retained. Single Steam attachment selection; video duration overlay retained. Telegram camera, live photo, spoiler, HQ and paid media excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/SharedDocumentCell.java",
+      "sha256": "54f7812909e62d82881f2a079d26c04f7932cd4d78181ad5e36944d6501d83bc",
+      "local": "src/main/java/com/monica/telegramchat/upstream/SharedDocumentPickerCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original VIEW_TYPE_PICKER constructor statements for 42dp icon, filename, extension and subtitle plus 64dp measurement extracted.",
+        "Original account download/animated status machinery excluded. Host provides name/size/date/URI; explicit palette and RTL configuration replace global Theme/LocaleController."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/LayoutHelper.java",
+      "sha256": "eb94f013d5cb4376133190b837d89b1f9224c48a5f21e269396d189f0c534ec3",
+      "local": "src/main/java/com/monica/telegramchat/upstream/LayoutHelper.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original layout helpers retained; locale direction comes from the host resources."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/TextDetailSettingsCell.java",
+      "sha256": "1fbcf1cf90c12ded4e34e96d535f7a09d537534ec922e0f7eb1c987c17a7bb1f",
+      "local": "src/main/java/com/monica/telegramchat/upstream/TextDetailSettingsCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Complete original cell constructor, measurement, multiline, value/icon setters and divider rendering retained.",
+        "Theme is per-instance SocialTheme; Unicode uses platform spans. Null guard during View construction."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/HeaderCell.java",
+      "sha256": "fe90cb4550e8194e6f191d0a5dfdec60b5f7a0f6fc9e7a26eeac19c1d08c2691",
+      "local": "src/main/java/com/monica/telegramchat/upstream/HeaderCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original nonanimated, single-title constructor branch and onMeasure retained. AnimatedTextView/secondary-title branches excluded; per-instance colors."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/UserCell.java",
+      "sha256": "789ef5669f45bc651725a1dcc320c0b802fec82e8107cf08107f4d034488a236",
+      "local": "src/main/java/com/monica/telegramchat/upstream/UserCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Extracted actual avatar/name/status/icon constructor statements, 58dp onMeasure and inset divider onDraw.",
+        "Account-bound setData/updates/stories/premium/check/admin/add branches excluded. Steam bind supplies text/status/bitmap; SimpleTextView and ImageReceiver are replaced with platform TextView and SteamAvatarView.",
+        "Host TextView adaptation measures font/fallback padding, places status below the measured title and expands above the original 58dp minimum to avoid clipped descent at fractional display density. Telegram style applies explicit host font scale; other styles retain their text size."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Cells/DialogCell.java",
+      "sha256": "f93b206464d4b9815665e1a8726a3ed841dc3e7ef945a1d270697357d8122804",
+      "local": "src/main/java/com/monica/telegramchat/upstream/DialogCell.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Portable CustomDialog subset: original model and time/name/count layout statements and baseline three-line text/badge geometry.",
+        "Full account-bound DialogCell is not imported: Telegram model updates, send checks, stories, spoiler/premium layers, swipe/archive/topic/transition paths excluded. StaticLayout text rendering and host bitmap avatar replace account renderers; host formats dates and localized accessibility descriptions.",
+        "Host accessibility adaptation: explicit text scale, measured multiline/badge height and bounded time width expand Telegram-style rows above the original 78dp minimum. Scale 1 preserves the previous fixed geometry; the full upstream class does not provide this host adaptation."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/Text.java",
+      "sha256": "8a2cf900e2670f8cfcc5418de28769b19a17df7e13e2cab74d640fce877a5fe8",
+      "local": "src/main/java/com/monica/telegramchat/upstream/Text.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original StaticLayout text construction, multiline, width/alignment, alpha/color/position draw methods retained. Animated premium emoji, shader ellipsis and theme services excluded."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/java/org/telegram/ui/Components/ProfileActionsView.java",
+      "sha256": "67163d89b9a3f79c898de830457b9a69264cc89e55c90966a27babafe6b0f34b",
+      "local": "src/main/java/com/monica/telegramchat/upstream/ProfileActionsView.java",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Package relocated to com.monica.telegramchat.upstream; platform utilities routed through explicit TelegramUi bridge.",
+        "Original action geometry, layout/drawing, touch handling, accessibility provider, ButtonBounce and position animations retained.",
+        "Telegram account action registry replaced with host labels/icons/callbacks. Avatar RenderNode blur, loading/lottie and preference-shadow branches excluded; per-instance solid action color."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable/filled_profile_message_24.xml",
+      "sha256": "13b4245433a54c4114490100b73981378ba82bb50fdccd6d9c53722d80bbb988",
+      "local": "src/main/res/drawable/telegram_filled_profile_message_24.xml",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable/outline_profile_message_24.xml",
+      "sha256": "3597fd60060febe4121fad450b95b20b5178ecf5fccc215bfbea15cc2a78b257",
+      "local": "src/main/res/drawable/telegram_outline_profile_message_24.xml",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable/filled_profile_edit_24.xml",
+      "sha256": "31a142ccdd2f7abca3fa54c7b173c14aeda16a0dd8d8979265d53c60a3c654ba",
+      "local": "src/main/res/drawable/telegram_filled_profile_edit_24.xml",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable/outline_profile_edit_24.xml",
+      "sha256": "c094e0cfa21d04020dea6e457012978bc2d20b47a5491644fb8cf9eac44db9e6",
+      "local": "src/main/res/drawable/telegram_outline_profile_edit_24.xml",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_copy.webp",
+      "sha256": "f2c12012e8974a3ca52123044e5240543723b5af4efa832ce3959dce512fee50",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_copy_filled.webp",
+      "sha256": "f048ac5360ff4a8f7dfc70720f442eaa8907082c3018e1cae6bcea6dd243e970",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_copy_filled.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_pin.webp",
+      "sha256": "e8ef8bb01e95108ac9b7e38d15b933ca760a750b4d3b257e31692d978d788538",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_pin.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-mdpi/msg_link.webp",
+      "sha256": "1d872ba286d05087409beb975b321ce5818b80218b8c1d9087aa3b74189999c7",
+      "local": "src/main/res/drawable-mdpi/telegram_msg_link.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_copy.webp",
+      "sha256": "4bf576bbaed88c0fd95473a0a712de1615363b694e6bd2f0b4780c15f99783d6",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_copy_filled.webp",
+      "sha256": "07e796d1c803decbb75b0e164dbc75e73a2beb8c2d253d8c9dbee3890e20077f",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_copy_filled.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_pin.webp",
+      "sha256": "aab11c0a64a29595738c1d4c8816b824f1994405470f3c34287fa573dd06bc1e",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_pin.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-hdpi/msg_link.webp",
+      "sha256": "faed86655fdbaeb6c97977f3185cc835d813d65e2ecda34b183b49c5bbe152f1",
+      "local": "src/main/res/drawable-hdpi/telegram_msg_link.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_copy.webp",
+      "sha256": "44f3da840d0b029d85d02818cd88bc536943ff2d6312e49d61608e8272842d67",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_copy_filled.webp",
+      "sha256": "3a78abdc0a2b39d24c362fce0b070edc492852cc00f2f487bd757e6768b92e8e",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_copy_filled.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_pin.webp",
+      "sha256": "d72e938b173f5f7094d84609b029d67a74c693a7a3c398885fec448027a80828",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_pin.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xhdpi/msg_link.webp",
+      "sha256": "ced8762979cd98dd5ed751c05f4319425028539a9861e02eec0b4a231e993cde",
+      "local": "src/main/res/drawable-xhdpi/telegram_msg_link.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_copy.webp",
+      "sha256": "9818796f4fac8d2a1e1ae09ad923ac012d35426cafd5566c8fd7062c6c5e605d",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_copy.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_copy_filled.webp",
+      "sha256": "e4c05e6ffaeed69dc6bc4baee4e0834ce5aa16fb6c39c55f62c121bd7ec08407",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_copy_filled.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_pin.webp",
+      "sha256": "f8fd0b6a5726647172d339c6e2d53a9f3b353eb905d2ac48d95b38bbe4bf3f8d",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_pin.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    },
+    {
+      "upstream": "TMessagesProj/src/main/res/drawable-xxhdpi/msg_link.webp",
+      "sha256": "72e9124017de96198753c5e409b14fae28a347e6edd9ac664454c4b1e69b8eb7",
+      "local": "src/main/res/drawable-xxhdpi/telegram_msg_link.webp",
+      "license": "GPL-2.0-or-later",
+      "modifications": [
+        "Original icon; renamed with telegram_ prefix, bytes unchanged."
+      ]
+    }
+  ]
+}

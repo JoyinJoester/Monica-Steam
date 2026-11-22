@@ -1,0 +1,26 @@
+{
+  "onlyOwnedPackages": [
+    {
+      "package": "takagi.ru.monica.steamapp.setglass.test",
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "package": "takagi.ru.monica.steamapp.setglass",
+      "exit": 0,
+      "output": "Success\r\n"
+    }
+  ],
+  "shutdownRequested": {
+    "errcode": 0,
+    "errmsg": ""
+  },
+  "stoppedVerified": true,
+  "sharedAvdTouched": false,
+  "sharedAdbStopped": false,
+  "dataDisksPreserved": true,
+  "stoppedIndices": [
+    0,
+    2
+  ]
+}

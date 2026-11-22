@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.SteamLibraryPullRefreshGuardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-13T18:17:28.473Z" hostname="JOYIN" time="0.037">
+  <properties/>
+  <testcase name="overviewUsesRealRefreshStateSharedMenuAndExpressiveIndicator" classname="takagi.ru.monica.steam.library.SteamLibraryPullRefreshGuardTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

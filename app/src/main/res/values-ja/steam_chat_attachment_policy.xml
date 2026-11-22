@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_attachment_file_summary">画像と動画 · 最大 30 MiB</string>
+    <string name="steam_chat_attachment_unsupported_type">Steam チャットで送信できるのは JPG、JPEG、PNG、GIF、WebP、AVIF、WebM、MPG、MPEG、MP4、OGV の画像と動画のみです。ZIP、PDF などのファイルはここでは送信できません。</string>
+    <string name="steam_chat_attachment_invalid_size">空ではない、30 MiB 以下の画像または動画を選択してください。</string>
+    <string name="steam_chat_attachment_limited_account">制限付き Steam アカウントでは添付ファイルをアップロードできません。先にアカウントの制限を解除してください。</string>
+    <string name="steam_chat_attachment_session_expired">Steam セッションの有効期限が切れました。アカウントのセッションを更新して再試行してください。</string>
+    <string name="steam_chat_attachment_rejected">Steam がこの添付ファイルを拒否しました。形式とサイズを確認するか、別の画像や動画を選択してください。</string>
+    <string name="steam_chat_attachment_service_failed">Steam の添付サービスでアップロードを完了できませんでした。しばらくしてから再試行してください。</string>
+</resources>

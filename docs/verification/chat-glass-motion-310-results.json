@@ -1,0 +1,1034 @@
+{
+  "version": "1.0.310",
+  "production_hashes": {
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramEdgeBlurView.java": "cb024a9e3612999cb5947eab41e281b26aa086eced6a99f0849f50ad213d1916",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramGlassView.java": "0ee5bcb29647362d23951bf9876b8cbb87257fa557e05cde3f01445088160088",
+    "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt": "37ea92e1f49373a768c4d77d6e188826a52bb83bcf00c7b181f97fb18f9144e6",
+    "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt": "e4515fade1d066b21b8417fba59fa33a06d59c276540dc180af9e01790414030",
+    "app/src/main/java/takagi/ru/monica/steam/security/SteamAppLockGate.kt": "1746e4f8dc8276d1a041270e8abf91a4f867df74ba452828a41fbb66bb3e43c6",
+    "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt": "7d21588b7eccc9b0b98bd63833529b287fed245a8f2021defd26302e2a8f57dc",
+    "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamNativeCartScreen.kt": "7f3ea5bdc7e5e53188c3af1d927edfc3c952899a61c569fcd635c281d123c49d",
+    "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "d5c8cf06bba5081dbbbc0b5f0726d2e4afeeee9fa65bd44dec83d158052ded92",
+    "app/src/main/java/takagi/ru/monica/steam/store/points/ui/SteamPointsShopScreen.kt": "1cf99385990d7a686a49d54640aafdda6b2a60ec6ba93f26607aaa30d925ec20",
+    "app/src/main/java/takagi/ru/monica/steam/profile/viewer/ui/SteamProfileViewerScreen.kt": "d5a7d5b701fd4c62ec9c2e238604eb0bc4a68cc0e568fd719a97c190eb805444",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "e6e2a9c47b5e8a35a4bb17ef5fd70d1d438b49d258526abaf99709c31b893351",
+    "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt": "a72533ede8d07e6326491dd2c6589fe53b8073efe8da9389a09d10286a8555c4",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatNavigation.kt": "dff4cea7797f21c970510e665bc9b5a8b20c1a955abb11b7ea4ac4e4e44824fd",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt": "51cbbbeb96cd941709edfbdf025e4a9b8f880ec59ba40e7e655a0561f2272a9a",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatSelectedContent.kt": "995156a4d92ae3a55f16ec5f5728e4b2e21fefbadec26b566777d63da10811ec",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt": "15bd4ace7b3911c9cc1f9ed154f6c54adfacb95df47d4e9a45c7685d1dd7d2e9",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt": "38ecaeaeb3e66d56e7acb8b28cfa5a7f3a0e51f44a83f6e0cf58d1e8553a51f2",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPicker.kt": "184d3f9e7824023b70c01be8155877df65568997676751c33e8e3583194a2f67",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramGlassSource.java": "9ae096346d96f22e2378e2efabc74913323c72a21344e9f1b52074d0cd650b68",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/SteamPageMotion.kt": "d3ff7e395dbf9a902b9f9b0d91c8433fe1862c9e319cf778b6490e02ea328417",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamSelectionIndicator.kt": "5fe283c86fa18e8b63bcce23d67b66ba4a96bb4dfaf19d1012e32a2b3566817b"
+  },
+  "builds": {
+    "build-final27": {
+      "exit": 0,
+      "seconds": 61.389288399834186,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        "-PdailySeq=27"
+      ],
+      "appId": "takagi.ru.monica.steamapp.glassmotion",
+      "appApks": [
+        {
+          "file": "Monica-Steam-Android-x86_64-1.0.310-26110918-27.APK",
+          "sha256": "3b5582bbbf625171680ea43a07a7ad07530b7639892f1c44e356904a0f74399e"
+        }
+      ]
+    },
+    "build-main-fixed01": {
+      "exit": 1,
+      "seconds": 7.0870204996317625,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    "build-main-fixed02": {
+      "exit": 0,
+      "seconds": 283.9082764000632,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apkSha256": "446d505b531450170eeafe8ee9123457c995cdf679c0ad547fab8323a83933fd",
+      "appId": "takagi.ru.monica.steamapp.glassmotion",
+      "appApks": [
+        {
+          "file": "Monica-Steam-Android-x86_64-1.0.310-26110918-25.APK",
+          "sha256": "24bb78e441342dc3c601e7423d84655defae835e21c74418a7e2d0927c09bff9"
+        }
+      ]
+    },
+    "build-main-fixed03": {
+      "exit": 0,
+      "seconds": 181.86474610026926,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+        "--tests",
+        "takagi.ru.monica.steam.library.SteamLibraryStoreNavigationGuardTest"
+      ],
+      "apkSha256": "e7dbbe8bb6e7b1a02bb424e82890fe208be57cb5dc599d3d30d4cc3e900f7bb3",
+      "appId": "takagi.ru.monica.steamapp.glassmotion",
+      "appApks": [
+        {
+          "file": "Monica-Steam-Android-x86_64-1.0.310-26110918-26.APK",
+          "sha256": "eb91c70d9c66ebd5b8b63135dce0f57366f708156cefc1d0a4ae48224f1eb97a"
+        }
+      ]
+    },
+    "build-native-baseline": {
+      "exit": 0,
+      "seconds": 30.333910099696368,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        "-PglassBaseline=true"
+      ],
+      "apkSha256": "2e28e75051e79b12d34aec085cf6bb93c0231fa0d0ef0ccce3c5788f3ed341db"
+    },
+    "build-native-coordinates": {
+      "exit": 0,
+      "seconds": 17.145940500311553,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        "-PdailySeq=27"
+      ],
+      "apkSha256": "276eaa02eb7abfbc961799bfeb3359eeebd638f71edead751262fed18463f36d"
+    },
+    "build-native-diagnostics": {
+      "exit": 0,
+      "seconds": 22.44446980021894,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        "-PdailySeq=27"
+      ],
+      "apkSha256": "064f2ef4920358dfaab67e78c1650c1e400e96a731ec3c7f03ae1b9a1f983233"
+    },
+    "build-native-final35": {
+      "exit": 0,
+      "seconds": 17.523579199798405,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest",
+        "-PdailySeq=27"
+      ],
+      "apkSha256": "f35a8b2f3d9bb23623b420e5f748a7fedc4546cdc72a65bce810dfa8c1c6a783"
+    },
+    "build-native-fixed": {
+      "exit": 1,
+      "seconds": 26.05164339998737,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":telegram-chat-ui:assembleDebugAndroidTest"
+      ]
+    },
+    "build-tests-final": {
+      "exit": 0,
+      "seconds": 131.92081330018118,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-glass-motion\\test.gradle",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.ui.MonicaSteamMotionParityTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+        "--tests",
+        "takagi.ru.monica.steam.library.SteamLibraryStoreNavigationGuardTest"
+      ]
+    }
+  },
+  "devices": [
+    {
+      "stage": "native-baseline",
+      "runner_seconds": 7.516,
+      "ok": false,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": -2
+        }
+      ]
+    },
+    {
+      "stage": "fixed02",
+      "runner_seconds": 20.712,
+      "ok": true,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "actualHeaderPopupStaysCompactAndActionsWorkAfterReopening",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "originalBubbleRendererChangesTailAndGroupingAndKeepsAlpha",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "nativeInputPreservesUnicodeMultilineAndSuppressesProgrammaticEcho",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "textCellMeasuresUnicodeRtlAndTimestampWithinNarrowBounds",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "sourceAttachmentAnimationsDecodeAndNativeTargetsDispatch",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "composerEchoKeepsComposingSpanSelectionAndCaptionlessSend",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "ui01",
+      "runner_seconds": 52.726,
+      "ok": false,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+          "status": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterIndicatorMovesBetweenExclusiveSelections",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sharedPageMotionDisposesOldContentAndSupportsReducedMotion",
+          "status": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "status": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "chatSearchKeepsHostPaletteAndSystemTextScale",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "unreadAndCategoriesAreMutuallyExclusive",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "realListToPopulatedThreadFrameSample",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "wallpaperMountCostSample",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "search-retry",
+      "runner_seconds": 3.619,
+      "ok": false,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "status": -2
+        }
+      ]
+    },
+    {
+      "stage": "ui03",
+      "runner_seconds": 131.928,
+      "ok": false,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterIndicatorMovesBetweenExclusiveSelections",
+          "status": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sharedPageMotionDisposesOldContentAndSupportsReducedMotion",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "olderReadingAnchorSurvivesImeAndReopening",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "lightThemeNativeTitleAndLongHistoryRemainInteractive",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "directNativeEditorSendsKeepsImeAndRetries",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "test": "rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "conversationFiltersOpenTheCorrectDetailAndMessageAction",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "embeddedInboxComposeSelectsAnExistingFriend",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "friendFiltersAndIncomingRequestKeepTheirCallbacks",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "groupPreferencesAndMemberSearchPreserveNavigation",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "officialEmojiPackDecodesAndNativePickerReturnsUnicode",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "inboxUnreadSearchPinsAndToolbarKeepNavigation",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "telegramConversationLargeTextFitsAndAccessibilityUsesHostLocale",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "telegramInboxMenuSearchAndUnreadPreserveNavigation",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "nativePhotoGridSelectsOwnedMediaBeforeConfirming",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "telegramConversationNativeMenuKeepsTargetAndDeleteConfirmation",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "originalDocumentCellsPreserveFolderAndFileCallbacks",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "final32",
+      "runner_seconds": 58.483,
+      "ok": true,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterIndicatorMovesBetweenExclusiveSelections",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sharedPageMotionDisposesOldContentAndSupportsReducedMotion",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "test": "chatSearchKeepsHostPaletteAndSystemTextScale",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "unreadAndCategoriesAreMutuallyExclusive",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "realListToPopulatedThreadFrameSample",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "test": "wallpaperMountCostSample",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "liquid32",
+      "runner_seconds": 12.355,
+      "ok": true,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "telegramInboxMenuSearchAndUnreadPreserveNavigation",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "native36",
+      "runner_seconds": null,
+      "ok": false,
+      "methods": []
+    },
+    {
+      "stage": "native35",
+      "runner_seconds": 26.242,
+      "ok": false,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "kyantRefractionReusesEffectAndUpdatesResizedGeometry",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "originalBubbleRendererChangesTailAndGroupingAndKeepsAlpha",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "nativeInputPreservesUnicodeMultilineAndSuppressesProgrammaticEcho",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "textCellMeasuresUnicodeRtlAndTimestampWithinNarrowBounds",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "originalAgslCompilesAndAcceptsRealRenderNodeDimensions",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "sourceAttachmentAnimationsDecodeAndNativeTargetsDispatch",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "composerEchoKeepsComposingSpanSelectionAndCaptionlessSend",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "actualHeaderPopupStaysCompactAndActionsWorkAfterReopening",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "diagnostics",
+      "runner_seconds": 6.43,
+      "ok": false,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "kyantRefractionReusesEffectAndUpdatesResizedGeometry",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": -2
+        }
+      ]
+    },
+    {
+      "stage": "native-diagnostics",
+      "runner_seconds": 6.71,
+      "ok": false,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "kyantRefractionReusesEffectAndUpdatesResizedGeometry",
+          "status": -2
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": -2
+        }
+      ]
+    },
+    {
+      "stage": "native-coordinates",
+      "runner_seconds": 3.107,
+      "ok": false,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "kyantRefractionReusesEffectAndUpdatesResizedGeometry",
+          "status": -2
+        }
+      ]
+    },
+    {
+      "stage": "native-final35",
+      "runner_seconds": 22.926,
+      "ok": true,
+      "methods": [
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "sixPillsShareOneCaptureAndRefreshLivePixels",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "kyantRefractionReusesEffectAndUpdatesResizedGeometry",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramGlassRenderingTest",
+          "test": "movingPillAndReplacingSourceKeepCorrectPixels",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "originalBubbleRendererChangesTailAndGroupingAndKeepsAlpha",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "nativeInputPreservesUnicodeMultilineAndSuppressesProgrammaticEcho",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "textCellMeasuresUnicodeRtlAndTimestampWithinNarrowBounds",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "originalAgslCompilesAndAcceptsRealRenderNodeDimensions",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "sourceAttachmentAnimationsDecodeAndNativeTargetsDispatch",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramSourceRuntimeTest",
+          "test": "composerEchoKeepsComposingSpanSelectionAndCaptionlessSend",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont",
+          "status": 0
+        },
+        {
+          "class": "com.monica.telegramchat.TelegramPopupSizeTest",
+          "test": "actualHeaderPopupStaysCompactAndActionsWorkAfterReopening",
+          "status": 0
+        }
+      ]
+    },
+    {
+      "stage": "glass35",
+      "runner_seconds": 48.027,
+      "ok": true,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "filterIndicatorMovesBetweenExclusiveSelections",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sharedPageMotionDisposesOldContentAndSupportsReducedMotion",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "status": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "status": 0
+        }
+      ]
+    }
+  ],
+  "jvm": {
+    "tests": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "apks": {
+    "app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26110918-27.APK": "3b5582bbbf625171680ea43a07a7ad07530b7639892f1c44e356904a0f74399e",
+    "app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "4e7e9b936f0a7fda2938d7860d61d0d483d5340559cc24cb550f3e3707375ce9",
+    "telegram-chat-ui\\build\\outputs\\apk\\androidTest\\debug\\telegram-chat-ui-debug-androidTest.apk": "f35a8b2f3d9bb23623b420e5f748a7fedc4546cdc72a65bce810dfa8c1c6a783"
+  },
+  "source_draws": {
+    "baseline": 13,
+    "fixed": 2,
+    "meaning": "Controlled update of six glass views; not FPS"
+  },
+  "cleanup": {
+    "api32": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\r\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.glassmotion.test"
+        ],
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.glassmotion"
+        ],
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "com.monica.telegramchat.glassmotiontest"
+        ],
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\r\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\r\n"
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\r\r\nOK\r\r\n"
+      }
+    ],
+    "api35": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:鏈轰富:4c13} running\n\tUserInfo{11:Paysage:410}\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.glassmotion.test"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.glassmotion"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "com.monica.telegramchat.glassmotiontest"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "glassmotion"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:鏈轰富:4c13} running\n\tUserInfo{11:Paysage:410}\n"
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ]
+  },
+  "api36_config_preserved": {
+    "C:\\Users\\joyins\\.android\\avd\\Monica_LiveUpdates_API_36_1_4K.ini": true,
+    "D:\\AndroidSDK\\codex-avd\\monica-live-updates-api36-1-standard-20260930\\config.ini": true
+  },
+  "api35_config_preserved": {
+    "C:\\Users\\joyins\\.android\\avd\\Pixel_Fold_API_35.ini": true,
+    "D:\\Android\\avd\\Pixel_Fold_API_35.avd\\config.ini": true
+  },
+  "limits": [
+    "Synthetic data only",
+    "Debug x86_64 software GPU",
+    "No phone/OEM/R8 performance acceptance",
+    "API36 system graphics crash before app installation; API35 used for runtime shader"
+  ],
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apk_delivered": false
+}

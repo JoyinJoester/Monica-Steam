@@ -1,0 +1,1 @@
+simpleperf E event_selection_set.cpp:742] failed to open perf event file for event_type cpu-clock:u: Permission denied

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_stats_friends">好友游玩对比</string>
+    <string name="steam_game_stats_you">我</string>
+    <string name="steam_game_stats_friend_average">好友平均</string>
+    <string name="steam_game_stats_readable_friends">统计了 %1$d 位公开时长的好友</string>
+    <string name="steam_game_stats_no_friend_times">暂无可读取的好友游玩时长</string>
+    <string name="steam_game_stats_badges">游戏徽章</string>
+    <string name="steam_game_stats_no_badges">暂无徽章或集换式卡片</string>
+    <string name="steam_game_stats_card_owned">已拥有</string>
+    <string name="steam_game_stats_card_missing">未拥有</string>
+    <string name="steam_game_stats_no_points">此游戏暂无点数商品</string>
+    <string name="steam_game_stats_points_cost">%1$d 点数</string>
+    <string name="steam_game_stats_view_all">查看全部</string>
+    <string name="steam_game_stats_section_unavailable">暂时无法读取，可刷新重试或在 Steam 查看。</string>
+</resources>

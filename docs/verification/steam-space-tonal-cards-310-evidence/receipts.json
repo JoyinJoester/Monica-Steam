@@ -1,0 +1,67 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "48533fb19f707714e4a73fff8559276bd479479a876292ad6b3d62ef2ed0d11d",
+    "normalizedSha256": "ddd69d3a23f687a61e63722c12ec0622405350c3ca4aace5ae17f0d724090907"
+  },
+  {
+    "file": "build01.json",
+    "rawSha256": "d90dc234e869b7460da880a3e4cba4ac6a668a13eaba0b6f64994f1f2465a11e",
+    "normalizedSha256": "d90dc234e869b7460da880a3e4cba4ac6a668a13eaba0b6f64994f1f2465a11e"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "badc3dcea392367c9a9f05e5cb2f21d16349e177be6ab3242142f6ffc6c29a23",
+    "normalizedSha256": "badc3dcea392367c9a9f05e5cb2f21d16349e177be6ab3242142f6ffc6c29a23"
+  },
+  {
+    "file": "device01.json",
+    "rawSha256": "95f69d09db9f53edb68fc82758a20fee00ab7aed062940a3ab2f0c08224c8b89",
+    "normalizedSha256": "95f69d09db9f53edb68fc82758a20fee00ab7aed062940a3ab2f0c08224c8b89"
+  },
+  {
+    "file": "device-results.json",
+    "rawSha256": "0504c93f2292ee2f775876336928b829149c8ba7384f22b6434cf782c58dba75",
+    "normalizedSha256": "0504c93f2292ee2f775876336928b829149c8ba7384f22b6434cf782c58dba75"
+  },
+  {
+    "file": "jvm-summary.json",
+    "rawSha256": "05769076e6fa791f489e3346ddc50d1c3a082db8cf0989f29946c1e71e35ccba",
+    "normalizedSha256": "05769076e6fa791f489e3346ddc50d1c3a082db8cf0989f29946c1e71e35ccba"
+  },
+  {
+    "file": "source-hashes.json",
+    "rawSha256": "5a702ec6980e1478c8a44f9f932622a28883a2dfd64c92999273d28159c68376",
+    "normalizedSha256": "5a702ec6980e1478c8a44f9f932622a28883a2dfd64c92999273d28159c68376"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924",
+    "normalizedSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest.xml",
+    "rawSha256": "f9cae0722cd507371031852938f8eed220f06398165ef67acce8f4d4451fabde",
+    "normalizedSha256": "f9cae0722cd507371031852938f8eed220f06398165ef67acce8f4d4451fabde"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.space.data.SteamSpaceServiceTest.xml",
+    "rawSha256": "764fc291b4ca7c0d9848e371f6514a7e3bd785a3fd5a20a0c8d39980abebe457",
+    "normalizedSha256": "764fc291b4ca7c0d9848e371f6514a7e3bd785a3fd5a20a0c8d39980abebe457"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.space.presentation.SteamSpaceContentSettingsViewModelTest.xml",
+    "rawSha256": "5833f28a429d32ad8ceaccb67e523af2219ffe311e99782cd7cbe92971fd7bbc",
+    "normalizedSha256": "5833f28a429d32ad8ceaccb67e523af2219ffe311e99782cd7cbe92971fd7bbc"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest.xml",
+    "rawSha256": "e3f7ee7e441656769951dfebcce26e1aee477b7100352e692fb8f013c6e24cf1",
+    "normalizedSha256": "e3f7ee7e441656769951dfebcce26e1aee477b7100352e692fb8f013c6e24cf1"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest.xml",
+    "rawSha256": "3e397b959f10e05df513c80d8bfe22436f81f6578df6cb2b451e60d355435c5d",
+    "normalizedSha256": "3e397b959f10e05df513c80d8bfe22436f81f6578df6cb2b451e60d355435c5d"
+  }
+]

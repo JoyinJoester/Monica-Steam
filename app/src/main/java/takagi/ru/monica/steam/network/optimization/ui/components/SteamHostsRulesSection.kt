@@ -205,6 +205,7 @@ private fun SteamHostsRuleCard(
     }
 }
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SteamHostTargetRow(
     address: String,

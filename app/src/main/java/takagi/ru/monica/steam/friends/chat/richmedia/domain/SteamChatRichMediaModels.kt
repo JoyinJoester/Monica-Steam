@@ -75,6 +75,13 @@ data class SteamChatUploadedAttachment(
     val spoiler: Boolean
 )
 
+data class SteamChatImageSource(
+    val url: String,
+    val label: String,
+    val width: Int = 0,
+    val height: Int = 0
+)
+
 sealed interface SteamChatRichContent {
     data class Text(
         val body: String,
@@ -91,7 +98,8 @@ sealed interface SteamChatRichContent {
         val url: String?,
         val label: String,
         val rawBody: String,
-        val inviteKind: String = "gameinvite"
+        val inviteKind: String = "gameinvite",
+        val caption: String = ""
     ) : SteamChatRichContent
 
     /** A standard Steam store link shared in chat, rendered as a native game card. */
@@ -114,7 +122,9 @@ sealed interface SteamChatRichContent {
         val url: String,
         val label: String,
         val kind: SteamChatAttachmentKind,
-        val spoiler: Boolean = false
+        val spoiler: Boolean = false,
+        val images: List<SteamChatImageSource> = emptyList(),
+        val caption: String = ""
     ) : SteamChatRichContent
 }
 
@@ -151,10 +161,6 @@ object SteamChatRichContentParser {
         """\[emoticon(?:\s+([^\]]+))?](.*?)\[/emoticon\s*]""",
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
-    private val joinLobbyPattern = Regex(
-        "steam://joinlobby/(\\d+)(?:/([^/\\s\\]]+))?(?:/(7656119\\d{10}))?",
-        RegexOption.IGNORE_CASE
-    )
     private val gameUrlPattern = Regex(
         "steam://(joinlobby|joinparty|rungame|rungameid|run|launch|remoteplay/connect)/([^\\s\\]]+)",
         RegexOption.IGNORE_CASE
@@ -164,12 +170,8 @@ object SteamChatRichContentParser {
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
     private val specialTagPattern = Regex(
-        "\\[(gameinvite|lobbyinvite|tradeoffer|trade_offer|incomingtradeoffer|broadcastinvite|broadcastviewrequest|playtestinvite|remoteplayinvite|gift|giftreceived|giftnotification|inventoryitem|itemnotification|newitem|friendinvite|friendrequest|claninvite|groupinvite|eventnotification|commentnotification|marketnotification|invite)(?:\\s+([^]]+))?](.*?)\\[/\\1]",
+        """\[(gameinvite|lobbyinvite)(?:\s+([^]]+))?](.*?)\[/\1]""",
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
-    )
-    private val officialSelfClosingMessagePattern = Regex(
-        "^\\[(tradeoffer|trade_offer|incomingtradeoffer|broadcastinvite|broadcastviewrequest|playtestinvite|remoteplayinvite|gift|giftreceived|giftnotification|inventoryitem|itemnotification|newitem|friendinvite|friendrequest|claninvite|groupinvite|eventnotification|commentnotification|marketnotification)(?:\\s+([^]]+))?]\\s*$",
-        RegexOption.IGNORE_CASE
     )
     private val selfClosingGameInvitePattern = Regex(
         "^\\[(gameinvite|lobbyinvite)(?:\\s+([^]]+))?]\\s*$",
@@ -192,10 +194,6 @@ object SteamChatRichContentParser {
         "(?:https?://|steam://)[^\\s\\]]+",
         RegexOption.IGNORE_CASE
     )
-    private val steamTradeOfferUrlPattern = Regex(
-        "https://steamcommunity\\.com/tradeoffer/(?:new/\\?[^\\s\\[\\]]+|\\d+/?[^\\s\\[\\]]*)",
-        RegexOption.IGNORE_CASE
-    )
     private val steamStoreAppUrlPattern = Regex(
         "https?://(?:store\\.steampowered\\.com|store\\.steamcommunity\\.com)/app/(\\d+)(?:/[^\\s\\]\\[]*)?",
         RegexOption.IGNORE_CASE
@@ -205,7 +203,7 @@ object SteamChatRichContentParser {
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
     private val imagePattern = Regex(
-        """\[img(?:\s+([^]]+)|=([^]]+))?](.*?)\[/img\s*]""",
+        """\[img(?:\s+([^]]+)|=([^]]+))?](\s*\[url(?:=[^]]+)?][^\[]*\[/url\s*]\s*|[^\[]*?)\[/img\s*]""",
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
     private val attributedImagePattern = Regex(
@@ -222,7 +220,8 @@ object SteamChatRichContentParser {
         setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    fun parse(body: String): SteamChatRichContent {
+    fun parse(body: String, messageSenderSteamId: String? = null): SteamChatRichContent {
+        SteamChatOpenGraphCardParser.parse(body)?.let { return it }
         actionPattern.matchEntire(body.trim())?.groupValues?.getOrNull(1)
             ?.trim()
             ?.takeIf(String::isNotBlank)
@@ -251,98 +250,49 @@ object SteamChatRichContentParser {
                 rawBody = body
             )?.let { return it }
         }
+        SteamChatOfficialMessageParser.parseBody(body, messageSenderSteamId)?.let {
+            return SteamChatRichContent.OfficialMessage(it)
+        }
+
         selfClosingGameInvitePattern.matchEntire(body.trim())?.let { match ->
             return parseGameInviteTag(
                 kind = match.groupValues[1],
                 rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
                 innerText = "",
-                rawBody = body
+                rawBody = body,
+                messageSenderSteamId = messageSenderSteamId
             )
         }
-        officialSelfClosingMessagePattern.matchEntire(body.trim())?.let { match ->
-            return SteamChatRichContent.OfficialMessage(
-                SteamChatOfficialMessageParser.parse(
-                    tag = match.groupValues[1],
-                    rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
-                    innerText = "",
-                    rawBody = body
-                )
-            )
-        }
-
-        val inviteMatch = joinLobbyPattern.find(body)
-        if (inviteMatch != null) {
-            val url = inviteMatch.value
-            val linkedLabel = linkedUrlPattern.find(body)?.groupValues?.getOrNull(2)
-                ?.trim()
-                .orEmpty()
-            return SteamChatRichContent.GameInvite(
-                appId = inviteMatch.groupValues.getOrNull(1)?.toIntOrNull(),
-                lobbyId = inviteMatch.groupValues.getOrNull(2)?.takeIf(String::isNotBlank),
-                inviterSteamId = inviteMatch.groupValues.getOrNull(3)?.takeIf(String::isNotBlank),
-                url = url,
-                label = linkedLabel.ifBlank { "Steam game invitation" },
-                rawBody = body
-            )
-        }
-
-        gameUrlPattern.find(body)?.let { match ->
+        val singleLink = plainLinkPattern.findAll(body).take(2).count() == 1
+        gameUrlPattern.find(body)?.takeIf { singleLink && ('[' !in body || linkedUrlPattern.matchEntire(body.trim()) != null) }?.let { match ->
             val kind = match.groupValues[1].lowercase()
             val parts = match.groupValues[2].split('/')
-            val appId = parts.firstOrNull()?.toIntOrNull()
+            val safeUrl = SteamChatCardLinks.gameInvite(match.value) ?: return@let
+            val appId = if (kind == "remoteplay/connect") {
+                SteamChatCardLinks.uri(safeUrl)?.let { SteamChatCardLinks.query(it, "appid") }?.toIntOrNull()
+            } else parts.firstOrNull()?.toIntOrNull()
             val lobbyId = parts.getOrNull(1)?.takeIf { kind == "joinlobby" }
             val inviter = parts.firstOrNull { it.startsWith("7656119") }
             return SteamChatRichContent.GameInvite(
                 appId = appId,
                 lobbyId = lobbyId,
                 inviterSteamId = inviter,
-                url = match.value,
+                url = safeUrl,
                 label = linkedUrlPattern.find(body)?.groupValues?.getOrNull(2)?.trim()
                     .orEmpty().ifBlank { "Steam game invitation" },
                 rawBody = body,
-                inviteKind = kind
+                inviteKind = kind,
+                caption = if ('[' !in body) body.removeRange(match.range).trim() else ""
             )
         }
 
-        steamTradeOfferUrlPattern.find(body)?.let { match ->
-            return SteamChatRichContent.OfficialMessage(
-                SteamChatOfficialMessageParser.parse(
-                    tag = "tradeoffer",
-                    rawAttributes = "",
-                    innerText = match.value,
-                    rawBody = body
-                )
-            )
-        }
-
-        specialTagPattern.find(body)?.let { match ->
-            val kind = match.groupValues[1].lowercase()
-            val attributes = parseAttributes(match.groupValues.getOrNull(2).orEmpty())
-            val innerText = match.groupValues.getOrNull(3).orEmpty().trim()
-            if (kind == "gameinvite" || kind == "lobbyinvite") {
-                return parseGameInviteTag(
-                    kind = kind,
-                    rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
-                    innerText = innerText,
-                    rawBody = body
-                )
-            }
-            val appId = attributes.firstValue("appid", "app_id", "gameid", "game_id")
-                ?.toIntOrNull()
-            val lobbyId = attributes.firstValue("lobbyid", "lobby_id", "lobby")
-            val inviter = attributes.firstValue("steamid", "steamid64", "steam_id")
-            val url = steamUrlPattern.find(innerText)?.value
-                ?: httpUrlPattern.find(innerText)?.value
-                ?: buildInviteUrl(kind, appId, lobbyId, inviter, attributes)
-            return SteamChatRichContent.OfficialMessage(
-                SteamChatOfficialMessageParser.parse(
-                    tag = kind,
-                    rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
-                    innerText = innerText,
-                    rawBody = body
-                ).let { official ->
-                    if (official.url == null && url != null) official.copy(url = url) else official
-                }
+        specialTagPattern.matchEntire(body.trim())?.let { match ->
+            if ('[' !in match.groupValues[3]) return parseGameInviteTag(
+                kind = match.groupValues[1].lowercase(),
+                rawAttributes = match.groupValues.getOrNull(2).orEmpty(),
+                innerText = match.groupValues.getOrNull(3).orEmpty().trim(),
+                rawBody = body,
+                messageSenderSteamId = messageSenderSteamId
             )
         }
 
@@ -525,35 +475,45 @@ object SteamChatRichContentParser {
     }
 
     private fun parseAttachment(body: String, spoiler: Boolean): SteamChatRichContent.Attachment? {
-        imagePattern.find(body)?.let { match ->
-            val rawAttributes = match.groupValues.getOrNull(1).orEmpty()
-                .ifBlank { match.groupValues.getOrNull(2).orEmpty() }
-            val attributes = parseAttributes(rawAttributes)
-            val url = normalizeAttachmentUrl(
-                attributes["src"]
-                    ?: match.groupValues.getOrNull(3).orEmpty()
-            )
-            if (httpUrlPattern.matchEntire(url) == null) return@let
-            return SteamChatRichContent.Attachment(
-                url = url,
-                label = fileLabel(url),
-                kind = SteamChatAttachmentKind.IMAGE,
-                spoiler = spoiler
-            )
-        }
-        attributedImagePattern.find(body)?.let { match ->
-            val attributes = parseAttributes(match.groupValues[1])
-            val url = normalizeAttachmentUrl(
-                attributes["src"] ?: attributes["thumbnail_src"].orEmpty()
-            )
-            if (httpUrlPattern.matchEntire(url) != null) {
-                return SteamChatRichContent.Attachment(
-                    url = url,
-                    label = fileLabel(url),
-                    kind = SteamChatAttachmentKind.IMAGE,
-                    spoiler = spoiler
-                )
+        val pairedImages = imagePattern.findAll(body).take(11).toList()
+        val images = (pairedImages + attributedImagePattern.findAll(body)
+            .filter { single -> pairedImages.none { single.range.first in it.range } }.take(11))
+            .sortedBy { it.range.first }
+        if (images.isNotEmpty()) {
+            if (images.size > 10) return null
+            val consumed = images.map { it.range }.toMutableList()
+            val sources = images.mapIndexed { index, match ->
+                val attributes = parseAttributes(match.groupValues[1].ifBlank { match.groupValues.getOrNull(2).orEmpty() })
+                val inner = match.groupValues.getOrNull(3).orEmpty().trim()
+                val wrapper = anyBbcodeUrlPattern.matchEntire(inner)
+                val wrappedUrl = wrapper?.let(::imageWrapperUrl) ?: if (wrapper != null) return null else null
+                val url = normalizeAttachmentUrl(attributes["src"] ?: attributes["thumbnail_src"]
+                    ?: wrappedUrl ?: inner)
+                if (httpUrlPattern.matchEntire(url) == null) return null
+                // A wrapper is image transport only when both its target and visible URL match the image.
+                if (wrappedUrl != null && wrappedUrl != url) return null
+                if (match !in pairedImages) {
+                    val tail = body.substring(match.range.last + 1)
+                    val linkedWrapper = anyBbcodeUrlPattern.find(tail)
+                        ?.takeIf { tail.substring(0, it.range.first).isBlank() }
+                    if (linkedWrapper != null) {
+                        if (imageWrapperUrl(linkedWrapper) != url) return null
+                        consumed[index] = match.range.first..(match.range.last + 1 + linkedWrapper.range.last)
+                    } else httpUrlPattern.find(tail)?.let { linked ->
+                        if (tail.substring(0, linked.range.first).isBlank() && normalizeAttachmentUrl(linked.value) == url)
+                            consumed[index] = match.range.first..(match.range.last + 1 + linked.range.last)
+                    }
+                }
+                SteamChatImageSource(url, fileLabel(url),
+                    (attributes["width"] ?: attributes["w"])?.toIntOrNull()?.takeIf { it in 1..16384 } ?: 0,
+                    (attributes["height"] ?: attributes["h"])?.toIntOrNull()?.takeIf { it in 1..16384 } ?: 0)
             }
+            var caption = body
+            consumed.asReversed().forEach { caption = caption.removeRange(it) }
+            // Do not silently discard an unmatched image or other rich block.
+            if ('[' in caption || ']' in caption) return null
+            return SteamChatRichContent.Attachment(sources.first().url, sources.first().label,
+                SteamChatAttachmentKind.IMAGE, spoiler, sources, caption.trim())
         }
         videoPattern.find(body)?.let { match ->
             val url = normalizeAttachmentUrl(match.groupValues[1])
@@ -587,6 +547,12 @@ object SteamChatRichContentParser {
             )
         }
         return null
+    }
+
+    private fun imageWrapperUrl(match: MatchResult): String? {
+        val text = normalizeAttachmentUrl(match.groupValues[2].ifBlank { match.groupValues[3] })
+        val target = normalizeAttachmentUrl(match.groupValues[1].ifBlank { text })
+        return target.takeIf { it == text && httpUrlPattern.matchEntire(it) != null }
     }
 
     private fun normalizeAttachmentUrl(value: String): String = value
@@ -644,7 +610,8 @@ object SteamChatRichContentParser {
         kind: String,
         rawAttributes: String,
         innerText: String,
-        rawBody: String
+        rawBody: String,
+        messageSenderSteamId: String? = null
     ): SteamChatRichContent.GameInvite {
         val normalizedKind = kind.lowercase()
         val attributes = parseAttributes(rawAttributes)
@@ -656,7 +623,7 @@ object SteamChatRichContentParser {
                 ?.getOrNull(1)
                 ?.toIntOrNull()
         val lobbyId = attributes.firstValue("lobbyid", "lobby_id", "lobby")
-        val inviter = attributes.firstValue("steamid", "steamid64", "steam_id")
+        val inviter = attributes.firstValue("steamid", "steamid64", "steam_id") ?: messageSenderSteamId
         val url = steamUrlPattern.find(innerText)?.value
             ?: httpUrlPattern.find(innerText)?.value
             ?: buildInviteUrl(normalizedKind, appId, lobbyId, inviter, attributes)
@@ -664,7 +631,7 @@ object SteamChatRichContentParser {
             appId = appId,
             lobbyId = lobbyId,
             inviterSteamId = inviter,
-            url = url,
+            url = SteamChatCardLinks.gameInvite(url),
             label = innerText.ifBlank { "Steam game invitation" },
             rawBody = rawBody,
             inviteKind = normalizedKind
@@ -701,15 +668,6 @@ object SteamChatRichContentParser {
         value,
         StandardCharsets.UTF_8.name()
     ).replace("+", "%20")
-
-    private fun steamSpecialLabel(kind: String): String = when (kind) {
-        "tradeoffer" -> "Steam trade offer"
-        "broadcastinvite" -> "Steam broadcast invitation"
-        "broadcastviewrequest" -> "Steam broadcast request"
-        "playtestinvite" -> "Steam playtest invitation"
-        "invite" -> "Steam invitation"
-        else -> "Steam notification"
-    }
 
     private fun fileLabel(url: String): String = runCatching {
         URLDecoder.decode(

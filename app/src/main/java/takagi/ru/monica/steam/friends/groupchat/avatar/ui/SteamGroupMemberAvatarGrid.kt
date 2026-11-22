@@ -1,143 +1,109 @@
 package takagi.ru.monica.steam.friends.groupchat.avatar.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.dp
 import kotlin.math.min
-import kotlin.math.roundToInt
-import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage
 import takagi.ru.monica.steam.friends.domain.SteamFriend
 
+/** Uses the same masked bitmap as the native inbox avatar, including its ink placement. */
 @Composable
 internal fun SteamGroupMemberAvatarGrid(
     members: List<SteamFriend>,
     contentDescription: String?,
     modifier: Modifier = Modifier
 ) {
-    val visibleMembers = remember(members) {
-        members.distinctBy(SteamFriend::steamId).take(MAX_GROUP_AVATAR_MEMBERS)
-    }
-    val rows = remember(visibleMembers.size) { steamGroupAvatarRows(visibleMembers.size) }
-    val accessibilityModifier = contentDescription?.let { description ->
-        Modifier.semantics { this.contentDescription = description }
-    } ?: Modifier
-
-    Layout(
-        content = {
-            visibleMembers.forEach { member ->
-                SteamGroupMemberAvatarTile(member)
-            }
-        },
-        modifier = modifier
-            .then(accessibilityModifier)
-            .padding(3.dp)
-    ) { measurables, constraints ->
-        val width = if (constraints.hasBoundedWidth) constraints.maxWidth else constraints.minWidth
-        val height = if (constraints.hasBoundedHeight) constraints.maxHeight else constraints.minHeight
-        if (measurables.isEmpty() || rows.isEmpty()) {
-            layout(width, height) {}
-        } else {
-            val rowCount = rows.size
-            val columnCount = rows.maxOrNull()?.coerceAtLeast(1) ?: 1
-            val gap = (min(width, height) * GROUP_AVATAR_GAP_RATIO)
-                .roundToInt()
-                .coerceAtLeast(1)
-            val tileWidth = (width - gap * (columnCount - 1)) / columnCount
-            val tileHeight = (height - gap * (rowCount - 1)) / rowCount
-            val tileSize = min(tileWidth, tileHeight).coerceAtLeast(1)
-            val placeables = measurables.map { measurable ->
-                measurable.measure(Constraints.fixed(tileSize, tileSize))
-            }
-            val gridHeight = rowCount * tileSize + (rowCount - 1) * gap
-
-            layout(width, height) {
-                var memberIndex = 0
-                var y = (height - gridHeight) / 2
-                rows.forEach { membersInRow ->
-                    val rowWidth = membersInRow * tileSize + (membersInRow - 1) * gap
-                    var x = (width - rowWidth) / 2
-                    repeat(membersInRow) {
-                        placeables[memberIndex].placeRelative(x, y)
-                        memberIndex++
-                        x += tileSize + gap
-                    }
-                    y += tileSize + gap
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamGroupMemberAvatarTile(member: SteamFriend) {
-    val context = LocalContext.current
-    val bitmap by produceState<ImageBitmap?>(initialValue = null, key1 = member.avatarUrl) {
-        value = member.avatarUrl
-            .takeIf(String::isNotBlank)
-            ?.let { loadSteamRemoteImage(context, it) }
-    }
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        shape = RoundedCornerShape(2.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHighest
-    ) {
-        val avatar = bitmap
-        if (avatar != null) {
+    BoxWithConstraints(modifier.fillMaxSize()) {
+        val side = minOf(maxWidth, maxHeight)
+        if (side.value.isFinite() && side.value > 0f) {
+            val bitmap = rememberSteamGroupAvatarBitmap(members, "", side)
             Image(
-                bitmap = avatar,
-                contentDescription = null,
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = contentDescription,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
-        } else {
-            Box(contentAlignment = Alignment.Center) {
-                Text(
-                    text = member.displayName.take(1).uppercase(),
-                    style = MaterialTheme.typography.labelSmall,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Clip
-                )
-            }
         }
     }
 }
 
-internal fun steamGroupAvatarRows(memberCount: Int): List<Int> = when (
-    memberCount.coerceIn(0, MAX_GROUP_AVATAR_MEMBERS)
-) {
-    0 -> emptyList()
-    1 -> listOf(1)
-    2 -> listOf(2)
-    3 -> listOf(1, 2)
-    4 -> listOf(2, 2)
-    5 -> listOf(2, 3)
-    6 -> listOf(3, 3)
-    7 -> listOf(1, 3, 3)
-    8 -> listOf(2, 3, 3)
-    else -> listOf(3, 3, 3)
+/** A member's share of the disc: the rectangle it covers plus the sector bounds to clip to. */
+internal data class GroupAvatarSlot(
+    val bounds: Rect,
+    val startAngle: Float,
+    val sweepAngle: Float,
+    /** Font size as a fraction of the slot's shortest edge. */
+    val initialScale: Float,
+    val isWholeDisc: Boolean = false
+)
+
+/** Number of member tiles actually drawn; more than four is unreadable at avatar sizes. */
+internal fun steamGroupAvatarTileCount(memberCount: Int): Int =
+    memberCount.coerceIn(0, MAX_GROUP_AVATAR_TILES)
+
+/**
+ * Pure geometry: no [Path] is built here so the layout stays unit-testable off-device.
+ * `startAngle` is degrees clockwise from 3 o'clock, matching [Path.arcTo].
+ */
+internal fun steamGroupAvatarSlots(circle: Rect, memberCount: Int): List<GroupAvatarSlot> {
+    val count = steamGroupAvatarTileCount(memberCount)
+    if (count <= 0 || circle.width <= 0f || circle.height <= 0f) return emptyList()
+    val oval = circle.fitSquare()
+    val center = oval.center
+    val left = oval.left
+    val right = oval.right
+    val top = oval.top
+    val bottom = oval.bottom
+    return when (count) {
+        1 -> listOf(GroupAvatarSlot(oval, 0f, 360f, 0.40f, isWholeDisc = true))
+        2 -> listOf(
+            GroupAvatarSlot(Rect(left, top, right, center.y), 180f, 180f, 0.72f),
+            GroupAvatarSlot(Rect(left, center.y, right, bottom), 0f, 180f, 0.72f)
+        )
+        3 -> listOf(
+            GroupAvatarSlot(Rect(left, top, right, center.y), 180f, 180f, 0.72f),
+            GroupAvatarSlot(Rect(left, center.y, center.x, bottom), 90f, 90f, 0.70f),
+            GroupAvatarSlot(Rect(center.x, center.y, right, bottom), 0f, 90f, 0.70f)
+        )
+        else -> listOf(
+            GroupAvatarSlot(Rect(left, top, center.x, center.y), 180f, 90f, 0.70f),
+            GroupAvatarSlot(Rect(center.x, top, right, center.y), 270f, 90f, 0.70f),
+            GroupAvatarSlot(Rect(left, center.y, center.x, bottom), 90f, 90f, 0.70f),
+            GroupAvatarSlot(Rect(center.x, center.y, right, bottom), 0f, 90f, 0.70f)
+        )
+    }
 }
 
-private const val MAX_GROUP_AVATAR_MEMBERS = 9
-private const val GROUP_AVATAR_GAP_RATIO = 0.045f
+/** Largest centred square inside [this], so the avatar stays circular in non-square slots. */
+internal fun Rect.fitSquare(): Rect {
+    val side = min(width, height)
+    return Rect(
+        offset = Offset(center.x - side / 2f, center.y - side / 2f),
+        size = Size(side, side)
+    )
+}
+
+internal fun GroupAvatarSlot.toPath(circle: Rect): Path {
+    val oval = circle.fitSquare()
+    return Path().apply {
+        if (isWholeDisc) {
+            addOval(oval)
+        } else {
+            // Every sector is a wedge from the centre, so one arc plus close() is enough:
+            // for halves the two radii collapse onto the diameter and the wedge stays exact.
+            moveTo(oval.center.x, oval.center.y)
+            arcTo(oval, startAngle, sweepAngle, false)
+            close()
+        }
+    }
+}
+
+private const val MAX_GROUP_AVATAR_TILES = 4

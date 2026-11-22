@@ -27,6 +27,7 @@ import okhttp3.Response
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okio.BufferedSink
 import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicy
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentGateway
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentKind
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentTarget
@@ -45,23 +46,17 @@ class SteamChatAttachmentUploader internal constructor(
     override suspend fun inspect(rawUri: String): SteamChatPendingAttachment {
         val uri = Uri.parse(rawUri)
         val metadata = queryMetadata(uri)
-        val reportedMimeType = resolver.getType(uri).orEmpty()
-        val mimeType = if (reportedMimeType.isBlank() ||
-            reportedMimeType == "application/octet-stream"
-        ) {
-            mimeTypeFromName(metadata.first)
-        } else {
-            reportedMimeType
-        }
-        val kind = attachmentKind(metadata.first, mimeType)
-        require(kind != null) { "Unsupported Steam chat attachment type" }
+        val mediaType = SteamChatAttachmentPolicy.mediaType(metadata.first, resolver.getType(uri).orEmpty())
+            ?: throw SteamChatUploadException.unsupportedType()
+        val mimeType = mediaType.mimeType
+        val kind = mediaType.kind
         val descriptorSize = resolver.openAssetFileDescriptor(uri, "r")
             ?.use { it.length }
             ?.takeIf { it >= 0L }
         val size = metadata.second.takeIf { it >= 0L }
             ?: descriptorSize
             ?: countBytes(uri)
-        require(size in 1..MAX_FILE_BYTES) { "Steam chat attachments must be 30 MB or smaller" }
+        if (size !in 1..MAX_FILE_BYTES) throw SteamChatUploadException.invalidSize()
         val dimensions = if (kind == SteamChatAttachmentKind.IMAGE) imageBounds(uri) else 0 to 0
         return SteamChatPendingAttachment(
             uri = uri.toString(),
@@ -81,6 +76,10 @@ class SteamChatAttachmentUploader internal constructor(
         spoiler: Boolean,
         onProgress: (Float) -> Unit
     ): SteamChatUploadedAttachment {
+        // A pending object can outlive the picker. Recheck before any reservation or request.
+        val mediaType = SteamChatAttachmentPolicy.mediaType(attachment.displayName, attachment.mimeType)
+        if (mediaType == null || mediaType.kind != attachment.kind) throw SteamChatUploadException.unsupportedType()
+        if (attachment.sizeBytes !in 1..MAX_FILE_BYTES) throw SteamChatUploadException.invalidSize()
         val secure = account.steamLoginSecure?.takeIf(String::isNotBlank)
             ?: throw SteamChatUploadException("Steam community session required for attachments")
         val targetFields = target.commitFields(spoiler)
@@ -264,32 +263,6 @@ class SteamChatAttachmentUploader internal constructor(
         total
     } ?: throw SteamChatUploadException("Selected attachment is no longer available")
 
-    private fun attachmentKind(name: String, mimeType: String): SteamChatAttachmentKind? {
-        val extension = name.substringAfterLast('.', "").lowercase(Locale.ROOT)
-        return when {
-            extension in IMAGE_EXTENSIONS && mimeType.startsWith("image/") -> SteamChatAttachmentKind.IMAGE
-            extension in VIDEO_EXTENSIONS && mimeType.startsWith("video/") -> SteamChatAttachmentKind.VIDEO
-            extension == "zip" -> SteamChatAttachmentKind.ARCHIVE
-            else -> null
-        }
-    }
-
-    private fun mimeTypeFromName(name: String): String = when (
-        name.substringAfterLast('.', "").lowercase(Locale.ROOT)
-    ) {
-        "jpg", "jpeg" -> "image/jpeg"
-        "png" -> "image/png"
-        "gif" -> "image/gif"
-        "webp" -> "image/webp"
-        "avif" -> "image/avif"
-        "webm" -> "video/webm"
-        "mp4" -> "video/mp4"
-        "mpg", "mpeg" -> "video/mpeg"
-        "ogv" -> "video/ogg"
-        "zip" -> "application/zip"
-        else -> "application/octet-stream"
-    }
-
     private fun sanitizeFilename(name: String): String = name
         .replace(Regex("[\\r\\n\\u0000-\\u001f\\u007f/\\\\]"), "_")
         .take(180)
@@ -318,11 +291,9 @@ class SteamChatAttachmentUploader internal constructor(
     }
 
     companion object {
-        const val MAX_FILE_BYTES = 30L * 1024L * 1024L
+        const val MAX_FILE_BYTES = SteamChatAttachmentPolicy.MAX_FILE_BYTES
         private const val BEGIN_URL = "https://steamcommunity.com/chat/beginfileupload/"
         private const val COMMIT_URL = "https://steamcommunity.com/chat/commitfileupload/"
-        private val IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "gif", "webp", "avif")
-        private val VIDEO_EXTENSIONS = setOf("webm", "mpg", "mp4", "mpeg", "ogv")
 
         private fun defaultClient(): OkHttpClient = SteamHttpClientProvider.newBuilder()
             .followRedirects(true)
@@ -359,6 +330,8 @@ internal enum class SteamChatUploadFailure {
     AUTHENTICATION,
     LIMITED_ACCOUNT,
     FILE_REJECTED,
+    UNSUPPORTED_TYPE,
+    INVALID_SIZE,
     SERVICE,
     UNKNOWN
 }
@@ -372,6 +345,12 @@ internal class SteamChatUploadException(
         get() = failure == SteamChatUploadFailure.AUTHENTICATION
 
     companion object {
+        internal fun unsupportedType(): SteamChatUploadException =
+            SteamChatUploadException("Unsupported Steam chat attachment type", failure = SteamChatUploadFailure.UNSUPPORTED_TYPE)
+
+        internal fun invalidSize(): SteamChatUploadException =
+            SteamChatUploadException("Steam chat attachments must be non-empty and 30 MiB or smaller", failure = SteamChatUploadFailure.INVALID_SIZE)
+
         internal fun authentication(message: String): SteamChatUploadException =
             SteamChatUploadException(message, failure = SteamChatUploadFailure.AUTHENTICATION)
 
@@ -393,9 +372,10 @@ internal class SteamChatUploadException(
 
         internal fun steamRejected(code: Int, message: String?): SteamChatUploadException {
             val failure = when (code) {
-                5, 15, 21, 65 -> SteamChatUploadFailure.AUTHENTICATION
+                5, 15, 21, 50, 65 -> SteamChatUploadFailure.AUTHENTICATION
                 112 -> SteamChatUploadFailure.LIMITED_ACCOUNT
-                8, 9, 11, 13, 20, 25, 50 -> SteamChatUploadFailure.FILE_REJECTED
+                20 -> SteamChatUploadFailure.SERVICE
+                8, 9, 11, 13, 25 -> SteamChatUploadFailure.FILE_REJECTED
                 else -> SteamChatUploadFailure.UNKNOWN
             }
             return SteamChatUploadException(
@@ -469,7 +449,7 @@ private class ContentUriRequestBody(
                 sink.write(buffer, 0, count)
                 written += count
                 if (written > SteamChatAttachmentUploader.MAX_FILE_BYTES) {
-                    throw SteamChatUploadException("Steam chat attachments must be 30 MB or smaller")
+                    throw SteamChatUploadException.invalidSize()
                 }
                 val progress = ((written * 100L) / attachment.sizeBytes.coerceAtLeast(1L)).toInt()
                 if (progress != lastProgress) {

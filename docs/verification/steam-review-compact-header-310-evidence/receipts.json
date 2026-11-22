@@ -1,0 +1,117 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "199606aa17e2a9de0de0e0815a3e240aa466ed1f024cd934550513d024f8fbd4",
+    "normalizedSha256": "199606aa17e2a9de0de0e0815a3e240aa466ed1f024cd934550513d024f8fbd4"
+  },
+  {
+    "file": "build02-native-oom.txt",
+    "rawSha256": "ef375f7904c82216fc1fffb0d2033b01853ffd8f953bb4a48c3c081f05553250",
+    "normalizedSha256": "ef375f7904c82216fc1fffb0d2033b01853ffd8f953bb4a48c3c081f05553250"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "4c6bba6f0f98ccfd521ea02ef07d00d57aebb7e965673090405825cd7058dd8c",
+    "normalizedSha256": "a67ffb4d8f302767103825ae7c83e5757fa1eaf9d93257d71d0d538b5d83e87f"
+  },
+  {
+    "file": "build03.txt",
+    "rawSha256": "d38aad9eb9321e0437c5c0ebe51b620bd63032aab5b4eab4a7acf42e7a2b4e22",
+    "normalizedSha256": "5cf95a09d413c8aa84d6e74d6f785291a28d26fdad81517fdaca9f35bb7c1712"
+  },
+  {
+    "file": "build04.txt",
+    "rawSha256": "91c12c7983700334ef6ccdffd1600be1e060d16f4830d162ebe4981be61a48fc",
+    "normalizedSha256": "6d8982dbdbf7868b8c2e6c984a567044ae2fca5571b2025ab897af641d24e197"
+  },
+  {
+    "file": "build01.json",
+    "rawSha256": "c14849291866686aaaff80c39d3972a29a28daaa07de11c844d436ebd54e3675",
+    "normalizedSha256": "c14849291866686aaaff80c39d3972a29a28daaa07de11c844d436ebd54e3675"
+  },
+  {
+    "file": "build02.json",
+    "rawSha256": "c18fb0ba39ec4208751a919574c00f1fa2c5900ff6f1ecfd5286f1192dfec146",
+    "normalizedSha256": "c18fb0ba39ec4208751a919574c00f1fa2c5900ff6f1ecfd5286f1192dfec146"
+  },
+  {
+    "file": "build03.json",
+    "rawSha256": "4545be9501aa7b465e2012af32281c82a0ae3b68f1da6ee11595edaa9a8cd497",
+    "normalizedSha256": "4545be9501aa7b465e2012af32281c82a0ae3b68f1da6ee11595edaa9a8cd497"
+  },
+  {
+    "file": "build04.json",
+    "rawSha256": "fb1d8822a94a041b7c614a590166d925ee365a451976c1c09e863ef590b6ca13",
+    "normalizedSha256": "fb1d8822a94a041b7c614a590166d925ee365a451976c1c09e863ef590b6ca13"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "41949515e1d5901652a44ab47fed3f3debcf3839443ebde814984a19c127ef76",
+    "normalizedSha256": "41949515e1d5901652a44ab47fed3f3debcf3839443ebde814984a19c127ef76"
+  },
+  {
+    "file": "device02.txt",
+    "rawSha256": "95f76592d0a3e54cdea44ce2b2a27c0cda10eebcdcf97506f5cb4d4521438a0a",
+    "normalizedSha256": "95f76592d0a3e54cdea44ce2b2a27c0cda10eebcdcf97506f5cb4d4521438a0a"
+  },
+  {
+    "file": "device01.json",
+    "rawSha256": "03516713824d57bfe110a96c202ef68ab7cf713b6df8f39e4b65a8f57181d66c",
+    "normalizedSha256": "03516713824d57bfe110a96c202ef68ab7cf713b6df8f39e4b65a8f57181d66c"
+  },
+  {
+    "file": "device02.json",
+    "rawSha256": "74b2bb81d11584d1cfbe521409a15fe8ba4b3388b4bcd07a4d9ddf63ffba2615",
+    "normalizedSha256": "74b2bb81d11584d1cfbe521409a15fe8ba4b3388b4bcd07a4d9ddf63ffba2615"
+  },
+  {
+    "file": "jvm-results.json",
+    "rawSha256": "78dc8608695e323d99a762a07115bb0ee9bf85374c47f3605fe001f5561c2fb1",
+    "normalizedSha256": "78dc8608695e323d99a762a07115bb0ee9bf85374c47f3605fe001f5561c2fb1"
+  },
+  {
+    "file": "source-sha256.json",
+    "rawSha256": "5f322ff878f4fe347985d936ee8cbce4a8b497a97b69ed2e37749fe9cface272",
+    "normalizedSha256": "5f322ff878f4fe347985d936ee8cbce4a8b497a97b69ed2e37749fe9cface272"
+  },
+  {
+    "file": "preserved-source-sha256.json",
+    "rawSha256": "d90b95403fdf9b86bdbe51c121f3e8d5ab6b2fa6c1b62ebb1f18411f1552f785",
+    "normalizedSha256": "d90b95403fdf9b86bdbe51c121f3e8d5ab6b2fa6c1b62ebb1f18411f1552f785"
+  },
+  {
+    "file": "changes.json",
+    "rawSha256": "5328af145e4826c4aad66052b7fb53233766d7a2549b1dcea61fe9df96998f53",
+    "normalizedSha256": "5328af145e4826c4aad66052b7fb53233766d7a2549b1dcea61fe9df96998f53"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924",
+    "normalizedSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924"
+  },
+  {
+    "file": "device-build-suspend.json",
+    "rawSha256": "40b82d4c2a1082b378b2d41a056f536a668d41d57582f63dc5e5ae2324b4009c",
+    "normalizedSha256": "40b82d4c2a1082b378b2d41a056f536a668d41d57582f63dc5e5ae2324b4009c"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.SteamStoreReviewTest.xml",
+    "rawSha256": "7493de1dc02871ce0b1c68e183891eaa76205e75ab99a1bb86ccc6a8ec8953b2",
+    "normalizedSha256": "7493de1dc02871ce0b1c68e183891eaa76205e75ab99a1bb86ccc6a8ec8953b2"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.SteamStoreReviewServiceTest.xml",
+    "rawSha256": "777895524f91de078d11ce4f13d2601e27d9787efe9a957775fedb52f2447086",
+    "normalizedSha256": "777895524f91de078d11ce4f13d2601e27d9787efe9a957775fedb52f2447086"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest.xml",
+    "rawSha256": "44a2accc95c8938c638399a74ad9fb4cc46f7bf6ddb5bc61202e3e63ba74e81e",
+    "normalizedSha256": "44a2accc95c8938c638399a74ad9fb4cc46f7bf6ddb5bc61202e3e63ba74e81e"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.library.SteamAchievementImagesTest.xml",
+    "rawSha256": "28e332770d3478c49911a02beafda7c7280096037662480de79ce9ea361b5832",
+    "normalizedSha256": "28e332770d3478c49911a02beafda7c7280096037662480de79ce9ea361b5832"
+  }
+]

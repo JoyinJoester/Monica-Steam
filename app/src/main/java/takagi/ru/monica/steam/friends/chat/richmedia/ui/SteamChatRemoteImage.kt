@@ -45,6 +45,7 @@ import takagi.ru.monica.steam.foundation.ui.steamRemoteImageCacheFile
 import takagi.ru.monica.steam.foundation.ui.decodeSteamRemoteBitmap
 import takagi.ru.monica.steam.foundation.ui.isSafeSteamRemoteImagePayload
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
+import takagi.ru.monica.steam.foundation.media.steamImageThumbnail
 
 /** Rendering policy for the small, fixed-size assets served by Steam. */
 internal enum class SteamChatRemoteImageMode {
@@ -73,7 +74,8 @@ internal fun SteamChatRemoteImage(
     modifier: Modifier = Modifier,
     playAnimation: Boolean = true,
     mode: SteamChatRemoteImageMode = SteamChatRemoteImageMode.CONTENT,
-    fallbackIcon: ImageVector = Icons.Default.EmojiEmotions
+    fallbackIcon: ImageVector = Icons.Default.EmojiEmotions,
+    onImageSize: ((Int, Int) -> Unit)? = null
 ) {
     val context = LocalContext.current
     val normalizedUrl = remember(url) { normalizeSteamImageUrl(url) }
@@ -133,6 +135,11 @@ internal fun SteamChatRemoteImage(
             }
         }
     }
+    LaunchedEffect(bitmap, drawable) {
+        val width = bitmap?.width ?: drawable?.intrinsicWidth ?: 0
+        val height = bitmap?.height ?: drawable?.intrinsicHeight ?: 0
+        if (width > 0 && height > 0) onImageSize?.invoke(width, height)
+    }
     when {
         animated != null -> SteamAnimatedRemoteImage(
             drawable = currentDrawable,
@@ -160,7 +167,10 @@ internal fun SteamChatRemoteImage(
                 filterQuality = staticSteamImageFilterQuality(mode)
             ),
             contentDescription = contentDescription,
-            modifier = modifier,
+            modifier = if (mode == SteamChatRemoteImageMode.CONTENT || mode == SteamChatRemoteImageMode.ARTWORK)
+                modifier.steamImageThumbnail(url, requireNotNull(bitmap).asImageBitmap(),
+                    if (mode == SteamChatRemoteImageMode.ARTWORK) ContentScale.Crop else ContentScale.Fit)
+                else modifier,
             contentScale = when (mode) {
                 SteamChatRemoteImageMode.ARTWORK -> ContentScale.Crop
                 SteamChatRemoteImageMode.STICKER -> {

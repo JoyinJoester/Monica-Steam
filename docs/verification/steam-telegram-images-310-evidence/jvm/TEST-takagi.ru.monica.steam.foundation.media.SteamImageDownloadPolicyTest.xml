@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.foundation.media.SteamImageDownloadPolicyTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:56.053Z" hostname="JOYIN" time="0.081">
+  <properties/>
+  <testcase name="acceptsOnlySecureOfficialSteamImageHosts" classname="takagi.ru.monica.steam.foundation.media.SteamImageDownloadPolicyTest" time="0.072"/>
+  <testcase name="buildsSanitizedNamesAndNormalizesSupportedImageTypes" classname="takagi.ru.monica.steam.foundation.media.SteamImageDownloadPolicyTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

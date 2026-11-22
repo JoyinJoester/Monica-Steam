@@ -12,7 +12,8 @@ class SteamChatInfoPreferencesStore(context: Context) {
         PREFERENCES_NAME,
         Context.MODE_PRIVATE
     )
-    private val security = SecurityManager(context.applicationContext)
+    private val appContext = context.applicationContext
+    private val security by lazy { SecurityManager(appContext) }
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     fun load(id: SteamChatConversationId): SteamChatConversationPreferences = runCatching {

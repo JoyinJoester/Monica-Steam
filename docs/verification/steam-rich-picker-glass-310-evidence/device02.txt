@@ -1,0 +1,183 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest:
+INSTRUMENTATION_STATUS: test=nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable(SteamRichPickerGlassDeviceTest.kt:261)
+
+INSTRUMENTATION_STATUS: stream=
+Error in nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable(SteamRichPickerGlassDeviceTest.kt:261)
+
+INSTRUMENTATION_STATUS: test=nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unsupportedEffectsRetainOpaqueNativeFallbackAndClickableTabs
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unsupportedEffectsRetainOpaqueNativeFallbackAndClickableTabs
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativePanelAlsoRendersHeldLensAndRebound
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Captured label must enlarge: 396/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativePanelAlsoRendersHeldLensAndRebound(SteamRichPickerGlassDeviceTest.kt:176)
+
+INSTRUMENTATION_STATUS: stream=
+Error in nativePanelAlsoRendersHeldLensAndRebound(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest):
+java.lang.AssertionError: Captured label must enlarge: 396/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativePanelAlsoRendersHeldLensAndRebound(SteamRichPickerGlassDeviceTest.kt:176)
+
+INSTRUMENTATION_STATUS: test=nativePanelAlsoRendersHeldLensAndRebound
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lightPanelBlursNativeSourceAndRetainsTransparency
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lightPanelBlursNativeSourceAndRetainsTransparency
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=holdMagnifiesLabelAndRimThenRebounds
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Captured label must enlarge: 397/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdMagnifiesLabelAndRimThenRebounds(SteamRichPickerGlassDeviceTest.kt:175)
+
+INSTRUMENTATION_STATUS: stream=
+Error in holdMagnifiesLabelAndRimThenRebounds(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest):
+java.lang.AssertionError: Captured label must enlarge: 397/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdMagnifiesLabelAndRimThenRebounds(SteamRichPickerGlassDeviceTest.kt:175)
+
+INSTRUMENTATION_STATUS: test=holdMagnifiesLabelAndRimThenRebounds
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=darkPanelBlursNativeSourceAndRetainsTransparency
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=darkPanelBlursNativeSourceAndRetainsTransparency
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reducedMotionLargeFontRtlStillDragsAndCloses
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reducedMotionLargeFontRtlStillDragsAndCloses
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draggingAnyCategoryCommitsOnlyOnReleaseAndCancelRestores
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draggingAnyCategoryCommitsOnlyOnReleaseAndCancelRestores
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 14.035
+There were 3 failures:
+1) nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable(SteamRichPickerGlassDeviceTest.kt:261)
+2) nativePanelAlsoRendersHeldLensAndRebound(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest)
+java.lang.AssertionError: Captured label must enlarge: 396/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.nativePanelAlsoRendersHeldLensAndRebound(SteamRichPickerGlassDeviceTest.kt:176)
+3) holdMagnifiesLabelAndRimThenRebounds(takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest)
+java.lang.AssertionError: Captured label must enlarge: 397/366
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdLens(SteamRichPickerGlassDeviceTest.kt:201)
+	at takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest.holdMagnifiesLabelAndRimThenRebounds(SteamRichPickerGlassDeviceTest.kt:175)
+
+FAILURES!!!
+Tests run: 8,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

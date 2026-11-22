@@ -1,0 +1,30 @@
+{
+  "ownTextWhitespacePass": true,
+  "releaseDiffCheckPass": true,
+  "finalFourSourceHashesMatch": true,
+  "publicAvdStopped": true,
+  "api35StillConnected": true,
+  "actualAppForegroundRestoredOnApi35": true,
+  "evidenceFileSha256": {
+    "build-fixture-baseline01.txt": "fd111f7d989e37ceb6e33a847d17b82912d7da0779717f4b522f7e73c2f53fe5",
+    "build-fixture-expanded03.txt": "f5b53b61098eed0bf3b5df8c9194435bac4fb83cc3f3105d761d14fe0d5f240f",
+    "build-fixture-expanded04.txt": "b97b042dc225b236e6550faba1e0f00ef56546990744bf48b05d348c96b6ac62",
+    "build-fixture-expanded05.txt": "29d09971c587ba2dea6ac8084ef98d567aa5ea85030fc5fae2bf778be835ea92",
+    "build-fixture-final06.txt": "6731832fe90c212834dafb3e05e8a3278a593a9fc25fa34b71a654a773ae3e2c",
+    "build-fixture-implementation02.txt": "499fbf9c7bf31172bba80e714453222c3d2f20ee545f273f7675d9a5b6f645da",
+    "build-production-final07.txt": "490a751415694eb911615473c26cdf90acc1d44353abb7d2808abaec6f6bc984",
+    "checkpoint-final06.json": "0efc555383c7f70267170c18c877f1ca5327d33decdc0cba2062c445e04ea994",
+    "cleanup-summary.json": "ad63026033eaf26977c1460a76c8e51e84a8158359dbdd89f397b69992d11bc9",
+    "device-api32-expanded04.txt": "a28ef8bf50d72c9ecb03e526e3a742697d034cf77b4e5349536cb21e48620d9e",
+    "device-api32-final06.txt": "3539aa428849865ad859f2e65bddb762a37ede38d80cda1d2d625236006603fe",
+    "device-api32-regression06.txt": "c0a5a17cca2f394dde9bf55af4d0b2e592e9395dd7c864d05a29915d464a2d80",
+    "device-api35-expanded04.txt": "3a3428cb1f0c65c0b57835c7f8fbdd97ff9aa552fb245e25d99ba4f2d251bd50",
+    "device-api35-expanded05.txt": "2df2d2837620aefeee43cc476cf6a440cfe0cc0d7b27d6916476ab0777eaa5c0",
+    "device-api35-final06.txt": "bfca12b9b1ed139393707becb3bd547af7af049aa529a59af88b35c378b04043",
+    "device-api35-regression06.txt": "098285bdd1b823b9798c1323d8bd1759be0b81e05797b700beb3f91dbe44b998",
+    "device-baseline-api32-drag01.txt": "74c6dd61be32cdb1214498393943979e89da63e63719ff3d9e3f7bd84dc4005c",
+    "device-optimized-api32-drag02.txt": "9a930ae7eb027853f7d0e5dcf4b8e1d69354164250dd5aec3588547f22304a03",
+    "results.json": "3cdb71a9d696b2055087235d60748f3cd1aff789c353e18c77dc725d04d414d5",
+    "liquid-glass-filter-drag-20261113.md": "56a822a8c488534214cb06511820040e74a4c30f5cdd33398c4edb582f218706"
+  }
+}

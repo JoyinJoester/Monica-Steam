@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.navigation
 
 import java.io.File
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -31,26 +32,18 @@ class SteamReducedMotionIntegrationGuardTest {
             activity.contains("LocalReduceAnimations provides settings.reduceAnimations")
         )
         assertTrue(
-            activity.contains("easyNotesScreenEnter(settings.reduceAnimations)")
+            activity.contains("steamPageTransition(settings.reduceAnimations,")
         )
         assertTrue(
-            settingsScreen.contains("easyNotesScreenEnter(settings.reduceAnimations)")
+            settingsScreen.contains("steamPageTransition(settings.reduceAnimations,")
         )
     }
 
     @Test
     fun steamPageTransitionsUseTheSharedReducedMotionPolicy() {
-        val transitions = projectFile(
-            "app/src/main/java/takagi/ru/monica/ui/navigation/NavTransitions.kt"
-        ).readText()
-        assertTrue(transitions.contains("fun easyNotesScreenEnter(reduceAnimations: Boolean)"))
-        assertTrue(transitions.contains("fun easyNotesScreenExit(reduceAnimations: Boolean)"))
-        assertTrue(transitions.contains("REDUCED_MOTION_FADE_IN_DURATION"))
-        assertTrue(transitions.contains("REDUCED_MOTION_FADE_OUT_DURATION"))
-
+        // Behavior (reverse direction, disposal and reduced motion) is checked on-device.
         listOf(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt",
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt",
             "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt",
             "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
             "app/src/main/java/takagi/ru/monica/steam/security/SteamAppLockGate.kt",
@@ -59,9 +52,23 @@ class SteamReducedMotionIntegrationGuardTest {
         ).forEach { path ->
             val source = projectFile(path).readText()
             assertTrue(path, source.contains("LocalReduceAnimations.current"))
-            assertTrue(path, source.contains("easyNotesScreenEnter(reduceAnimations)"))
-            assertTrue(path, source.contains("easyNotesScreenExit(reduceAnimations)"))
+            assertTrue(path, source.contains("steamPageTransition(reduceAnimations"))
         }
+
+        // Chat delegates its conversation/subpage policy to a shared navigation component.
+        // Follow that delegation rather than requiring the previous helper names at the caller.
+        val chat = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt"
+        ).readText()
+        val chatNavigation = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatNavigation.kt"
+        ).readText()
+        assertTrue(chat.contains("val reduceAnimations = LocalReduceAnimations.current"))
+        assertTrue(chat.contains("else SteamChatNavigation("))
+        assertTrue(chat.substringAfter("else SteamChatNavigation(")
+            .substringBefore(") { (partnerSteamId").contains("reduceAnimations = reduceAnimations"))
+        assertTrue(chatNavigation.contains("reduceAnimations: Boolean"))
+        assertTrue(chatNavigation.contains("steamPageTransition(reduceAnimations, forward = opening)"))
     }
 
     @Test

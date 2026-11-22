@@ -1,0 +1,84 @@
+{
+  "scope": "Grammar/resource checks performed by the static script; runtime results are recorded separately.",
+  "syntax": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatMessageBubble.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatOfficialMessages.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModels.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMessageContent.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/domain/SteamChatHistoryCategories.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/gameinvite/ui/SteamChatGameInviteCard.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecision.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModelsTest.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatCardLinks.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatCardsTest.kt",
+      "errors": []
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt",
+      "errors": []
+    }
+  ],
+  "new_resource_keys": 48,
+  "locales": [
+    "values",
+    "values-zh",
+    "values-ja",
+    "values-ru",
+    "values-vi"
+  ],
+  "resource_references": 48,
+  "locale_parity": true,
+  "whitespace_errors": [],
+  "scoped_git_diff_check_exit": 0,
+  "new_jvm_methods": 19,
+  "new_device_methods": 14,
+  "android_tests_executed_by_static_script": false
+}

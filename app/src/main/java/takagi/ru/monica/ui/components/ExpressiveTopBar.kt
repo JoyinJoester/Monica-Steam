@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -41,6 +45,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassAvailable
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
 
 /**
  * M3E 风格的顶部标题栏
@@ -59,9 +65,13 @@ fun ExpressiveTopBar(
     onActionPillBoundsChanged: ((Rect) -> Unit)? = null,
     collapsedTitleEndPadding: Dp = 180.dp,
     compact: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    titleOverflow: TextOverflow = TextOverflow.Clip,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
+    val glass = steamGlassAvailable()
     val focusManager = LocalFocusManager.current
     val resolvedSearchHint = searchHint ?: stringResource(R.string.topbar_search_hint)
 
@@ -81,8 +91,9 @@ fun ExpressiveTopBar(
     val isLongTitle = title.length > 10
     val titleStyle = when {
         compact -> MaterialTheme.typography.titleLarge
-        title.length > 18 -> MaterialTheme.typography.bodyLarge
-        isLongTitle -> MaterialTheme.typography.titleMedium
+        // Longer titles step down within the headline/title scale, never to body sizes.
+        title.length > 18 -> MaterialTheme.typography.titleLarge
+        isLongTitle -> MaterialTheme.typography.headlineSmall
         else -> MaterialTheme.typography.headlineLarge
     }
     val pillReserve = if (isSearchExpanded) 0.dp else collapsedTitleEndPadding
@@ -115,7 +126,7 @@ fun ExpressiveTopBar(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
                 maxLines = if (isLongTitle) 2 else 1,
-                overflow = TextOverflow.Clip
+                overflow = titleOverflow
             )
         }
 
@@ -130,6 +141,7 @@ fun ExpressiveTopBar(
                 modifier = Modifier
 
                     .height(56.dp)
+                    .then(if (glass) Modifier.steamGlassSurface(RoundedCornerShape(50)) else Modifier)
                     .onGloballyPositioned { coordinates ->
                         onActionPillBoundsChanged?.invoke(coordinates.boundsInWindow())
                     }
@@ -159,8 +171,8 @@ fun ExpressiveTopBar(
                         }
                     },
                 shape = RoundedCornerShape(50),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                tonalElevation = 2.dp
+                color = if (glass) Color.Transparent else MaterialTheme.colorScheme.surfaceContainerHigh,
+                tonalElevation = if (glass) 0.dp else 2.dp
             ) {
                 // 内容切换
                 AnimatedContent(
@@ -209,6 +221,8 @@ fun ExpressiveTopBar(
                                     ),
                                     singleLine = true,
                                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                                    keyboardOptions = keyboardOptions,
+                                    keyboardActions = keyboardActions,
                                     modifier = Modifier.focusRequester(focusRequester)
                                 )
                             }

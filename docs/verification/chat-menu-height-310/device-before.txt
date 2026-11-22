@@ -1,0 +1,160 @@
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramPopupSizeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.monica.telegramchat.TelegramPopupSizeTest:
+INSTRUMENTATION_STATUS: test=visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramPopupSizeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Backdrop must not grow the menu; font=1.0 liquid=true expected:<320> but was:<1440>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont$0(TelegramPopupSizeTest.java:79)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$gpAydyIrk3EtKIPZ18McxLUlulM(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont(com.monica.telegramchat.TelegramPopupSizeTest):
+java.lang.AssertionError: Backdrop must not grow the menu; font=1.0 liquid=true expected:<320> but was:<1440>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont$0(TelegramPopupSizeTest.java:79)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$gpAydyIrk3EtKIPZ18McxLUlulM(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramPopupSizeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualHeaderPopupStaysCompactAndActionsWorkAfterReopening
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramPopupSizeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Only menu rows and shadow insets determine wrap-content height expected:<320> but was:<1806>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.assertContentBounds(TelegramPopupSizeTest.java:42)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$actualHeaderPopupStaysCompactAndActionsWorkAfterReopening$4(TelegramPopupSizeTest.java:118)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$o_0ev2WDTq-3un9QvuM438zKhgk(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualHeaderPopupStaysCompactAndActionsWorkAfterReopening(com.monica.telegramchat.TelegramPopupSizeTest):
+java.lang.AssertionError: Only menu rows and shadow insets determine wrap-content height expected:<320> but was:<1806>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.assertContentBounds(TelegramPopupSizeTest.java:42)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$actualHeaderPopupStaysCompactAndActionsWorkAfterReopening$4(TelegramPopupSizeTest.java:118)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$o_0ev2WDTq-3un9QvuM438zKhgk(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=actualHeaderPopupStaysCompactAndActionsWorkAfterReopening
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 7.874
+There were 2 failures:
+1) visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont(com.monica.telegramchat.TelegramPopupSizeTest)
+java.lang.AssertionError: Backdrop must not grow the menu; font=1.0 liquid=true expected:<320> but was:<1440>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$visibleGlassKeepsSameWrapHeightAsRowsAtNormalAndLargeFont$0(TelegramPopupSizeTest.java:79)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$gpAydyIrk3EtKIPZ18McxLUlulM(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+2) actualHeaderPopupStaysCompactAndActionsWorkAfterReopening(com.monica.telegramchat.TelegramPopupSizeTest)
+java.lang.AssertionError: Only menu rows and shadow insets determine wrap-content height expected:<320> but was:<1806>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at com.monica.telegramchat.TelegramPopupSizeTest.assertContentBounds(TelegramPopupSizeTest.java:42)
+	at com.monica.telegramchat.TelegramPopupSizeTest.lambda$actualHeaderPopupStaysCompactAndActionsWorkAfterReopening$4(TelegramPopupSizeTest.java:118)
+	at com.monica.telegramchat.TelegramPopupSizeTest.$r8$lambda$o_0ev2WDTq-3un9QvuM438zKhgk(Unknown Source:0)
+	at com.monica.telegramchat.TelegramPopupSizeTest$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

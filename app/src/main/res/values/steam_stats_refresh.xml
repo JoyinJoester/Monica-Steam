@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_stats_friends">Friends’ playtime</string>
+    <string name="steam_game_stats_you">You</string>
+    <string name="steam_game_stats_friend_average">Friends’ average</string>
+    <string name="steam_game_stats_readable_friends">Based on %1$d friends with visible playtime</string>
+    <string name="steam_game_stats_no_friend_times">No visible friend playtime</string>
+    <string name="steam_game_stats_badges">Game badges</string>
+    <string name="steam_game_stats_no_badges">No badge or trading cards available</string>
+    <string name="steam_game_stats_card_owned">Owned</string>
+    <string name="steam_game_stats_card_missing">Not owned</string>
+    <string name="steam_game_stats_no_points">No points items for this game</string>
+    <string name="steam_game_stats_points_cost">%1$d points</string>
+    <string name="steam_game_stats_view_all">View all</string>
+    <string name="steam_game_stats_section_unavailable">Unavailable. Try refreshing or open Steam.</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_space_post_audience">Share a text update with your Steam friends.</string>
+    <string name="steam_space_post_text">What would you like to share?</string>
+    <string name="steam_space_post_count">%1$d / %2$d characters</string>
+    <string name="steam_space_post_prepare_failed">Could not prepare your Steam session. Sign in again or try later.</string>
+    <string name="steam_space_post_unknown">Steam did not confirm the result. Check your activity on Steam before posting again to avoid duplicates.</string>
+    <string name="steam_space_post_sending">Publishing…</string>
+    <string name="steam_space_post_check_web">Check on Steam</string>
+    <string name="steam_space_post_use_web">Use the Steam webpage</string>
+    <string name="steam_space_post_success">Activity published</string>
+    <string name="steam_space_post_discard_title">Leave this draft?</string>
+    <string name="steam_space_post_discard_body">Your unsent text will be discarded.</string>
+    <string name="steam_space_post_discard_unknown">The draft will be discarded. Leaving does not cancel a post Steam may have already received.</string>
+    <string name="steam_space_post_discard">Leave</string>
+    <string name="steam_space_post_keep_editing">Stay</string>
+</resources>

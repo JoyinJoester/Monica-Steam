@@ -1,0 +1,20 @@
+{
+  "mumu1BaselineMatch": {
+    "users": true,
+    "currentUser": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "packages": true,
+    "rotation": true
+  },
+  "removedOwnPackages": [
+    "takagi.ru.monica.steamapp.filterlens.test",
+    "takagi.ru.monica.steamapp.filterlens"
+  ],
+  "mumu0OriginalPackagesRetained": true,
+  "mumu0CurrentUser": "14",
+  "mumu0LeftRunning": true,
+  "mumu1StartedByTask": true,
+  "mumu1Stopped": true
+}

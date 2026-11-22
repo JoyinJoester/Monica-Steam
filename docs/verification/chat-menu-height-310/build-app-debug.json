@@ -1,0 +1,25 @@
+{
+  "exit": 0,
+  "seconds": 101.29864190006629,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-chat-menu-height\\test.gradle",
+    "-I",
+    ".codex-tasks/20261109-toolchain-pilot/isolation.gradle",
+    "-PdailySeq=24",
+    ":app:assembleDebug"
+  ],
+  "appId": "takagi.ru.monica.steamapp.toolchainpilot",
+  "appApks": [
+    {
+      "file": "Monica-Steam-Android-x86_64-1.0.310-26110918-24.APK",
+      "sha256": "93b07128f2aa655faa832d8002c4d0f68c27846cbe2f30fcb559c9cbfcf11e55"
+    }
+  ]
+}

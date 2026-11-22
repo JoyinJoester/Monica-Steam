@@ -19,9 +19,9 @@ class SteamStoreFilterUiGuardTest {
 
         assertTrue(sheet.contains("ModalBottomSheet("))
         assertTrue(sheet.contains("tagsExpanded"))
-        assertTrue(sheet.contains("OutlinedTextField("))
-        assertTrue(sheet.contains("take(DEFAULT_VISIBLE_TAGS)"))
-        assertTrue(sheet.contains("FilterChip("))
+        assertTrue(sheet.contains("SteamSheetSearchField("))
+        assertTrue(sheet.contains("DEFAULT_VISIBLE_TAGS"))
+        assertTrue(sheet.contains("SteamSheetChoice("))
         assertTrue(sheet.contains("heightIn(min = 48.dp)"))
         assertTrue(sheet.contains("SteamStoreActiveFilterSummary("))
         assertTrue(sheet.contains("SteamStoreTagBadges("))

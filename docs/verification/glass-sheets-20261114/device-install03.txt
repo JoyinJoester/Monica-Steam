@@ -1,0 +1,663 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest:
+INSTRUMENTATION_STATUS: test=libraryLiquidLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidLight(SteamSheetDesignDeviceTest.kt:111)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryLiquidLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidLight(SteamSheetDesignDeviceTest.kt:111)
+
+INSTRUMENTATION_STATUS: test=libraryLiquidLight
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=storeFilterKeepsPendingChoicesUntilApply
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Apply filters' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.storeFilterKeepsPendingChoicesUntilApply(SteamSheetDesignDeviceTest.kt:141)
+
+INSTRUMENTATION_STATUS: stream=
+Error in storeFilterKeepsPendingChoicesUntilApply(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Apply filters' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.storeFilterKeepsPendingChoicesUntilApply(SteamSheetDesignDeviceTest.kt:141)
+
+INSTRUMENTATION_STATUS: test=storeFilterKeepsPendingChoicesUntilApply
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sharingM3eDark
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eDark(SteamSheetDesignDeviceTest.kt:164)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sharingM3eDark(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eDark(SteamSheetDesignDeviceTest.kt:164)
+
+INSTRUMENTATION_STATUS: test=sharingM3eDark
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=switcherScrollsAndAddAccountRemainsReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Add Steam account' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.switcherScrollsAndAddAccountRemainsReachable(SteamSheetDesignDeviceTest.kt:190)
+
+INSTRUMENTATION_STATUS: stream=
+Error in switcherScrollsAndAddAccountRemainsReachable(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Add Steam account' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.switcherScrollsAndAddAccountRemainsReachable(SteamSheetDesignDeviceTest.kt:190)
+
+INSTRUMENTATION_STATUS: test=switcherScrollsAndAddAccountRemainsReachable
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sharingLiquidDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidDarkLargeText(SteamSheetDesignDeviceTest.kt:162)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sharingLiquidDarkLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidDarkLargeText(SteamSheetDesignDeviceTest.kt:162)
+
+INSTRUMENTATION_STATUS: test=sharingLiquidDarkLargeText
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=friendAccountPickerVirtualizesAndReachesLastAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic account 30' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.friendAccountPickerVirtualizesAndReachesLastAccount(SteamSheetDesignDeviceTest.kt:202)
+
+INSTRUMENTATION_STATUS: stream=
+Error in friendAccountPickerVirtualizesAndReachesLastAccount(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic account 30' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.friendAccountPickerVirtualizesAndReachesLastAccount(SteamSheetDesignDeviceTest.kt:202)
+
+INSTRUMENTATION_STATUS: test=friendAccountPickerVirtualizesAndReachesLastAccount
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryLiquidDark
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidDark(SteamSheetDesignDeviceTest.kt:112)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryLiquidDark(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidDark(SteamSheetDesignDeviceTest.kt:112)
+
+INSTRUMENTATION_STATUS: test=libraryLiquidDark
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=invalidDraftImeAndBackDoNotAddAnything
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=invalidDraftImeAndBackDoNotAddAnything
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draftLiquidLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draftLiquidLight
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draftM3eLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draftM3eLight
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryM3eLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eLight(SteamSheetDesignDeviceTest.kt:113)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryM3eLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eLight(SteamSheetDesignDeviceTest.kt:113)
+
+INSTRUMENTATION_STATUS: test=libraryM3eLight
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryResetAndScrollKeepDraftUnapplied
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Total playtime' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryResetAndScrollKeepDraftUnapplied(SteamSheetDesignDeviceTest.kt:122)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryResetAndScrollKeepDraftUnapplied(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Total playtime' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryResetAndScrollKeepDraftUnapplied(SteamSheetDesignDeviceTest.kt:122)
+
+INSTRUMENTATION_STATUS: test=libraryResetAndScrollKeepDraftUnapplied
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sharingM3eLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eLight(SteamSheetDesignDeviceTest.kt:163)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sharingM3eLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eLight(SteamSheetDesignDeviceTest.kt:163)
+
+INSTRUMENTATION_STATUS: test=sharingM3eLight
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=giftSelectionKeepsValidationNoteAndSelectedState
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.giftSelectionKeepsValidationNoteAndSelectedState(SteamSheetDesignDeviceTest.kt:179)
+
+INSTRUMENTATION_STATUS: stream=
+Error in giftSelectionKeepsValidationNoteAndSelectedState(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.giftSelectionKeepsValidationNoteAndSelectedState(SteamSheetDesignDeviceTest.kt:179)
+
+INSTRUMENTATION_STATUS: test=giftSelectionKeepsValidationNoteAndSelectedState
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draftLiquidDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draftLiquidDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryM3eDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eDarkLargeText(SteamSheetDesignDeviceTest.kt:114)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryM3eDarkLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eDarkLargeText(SteamSheetDesignDeviceTest.kt:114)
+
+INSTRUMENTATION_STATUS: test=libraryM3eDarkLargeText
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draftM3eDark
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draftM3eDark
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryFallbackLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryFallbackLargeText(SteamSheetDesignDeviceTest.kt:115)
+
+INSTRUMENTATION_STATUS: stream=
+Error in libraryFallbackLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryFallbackLargeText(SteamSheetDesignDeviceTest.kt:115)
+
+INSTRUMENTATION_STATUS: test=libraryFallbackLargeText
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sharingLiquidLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=19
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidLight(SteamSheetDesignDeviceTest.kt:161)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sharingLiquidLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest):
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidLight(SteamSheetDesignDeviceTest.kt:161)
+
+INSTRUMENTATION_STATUS: test=sharingLiquidLight
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 24.75
+There were 14 failures:
+1) libraryLiquidLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidLight(SteamSheetDesignDeviceTest.kt:111)
+2) storeFilterKeepsPendingChoicesUntilApply(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Apply filters' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.storeFilterKeepsPendingChoicesUntilApply(SteamSheetDesignDeviceTest.kt:141)
+3) sharingM3eDark(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eDark(SteamSheetDesignDeviceTest.kt:164)
+4) switcherScrollsAndAddAccountRemainsReachable(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Add Steam account' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.switcherScrollsAndAddAccountRemainsReachable(SteamSheetDesignDeviceTest.kt:190)
+5) sharingLiquidDarkLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidDarkLargeText(SteamSheetDesignDeviceTest.kt:162)
+6) friendAccountPickerVirtualizesAndReachesLastAccount(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic account 30' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.friendAccountPickerVirtualizesAndReachesLastAccount(SteamSheetDesignDeviceTest.kt:202)
+7) libraryLiquidDark(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryLiquidDark(SteamSheetDesignDeviceTest.kt:112)
+8) libraryM3eLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eLight(SteamSheetDesignDeviceTest.kt:113)
+9) libraryResetAndScrollKeepDraftUnapplied(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Total playtime' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:82)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryResetAndScrollKeepDraftUnapplied(SteamSheetDesignDeviceTest.kt:122)
+10) sharingM3eLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingM3eLight(SteamSheetDesignDeviceTest.kt:163)
+11) giftSelectionKeepsValidationNoteAndSelectedState(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.giftSelectionKeepsValidationNoteAndSelectedState(SteamSheetDesignDeviceTest.kt:179)
+12) libraryM3eDarkLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library$default(SteamSheetDesignDeviceTest.kt:92)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryM3eDarkLargeText(SteamSheetDesignDeviceTest.kt:114)
+13) libraryFallbackLargeText(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Close' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:403)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:61)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.library(SteamSheetDesignDeviceTest.kt:107)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.libraryFallbackLargeText(SteamSheetDesignDeviceTest.kt:115)
+14) sharingLiquidLight(takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest)
+java.lang.AssertionError: Assert failed: The component with Text + InputText + EditableText contains 'Synthetic friend 80' (ignoreCase: false) is not displayed!
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:34)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share(SteamSheetDesignDeviceTest.kt:156)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.share$default(SteamSheetDesignDeviceTest.kt:145)
+	at takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest.sharingLiquidLight(SteamSheetDesignDeviceTest.kt:161)
+
+FAILURES!!!
+Tests run: 19,  Failures: 14
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.friends.chat.richmedia.presentation
 
 import android.content.Context
+import takagi.ru.monica.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -45,6 +46,7 @@ data class SteamChatRichMediaUiState(
     val attachmentUploading: Boolean = false,
     val attachmentProgress: Float = 0f,
     val attachmentFailure: String? = null,
+    val attachmentFailureResource: Int? = null,
     val uploadCompletedAt: Long = 0L
 )
 
@@ -134,6 +136,7 @@ class SteamChatRichMediaViewModel(
                 pendingAttachment = null,
                 attachmentSpoiler = false,
                 attachmentPreparing = true,
+                attachmentFailureResource = null,
                 attachmentFailure = null,
                 attachmentProgress = 0f
             )
@@ -149,6 +152,7 @@ class SteamChatRichMediaViewModel(
                         it.copy(
                             pendingAttachment = attachment,
                             attachmentPreparing = false,
+                            attachmentFailureResource = null,
                             attachmentFailure = null
                         )
                     }
@@ -158,7 +162,8 @@ class SteamChatRichMediaViewModel(
                         it.copy(
                             pendingAttachment = null,
                             attachmentPreparing = false,
-                            attachmentFailure = error.userFacingMessage()
+                            attachmentFailure = error.userFacingMessage(),
+                            attachmentFailureResource = error.userFacingMessageResource()
                         )
                     }
                 }
@@ -182,6 +187,7 @@ class SteamChatRichMediaViewModel(
             it.copy(
                 attachmentUploading = true,
                 attachmentProgress = 0f,
+                attachmentFailureResource = null,
                 attachmentFailure = null
             )
         }
@@ -209,6 +215,7 @@ class SteamChatRichMediaViewModel(
                             attachmentSpoiler = false,
                             attachmentUploading = false,
                             attachmentProgress = 0f,
+                            attachmentFailureResource = null,
                             attachmentFailure = null,
                             uploadCompletedAt = nowMillis()
                         )
@@ -219,7 +226,8 @@ class SteamChatRichMediaViewModel(
                         it.copy(
                             attachmentUploading = false,
                             attachmentProgress = 0f,
-                            attachmentFailure = error.userFacingMessage()
+                            attachmentFailure = error.userFacingMessage(),
+                            attachmentFailureResource = error.userFacingMessageResource()
                         )
                     }
                 }
@@ -236,13 +244,14 @@ class SteamChatRichMediaViewModel(
                 attachmentPreparing = false,
                 attachmentUploading = false,
                 attachmentProgress = 0f,
+                attachmentFailureResource = null,
                 attachmentFailure = null
             )
         }
     }
 
     fun clearAttachmentFailure() {
-        _uiState.value = _uiState.value.copy(attachmentFailure = null)
+        _uiState.value = _uiState.value.copy(attachmentFailure = null, attachmentFailureResource = null)
     }
 
     private fun loadCatalogs(account: SteamAccount, generation: Long) {
@@ -395,9 +404,20 @@ private fun Throwable.userFacingMessage(): String = message
                 raw?.takeIf(String::isNotBlank) ?: "Steam 拒绝了这个附件。"
             SteamChatUploadFailure.SERVICE ->
                 raw?.takeIf(String::isNotBlank) ?: "Steam 附件服务暂时不可用。"
-            SteamChatUploadFailure.UNKNOWN, null -> raw
+            SteamChatUploadFailure.UNKNOWN, SteamChatUploadFailure.UNSUPPORTED_TYPE,
+            SteamChatUploadFailure.INVALID_SIZE, null -> raw
         }
     }
     ?.takeIf(String::isNotBlank)
     ?.take(240)
     ?: "Steam attachment operation failed"
+
+private fun Throwable.userFacingMessageResource(): Int? = when ((this as? SteamChatUploadException)?.failure) {
+    SteamChatUploadFailure.UNSUPPORTED_TYPE -> R.string.steam_chat_attachment_unsupported_type
+    SteamChatUploadFailure.INVALID_SIZE -> R.string.steam_chat_attachment_invalid_size
+    SteamChatUploadFailure.LIMITED_ACCOUNT -> R.string.steam_chat_attachment_limited_account
+    SteamChatUploadFailure.AUTHENTICATION -> R.string.steam_chat_attachment_session_expired
+    SteamChatUploadFailure.FILE_REJECTED -> R.string.steam_chat_attachment_rejected
+    SteamChatUploadFailure.SERVICE -> R.string.steam_chat_attachment_service_failed
+    SteamChatUploadFailure.UNKNOWN, null -> null
+}

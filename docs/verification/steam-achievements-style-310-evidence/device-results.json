@@ -1,0 +1,179 @@
+{
+  "device01": {
+    "total": 6,
+    "passed": 6,
+    "runnerSeconds": 8.597,
+    "cases": [
+      {
+        "name": "titleHasClearSpacingAndBothGlassSelectorsLift",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "setLabelsResolveInEverySupportedLanguage",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "legacyCachedUrlAndMissingGrayImageRenderInRtlReducedMotion",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "publicAimLabImageReallyDownloadsFromTheNewRoute",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "collectionAndCompletionComposeAndCancelRestores",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "m3eLargeTextAndHiddenAchievementsStayReadableAndConcealed",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      }
+    ]
+  },
+  "device03": {
+    "total": 6,
+    "passed": 6,
+    "runnerSeconds": 9.303,
+    "cases": [
+      {
+        "name": "titleHasClearSpacingAndBothGlassSelectorsLift",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "setLabelsResolveInEverySupportedLanguage",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "legacyCachedUrlAndMissingGrayImageRenderInRtlReducedMotion",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "publicAimLabImageReallyDownloadsFromTheNewRoute",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "collectionAndCompletionComposeAndCancelRestores",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "m3eLargeTextAndHiddenAchievementsStayReadableAndConcealed",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      }
+    ]
+  },
+  "regression01": {
+    "total": 3,
+    "passed": 3,
+    "runnerSeconds": 3.358,
+    "cases": [
+      {
+        "name": "largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "nativeBridgePreservesMembershipArchiveAndHiddenFlags",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "realGameDetailCombinesCategoryAndStatusFilters",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      }
+    ]
+  },
+  "regression02": {
+    "total": 3,
+    "passed": 3,
+    "runnerSeconds": 3.194,
+    "cases": [
+      {
+        "name": "largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "nativeBridgePreservesMembershipArchiveAndHiddenFlags",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "realGameDetailCombinesCategoryAndStatusFilters",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      }
+    ]
+  },
+  "device04": {
+    "total": 6,
+    "passed": 6,
+    "runnerSeconds": 8.525,
+    "cases": [
+      {
+        "name": "titleHasClearSpacingAndBothGlassSelectorsLift",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "setLabelsResolveInEverySupportedLanguage",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "legacyCachedUrlAndMissingGrayImageRenderInRtlReducedMotion",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "publicAimLabImageReallyDownloadsFromTheNewRoute",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "collectionAndCompletionComposeAndCancelRestores",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "m3eLargeTextAndHiddenAchievementsStayReadableAndConcealed",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "passed": true
+      }
+    ]
+  },
+  "regression03": {
+    "total": 3,
+    "passed": 3,
+    "runnerSeconds": 3.152,
+    "cases": [
+      {
+        "name": "largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "nativeBridgePreservesMembershipArchiveAndHiddenFlags",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      },
+      {
+        "name": "realGameDetailCombinesCategoryAndStatusFilters",
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "passed": true
+      }
+    ]
+  }
+}

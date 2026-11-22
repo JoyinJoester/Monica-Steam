@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-21T08:03:21.987Z" hostname="JOYIN" time="0.039">
+  <properties/>
+  <testcase name="reducedMotionSettlesImmediatelyAndPostScrollExpandsOnlyAtTop" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.017"/>
+  <testcase name="upwardDragConsumesOnlyTheRemainingCollapseHeight" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <testcase name="progressAndConsumptionRemainBoundedAcrossMixedGestures" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <testcase name="horizontalMovementDoesNotFoldHeaderAndDisabledHeaderConsumesNothing" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.002"/>
+  <testcase name="downwardDragCannotExpandUntilFeedReachesTheTop" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <testcase name="unchangedNaturalMeasurementDoesNotInvalidateItsOwnLayout" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.017"/>
+  <testcase name="largerNaturalFontHeightKeepsProgressButUpdatesPixelConsumption" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.001"/>
+  <testcase name="noHeaderRangeAndInvalidDeltasNeverConsumeFeedMovement" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <testcase name="settleUsesDirectionOrNearestEndpointWithoutReopeningAboveScrolledFeed" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <testcase name="excessDownwardMovementRemainsAvailableForPullToRefresh" classname="takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,21 @@
+{
+  "RELEASE_NOTES.md": "a72d07ae0a623423cbb114bfc5eb3e1a2859fceb8146e450e9822c5e7a21b186",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamGameDetailTabsUiTest.kt": "15fdc8a399bc26d459214b2d361520602a0cfe9ed6f2cca176e071263f6429a8",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStoreDetailPricesUiTest.kt": "8fc4ff36ba92503ea02d20a3db1a779cea4d11214681fc3c218ff95ea9be09bf",
+  "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt": "05991eb0a2b6196293039d318257bd7e671007081278140216be441d3baa0e84",
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamGameLibraryService.kt": "e6463c226b0bddda832d7b10e2955abc40a3a0f81357feff4fa8a7db04e8000e",
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt": "f21a0118dcdeefe3c3af069c1b9a292370eca4e2937de9419ecc59ab1b5d94b6",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "4fd7b784ae9f9fe862ea0a0e213a36d5632f278fc84e0ee4a8c14720bae17844",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailTabs.kt": "ad7a95c557b0a7da7d67a3812a6ff2943a99c7c244801d4f3360b0102e6a6baf",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStats.kt": "1699bdfe10b1ff93f208ff1d2619136703a738ef9ddab0e980173fcf79a789b5",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStatsContent.kt": "63fb17478c9b70d1d2da01f8e280bb34090cd602f1303f489a4f3f67def1750e",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "328704ce76174611a07937c62f2e8bd462f5b144d62fc96ff5fd867d8d16932e",
+  "app/src/main/res/values-ja/steam_game_detail_strings.xml": "9aeeaf45f8b7590691f5f171bbce73db5da34d01a31037b30e559af200972425",
+  "app/src/main/res/values-ru/steam_game_detail_strings.xml": "00e3f531d8af6eb1ce4c8abb550a83dad714817bb968746c4789fba7f13667c1",
+  "app/src/main/res/values-vi/steam_game_detail_strings.xml": "8a1aa3cf343d9b0db4c5a1238ff01215f70072e9d68b9dd12094ed86990fbfe1",
+  "app/src/main/res/values-zh/steam_game_detail_strings.xml": "137322e6d2f5359ea469cd4c770122c6e68bc47bb4641c29647d164b33b27a23",
+  "app/src/main/res/values/steam_game_detail_strings.xml": "d845f13acc346442891c0a6b227360da56215b27853fa08f398245e9a3b80159",
+  "app/src/test/java/takagi/ru/monica/steam/library/SteamPlayerGameDetailServiceTest.kt": "833d51311e41899cc4bb92e2c25c070b011605f3bf134cb52ea4c1cd4148cb8d",
+  "app/src/test/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStatsTest.kt": "c103e04caa1c67fa7c98d57d8443c3d925a6cfd853db49f180ae103aa227868a",
+  "docs/releases/Monica-Steam-Unreleased.md": "864dd51b8fffeac224e90067b6a13155cb3701553cd0fe96f603ecfdbf147e84"
+}

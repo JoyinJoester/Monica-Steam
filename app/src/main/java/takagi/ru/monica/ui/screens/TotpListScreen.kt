@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context

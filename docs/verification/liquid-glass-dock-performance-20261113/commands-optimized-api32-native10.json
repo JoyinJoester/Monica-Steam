@@ -1,0 +1,48 @@
+[
+  {
+    "args": [
+      "shell",
+      "input",
+      "keyevent",
+      "KEYCODE_WAKEUP"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "wm",
+      "dismiss-keyguard"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "rm",
+      "-f",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames-native.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dispatch.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-large-reduced.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-large.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-large.png"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "pull",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\captures-optimized-api32-native10"
+    ],
+    "exit": 0,
+    "output": "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/: 1 file pulled, 0 skipped. 0.1 MB/s (558 bytes in 0.004s)\n"
+  }
+]

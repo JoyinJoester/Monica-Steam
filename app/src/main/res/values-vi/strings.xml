@@ -3540,4 +3540,15 @@ Làm mới hoặc đồng bộ hóa cơ sở dữ liệu KeePass này, sau đó 
     <string name="extensions_steam_settings">Steam</string>
     <string name="steam_mini_profile_background_title">Nền hồ sơ thu nhỏ</string>
     <string name="steam_mini_profile_background_description">Hiển thị nền hồ sơ thu nhỏ Steam trên thẻ mã và chi tiết tài khoản. Nền động chỉ phát khi hiển thị; bộ nhớ đệm tối đa 64 MB.</string>
+    <string name="steam_chat_background_section">Trò chuyện Steam</string>
+    <string name="steam_chat_background_title">Thông báo tin nhắn trò chuyện</string>
+    <string name="steam_chat_background_description">Thông báo khi bạn bè gửi tin nhắn, không hiển thị thông báo trạng thái kết nối. Nếu hệ thống kết thúc tiến trình ứng dụng, hãy mở lại ứng dụng để tiếp tục nhận tin nhắn.</string>
+    <string name="steam_chat_background_permission_required">Cần cấp quyền thông báo để nhận thông báo tin nhắn.</string>
+    <string name="steam_chat_background_start_failed">Không thể bật thông báo tin nhắn trò chuyện.</string>
+    <string name="steam_chat_background_target_unavailable">Tài khoản Steam của thông báo này không còn khả dụng.</string>
+
+    <string name="steam_store_price_buy">%1$s · Mua</string>
+    <string name="steam_store_offer_days">Còn %1$d ngày</string>
+    <string name="steam_store_offer_hours">Còn %1$d giờ</string>
+    <string name="steam_store_offer_minutes">Còn %1$d phút</string>
 </resources>

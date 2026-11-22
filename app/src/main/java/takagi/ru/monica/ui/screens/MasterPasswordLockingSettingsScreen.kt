@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Column
@@ -16,20 +20,18 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.VpnKey
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -38,6 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import androidx.biometric.BiometricManager
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.BiometricAuthHelper
 import takagi.ru.monica.viewmodel.SettingsViewModel
@@ -56,12 +60,19 @@ fun MasterPasswordLockingSettingsScreen(
     val activity = context as? FragmentActivity
     val settings by viewModel.settings.collectAsState()
     val biometricHelper = remember(context) { BiometricAuthHelper(context) }
-    val isBiometricAvailable = remember(biometricHelper) { biometricHelper.isBiometricAvailable() }
+    var biometricStatus by remember(biometricHelper) {
+        mutableIntStateOf(biometricHelper.getBiometricStatusCode())
+    }
+    LifecycleResumeEffect(biometricHelper) {
+        biometricStatus = biometricHelper.getBiometricStatusCode()
+        onPauseOrDispose { }
+    }
+    val isBiometricAvailable = biometricStatus == BiometricManager.BIOMETRIC_SUCCESS
     val biometricSubtitle = if (isBiometricAvailable) {
         if (settings.biometricEnabled) context.getString(R.string.biometric_unlock_enabled)
         else context.getString(R.string.biometric_unlock_disabled)
     } else {
-        biometricHelper.getBiometricStatusMessage()
+        biometricHelper.getBiometricStatusMessage(biometricStatus)
     }
 
     var biometricSwitchState by remember(settings.biometricEnabled) {

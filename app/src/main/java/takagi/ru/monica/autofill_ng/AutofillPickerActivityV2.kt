@@ -4384,7 +4384,7 @@ private fun AutofillFilterPanelBody(
                         leadingIcon = { Icon(Icons.Default.Storage, contentDescription = null) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true,
                         shape = RoundedCornerShape(16.dp),
@@ -4436,7 +4436,7 @@ private fun AutofillFilterPanelBody(
                                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassGroupMenuExpanded)
                             },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true,
                             shape = RoundedCornerShape(16.dp),
@@ -4496,7 +4496,7 @@ private fun AutofillFilterPanelBody(
                         leadingIcon = { Icon(Icons.Default.CloudSync, contentDescription = null) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true,
                         shape = RoundedCornerShape(16.dp),
@@ -4547,7 +4547,7 @@ private fun AutofillFilterPanelBody(
                             leadingIcon = { Icon(Icons.Default.Folder, contentDescription = null) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = folderMenuExpanded) },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true,
                             shape = RoundedCornerShape(16.dp),

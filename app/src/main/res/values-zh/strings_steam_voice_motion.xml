@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_voice_status_connected">正在语音聊天 · %1$d 人</string>
+    <string name="steam_voice_status_waiting">等待对方接听</string>
+    <string name="steam_voice_status_reconnecting">正在重新连接</string>
+    <string name="steam_voice_status_connecting">正在连接语音聊天</string>
+    <string name="steam_voice_status_members">%1$d 人正在语音聊天</string>
+    <string name="steam_voice_status_channel">语音频道</string>
+    <string name="steam_voice_status_joined">已经加入语音聊天</string>
+    <string name="steam_voice_status_empty">当前没有成员加入</string>
+</resources>

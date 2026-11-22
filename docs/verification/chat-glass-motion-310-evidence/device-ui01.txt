@@ -1,0 +1,336 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamAppGlassUiTest:
+INSTRUMENTATION_STATUS: test=filterAndPickerBarsSampleLiveBackgroundInBothStyles
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Bar must sample its live sibling source in LIQUID_GLASS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.filterAndPickerBarsSampleLiveBackgroundInBothStyles(SteamAppGlassUiTest.kt:75)
+
+INSTRUMENTATION_STATUS: stream=
+Error in filterAndPickerBarsSampleLiveBackgroundInBothStyles(takagi.ru.monica.steam.navigation.SteamAppGlassUiTest):
+java.lang.AssertionError: Bar must sample its live sibling source in LIQUID_GLASS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.filterAndPickerBarsSampleLiveBackgroundInBothStyles(SteamAppGlassUiTest.kt:75)
+
+INSTRUMENTATION_STATUS: test=filterAndPickerBarsSampleLiveBackgroundInBothStyles
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=materialsRefreshFromSiblingAndStyleSwitchPreservesDraft
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=materialsRefreshFromSiblingAndStyleSwitchPreservesDraft
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=filterIndicatorMovesBetweenExclusiveSelections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=filterIndicatorMovesBetweenExclusiveSelections
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realPickerKeepsExclusiveTabsAndCloseAtLargeFontInBothStyles
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sharedPageMotionDisposesOldContentAndSupportsReducedMotion
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (TestTag = 'page-1')
+Node found:
+Node #140 at (l=0.0, t=48.0, r=1080.0, b=2068.0)px, Tag: 'page-1'
+Has 1 child
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.sharedPageMotionDisposesOldContentAndSupportsReducedMotion(SteamAppGlassUiTest.kt:136)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sharedPageMotionDisposesOldContentAndSupportsReducedMotion(takagi.ru.monica.steam.navigation.SteamAppGlassUiTest):
+java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (TestTag = 'page-1')
+Node found:
+Node #140 at (l=0.0, t=48.0, r=1080.0, b=2068.0)px, Tag: 'page-1'
+Has 1 child
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.sharedPageMotionDisposesOldContentAndSupportsReducedMotion(SteamAppGlassUiTest.kt:136)
+
+INSTRUMENTATION_STATUS: test=sharedPageMotionDisposesOldContentAndSupportsReducedMotion
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sheetHandlePreservesExpandCollapseAndDismissVeto
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sheetHandlePreservesExpandCollapseAndDismissVeto
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamAppGlassUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest:
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar(takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest):
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=chatSearchKeepsHostPaletteAndSystemTextScale
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=chatSearchKeepsHostPaletteAndSystemTextScale
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest:
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realListToPopulatedThreadFrameSample
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realListToPopulatedThreadFrameSample
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=15
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 52.726
+There were 3 failures:
+1) filterAndPickerBarsSampleLiveBackgroundInBothStyles(takagi.ru.monica.steam.navigation.SteamAppGlassUiTest)
+java.lang.AssertionError: Bar must sample its live sibling source in LIQUID_GLASS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.filterAndPickerBarsSampleLiveBackgroundInBothStyles(SteamAppGlassUiTest.kt:75)
+2) sharedPageMotionDisposesOldContentAndSupportsReducedMotion(takagi.ru.monica.steam.navigation.SteamAppGlassUiTest)
+java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (TestTag = 'page-1')
+Node found:
+Node #140 at (l=0.0, t=48.0, r=1080.0, b=2068.0)px, Tag: 'page-1'
+Has 1 child
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.steam.navigation.SteamAppGlassUiTest.sharedPageMotionDisposesOldContentAndSupportsReducedMotion(SteamAppGlassUiTest.kt:136)
+3) nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar(takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest)
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 15,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

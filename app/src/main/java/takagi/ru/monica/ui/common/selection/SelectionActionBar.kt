@@ -27,8 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassAvailable
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
 
 data class SelectionActionBarAction(
     val icon: ImageVector,
@@ -55,12 +58,13 @@ fun SelectionActionBar(
     containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
     contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
+    val glass = steamGlassAvailable()
     Surface(
-        modifier = modifier,
+        modifier = modifier.then(if (glass) Modifier.steamGlassSurface(RoundedCornerShape(28.dp), containerColor) else Modifier),
         shape = RoundedCornerShape(28.dp),
-        tonalElevation = 3.dp,
-        shadowElevation = 8.dp,
-        color = containerColor,
+        tonalElevation = if (glass) 0.dp else 3.dp,
+        shadowElevation = if (glass) 0.dp else 8.dp,
+        color = if (glass) Color.Transparent else containerColor,
         contentColor = contentColor
     ) {
         Row(
@@ -70,12 +74,16 @@ fun SelectionActionBar(
         ) {
             if (showSelectionControls) {
                 Surface(
+                    // Reserve the action buttons first so a large count cannot squeeze out Exit.
+                    modifier = Modifier.weight(1f, fill = false),
                     shape = CircleShape,
                     color = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ) {
                     Text(
                         text = selectedCount.toString(),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.Bold
                         ),

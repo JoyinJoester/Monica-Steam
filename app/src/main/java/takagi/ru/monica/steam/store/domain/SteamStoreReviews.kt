@@ -46,6 +46,7 @@ data class SteamStoreReviews(
     val recent: SteamReviewSummary? = null,
     val items: List<SteamUserReview> = emptyList(),
     val nextCursor: String? = null,
+    val pageLoadFailed: Boolean = false,
     val fetchedAt: Long = System.currentTimeMillis()
 )
 
@@ -104,8 +105,8 @@ internal fun SteamStoreDetail.preserveCachedReviews(cached: SteamStoreDetail?): 
     val mergedReviews = freshReviews.copy(
         overall = freshReviews.overall ?: cachedReviews.overall,
         recent = freshReviews.recent ?: cachedReviews.recent,
-        items = freshReviews.items.ifEmpty { cachedReviews.items },
-        nextCursor = freshReviews.nextCursor ?: cachedReviews.nextCursor
+        items = if (freshReviews.pageLoadFailed) cachedReviews.items else freshReviews.items,
+        nextCursor = if (freshReviews.pageLoadFailed) cachedReviews.nextCursor else freshReviews.nextCursor
     )
     return if (mergedReviews == freshReviews) result else result.copy(reviews = mergedReviews)
 }
@@ -114,6 +115,7 @@ internal fun SteamStoreReviews.mergePage(page: SteamReviewPage): SteamStoreRevie
     overall = overall ?: page.summary,
     items = (items + page.items).distinctBy(SteamUserReview::recommendationId),
     nextCursor = page.nextCursor,
+    pageLoadFailed = false,
     fetchedAt = System.currentTimeMillis()
 )
 

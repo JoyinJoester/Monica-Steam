@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-21T01:21:43.891Z" hostname="JOYIN" time="0.152">
+  <properties/>
+  <testcase name="parsesPublicMiniProfileBackgroundVideoUrls" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.121"/>
+  <testcase name="parsesPublicAvatarFrameAndProfileDetails" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.002"/>
+  <testcase name="rejectsMissingOrUntrustedBackgroundUrls" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.001"/>
+  <testcase name="centerCropUsesNormalizedTextureScaleWithoutStretching" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.001"/>
+  <testcase name="diskCachePrunesOldestFilesAndHonorsProtectedMedia" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.02"/>
+  <testcase name="parsesCurrentGameDetailsForRecentGamesWidget" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.0"/>
+  <testcase name="convertsSteamId64ToPublicMiniProfileAccountId" classname="takagi.ru.monica.steam.SteamMiniProfileBackgroundTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

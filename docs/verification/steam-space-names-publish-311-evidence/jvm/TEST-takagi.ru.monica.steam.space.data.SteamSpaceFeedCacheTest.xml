@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-21T17:00:10.041Z" hostname="JOYIN" time="0.077">
+  <properties/>
+  <testcase name="codecRejectsMalformedHugeDuplicateAndUnsupportedEnvelopes" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.039"/>
+  <testcase name="previousSnapshotWithoutAppNameMappingStillLoads" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="memoryAndDiskKeepAtMostFourAccountLanguageEntries" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.008"/>
+  <testcase name="expiryAndClockRollbackDiscardMemoryAndDiskWithoutDeletingOriginalBytes" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="cacheCopiesInputAndOutputCollectionsIncludingNestedLists" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="cancellationIsNotSwallowedByDiskBoundary" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.002"/>
+  <testcase name="identitiesIncludeLocalIdSteamIdLanguageCreationAndTemporaryScope" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="emptyFeedIsCacheableButInvalidCursorOrOversizedFeedPreservesGoodCache" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="rememberMakesResultImmediatelyAvailableWithoutIoAndLaterSavePersistsIt" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="slowEncryptedReadNeverBlocksMemoryPeekAndNewerSaveWinsAfterRead" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.005"/>
+  <testcase name="newInstanceRestoresRichFeedAndPageChainFromEncryptedSnapshot" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="corruptedCiphertextOrPlaintextIsNeverRestoredAsValidFeed" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="temporaryFeedDoesNotReadOrReplacePersistedSavedAccount" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="olderRefreshAndLateEarlierPageCannotReplaceNewerSnapshot" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.002"/>
+  <testcase name="appNameMappingsAreDetachedAndBoundedAlongWithTheFeed" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.004"/>
+  <testcase name="peekNeverReadsDiskOrInitializesCipher" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.001"/>
+  <testcase name="encryptionOrDiskFailureKeepsMemoryButNeverWritesPlaintext" classname="takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

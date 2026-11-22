@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.092Z" hostname="JOYIN" time="0.093">
+  <properties/>
+  <testcase name="readsEquippedBackgroundFromInlineStyle" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.087"/>
+  <testcase name="rejectsHostsOutsideTheSteamCdnAllowList" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.001"/>
+  <testcase name="readsAnimatedBackgroundPoster" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.003"/>
+  <testcase name="readsAnimatedBackgroundFromTheModernProfileMarkup" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.001"/>
+  <testcase name="prefersTheProfileBackgroundOverOtherPageImages" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.0"/>
+  <testcase name="blankOrLoginPagesHaveNoBackground" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

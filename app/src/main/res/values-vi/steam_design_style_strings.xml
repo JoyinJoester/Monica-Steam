@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_dock_style_title">Kiểu thanh điều hướng</string>
+    <string name="steam_dock_style_description">M3E là mặc định. Cả hai kiểu đều có Cửa hàng, Thư viện trò chơi, Trò chuyện, Mã xác thực và Cài đặt.</string>
+    <string name="steam_dock_style_liquid_glass">Kính lỏng</string>
+    <string name="steam_dock_style_fixed">M3E</string>
+    <string name="steam_design_style_title">Phong cách thiết kế</string>
+    <string name="steam_design_style_description">Cả hai phong cách đều dùng màu sắc và cài đặt hiển thị đã chọn. Bạn có thể đổi bất kỳ lúc nào.</string>
+    <string name="steam_design_style_m3e_description">Material 3 Expressive: thanh điều hướng cố định, khung nội dung cùng tông màu và nút nổi tiêu chuẩn</string>
+    <string name="steam_design_style_liquid_glass_description">Thanh điều hướng kính nổi; các nút nổi trong Trò chuyện và Cửa hàng cũng dùng hiệu ứng kính</string>
+    <string name="steam_design_style_order_hint">Đổi thứ tự các mục trong Điều hướng và chuyển động › Điều hướng dưới cùng.</string>
+    <string name="steam_design_style_preview">Xem trước</string>
+    <string name="steam_design_style_glass_unsupported">Thiết bị này dùng nền bán trong suốt thay cho hiệu ứng kính trực tiếp.</string>
+</resources>

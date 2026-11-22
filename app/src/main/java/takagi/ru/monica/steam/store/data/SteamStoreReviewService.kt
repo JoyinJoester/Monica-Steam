@@ -11,7 +11,7 @@ import takagi.ru.monica.steam.store.domain.SteamStoreReviews
 class SteamStoreReviewService(
     private val client: OkHttpClient
 ) {
-    fun fetch(appId: Int, language: String = "schinese"): SteamStoreReviews? {
+    fun fetch(appId: Int, language: String = "schinese"): SteamStoreReviews {
         val page = fetchPart(appId, "page") { fetchPage(appId, language = language) }
         val recent = fetchPart(appId, "recent") {
             SteamStoreReviewParser.parseRecent(
@@ -24,16 +24,13 @@ class SteamStoreReviewService(
                 )
             )
         }
-        return if (page == null && recent == null) {
-            null
-        } else {
-            SteamStoreReviews(
-                overall = page?.summary,
-                recent = recent,
-                items = page?.items.orEmpty(),
-                nextCursor = page?.nextCursor
-            )
-        }
+        return SteamStoreReviews(
+            overall = page?.summary,
+            recent = recent,
+            items = page?.items.orEmpty(),
+            nextCursor = page?.nextCursor,
+            pageLoadFailed = page == null
+        )
     }
 
     fun fetchPage(
@@ -44,7 +41,7 @@ class SteamStoreReviewService(
         filters: SteamReviewFilterSelection = SteamReviewFilterSelection()
     ): SteamReviewPage = SteamStoreReviewParser.parsePage(
         get(
-            pathSegments = listOf("appreviews", appId.toString()),
+            pathSegments = listOf("ajaxappreviews", appId.toString()),
             query = buildMap {
                 put("json", "1")
                 put("language", language)

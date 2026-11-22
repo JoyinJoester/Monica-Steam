@@ -1,0 +1,2 @@
+onError: commandError=false message=INSTRUMENTATION_ABORTED: System has crashed.
+INSTRUMENTATION_ABORTED: System has crashed.

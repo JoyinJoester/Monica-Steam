@@ -1,0 +1,15 @@
+{
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest#systemShadeShowsIndependentMessageNotifications",
+    "takagi.ru.monica.steamapp.messagenotifications.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "exit": 0,
+  "seconds": 5.442452999996021
+}

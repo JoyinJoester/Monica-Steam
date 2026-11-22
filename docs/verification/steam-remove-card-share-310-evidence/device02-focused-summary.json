@@ -1,0 +1,10 @@
+{
+  "stage": "device02-focused",
+  "failures": [
+    {
+      "test": "sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+      "error": "androidx.test.espresso.NoMatchingViewException: No views in hierarchy found matching: (an instance of android.widget.TextView and view.getText() with or without transformation to match: is \"\u7cfb\u7edf\u6587\u4ef6\" and (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle))"
+    }
+  ],
+  "fullLogRetainedLocally": true
+}

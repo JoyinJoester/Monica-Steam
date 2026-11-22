@@ -1,0 +1,926 @@
+[
+  {
+    "stage": "final-longpress-retry",
+    "runnerSeconds": 16.815,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "longPressMenuFollowsTheTouchPointInBothThemes",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-release-external01",
+    "runnerSeconds": 18.41,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "final-release-external02",
+    "runnerSeconds": 18.853,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "final-release-external03",
+    "runnerSeconds": 4.265,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "final-release-external04",
+    "runnerSeconds": 34.905,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "final-release-external05",
+    "runnerSeconds": 23.467,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-release-seed",
+    "runnerSeconds": 1.754,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseSeedTest",
+        "test": "seedEncryptedSyntheticAccountForOfflineReleaseScanner",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-release-seed02",
+    "runnerSeconds": 2.33,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseSeedTest",
+        "test": "seedEncryptedSyntheticAccountForOfflineReleaseScanner",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-release",
+    "runnerSeconds": null,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "methods": []
+  },
+  {
+    "stage": "final-release02",
+    "runnerSeconds": null,
+    "runnerPassed": false,
+    "passed": 5,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamR8ReflectionEntryTest",
+        "test": "manifestRegistrarsAndWorkInputMergerRetainPublicConstructors",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.pilot.SteamR8NativeTest",
+        "test": "nativeOwnedGamesAcceptsMinimalSyntheticProtobuf",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.pilot.SteamR8NativeTest",
+        "test": "nativeMalformedPayloadAndMismatchedArraysReturnNullWithoutFallback",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.pilot.SteamR8NativeTest",
+        "test": "nativeWorkshopOrderingKeepsSignedScoresUnsignedIdsAndStableTies",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.pilot.SteamR8NativeTest",
+        "test": "nativeCmEncodeDecodePreservesHeaderUnicodeAndBody",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest",
+        "test": "coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "final-scanner-denied",
+    "runnerSeconds": 3.896,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerDeniedPermissionTest",
+        "test": "actualPermissionDenialKeepsReturnAvailableAndNeverBindsCamera",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-scanner-native-chat",
+    "runnerSeconds": 37.126,
+    "runnerPassed": true,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerEntryTest",
+        "test": "scannerOpensWithCameraPermissionAndReturns",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerLifecycleTest",
+        "test": "galleryUsesRealMlKitRejectsForeignQrAndAcceptsSteamQrOnlyOnce",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerLifecycleTest",
+        "test": "repeatedGrantedEntriesStreamFramesAndDetachTheirCameraOnReturn",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "cmRoundTripUsesBothNativeEntryPoints",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "ownedGamesCrossesJniAndDecodesUnicodeAndUnsignedFields",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "sharedGameLastPlayedCrossesJniWithoutInventingRecentMinutes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "malformedNativeInputReturnsNullWithoutCrashingJvm",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "legacySecretImportRemainsCompatibleWhenNativeLibraryIsLoaded",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "unreadAndCategoriesAreMutuallyExclusive",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "realListToPopulatedThreadFrameSample",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "wallpaperMountCostSample",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-security-storage",
+    "runnerSeconds": 63.464,
+    "runnerPassed": true,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.session.SteamTemporaryLoginUiTest",
+        "test": "temporaryOptionIsAccessibleAndRendersAtDialogWidth",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.session.SteamTemporaryLoginUiTest",
+        "test": "passwordDialogSubmitsTemporaryFlagAndClearsItForAuthenticatorMode",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileConsentScreenTest",
+        "test": "selectionNeverConfirmsAndExplicitConfirmationIsRequired",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileHandoffProviderTest",
+        "test": "rejectsOtherUidWritesAndAlteredUris",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileHandoffProviderTest",
+        "test": "readsOnceAndUsesGenericMetadata",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "documentResultSurvivesImmediateRelockWithoutRetainingAuthorization",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "cancellingDocumentPickerDoesNotRequestAuthenticationOrWrite",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "sensitiveGateIgnoresStartupBypassAndRelocksOnReturn",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "missingMasterPasswordRejectsExportWithoutWritingBytes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "recreationDoesNotRestoreAnExportGrant",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "activeSessionDoesNotBypassExportAndWrongPasswordOrCancelWritesNothing",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "correctPasswordWritesValidArchiveAndNextExportRequiresFreshVerification",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.backup.SteamMaFileExportAuthenticationTest",
+        "test": "backgroundingVerificationDiscardsThePendingExport",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamDockPreferencesDeviceTest",
+        "test": "removedTelegramStyleFallsBackAfterReopenWithoutChangingExistingOrders",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceContentSettingsDeviceTest",
+        "test": "categoriesPersistByNameAcrossStoreRecreationAndIgnoreUnknownFutureKinds",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest",
+        "test": "encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-ui",
+    "runnerSeconds": 217.95,
+    "runnerPassed": false,
+    "passed": 35,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "longPressMenuFollowsTheTouchPointInBothThemes",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "nativeTapDispatchHasNoGestureTimeout",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "preferenceReadRunsOffTheUiThread",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "bottomEdgeLargeTypeAndKeyboardMenusRemainInsideTheWindow",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "cancelledPreferenceReadCannotRestoreThePreviousConversation",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+        "test": "conversationTransitionSettlesWithoutTheLongScalePause",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "olderReadingAnchorSurvivesImeAndReopening",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "lightThemeNativeTitleAndLongHistoryRemainInteractive",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "directNativeEditorSendsKeepsImeAndRetries",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "test": "rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "test": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "test": "directSearchRetainsMessagesAndDraftInBothThemes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "test": "gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "test": "groupSearchRetainsMessagesAndDraftInBothThemes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+        "test": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+        "test": "filterIndicatorMovesBetweenExclusiveSelections",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+        "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+        "test": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+        "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+        "test": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+        "test": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+        "test": "chatSearchKeepsHostPaletteAndSystemTextScale",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "interruptedActionDismissesAndNavigatesExactlyOnce",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "disposingDrawerDuringCloseDoesNotRunStaleNavigation",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "swipeClosedRemovesWindowAndUnblocksHome",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "tapScrimRemovesWindowAndUnblocksHome",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "closeWhileOpeningRemovesTheDialogWindow",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+        "test": "interruptedButtonCloseStillRemovesWindow",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-work-storage",
+    "runnerSeconds": 73.802,
+    "runnerPassed": false,
+    "passed": 7,
+    "failed": 6,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "presetNotificationRestoresItsNameAndRetriesBothOperationDirections",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "continueAndBackHideProgressWithoutStoppingAndItCanBeReopened",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest",
+        "test": "storageExportPreservesNestedNamesAndBytes",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest",
+        "test": "zstandardChunkDecodesUsingBundledAndroidLibrary",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "stageLabelsAndCancelRemainVisibleAtLargeFont",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "exportReportsWrittenBytesAndPreservesNestedFiles",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "cancelledExportDoesNotContinueWritingOrReachNextFile",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "savingReplacesCompletedNetworkCountersWithItsOwnProgress",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "notificationUsesSameStageAndStageFraction",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "checksumCountsFilesAndDirectDownloadOnlyClaimsSizeCheck",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "legacySavingDataDoesNotShowStaleNetworkPercentage",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-work-storage02",
+    "runnerSeconds": 38.251,
+    "runnerPassed": false,
+    "passed": 12,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount",
+        "status": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "presetNotificationRestoresItsNameAndRetriesBothOperationDirections",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "continueAndBackHideProgressWithoutStoppingAndItCanBeReopened",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest",
+        "test": "storageExportPreservesNestedNamesAndBytes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest",
+        "test": "zstandardChunkDecodesUsingBundledAndroidLibrary",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "stageLabelsAndCancelRemainVisibleAtLargeFont",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "exportReportsWrittenBytesAndPreservesNestedFiles",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "cancelledExportDoesNotContinueWritingOrReachNextFile",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "savingReplacesCompletedNetworkCountersWithItsOwnProgress",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "notificationUsesSameStageAndStageFraction",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "checksumCountsFilesAndDirectDownloadOnlyClaimsSizeCheck",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest",
+        "test": "legacySavingDataDoesNotShowStaleNetworkPercentage",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "final-worker-clean",
+    "runnerSeconds": 5.673,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest",
+        "test": "systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "persistence-diagnostic",
+    "runnerSeconds": 0.05,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamToolchainPersistenceDiagnosticTest",
+        "test": "firstReadOnlyRefreshedReadyFlagAndCompatWrapperOfTheSameMdk",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "persistence-diagnostic02",
+    "runnerSeconds": 1.786,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamToolchainPersistenceDiagnosticTest",
+        "test": "firstReadOnlyRefreshedReadyFlagAndCompatWrapperOfTheSameMdk",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "persistence-seed",
+    "runnerSeconds": 2.085,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamToolchainPersistenceUpgradeTest",
+        "test": "seedWithOldDataStoreAndSecurityCrypto",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "persistence-verify",
+    "runnerSeconds": 6.593,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamToolchainPersistenceUpgradeTest",
+        "test": "upgradedColdProcessReadsOldPreferencesPasswordCiphertextAndAccountUnchanged",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "release-data-after-reboot",
+    "runnerSeconds": 0.031,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamReleaseDataDiagnosticTest",
+        "test": "retainedReleaseDatabaseStillContainsEncryptedSeed",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "release-data-diagnostic01",
+    "runnerSeconds": 0.011,
+    "runnerPassed": false,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamReleaseDataDiagnosticTest",
+        "test": "retainedReleaseDatabaseStillContainsEncryptedSeed",
+        "status": -2
+      }
+    ]
+  },
+  {
+    "stage": "release-data-diagnostic02",
+    "runnerSeconds": 0.029,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamReleaseDataDiagnosticTest",
+        "test": "retainedReleaseDatabaseStillContainsEncryptedSeed",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "scanner-before",
+    "runnerSeconds": 14.428,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerEntryTest",
+        "test": "scannerOpensWithCameraPermissionAndReturns",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "scanner-denied-newtoolchain",
+    "runnerSeconds": 2.447,
+    "runnerPassed": true,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerDeniedPermissionTest",
+        "test": "actualPermissionDenialKeepsReturnAvailableAndNeverBindsCamera",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "scanner-newtoolchain",
+    "runnerSeconds": 31.358,
+    "runnerPassed": true,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerEntryTest",
+        "test": "scannerOpensWithCameraPermissionAndReturns",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerLifecycleTest",
+        "test": "galleryUsesRealMlKitRejectsForeignQrAndAcceptsSteamQrOnlyOnce",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.scanner.SteamScannerLifecycleTest",
+        "test": "repeatedGrantedEntriesStreamFramesAndDetachTheirCameraOnReturn",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "cmRoundTripUsesBothNativeEntryPoints",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "ownedGamesCrossesJniAndDecodesUnicodeAndUnsignedFields",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "sharedGameLastPlayedCrossesJniWithoutInventingRecentMinutes",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "malformedNativeInputReturnsNullWithoutCrashingJvm",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.core.SteamNativeDeviceTest",
+        "test": "legacySecretImportRemainsCompatibleWhenNativeLibraryIsLoaded",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "unreadAndCategoriesAreMutuallyExclusive",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "realListToPopulatedThreadFrameSample",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+        "test": "wallpaperMountCostSample",
+        "status": 0
+      }
+    ]
+  },
+  {
+    "stage": "session-after-upgrade",
+    "runnerSeconds": 0.924,
+    "runnerPassed": true,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "methods": [
+      {
+        "class": "takagi.ru.monica.steam.session.SteamSessionStorageRecoveryTest",
+        "test": "reLoginWrittenThroughAccountRepositoryReplacesCachedSessionForAStaleHandle",
+        "status": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.session.SteamTemporaryAccountStorageTest",
+        "test": "sameSteamIdTemporaryLoginAndRotationNeverChangeSavedAccount",
+        "status": 0
+      }
+    ]
+  }
+]

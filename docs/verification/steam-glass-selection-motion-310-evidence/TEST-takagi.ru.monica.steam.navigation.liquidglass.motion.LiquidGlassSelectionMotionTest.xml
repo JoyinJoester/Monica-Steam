@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-21T09:48:31.087Z" hostname="JOYIN" time="0.34">
+  <properties/>
+  <testcase name="stoppedPageRejectsLateReleaseFromAnyOption" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.203"/>
+  <testcase name="quickTapOnAnotherOptionSurvivesImmediateSelectionRecomposition" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.079"/>
+  <testcase name="draggingFromUnselectedOptionCommitsOnlyReleasedTarget" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.004"/>
+  <testcase name="physicalPressTravelsFromCommittedSlotAndCancellationReturnsContinuously" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.011"/>
+  <testcase name="newPressAndDisposeCancelOldPulseAndRepeatedTapRestartsIt" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.008"/>
+  <testcase name="reducedAndInactiveClickCommitWithoutExpansion" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.003"/>
+  <testcase name="physicalQuickTapRetainsTravelThroughReleaseAndSelectionCommit" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.011"/>
+  <testcase name="externalSelectionReflowStopAndReducedMotionRevokeTapFeedback" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.008"/>
+  <testcase name="unselectedPressDoesNotCommitAndCancellationRestoresOriginalBounds" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.004"/>
+  <testcase name="quickTapOnSelectedOptionKeepsExpansionThenReleasesWithOneImmediateCallback" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,193 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest:
+INSTRUMENTATION_STATUS: test=cachedPageCancelsPendingReleaseAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<ALL> but was:<UNREAD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:246)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsPendingReleaseAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:227)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedPageCancelsPendingReleaseAndCanDragAfterReturn(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest):
+java.lang.AssertionError: expected:<ALL> but was:<UNREAD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:246)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsPendingReleaseAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:227)
+
+INSTRUMENTATION_STATUS: test=cachedPageCancelsPendingReleaseAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedPageCancelsHeldPointerAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<UNREAD> but was:<ALL>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifySelection(SteamLiquidGlassFilterDragTest.kt:175)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:253)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsHeldPointerAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:231)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedPageCancelsHeldPointerAndCanDragAfterReturn(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest):
+java.lang.AssertionError: expected:<UNREAD> but was:<ALL>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifySelection(SteamLiquidGlassFilterDragTest.kt:175)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:253)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsHeldPointerAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:231)
+
+INSTRUMENTATION_STATUS: test=cachedPageCancelsHeldPointerAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest:
+INSTRUMENTATION_STATUS: test=cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 3000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:901)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:500)
+	at takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest.cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree(SteamTabPageHostDeviceTest.kt:129)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree(takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest):
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 3000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:901)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:500)
+	at takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest.cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree(SteamTabPageHostDeviceTest.kt:129)
+
+INSTRUMENTATION_STATUS: test=cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundDropsInactivePageBeforeResume
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundDropsInactivePageBeforeResume
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=platformViewModeEvictsInactivePageWithoutRemountingCurrentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=platformViewModeEvictsInactivePageWithoutRemountingCurrentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameFrameNavigationAndBackgroundCannotRestoreInactivePage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sameFrameNavigationAndBackgroundCannotRestoreInactivePage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 22.182
+There were 3 failures:
+1) cachedPageCancelsPendingReleaseAndCanDragAfterReturn(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest)
+java.lang.AssertionError: expected:<ALL> but was:<UNREAD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:246)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsPendingReleaseAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:227)
+2) cachedPageCancelsHeldPointerAndCanDragAfterReturn(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest)
+java.lang.AssertionError: expected:<UNREAD> but was:<ALL>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifySelection(SteamLiquidGlassFilterDragTest.kt:175)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.verifyCachedCancellation(SteamLiquidGlassFilterDragTest.kt:253)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.cachedPageCancelsHeldPointerAndCanDragAfterReturn(SteamLiquidGlassFilterDragTest.kt:231)
+3) cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree(takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest)
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 3000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:901)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:500)
+	at takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest.cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree(SteamTabPageHostDeviceTest.kt:129)
+
+FAILURES!!!
+Tests run: 8,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

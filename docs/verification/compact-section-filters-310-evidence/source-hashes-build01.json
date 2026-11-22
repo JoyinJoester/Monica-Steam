@@ -1,0 +1,10 @@
+{
+  "RELEASE_NOTES.md": "164b2c0bc28c1ab7e9f29275cfb17368a8d9476c7f6d7587f05d95a2d78ee700",
+  "docs/releases/Monica-Steam-Unreleased.md": "88fc17e61a7b6778aa339a7ad951f817927966171e960075b68ba6195023f106",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementSetSelector.kt": "447d8b5c3e18a96ea18d8f38b500a23486d6e1cc8aaa7160de9e73c2bfbd5fa7",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementStatusSelector.kt": "38ddc15a69bb874cf4cb5b9d504415ee1ebc1a04fad17d6cb7ed9c6bbb065aa2",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamSharedHistory.kt": "60ad787beb187a2a46b42a9fae22a951bf278fa6d5ad7abe4e13a77c38b21aee",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "e512d684ff276646fbc72f1bd3b96891003433dde41df9f537e91aeaf0cf6d79",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatContentUiTest.kt": "956fe857cd4c54ddca1af4427d892e137193ff504f39d8e262728718479bba11",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/SteamAchievementStyleDeviceTest.kt": "cd7198cff7c544134ce537a1f9f301af1550b2b556c1baa29abaa81942c0dd3f"
+}

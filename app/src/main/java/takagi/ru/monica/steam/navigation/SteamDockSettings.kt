@@ -1,6 +1,8 @@
 package takagi.ru.monica.steam.navigation
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -161,8 +163,8 @@ internal fun reorderFixedDockOrder(
 
 private val Context.steamDockDataStore by preferencesDataStore(name = "monica_steam_dock")
 
-class SteamDockPreferences(context: Context) {
-    private val dataStore = context.applicationContext.steamDockDataStore
+class SteamDockPreferences internal constructor(private val dataStore: DataStore<Preferences>) {
+    constructor(context: Context) : this(context.applicationContext.steamDockDataStore)
 
     val configuration: Flow<SteamDockConfiguration> = dataStore.data.map { preferences ->
         val storedM3eOrder = preferences[ORDER_KEY]

@@ -1,0 +1,281 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest:
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: 全部 must share the tab selection model expected:<true> but was:<false>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.assertSelected$lambda$8(SteamChatEntryRegressionTest.kt:89)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$fDKP2OfcvmmbhCCKD2tyCcoRh_0(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:51)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$6v1yrbLMCIGKYmx4TfktPC0YLiI(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda26.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in unreadAndCategoriesAreMutuallyExclusive(takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest):
+java.lang.AssertionError: 全部 must share the tab selection model expected:<true> but was:<false>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.assertSelected$lambda$8(SteamChatEntryRegressionTest.kt:89)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$fDKP2OfcvmmbhCCKD2tyCcoRh_0(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:51)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$6v1yrbLMCIGKYmx4TfktPC0YLiI(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda26.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramWallpaperUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.TelegramWallpaperUiTest:
+INSTRUMENTATION_STATUS: test=bothChatTypesRenderOriginalSoftAndPlainWithoutChangingMessageCells
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramWallpaperUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=bothChatTypesRenderOriginalSoftAndPlainWithoutChangingMessageCells
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramWallpaperUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=pickerConfirmsOrCancelsAndEncryptedPreferencesSurviveReload
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramWallpaperUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pickerConfirmsOrCancelsAndEncryptedPreferencesSurviveReload
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.TelegramChatUiTest:
+INSTRUMENTATION_STATUS: test=olderReadingAnchorSurvivesImeAndReopening
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=olderReadingAnchorSurvivesImeAndReopening
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lightThemeNativeTitleAndLongHistoryRemainInteractive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lightThemeNativeTitleAndLongHistoryRemainInteractive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=directNativeEditorSendsKeepsImeAndRetries
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=directNativeEditorSendsKeepsImeAndRetries
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.TelegramSocialUiTest:
+INSTRUMENTATION_STATUS: test=inboxUnreadSearchPinsAndToolbarKeepNavigation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inboxUnreadSearchPinsAndToolbarKeepNavigation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest:
+INSTRUMENTATION_STATUS: test=returningFromRealThreadStartsAtTopEvenWhenRowsArriveLater
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=returningFromRealThreadStartsAtTopEvenWhenRowsArriveLater
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest:
+INSTRUMENTATION_STATUS: test=glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 81.337
+There was 1 failure:
+1) unreadAndCategoriesAreMutuallyExclusive(takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest)
+java.lang.AssertionError: 全部 must share the tab selection model expected:<true> but was:<false>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.assertSelected$lambda$8(SteamChatEntryRegressionTest.kt:89)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$fDKP2OfcvmmbhCCKD2tyCcoRh_0(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:51)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.$r8$lambda$6v1yrbLMCIGKYmx4TfktPC0YLiI(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda26.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 14,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

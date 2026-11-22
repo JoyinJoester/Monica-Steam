@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "seconds": 18.552877700014506,
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamSheetImeDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sheetHandlePreservesExpandCollapseAndDismissVeto,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+    "takagi.ru.monica.steamapp.sheetdesign.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

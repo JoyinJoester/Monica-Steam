@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_stats_friends">Thời gian chơi của bạn bè</string>
+    <string name="steam_game_stats_you">Bạn</string>
+    <string name="steam_game_stats_friend_average">Trung bình bạn bè</string>
+    <string name="steam_game_stats_readable_friends">Dựa trên %1$d người bạn công khai thời gian chơi</string>
+    <string name="steam_game_stats_no_friend_times">Không có thời gian chơi công khai của bạn bè</string>
+    <string name="steam_game_stats_badges">Huy hiệu trò chơi</string>
+    <string name="steam_game_stats_no_badges">Chưa có huy hiệu hoặc thẻ trao đổi</string>
+    <string name="steam_game_stats_card_owned">Đã sở hữu</string>
+    <string name="steam_game_stats_card_missing">Chưa sở hữu</string>
+    <string name="steam_game_stats_no_points">Trò chơi này chưa có vật phẩm đổi điểm</string>
+    <string name="steam_game_stats_points_cost">%1$d điểm</string>
+    <string name="steam_game_stats_view_all">Xem tất cả</string>
+    <string name="steam_game_stats_section_unavailable">Không thể tải. Hãy làm mới hoặc xem trên Steam.</string>
+</resources>

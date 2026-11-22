@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "095d57bcd7dcad41359f0924a967d417ce5401bdc3975f7d04755ec93485e3ea",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSurface.kt": "639fc4cd7e41ea364f82ad3b17765bc7bd61fd9a35b24217e86cfb3399601eb8",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailChrome.kt": "1ffcdd5349a8945fa03c9dcba0cbd41d3a24917864a091cd087410005e55e334",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "c85a4f7827c77474c094316d25d7039902fa6e582cb6e807510443597956bfb6",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamGameDetailTabsUiTest.kt": "a153d431717bd377592071b6870051bc71c2d314002bda607fd087ebf0df3d0d",
+  "RELEASE_NOTES.md": "4451303ae458fff43dc8a022b928d1f51e9bc5f64e0c6f285df7ec67849f2f5e",
+  "docs/releases/Monica-Steam-Unreleased.md": "8e48d3e8a5b105bb7aff5388b85553443e21be5fac2fbb7d45c93ce321027a8e"
+}

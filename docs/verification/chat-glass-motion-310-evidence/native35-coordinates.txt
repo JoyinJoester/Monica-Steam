@@ -1,0 +1,13 @@
+--------- beginning of main
+11-09 04:53:31.286  3508  3543 I System.out: GLASS_SOURCE_DRAWS_FOR_SIX_PILLS=2
+11-09 04:55:01.467  3909  3923 I System.out: GLASS_SOURCE_DRAWS_FOR_SIX_PILLS=2
+11-09 04:55:22.418  4021  4069 I System.out: GLASS_SOURCE_DRAWS_FOR_SIX_PILLS=2
+11-09 04:55:22.604  4021  4069 I System.out: GLASS_PIXEL=ff1a1b20 at 20,100 size=160x80
+11-09 04:55:24.344  4021  4069 I System.out: GLASS_PIXEL=ff1a1b20 at 20,100 size=160x80
+11-09 04:55:26.056  4021  4069 I System.out: GLASS_PIXEL=ff1a1b20 at 2028,100 size=160x80
+11-09 04:57:21.272  4152  4152 I System.out: GLASS_SCREEN=20,100 attached=true
+11-09 04:57:21.272  4152  4152 I System.out: GLASS_PARENT=android.widget.FrameLayout at=0,0 top=0 size=2208x1840
+11-09 04:57:21.272  4152  4152 I System.out: GLASS_PARENT=android.widget.FrameLayout at=0,0 top=0 size=2208x1840
+11-09 04:57:21.272  4152  4152 I System.out: GLASS_PARENT=com.android.internal.widget.ActionBarOverlayLayout at=0,0 top=0 size=2208x1840
+11-09 04:57:21.272  4152  4152 I System.out: GLASS_PARENT=com.android.internal.policy.DecorView at=0,0 top=0 size=2208x1840
+11-09 04:57:21.273  4152  4202 I System.out: GLASS_PIXEL=ff1a1b20 at 20,100 size=160x80

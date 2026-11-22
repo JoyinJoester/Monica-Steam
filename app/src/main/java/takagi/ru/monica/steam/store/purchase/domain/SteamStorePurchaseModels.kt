@@ -11,7 +11,8 @@ data class SteamStorePackageOption(
     val priceCents: Int? = null,
     val discountPercent: Int = 0,
     val isFreeLicense: Boolean = false,
-    val canGetFreeLicense: Boolean = false
+    val canGetFreeLicense: Boolean = false,
+    val discountEndEpochSeconds: Long? = null
 )
 
 @Serializable

@@ -1,0 +1,18 @@
+{
+  "checkedTaskFiles": 147,
+  "gitDiffCheck": "pass",
+  "fullFileTrailingWhitespace": [],
+  "reviewResourceCounts": {
+    "values": 3,
+    "values-zh": 3,
+    "values-ja": 3,
+    "values-ru": 3,
+    "values-vi": 3
+  },
+  "designIgnored": true,
+  "finalChatProductionHashesUnchanged": true,
+  "deviceFinal01": "35/35 25.135s",
+  "deviceFinal02": "3/3 3.938s",
+  "jvmFinal02": "18/18",
+  "allCreatedTestPackagesRemoved": true
+}

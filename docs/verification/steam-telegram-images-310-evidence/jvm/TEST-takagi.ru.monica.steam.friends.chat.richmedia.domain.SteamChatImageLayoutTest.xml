@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.562Z" hostname="JOYIN" time="0.037">
+  <properties/>
+  <testcase name="oddGridLastPhotoFillsLastRow" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" time="0.005"/>
+  <testcase name="albumTilesCoverWholeBubbleWithoutOverlap" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" time="0.031"/>
+  <testcase name="singlePortraitAndLandscapeUseTheirRealAspectRatio" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" time="0.0"/>
+  <testcase name="portraitFirstThreePhotosUseFullHeightLeftTile" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" time="0.0"/>
+  <testcase name="unknownRatiosFallbackAndSmallScreensStayBounded" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

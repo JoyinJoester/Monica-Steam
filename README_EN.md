@@ -73,6 +73,14 @@ It brings Steam Guard, account management, mobile confirmations, library, store,
 - Friends, DM/group chat, notifications, and experimental voice calls.
 - Main-password / biometric lock, plus WebDAV / ZIP Steam account backups.
 
+Friend chat messages can still notify you. Removed persistent connecting, waiting-for-account and reconnecting notifications. If Android ends the app process, reopen the app to resume receiving messages. Upgrades retire old connection notifications and preserve the message channel settings.
+
+Fixed Steam-enriched `[og]` links appearing as raw text after sharing a profile. Existing profile, inventory and broadcast messages now use card titles, descriptions and preview images, with details and original text available from the long-press preview.
+
+Chat photos use compact Telegram-style bubbles: single images follow their aspect ratio, multiple images within one message form an album, and time and delivery status overlay the lower-right corner. Captions appear below the images. Image opening and return motion, album paging, message actions and failed-send retry remain available.
+
+Fixed Steam photos with a nested `[url]…[/url]` wrapper appearing as raw text. Responsive image attributes, aspect ratio, captions and album order are preserved; mismatched URLs or additional content remain visible as text.
+
 ### Quick install
 
 1. Download the latest APK from [Releases](https://github.com/JoyinJoester/Monica-Steam/releases).
@@ -82,15 +90,16 @@ It brings Steam Guard, account management, mobile confirmations, library, store,
 
 ### Keeping Steam Guard in both apps
 
-The [Millennium](https://github.com/Good-Joe2049/Millennium) module lets Monica Pass and the main Steam app use the same Steam Guard authenticator alongside each other.
-It provides Steam Guard and `maFile` import, export, and restoration. You can also import the exported `maFile` into Monica Steam to reuse the same authenticator data. See the [Millennium documentation](https://github.com/Good-Joe2049/Millennium#mafile) for module installation, activation, and restoration steps.
+The [SteamNova (formerly Millennium)](https://github.com/GoodJoe-2049/Steam-Nova) module lets Monica Pass and the main Steam app use the same Steam Guard authenticator alongside each other.
+It provides Steam Guard and `maFile` import, export, and restoration. You can also import the exported `maFile` into Monica Steam to reuse the same authenticator data. See the [SteamNova documentation](https://github.com/GoodJoe-2049/Steam-Nova#mafile) for module installation, activation, and restoration steps.
+Its MIT-licensed implementation also informed the regional mapping, rating calculations and requests in our SteamDB game-data feature; the data itself still comes from Steam / SteamDB.
 
 Monica Steam encrypts its internal storage, but the ZIP from **maFile import and export** contains **single-account plaintext `.maFile` JSON files**. Identity verification before export does not encrypt the exported files.
 
-- **Monica Steam → Millennium:** export the maFile ZIP, extract it, then select the account's `.maFile` in Millennium's maFile import page. Millennium currently accepts single-account plaintext files up to 1 MB, not ZIP archives or encrypted database backups.
+- **Monica Steam → SteamNova:** export the maFile ZIP, extract it, then select the account's `.maFile` in SteamNova's maFile import page. SteamNova currently accepts single-account plaintext files up to 1 MB, not ZIP archives or encrypted database backups.
 - **Consented direct handoff (in development):** a compatible module can offer **Get from Monica Steam** on the same device. Unlock Monica Steam for each request, select one account, confirm the handoff, then preview and confirm import in the module. A master password is required. The transfer is bound to Steam's UID, expires after 60 seconds and allows one open without a plaintext temporary file. The recipient can still retain credentials it has read. Both apps must support [maFile handoff protocol v1](docs/interop/monica-mafile-handoff.md); older versions retain file import.
-- **Millennium → Monica Steam:** export a `.maFile` in the module, then add an account from Monica Steam's token page using the maFile import option.
-- **Directly opening Monica is a separate feature:** Millennium's current source targets the regular Monica app (`takagi.ru.monica`) with a code-generation URI. This does not import a complete maFile into Monica Steam (`takagi.ru.monica.steamapp`); the URI does not contain full confirmation secrets or login sessions.
+- **SteamNova → Monica Steam:** export a `.maFile` in the module, then add an account from Monica Steam's token page using the maFile import option.
+- **Directly opening Monica is a separate feature:** SteamNova's current source targets the regular Monica app (`takagi.ru.monica`) with a code-generation URI. This does not import a complete maFile into Monica Steam (`takagi.ru.monica.steamapp`); the URI does not contain full confirmation secrets or login sessions.
 
 ### Known limitations
 - Still a public test build; APIs and UI may change.
@@ -142,11 +151,13 @@ See [`SOURCE.md`](./SOURCE.md) for the extraction baseline.
 - Browsing, search, regional prices, currency conversion, and account-region filtering.
 - Purchase options, editions, DLC, bundles, system requirements, screenshots, and reviews.
 - Native cart and wishlist views; final checkout stays on Steam’s official flow.
+- One checkout area in the standalone cart: a solid M3E bar or floating glass capsule. Images expand from their thumbnails and return when closed.
 - Events and points-store content when Steam exposes compatible data.
 
 ### Friends, chat, and notifications
 - Friends list, profiles, unified DM/group conversations.
 - Text, emoji, stickers, images, reactions, reports, and chat search where supported.
+- Long-press message cards to lift their details and actions above a blurred background. Steam Space groups friends’ activity by date and resolves game names using the library cache and public Steam Store metadata. A bottom-right FAB opens a native text composer, with an official webpage option and no automatic resend when the outcome is unknown.
 - Group channels, roles/permissions, invite links, and related management.
 - Notifications, unread state, gift/confirmation-related actions.
 - Experimental private/group voice calls.
@@ -210,8 +221,8 @@ You can also support via [Afdian](https://afdian.com/a/JoyinJoester), [Ko-fi](ht
 ### Prerequisites
 - Latest stable Android Studio.
 - JDK 17+.
-- `compileSdk 35`, `targetSdk 34`, `minSdk 26` (Android 8.0+).
-- Build baseline: AGP `8.7.3`, Kotlin `2.0.21`, Compose BOM `2026.03.00` (see `gradle/libs.versions.toml`).
+- `compileSdk 37`, `targetSdk 34`, `minSdk 26` (Android 8.0+).
+- Build baseline: AGP `9.3.2`, Kotlin `2.4.21`, Compose BOM `2026.09.00` (Gradle `9.5.0`, compileSdk `37`; see `gradle/libs.versions.toml`).
 
 ### Useful commands
 

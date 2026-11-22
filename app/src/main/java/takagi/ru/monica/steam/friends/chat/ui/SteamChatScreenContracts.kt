@@ -2,7 +2,7 @@ package takagi.ru.monica.steam.friends.chat.ui
 
 import takagi.ru.monica.steam.data.SteamAccountSourceState
 
-internal enum class SteamChatSubpage { INFO, SEARCH, ADMIN }
+internal enum class SteamChatSubpage { INFO, ADMIN }
 
 /** Keep the current chat session alive while an MDBX/local source is switching. */
 internal fun shouldApplySteamAccountSelection(sourceState: SteamAccountSourceState): Boolean =

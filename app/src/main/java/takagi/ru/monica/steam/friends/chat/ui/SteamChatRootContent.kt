@@ -1,20 +1,25 @@
 package takagi.ru.monica.steam.friends.chat.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Column
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialTheme
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialTopBar
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SwitchAccount
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
@@ -28,11 +33,11 @@ import takagi.ru.monica.steam.friends.ui.SteamAddFriendScreen
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceAudioRoute
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
-import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.design.telegram.SteamTelegramTopBar
+import takagi.ru.monica.steam.navigation.steamPageTransition
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 internal fun SteamChatRootContent(
     standalone: Boolean,
     showFriends: Boolean,
@@ -45,8 +50,8 @@ internal fun SteamChatRootContent(
     groupChatState: SteamGroupChatUiState,
     voiceState: SteamVoiceCallState,
     effectiveSearchQuery: String,
-    pinnedDirectIds: Set<String>,
-    pinnedGroupIds: Set<String>,
+    conversationFlags: SteamConversationFlags,
+    conversationActions: SteamConversationActions,
     onStandaloneSearchQueryChange: (String) -> Unit,
     onSearchExpandedChange: (Boolean) -> Unit,
     onShowAccounts: () -> Unit,
@@ -65,41 +70,25 @@ internal fun SteamChatRootContent(
     onToggleVoiceMicrophone: () -> Unit,
     onToggleVoiceOutput: () -> Unit,
     onSelectVoiceAudioRoute: (SteamVoiceAudioRoute) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onOpenSpace: (() -> Unit)? = null
 ) {
     val reduceAnimations = LocalReduceAnimations.current
+    var newChatOpen by remember { mutableStateOf(false) }
+    TelegramSocialTheme {
     if (standalone) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = {
-                ExpressiveTopBar(
-                    title = stringResource(when {
-                        addFriendOpen -> R.string.steam_friend_add_title
-                        showFriends -> R.string.steam_friends_title
-                        else -> R.string.steam_chat_title
-                    }),
-                    searchQuery = if (addFriendOpen) "" else standaloneSearchQuery,
-                    onSearchQueryChange = onStandaloneSearchQueryChange,
-                    isSearchExpanded = !addFriendOpen && searchExpanded,
-                    onSearchExpandedChange = onSearchExpandedChange,
-                    searchHint = stringResource(R.string.steam_chat_search_hint),
-                    modifier = Modifier.steamWindowTopPadding(),
-                    navigationIcon = if (addFriendOpen) {
-                        {
-                            IconButton(onClick = { onAddFriendOpenChange(false) }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = stringResource(R.string.back)
-                                )
-                            }
-                        }
-                    } else {
-                        null
-                    },
-                    compact = addFriendOpen,
-                    actions = {
-                        if (addFriendOpen) {
+                Column(Modifier.steamWindowTopPadding()) {
+                val account = accountSourceState.accounts.firstOrNull { it.id == accountSourceState.selectedAccountId }
+                val canSwitchAccounts = accountSourceState.accounts.isNotEmpty() || accountSourceState.mdbxDatabases.isNotEmpty()
+                when {
+                    addFriendOpen -> TelegramSocialTopBar(
+                        title = stringResource(R.string.steam_friend_add_title),
+                        onBack = ({ onAddFriendOpenChange(false) }),
+                        actions = {
                             IconButton(onClick = onOpenOfficialAddFriend) {
                                 Icon(
                                     Icons.AutoMirrored.Filled.OpenInNew,
@@ -108,32 +97,36 @@ internal fun SteamChatRootContent(
                                     )
                                 )
                             }
-                        } else {
-                            IconButton(
-                                onClick = onShowAccounts,
-                                enabled = accountSourceState.accounts.isNotEmpty() ||
-                                    accountSourceState.mdbxDatabases.isNotEmpty()
-                            ) {
-                                Icon(
-                                    Icons.Default.SwitchAccount,
-                                    contentDescription = stringResource(R.string.steam_switch_account)
-                                )
-                            }
-                            IconButton(onClick = onToggleFriends) {
-                                Icon(
-                                    Icons.Default.Groups,
-                                    contentDescription = stringResource(R.string.steam_friends_title)
-                                )
-                            }
-                            IconButton(onClick = { onSearchExpandedChange(true) }) {
-                                Icon(
-                                    Icons.Default.Search,
-                                    contentDescription = stringResource(R.string.steam_store_search)
-                                )
-                            }
                         }
-                    }
-                )
+                    )
+                    showFriends -> SteamFriendsTopBar(
+                        account = account,
+                        query = standaloneSearchQuery,
+                        onQueryChange = onStandaloneSearchQueryChange,
+                        searchExpanded = searchExpanded,
+                        onSearchExpandedChange = onSearchExpandedChange,
+                        canSwitchAccounts = canSwitchAccounts,
+                        onRefresh = onRefreshFriends,
+                        refreshing = friendsState.loading || friendsState.refreshing,
+                        onCreateGroup = onCreateGroup,
+                        onOpenChats = onToggleFriends,
+                        onShowAccounts = onShowAccounts
+                    )
+                    else -> SteamInboxTopBar(
+                        account = account,
+                        canSwitchAccounts = canSwitchAccounts,
+                        query = standaloneSearchQuery,
+                        onQueryChange = onStandaloneSearchQueryChange,
+                        searchExpanded = searchExpanded,
+                        onSearchExpandedChange = onSearchExpandedChange,
+                        onShowAccounts = onShowAccounts,
+                        onOpenSpace = onOpenSpace,
+                        onCreateGroup = onCreateGroup,
+                        onRefresh = onRefreshConversations,
+                        refreshing = chatState.sessionsLoading || chatState.sessionsRefreshing || groupChatState.groupsLoading || groupChatState.groupsRefreshing
+                    )
+                }
+                }
             }
         ) { padding ->
             AnimatedContent(
@@ -144,8 +137,7 @@ internal fun SteamChatRootContent(
                 },
                 modifier = Modifier.fillMaxSize().padding(padding),
                 transitionSpec = {
-                    easyNotesScreenEnter(reduceAnimations)
-                        .togetherWith(easyNotesScreenExit(reduceAnimations))
+                    steamPageTransition(reduceAnimations, forward = targetState > initialState)
                 },
                 label = "SteamChatRootMode"
             ) { rootMode ->
@@ -166,7 +158,6 @@ internal fun SteamChatRootContent(
                         loading = friendsState.loading && friendsState.snapshot == null,
                         query = effectiveSearchQuery,
                         onOpenThread = onOpenDirect,
-                        onRefresh = onRefreshFriends,
                         onAddFriend = { onAddFriendOpenChange(true) },
                         modifier = Modifier.fillMaxSize()
                     )
@@ -176,12 +167,13 @@ internal fun SteamChatRootContent(
                         friendsState = friendsState,
                         voiceState = voiceState,
                         effectiveSearchQuery = effectiveSearchQuery,
-                        pinnedDirectIds = pinnedDirectIds,
-                        pinnedGroupIds = pinnedGroupIds,
+                        conversationFlags = conversationFlags,
+                        conversationActions = conversationActions,
                         onOpenDirect = onOpenDirect,
                         onOpenGroup = onOpenGroup,
                         onRefresh = onRefreshConversations,
                         onCreateGroup = onCreateGroup,
+                        onNewChat = { onSearchExpandedChange(false); onToggleFriends() },
                         onLeaveVoice = onLeaveVoice,
                         onToggleVoiceMicrophone = onToggleVoiceMicrophone,
                         onToggleVoiceOutput = onToggleVoiceOutput,
@@ -191,24 +183,48 @@ internal fun SteamChatRootContent(
             }
         }
     } else {
+        Column(modifier) {
+        SteamTelegramTopBar(title = stringResource(R.string.steam_chat_title), actions = {
+            SteamInboxOverflowMenu(onOpenSpace, onCreateGroup, onRefreshConversations,
+                chatState.sessionsLoading || chatState.sessionsRefreshing || groupChatState.groupsLoading || groupChatState.groupsRefreshing)
+        })
         SteamChatConversationRoot(
             chatState = chatState,
             groupChatState = groupChatState,
             friendsState = friendsState,
             voiceState = voiceState,
             effectiveSearchQuery = effectiveSearchQuery,
-            pinnedDirectIds = pinnedDirectIds,
-            pinnedGroupIds = pinnedGroupIds,
+            conversationFlags = conversationFlags,
+            conversationActions = conversationActions,
             onOpenDirect = onOpenDirect,
             onOpenGroup = onOpenGroup,
             onRefresh = onRefreshConversations,
             onCreateGroup = onCreateGroup,
+            onNewChat = { newChatOpen = true },
             onLeaveVoice = onLeaveVoice,
             onToggleVoiceMicrophone = onToggleVoiceMicrophone,
             onToggleVoiceOutput = onToggleVoiceOutput,
             onSelectVoiceAudioRoute = onSelectVoiceAudioRoute,
-            modifier = modifier
+            modifier = Modifier.weight(1f)
         )
+        }
+        if (newChatOpen) ModalBottomSheet(onDismissRequest = { newChatOpen = false }) {
+            SteamChatFriendPicker(
+                friends = friendsState.snapshot?.acceptedFriends.orEmpty(),
+                loading = friendsState.loading && friendsState.snapshot == null,
+                query = "", onOpenThread = { newChatOpen = false; onOpenDirect(it) },
+                onAddFriend = { newChatOpen = false; onAddFriendOpenChange(true) }
+            )
+        }
+        if (addFriendOpen) ModalBottomSheet(onDismissRequest = { onAddFriendOpenChange(false) }) {
+            SteamAddFriendScreen(
+                state = friendsState, onSearch = onFindFriendCandidates,
+                onOpenFriend = { onAddFriendOpenChange(false); onOpenDirect(it.steamId) },
+                onAddFriend = onAddFriend, onRespondToInvite = onRespondToInvite,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
     }
 }
 
@@ -219,12 +235,13 @@ private fun SteamChatConversationRoot(
     friendsState: SteamFriendsUiState,
     voiceState: SteamVoiceCallState,
     effectiveSearchQuery: String,
-    pinnedDirectIds: Set<String>,
-    pinnedGroupIds: Set<String>,
+    conversationFlags: SteamConversationFlags,
+    conversationActions: SteamConversationActions,
     onOpenDirect: (String) -> Unit,
     onOpenGroup: (String, String) -> Unit,
     onRefresh: () -> Unit,
     onCreateGroup: () -> Unit,
+    onNewChat: () -> Unit,
     onLeaveVoice: () -> Unit,
     onToggleVoiceMicrophone: () -> Unit,
     onToggleVoiceOutput: () -> Unit,
@@ -236,12 +253,13 @@ private fun SteamChatConversationRoot(
         groupState = groupChatState,
         friends = friendsState.snapshot?.acceptedFriends.orEmpty(),
         query = effectiveSearchQuery,
-        pinnedPartnerSteamIds = pinnedDirectIds,
-        pinnedGroupIds = pinnedGroupIds,
+        flags = conversationFlags,
+        actions = conversationActions,
         onOpenDirect = onOpenDirect,
         onOpenGroup = onOpenGroup,
         onRefresh = onRefresh,
         onCreateGroup = onCreateGroup,
+        onNewChat = onNewChat,
         voiceState = voiceState,
         onLeaveVoice = onLeaveVoice,
         onToggleVoiceMicrophone = onToggleVoiceMicrophone,

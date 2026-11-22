@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.navigation.domain.SteamStoreDetailHistoryTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-20T06:56:14.427Z" hostname="JOYIN" time="0.001">
+  <properties/>
+  <testcase name="rootNavigationCanClearPreviousDetailHistory" classname="takagi.ru.monica.steam.store.navigation.domain.SteamStoreDetailHistoryTest" time="0.001"/>
+  <testcase name="relatedDetailsReturnInLastOpenedOrder" classname="takagi.ru.monica.steam.store.navigation.domain.SteamStoreDetailHistoryTest" time="0.0"/>
+  <testcase name="duplicateAdjacentRoutesAreIgnored" classname="takagi.ru.monica.steam.store.navigation.domain.SteamStoreDetailHistoryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

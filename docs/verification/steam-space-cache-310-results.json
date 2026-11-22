@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-07",
+  "version": "1.0.310-26110718-18",
+  "production": "x86_64 Debug, minify disabled by local verification init script",
+  "builds": [
+    {
+      "id": "01",
+      "duration": "8m26s",
+      "jvm_passed": 72,
+      "note": "Before final review improvements"
+    },
+    {
+      "id": "02",
+      "duration": "9m20s",
+      "jvm_passed": 75,
+      "jvm_total": 76,
+      "note": "New MDBX cache key regression test ran against already compiled old key and failed; logs/XML retained"
+    },
+    {
+      "id": "03",
+      "duration": "6m38s",
+      "jvm_passed": 76,
+      "jvm_total": 76,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "jvm": [
+    {
+      "name": "takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest",
+      "tests": "15",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T11:26:35",
+      "hostname": "JOYIN",
+      "time": "0.103"
+    },
+    {
+      "name": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+      "tests": "19",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T11:26:35",
+      "hostname": "JOYIN",
+      "time": "0.156"
+    },
+    {
+      "name": "takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest",
+      "tests": "32",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T11:26:32",
+      "hostname": "JOYIN",
+      "time": "3.028"
+    },
+    {
+      "name": "takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T11:26:35",
+      "hostname": "JOYIN",
+      "time": "0.071"
+    }
+  ],
+  "device": {
+    "emulator": "existing MuMu instance 0",
+    "api": 35,
+    "abi": "x86_64",
+    "user": 10,
+    "tests": 21,
+    "runner_seconds": 39.059,
+    "passed_methods": [
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#loginEmptyAndNetworkStatesRemainDistinct",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#backDismissesSheetFirstAndAccountSwitchRevokesIt",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#originalActivityAndSensitiveMediaUseReadOnlyActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+      "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest#encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts"
+    ],
+    "driver_first_failure": "Android15 exposes topResumedActivity rather than mResumedActivity; run01 failed before instrumentation. Same APK run02 passed after driver field compatibility."
+  },
+  "cache": {
+    "fresh_millis": 300000,
+    "retention_millis": 86400000,
+    "max_entries": 4,
+    "max_events_per_entry": 400,
+    "max_encoded_characters": 2097152,
+    "persisted": "existing C2 compatibility encryption; no credentials serialized",
+    "temporary_accounts": "memory only",
+    "mdbx_identity": "stable negative database+entry id, SteamID and language; synthetic creation timestamp excluded",
+    "storage_timeout": "1500ms coroutine timeout only for interruptible reads, not a hard provider deadline"
+  },
+  "source_sha256": {
+    "app/src/main/java/takagi/ru/monica/steam/space/domain/SteamSpaceFeedCache.kt": "12d69cd38adae2bec6ed21d37dac3519240b40bba821bba9ab635008b19e9f64",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceFeedCache.kt": "e849d8fffb13f648c3f2774a9faf5c7340fd11ff3b457d0c25c153e4f14eef60",
+    "app/src/main/java/takagi/ru/monica/steam/space/domain/SteamSpaceModels.kt": "fdc8ffe43ba11cee99d1f67d0d8c872e01bd2a703d4fb505f5d43a5624ebf527",
+    "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModel.kt": "7d0337974a4e3f17ea735bb5be73e39796cb63e85e49cc9e1d159258ef7679a2",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceRoute.kt": "df8a63941839a7b2a2f043f56a101c59b1565f11f78ead5325048a956957b4c7",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt": "f3cc8dfd641ae80e2b634b2ff1843d6dae748c52f921f8dfd6c99ba33456ef19",
+    "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceFeedCacheTest.kt": "758f8a4e8f50c576bac62de8cd756a96fc70b8f660cc4e7965baa028d8d3be01",
+    "app/src/test/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModelTest.kt": "b4fe48223741580224008083874031feaa647051420cfb025f7247e1f5f3f874",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceCacheDeviceTest.kt": "02712344538917d59acd1d0dcdd1b405eba1f70e3131b4d9fad4913d03f800d5",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceLifecycleUiTest.kt": "60fcc3bf94900d627994ffd0b702afee792fc13b6d6deb21c525b0682e431f62",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "b8ef9ad9543352faa512c6a5532d4bccc51e66d035e8448fbbb0b63a8245a78e"
+  },
+  "apk_sha256": {
+    "app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26110718-18.APK": "4b287f1350f6ee4c2ecc1957115c6b4a86444415ce5db703eb334368adf7c7ce",
+    "app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "5154459a34052c0fa2b9e55c2a4ad7fc77e5deeeb26f30ff91a810b938463d73"
+  },
+  "cleanup": {
+    "original_user": "0",
+    "users_before": "Users:\n\tUserInfo{0:Owner:4c13} running\n",
+    "density_before": "Physical density: 280\n",
+    "packages_before": "",
+    "guest_name": "Monica_Steam_Space_Cache_20261107",
+    "guest_id": "10",
+    "users_after": "Users:\n\tUserInfo{0:Owner:4c13} running\n",
+    "current_user_after": "0",
+    "density_after": "Physical density: 280\n",
+    "owner_packages_after": "",
+    "uninstalled_package_records_after": "package:takagi.ru.monica.steamapp\npackage:takagi.ru.monica.steamapp.test\n",
+    "cleanup_complete": true,
+    "mumu_instance_0_stopped": true,
+    "mumu_instance_1_remained_stopped": true
+  },
+  "limitations": [
+    "Synthetic Steam activity only; no real account/server endpoint run.",
+    "Actual encrypted preferences verified by cache instance recreation, not process kill/restart.",
+    "No R8 or physical/OEM device verification.",
+    "Cold process restore requires completed asynchronous disk save; a process death before commit can lose latest optional cache."
+  ]
+}

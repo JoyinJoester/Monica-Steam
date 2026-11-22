@@ -1,0 +1,84 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugBuildConfig
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:processDebugNavigationResources UP-TO-DATE
+> Task :telegram-chat-ui:preBuild UP-TO-DATE
+> Task :telegram-chat-ui:preDebugBuild UP-TO-DATE
+> Task :telegram-chat-ui:processDebugNavigationResources UP-TO-DATE
+> Task :app:processDebugNavigationResources
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :mdbx-engine:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/mdbx-engine/src/main/java/uniffi/mdbx_ffi/mdbx_ffi.kt:2459:5 Expression is unused.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/mdbx-engine/src/main/java/uniffi/mdbx_ffi/mdbx_ffi.kt:2462:5 Expression is unused.
+
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :telegram-chat-ui:generateDebugResources UP-TO-DATE
+> Task :telegram-chat-ui:packageDebugResources UP-TO-DATE
+> Task :telegram-chat-ui:parseDebugLocalResources UP-TO-DATE
+> Task :telegram-chat-ui:generateDebugRFile UP-TO-DATE
+> Task :telegram-chat-ui:compileDebugKotlin NO-SOURCE
+> Task :telegram-chat-ui:javaPreCompileDebug UP-TO-DATE
+
+> Task :telegram-chat-ui:compileDebugJavaWithJavac
+注: 某些输入文件使用或覆盖了已过时的 API。
+注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+
+> Task :telegram-chat-ui:bundleLibCompileToJarDebug
+> Task :app:kspDebugKotlin
+w: [ksp] C:/Users/joyins/Desktop/Monica-all/Monica Steam/app/src/main/java/takagi/ru/monica/attachments/data/AttachmentDao.kt:96: The DAO function return type (kotlin.collections.List<kotlin.String?>) with the nullable type argument is meaningless because for now Room will never put a null value in a result.
+
+> Task :app:compileDebugKotlin
+
+The message received from the daemon indicates that the daemon has disappeared.
+Build request sent: Build{id=ef722b57-9795-4ce5-b96e-036ab9c423c0, currentDir=C:\Users\joyins\Desktop\Monica-all\Monica Steam}
+Attempting to read last messages from the daemon log...
+Daemon pid: 33548
+  log file: D:\GradleRepository\daemon\9.7.0\daemon-33548.out.log
+----- Last 20 lines from daemon log file - daemon-33548.out.log -----
+2026-11-21T11:43:44.744+0800 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+2026-11-21T11:43:44.747+0800 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+2026-11-21T11:43:44.748+0800 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+2026-11-21T11:43:44.748+0800 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+2026-11-21T11:43:44.749+0800 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=ef722b57-9795-4ce5-b96e-036ab9c423c0, currentDir=C:\Users\joyins\Desktop\Monica-all\Monica Steam}. Dispatching build started information...
+2026-11-21T11:43:44.749+0800 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 49: dispatching org.gradle.launcher.daemon.protocol.BuildStarted@5347507e
+2026-11-21T11:43:44.752+0800 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+2026-11-21T11:43:44.752+0800 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 33548). The daemon log file: D:\GradleRepository\daemon\9.7.0\daemon-33548.out.log
+2026-11-21T11:43:44.753+0800 [DEBUG] [org.gradle.launcher.daemon.server.exec.ApplyClientEnvironmentVariables] Configuring env variables: [PATH, BROWSER_USE_ACCESS_VERIFYING_IDENTITY, DEVECO_SDK_HOME, HERMES_HOME, ALLUSERSPROFILE, INTEL_DEV_REDIST, GATEWAY_VM_OPTIONS, ANDROID_HOME, RUSTROVER_VM_OPTIONS, GH_PAGER, PROGRAMFILES, COLORTERM, PSMODULEPATH, DIRNAME, USERNAME, CODEX_TASK_WORKSPACE_VERIFYING_IDENTITY, STUDIO_VM_OPTIONS, DEFAULT_JVM_OPTS, PATHEXT, PAGER, CODEX_WINDOWS_SANDBOX_PACKAGE_FAMILY, HOMEPATH, LC_ALL, PROCESSOR_IDENTIFIER, PUBLIC, ZSH_TMUX_AUTOSTARTED, FLUTTER_STORAGE_BASE_URL, CLINK_DIR, LC_CTYPE, CODEX_SESSION_ID, ZES_ENABLE_SYSMAN, WEBSTORM_VM_OPTIONS, JAVA_HOME, PROMPT, CLION_VM_OPTIONS, RUST_LOG, PROGRAMFILES(X86), TERM, VIRTUAL_ENV_DISABLE_PROMPT, GOLAND_VM_OPTIONS, =C:, APPDATA, GRADLE_USER_HOME, CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS, STARSHIP_SHELL, JAVA_EXE, CODEX_THREAD_ID, JETBRAINS_CLIENT_VM_OPTIONS, VSLANG, DOTNET_CLI_UI_LANGUAGE, DISABLE_AUTO_UPDATE, COMPUTERNAME, APP_BASE_NAME, ZSH_TMUX_AUTOSTART, WEBIDE_VM_OPTIONS, HOMEDRIVE, CODEX_TECTONIC_PATH, NUMBER_OF_PROCESSORS, 123PAN, USERDOMAIN_ROAMINGPROFILE, PROCESSOR_LEVEL, SYSTEMDRIVE, GIT_PAGER, HERMES_GIT_BASH_PATH, CODEX_MCP_NODE_PATH, CODEX_SHELL, PROCESSOR_ARCHITECTURE, MIC_LD_LIBRARY_PATH, PUB_HOSTED_URL, DRIVERDATA, CODEX_APP_TOOLS_PIPE_PATH, RIDER_VM_OPTIONS, PROGRAMDATA, CHOCOLATEYLASTPATHUPDATE, DEVECOSTUDIO_VM_OPTIONS, CODEX_APP_RUNTIME_CLI_PATH, CODEX_INTERNAL_ORIGINATOR_OVERRIDE, ONEDRIVE, APP_HOME, CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE, SHELL, DOKANLIBRARY2, CODEX_PERMISSION_PROFILE, WINDIR, DATASPELL_VM_OPTIONS, LOG_FORMAT, POWERSHELL_DISTRIBUTION_CHANNEL, DATAGRIP_VM_OPTIONS, LOCALAPPDATA, NUGET_HTTP_CACHE_PATH, COMMONPROGRAMFILES(X86), USERDOMAIN, LOGONSERVER, PYCHARM_VM_OPTIONS, STARSHIP_SESSION_KEY, WIX, JETBRAINSCLIENT_VM_OPTIONS, LANG, IDEA_VM_OPTIONS, PROGRAMW6432, SYSTEMROOT, AQUA_VM_OPTIONS, CHOCOLATEYINSTALL, RUBYMINE_VM_OPTIONS, ANDROID_LINT_JARS, NO_COLOR, NUGET_PLUGINS_CACHE_PATH, VBOX_MSI_INSTALL_PATH, CODEX_CI, OS, COMMONPROGRAMW6432, COMMONPROGRAMFILES, COMSPEC, CODEX_TOOL_CALL_ID, PROCESSOR_REVISION, CLASSPATH, TEMP, USERPROFILE, TMP, CODEX_VERSION, PHPSTORM_VM_OPTIONS, NUGET_PACKAGES, DEVECO STUDIO]
+2026-11-21T11:43:44.764+0800 [DEBUG] [org.gradle.launcher.daemon.server.exec.RequestStopIfSingleUsedDaemon] Requesting daemon stop after processing Build{id=ef722b57-9795-4ce5-b96e-036ab9c423c0, currentDir=C:\Users\joyins\Desktop\Monica-all\Monica Steam}
+2026-11-21T11:43:44.765+0800 [LIFECYCLE] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Daemon will be stopped at the end of the build
+2026-11-21T11:43:44.765+0800 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Stop as soon as idle requested. The daemon is busy
+2026-11-21T11:43:44.765+0800 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon stop has been requested. Sleeping until state changes.
+2026-11-21T11:43:44.770+0800 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+2026-11-21T11:43:44.770+0800 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=dcfc5ec1-4602-47e2-b210-834ebb147cd7,javaHome=C:\Users\joyins\.jdks\jbr-21.0.6,javaVersion=21,javaVendor=JetBrains s.r.o.,daemonRegistryDir=D:\GradleRepository\daemon,pid=33548,idleTimeout=120000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-Xmx8g,-Dfile.encoding=UTF-8,-Duser.country=CN,-Duser.language=zh,-Duser.variant]
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/mdbx-engine/src/main/java/uniffi/mdbx_ffi/mdbx_ffi.kt:2459:5 Expression is unused.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/mdbx-engine/src/main/java/uniffi/mdbx_ffi/mdbx_ffi.kt:2462:5 Expression is unused.
+注: 某些输入文件使用或覆盖了已过时的 API。
+注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+w: [ksp] C:/Users/joyins/Desktop/Monica-all/Monica Steam/app/src/main/java/takagi/ru/monica/attachments/data/AttachmentDao.kt:96: The DAO function return type (kotlin.collections.List<kotlin.String?>) with the nullable type argument is meaningless because for now Room will never put a null value in a result.----- End of the daemon log -----
+
+JVM crash log found: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/hs_err_pid33548.log
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Gradle build daemon disappeared unexpectedly (it may have been killed or may have crashed)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.

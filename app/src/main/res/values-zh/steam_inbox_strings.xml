@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_options">聊天选项</string>
+    <string name="steam_chat_create_group">新建群聊</string>
+    <string name="steam_chat_search">搜索聊天</string>
+    <string name="steam_chat_close_search">关闭搜索</string>
+    <string name="steam_chat_filter_all">全部</string>
+    <string name="steam_chat_filter_direct">私聊</string>
+    <string name="steam_chat_filter_group">群聊</string>
+    <string name="steam_chat_filter_pinned">置顶</string>
+    <string name="steam_chat_filter_archived">归档</string>
+    <string name="steam_chat_unread">未读</string>
+    <string name="steam_chat_no_unread">没有未读聊天</string>
+    <string name="steam_chat_no_conversations">暂无聊天</string>
+    <string name="steam_chat_no_archived">没有归档的会话</string>
+    <string name="steam_chat_no_pinned">没有置顶的会话</string>
+    <string name="steam_chat_no_messages">还没有消息</string>
+    <string name="steam_chat_new_chat">新建聊天</string>
+    <string name="steam_contacts_search_hint">搜索联系人</string>
+    <string name="steam_friends_refresh">刷新联系人</string>
+
+    <string name="steam_chat_pin">置顶</string>
+    <string name="steam_chat_unpin">取消置顶</string>
+    <string name="steam_chat_archive">归档</string>
+    <string name="steam_chat_unarchive">移出归档</string>
+    <string name="steam_chat_delete">删除会话</string>
+    <string name="steam_chat_delete_title">删除这个会话？</string>
+    <string name="steam_chat_delete_keep_messages">保留会话内容</string>
+    <string name="steam_chat_delete_keep_messages_hint">仅从列表移除，聊天记录仍保留在该账号中</string>
+    <string name="steam_chat_delete_with_messages">删除会话内容</string>
+    <string name="steam_chat_delete_with_messages_hint">同时清空本机缓存的聊天记录</string>
+    <string name="steam_chat_delete_title_many">删除 %1$d 个会话？</string>
+    <string name="steam_chat_delete_cancel">取消删除</string>
+    <string name="steam_chat_selection_count">已选择 %1$d 项</string>
+    <string name="steam_chat_selection_cancel">取消选择</string>
+    <string name="steam_chat_selection_hint">右滑会话可多选</string>
+</resources>

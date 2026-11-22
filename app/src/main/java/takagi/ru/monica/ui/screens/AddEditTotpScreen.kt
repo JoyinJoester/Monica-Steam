@@ -1,5 +1,12 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassFloatingActionButton as FloatingActionButton
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -986,7 +993,7 @@ fun AddEditTotpScreen(
                                 label = { Text(stringResource(R.string.otp_type)) },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedOtpType) },
                                 leadingIcon = { Icon(Icons.Default.Category, contentDescription = null) },
-                                modifier = Modifier.menuAnchor().fillMaxWidth(),
+                                modifier = Modifier.menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
                                 colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
                                 shape = RoundedCornerShape(12.dp)
                             )

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:56.828Z" hostname="JOYIN" time="0.174">
+  <properties/>
+  <testcase name="marksOfficialRichChatCommandsAsBbCode" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest" time="0.133"/>
+  <testcase name="serviceUsesOfficialFriendMessagesMethodsAndFixed32HistoryBoundary" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest" time="0.037"/>
+  <testcase name="parsesSessionsMessagesAndSendConfirmation" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

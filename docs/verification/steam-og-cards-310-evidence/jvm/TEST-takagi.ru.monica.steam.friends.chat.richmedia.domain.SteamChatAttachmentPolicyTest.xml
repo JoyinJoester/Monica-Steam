@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:47:46.573Z" hostname="JOYIN" time="0.003">
+  <properties/>
+  <testcase name="rejectsMismatchedOrUnsupportedMimeEvenWithMediaSuffix" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" time="0.001"/>
+  <testcase name="unknownProviderMimeFallsBackOnlyForSupportedExtension" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" time="0.001"/>
+  <testcase name="normalizesKnownMimeAliasesAndParameters" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" time="0.0"/>
+  <testcase name="rejectsZipAndOtherDocumentsRegardlessOfClaimedMime" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" time="0.001"/>
+  <testcase name="acceptsEverySteamChatMediaExtensionWithCanonicalMime" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

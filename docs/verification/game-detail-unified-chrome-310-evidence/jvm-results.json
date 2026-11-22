@@ -1,0 +1,23 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.ui.SteamStoreDetailActionToolbarTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.material3.ExposedDropdownMenu
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -108,7 +110,7 @@ private fun SshKeyAlgorithmDropdown(
             shape = fieldShape,
             modifier = Modifier
                 .fillMaxWidth()
-                .menuAnchor()
+                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -155,7 +157,7 @@ private fun SshKeyRsaSizeDropdown(
             shape = fieldShape,
             modifier = Modifier
                 .fillMaxWidth()
-                .menuAnchor()
+                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
         )
         ExposedDropdownMenu(
             expanded = expanded,

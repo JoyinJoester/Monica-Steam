@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_achievement_sets">Achievement sets</string>
+    <string name="steam_achievement_sets_all">All sets</string>
+    <string name="steam_achievement_set_base">Base game</string>
+    <string name="steam_achievement_set_unnamed">Set %1$d</string>
+    <string name="steam_achievement_set_progress">%1$d / %2$d</string>
+    <string name="steam_achievement_set_complete">Set completed</string>
+    <string name="steam_achievement_set_unavailable">Currently unavailable</string>
+    <string name="steam_achievement_set_archived">Archived</string>
+    <string name="steam_achievement_set_dlc">DLC</string>
+    <string name="steam_achievement_hidden">Hidden achievement</string>
+    <string name="steam_achievement_archived">Archived · excluded from set completion</string>
+</resources>

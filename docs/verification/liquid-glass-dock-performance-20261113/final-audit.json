@@ -1,0 +1,20 @@
+{
+  "api35ConfigAndRegistrationUnchanged": {
+    "D:\\Android\\avd\\Pixel_Fold_API_35.avd\\config.ini": true,
+    "C:\\Users\\joyins\\.android\\avd\\Pixel_Fold_API_35.ini": true
+  },
+  "api36ConfigAndRegistrationUnchanged": {
+    "D:\\AndroidSDK\\codex-avd\\monica-live-updates-api36-1-standard-20260930\\config.ini": true,
+    "C:\\Users\\joyins\\.android\\avd\\Monica_LiveUpdates_API_36_1_4K.ini": true
+  },
+  "api32UserListUnchanged": true,
+  "api35UserListUnchanged": true,
+  "api36UserListUnchanged": true,
+  "ownNewFilesWhitespacePass": true,
+  "packages": {
+    "api32": "own main/test uninstalled",
+    "api35": "own main/test uninstalled",
+    "api36.1": "own main/test remain; package service unavailable; emulator stopped"
+  },
+  "noCommitPushReleaseOrApkDelivery": true
+}

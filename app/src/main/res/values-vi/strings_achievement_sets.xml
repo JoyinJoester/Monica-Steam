@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_achievement_sets">Bộ thành tích</string>
+    <string name="steam_achievement_sets_all">Tất cả bộ</string>
+    <string name="steam_achievement_set_base">Trò chơi gốc</string>
+    <string name="steam_achievement_set_unnamed">Bộ %1$d</string>
+    <string name="steam_achievement_set_progress">%1$d / %2$d</string>
+    <string name="steam_achievement_set_complete">Đã hoàn thành bộ</string>
+    <string name="steam_achievement_set_unavailable">Hiện không khả dụng</string>
+    <string name="steam_achievement_set_archived">Đã lưu trữ</string>
+    <string name="steam_achievement_set_dlc">DLC</string>
+    <string name="steam_achievement_hidden">Thành tích ẩn</string>
+    <string name="steam_achievement_archived">Đã lưu trữ · không tính vào hoàn thành bộ</string>
+</resources>

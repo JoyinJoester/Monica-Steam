@@ -33,5 +33,5 @@
     <string name="steamdb_unknown_region">Price history requires a supported store region and currency.</string>
     <string name="steamdb_free">Free game · no price history requested</string>
     <string name="steamdb_open">Open SteamDB</string>
-    <string name="steamdb_attribution">Data from Steam / SteamDB. Monica Steam is an independent app. Inspired by Millennium (MIT).</string>
+    <string name="steamdb_attribution">Data from Steam / SteamDB. Monica Steam is an independent app. Inspired by SteamNova (formerly Millennium, MIT): https://github.com/GoodJoe-2049/Steam-Nova</string>
 </resources>

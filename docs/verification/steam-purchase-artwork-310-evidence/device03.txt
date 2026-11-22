@@ -1,0 +1,477 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest:
+INSTRUMENTATION_STATUS: test=floatingWishlistAndGlassBarRemainReachableWithLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=floatingWishlistAndGlassBarRemainReachableWithLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=floatingPurchaseOpensEditionsAndPassesSelectedPackage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=floatingPurchaseOpensEditionsAndPassesSelectedPackage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=freeLicenseUsesExistingClaimAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=freeLicenseUsesExistingClaimAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailableAndFreeRegionsDoNotRequestHistory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailableAndFreeRegionsDoNotRequestHistory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=detailShowsGameBeforePriceAndKeepsNavigationActionsReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=detailShowsGameBeforePriceAndKeepsNavigationActionsReachable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailableDetailSeparatesReferencePriceInLargeDarkLayout
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailableDetailSeparatesReferencePriceInLargeDarkLayout
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedGameOffersGiftButKeepsSelfPurchaseDisabled
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedGameOffersGiftButKeepsSelfPurchaseDisabled
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=collapsedRowsPinAccountAndKeepPricesCompact
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=collapsedRowsPinAccountAndKeepPricesCompact
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=bundleSelectionOpensBundleContentsAndOfficialOption
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=bundleSelectionOpensBundleContentsAndOfficialOption
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeGlassBundleKeepsArtworkContentsAndLastGameNavigation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform GetTextLayoutResult action.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains '完整捆绑包' (ignoreCase: false))
+Nodes found:
+1) Node #2500 at (l=46.0, t=1319.0, r=1034.0, b=1811.0)px, Tag: 'store_bundle_99'
+ContentDescription = '[打开商店详情]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 24.0.dp), topEnd = CornerSize(size = 24.0.dp), bottomEnd = CornerSize(size = 24.0.dp), bottomStart = CornerSize(size = 24.0.dp))'
+Text = '[完整捆绑包, 赛博朋克 2077 · 往日之影 · 测试内容 1, 12 项内容, -8%, ¥149.00]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 11 siblings
+2) Node #2541 at (l=46.0, t=1316.0, r=256.0, b=1378.0)px
+Text = '[完整捆绑包]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+Has 10 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performSemanticsAction(Actions.kt:635)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.assertLargePopupHeading(SteamStoreDetailPricesUiTest.kt:198)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.largeGlassBundleKeepsArtworkContentsAndLastGameNavigation(SteamStoreDetailPricesUiTest.kt:340)
+
+INSTRUMENTATION_STATUS: stream=
+Error in largeGlassBundleKeepsArtworkContentsAndLastGameNavigation(takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest):
+java.lang.AssertionError: Failed to perform GetTextLayoutResult action.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains '完整捆绑包' (ignoreCase: false))
+Nodes found:
+1) Node #2500 at (l=46.0, t=1319.0, r=1034.0, b=1811.0)px, Tag: 'store_bundle_99'
+ContentDescription = '[打开商店详情]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 24.0.dp), topEnd = CornerSize(size = 24.0.dp), bottomEnd = CornerSize(size = 24.0.dp), bottomStart = CornerSize(size = 24.0.dp))'
+Text = '[完整捆绑包, 赛博朋克 2077 · 往日之影 · 测试内容 1, 12 项内容, -8%, ¥149.00]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 11 siblings
+2) Node #2541 at (l=46.0, t=1316.0, r=256.0, b=1378.0)px
+Text = '[完整捆绑包]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+Has 10 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performSemanticsAction(Actions.kt:635)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.assertLargePopupHeading(SteamStoreDetailPricesUiTest.kt:198)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.largeGlassBundleKeepsArtworkContentsAndLastGameNavigation(SteamStoreDetailPricesUiTest.kt:340)
+
+INSTRUMENTATION_STATUS: test=largeGlassBundleKeepsArtworkContentsAndLastGameNavigation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailablePurchaseKeepsOfficialAccessAndDisablesWishlistAdd
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailablePurchaseKeepsOfficialAccessAndDisablesWishlistAdd
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest:
+INSTRUMENTATION_STATUS: test=darkGlassHeaderPressRendersLensAndCancelKeepsSection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=darkGlassHeaderPressRendersLensAndCancelKeepsSection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeWorkshopUsesCombinedHeaderAndKeepsBrowseAndBack
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeWorkshopUsesCombinedHeaderAndKeepsBrowseAndBack
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lateOldAccountCannotReplaceCurrentPlayersStats
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateOldAccountCannotReplaceCurrentPlayersStats
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=noActivityShowsUnavailableWhileAchievementsRemainUsable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=noActivityShowsUnavailableWhileAchievementsRemainUsable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=storeAndPersonalStatsRetainIndependentScrollAndFilter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=storeAndPersonalStatsRetainIndependentScrollAndFilter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=workshopAppearsOnlyForSupportedGameAndKeepsSameHeader
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=workshopAppearsOnlyForSupportedGameAndKeepsSameHeader
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=compactHeaderIsOneRowAndDoesNotStretchTheTabs
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compactHeaderIsOneRowAndDoesNotStretchTheTabs
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=darkLargeFontKeepsHeaderMetricsAndControlsReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=darkLargeFontKeepsHeaderMetricsAndControlsReachable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=achievementFilterSurvivesTabRoundTripAndConcealsHiddenNames
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=achievementFilterSurvivesTabRoundTripAndConcealsHiddenNames
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=personalEntryRemainsUsableWhenStoreUnavailable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=personalEntryRemainsUsableWhenStoreUnavailable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoredToolbarSharesOpensReviewsAndDragsToOtherEdge
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoredToolbarSharesOpensReviewsAndDragsToOtherEdge
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=liquidGlassTabsKeepBothSectionsReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=liquidGlassTabsKeepBothSectionsReachable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failureSupportsExplicitRetryAndDoesNotShowZero
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failureSupportsExplicitRetryAndDoesNotShowZero
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=purchaseBarStaysAcrossStatsAndWorkshopAndOpensStoreSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=purchaseBarStaysAcrossStatsAndWorkshopAndOpensStoreSheet
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=signedOutHasAccountActionAndNoInventedHours
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=signedOutHasAccountActionAndNoInventedHours
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 40.852
+There was 1 failure:
+1) largeGlassBundleKeepsArtworkContentsAndLastGameNavigation(takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest)
+java.lang.AssertionError: Failed to perform GetTextLayoutResult action.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (Text + InputText + EditableText contains '完整捆绑包' (ignoreCase: false))
+Nodes found:
+1) Node #2500 at (l=46.0, t=1319.0, r=1034.0, b=1811.0)px, Tag: 'store_bundle_99'
+ContentDescription = '[打开商店详情]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 24.0.dp), topEnd = CornerSize(size = 24.0.dp), bottomEnd = CornerSize(size = 24.0.dp), bottomStart = CornerSize(size = 24.0.dp))'
+Text = '[完整捆绑包, 赛博朋克 2077 · 往日之影 · 测试内容 1, 12 项内容, -8%, ¥149.00]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 11 siblings
+2) Node #2541 at (l=46.0, t=1316.0, r=256.0, b=1378.0)px
+Text = '[完整捆绑包]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+Has 10 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performSemanticsAction(Actions.kt:635)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.assertLargePopupHeading(SteamStoreDetailPricesUiTest.kt:198)
+	at takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest.largeGlassBundleKeepsArtworkContentsAndLastGameNavigation(SteamStoreDetailPricesUiTest.kt:340)
+
+FAILURES!!!
+Tests run: 28,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

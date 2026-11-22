@@ -78,10 +78,7 @@ class SteamGroupChatIntegrationTest {
     }
 
     @Test
-    fun channelNavigationUsesMonicaQuickFilterAndPreferredEntryRoom() {
-        val quickFilter = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChannelQuickFilter.kt"
-        ).readText()
+    fun channelNavigationKeepsSteamRoomsAndPreferredEntryRoomInNativeGlass() {
         val conversationList = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt"
         ).readText()
@@ -89,9 +86,11 @@ class SteamGroupChatIntegrationTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt"
         ).readText()
 
-        assertTrue(quickFilter.contains("MonicaExpressiveFilterChip"))
-        assertTrue(quickFilter.contains("rooms.size <= 1"))
-        assertTrue(thread.contains("SteamGroupChannelQuickFilter("))
+        assertTrue(thread.contains("TelegramGroupChannelPill("))
+        assertTrue(thread.contains("TelegramGlassView(context)"))
+        assertTrue(thread.contains("onSelect(room.chatId)"))
+        assertTrue(thread.contains("room.unread"))
+        assertFalse(thread.contains("SteamGroupChannelQuickFilter("))
         assertTrue(conversationList.contains("group.preferredChatId"))
     }
 
@@ -178,35 +177,50 @@ class SteamGroupChatIntegrationTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt"
         ).readText()
         val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
+        val scaffold = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatSurface.kt"
+        ).readText()
 
-        assertTrue(thread.contains("imePadding()"))
-        assertTrue(thread.contains("steamWindowBottomPadding(suppressWhenImeVisible = true)"))
+        assertTrue(thread.contains("TelegramChatScaffold("))
+        assertTrue(thread.contains("contentPadding = contentPadding"))
+        assertTrue(scaffold.contains("imePadding()"))
         assertTrue(manifest.contains("android:windowSoftInputMode=\"adjustResize\""))
     }
 
     @Test
-    fun everyGroupConversationSurfaceUsesTheDedicatedAvatarLoader() {
+    fun groupListsKeepCompositeAvatarsAndNativeHeaderReceivesTheSteamAvatar() {
         val groupList = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatList.kt"
         ).readText()
         val conversationList = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt"
         ).readText()
+        val conversationRow = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationRow.kt"
+        ).readText()
         val thread = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt"
         ).readText()
-        val editor = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamGroupAvatarEditor.kt"
+        val info = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoScreen.kt"
         ).readText()
 
         assertTrue(groupList.contains("SteamGroupAvatarImage("))
-        assertTrue(conversationList.contains("SteamGroupAvatarImage("))
-        assertTrue(thread.contains("SteamGroupAvatarImage("))
-        assertTrue(editor.contains("SteamGroupAvatarImage("))
+        // The inbox row is a native cell, so the composite has to reach it as a bitmap in the
+        // cell's own avatar slot; a composable overlay drifts off that slot.
+        assertTrue(conversationRow.contains("rememberSteamGroupAvatarBitmap("))
+        // Selection also goes through the same slot: the tick picture replaces the avatar, it is
+        // not an overlay that can drift off the cell frame.
+        assertTrue(conversationRow.contains("avatarOverride = selectionAvatar ?: groupAvatar"))
+        assertTrue(conversationRow.contains("rememberSteamSelectionAvatarBitmap("))
+        assertFalse(conversationRow.contains("Modifier.padding(start = 10.dp, top = 10.dp)"))
+        assertFalse(conversationRow.contains("SteamGroupAvatarImage("))
+        assertTrue(thread.contains("TelegramChatHeader("))
+        assertTrue(thread.contains("avatarUrl = group.avatarUrl"))
+        assertTrue(info.contains("SteamGroupAvatarImage("))
         assertTrue(groupList.contains("members = groupMembers"))
-        assertTrue(conversationList.contains("members = entry.groupMembers"))
-        assertTrue(thread.contains("members = members"))
-        assertTrue(editor.contains("members = members"))
+        assertTrue(conversationRow.contains("members = entry.groupMembers"))
+        assertTrue(info.contains("members = members"))
     }
 
     private fun projectFile(path: String): File {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-14T15:39:48.647Z" hostname="JOYIN" time="0.048">
+  <properties/>
+  <testcase name="settingsAreOptInAndReuseTheSharedMonicaSettingsSurface" classname="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" time="0.027"/>
+  <testcase name="serviceUsesTheSelectedSourceHandleAndPersistentRealtimeGateway" classname="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" time="0.004"/>
+  <testcase name="manifestDeclaresTheAndroid14SpecialUseForegroundService" classname="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" time="0.004"/>
+  <testcase name="messageNotificationsArePrivateDeduplicatedAndOpenTheExactConversation" classname="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" time="0.005"/>
+  <testcase name="applicationAndBootReceiverRestoreOnlyTheExplicitlyEnabledService" classname="takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

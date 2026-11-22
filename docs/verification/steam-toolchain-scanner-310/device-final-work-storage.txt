@@ -1,0 +1,917 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest:
+INSTRUMENTATION_STATUS: test=stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: stream=
+Error in stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest):
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: test=stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest):
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: test=systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=presetNotificationRestoresItsNameAndRetriesBothOperationDirections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: stream=
+Error in presetNotificationRestoresItsNameAndRetriesBothOperationDirections(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest):
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: test=presetNotificationRestoresItsNameAndRetriesBothOperationDirections
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=continueAndBackHideProgressWithoutStoppingAndItCanBeReopened
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: stream=
+Error in continueAndBackHideProgressWithoutStoppingAndItCanBeReopened(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest):
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+
+INSTRUMENTATION_STATUS: test=continueAndBackHideProgressWithoutStoppingAndItCanBeReopened
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest:
+INSTRUMENTATION_STATUS: test=storageExportPreservesNestedNamesAndBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+
+INSTRUMENTATION_STATUS: stream=
+Error in storageExportPreservesNestedNamesAndBytes(takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest):
+java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+
+INSTRUMENTATION_STATUS: test=storageExportPreservesNestedNamesAndBytes
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=zstandardChunkDecodesUsingBundledAndroidLibrary
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+
+INSTRUMENTATION_STATUS: stream=
+Error in zstandardChunkDecodesUsingBundledAndroidLibrary(takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest):
+java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+
+INSTRUMENTATION_STATUS: test=zstandardChunkDecodesUsingBundledAndroidLibrary
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest:
+INSTRUMENTATION_STATUS: test=stageLabelsAndCancelRemainVisibleAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stageLabelsAndCancelRemainVisibleAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=exportReportsWrittenBytesAndPreservesNestedFiles
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=exportReportsWrittenBytesAndPreservesNestedFiles
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledExportDoesNotContinueWritingOrReachNextFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancelledExportDoesNotContinueWritingOrReachNextFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=savingReplacesCompletedNetworkCountersWithItsOwnProgress
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=savingReplacesCompletedNetworkCountersWithItsOwnProgress
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=notificationUsesSameStageAndStageFraction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=notificationUsesSameStageAndStageFraction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=checksumCountsFilesAndDirectDownloadOnlyClaimsSizeCheck
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=checksumCountsFilesAndDirectDownloadOnlyClaimsSizeCheck
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacySavingDataDoesNotShowStaleNetworkPercentage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.workshop.WorkshopStageProgressUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacySavingDataDoesNotShowStaleNetworkPercentage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 73.802
+There were 10 failures:
+1) stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Missing UI text: Stop remaining items
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=3:05 description=3:05 AM
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=Android Setup notification: Finish setting up your sdk_gphone64_x86_64
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Wifi signal full.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Phone three bars.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=Battery charging, 100 percent.
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.LinearLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+androidx.compose.ui.platform.ComposeView visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.ScrollView visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Monica Steam description=null
+android.widget.TextView visible=true clickable=false text=Set up your master password description=null
+android.widget.TextView visible=true clickable=false text=Only tokens, backups and settings will ask again. description=null
+android.widget.EditText visible=true clickable=true text= description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Master Password description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=true text=null description=null
+android.view.View visible=true clickable=false text=null description=Show password
+android.widget.Button visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=At least 3 characters required description=null
+android.view.View visible=true clickable=true text=null description=null
+android.widget.TextView visible=true clickable=false text=Set Up Password description=null
+android.widget.Button visible=true clickable=false text=null description=null
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.awaitText(SteamWorkshopBackgroundTest.kt:246)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.click(SteamWorkshopBackgroundTest.kt:259)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen(SteamWorkshopBackgroundTest.kt:104)
+2) stopButtonStopsTheQueuedTaskAndLeavesItsResultsOpen(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+3) systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.access$goHome(SteamWorkshopBackgroundTest.kt:40)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest$systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount$1.invokeSuspend(SteamWorkshopBackgroundTest.kt:124)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:35)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:101)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount(SteamWorkshopBackgroundTest.kt:114)
+4) systemWorkerStartsWithoutAWorkshopPageAndChecksItsOriginalAccount(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+5) presetNotificationRestoresItsNameAndRetriesBothOperationDirections(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Missing UI text: Switch preset
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=3:05 description=3:05 AM
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=Android Setup notification: Finish setting up your sdk_gphone64_x86_64
+android.widget.ImageView visible=true clickable=false text=null description=Monica Steam notification: Workshop task needs attention · Dota 2
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Wifi signal full.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Phone signal full.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=Battery charging, 100 percent.
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.LinearLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+androidx.compose.ui.platform.ComposeView visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.ScrollView visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Monica Steam description=null
+android.widget.TextView visible=true clickable=false text=Set up your master password description=null
+android.widget.TextView visible=true clickable=false text=Only tokens, backups and settings will ask again. description=null
+android.widget.EditText visible=true clickable=true text= description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Master Password description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=true text=null description=null
+android.view.View visible=true clickable=false text=null description=Show password
+android.widget.Button visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=At least 3 characters required description=null
+android.view.View visible=true clickable=true text=null description=null
+android.widget.TextView visible=true clickable=false text=Set Up Password description=null
+android.widget.Button visible=true clickable=false text=null description=null
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.awaitText(SteamWorkshopBackgroundTest.kt:246)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.access$awaitText(SteamWorkshopBackgroundTest.kt:40)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest$presetNotificationRestoresItsNameAndRetriesBothOperationDirections$1.invokeSuspend(SteamWorkshopBackgroundTest.kt:146)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.presetNotificationRestoresItsNameAndRetriesBothOperationDirections(SteamWorkshopBackgroundTest.kt:142)
+6) presetNotificationRestoresItsNameAndRetriesBothOperationDirections(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+7) continueAndBackHideProgressWithoutStoppingAndItCanBeReopened(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Missing UI text: Continue in background
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=3:05 description=3:05 AM
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=Android Setup notification: Finish setting up your sdk_gphone64_x86_64
+android.widget.ImageView visible=true clickable=false text=null description=Monica Steam notification: Workshop task needs attention · Dota 2
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Wifi signal full.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=Phone signal full.
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=Battery charging, 100 percent.
+android.widget.ImageView visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.LinearLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=false clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+android.widget.LinearLayout visible=true clickable=false text=null description=null
+android.widget.FrameLayout visible=true clickable=false text=null description=null
+androidx.compose.ui.platform.ComposeView visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.ScrollView visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Monica Steam description=null
+android.widget.TextView visible=true clickable=false text=Set up your master password description=null
+android.widget.TextView visible=true clickable=false text=Only tokens, backups and settings will ask again. description=null
+android.widget.EditText visible=true clickable=true text= description=null
+android.view.View visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=Master Password description=null
+android.view.View visible=true clickable=false text=null description=null
+android.view.View visible=true clickable=true text=null description=null
+android.view.View visible=true clickable=false text=null description=Show password
+android.widget.Button visible=true clickable=false text=null description=null
+android.widget.TextView visible=true clickable=false text=At least 3 characters required description=null
+android.view.View visible=true clickable=true text=null description=null
+android.widget.TextView visible=true clickable=false text=Set Up Password description=null
+android.widget.Button visible=true clickable=false text=null description=null
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.awaitText(SteamWorkshopBackgroundTest.kt:246)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.continueAndBackHideProgressWithoutStoppingAndItCanBeReopened(SteamWorkshopBackgroundTest.kt:89)
+8) continueAndBackHideProgressWithoutStoppingAndItCanBeReopened(takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest)
+java.lang.AssertionError: Values should be different. Actual: takagi.ru.monica.steamapp.toolchainpilot
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failEquals(Assert.java:187)
+	at org.junit.Assert.assertNotEquals(Assert.java:163)
+	at org.junit.Assert.assertNotEquals(Assert.java:177)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.goHome(SteamWorkshopBackgroundTest.kt:186)
+	at takagi.ru.monica.steam.workshop.SteamWorkshopBackgroundTest.closeActivity(SteamWorkshopBackgroundTest.kt:82)
+9) storageExportPreservesNestedNamesAndBytes(takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest)
+java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+10) zstandardChunkDecodesUsingBundledAndroidLibrary(takagi.ru.monica.steam.workshop.WallpaperDownloadUiTest)
+java.lang.RuntimeException: Unable to resolve activity for: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=takagi.ru.monica.steamapp.toolchainpilot.test/androidx.activity.ComponentActivity }
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:405)
+	at androidx.test.core.app.InstrumentationActivityInvoker.startActivity(InstrumentationActivityInvoker.java:428)
+	at androidx.test.core.app.ActivityScenario.launchInternal(ActivityScenario.java:367)
+	at androidx.test.core.app.ActivityScenario.launch(ActivityScenario.java:203)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.lambda$new$0(ActivityScenarioRule.java:77)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule$$ExternalSyntheticLambda2.get(D8$$SyntheticClass:0)
+	at androidx.test.ext.junit.rules.ActivityScenarioRule.before(ActivityScenarioRule.java:112)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:50)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(Unknown Source:4)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(Unknown Source:2)
+	at androidx.compose.ui.test.EspressoLink.withStrategy(EspressoLink.android.kt:69)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:8)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(Unknown Source:4)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)
+	at kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)
+	at kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:68)
+	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:467)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+
+FAILURES!!!
+Tests run: 13,  Failures: 10
+
+
+INSTRUMENTATION_CODE: -1

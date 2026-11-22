@@ -34,7 +34,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.password.MonicaTopActionsDropdownMenu
@@ -59,51 +61,45 @@ fun SteamPageOverflowMenu(
     additionalActions: List<SteamPageOverflowAction> = emptyList(),
     icon: ImageVector = Icons.Default.MoreVert
 ) {
+    SteamActionOverflowMenu(
+        refreshing = refreshing,
+        icon = icon,
+        actions = listOf(
+            SteamPageOverflowAction(stringResource(R.string.steam_notifications_title), Icons.Default.Notifications, onClick = onOpenNotifications)
+        ) + additionalActions + listOf(
+            SteamPageOverflowAction(stringResource(R.string.refresh), Icons.Default.Refresh, enabled = !refreshing, onClick = onRefresh),
+            SteamPageOverflowAction(stringResource(R.string.settings_title), Icons.Default.Settings, onClick = onOpenSettings)
+        )
+    )
+}
+
+/** Shared anchor, menu surface and action rows for page headers, including chat. */
+@Composable
+internal fun SteamActionOverflowMenu(
+    refreshing: Boolean,
+    actions: List<SteamPageOverflowAction>,
+    icon: ImageVector = Icons.Default.MoreVert,
+    contentDescription: String = stringResource(R.string.more_options),
+    beforeAction: () -> Unit = {}
+) {
     var expanded by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { expanded = true }) {
-            Icon(icon, contentDescription = stringResource(R.string.more_options))
+            SteamRefreshActionIcon(refreshing, icon, contentDescription)
         }
-        MonicaTopActionsDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.steam_notifications_title)) },
-                leadingIcon = { Icon(Icons.Default.Notifications, contentDescription = null) },
-                onClick = {
-                    expanded = false
-                    onOpenNotifications()
-                }
-            )
-            additionalActions.forEach { action ->
+        MonicaTopActionsDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            actions.forEach { action ->
                 DropdownMenuItem(
                     text = { Text(action.label) },
                     leadingIcon = { Icon(action.icon, contentDescription = null) },
                     enabled = action.enabled,
                     onClick = {
                         expanded = false
+                        beforeAction()
                         action.onClick()
                     }
                 )
             }
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.refresh)) },
-                leadingIcon = { Icon(Icons.Default.Refresh, contentDescription = null) },
-                enabled = !refreshing,
-                onClick = {
-                    expanded = false
-                    onRefresh()
-                }
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.settings_title)) },
-                leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) },
-                onClick = {
-                    expanded = false
-                    onOpenSettings()
-                }
-            )
         }
     }
 }
@@ -115,6 +111,8 @@ fun SteamExpressivePullToRefresh(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    indicatorTopInset: Dp = 0.dp,
+    showIndicator: Boolean = true,
     content: @Composable BoxScope.() -> Unit
 ) {
     if (!enabled) {
@@ -170,11 +168,17 @@ fun SteamExpressivePullToRefresh(
         modifier = modifier.fillMaxSize(),
         state = state,
         indicator = {
-            PullToRefreshDefaults.LoadingIndicator(
-                state = visualIndicatorState,
-                isRefreshing = refreshing,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
+            // A hidden expressive indicator still builds its polygon morph sequence.
+            // Avoid rebuilding it on every page switch; keep it through the return animation.
+            if (showIndicator && (refreshing || state.distanceFraction > PULL_REFRESH_HIDDEN_EPSILON)) {
+                PullToRefreshDefaults.LoadingIndicator(
+                    state = visualIndicatorState,
+                    isRefreshing = refreshing,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .offset(y = indicatorTopInset)
+                )
+            }
         },
     ) {
         Box(

@@ -1,0 +1,19 @@
+{
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamAvatarLoadingRegressionTest.kt": "19c81460ba92e6328e8fd89791964ee68349ac2654148f24b02cd69917786120",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamChatEvidenceExportTest.kt": "7e9a764dcacaa3577cd0341284f13b7dad0c7cb85e4232aefad7e17d49041e03",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamChatFloatingSelectionTest.kt": "8f14a7f5d59319a94762ce2b7d0fd0b173393464ed8650e2f09ca5b9cc2c7277",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamChatHandoffRegressionTest.kt": "102946aa22832c1a5f8766569f8fafd8a8ffa86a7ba81d952202c92d137627cf",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamChatSemanticsProbe.kt": "7b1de826309fa12ca7bda6f4aaf76002f30471ce5dbd1adc0bc15259d745ee7d",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamGroupAvatarRendererTest.kt": "0398340c93a8cb79737b9c59a7ced1c5d65f06d06dfebd4e7d8c3309a2c57b7b",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamGroupAvatarUiTest.kt": "0ebaf44bbf4a8e30b3c519dd7387be4642007cdb42115864bdf6a03d3683a6e1",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\SteamInboxSwipeUiTest.kt": "b432fdd6f10463e4487f7a044c8c1487f95f6a0b294d52af6fd5b4df2899e63b",
+  "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\TelegramSocialUiTest.kt": "d6894d1a4e9776ecdf0fa5febd7de21c30292c55766a2211a6a1d7da42a7a7ae",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\telegram\\TelegramNativeSocial.kt": "dc3fa51eaf7112cd84642e03fbb48238858b98771c66702f18445ae78540f92c",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationFilters.kt": "58aa538db9af3aa1b167f547ee021fca3b80ae4fdc17d870d304c06a11030bc9",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationList.kt": "8523988ac34d937efad624865682e468ffab36c55eb1368ce6326fb440b85c22",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationRow.kt": "59f63653282bc11548e6b887b2aca3c71659c9a8173ec6e995231f046bc92cd8",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\groupchat\\avatar\\ui\\SteamGroupAvatarImage.kt": "f2a470b602ac403637865aa808153c963e8e05845424f0164ba2c95ef981703b",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\groupchat\\avatar\\ui\\SteamGroupAvatarRenderer.kt": "660e136f0b879bb9a338768e192915f7a98526c3e4f8add2310a2ca30a72dd2a",
+  "app\\src\\main\\java\\takagi\\ru\\monica\\ui\\common\\selection\\SelectionActionBar.kt": "c2e39f0bb81510ee76bb6ba49424f1e61ea8d440bed56b6a307015621b1a03ff",
+  "telegram-chat-ui\\src\\main\\java\\com\\monica\\telegramchat\\TelegramPopupLayout.java": "b596cc41024895cf31be7edc96d223bbe1c55c54e575c3ef3b8ed1a1f3c78bc6"
+}

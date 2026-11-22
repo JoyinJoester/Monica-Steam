@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.friends.chat.background.data
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import takagi.ru.monica.MonicaSteamActivity
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationRequest
@@ -37,6 +38,11 @@ object SteamChatNotificationContract {
         val requestKey = "${handle.stableKey}|${partnerSteamId.orEmpty()}"
         val intent = Intent(context, MonicaSteamActivity::class.java).apply {
             action = ACTION_OPEN_CHAT
+            // PendingIntent equality ignores extras. A full digest also isolates routes
+            // whose legacy integer request codes happen to collide.
+            data = Uri.Builder().scheme("monica-steam-chat").authority("conversation")
+                .appendPath(steamChatConversationNotificationPrefix(handle.stableKey, partnerSteamId.orEmpty()))
+                .build()
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra(EXTRA_ACCOUNT_ID, handle.account.id)
             putExtra(EXTRA_ACCOUNT_STEAM_ID, handle.account.steamId)

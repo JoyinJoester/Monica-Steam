@@ -1,0 +1,34 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.006"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+    "tests": "7",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.466"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.044"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.044"
+  }
+]

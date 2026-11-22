@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramFriendAvatar
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialDivider
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -49,63 +54,26 @@ internal fun SteamFriendCard(
     val isOutgoing = friend.relationship == SteamFriendRelationship.REQUEST_OUTGOING
     Card(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth().heightIn(min = 76.dp),
-        shape = RoundedCornerShape(18.dp),
+        modifier = Modifier.fillMaxWidth(),
+        shape = RectangleShape,
         colors = CardDefaults.cardColors(
-            containerColor = when {
-                isIncoming -> MaterialTheme.colorScheme.tertiaryContainer
-                friend.isPlaying -> MaterialTheme.colorScheme.secondaryContainer
-                else -> MaterialTheme.colorScheme.surfaceContainerLow
-            }
+            containerColor = Color.Transparent
         )
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+            modifier = Modifier.padding(bottom = if (isIncoming) 8.dp else 0.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                FriendAvatar(friend = friend, size = 52)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text(
-                        text = friend.displayName,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = when {
-                            isIncoming -> stringResource(R.string.steam_friend_incoming_request)
-                            isOutgoing -> stringResource(R.string.steam_friend_outgoing_request)
-                            friend.isPlaying -> stringResource(
-                                R.string.steam_friend_playing,
-                                friend.gameName.ifBlank { friend.gameId }
-                            )
-                            else -> friend.personaState.label()
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = if (friend.isPlaying) {
-                            MaterialTheme.colorScheme.onSecondaryContainer
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-                if (actionInProgress) {
-                    CircularProgressIndicator(modifier = Modifier.size(22.dp), strokeWidth = 2.dp)
-                } else {
-                    Surface(
-                        modifier = Modifier.size(12.dp),
-                        shape = CircleShape,
-                        color = friend.statusColor()
-                    ) {}
-                }
-            }
+            takagi.ru.monica.steam.friends.chat.telegram.TelegramNativeContactRow(
+                friend = friend,
+                status = when {
+                    isIncoming -> stringResource(R.string.steam_friend_incoming_request)
+                    isOutgoing -> stringResource(R.string.steam_friend_outgoing_request)
+                    friend.isPlaying -> stringResource(R.string.steam_friend_playing, friend.gameName.ifBlank { friend.gameId })
+                    else -> friend.personaState.label()
+                }, onClick = onClick
+            )
+            if (actionInProgress) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
             if (isIncoming) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

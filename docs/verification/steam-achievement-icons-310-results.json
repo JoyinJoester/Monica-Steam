@@ -1,0 +1,45 @@
+{
+  "jvm": [
+    {
+      "name": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+      "tests": "19",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T09:56:33",
+      "hostname": "JOYIN",
+      "time": "0.293"
+    },
+    {
+      "name": "takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest",
+      "tests": "23",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T09:56:33",
+      "hostname": "JOYIN",
+      "time": "1.507"
+    },
+    {
+      "name": "takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-07T09:56:35",
+      "hostname": "JOYIN",
+      "time": "0.106"
+    }
+  ],
+  "jvm_total": 52,
+  "previous_task_paths_unchanged": 18,
+  "sha256": {
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt": "32c31bc074af0e29e2164d2d86e3bfcde5685c1c21d40589b29c26cdaa8c8d7d",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceLinks.kt": "b2853cdfc9a8a4e140cca92f591d89793f10af4c78adfeac6fc701b470165ff7",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceParser.kt": "ac4e02dc7513a39c4165dd8235df43810e1866b6fc1d7f5baff1d7efe029c6d8",
+    "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceServiceTest.kt": "c69916e8fa33ca2efbfcc17739e9fc216f2a5249b9882c26949ef01fa475d9f2",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "3e7394be42fe63d78e44a2003ffc55d56322fba80d644bf2d51c893e03b6aebf",
+    "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26110718-17.APK": "12d20633e7d2050ab5e759e0ac7c1dd31697eea8cc16588fc001b3d3756bd3ad",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2a11ee2ae7abfd58574a9ad08202328a38f9263d70afd39dfae4fe4c61301a8e"
+  }
+}

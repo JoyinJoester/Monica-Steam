@@ -27,6 +27,7 @@ internal data class SteamCmOperation(
 )
 
 internal class SteamCmResponseTimeoutException(message: String) : SocketTimeoutException(message)
+internal class SteamCmRequestOutcomeUnknownException(message: String, cause: Throwable) : IOException(message, cause)
 
 /**
  * One logged-on CM WebSocket. Requests stay on the socket until their response
@@ -40,7 +41,8 @@ internal class SteamCmPersistentConnection(
     private val webLogonToken: String,
     private val timeoutMillis: Long,
     private val eventSink: (SteamCmEnvelope) -> Unit = {},
-    private val logonBody: () -> ByteArray = { SteamCmProtocol.webLogonBody(webLogonToken) }
+    private val logonBody: () -> ByteArray = { SteamCmProtocol.webLogonBody(webLogonToken) },
+    private val disconnectSink: () -> Unit = {}
 ) : WebSocketListener(), Closeable {
     private val stateLock = Any()
     private val noJobLock = ReentrantLock()
@@ -53,6 +55,7 @@ internal class SteamCmPersistentConnection(
     private var sessionSteamId: Long = steamId
     private var loggedOn = false
     private var closed = false
+    private var failed = false
 
     fun isHealthy(): Boolean = synchronized(stateLock) {
         !closed && loggedOn && activeSocket != null
@@ -63,7 +66,7 @@ internal class SteamCmPersistentConnection(
      * or logging on. Closing it merely because `isHealthy()` is not true yet
      * makes concurrent realtime and service callers tear each other down.
      */
-    fun canBeReused(): Boolean = synchronized(stateLock) { !closed }
+    fun canBeReused(): Boolean = synchronized(stateLock) { !closed && !failed }
 
     /** Opens and authenticates the socket without requiring a request first. */
     fun connect() {
@@ -175,15 +178,14 @@ internal class SteamCmPersistentConnection(
         } catch (error: InterruptedException) {
             Thread.currentThread().interrupt()
             pending.remove(request)
-            throw IOException("Interrupted while waiting for Steam CM", error)
+            throw SteamCmRequestOutcomeUnknownException("Interrupted while waiting for Steam CM", error)
         } catch (error: ExecutionException) {
             pending.remove(request)
             val cause = error.cause
             // Preserve Steam's status so callers can refresh expired sessions and
             // distinguish permission/rate-limit failures from transport failures.
             if (cause is SteamApiException) throw cause
-            if (cause is RuntimeException) throw cause
-            throw IOException("Steam CM operation failed", cause)
+            throw SteamCmRequestOutcomeUnknownException("Steam CM response was lost", cause ?: error)
         }
     }
 
@@ -195,6 +197,7 @@ internal class SteamCmPersistentConnection(
             if (loggedOn && activeSocket != null) return
             waiter = connectWaiter ?: CompletableFuture<Unit>().also {
                 connectWaiter = it
+                failed = false
                 shouldOpen = true
             }
         }
@@ -207,7 +210,7 @@ internal class SteamCmPersistentConnection(
                     .build()
                 val socket = socketFactory(request, this)
                 synchronized(stateLock) {
-                    if (activeSocket == null && !closed) activeSocket = socket
+                    if (activeSocket == null && !closed && !failed) activeSocket = socket
                 }
             } catch (error: Throwable) {
                 failConnection(null, error)
@@ -235,7 +238,7 @@ internal class SteamCmPersistentConnection(
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         synchronized(stateLock) {
-            if (closed) {
+            if (closed || failed) {
                 webSocket.cancel()
                 return
             }
@@ -354,7 +357,9 @@ internal class SteamCmPersistentConnection(
         val connect: CompletableFuture<Unit>?
         val socket: WebSocket?
         synchronized(stateLock) {
+            if (closed || failed) return
             if (webSocket != null && activeSocket !== webSocket) return
+            failed = true
             socket = activeSocket
             activeSocket = null
             loggedOn = false
@@ -367,6 +372,7 @@ internal class SteamCmPersistentConnection(
         waiters.forEach { it.future.completeExceptionally(error) }
         connect?.completeExceptionally(error)
         socket?.cancel()
+        runCatching { disconnectSink() }
     }
 
     private data class PendingRequest(

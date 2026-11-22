@@ -1,0 +1,10 @@
+{
+  "RELEASE_NOTES.md": "a5858101633d743e8331b8c6392fc8f9cfec2b35b1fde5648577b4981e18496c",
+  "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramEmojiPickerView.java": "60eb3ae31e2141cb445376d9dc5a25d49757f68bfccaf4ec9a5f4e794cb59a61",
+  "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramGlassView.java": "4bf727e8cebb54da700dab500fcd7787824a76b56d9dca92eed5ed2801fffbf4",
+  "docs/releases/Monica-Steam-Unreleased.md": "c6204be6d7b076530b241a48240111bb072d50201de5fca4768db8cd7da54540",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionLens.kt": "cc7f2ea6ec304d65e4e0d46d37938d87caab3ae50528ed4ff36e39a68dc08351",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt": "9b9f4905bb1a475509753c72a6722b0a04bfa9782d56584fcf0cfe6bea59607d",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPicker.kt": "044c4cfa796f4c0d2b501f552df2d1c32c857cb63b9d1c98a44da2d06dc9a39e",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamRichPickerGlassDeviceTest.kt": "f55f4a667547e3ea3654726b93c3ccd2a6f98d930d607053c5658ebd4f33e604"
+}

@@ -13,7 +13,7 @@ import takagi.ru.monica.steam.importer.SteamMaFilePayload
 class SteamTemporaryAccountStorageTest {
     @Test fun sameSteamIdTemporaryLoginAndRotationNeverChangeSavedAccount() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        check(context.packageName.endsWith(".recoverytest"))
+        check(context.packageName in setOf("takagi.ru.monica.steam.recoverytest", "takagi.ru.monica.steamapp.toolchainpilot"))
         val database = Room.inMemoryDatabaseBuilder(context, SteamDatabase::class.java).build()
         try {
             val store = SteamTemporaryAccounts()

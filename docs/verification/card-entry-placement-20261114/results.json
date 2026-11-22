@@ -1,0 +1,32 @@
+{
+  "sources": {
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt": "50800b5fe77c9dcbe2ffb38fb7d0e4735dcdc445be73c08b468fc6f518727ad3",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatControls.kt": "159c1fc90d82359d15d788807d126846de515ad25f757776658abad9cb55afaa",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramChatComposerView.java": "f4c533cc6dcdf75f09b2d3b8c8e80843fa147b2d66979aa13e335527280bbb6f",
+    "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "06c81166674093c1afa32550fdc1b7ff99910dc150d204adce5d3658b5a48dc1"
+  },
+  "build": {
+    "exit": 0,
+    "seconds": 57.14382840000326,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-card-entry-placement\\isolation.gradle",
+      "-PdockFixture=true",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "7bd9752f9f78b3fd4c1237004e83c43e62d3457a894c3708a3cc249650123295",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "79f40d72d4266db2f43a198437c8b8c984b384be1215b942ebb4229552254f3e"
+    }
+  },
+  "tests": 5,
+  "cleanup": "Own packages removed, own API32 AVD stopped; original users and disks preserved"
+}

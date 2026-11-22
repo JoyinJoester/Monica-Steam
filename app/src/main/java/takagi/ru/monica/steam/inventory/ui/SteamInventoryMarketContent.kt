@@ -1,5 +1,8 @@
 package takagi.ru.monica.steam.inventory.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamListFilterChip as FilterChip
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassFloatingActionButton as FloatingActionButton
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -46,9 +49,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator

@@ -1,0 +1,21 @@
+[
+  {
+    "appId": 570,
+    "hash": "92a08788e62ec08c84036cacb60524e16d56d9ed",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "appId": 570,
+    "hash": "0bbb630d63262dd66d2fdd0f7d37e8661a410075",
+    "status": 200,
+    "bytes": 1210,
+    "contentType": "image/jpeg"
+  },
+  {
+    "appId": 620,
+    "hash": "2e478fc6874d06ae5baf0d147f6f21203291aa02",
+    "status": 200,
+    "bytes": 1246,
+    "contentType": "image/jpeg"
+  }
+]

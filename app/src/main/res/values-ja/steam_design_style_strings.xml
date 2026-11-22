@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_dock_style_title">Dock のスタイル</string>
+    <string name="steam_dock_style_description">初期設定は M3E です。どちらのスタイルにもストア、ゲームライブラリ、チャット、トークン、設定が含まれます。</string>
+    <string name="steam_dock_style_liquid_glass">リキッドガラス</string>
+    <string name="steam_dock_style_fixed">M3E</string>
+    <string name="steam_design_style_title">デザインスタイル</string>
+    <string name="steam_design_style_description">どちらのスタイルも選択した配色と表示設定を使用します。いつでも切り替えられます。</string>
+    <string name="steam_design_style_m3e_description">Material 3 Expressive：固定ナビゲーション、色調を合わせたコンテナ、標準のフローティングボタン</string>
+    <string name="steam_design_style_liquid_glass_description">浮かぶガラスのナビゲーション。チャットやストアのフローティング操作にもガラスを使用します</string>
+    <string name="steam_design_style_order_hint">表示順は「ナビゲーションと動き › 下部ナビゲーション」で変更できます。</string>
+    <string name="steam_design_style_preview">プレビュー</string>
+    <string name="steam_design_style_glass_unsupported">この端末ではリアルタイムのガラス効果の代わりに半透明の背景を使用します。</string>
+</resources>

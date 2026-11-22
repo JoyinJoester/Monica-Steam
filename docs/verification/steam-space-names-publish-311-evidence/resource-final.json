@@ -1,0 +1,22 @@
+{
+  "values": {
+    "count": 14,
+    "sha256": "b54695c9be69f7e5ff2b75df2b132a6130f7a4fc85d79bf5d69691ccffe0b32b"
+  },
+  "values-zh": {
+    "count": 14,
+    "sha256": "c82884256f5b2685a974a23d6709d91a7b45f2ee69a4762a2f4fc5b5d302b9dc"
+  },
+  "values-ja": {
+    "count": 14,
+    "sha256": "7c9728cecbfb3a68a4a9172a7ee673ffc7c1e110183e86b4951d007c1bc7e048"
+  },
+  "values-ru": {
+    "count": 14,
+    "sha256": "c0b9692edf737c4a000cce3a51151ec0aa41ecfa72a4bd0b688b8453974f054a"
+  },
+  "values-vi": {
+    "count": 14,
+    "sha256": "387f4ae7f9285d27fdf880af93026316cc756b30fa2f182bac8c0ae828d19efb"
+  }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.972Z" hostname="JOYIN" time="0.016">
+  <properties/>
+  <testcase name="archivedChatsLeaveTheMainTabsAndOnlyShowUnderArchive" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.008"/>
+  <testcase name="deletedChatStaysHiddenUntilANewerMessageArrives" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.001"/>
+  <testcase name="unreadTabKeepsOnlyPendingConversations" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.0"/>
+  <testcase name="accountConsumersStayOnThePreviousAccountWhileSourceIsLoading" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.001"/>
+  <testcase name="activeLocalGroupVoiceIsVisibleBeforeTheServerSummaryRefreshes" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.003"/>
+  <testcase name="pinnedConversationWinsOverTimestampAcrossTypes" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.0"/>
+  <testcase name="directAndGroupChatsShareOneChronologicalList" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.0"/>
+  <testcase name="transientFailuresDoNotCoverUsableCachedConversations" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.002"/>
+  <testcase name="multiChannelGroupUsesItsMostRecentlyActiveRoom" classname="takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

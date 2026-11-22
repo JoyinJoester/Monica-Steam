@@ -1,0 +1,292 @@
+{
+  "version": "1.0.310",
+  "versionCode": 18,
+  "buildSequence": 22,
+  "scope": "FAB only; current chat pages retained",
+  "build": {
+    "exit": 0,
+    "seconds": 798.6372839999385,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=22",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261108-chat-fab\\verify.gradle",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.ui.*",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.*",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.telegram.*"
+    ]
+  },
+  "previewTestBuild": {
+    "exit": 0,
+    "seconds": 112.49364109989256,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx6g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=22",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261108-chat-fab\\verify.gradle",
+      ":app:assembleDebugAndroidTest"
+    ]
+  },
+  "jvm": {
+    "tests": 94,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "deviceMethods": 3,
+  "deviceRunnerSeconds": 36.136,
+  "previewRuns": [
+    {
+      "style": "FIXED",
+      "dark": "true",
+      "exit": 0,
+      "seconds": 18.957339599728584,
+      "passed": true,
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+        "-e",
+        "previewDesignStyle",
+        "FIXED",
+        "-e",
+        "previewDark",
+        "true",
+        "-e",
+        "internalEvidence",
+        "true",
+        "takagi.ru.monica.steamapp.chatmotion.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    },
+    {
+      "style": "FIXED",
+      "dark": "false",
+      "exit": 0,
+      "seconds": 15.284131899941713,
+      "passed": true,
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+        "-e",
+        "previewDesignStyle",
+        "FIXED",
+        "-e",
+        "previewDark",
+        "false",
+        "-e",
+        "internalEvidence",
+        "true",
+        "takagi.ru.monica.steamapp.chatmotion.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    },
+    {
+      "style": "LIQUID_GLASS",
+      "dark": "true",
+      "exit": 0,
+      "seconds": 13.318393500056118,
+      "passed": true,
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+        "-e",
+        "previewDesignStyle",
+        "LIQUID_GLASS",
+        "-e",
+        "previewDark",
+        "true",
+        "-e",
+        "internalEvidence",
+        "true",
+        "takagi.ru.monica.steamapp.chatmotion.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    },
+    {
+      "style": "LIQUID_GLASS",
+      "dark": "false",
+      "exit": 0,
+      "seconds": 11.454109899699688,
+      "passed": true,
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+        "-e",
+        "previewDesignStyle",
+        "LIQUID_GLASS",
+        "-e",
+        "previewDark",
+        "false",
+        "-e",
+        "internalEvidence",
+        "true",
+        "takagi.ru.monica.steamapp.chatmotion.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    }
+  ],
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26110818-22.APK": "e27e5ee32ee43bf2364b9dcffbc2fd111dcb94fe7bce9bce88926f94818d3c3e",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "ad9d2af9c6a4f337c84f89c87fe892d432d5d2dec0023b0c386ff22c1cbad086"
+  },
+  "mainApkUnchangedDuringPreviewBuild": true,
+  "sourcePaths": 2323,
+  "sourceChangesAfterInitialBuild": [
+    "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\chat\\TelegramSocialUiTest.kt"
+  ],
+  "avdConfigurationUnchanged": true,
+  "cleanup": {
+    "commands": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.chatmotion.test"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.chatmotion"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "takagi.ru.monica.steamapp.chatmotion"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "--user",
+          "0",
+          "takagi.ru.monica.steamapp"
+        ],
+        "exit": 0,
+        "output": "package:takagi.ru.monica.steamapp.test\npackage:takagi.ru.monica.steamapp\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ],
+    "preserved": [
+      {
+        "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+        "bytes": 109
+      },
+      {
+        "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+        "bytes": 3908
+      },
+      {
+        "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+        "bytes": 12884901888
+      },
+      {
+        "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2",
+        "bytes": 22325035008
+      },
+      {
+        "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata.img",
+        "bytes": 1048576
+      }
+    ],
+    "users": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n",
+    "stoppedSelfStartedAvd": true,
+    "removedOnlyIsolatedTestPackages": true
+  },
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

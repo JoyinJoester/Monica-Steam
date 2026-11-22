@@ -1,50 +1,37 @@
 package takagi.ru.monica.steam.friends.chat.gameinvite.ui
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Storefront
+import androidx.compose.material.icons.rounded.ChatBubbleOutline
+import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.filled.SportsEsports
-import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.gameinvite.data.SteamChatGameInviteMetadataRepository
 import takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInviteMetadata
 import takagi.ru.monica.steam.friends.chat.gameinvite.domain.toGameInvitePresentation
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContent
-import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImage
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardLinks
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.openSteamChatCard
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatCardAction
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRichCard
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.steamChatCopyLink
 
 @Composable
 internal fun SteamChatGameInviteCard(
     content: SteamChatRichContent.GameInvite,
     onOpenStoreApp: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLongClick: (() -> Unit)? = null,
+    onDeleteMessage: (() -> Unit)? = null
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val language = remember(locale.language) {
@@ -71,87 +58,31 @@ internal fun SteamChatGameInviteCard(
         presentation.appId?.let(onOpenStoreApp)
         Unit
     }
-
-    Surface(
-        modifier = modifier
-            .widthIn(min = 232.dp, max = 304.dp)
-            .animateContentSize(),
-        shape = RoundedCornerShape(20.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        tonalElevation = 1.dp
-    ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Surface(
-                    modifier = Modifier.size(width = 112.dp, height = 63.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        presentation.artworkUrl?.let { artworkUrl ->
-                            SteamChatRemoteImage(
-                                url = artworkUrl,
-                                contentDescription = stringResource(
-                                    R.string.steam_chat_game_invite_artwork,
-                                    title
-                                ),
-                                modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)),
-                                fallbackIcon = Icons.Default.SportsEsports
-                            )
-                        } ?: Icon(
-                            imageVector = Icons.Default.SportsEsports,
-                            contentDescription = null
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(3.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.steam_notification_kind_game_invite),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleSmall,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    presentation.appId?.let { appId ->
-                        Text(
-                            text = stringResource(R.string.steam_chat_game_invite_app_id, appId),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            }
-            if (presentation.appId != null) {
-                FilledTonalButton(
-                    onClick = openStore,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp)
-                        .heightIn(min = 48.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Storefront,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.steam_chat_game_invite_view_store),
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                }
-            }
-        }
+    val storeLabel = stringResource(R.string.steam_chat_game_invite_view_store)
+    val inviteUrl = remember(content.url) { SteamChatCardLinks.gameInvite(content.url) }
+    val copy = steamChatCopyLink(title, inviteUrl)
+    val openInvite = inviteUrl?.let { url ->
+        SteamChatCardAction(stringResource(R.string.open_link), icon = Icons.Rounded.OpenInNew, prominent = true) { openSteamChatCard(context, url) }
     }
+    val messageActions = onLongClick?.let {
+        SteamChatCardAction(stringResource(R.string.steam_preview_message_actions),
+            icon = Icons.Rounded.ChatBubbleOutline, run = it)
+    }
+    val delete = onDeleteMessage?.let { SteamChatCardAction(stringResource(R.string.delete),
+        icon = Icons.Rounded.DeleteOutline, destructive = true, run = it) }
+    val caption = listOf(content.caption, content.label.takeUnless {
+        it == "Steam game invitation" || it == content.url || it == title
+    }).filterNotNull().filter(String::isNotBlank).distinct().joinToString("\n")
+    SteamChatRichCard(
+        kind = stringResource(R.string.steam_notification_kind_game_invite),
+        title = title,
+        icon = Icons.Default.SportsEsports,
+        artwork = presentation.artworkUrl,
+        metadata = presentation.appId?.let { stringResource(R.string.steam_chat_game_invite_app_id, it) },
+        description = caption,
+        primary = if (presentation.appId != null) SteamChatCardAction(storeLabel, icon = Icons.Rounded.Storefront, run = openStore) else openInvite,
+        actions = listOfNotNull(copy, openInvite.takeIf { presentation.appId != null }, messageActions, delete),
+        modifier = modifier,
+        featuredArtwork = true
+    )
 }

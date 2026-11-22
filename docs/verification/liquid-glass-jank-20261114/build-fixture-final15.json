@@ -1,0 +1,39 @@
+{
+  "exit": 0,
+  "seconds": 57.0160241999547,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-PdailySeq=45",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-liquid-glass-jank\\isolation.gradle",
+    "-PdockFixture=true",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.navigation.SteamFloatingDockGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest",
+    "--tests",
+    "takagi.ru.monica.steam.refresh.*",
+    "--tests",
+    "takagi.ru.monica.steam.library.SteamLibraryPullRefreshGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.store.SteamStorePullRefreshGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.profile.SteamRemoteImageCacheUrlTest",
+    "--tests",
+    "takagi.ru.monica.steam.navigation.liquidglass.motion.*"
+  ],
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "d207c5ca72397079a16d177dc0c4632a7be009aea62f8614e7999d0dcbb4cbaa",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "b26b0d6fb744074b62cdda1db3887afcb7a9988e29976db9bacef91eaa743577"
+  }
+}

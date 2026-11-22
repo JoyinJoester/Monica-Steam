@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:32.609Z" hostname="JOYIN" time="0.256">
+  <properties/>
+  <testcase name="retriesAConnectionFailureWithBoundedBackoff" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.196"/>
+  <testcase name="retriesSessionResolutionBeforeOpeningTheSocket" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.013"/>
+  <testcase name="rotatesTheCollectorAndSocketWhenSessionCredentialsChange" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.015"/>
+  <testcase name="resolvesTheAccountBeforeOpeningTheCmTransport" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.005"/>
+  <testcase name="connectsThenForwardsParsedEventsForTheCollectedAccount" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.007"/>
+  <testcase name="restartsAnEventCollectorThatStopsUnexpectedly" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.011"/>
+  <testcase name="propagatesCancellationFromTheConnectionBoundary" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

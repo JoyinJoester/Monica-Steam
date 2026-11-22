@@ -1,0 +1,768 @@
+{
+  "date": "2026-11-14",
+  "complete": true,
+  "version": "1.0.310",
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false,
+  "sourceSha256": {
+    "app/src/main/java/takagi/ru/monica/steam/navigation/SteamTabPageHost.kt": "7a0bce5d6e1c9b6f9e737749621782bd47de8f180bf2ca70baa7f95516815eb3",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamTabPageHostDeviceTest.kt": "a7a7cbe943a4e27faaca8bd8653fdd5de05cf9763dbd2072a492742246087caa",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedNativeChatDeviceTest.kt": "3ece5de07c9af33a18640de62d079ecf56ad3b557eddc20b79697959f8d062a1",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedPageStateDeviceTest.kt": "55e22f6d060924cb073690f7fc101646f031f31e9f1e7ea5878a40c0a0d12960",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt": "619b830fee1c9eced9e12605280bc7fa76abb5bf98df77d4c7c8b1b0f0166f68",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "b7e1520b40bdc9502303cedc57a7c13a97fd99e8c885ef34c86cae1927781d25"
+  },
+  "instrumentationRestoredSha256": {
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/render/SteamLiquidGlassBackdrop.kt": "e41608ad43d4df31cd22ac589e77e6ed347304f4ee4fb258820394fee0f3a3e7",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/upstream/DialogCell.java": "7e728e743a8fefab310505a7971713100c9c833a54abe61e20ce8feddd92f979",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/SteamAvatarView.java": "e8fd8430ee7c09ca4c48471d15ca6ee13f1d7165bfcfc67dc6cc20c72da24cbb"
+  },
+  "previousSourceAudit": {
+    "achievement": {
+      "checked": 20,
+      "matching": 19,
+      "knownSubsequentPageLifecycleChange": [
+        "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt"
+      ]
+    },
+    "sheets": {
+      "checked": 19,
+      "matching": 19,
+      "knownSubsequentPageLifecycleChange": []
+    }
+  },
+  "productionBuild": {
+    "exit": 0,
+    "seconds": 832.1996705000056,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-chat-tab-entry\\production.gradle",
+      ":app:assembleDebug",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "*SteamConversationListTest",
+      "--tests",
+      "*SteamDockColdSwitchPerformanceGuardTest",
+      "--tests",
+      "*LiquidGlassDockMotionTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "1898468720fc818e86035749b5d02e109b9e070cf7a56bf05caf91767cfa4972"
+    }
+  },
+  "apkAudit": {
+    "productionR8": {
+      "sha256": "1898468720fc818e86035749b5d02e109b9e070cf7a56bf05caf91767cfa4972",
+      "bytes": 34017566,
+      "packageLine": "package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "debuggable": false,
+      "internet": true,
+      "nativeCode": "native-code: 'x86_64'"
+    },
+    "fixture": {
+      "sha256": "2320c9fc221b0e86c6edc80e52af7dbcc1053371d856ce185a2611abe791733e",
+      "bytes": 93336402,
+      "packageLine": "package: name='takagi.ru.monica.steamapp.chatentry' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "debuggable": true,
+      "internet": false,
+      "nativeCode": "native-code: 'x86_64'"
+    },
+    "test": {
+      "sha256": "b13d272dd90417085a9ddd33b26c312f2c4b29db34a68d79f81015c81e10ce56",
+      "bytes": 2403158,
+      "packageLine": "package: name='takagi.ru.monica.steamapp.chatentry.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "debuggable": true,
+      "internet": false,
+      "nativeCode": null
+    },
+    "native": {
+      "lib/x86_64/libandroidx.graphics.path.so": {
+        "production": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0",
+        "fixture": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0"
+      },
+      "lib/x86_64/libargon2jni.so": {
+        "production": "053e720a1b1df8e814d479600f9fa3e71556da5f674687cb72f0bd0651286dbf",
+        "fixture": "053e720a1b1df8e814d479600f9fa3e71556da5f674687cb72f0bd0651286dbf"
+      },
+      "lib/x86_64/libargon2native.so": {
+        "production": "89d0c70653791539ac67e0f1ad123d49c0fbd8986f7775bf108e7dbc7d21e2d2",
+        "fixture": "89d0c70653791539ac67e0f1ad123d49c0fbd8986f7775bf108e7dbc7d21e2d2"
+      },
+      "lib/x86_64/libbarhopper_v3.so": {
+        "production": "6c5deea87d962af008fd48c3229db13ab68eef2e9feeccb2df5b33a920c0579a",
+        "fixture": "6c5deea87d962af008fd48c3229db13ab68eef2e9feeccb2df5b33a920c0579a"
+      },
+      "lib/x86_64/libdatastore_shared_counter.so": {
+        "production": "537b910d1601ba234dfe17228bf22a48e5336529cf00796213bcc1a7e0e8367a",
+        "fixture": "537b910d1601ba234dfe17228bf22a48e5336529cf00796213bcc1a7e0e8367a"
+      },
+      "lib/x86_64/libimage_processing_util_jni.so": {
+        "production": "112703727717651e69e91f3ea2c3c2311737ee5809a909c9d342a811b6c7c069",
+        "fixture": "112703727717651e69e91f3ea2c3c2311737ee5809a909c9d342a811b6c7c069"
+      },
+      "lib/x86_64/libjnidispatch.so": {
+        "production": "288eafff19a70e833498201071c3d724f03f32ee8ff64a14fca50b57d975db70",
+        "fixture": "288eafff19a70e833498201071c3d724f03f32ee8ff64a14fca50b57d975db70"
+      },
+      "lib/x86_64/libmdbx_ffi.so": {
+        "production": "c9d0f94503db9429b3e1c4f2468a29af0641ca6ac216e972aff919eee2fa341a",
+        "fixture": "c9d0f94503db9429b3e1c4f2468a29af0641ca6ac216e972aff919eee2fa341a"
+      },
+      "lib/x86_64/libmonica_steam_android.so": {
+        "production": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d",
+        "fixture": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d"
+      },
+      "lib/x86_64/libsurface_util_jni.so": {
+        "production": "e5311942b4fce0f7f2505d41150cf9921e558a6368929cb73127450f74dd4fe4",
+        "fixture": "e5311942b4fce0f7f2505d41150cf9921e558a6368929cb73127450f74dd4fe4"
+      },
+      "lib/x86_64/libzstd-jni-1.5.7-3.so": {
+        "production": "543898ed84da9d48ff92665e1d4a6dad3fb001f96ea3044c97690534e4d27bb4",
+        "fixture": "543898ed84da9d48ff92665e1d4a6dad3fb001f96ea3044c97690534e4d27bb4"
+      }
+    },
+    "mapping": {
+      "bytes": 220310362,
+      "sha256": "0fc2cb9a1305a80199ae4e8d3d2391535e074c7c74880cc8a20451e689061776"
+    },
+    "metadata": {
+      "version": 3,
+      "artifactType": {
+        "type": "APK",
+        "kind": "Directory"
+      },
+      "applicationId": "takagi.ru.monica.steamapp",
+      "variantName": "debug",
+      "elements": [
+        {
+          "type": "SINGLE",
+          "filters": [],
+          "attributes": [],
+          "versionCode": 18,
+          "versionName": "1.0.310",
+          "outputFile": "Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK"
+        }
+      ],
+      "elementType": "File",
+      "baselineProfiles": [
+        {
+          "minApi": 28,
+          "maxApi": 30,
+          "baselineProfiles": [
+            "baselineProfiles/1/Monica-Steam-Android-x86_64-1.0.310-26111418-45.dm"
+          ]
+        },
+        {
+          "minApi": 31,
+          "maxApi": 2147483647,
+          "baselineProfiles": [
+            "baselineProfiles/0/Monica-Steam-Android-x86_64-1.0.310-26111418-45.dm"
+          ]
+        }
+      ],
+      "minSdkVersionForDexing": 26
+    }
+  },
+  "jvm": {
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "jvmClasses": [
+    "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+    "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+    "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest"
+  ],
+  "devices": [
+    {
+      "stage": "install-final26",
+      "methods": [
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#backgroundDropsInactivePageBeforeResume",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#platformViewModeEvictsInactivePageWithoutRemountingCurrentPage",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#sameFrameNavigationAndBackgroundCannotRestoreInactivePage",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#switchingTabsReleasesNativeEditorFocusAndRoutesKeysToCurrentPage",
+        "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack",
+        "takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest#hiddenChatStopsCollectingAndDisplaysLatestInboxOnReturn",
+        "takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest#hiddenLibraryStopsCollectingAndRendersLatestGamesOnReturn",
+        "takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest#nestedContentViewUsesTheRetainedPageLifecycle",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+        "takagi.ru.monica.steam.navigation.LiquidGlassLensDeviceTest#retainedZeroRefractionIsPixelIdenticalAndPressedLensStillRefracts",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft"
+      ],
+      "passed": 16,
+      "runnerSeconds": 26.302,
+      "receipt": {
+        "exit": 0,
+        "seconds": 27.248961600009352,
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest,takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest,takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsPendingReleaseAndCanDragAfterReturn,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsHeldPointerAndCanDragAfterReturn,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged,takagi.ru.monica.steam.navigation.LiquidGlassLensDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "-e",
+          "pageVariant",
+          "candidate",
+          "takagi.ru.monica.steamapp.chatentry.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      }
+    },
+    {
+      "stage": "visual32",
+      "methods": [
+        "takagi.ru.monica.steam.navigation.SteamChatTabEntryFrameTest#hiddenActualChatStopsUiCollectionAndResumesLatestState"
+      ],
+      "passed": 1,
+      "runnerSeconds": 6.68,
+      "receipt": {
+        "exit": 0,
+        "seconds": 7.627307099988684,
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamChatTabEntryFrameTest#hiddenActualChatStopsUiCollectionAndResumesLatestState",
+          "-e",
+          "pageVariant",
+          "candidate",
+          "takagi.ru.monica.steamapp.chatentry.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      }
+    }
+  ],
+  "performance": [
+    {
+      "stage": "result-final27",
+      "variant": "candidate",
+      "layoutRebuilds": 0,
+      "retainedCellObservations": 84,
+      "lostMetrics": 0,
+      "CHAT": {
+        "commits": 15,
+        "commitMedianMs": 49.205,
+        "commitP95Ms": 61.164,
+        "frames": 270,
+        "totalP95Ms": 40.554,
+        "drawP95Ms": 7.891,
+        "layoutP95Ms": 0.133,
+        "syncP95Ms": 0.758
+      },
+      "LIBRARY": {
+        "commits": 15,
+        "commitMedianMs": 42.528,
+        "commitP95Ms": 48.032,
+        "frames": 225,
+        "totalP95Ms": 35.601,
+        "drawP95Ms": 5.672,
+        "layoutP95Ms": 0.133,
+        "syncP95Ms": 0.788
+      }
+    },
+    {
+      "stage": "result-final28",
+      "variant": "candidate",
+      "layoutRebuilds": 0,
+      "retainedCellObservations": 84,
+      "lostMetrics": 0,
+      "CHAT": {
+        "commits": 15,
+        "commitMedianMs": 37.941,
+        "commitP95Ms": 55.684,
+        "frames": 272,
+        "totalP95Ms": 40.186,
+        "drawP95Ms": 8.144,
+        "layoutP95Ms": 0.13,
+        "syncP95Ms": 0.807
+      },
+      "LIBRARY": {
+        "commits": 15,
+        "commitMedianMs": 39.488,
+        "commitP95Ms": 59.899,
+        "frames": 218,
+        "totalP95Ms": 35.649,
+        "drawP95Ms": 5.229,
+        "layoutP95Ms": 0.11,
+        "syncP95Ms": 0.762
+      }
+    },
+    {
+      "stage": "result-old29",
+      "variant": "candidate",
+      "layoutRebuilds": 0,
+      "retainedCellObservations": 84,
+      "lostMetrics": 0,
+      "CHAT": {
+        "commits": 15,
+        "commitMedianMs": 58.181,
+        "commitP95Ms": 69.3,
+        "frames": 265,
+        "totalP95Ms": 46.238,
+        "drawP95Ms": 15.512,
+        "layoutP95Ms": 0.135,
+        "syncP95Ms": 0.691
+      },
+      "LIBRARY": {
+        "commits": 15,
+        "commitMedianMs": 43.034,
+        "commitP95Ms": 63.027,
+        "frames": 209,
+        "totalP95Ms": 42.266,
+        "drawP95Ms": 13.107,
+        "layoutP95Ms": 0.131,
+        "syncP95Ms": 0.473
+      }
+    },
+    {
+      "stage": "result-old30",
+      "variant": "candidate",
+      "layoutRebuilds": 0,
+      "retainedCellObservations": 84,
+      "lostMetrics": 0,
+      "CHAT": {
+        "commits": 15,
+        "commitMedianMs": 56.774,
+        "commitP95Ms": 77.03,
+        "frames": 261,
+        "totalP95Ms": 43.409,
+        "drawP95Ms": 17.273,
+        "layoutP95Ms": 0.123,
+        "syncP95Ms": 0.744
+      },
+      "LIBRARY": {
+        "commits": 15,
+        "commitMedianMs": 37.954,
+        "commitP95Ms": 55.491,
+        "frames": 209,
+        "totalP95Ms": 35.47,
+        "drawP95Ms": 13.031,
+        "layoutP95Ms": 0.116,
+        "syncP95Ms": 0.445
+      }
+    },
+    {
+      "stage": "result-final31",
+      "variant": "candidate",
+      "layoutRebuilds": 0,
+      "retainedCellObservations": 84,
+      "lostMetrics": 0,
+      "CHAT": {
+        "commits": 15,
+        "commitMedianMs": 45.203,
+        "commitP95Ms": 64.8,
+        "frames": 269,
+        "totalP95Ms": 45.878,
+        "drawP95Ms": 8.166,
+        "layoutP95Ms": 0.151,
+        "syncP95Ms": 0.918
+      },
+      "LIBRARY": {
+        "commits": 15,
+        "commitMedianMs": 38.662,
+        "commitP95Ms": 61.356,
+        "frames": 218,
+        "totalP95Ms": 36.061,
+        "drawP95Ms": 5.049,
+        "layoutP95Ms": 0.121,
+        "syncP95Ms": 0.829
+      }
+    }
+  ],
+  "fullyResolvedOnUserHardware": false,
+  "cleanup": {
+    "originalSettingsVerified": true,
+    "densityBeforeCleanup": "Physical density: 280\r\nOverride density: 480",
+    "ownedPackagesRemoved": true,
+    "onlyStoppedIndex": 2,
+    "diskPreserved": true,
+    "before": {
+      "0": {
+        "android_version": "15.0",
+        "created_timestamp": 1793811814685479,
+        "disk_size_bytes": 11360638068,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "0",
+        "info_source": "rpc",
+        "is_android_started": false,
+        "is_main": false,
+        "is_process_started": false,
+        "name": "Android Device"
+      },
+      "1": {
+        "android_version": "15.0",
+        "created_timestamp": 1793856063204935,
+        "disk_size_bytes": 7428489312,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "1",
+        "info_source": "rpc",
+        "is_android_started": false,
+        "is_main": false,
+        "is_process_started": false,
+        "name": "Monica OMK 325 Test"
+      },
+      "2": {
+        "adb_host_ip": "127.0.0.1",
+        "adb_port": 16448,
+        "android_version": "15.0",
+        "created_timestamp": 1794331605453974,
+        "disk_size_bytes": 10040459394,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "2",
+        "info_source": "rpc",
+        "is_android_started": true,
+        "is_main": false,
+        "is_process_started": true,
+        "launch_err_code": 0,
+        "launch_err_msg": "",
+        "launch_time": 7707978,
+        "main_wnd": "0D190186",
+        "name": "Monica Release Upgrade Test",
+        "pid": 24248,
+        "player_state": "start_finished",
+        "render_wnd": "000534B2",
+        "vt_enabled": true
+      }
+    },
+    "after": {
+      "0": {
+        "android_version": "15.0",
+        "created_timestamp": 1793811814685479,
+        "disk_size_bytes": 11360638068,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "0",
+        "info_source": "rpc",
+        "is_android_started": false,
+        "is_main": false,
+        "is_process_started": false,
+        "name": "Android Device"
+      },
+      "1": {
+        "android_version": "15.0",
+        "created_timestamp": 1793856063204935,
+        "disk_size_bytes": 7428489312,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "1",
+        "info_source": "rpc",
+        "is_android_started": false,
+        "is_main": false,
+        "is_process_started": false,
+        "name": "Monica OMK 325 Test"
+      },
+      "2": {
+        "android_version": "15.0",
+        "created_timestamp": 1794331605453974,
+        "disk_size_bytes": 10662264706,
+        "error_code": 0,
+        "hyperv_enabled": true,
+        "index": "2",
+        "info_source": "rpc",
+        "is_android_started": false,
+        "is_main": false,
+        "is_process_started": false,
+        "name": "Monica Release Upgrade Test"
+      }
+    },
+    "otherInstances": {
+      "0": {
+        "before": {
+          "android_version": "15.0",
+          "created_timestamp": 1793811814685479,
+          "disk_size_bytes": 11360638068,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "0",
+          "info_source": "rpc",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Android Device"
+        },
+        "after": {
+          "android_version": "15.0",
+          "created_timestamp": 1793811814685479,
+          "disk_size_bytes": 11360638068,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "0",
+          "info_source": "rpc",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Android Device"
+        }
+      },
+      "1": {
+        "before": {
+          "android_version": "15.0",
+          "created_timestamp": 1793856063204935,
+          "disk_size_bytes": 7428489312,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "1",
+          "info_source": "rpc",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Monica OMK 325 Test"
+        },
+        "after": {
+          "android_version": "15.0",
+          "created_timestamp": 1793856063204935,
+          "disk_size_bytes": 7428489312,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "1",
+          "info_source": "rpc",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Monica OMK 325 Test"
+        }
+      }
+    },
+    "records": [
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "wm",
+          "density"
+        ],
+        "exit": 0,
+        "output": "Physical density: 280\r\nOverride density: 480\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "wm",
+          "density",
+          "reset"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "wm",
+          "density"
+        ],
+        "exit": 0,
+        "output": "Physical density: 280\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "settings",
+          "get",
+          "secure",
+          "default_input_method"
+        ],
+        "exit": 0,
+        "output": "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "settings",
+          "get",
+          "global",
+          "animator_duration_scale"
+        ],
+        "exit": 0,
+        "output": "0.5\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "settings",
+          "get",
+          "global",
+          "transition_animation_scale"
+        ],
+        "exit": 0,
+        "output": "0.5\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "settings",
+          "get",
+          "global",
+          "window_animation_scale"
+        ],
+        "exit": 0,
+        "output": "0.5\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "uninstall",
+          "takagi.ru.monica.steamapp.chatentry.test"
+        ],
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "uninstall",
+          "takagi.ru.monica.steamapp.chatentry"
+        ],
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "args": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "takagi.ru.monica"
+        ],
+        "exit": 0,
+        "output": "package:takagi.ru.monica.bwsync326fd\r\npackage:takagi.ru.monica\r\n"
+      },
+      {
+        "args": [
+          "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+          "info",
+          "-v",
+          "all"
+        ],
+        "exit": 0,
+        "output": "{\n  \"0\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793811814685479,\n    \"disk_size_bytes\": 11360638068,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"0\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Android Device\"\n  },\n  \"1\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793856063204935,\n    \"disk_size_bytes\": 7428489312,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"1\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica OMK 325 Test\"\n  },\n  \"2\": {\n    \"adb_host_ip\": \"127.0.0.1\",\n    \"adb_port\": 16448,\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1794331605453974,\n    \"disk_size_bytes\": 10040459394,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"2\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": true,\n    \"is_main\": false,\n    \"is_process_started\": true,\n    \"launch_err_code\": 0,\n    \"launch_err_msg\": \"\",\n    \"launch_time\": 7707978,\n    \"main_wnd\": \"0D190186\",\n    \"name\": \"Monica Release Upgrade Test\",\n    \"pid\": 24248,\n    \"player_state\": \"start_finished\",\n    \"render_wnd\": \"000534B2\",\n    \"vt_enabled\": true\n  }\n}\n"
+      },
+      {
+        "args": [
+          "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+          "control",
+          "-v",
+          "2",
+          "shutdown"
+        ],
+        "exit": 0,
+        "output": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}\n"
+      },
+      {
+        "args": [
+          "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+          "info",
+          "-v",
+          "all"
+        ],
+        "exit": 0,
+        "output": "{\n  \"0\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793811814685479,\n    \"disk_size_bytes\": 11360638068,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"0\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Android Device\"\n  },\n  \"1\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793856063204935,\n    \"disk_size_bytes\": 7428489312,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"1\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica OMK 325 Test\"\n  },\n  \"2\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1794331605453974,\n    \"disk_size_bytes\": 10662264706,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"2\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica Release Upgrade Test\"\n  }\n}\n"
+      }
+    ]
+  },
+  "reportSha256": "6069967f8e8003b307a048354c04fb1b52c59076d5a84c5f90b4ef016402759b",
+  "evidenceSha256": {
+    "apk-audit.json": "610fbd14dfa7d57fb4df5921d349f3be299a46c1ae7902a5deafaff31ac121d7",
+    "apk-fixture-badging.txt": "f84fee9df55ec3d6a8ae91d2d3786a5d3e9cf9cb6c3701ed5fddabef61b12f26",
+    "apk-productionR8-badging.txt": "d4770e937ce7338abb239f8cf0c525327f7338d137afe7eaa0087a8df10fb9a2",
+    "build-fixture-final09.json": "2e29ee1efae5d3f556a58f1da2b3312ec8266a41228bb4d8fae5b9c46c4ae290",
+    "build-production01.json": "88f59024715b5830839176edd4d3b0e4ec682212776885966dc6857000b82d41",
+    "build-production01.txt": "cb8e6d7aa70c26c13904c31939b70233f7ac0ba8c1f9d27162e0250d998253b2",
+    "cleanup-first-failed.json": "f5db2d3baa67caff185c9eac9142583d536f3ea08820aa4171e20f76cbad15d0",
+    "cleanup.json": "1164a05c6ad1ff073e119278559e6780ae097e98bad963cd1be410f904954094",
+    "comparison-inputs.json": "fba510cb2f919e701d54b338da55536c3d8275b6754d4587bc71a07064df901e",
+    "device-environment.json": "79178a109376a3ee6e244ee7ea04826721ae95c1a08af7061f69060d538cf823",
+    "device-final27.json": "229b18792fb6a6d3794b2487aa6f693da31cc7448881bb1215e200b0fe5558b0",
+    "device-final27.txt": "4d2047e9b57a7f78cfc69177c529d3848adb247336eb70a0938ee6cf3de2156d",
+    "device-final28.json": "ae9df097d70fd97c8976b1581d6779bfc52657f0b81c3faec27dca1d126f1621",
+    "device-final28.txt": "e274cb2e248af6d60a0e61a69281a49aa6d23cc7f4a0c6a6b84aa32e174125fd",
+    "device-final31.json": "49af1bda9df7a5ad921f64c69eb2c26e9f2ac5769ad21bdcae7057557cf40a1e",
+    "device-final31.txt": "015bf447c851497e7cb1398526ff085ef4dc9818e54e17bd61ca355e844253e2",
+    "device-install-final26.json": "c38870a1a69a02d24900899f4fb55fac4b1e23f615dd06d1c5f7977c376a9787",
+    "device-install-final26.txt": "a45ba3c14a46ced1cca54f511a060972c518e8e85940fc39dbf8f5ce4952d732",
+    "device-install-originalfocus25.txt": "8596ed089773d9b6cb4bc91bde2690ab25c86da0f639379c50aab89c1ae42fcb",
+    "device-old29.json": "a7a44632d798f0169c6a5983c2e06cb396d44c589e0391e592ca82d4e696a191",
+    "device-old29.txt": "9874f9b9912d58168f97948b14a5bbc1087cfa46e49aee84cf4cd67331eb1f23",
+    "device-old30.json": "a005824a12de7c17ab20e7dfdff33ba59775cd54fca18fc40ec028f0e208d135",
+    "device-old30.txt": "8d3b08efff08ab12269fdc2817675380f105227ea5bbb94e10e72e62bf39ca21",
+    "device-trace09.txt": "1e1fabce4600f5cdf77e2407c51768c68b80b91260d909885905194335e0ca70",
+    "device-visual32.json": "cba70ad384d337bdb6c0ea054a68a468459c2721f2cdccf1047472e65138dc95",
+    "device-visual32.txt": "9b6ebd18e730151c081c2765c49c22165b9f25263f7dd97b98ed369ac5857704",
+    "directional-summary.json": "7ee7f308cb8ea607cacc172eeabbee51bb98fdef521de8805bc79584c3d9ef57",
+    "result-final27.json": "b6cb21a2bfe11f0097ea51ca0c7c9bbc938851b8a4c33055b93f6065f759b24b",
+    "result-final28.json": "49a0abf259a9d58113fd9f4cdd268b8d6f84e94c7d6f9937b8bb204bd8a4e3cc",
+    "result-final31.json": "2578de7f53712047e1c3672b50669c173cc8bfb9fa7c7ae6d9f3bf11845a56ad",
+    "result-old29.json": "91b50754e73611264e54e0dc90752b2127ba4e939db7691aa9c99ebe30ea1b22",
+    "result-old30.json": "117ea36e6160a086759451f1a18fc0dabd280d643fdaf6a774de2f9ea031cc8c",
+    "result-visual32.json": "f13d9057d9fd7942c04fbe466a02669dbc60168ad550c2ee8f6c0b056355f454",
+    "sched-atrace20.txt.json": "4c15303719547ad714a980a5633ba067379a5b20fed644decef719c8e49b3a43",
+    "TEST-takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest.xml": "a1e8470cdad55889b9dd7f11e5dbe6678c7e1fa79b325c90c28ac5654798d97d",
+    "TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest.xml": "0eb0992164f9c82e5e24b3d86fc05913f6771382b18078599ea49b51514efb30",
+    "TEST-takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest.xml": "8489ce5969dab88949e1dd568c9bd553987aa6a1cba0de54f787afcfcf58279f"
+  }
+}

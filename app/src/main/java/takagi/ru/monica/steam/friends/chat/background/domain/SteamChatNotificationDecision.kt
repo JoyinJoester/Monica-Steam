@@ -141,7 +141,8 @@ object SteamChatNotificationPolicy {
             is SteamChatRichContent.OfficialMessage -> SteamChatNotificationPreview(
                 kind = SteamChatNotificationPreviewKind.STEAM_EVENT,
                 text = compactText(
-                    content.message.description.ifBlank { content.message.title }
+                    content.message.caption.ifBlank { content.message.displayName }
+                        .ifBlank { content.message.description }.ifBlank { content.message.url.orEmpty() }
                 )
             )
         }

@@ -1,0 +1,6 @@
+{
+  "version": "1.0.310",
+  "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26110218-05.APK",
+  "elapsed": 93.77149360021576,
+  "classes": "takagi.ru.monica.steam.chat.TelegramChatUiTest,takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest,takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest,takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest,takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest"
+}

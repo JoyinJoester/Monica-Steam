@@ -1,0 +1,12 @@
+{
+  "locales": [
+    "values",
+    "values-ja",
+    "values-ru",
+    "values-vi",
+    "values-zh"
+  ],
+  "keys": 36,
+  "values": 180,
+  "placeholderParity": true
+}

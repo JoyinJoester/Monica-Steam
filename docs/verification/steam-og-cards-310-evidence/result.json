@@ -1,0 +1,65 @@
+{
+  "version": "1.0.310",
+  "package": "takagi.ru.monica.steamapp.ogcards",
+  "jvm": {
+    "tests": 113,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "new_parser_jvm_methods": 12,
+  "device": {
+    "emulator": "existing MuMu",
+    "serial": "127.0.0.1:16384",
+    "api": 35,
+    "abi": "x86_64",
+    "owned_user": 15,
+    "final_passed": 22,
+    "runner_seconds": 34.223
+  },
+  "build_seconds": [
+    23,
+    75,
+    20
+  ],
+  "prior_notification_files_unchanged": 29,
+  "send_composer_and_share_sheet_unchanged": true,
+  "source_fields_preserved": true,
+  "prior_device_run": {
+    "passed": 18,
+    "failed": 4,
+    "reason": "Preview and underlying card share a title; fixture selector was scoped to preview, with no production change"
+  },
+  "images_local_only": true,
+  "limits": [
+    "Synthetic server-shaped events and cached synthetic image; no real Steam account, profile/image fetch or actual chat send",
+    "Only API35/x86_64/Debug; no new R8, OEM or physical device validation"
+  ],
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apk_delivered": false,
+  "apk_sha256": {
+    "Monica-Steam-Android-x86_64-1.0.310-26111918-02.APK": "ac6c0d86db9792685800a2d3714097af9c62709dd28b561c3687aae4073f7aa8",
+    "app-debug-androidTest.apk": "d4537a640a8685074f427b740703dd743b26b26eb06239828fbcc4bd18970b3d"
+  },
+  "cleanup": {
+    "current_user": 0,
+    "original_users_retained": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "owned_user_removed": 15,
+    "test_packages_removed": true,
+    "original_running_mumu_retained": true
+  },
+  "audit": {
+    "source_hashes_frozen": true,
+    "diff_check": true,
+    "changed_line_whitespace": true,
+    "screenshots_ignored": true,
+    "eight_og_screenshots_viewed": true
+  }
+}

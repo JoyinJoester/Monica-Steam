@@ -1,0 +1,21 @@
+{
+  "exit": 0,
+  "seconds": 27.44445650000125,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-PdailySeq=45",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-dock-page-link\\isolation.gradle",
+    "-PdockFixture=true",
+    ":app:assembleDebugAndroidTest"
+  ],
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "bab89d977761cc27d3344f06e683137f1611ee26b2d5fb7de087c1f8995487b6",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "2ab5311176cdb580c9069772fc14b999ad5f65a28e640a720533d77698d6acfe"
+  }
+}

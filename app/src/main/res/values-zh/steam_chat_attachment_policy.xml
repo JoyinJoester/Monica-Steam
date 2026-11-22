@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_attachment_file_summary">图片和视频 · 最大 30 MiB</string>
+    <string name="steam_chat_attachment_unsupported_type">Steam 聊天仅支持 JPG、JPEG、PNG、GIF、WebP、AVIF、WebM、MPG、MPEG、MP4 或 OGV 图片和视频，不能在这里发送 ZIP、PDF 等其他文件。</string>
+    <string name="steam_chat_attachment_invalid_size">请选择非空且不超过 30 MiB 的图片或视频。</string>
+    <string name="steam_chat_attachment_limited_account">Steam 受限账户无法上传附件，请先解除账户限制。</string>
+    <string name="steam_chat_attachment_session_expired">Steam 登录会话已过期，请刷新账号会话后重试。</string>
+    <string name="steam_chat_attachment_rejected">Steam 拒绝了这个附件。请检查格式和大小，或选择其他图片或视频。</string>
+    <string name="steam_chat_attachment_service_failed">Steam 附件服务未能完成上传，请稍后重试。</string>
+</resources>

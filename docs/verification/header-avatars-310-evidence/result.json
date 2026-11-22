@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "version": "1.0.310",
+  "versionCode": 18,
+  "build": "build01 succeeded",
+  "device01": "5/5 passed, runner 10.423s",
+  "device02": "1/1 passed, runner 3.306s; same main APK; test theme container corrected",
+  "jvm": "1/1 existing header integration guard passed",
+  "sourcePaths": 13,
+  "nativeScreenshotsInspected": true,
+  "limitations": [
+    "Synthetic API35 x86_64 debug emulator",
+    "Library avatar source wiring and shared component verified; no authenticated full-library end-to-end run",
+    "No live avatar network or physical OEM/R8 run"
+  ],
+  "cleanup": {
+    "taskPackagesUninstalled": true,
+    "preExistingMuMu0Preserved": true,
+    "muMuPID": 15892,
+    "currentUserDisplayFontRetained": true,
+    "strictBaselineComparisonPassed": false,
+    "externalCleanupObserved": {
+      "removedUser13": true,
+      "removedPackage": [
+        "package:takagi.ru.monica.adaptivereleasemain20261119"
+      ],
+      "evidence": "20261121-biometric-rebind-guide/cleanup.json",
+      "evidenceSHA256": "cf0ca3bdc9ad5720f97e70fb33f62a51a74b379336e676fbe6f25bce96e8ff53"
+    },
+    "note": "The strict cleanup assertion failed after both owned packages were successfully uninstalled. Read-only reconciliation matched the two differences to the concurrent biometric guide cleanup. No other user/package was modified or recreated by this task."
+  }
+}

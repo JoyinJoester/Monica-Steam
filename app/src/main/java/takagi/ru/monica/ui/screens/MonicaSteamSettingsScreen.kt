@@ -1,13 +1,14 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,6 +26,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.DragIndicator
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -47,8 +53,7 @@ import takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationSe
 import takagi.ru.monica.steam.store.hints.ui.SteamStoreHintSettingsScreen
 import takagi.ru.monica.steam.security.SteamAppLockGate
 import takagi.ru.monica.steam.security.shouldProtectSteamSensitiveSurface
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.viewmodel.SettingsViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
@@ -61,6 +66,7 @@ private enum class SteamSettingsChild {
     STEAM_FEATURES,
     NAVIGATION,
     DOCK,
+    DESIGN_STYLE,
     COLORS,
     CUSTOM_COLORS,
     MASTER_PASSWORD_SETUP,
@@ -89,7 +95,8 @@ private fun SteamSettingsChild.parent(): SteamSettingsChild? = when (this) {
     SteamSettingsChild.NOTIFICATIONS,
     SteamSettingsChild.NETWORK_OPTIMIZATION -> null
 
-    SteamSettingsChild.COLORS -> SteamSettingsChild.APPEARANCE
+    SteamSettingsChild.COLORS,
+    SteamSettingsChild.DESIGN_STYLE -> SteamSettingsChild.APPEARANCE
 
     SteamSettingsChild.DOCK -> SteamSettingsChild.NAVIGATION
     SteamSettingsChild.EXTENSIONS,
@@ -126,7 +133,7 @@ fun MonicaSteamSettingsScreen(
     fixedDockOrder: List<SteamDockTab> = SteamDockTab.FIXED_DEFAULT_ORDER,
     onFixedDockOrderChange: (List<SteamDockTab>) -> Unit = {},
     showNavigationBack: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var child by remember { mutableStateOf<SteamSettingsChild?>(null) }
     val settingsScrollState = rememberScrollState()
@@ -190,6 +197,8 @@ fun MonicaSteamSettingsScreen(
             onOpenMdbx = onOpenMdbx,
             onOpenDock = { child = SteamSettingsChild.DOCK },
             onOpenColors = { child = SteamSettingsChild.COLORS },
+            designStyle = dockStyle,
+            onOpenDesignStyle = { child = SteamSettingsChild.DESIGN_STYLE },
             onOpenMasterPasswordLocking = openMasterPasswordSettings,
             onOpenPlus = { child = SteamSettingsChild.PLUS },
             onOpenDeveloper = { child = SteamSettingsChild.DEVELOPER },
@@ -215,8 +224,7 @@ fun MonicaSteamSettingsScreen(
             horizontal = if (adaptiveLayout.useTwoPaneLayout) 16.dp else 0.dp
         ),
         transitionSpec = {
-            easyNotesScreenEnter(settings.reduceAnimations)
-                .togetherWith(easyNotesScreenExit(settings.reduceAnimations))
+            steamPageTransition(settings.reduceAnimations, forward = targetState != null)
         },
         label = "MonicaSteamSettingsNavigation"
     ) { animatedChild ->
@@ -260,9 +268,14 @@ fun MonicaSteamSettingsScreen(
                     onBack = { child = null },
                     additionalGroup = SteamSettingsAdditionalGroup.NAVIGATION
                 )
-                SteamSettingsChild.DOCK -> SteamDockOrderScreen(
+                SteamSettingsChild.DESIGN_STYLE -> SteamDesignStyleScreen(
                     style = dockStyle,
                     onStyleChange = onDockStyleChange,
+                    onNavigateBack = { child = SteamSettingsChild.APPEARANCE },
+                    modifier = Modifier.fillMaxSize()
+                )
+                SteamSettingsChild.DOCK -> SteamDockOrderScreen(
+                    style = dockStyle,
                     liquidGlassOrder = liquidGlassDockOrder,
                     onLiquidGlassOrderChange = onLiquidGlassDockOrderChange,
                     fixedOrder = fixedDockOrder,
@@ -455,14 +468,11 @@ internal fun SteamDockOrderScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     style: SteamDockStyle = SteamDockStyle.FIXED,
-    onStyleChange: (SteamDockStyle) -> Unit = {},
     liquidGlassOrder: List<SteamDockTab> = SteamDockTab.LIQUID_GLASS_DEFAULT_ORDER,
     onLiquidGlassOrderChange: (List<SteamDockTab>) -> Unit = {},
     fixedOrder: List<SteamDockTab> = SteamDockTab.FIXED_DEFAULT_ORDER,
-    onFixedOrderChange: (List<SteamDockTab>) -> Unit = {}
+    onFixedOrderChange: (List<SteamDockTab>) -> Unit = {},
 ) {
-    var selectedStyle by remember(style) { mutableStateOf(style) }
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -484,60 +494,15 @@ internal fun SteamDockOrderScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            Text(
-                text = stringResource(R.string.steam_dock_style_title),
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(start = 20.dp, top = 12.dp, end = 20.dp)
-            )
-            Text(
-                text = stringResource(R.string.steam_dock_style_description),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
-            )
-            SingleChoiceSegmentedButtonRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            ) {
-                SteamDockStyle.entries.forEachIndexed { index, candidate ->
-                    SegmentedButton(
-                        selected = selectedStyle == candidate,
-                        onClick = {
-                            selectedStyle = candidate
-                            onStyleChange(candidate)
-                        },
-                        shape = SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = SteamDockStyle.entries.size
-                        ),
-                        modifier = Modifier
-                            .weight(1f)
-                            .heightIn(min = 48.dp)
-                    ) {
-                        Text(
-                            text = stringResource(
-                                when (candidate) {
-                                    SteamDockStyle.LIQUID_GLASS ->
-                                        R.string.steam_dock_style_liquid_glass
-                                    SteamDockStyle.FIXED -> R.string.steam_dock_style_fixed
-                                }
-                            ),
-                            maxLines = 1
-                        )
-                    }
-                }
-            }
-
-            key(selectedStyle) {
+            // The style itself lives in Appearance › Design style; this page only orders it.
+            key(style) {
                 SteamDockSortableList(
-                    style = selectedStyle,
-                    order = when (selectedStyle) {
+                    style = style,
+                    order = when (style) {
                         SteamDockStyle.LIQUID_GLASS -> liquidGlassOrder
                         SteamDockStyle.FIXED -> fixedOrder
                     },
-                    onOrderChange = when (selectedStyle) {
+                    onOrderChange = when (style) {
                         SteamDockStyle.LIQUID_GLASS -> onLiquidGlassOrderChange
                         SteamDockStyle.FIXED -> onFixedOrderChange
                     },
@@ -593,15 +558,10 @@ private fun SteamDockSortableList(
     }
 
     Text(
-        text = stringResource(
-            when (style) {
-                SteamDockStyle.LIQUID_GLASS -> R.string.steam_dock_liquid_glass_order_hint
-                SteamDockStyle.FIXED -> R.string.steam_dock_fixed_order_hint
-            }
-        ),
+        text = stringResource(R.string.steam_dock_order_description),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
+        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
     )
     LazyColumn(
         state = listState,
@@ -612,13 +572,25 @@ private fun SteamDockSortableList(
             end = 16.dp,
             bottom = dockContentClearance + 16.dp
         ),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        // Monica's connected settings group: 24 dp outside, 4 dp inside, 2 dp gaps.
+        verticalArrangement = Arrangement.spacedBy(2.dp),
         userScrollEnabled = !reorderableState.isAnyItemDragging
     ) {
-        items(localOrder, key = SteamDockTab::name) { tab ->
+        itemsIndexed(localOrder, key = { _, tab -> tab.name }) { index, tab ->
             ReorderableItem(reorderableState, key = tab.name) { isDragging ->
-                val elevation = if (isDragging) 8.dp else 0.dp
-                BottomNavConfigRow(
+                val outer = 24.dp
+                val inner = 4.dp
+                val shape = if (isDragging) {
+                    RoundedCornerShape(outer)
+                } else {
+                    RoundedCornerShape(
+                        topStart = if (index == 0) outer else inner,
+                        topEnd = if (index == 0) outer else inner,
+                        bottomStart = if (index == localOrder.lastIndex) outer else inner,
+                        bottomEnd = if (index == localOrder.lastIndex) outer else inner
+                    )
+                }
+                SteamDockOrderRow(
                     icon = when (tab) {
                         SteamDockTab.TOKEN -> Icons.Default.Security
                         SteamDockTab.LIBRARY -> Icons.Default.SportsEsports
@@ -633,15 +605,62 @@ private fun SteamDockSortableList(
                         SteamDockTab.CHAT -> stringResource(R.string.steam_chat_title)
                         SteamDockTab.SETTINGS -> stringResource(R.string.settings_title)
                     },
-                    subtitle = stringResource(R.string.steam_dock_drag_hint),
-                    checked = true,
-                    switchEnabled = false,
-                    onCheckedChange = {},
-                    showSwitch = false,
+                    dragHint = stringResource(R.string.steam_dock_drag_hint),
                     dragHandleModifier = Modifier.longPressDraggableHandle(),
-                    modifier = Modifier.shadow(elevation)
+                    modifier = Modifier
+                        .shadow(if (isDragging) 8.dp else 0.dp, shape)
+                        .clip(shape)
+                        .background(
+                            if (isDragging) {
+                                MaterialTheme.colorScheme.surfaceContainerHighest
+                            } else {
+                                MaterialTheme.colorScheme.surfaceContainer
+                            }
+                        )
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun SteamDockOrderRow(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    dragHint: String,
+    dragHandleModifier: Modifier,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .padding(start = 16.dp, end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(Modifier.width(16.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.weight(1f)
+        )
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .then(dragHandleModifier),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.DragIndicator,
+                contentDescription = dragHint,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }

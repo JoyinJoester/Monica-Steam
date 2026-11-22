@@ -1,0 +1,52 @@
+[
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailChrome.kt",
+    "component": "SteamGlassSelectionRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementSetSelector.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementStatusSelector.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialUi.kt",
+    "component": "SteamListFilterRow",
+    "uses": 2
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamThreadSearch.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPicker.kt",
+    "component": "SteamGlassSelectionRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatHistorySearchScreen.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamSharedHistory.kt",
+    "component": "SteamListFilterRow",
+    "uses": 1
+  }
+]

@@ -43,6 +43,8 @@ import takagi.ru.monica.steam.quickaccess.SteamWidgetUpdater
 import takagi.ru.monica.steam.session.domain.SteamAccountSessionResolver
 import takagi.ru.monica.steam.session.domain.resolveOrKeep
 import takagi.ru.monica.steam.store.data.SteamStoreService
+import takagi.ru.monica.steam.library.collections.*
+import java.util.concurrent.atomic.AtomicBoolean
 
 data class SteamLibraryUiState(
     val accounts: List<SteamAccount> = emptyList(),
@@ -71,7 +73,9 @@ data class SteamLibraryUiState(
     val loadingAchievements: Boolean = false,
     val achievementFailure: SteamLibraryFailureReason? = null,
     val loadingRegionalPrices: Boolean = false,
-    val regionalPriceFailure: SteamLibraryFailureReason? = null
+    val regionalPriceFailure: SteamLibraryFailureReason? = null,
+    val collectionSelection: String? = null,
+    val collections: SteamCollectionsState = SteamCollectionsState()
 )
 
 class SteamLibraryViewModel internal constructor(
@@ -89,7 +93,8 @@ class SteamLibraryViewModel internal constructor(
         SteamLibraryGameContextService(),
     private val gameContextCache: SteamLibraryGameContextCache? = null,
     private val achievementSyncCoordinator: SteamAchievementSyncCoordinator? = null,
-    private val appContext: Context? = null
+    private val appContext: Context? = null,
+    private val collectionsGateway: SteamCollectionsGateway = SteamCollectionsService()
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SteamLibraryUiState())
     val uiState: StateFlow<SteamLibraryUiState> = _uiState.asStateFlow()
@@ -100,6 +105,10 @@ class SteamLibraryViewModel internal constructor(
     private var selectedAchievementSyncKey: String? = null
     private var regionalPriceLoadGeneration: Long = 0L
     private var gameContextLoadGeneration: Long = 0L
+    @Volatile private var collectionsEpoch = 0L
+    private var collectionsScopeKey: String? = null
+    private var collectionsJob: Job? = null
+    private val collectionsWriteGate = AtomicBoolean(false)
 
     init {
         achievementSyncCoordinator?.let { coordinator ->
@@ -133,6 +142,14 @@ class SteamLibraryViewModel internal constructor(
                     accountsLoading = sourceState.loading,
                     accountSourceError = sourceState.errorMessage
                 )
+                val collectionKey = selected?.let { "${sourceState.storageSource}|${it.id}|${it.steamId}" }
+                if (collectionsScopeKey != collectionKey) {
+                    collectionsScopeKey = collectionKey
+                    collectionsEpoch++
+                    collectionsJob?.cancel()
+                    _uiState.update { it.copy(collections = SteamCollectionsState(), collectionSelection = null) }
+                    if (selected != null) refreshCollections()
+                }
                 if ((sourceChanged || accountChanged) && selected != null) {
                     loadAccount(selected)
                 } else if ((sourceChanged || accountChanged) && selected == null) {
@@ -180,6 +197,7 @@ class SteamLibraryViewModel internal constructor(
     fun refreshLibrary() {
         val account = selectedAccount() ?: return
         if (_uiState.value.loadingLibrary) return
+        refreshCollections()
         val generation = ++libraryLoadGeneration
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(loadingLibrary = true, libraryFailure = null)
@@ -254,6 +272,75 @@ class SteamLibraryViewModel internal constructor(
         }
     }
 
+    internal fun selectCollection(selection: String?) {
+        val snapshot = _uiState.value.collections.snapshot
+        if (selection != null && (selection == "" && snapshot?.canIdentifyUnfiled != true ||
+            selection != "" && snapshot?.collections?.none { it.id == selection && it.editable } != false)) return
+        _uiState.update { it.copy(collectionSelection = selection) }
+    }
+
+    internal fun refreshCollections() {
+        val account = selectedAccount() ?: return
+        if (_uiState.value.collections.saving || collectionsWriteGate.get()) return
+        val epoch = ++collectionsEpoch
+        collectionsJob?.cancel()
+        _uiState.update { it.copy(collections = it.collections.copy(loading = true, saved = false)) }
+        collectionsJob = viewModelScope.launch {
+            val result = runSteamLibraryCatching { withContext(Dispatchers.IO) {
+                collectionsGateway.download(refreshAccountSession(account, false))
+            } }
+            if (epoch != collectionsEpoch) return@launch
+            _uiState.update { state -> state.copy(collections = state.collections.copy(
+                snapshot = result.getOrNull() ?: state.collections.snapshot,
+                loading = false,
+                failure = result.exceptionOrNull()?.let(::collectionsFailure)
+            )) }
+        }
+    }
+
+    internal fun changeCollection(change: SteamCollectionChange) {
+        val account = selectedAccount() ?: return
+        if (change is SteamCollectionChange.Membership) {
+            if (_uiState.value.snapshot?.allowsCollectionMembership(account.id, change.changes.keys) != true) return
+        }
+        val state = _uiState.value.collections
+        if (state.loading || state.saving || state.failure == SteamCollectionsFailure.UNKNOWN ||
+            state.snapshot == null || !collectionsWriteGate.compareAndSet(false, true)) return
+        val epoch = ++collectionsEpoch
+        collectionsJob?.cancel()
+        _uiState.update { it.copy(collections = it.collections.copy(saving = true, failure = null, saved = false)) }
+        viewModelScope.launch {
+            try {
+                val result = runSteamLibraryCatching { withContext(Dispatchers.IO) {
+                    val prepared = refreshAccountSession(account, false)
+                    collectionsGateway.save(prepared, change) { epoch == collectionsEpoch }
+                } }
+                if (epoch != collectionsEpoch) return@launch
+                _uiState.update { current -> current.copy(collections = current.collections.copy(
+                    snapshot = result.getOrNull() ?: current.collections.snapshot,
+                    saving = false, saved = result.isSuccess,
+                    failure = result.exceptionOrNull()?.let(::collectionsFailure)
+                )) }
+            } catch (cancelled: CancellationException) {
+                if (epoch == collectionsEpoch) _uiState.update { current -> current.copy(
+                    collections = current.collections.copy(saving = false, failure = SteamCollectionsFailure.UNKNOWN)) }
+                throw cancelled
+            } finally {
+                collectionsWriteGate.set(false)
+                if (epoch != collectionsEpoch) refreshCollections()
+            }
+        }
+    }
+
+    private fun collectionsFailure(error: Throwable): SteamCollectionsFailure = when {
+        error is SteamCollectionConflict -> SteamCollectionsFailure.CONFLICT
+        error is SteamCollectionUnknown -> SteamCollectionsFailure.UNKNOWN
+        error is IllegalArgumentException -> SteamCollectionsFailure.INVALID
+        error is SteamApiException && (error.httpStatusCode == 401 || error.eResult in listOf(5, 21, 27)) -> SteamCollectionsFailure.LOGIN
+        error is SteamApiException && (error.httpStatusCode == 403 || error.eResult == 15) -> SteamCollectionsFailure.UNAVAILABLE
+        else -> SteamCollectionsFailure.NETWORK
+    }
+
     fun syncAllAchievementProgress(): Boolean {
         val account = selectedAccount() ?: return false
         if (_uiState.value.loadingLibrary) return false
@@ -304,7 +391,7 @@ class SteamLibraryViewModel internal constructor(
         return snapshot.copy(games = games)
     }
 
-    fun openGame(game: SteamGame) {
+    fun openGame(game: SteamGame, loadDetails: Boolean = true) {
         val account = selectedAccount() ?: return
         regionalPriceLoadGeneration++
         gameContextLoadGeneration++
@@ -317,11 +404,12 @@ class SteamLibraryViewModel internal constructor(
             gameContextFailure = null,
             achievements = null,
             achievementsFromCache = false,
-            loadingAchievements = true,
+            loadingAchievements = loadDetails,
             achievementFailure = null,
             loadingRegionalPrices = false,
             regionalPriceFailure = null
         )
+        if (!loadDetails) return
         viewModelScope.launch {
             val cached = runSteamLibraryCatching {
                 withContext(Dispatchers.IO) {

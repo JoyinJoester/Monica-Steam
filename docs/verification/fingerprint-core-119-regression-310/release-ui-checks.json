@@ -1,0 +1,15 @@
+{
+  "initial_enabled_preference_visible": true,
+  "can_disable": true,
+  "actual_system_prompt": true,
+  "unrecognized_finger_rejected": true,
+  "cancel_keeps_disabled": true,
+  "successful_finger_enables": true,
+  "cold_start_prompt": true,
+  "cold_start_unrecognized_rejected": true,
+  "cancel_keeps_locked": true,
+  "password_fallback_enters_home": true,
+  "second_cold_start_prompt": true,
+  "fingerprint_enters_home": true,
+  "installed_release_not_debuggable": true
+}

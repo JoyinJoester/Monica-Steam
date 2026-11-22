@@ -5,7 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -19,6 +19,8 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
 
 @Composable
 internal fun BottomSheetAnimatedVisibility(
@@ -55,7 +57,7 @@ internal fun MonicaModalBottomSheet(
     showDragHandle: Boolean = true,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    ModalBottomSheet(
+    SteamGlassModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
@@ -72,7 +74,7 @@ internal fun MonicaModalBottomSheet(
             null
         },
         content = {
-            CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+            CompositionLocalProvider(LocalOverscrollFactory provides null) {
                 content()
             }
         }

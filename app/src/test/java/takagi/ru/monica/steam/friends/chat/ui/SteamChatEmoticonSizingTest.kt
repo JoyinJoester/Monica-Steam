@@ -59,8 +59,10 @@ class SteamChatEmoticonSizingTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPicker.kt"
         ).readText()
 
-        assertTrue(source.contains("GridCells.Adaptive(56.dp)"))
-        assertTrue(source.contains("Modifier.padding(1.dp)"))
+        // The picker moved onto the Telegram panel, which keeps 54dp cells and a 2dp inner
+        // padding: large enough for Steam's 64px emoticons without a second resampling pass.
+        assertTrue(source.contains("GridCells.Adaptive(54.dp)"))
+        assertTrue(source.contains("Modifier.padding(2.dp)"))
     }
 
     private fun projectFile(path: String): File {

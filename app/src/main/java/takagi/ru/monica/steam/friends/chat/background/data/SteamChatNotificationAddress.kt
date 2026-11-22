@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.friends.chat.background.data
 
 import java.security.MessageDigest
+import takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationIdentity
 
 internal data class SteamChatNotificationAddress(
     val tag: String,
@@ -8,6 +9,25 @@ internal data class SteamChatNotificationAddress(
     val groupKey: String
 )
 
+/** Full digests keep individual messages distinct even when integer IDs collide. */
+internal fun steamChatMessageNotificationAddress(
+    identity: SteamChatNotificationIdentity
+): SteamChatNotificationAddress = SteamChatNotificationAddress(
+    tag = steamChatConversationNotificationPrefix(identity.accountKey, identity.partnerSteamId) +
+        identity.stableKey,
+    id = MESSAGE_NOTIFICATION_ID_BASE,
+    groupKey = steamChatNotificationAddress(identity.accountKey, identity.partnerSteamId).groupKey
+)
+
+internal fun steamChatConversationNotificationPrefix(
+    accountKey: String,
+    partnerSteamId: String
+): String = MESSAGE_NOTIFICATION_TAG_PREFIX +
+    sha256Hex(listOf(accountKey, partnerSteamId).joinToString("\u001f")) + "_"
+
+internal const val MESSAGE_NOTIFICATION_TAG_PREFIX = "steam_chat_message_"
+
+/** Legacy conversation address, retained to clear notifications posted before upgrading. */
 internal fun steamChatNotificationAddress(
     accountKey: String,
     partnerSteamId: String

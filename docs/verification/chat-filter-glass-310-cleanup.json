@@ -1,0 +1,22 @@
+{
+  "removed": [
+    {
+      "package": "takagi.ru.monica.steamapp.chatglass.test",
+      "result": "Success"
+    },
+    {
+      "package": "takagi.ru.monica.steamapp.chatglass",
+      "result": "Success"
+    }
+  ],
+  "after": {
+    "users": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_KMP_Migration_20261108:1030}\r\n\tUserInfo{11:Monica_Harmony_Bridge_20261111:1030}\r\n\tUserInfo{12:Monica_Harmony_Return_20261112:1030}\r\n",
+    "packages": "package:com.android.providers.media.module\r\npackage:com.android.modulemetadata\r\npackage:com.android.connectivity.resources\r\npackage:com.android.server.deviceconfig.resources\r\npackage:com.google.android.gsf\r\npackage:com.android.internal.display.cutout.emulation.hole\r\npackage:com.android.location.fused\r\npackage:takagi.ru.monica.steamapp.janktest\r\npackage:com.android.vpndialogs\r\npackage:com.android.settings\r\npackage:com.android.appsearch.apk\r\npackage:takagi.ru.monica.steamapp.janktest.test\r\npackage:com.android.internal.display.cutout.emulation.tall\r\npackage:com.netease.mumu.cloner\r\npackage:com.android.internal.display.cutout.emulation.double\r\npackage:com.android.theme.font.notoserifsource\r\npackage:com.android.photopicker\r\npackage:com.mumu.store\r\npackage:com.android.ondevicepersonalization.services\r\npackage:com.android.providers.contacts\r\npackage:com.google.android.syncadapters.calendar\r\npackage:com.android.htmlviewer\r\npackage:com.android.vending\r\npackage:com.android.federatedcompute.services\r\npackage:com.google.android.syncadapters.contacts\r\npackage:com.nemu.nlp\r\npackage:com.android.cts.priv.ctsshim\r\npackage:com.google.android.contacts\r\npackage:com.android.providers.downloads\r\npackage:com.mumu.shared.sdk\r\npackage:com.android.credentialmanager\r\npackage:com.android.networkstack\r\npackage:com.android.wallpaper\r\npackage:com.google.android.play.games\r\npackage:com.android.systemui\r\npackage:com.android.wallpapercropper\r\npackage:android.ext.shared\r\npackage:com.android.networkstack.tethering\r\npackage:com.android.keychain\r\npackage:com.android.internal.systemui.navbar.gestural\r\npackage:com.android.gallery3d\r\npackage:com.android.documentsui\r\npackage:com.android.cts.ctsshim\r\npackage:com.android.bluetooth\r\npackage:com.android.settings.intelligence\r\npackage:com.android.adservices.api\r\npackage:me.weishu.kernelsu\r\npackage:com.android.webview\r\npackage:com.android.shell\r\npackage:com.android.internal.display.cutout.emulation.corner\r\npackage:com.google.android.gms\r\npackage:com.android.storagemanager\r\npackage:com.android.providers.downloads.ui\r\npackage:com.android.packageinstaller\r\npackage:com.android.intentresolver\r\npackage:com.android.certinstaller\r\npackage:android.ext.services\r\npackage:com.sohu.inputmethod.sogou.chuizi\r\npackage:app.lawnchair\r\npackage:com.android.wifi.resources\r\npackage:com.android.wifi.dialog\r\npackage:com.android.internal.systemui.navbar.threebutton\r\npackage:com.android.localtransport\r\npackage:com.android.providers.calendar\r\npackage:com.android.soundpicker\r\npackage:android\r\npackage:com.android.rkpdapp\r\npackage:com.android.providers.telephony\r\npackage:com.android.permissioncontroller\r\npackage:com.android.camera2\r\npackage:com.nemu.oaidmanager\r\npackage:com.android.hotspot2.osulogin\r\npackage:com.android.chromium\r\npackage:com.android.sdksandbox\r\npackage:com.mumu.acc\r\npackage:com.android.safetycenter.resources\r\npackage:com.android.internal.display.cutout.emulation.waterfall\r\npackage:com.android.externalstorage\r\npackage:com.android.server.telecom\r\npackage:com.android.providers.settings\r\npackage:com.android.phone\r\n",
+    "size": "Physical size: 1080x1920\r\n",
+    "density": "Physical density: 280\r\n",
+    "font": "1.0\r\n",
+    "currentUser": "0\r\n"
+  },
+  "originalUsersPackagesAndDisplayUnchanged": true,
+  "preRunningMuMuKeptRunning": true
+}

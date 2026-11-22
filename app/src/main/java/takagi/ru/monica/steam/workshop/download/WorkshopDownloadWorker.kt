@@ -23,9 +23,8 @@ import kotlin.coroutines.coroutineContext
 class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     private val store = WorkshopDownloads.get(applicationContext)
     private var label = ""
-    private var done = 0L
-    private var total = 0L
-    private var phase = "resolving"
+    @Volatile private var stageProgress = WorkshopDownloadProgress(WorkshopDownloadStage.RESOLVING)
+    private var lastProgressAt = 0L
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foreground()
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -57,26 +56,18 @@ class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : Corou
             }
             val client = WorkshopDownloadClient()
             val source = client.details(record.appId, record.itemId)
-            phase = "downloading"
-            var last = 0L
-            val files = client.download(source, staging, account) { bytes, size ->
-                done = bytes; total = size
-                val now = SystemClock.elapsedRealtime()
-                if (now - last >= 1000 || bytes == size) {
-                    setProgress(workDataOf("done" to bytes, "total" to size, "phase" to phase))
-                    setForeground(foreground()); last = now
-                }
-            }
+            val files = client.download(source, staging, account,
+                stageProgress = { publishProgress(it) }) { _, _ -> }
             coroutineContext.ensureActive()
-            phase = "saving"
-            setProgress(workDataOf("done" to done, "total" to total, "phase" to phase))
-            setForeground(foreground())
+            publishProgress(WorkshopDownloadProgress(WorkshopDownloadStage.SAVING))
             // Always create a new folder: never overwrite a user's existing files.
             val output = tree.createDirectory(".monica-${record.id}.partial") ?: throw SecurityException("Cannot create save folder")
             exportRoot = output
             record = record.copy(savedRoot = output.uri.toString())
             store.update(record)
-            exportFiles(applicationContext, staging, files, output)
+            exportFiles(applicationContext, staging, files, output) { done, total ->
+                publishProgress(WorkshopDownloadProgress(WorkshopDownloadStage.SAVING, done, total))
+            }
             coroutineContext.ensureActive()
             check(output.renameTo("Wallpaper-${record.itemId}")) { "Cannot finish save folder" }
             record = record.copy(completed = true, savedRoot = output.uri.toString(), failure = null)
@@ -94,7 +85,7 @@ class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : Corou
                     error is java.io.FileNotFoundException -> "storage"
                 error is SteamApiException && (error.httpStatusCode == 401 || error.eResult in listOf(5, 15, 65)) -> "access"
                 error is IllegalArgumentException || error is IllegalStateException -> "invalid"
-                phase == "saving" -> "storage"
+                stageProgress.stage == WorkshopDownloadStage.SAVING -> "storage"
                 else -> "network"
             }
             store.update(record.copy(failure = reason, savedRoot = null))
@@ -109,33 +100,27 @@ class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : Corou
         }
     }
 
-    private fun foreground(): ForegroundInfo {
-        val context = applicationContext
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(
-            NotificationChannel(CHANNEL, context.getString(R.string.wallpaper_downloads), NotificationManager.IMPORTANCE_LOW))
-        val percent = if (total > 0) ((done.toDouble() / total) * 100).toInt().coerceIn(0, 100) else 0
-        val notification = NotificationCompat.Builder(context, CHANNEL)
-            .setSmallIcon(R.drawable.ic_steam_chat_notification)
-            .setContentTitle(label.ifBlank { context.getString(R.string.wallpaper_downloads) })
-            .setContentText(context.getString(when (phase) {
-                "saving" -> R.string.wallpaper_saving
-                "downloading" -> R.string.wallpaper_downloading
-                else -> R.string.wallpaper_resolving
-            }))
-            .setOngoing(true).setOnlyAlertOnce(true).setSilent(true)
-            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-            .setProgress(100, percent, total <= 0 || phase == "saving")
-            .addAction(0, context.getString(R.string.workshop_cancel),
-                WorkManager.getInstance(context).createCancelPendingIntent(id))
-            .build()
-        val notificationId = 0x6b000000 or (id.hashCode() and 0x00ffffff)
-        return if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-            else ForegroundInfo(notificationId, notification)
+    private suspend fun publishProgress(next: WorkshopDownloadProgress) {
+        coroutineContext.ensureActive()
+        val changedStage = stageProgress.stage != next.stage
+        stageProgress = next
+        val now = SystemClock.elapsedRealtime()
+        if (changedStage || now - lastProgressAt >= 250 || (next.total > 0 && next.done == next.total)) {
+            setProgress(next.toData())
+            setForeground(foreground())
+            lastProgressAt = now
+        }
     }
 
+    private fun foreground(): ForegroundInfo =
+        workshopDownloadForeground(applicationContext, id, label, stageProgress)
+
     companion object {
-        private const val CHANNEL = "steam_workshop_downloads"
-        internal suspend fun exportFiles(context: Context, staging: File, files: List<File>, root: DocumentFile) {
+        internal suspend fun exportFiles(context: Context, staging: File, files: List<File>, root: DocumentFile,
+            progress: suspend (Long, Long) -> Unit = { _, _ -> }) {
+            val total = files.sumOf { it.length() }
+            var done = 0L
+            progress(done, total)
             val directories = mutableMapOf("" to root)
             for (file in files) {
                 coroutineContext.ensureActive()
@@ -163,6 +148,8 @@ class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : Corou
                             coroutineContext.ensureActive()
                             val n = input.read(buffer); if (n < 0) break
                             out.write(buffer, 0, n)
+                            done += n
+                            progress(done, total)
                         }
                     }
                 }
@@ -170,4 +157,26 @@ class WorkshopDownloadWorker(context: Context, params: WorkerParameters) : Corou
             }
         }
     }
+}
+
+private const val WORKSHOP_DOWNLOAD_CHANNEL = "steam_workshop_downloads"
+
+internal fun workshopDownloadForeground(context: Context, id: java.util.UUID, label: String,
+    progress: WorkshopDownloadProgress): ForegroundInfo {
+    context.getSystemService(NotificationManager::class.java).createNotificationChannel(
+        NotificationChannel(WORKSHOP_DOWNLOAD_CHANNEL, context.getString(R.string.wallpaper_downloads), NotificationManager.IMPORTANCE_LOW))
+    val percent = ((progress.fraction ?: 0f) * 100).toInt()
+    val notification = NotificationCompat.Builder(context, WORKSHOP_DOWNLOAD_CHANNEL)
+        .setSmallIcon(R.drawable.ic_steam_chat_notification)
+        .setContentTitle(label.ifBlank { context.getString(R.string.wallpaper_downloads) })
+        .setContentText(context.getString(progress.stage.label))
+        .setOngoing(true).setOnlyAlertOnce(true).setSilent(true)
+        .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+        .setProgress(100, percent, progress.fraction == null)
+        .addAction(0, context.getString(R.string.workshop_cancel),
+            WorkManager.getInstance(context).createCancelPendingIntent(id))
+        .build()
+    val notificationId = 0x6b000000 or (id.hashCode() and 0x00ffffff)
+    return if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        else ForegroundInfo(notificationId, notification)
 }

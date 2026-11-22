@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_history_all">すべて</string>
+    <string name="steam_history_text">テキスト</string>
+    <string name="steam_history_media">メディア</string>
+    <string name="steam_history_files">ファイル</string>
+    <string name="steam_history_links">リンク</string>
+    <string name="steam_history_invites">招待</string>
+    <string name="steam_history_stickers">ステッカー</string>
+    <string name="steam_history_any_time">全期間</string>
+    <string name="steam_history_today">今日</string>
+    <string name="steam_history_last_week">過去7日間</string>
+    <string name="steam_history_last_month">過去30日間</string>
+    <string name="steam_thread_search">メッセージを検索</string>
+    <string name="steam_thread_search_filters">検索フィルター</string>
+    <string name="steam_thread_all_senders">すべての送信者</string>
+    <string name="steam_thread_older_match">前の一致</string>
+    <string name="steam_thread_newer_match">次の一致</string>
+    <string name="steam_thread_no_matches">一致するメッセージはありません</string>
+    <string name="steam_thread_results_list">結果を表示</string>
+    <string name="steam_thread_shared_content">チャット内容</string>
+    <string name="steam_thread_no_shared_content">チャット内容はまだありません</string>
+    <string name="steam_chat_content_image">画像</string>
+    <string name="steam_chat_content_video">動画</string>
+    <string name="steam_chat_content_spoiler">ネタバレ</string>
+    <string name="steam_thread_open_shared_message">メッセージを開く: %1$s</string>
+</resources>

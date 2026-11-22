@@ -1,0 +1,22 @@
+{
+  "isolated": {
+    "sha256": "d207c5ca72397079a16d177dc0c4632a7be009aea62f8614e7999d0dcbb4cbaa",
+    "bytes": 89731451,
+    "packageLine": "package: name='takagi.ru.monica.steamapp.janktest' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+    "debuggable": true,
+    "internet": false,
+    "nativeCode": "native-code: 'x86_64'"
+  },
+  "productionR8": {
+    "sha256": "13ff2a7207fe6fda18b26b9584fb6cd9efc81b7aa0fbec884db7012151668628",
+    "bytes": 33230219,
+    "packageLine": "package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+    "debuggable": false,
+    "internet": true,
+    "nativeCode": "native-code: 'x86_64'"
+  },
+  "mapping": {
+    "bytes": 219778899,
+    "sha256": "5596cfa94a0f12c7be1efe2e8f8170ae64069230fec813081c9e2e3f8e89fbf1"
+  }
+}

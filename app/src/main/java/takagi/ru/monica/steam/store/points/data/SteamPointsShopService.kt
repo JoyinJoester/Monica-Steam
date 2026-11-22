@@ -17,12 +17,13 @@ internal class SteamPointsShopService(
         category: SteamPointsShopCategory,
         cursor: String? = null,
         language: String = "schinese",
-        count: Int = 24
+        count: Int = 24,
+        appId: Int? = null
     ): SteamPointsShopPage = parseSteamPointsShopPage(
         response = api.callProtobuf(
             iface = "ILoyaltyRewardsService",
             method = "BatchedQueryRewardItems",
-            request = buildSteamPointsShopQuery(category, language, count, cursor),
+            request = buildSteamPointsShopQuery(category, language, count, cursor, appId),
             useGet = true
         ),
         category = category

@@ -1,0 +1,53 @@
+{
+  "20261119-steam-message-only-notifications": {
+    "same": [
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/SteamChatBackground.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationPublisher.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/ui/SteamChatBackgroundSettingsContent.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/SteamChatBackgroundIntegrationGuardTest.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/SteamChatNotificationPresentationGuardTest.kt",
+      "app/src/androidTest/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatMessageNotificationsTest.kt",
+      "app/src/main/AndroidManifest.xml",
+      "app/src/main/java/takagi/ru/monica/MonicaSteamApplication.kt",
+      "app/src/main/java/takagi/ru/monica/steam/notifications/settings/ui/SteamNotificationSettingsScreen.kt",
+      "app/src/main/res/values/strings.xml",
+      "app/src/main/res/values-zh/strings.xml",
+      "app/src/main/res/values-ja/strings.xml",
+      "app/src/main/res/values-ru/strings.xml",
+      "app/src/main/res/values-vi/strings.xml",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundPreferences.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAccountActivator.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAddress.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationContract.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationHistory.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatBackgroundSettings.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecision.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationRequest.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAddressTest.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationHistoryTest.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecisionTest.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationMonitor.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationRuntime.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationUpgradeReceiver.kt",
+      "app/src/androidTest/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatDisabledMessageChannelTest.kt"
+    ],
+    "changed": []
+  },
+  "20261119-steam-og-cards": {
+    "same": [
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatCardLinks.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecision.kt",
+      "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatOpenGraphCardParser.kt",
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatOpenGraphCardParserTest.kt"
+    ],
+    "changed": [
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModels.kt",
+      "README.md",
+      "README_EN.md",
+      "RELEASE_NOTES.md"
+    ]
+  }
+}

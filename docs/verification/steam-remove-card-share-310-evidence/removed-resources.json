@@ -1,0 +1,67 @@
+{
+  "values": [
+    "steam_card_add_draft",
+    "steam_card_chat_actions",
+    "steam_card_draft_hint",
+    "steam_card_invalid_link",
+    "steam_card_link_label",
+    "steam_card_my_broadcast",
+    "steam_card_my_inventory",
+    "steam_card_my_profile",
+    "steam_card_remove_draft",
+    "steam_card_share",
+    "steam_card_share_hint"
+  ],
+  "values-zh": [
+    "steam_card_add_draft",
+    "steam_card_chat_actions",
+    "steam_card_draft_hint",
+    "steam_card_invalid_link",
+    "steam_card_link_label",
+    "steam_card_my_broadcast",
+    "steam_card_my_inventory",
+    "steam_card_my_profile",
+    "steam_card_remove_draft",
+    "steam_card_share",
+    "steam_card_share_hint"
+  ],
+  "values-ru": [
+    "steam_card_add_draft",
+    "steam_card_chat_actions",
+    "steam_card_draft_hint",
+    "steam_card_invalid_link",
+    "steam_card_link_label",
+    "steam_card_my_broadcast",
+    "steam_card_my_inventory",
+    "steam_card_my_profile",
+    "steam_card_remove_draft",
+    "steam_card_share",
+    "steam_card_share_hint"
+  ],
+  "values-ja": [
+    "steam_card_add_draft",
+    "steam_card_chat_actions",
+    "steam_card_draft_hint",
+    "steam_card_invalid_link",
+    "steam_card_link_label",
+    "steam_card_my_broadcast",
+    "steam_card_my_inventory",
+    "steam_card_my_profile",
+    "steam_card_remove_draft",
+    "steam_card_share",
+    "steam_card_share_hint"
+  ],
+  "values-vi": [
+    "steam_card_add_draft",
+    "steam_card_chat_actions",
+    "steam_card_draft_hint",
+    "steam_card_invalid_link",
+    "steam_card_link_label",
+    "steam_card_my_broadcast",
+    "steam_card_my_inventory",
+    "steam_card_my_profile",
+    "steam_card_remove_draft",
+    "steam_card_share",
+    "steam_card_share_hint"
+  ]
+}

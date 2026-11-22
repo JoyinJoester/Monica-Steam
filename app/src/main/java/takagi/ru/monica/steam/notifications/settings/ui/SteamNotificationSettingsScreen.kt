@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.notifications.settings.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -28,12 +30,10 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -51,7 +51,7 @@ import takagi.ru.monica.steam.alerts.data.SteamAlertPreferences
 import takagi.ru.monica.steam.alerts.data.SteamAlertScheduler
 import takagi.ru.monica.steam.alerts.domain.SteamAlertSettings
 import takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundPreferences
-import takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundServiceController
+import takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationRuntime
 import takagi.ru.monica.steam.friends.chat.background.domain.SteamChatBackgroundSettings
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.ui.screens.SettingsItem
@@ -89,11 +89,11 @@ fun SteamNotificationSettingsScreen(
         scope.launch {
             chatPreferences.setEnabled(enabled)
             if (enabled) {
-                if (!SteamChatBackgroundServiceController.start(context)) {
+                if (!SteamChatNotificationRuntime.start(context)) {
                     chatPreferences.setEnabled(false)
                     Toast.makeText(context, R.string.steam_chat_background_start_failed, Toast.LENGTH_LONG).show()
                 }
-            } else SteamChatBackgroundServiceController.stop(context)
+            } else SteamChatNotificationRuntime.stop(context)
         }
     }
 

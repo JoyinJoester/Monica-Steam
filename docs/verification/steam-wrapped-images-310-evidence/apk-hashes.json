@@ -1,0 +1,12 @@
+{
+  "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26111918-05.APK": {
+    "sha256": "db1cdc611155986dda627aa19be6a6688d9cea0d5c06a389c6a2d4c170451943",
+    "installed_sha256": "db1cdc611155986dda627aa19be6a6688d9cea0d5c06a389c6a2d4c170451943",
+    "size": 87529816
+  },
+  "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": {
+    "sha256": "439e3b2ff12cfbf1c26c3db1e8f82de72d1a5423c8054a46e8e13de7d40abb22",
+    "installed_sha256": "439e3b2ff12cfbf1c26c3db1e8f82de72d1a5423c8054a46e8e13de7d40abb22",
+    "size": 2563690
+  }
+}

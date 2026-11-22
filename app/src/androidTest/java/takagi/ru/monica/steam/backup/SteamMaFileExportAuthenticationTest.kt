@@ -1,7 +1,7 @@
 package takagi.ru.monica.steam.backup
 
 import android.net.Uri
-import androidx.activity.ComponentActivity
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
 import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.ActivityResultRegistryOwner
@@ -42,7 +42,7 @@ import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SettingsViewModel
 
 class SteamMaFileExportAuthenticationTest {
-    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
     private lateinit var security: SecurityManager
     private lateinit var destination: File
@@ -59,7 +59,7 @@ class SteamMaFileExportAuthenticationTest {
     }
 
     @Before fun prepare() = runBlocking {
-        check(context.packageName.endsWith(".recoverytest"))
+        check(context.packageName in setOf("takagi.ru.monica.steam.recoverytest", "takagi.ru.monica.steamapp.toolchainpilot"))
         security = SecurityManager(context)
         security.clearSecurityData()
         SessionManager.markLocked()

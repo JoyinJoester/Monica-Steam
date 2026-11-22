@@ -6,8 +6,25 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionOnScreen
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.window.DialogWindowProvider
+import takagi.ru.monica.ui.LocalReduceAnimations
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassHost
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -66,6 +83,33 @@ internal fun SteamFullscreenImageViewer(
     ) { images.size }
     var downloading by remember { mutableStateOf(false) }
     var pendingPermissionIndex by remember { mutableStateOf<Int?>(null) }
+    val root = LocalView.current.rootView
+    val origin = remember(images, initialIndex) { touchedSteamImageOrigin(root, images[initialIndex.coerceIn(images.indices)]) }
+    DisposableEffect(origin) {
+        origin?.anchor?.hidden = true
+        onDispose { origin?.anchor?.hidden = false }
+    }
+    val reduced = LocalReduceAnimations.current
+    val progress = remember { Animatable(0f) }
+    var closing by remember { mutableStateOf(false) }
+    var returning by remember { mutableStateOf<SteamImageOrigin?>(null) }
+    val zoomedPages = remember { mutableStateMapOf<Int, Boolean>() }
+    var screenOffset by remember { mutableStateOf(Offset.Zero) }
+    val dismiss = {
+        if (!closing) {
+            returning = origin?.anchor?.origin()?.takeIf {
+                pagerState.currentPage == initialIndex && zoomedPages[pagerState.currentPage] != true
+            }
+            closing = true
+        }
+    }
+    LaunchedEffect(closing, reduced) {
+        if (closing) {
+            if (!reduced) progress.animateTo(0f, tween(220, easing = FastOutSlowInEasing))
+            onDismiss()
+        } else if (reduced) progress.snapTo(1f)
+        else progress.animateTo(1f, tween(260, easing = FastOutSlowInEasing))
+    }
 
     val startDownload: (Int) -> Unit = { requestedIndex ->
         if (!downloading) {
@@ -116,19 +160,28 @@ internal fun SteamFullscreenImageViewer(
     }
 
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = dismiss,
         properties = DialogProperties(
-            dismissOnBackPress = true,
+            dismissOnBackPress = false,
             dismissOnClickOutside = false,
             usePlatformDefaultWidth = false,
             decorFitsSystemWindows = false
         )
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black)
-        ) {
+        val dialog = LocalView.current.parent as? DialogWindowProvider
+        SideEffect { dialog?.window?.setDimAmount(0f); dialog?.window?.setWindowAnimations(0) }
+        BackHandler(onBack = dismiss)
+        val flight = if (closing) returning else origin
+        Box(Modifier.fillMaxSize().testTag("steam-image-viewer")
+            .onGloballyPositioned { screenOffset = it.positionOnScreen() }
+            .drawBehind { drawRect(Color.Black, alpha = progress.value) }) {
+        SteamGlassHost(
+            modifier = Modifier.fillMaxSize().graphicsLayer {
+                alpha = if (flight != null && progress.value < 1f) 0f else progress.value
+                if (flight == null) { scaleX = .96f + .04f * progress.value; scaleY = scaleX }
+            },
+            backdropColor = Color.Transparent,
+            content = {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
@@ -137,17 +190,19 @@ internal fun SteamFullscreenImageViewer(
                 SteamFullscreenImagePage(
                     url = images[page],
                     contentDescription = stringResource(strings.imageDescription, page + 1),
-                    loadFailedText = stringResource(strings.loadFailed)
+                    loadFailedText = stringResource(strings.loadFailed),
+                    onZoomChanged = { zoomedPages[page] = it }
                 )
             }
 
+            }, overlay = {
             ImageViewerTopControls(
                 title = title,
                 downloading = downloading,
                 closeDescription = stringResource(strings.close),
                 downloadDescription = stringResource(strings.download),
                 downloadingDescription = stringResource(strings.downloading),
-                onDismiss = onDismiss,
+                onDismiss = dismiss,
                 onDownload = {
                     val currentIndex = pagerState.currentPage
                     if (downloader.requiresLegacyStoragePermission()) {
@@ -190,6 +245,10 @@ internal fun SteamFullscreenImageViewer(
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }
+        })
+        if (flight != null && progress.value < 1f && !reduced) {
+            SteamImageFlight(flight, { progress.value }, { screenOffset })
+        }
         }
     }
 }

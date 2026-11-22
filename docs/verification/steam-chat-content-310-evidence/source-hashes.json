@@ -1,0 +1,18 @@
+{
+  "RELEASE_NOTES.md": "4e0971d04f9cb903283c24cbe5d5c55e4d95a7ba8000df806d463b25aa00ad38",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatChromeUiTest.kt": "5b48053a3f2dbd7a5977014117191f8d96b8f5ffdee5b6fd8c34a4d9be40946a",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatContentUiTest.kt": "91d88fbe34f6a0363831147766c8d3779e6ed0f58b0194f0f54700e9036c5758",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/domain/SteamChatHistoryCategories.kt": "ab97158fb2e42f80526ca59d79b84fd078a8928996c5b0c3e134467fbdb808fe",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatContentRow.kt": "0647c08c4a3052279cf2c64549d48fdf51d5bbbae2a162a001fcf233ab9f4aba",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatHistorySearchRows.kt": "64ce12acaa1fdfa275a2943c2aeb66a728c8de3bc4f5e4a573538fe93240fa43",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoScreen.kt": "2bc6a9451dc3ec6808265641a9a97a2cf4870cd1aefe9ed982667f5e74d9824a",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamSharedHistory.kt": "676a001df2273f88ab2a152c10ad3ca92bb36a47853857ba30edf2c0ac0f9d02",
+  "app/src/main/res/values-ja/steam_thread_search.xml": "e3209eb97cc5fec65cc7de9629c597a23c94a593b0f847a8cf717ca8e5dd3c97",
+  "app/src/main/res/values-ru/steam_thread_search.xml": "46acb0152814b383c3dd1b029e4621c530b539dd289e005626b77ce707a06579",
+  "app/src/main/res/values-vi/steam_thread_search.xml": "0eba6a6daa1bebc91c247d1b0ef9f61fa53cb7e8237c8ce5bc2d5535a5a61320",
+  "app/src/main/res/values-zh/steam_thread_search.xml": "0f466b4df5ad41a18d59dfc71c07308cc008c20888ad59d1c103166ced2769f1",
+  "app/src/main/res/values/steam_thread_search.xml": "30756d649a30216e27a3403c6f3a528463cdd5cdc8ae59ffb3c952ee962856c2",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/info/domain/SteamChatContentMetadataTest.kt": "8a1f45ac48cae290652239e4fdd538a6cc4efab207b13afd9cc63d8879da9a6c",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoIntegrationGuardTest.kt": "226cdbb3a30985229f629f6f83e53604c65c56f630aad895ad3bd4e6cf4cbc10",
+  "docs/releases/Monica-Steam-Unreleased.md": "1ce92270e15ff43017794442a6a388f888805184acfc99f7ea2f546799e70330"
+}

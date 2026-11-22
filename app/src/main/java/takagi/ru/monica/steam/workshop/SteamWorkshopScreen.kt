@@ -1,5 +1,15 @@
 package takagi.ru.monica.steam.workshop
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamPopupBackdrop
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamGlassBackdrop
+import takagi.ru.monica.steam.store.ui.SteamDraggableDetailToolbar
+import takagi.ru.monica.steam.store.ui.SteamGameSectionHeader
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
@@ -65,7 +75,9 @@ import takagi.ru.monica.steam.workshop.download.*
 internal fun SteamWorkshopScreen(
     appId: Int, gameName: String, account: SteamAccount?, source: SteamStorageSource,
     onBack: () -> Unit, modifier: Modifier = Modifier,
-    initialShareCode: String? = null, onInitialShareConsumed: () -> Unit = {}
+    initialShareCode: String? = null, onInitialShareConsumed: () -> Unit = {},
+    gameHeader: SteamGameSectionHeader? = null,
+    gateway: SteamWorkshopGateway? = null
 ) {
     var activeAppId by rememberSaveable(appId) { mutableIntStateOf(appId) }
     var shareCode by rememberSaveable(appId) { mutableStateOf<String?>(null) }
@@ -105,17 +117,18 @@ internal fun SteamWorkshopScreen(
         account?.let { repository.sessionHandleForSource(it, source) }
     }
     val scopeKey = "workshop_${handle?.stableKey ?: "guest_${source}_${account?.steamId}"}_$activeAppId"
-    val factory = remember(scopeKey) {
+    val workshopService = gateway ?: remember { SteamWorkshopService() }
+    val factory = remember(scopeKey, workshopService) {
         object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = SteamWorkshopViewModel(
-                activeAppId, account, SteamWorkshopService(), handle?.let { captured ->
+                activeAppId, account, workshopService, handle?.let { captured ->
                     SteamAccountSessionResolver { current, force ->
                         repository.sessionManager.resolve(captured.copy(account = current), force).account
                     }
                 }, bulkController = handle?.let {
                     SteamWorkshopBulkTasks.get(context.applicationContext).controller(it, activeAppId, title)
-                } ?: InMemoryWorkshopBulkController(activeAppId, null, SteamWorkshopService()),
+                } ?: InMemoryWorkshopBulkController(activeAppId, null, workshopService),
                 presetRepository = SteamWorkshopPresets.get(context.applicationContext)
             ) as T
         }
@@ -151,7 +164,11 @@ internal fun SteamWorkshopScreen(
             shareCode = null
         }
     }
-    LaunchedEffect(state.query) { listState.scrollToItem(0) }
+    var previousQuery by rememberSaveable(scopeKey) { mutableStateOf(state.query.toString()) }
+    LaunchedEffect(state.query) {
+        if (previousQuery != state.query.toString()) listState.scrollToItem(0)
+        previousQuery = state.query.toString()
+    }
     val back = {
         when {
             showDownloads -> showDownloads = false
@@ -180,30 +197,11 @@ internal fun SteamWorkshopScreen(
     } }
     BackHandler(onBack = back)
 
-    if (showDownloads) WorkshopDownloadsScreen(downloadRows, { showDownloads = false }, downloads::cancel,
-        { record ->
-            retryDownload = record
-            downloadItem = WorkshopItem(record.itemId, record.appId, record.title, preview = record.preview)
-        }, modifier)
-    else Box(modifier.fillMaxSize()) {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(), contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            topBar = { Column {
-                TopAppBar(
-                    modifier = Modifier.steamWindowTopPadding(), windowInsets = WindowInsets(0, 0, 0, 0),
-                    title = { Column {
-                        Text(if (activeAppId == WALLPAPER_ENGINE_APP_ID && state.selected == null) "Wallpaper Engine" else stringResource(when {
-                            state.selected != null -> R.string.workshop_detail_title
-                            state.imported != null -> R.string.workshop_import_title
-                            else -> R.string.workshop_title
-                        }), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        if (activeAppId != WALLPAPER_ENGINE_APP_ID || state.selected != null)
-                            Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    } },
-                    navigationIcon = { IconButton(onClick = back) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.workshop_back))
-                    } },
-                    actions = {
+    val density = LocalDensity.current
+    var headerHeight by remember { mutableStateOf(128.dp) }
+    var bodyBackdrop by remember { mutableStateOf<takagi.ru.monica.steam.navigation.liquidglass.render.SteamLiquidGlassBackdrop?>(null) }
+    val workshopActions: @Composable () -> Unit = {
+
                         IconButton(onClick = { showDownloads = true }) {
                             Icon(Icons.Default.Download, stringResource(R.string.wallpaper_downloads))
                         }
@@ -245,7 +243,33 @@ internal fun SteamWorkshopScreen(
                                     onClick = { menu = false; refresh() })
                             }
                         }
-                    }
+
+    }
+    if (showDownloads) WorkshopDownloadsScreen(downloadRows, { showDownloads = false }, downloads::cancel,
+        { record ->
+            retryDownload = record
+            downloadItem = WorkshopItem(record.itemId, record.appId, record.title, preview = record.preview)
+        }, modifier)
+    else Box(modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(), contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            topBar = { Column(Modifier.onSizeChanged { headerHeight = with(density) { it.height.toDp() } }) {
+                if (gameHeader != null && rootPage) gameHeader(back)
+                else TopAppBar(
+                    modifier = Modifier.steamWindowTopPadding(), windowInsets = WindowInsets(0, 0, 0, 0),
+                    title = { Column {
+                        Text(if (activeAppId == WALLPAPER_ENGINE_APP_ID && state.selected == null) "Wallpaper Engine" else stringResource(when {
+                            state.selected != null -> R.string.workshop_detail_title
+                            state.imported != null -> R.string.workshop_import_title
+                            else -> R.string.workshop_title
+                        }), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        if (activeAppId != WALLPAPER_ENGINE_APP_ID || state.selected != null)
+                            Text(title, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    } },
+                    navigationIcon = { IconButton(onClick = back) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.workshop_back))
+                    } },
+                    actions = { workshopActions() }
                 )
                 if (!state.bulkDialogVisible) state.bulk?.let { WorkshopBulkBanner(it, model::showBulk) }
                 if (rootPage) PrimaryTabRow(selectedTabIndex = selectedTab) {
@@ -265,6 +289,8 @@ internal fun SteamWorkshopScreen(
                 }
             } }
         ) { padding ->
+            val source = LocalSteamPopupBackdrop.current
+            SideEffect { bodyBackdrop = source }
             if (state.selected != null) {
                 key(scopeKey, state.selected?.id) {
                     SteamWorkshopDetail(state, model::subscribe, { model.open(requireNotNull(state.selected)) },
@@ -288,26 +314,18 @@ internal fun SteamWorkshopScreen(
                     replace = { model.presets.fromSubscriptions(it) }, delete = model.presets::delete,
                     retry = model.presets::reload, modifier = Modifier.padding(padding))
             } else Column(Modifier.padding(padding).fillMaxSize()) {
-                OutlinedTextField(
-                    value = state.query.search, onValueChange = { model.query(state.query.copy(search = it.take(128))) },
-                    placeholder = { Text(stringResource(R.string.workshop_search), maxLines = 1, overflow = TextOverflow.Ellipsis) }, singleLine = true,
-                    shape = MaterialTheme.shapes.extraLarge,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    leadingIcon = { Icon(Icons.Default.Search, null) },
-                    trailingIcon = { Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (state.query.search.isNotEmpty()) IconButton(onClick = { model.query(state.query.copy(search = "")) }) {
-                            Icon(Icons.Default.Close, stringResource(R.string.workshop_clear_search))
-                        }
+                takagi.ru.monica.steam.foundation.ui.SteamListSearchField(
+                    state.query.search, { model.query(state.query.copy(search = it.take(128))) },
+                    stringResource(R.string.workshop_search),
+                    Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 12.dp),
+                    trailingContent = {
                         IconButton(onClick = { filters = true }) {
                             BadgedBox(badge = {
                                 if (state.query.tags.isNotEmpty()) Badge { Text(state.query.tags.size.toString()) }
                                 else if (filtersActive) Badge()
-                            }) {
-                                Icon(Icons.Default.Tune, stringResource(if (filtersActive) R.string.workshop_filters_active else R.string.workshop_filters))
-                            }
+                            }) { Icon(Icons.Default.Tune, stringResource(if (filtersActive) R.string.workshop_filters_active else R.string.workshop_filters)) }
                         }
-                    } }, modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 12.dp)
-                )
+                    })
                 Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(R.string.workshop_count, if (state.query.subscribedOnly && state.query.search.isNotBlank()) state.items.size else state.total),
@@ -355,6 +373,12 @@ internal fun SteamWorkshopScreen(
                         OutlinedButton(onClick = model::loadMore, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.workshop_load_more)) }
                     }
                 }
+            }
+        }
+        if (gameHeader != null && rootPage) {
+            CompositionLocalProvider(LocalSteamGlassBackdrop provides bodyBackdrop) {
+                SteamDraggableDetailToolbar(Modifier.padding(top = headerHeight,
+                    bottom = clearance + if (selecting) 96.dp else 16.dp)) { _ -> workshopActions() }
             }
         }
         if (selecting) {

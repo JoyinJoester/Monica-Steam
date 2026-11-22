@@ -1,0 +1,43 @@
+{
+  "complete": true,
+  "version": "1.0.310",
+  "versionCode": 18,
+  "jvmPassed": 18,
+  "devicePassed": 17,
+  "deviceRunnerSeconds": 34.955,
+  "buildSeconds": 90.485,
+  "baselineDevice": {
+    "tests": 2,
+    "failures": 2,
+    "reason": "Duplicate navigation during real page transitions"
+  },
+  "firstFixedDevice": {
+    "tests": 17,
+    "passed": 14,
+    "failures": 3,
+    "reason": "Unplaced Workshop header retained semantics; fixed by clearing semantics when hidden"
+  },
+  "nativeImages": 46,
+  "animatedPreview": "Native test frames at 4x slow playback",
+  "mainSha256": "b330b3114113d795d049e1ab9d962b91a36eaaa25906ebb9bcddd13d14b9aa3d",
+  "testSha256": "3ac378c60ef38e8eae2a8c69cd724b4f0181d883c2171ee728b5c7457f7d9aca",
+  "cleanup": {
+    "baselineChecks": {
+      "current": true,
+      "size": true,
+      "density": true,
+      "font": true,
+      "userIdentitiesAndFlagsRetained": true,
+      "originalPackagesRetained": true,
+      "taskPackagesAbsent": true
+    },
+    "taskPackagesUninstalled": true,
+    "taskStartedInstanceStopped": false,
+    "preExistingMuMu0Preserved": true,
+    "configurationAndDataDiskRetained": true,
+    "userRuntimeRunningFlagsChanged": false
+  },
+  "committed": false,
+  "pushed": false,
+  "apkDelivered": false
+}

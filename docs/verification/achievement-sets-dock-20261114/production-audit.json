@@ -1,0 +1,22 @@
+{
+  "package": "takagi.ru.monica.steamapp",
+  "version": "1.0.310",
+  "debuggable": false,
+  "minifyWithR8": true,
+  "apkSha256": "ec7bdd647a6c378b839087fc4f65b438a8a87699aaac53182be441292e826d99",
+  "resourceNamesVerified": [
+    "steam_achievement_archived",
+    "steam_achievement_hidden",
+    "steam_achievement_set_archived",
+    "steam_achievement_set_base",
+    "steam_achievement_set_complete",
+    "steam_achievement_set_dlc",
+    "steam_achievement_set_progress",
+    "steam_achievement_set_unavailable",
+    "steam_achievement_set_unnamed",
+    "steam_achievement_sets",
+    "steam_achievement_sets_all"
+  ],
+  "deviceTestedNativeExactlyMatchesProduction": true,
+  "packagedNativeSha256": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d"
+}

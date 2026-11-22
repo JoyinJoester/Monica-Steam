@@ -1,0 +1,47 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest:
+INSTRUMENTATION_STATUS: test=coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Target control must be enabled
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget(SteamScannerReleaseActivityTest.kt:69)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget$default(SteamScannerReleaseActivityTest.kt:60)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(SteamScannerReleaseActivityTest.kt:119)
+
+INSTRUMENTATION_STATUS: stream=
+Error in coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest):
+java.lang.AssertionError: Target control must be enabled
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget(SteamScannerReleaseActivityTest.kt:69)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget$default(SteamScannerReleaseActivityTest.kt:60)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(SteamScannerReleaseActivityTest.kt:119)
+
+INSTRUMENTATION_STATUS: test=coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.265
+There was 1 failure:
+1) coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest)
+java.lang.AssertionError: Target control must be enabled
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget(SteamScannerReleaseActivityTest.kt:69)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.clickTarget$default(SteamScannerReleaseActivityTest.kt:60)
+	at takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest.coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(SteamScannerReleaseActivityTest.kt:119)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

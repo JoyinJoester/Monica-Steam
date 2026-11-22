@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_preview_open">プレビュー</string>
+    <string name="steam_preview_close">プレビューを閉じる</string>
+    <string name="steam_preview_message_actions">メッセージの操作</string>
+    <string name="steam_space_publish">近況を投稿</string>
+    <string name="steam_space_event_details">アクティビティの詳細</string>
+</resources>

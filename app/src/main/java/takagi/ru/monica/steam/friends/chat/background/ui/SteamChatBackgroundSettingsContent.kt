@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundPreferences
-import takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundServiceController
+import takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationRuntime
 import takagi.ru.monica.steam.friends.chat.background.domain.SteamChatBackgroundSettings
 import takagi.ru.monica.ui.screens.SettingsItemWithSwitch
 import takagi.ru.monica.ui.screens.SettingsSection
@@ -36,7 +36,7 @@ fun SteamChatBackgroundSettingsContent() {
         coroutineScope.launch {
             preferences.setEnabled(enabled)
             if (enabled) {
-                if (!SteamChatBackgroundServiceController.start(context)) {
+                if (!SteamChatNotificationRuntime.start(context)) {
                     preferences.setEnabled(false)
                     Toast.makeText(
                         context,
@@ -45,7 +45,7 @@ fun SteamChatBackgroundSettingsContent() {
                     ).show()
                 }
             } else {
-                SteamChatBackgroundServiceController.stop(context)
+                SteamChatNotificationRuntime.stop(context)
             }
         }
     }

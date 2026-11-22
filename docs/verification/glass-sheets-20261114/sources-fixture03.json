@@ -1,0 +1,13 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassComponents.kt": "92f45dfc977ffa6a162b629c2595ac902af49ebb1e1c56a257b3d08db18145f9",
+  "app/src/main/java/takagi/ru/monica/steam/library/filter/ui/SteamLibraryFilterSheet.kt": "f2d33cb9e8a186fd85d32b78f78e0b66ebe4da30092e68db771b0b474ce8bfcc",
+  "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt": "027b9261c09b03f12e395d3f877ae17827798e95149b55c5b7ce7490d182e5d5",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountSwitcherSheet.kt": "e28d431f89de40ee6e3a8ec7136d6bd86e7dc9bdf82bd86df3b8f36a0fbd548d",
+  "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendUiSupport.kt": "d063f4e619967b4bad71dc56a9e1cb8923dd70c4d96e9f2648ee671081551546",
+  "app/src/main/java/takagi/ru/monica/steam/store/share/ui/SteamStoreGameShareSheet.kt": "05de9de20b1fe0087e7a9580a76b79d78a8b48d413136ee77f1cd3ad71d3f319",
+  "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/SteamStoreGiftRecipientSheet.kt": "4df148967c6103658093dc008ef3e03dad5d17b2e5a4071697b760db030d6560",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt": "90f8572b3781b449f7a5c0bd5474c6ab12ffc1dd0734fc6884e244382d30233f",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamSheetContent.kt": "e2fc5ffb099bfbe4ba8ee0c12aab6ebe018ea2afce888f42502ee55d2d9223a2",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetDesignDeviceTest.kt": "6fa20c66c6bbc7249c63fc6f0af52f066d75380d52d60d9f8c86f59e867330cc",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "45aef5a31c4e72e64d32367d9263f3fe2af9138345f1947cd24b48d25ff00eed"
+}

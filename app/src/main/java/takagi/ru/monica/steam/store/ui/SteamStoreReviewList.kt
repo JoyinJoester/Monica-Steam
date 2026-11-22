@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamListFilterChip as FilterChip
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -13,19 +15,14 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.ThumbDown
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -70,11 +67,15 @@ internal fun SteamStoreReviewsSection(
     onFiltersChanged: (SteamReviewFilterSelection) -> Unit,
     onLoadMore: () -> Unit,
     onOpenAuthor: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    authorLoader: (suspend (String) -> takagi.ru.monica.steam.profile.SteamMiniProfileDecor?)? = null
 ) {
     var expanded by rememberSaveable(appId) { mutableStateOf(false) }
     var showFilterSheet by rememberSaveable(appId) { mutableStateOf(false) }
     val visibleReviews = if (expanded) reviews.items else reviews.items.take(REVIEW_PREVIEW_COUNT)
+    val effectiveError = loadError ?: if (reviews.pageLoadFailed && !loadingMore) {
+        stringResource(R.string.steam_store_reviews_unavailable)
+    } else null
     val canExpand = !expanded && (
         reviews.items.size > REVIEW_PREVIEW_COUNT || reviews.nextCursor != null
     )
@@ -93,10 +94,14 @@ internal fun SteamStoreReviewsSection(
             SteamStoreReviewCard(
                 review = review,
                 showFullBody = expanded,
-                onOpenAuthor = onOpenAuthor
+                onOpenAuthor = onOpenAuthor,
+                authorLoader = authorLoader
             )
         }
-        loadError?.takeIf(String::isNotBlank)?.let { error ->
+        if (reviews.items.isEmpty() && !loadingMore && effectiveError == null) {
+            Text(stringResource(R.string.steam_store_reviews_empty), style = MaterialTheme.typography.bodyMedium)
+        }
+        effectiveError?.takeIf(String::isNotBlank)?.let { error ->
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -110,7 +115,12 @@ internal fun SteamStoreReviewsSection(
                 )
             }
         }
-        if (canExpand || (expanded && reviews.nextCursor != null)) {
+        if (reviews.pageLoadFailed || (effectiveError != null && reviews.nextCursor != null)) {
+            OutlinedButton(onClick = onLoadMore, enabled = !loadingMore,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                Text(stringResource(if (loadingMore) R.string.steam_store_reviews_loading_more else R.string.steam_store_reviews_retry))
+            }
+        } else if (canExpand || (expanded && reviews.nextCursor != null)) {
             OutlinedButton(
                 onClick = {
                     if (canExpand) {
@@ -361,19 +371,10 @@ private fun steamReviewTimeLabel(filter: SteamReviewTimeFilter): String = string
 private fun SteamStoreReviewCard(
     review: SteamUserReview,
     showFullBody: Boolean,
-    onOpenAuthor: (String) -> Unit
+    onOpenAuthor: (String) -> Unit,
+    authorLoader: (suspend (String) -> takagi.ru.monica.steam.profile.SteamMiniProfileDecor?)?
 ) {
     val context = LocalContext.current
-    val accent = if (review.votedUp) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        MaterialTheme.colorScheme.error
-    }
-    val iconContainer = if (review.votedUp) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.errorContainer
-    }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -381,57 +382,12 @@ private fun SteamStoreReviewCard(
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Surface(shape = CircleShape, color = iconContainer, contentColor = accent) {
-                    Icon(
-                        imageVector = if (review.votedUp) Icons.Default.ThumbUp else Icons.Default.ThumbDown,
-                        contentDescription = null,
-                        modifier = Modifier.padding(10.dp)
-                    )
-                }
-                Column(modifier = Modifier.weight(1f)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(
-                                if (review.votedUp) {
-                                    R.string.steam_store_review_recommended
-                                } else {
-                                    R.string.steam_store_review_not_recommended
-                                }
-                            ),
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = accent
-                        )
-                        review.createdAt.takeIf { it > 0L }?.let { createdAt ->
-                            Text(
-                                text = formatReviewDate(createdAt),
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1
-                            )
-                        }
-                    }
-                    Text(
-                        text = reviewMetadata(review),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
+            SteamReviewAuthor(review.authorSteamId, onOpenAuthor, authorLoader,
+                votedUp = review.votedUp,
+                metadata = listOfNotNull(reviewMetadata(review),
+                    review.createdAt.takeIf { it > 0L }?.let(::formatReviewDate)).joinToString(" · "))
             SelectionContainer {
                 SteamRichText(
                     source = review.body,
@@ -460,16 +416,7 @@ private fun SteamStoreReviewCard(
                     ReviewLabel(stringResource(R.string.steam_store_review_early_access))
                 }
             }
-            if (review.authorSteamId.isNotBlank()) {
-                TextButton(
-                    onClick = { onOpenAuthor(review.authorSteamId) },
-                    modifier = Modifier.align(Alignment.End).heightIn(min = 48.dp)
-                ) {
-                    Icon(Icons.Default.AccountCircle, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.steam_store_review_view_author))
-                }
-            }
+
         }
     }
 }

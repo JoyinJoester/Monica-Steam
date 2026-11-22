@@ -70,6 +70,9 @@ class SteamCmClient internal constructor(
         accountKey = accountKeyResolver(account)
     )
 
+    internal fun disconnectsFor(account: SteamAccount): Flow<Unit> =
+        pool.disconnectsFor(accountKeyResolver(account))
+
     internal fun latestEvent(account: SteamAccount, eMsg: Int): SteamCmEnvelope? =
         pool.latestEvent(accountKeyResolver(account), eMsg)
 

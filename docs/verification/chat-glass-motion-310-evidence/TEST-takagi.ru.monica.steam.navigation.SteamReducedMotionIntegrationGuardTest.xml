@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-09T04:40:54.628Z" hostname="JOYIN" time="0.021">
+  <properties/>
+  <testcase name="steamPageTransitionsUseTheSharedReducedMotionPolicy" classname="takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest" time="0.013"/>
+  <testcase name="steamSettingsExposeAndProvideTheExistingReducedMotionPreference" classname="takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest" time="0.005"/>
+  <testcase name="bothDockStylesKeepFeedbackWithoutBouncyReducedMotion" classname="takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

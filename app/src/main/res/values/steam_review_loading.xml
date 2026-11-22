@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_reviews_unavailable">Unable to load reviews. Please try again.</string>
+    <string name="steam_store_reviews_empty">No reviews match these filters.</string>
+    <string name="steam_store_reviews_retry">Retry</string>
+</resources>

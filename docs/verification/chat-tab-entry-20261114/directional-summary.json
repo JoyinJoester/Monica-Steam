@@ -1,0 +1,650 @@
+[
+  {
+    "stage": "result-atrace18",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 83.219,
+      "commitP95Ms": 104.525,
+      "frames": 277,
+      "totalP95Ms": 67.9,
+      "drawP95Ms": 16.481,
+      "layoutP95Ms": 0.191,
+      "syncP95Ms": 1.169
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 54.213,
+      "commitP95Ms": 79.986,
+      "frames": 212,
+      "totalP95Ms": 59.902,
+      "drawP95Ms": 16.054,
+      "layoutP95Ms": 0.185,
+      "syncP95Ms": 0.569
+    }
+  },
+  {
+    "stage": "result-atrace20",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 77.534,
+      "commitP95Ms": 102.15,
+      "frames": 278,
+      "totalP95Ms": 58.121,
+      "drawP95Ms": 18.85,
+      "layoutP95Ms": 0.181,
+      "syncP95Ms": 0.937
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 55.711,
+      "commitP95Ms": 60.962,
+      "frames": 213,
+      "totalP95Ms": 52.726,
+      "drawP95Ms": 19.896,
+      "layoutP95Ms": 0.175,
+      "syncP95Ms": 0.536
+    }
+  },
+  {
+    "stage": "result-compose11",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 62.96,
+      "commitP95Ms": 72.642,
+      "frames": 267,
+      "totalP95Ms": 51.768,
+      "drawP95Ms": 17.245,
+      "layoutP95Ms": 0.115,
+      "syncP95Ms": 0.751
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 47.226,
+      "commitP95Ms": 55.5,
+      "frames": 212,
+      "totalP95Ms": 43.738,
+      "drawP95Ms": 16.334,
+      "layoutP95Ms": 0.124,
+      "syncP95Ms": 0.431
+    }
+  },
+  {
+    "stage": "result-final27",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 49.205,
+      "commitP95Ms": 61.164,
+      "frames": 270,
+      "totalP95Ms": 40.554,
+      "drawP95Ms": 7.891,
+      "layoutP95Ms": 0.133,
+      "syncP95Ms": 0.758
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 42.528,
+      "commitP95Ms": 48.032,
+      "frames": 225,
+      "totalP95Ms": 35.601,
+      "drawP95Ms": 5.672,
+      "layoutP95Ms": 0.133,
+      "syncP95Ms": 0.788
+    }
+  },
+  {
+    "stage": "result-final28",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 37.941,
+      "commitP95Ms": 55.684,
+      "frames": 272,
+      "totalP95Ms": 40.186,
+      "drawP95Ms": 8.144,
+      "layoutP95Ms": 0.13,
+      "syncP95Ms": 0.807
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 39.488,
+      "commitP95Ms": 59.899,
+      "frames": 218,
+      "totalP95Ms": 35.649,
+      "drawP95Ms": 5.229,
+      "layoutP95Ms": 0.11,
+      "syncP95Ms": 0.762
+    }
+  },
+  {
+    "stage": "result-final31",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 45.203,
+      "commitP95Ms": 64.8,
+      "frames": 269,
+      "totalP95Ms": 45.878,
+      "drawP95Ms": 8.166,
+      "layoutP95Ms": 0.151,
+      "syncP95Ms": 0.918
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 38.662,
+      "commitP95Ms": 61.356,
+      "frames": 218,
+      "totalP95Ms": 36.061,
+      "drawP95Ms": 5.049,
+      "layoutP95Ms": 0.121,
+      "syncP95Ms": 0.829
+    }
+  },
+  {
+    "stage": "result-install-baseline01",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 60.502,
+      "commitP95Ms": 106.38,
+      "frames": 249,
+      "totalP95Ms": 68.644,
+      "drawP95Ms": 18.43,
+      "layoutP95Ms": 0.152,
+      "syncP95Ms": 0.85
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 47.798,
+      "commitP95Ms": 117.071,
+      "frames": 205,
+      "totalP95Ms": 59.048,
+      "drawP95Ms": 15.79,
+      "layoutP95Ms": 0.149,
+      "syncP95Ms": 0.559
+    }
+  },
+  {
+    "stage": "result-install-compose10",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 62.983,
+      "commitP95Ms": 83.446,
+      "frames": 267,
+      "totalP95Ms": 51.658,
+      "drawP95Ms": 19.5,
+      "layoutP95Ms": 0.142,
+      "syncP95Ms": 0.721
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 44.445,
+      "commitP95Ms": 68.283,
+      "frames": 204,
+      "totalP95Ms": 45.047,
+      "drawP95Ms": 15.406,
+      "layoutP95Ms": 0.125,
+      "syncP95Ms": 0.426
+    }
+  },
+  {
+    "stage": "result-install-placed21",
+    "variant": "stableLayer",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 55.301,
+      "commitP95Ms": 66.914,
+      "frames": 267,
+      "totalP95Ms": 51.846,
+      "drawP95Ms": 9.159,
+      "layoutP95Ms": 0.163,
+      "syncP95Ms": 0.891
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 42.759,
+      "commitP95Ms": 49.309,
+      "frames": 219,
+      "totalP95Ms": 46.672,
+      "drawP95Ms": 6.181,
+      "layoutP95Ms": 0.137,
+      "syncP95Ms": 0.941
+    }
+  },
+  {
+    "stage": "result-install-probes05",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 66.02,
+      "commitP95Ms": 86.815,
+      "frames": 250,
+      "totalP95Ms": 57.47,
+      "drawP95Ms": 20.891,
+      "layoutP95Ms": 0.135,
+      "syncP95Ms": 0.832
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 45.178,
+      "commitP95Ms": 65.091,
+      "frames": 208,
+      "totalP95Ms": 49.895,
+      "drawP95Ms": 15.698,
+      "layoutP95Ms": 0.118,
+      "syncP95Ms": 0.475
+    }
+  },
+  {
+    "stage": "result-install-traced19",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 78.845,
+      "commitP95Ms": 93.703,
+      "frames": 266,
+      "totalP95Ms": 67.514,
+      "drawP95Ms": 23.32,
+      "layoutP95Ms": 0.151,
+      "syncP95Ms": 0.872
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 52.59,
+      "commitP95Ms": 80.149,
+      "frames": 209,
+      "totalP95Ms": 58.451,
+      "drawP95Ms": 19.641,
+      "layoutP95Ms": 0.157,
+      "syncP95Ms": 0.56
+    }
+  },
+  {
+    "stage": "result-nocapture03",
+    "variant": "noCapture",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 53.089,
+      "commitP95Ms": 73.98,
+      "frames": 329,
+      "totalP95Ms": 48.172,
+      "drawP95Ms": 9.391,
+      "layoutP95Ms": 0.152,
+      "syncP95Ms": 0.441
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 45.315,
+      "commitP95Ms": 63.268,
+      "frames": 239,
+      "totalP95Ms": 45.574,
+      "drawP95Ms": 13.973,
+      "layoutP95Ms": 0.149,
+      "syncP95Ms": 0.423
+    }
+  },
+  {
+    "stage": "result-nochrome04",
+    "variant": "noChrome",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 53.754,
+      "commitP95Ms": 65.583,
+      "frames": 263,
+      "totalP95Ms": 52.076,
+      "drawP95Ms": 14.307,
+      "layoutP95Ms": 0.153,
+      "syncP95Ms": 0.488
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 45.422,
+      "commitP95Ms": 68.685,
+      "frames": 207,
+      "totalP95Ms": 53.665,
+      "drawP95Ms": 16.66,
+      "layoutP95Ms": 0.145,
+      "syncP95Ms": 0.366
+    }
+  },
+  {
+    "stage": "result-old29",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 58.181,
+      "commitP95Ms": 69.3,
+      "frames": 265,
+      "totalP95Ms": 46.238,
+      "drawP95Ms": 15.512,
+      "layoutP95Ms": 0.135,
+      "syncP95Ms": 0.691
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 43.034,
+      "commitP95Ms": 63.027,
+      "frames": 209,
+      "totalP95Ms": 42.266,
+      "drawP95Ms": 13.107,
+      "layoutP95Ms": 0.131,
+      "syncP95Ms": 0.473
+    }
+  },
+  {
+    "stage": "result-old30",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 56.774,
+      "commitP95Ms": 77.03,
+      "frames": 261,
+      "totalP95Ms": 43.409,
+      "drawP95Ms": 17.273,
+      "layoutP95Ms": 0.123,
+      "syncP95Ms": 0.744
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 37.954,
+      "commitP95Ms": 55.491,
+      "frames": 209,
+      "totalP95Ms": 35.47,
+      "drawP95Ms": 13.031,
+      "layoutP95Ms": 0.116,
+      "syncP95Ms": 0.445
+    }
+  },
+  {
+    "stage": "result-placed22",
+    "variant": "stableLayer",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 51.188,
+      "commitP95Ms": 65.427,
+      "frames": 264,
+      "totalP95Ms": 41.057,
+      "drawP95Ms": 7.984,
+      "layoutP95Ms": 0.135,
+      "syncP95Ms": 0.877
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 34.836,
+      "commitP95Ms": 47.7,
+      "frames": 223,
+      "totalP95Ms": 35.003,
+      "drawP95Ms": 5.163,
+      "layoutP95Ms": 0.122,
+      "syncP95Ms": 0.844
+    }
+  },
+  {
+    "stage": "result-quiet02",
+    "variant": "quiet",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 66.154,
+      "commitP95Ms": 73.414,
+      "frames": 205,
+      "totalP95Ms": 49.789,
+      "drawP95Ms": 18.214,
+      "layoutP95Ms": 0.132,
+      "syncP95Ms": 0.782
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 48.001,
+      "commitP95Ms": 56.556,
+      "frames": 207,
+      "totalP95Ms": 42.531,
+      "drawP95Ms": 15.589,
+      "layoutP95Ms": 0.115,
+      "syncP95Ms": 0.431
+    }
+  },
+  {
+    "stage": "result-replaced23",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 63.948,
+      "commitP95Ms": 86.338,
+      "frames": 267,
+      "totalP95Ms": 52.585,
+      "drawP95Ms": 17.193,
+      "layoutP95Ms": 0.138,
+      "syncP95Ms": 0.753
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 42.095,
+      "commitP95Ms": 66.778,
+      "frames": 210,
+      "totalP95Ms": 43.444,
+      "drawP95Ms": 16.065,
+      "layoutP95Ms": 0.129,
+      "syncP95Ms": 0.445
+    }
+  },
+  {
+    "stage": "result-restored16",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 68.542,
+      "commitP95Ms": 77.957,
+      "frames": 253,
+      "totalP95Ms": 60.319,
+      "drawP95Ms": 21.148,
+      "layoutP95Ms": 0.14,
+      "syncP95Ms": 0.867
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 48.179,
+      "commitP95Ms": 82.627,
+      "frames": 206,
+      "totalP95Ms": 51.437,
+      "drawP95Ms": 15.101,
+      "layoutP95Ms": 0.137,
+      "syncP95Ms": 0.443
+    }
+  },
+  {
+    "stage": "result-reverse08",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 68.35,
+      "commitP95Ms": 88.259,
+      "frames": 257,
+      "totalP95Ms": 53.624,
+      "drawP95Ms": 21.158,
+      "layoutP95Ms": 0.148,
+      "syncP95Ms": 0.866
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 45.215,
+      "commitP95Ms": 72.009,
+      "frames": 213,
+      "totalP95Ms": 47.112,
+      "drawP95Ms": 15.783,
+      "layoutP95Ms": 0.14,
+      "syncP95Ms": 0.45
+    }
+  },
+  {
+    "stage": "result-reverse13",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 66.224,
+      "commitP95Ms": 75.921,
+      "frames": 292,
+      "totalP95Ms": 50.291,
+      "drawP95Ms": 10.2,
+      "layoutP95Ms": 0.137,
+      "syncP95Ms": 0.812
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 48.251,
+      "commitP95Ms": 65.734,
+      "frames": 213,
+      "totalP95Ms": 46.286,
+      "drawP95Ms": 16.807,
+      "layoutP95Ms": 0.121,
+      "syncP95Ms": 0.512
+    }
+  },
+  {
+    "stage": "result-reverse14",
+    "variant": "candidate",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 71.091,
+      "commitP95Ms": 98.209,
+      "frames": 255,
+      "totalP95Ms": 60.369,
+      "drawP95Ms": 19.502,
+      "layoutP95Ms": 0.153,
+      "syncP95Ms": 0.901
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 49.855,
+      "commitP95Ms": 71.706,
+      "frames": 208,
+      "totalP95Ms": 57.42,
+      "drawP95Ms": 17.23,
+      "layoutP95Ms": 0.128,
+      "syncP95Ms": 0.524
+    }
+  },
+  {
+    "stage": "result-stable06",
+    "variant": "stableLayer",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 69.636,
+      "commitP95Ms": 113.85,
+      "frames": 242,
+      "totalP95Ms": 61.518,
+      "drawP95Ms": 17.976,
+      "layoutP95Ms": 0.15,
+      "syncP95Ms": 0.932
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 46.134,
+      "commitP95Ms": 78.165,
+      "frames": 212,
+      "totalP95Ms": 54.639,
+      "drawP95Ms": 16.416,
+      "layoutP95Ms": 0.149,
+      "syncP95Ms": 0.557
+    }
+  },
+  {
+    "stage": "result-stable07",
+    "variant": "stableLayer",
+    "layoutRebuilds": 0,
+    "retainedCellObservations": 84,
+    "lostMetrics": 0,
+    "CHAT": {
+      "commits": 15,
+      "commitMedianMs": 69.818,
+      "commitP95Ms": 89.72,
+      "frames": 259,
+      "totalP95Ms": 53.131,
+      "drawP95Ms": 18.457,
+      "layoutP95Ms": 0.136,
+      "syncP95Ms": 0.836
+    },
+    "LIBRARY": {
+      "commits": 15,
+      "commitMedianMs": 44.104,
+      "commitP95Ms": 60.125,
+      "frames": 208,
+      "totalP95Ms": 44.087,
+      "drawP95Ms": 15.151,
+      "layoutP95Ms": 0.137,
+      "syncP95Ms": 0.443
+    }
+  }
+]

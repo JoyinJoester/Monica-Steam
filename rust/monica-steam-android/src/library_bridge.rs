@@ -15,7 +15,7 @@ use std::ptr;
 const OWNED_GAMES_BRIDGE_MAGIC: &[u8; 4] = b"MSL1";
 const ACHIEVEMENT_PROGRESS_BRIDGE_MAGIC: &[u8; 4] = b"MSP1";
 const STORE_ITEMS_BRIDGE_MAGIC: &[u8; 4] = b"MST1";
-const ACHIEVEMENT_DETAILS_BRIDGE_MAGIC: &[u8; 4] = b"MSA1";
+const ACHIEVEMENT_DETAILS_BRIDGE_MAGIC: &[u8; 4] = b"MSA2";
 
 fn write_optional_string(out: &mut Vec<u8>, value: Option<&str>) -> Option<()> {
     match value {
@@ -100,6 +100,8 @@ fn serialize_achievement_details(items: &[AchievementDetail]) -> Option<Vec<u8>>
         let has_unlock_time = item.unlock_time_seconds.is_some();
         out.extend_from_slice(&(if has_unlock_time { 1i32 } else { 0i32 }).to_le_bytes());
         out.extend_from_slice(&item.unlock_time_seconds.unwrap_or(0).to_le_bytes());
+        out.extend_from_slice(&item.group_id.to_le_bytes());
+        out.extend_from_slice(&(u32::from(item.archived) | (u32::from(item.hidden) << 1)).to_le_bytes());
         write_required_string(&mut out, &item.api_name)?;
         write_required_string(&mut out, &item.display_name)?;
         write_required_string(&mut out, &item.description)?;
@@ -238,10 +240,13 @@ mod tests {
             unlock_time_seconds: Some(1_700_000_000),
             icon_url: Some("https://cdn.example/icon.jpg".to_string()),
             locked_icon_url: None,
+            group_id: 42,
+            archived: true,
+            hidden: false,
         }])
         .unwrap();
 
-        assert_eq!(&encoded[0..4], b"MSA1");
+        assert_eq!(&encoded[0..4], b"MSA2");
         assert_eq!(u32::from_le_bytes(encoded[4..8].try_into().unwrap()), 1);
         assert_eq!(i32::from_le_bytes(encoded[8..12].try_into().unwrap()), 1);
         assert_eq!(i32::from_le_bytes(encoded[12..16].try_into().unwrap()), 1);
@@ -249,5 +254,7 @@ mod tests {
             i64::from_le_bytes(encoded[16..24].try_into().unwrap()),
             1_700_000_000
         );
+        assert_eq!(u32::from_le_bytes(encoded[24..28].try_into().unwrap()), 42);
+        assert_eq!(u32::from_le_bytes(encoded[28..32].try_into().unwrap()), 1);
     }
 }

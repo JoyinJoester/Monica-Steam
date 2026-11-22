@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStorePurchaseContextUiGuardTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-21T07:53:55.622Z" hostname="JOYIN" time="0.019">
+  <properties/>
+  <testcase name="purchaseContextLivesInAFocusedModuleAndIsWiredIntoDetail" classname="takagi.ru.monica.steam.store.SteamStorePurchaseContextUiGuardTest" time="0.011"/>
+  <testcase name="unknownOrMissingOwnershipIsNotPresentedAsARealAccountStatus" classname="takagi.ru.monica.steam.store.SteamStorePurchaseContextUiGuardTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

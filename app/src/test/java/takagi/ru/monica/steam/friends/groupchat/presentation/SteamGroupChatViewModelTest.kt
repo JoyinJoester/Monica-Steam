@@ -604,6 +604,7 @@ class SteamGroupChatViewModelTest {
         override fun saveGroups(snapshot: SteamGroupChatGroupsSnapshot) { groups = snapshot }
         override fun loadThread(accountSteamId: String, groupId: String, chatId: String) = thread
         override fun saveThread(snapshot: SteamGroupChatThreadSnapshot) { thread = snapshot }
+        override fun removeThread(accountSteamId: String, groupId: String, chatId: String) { thread = null }
     }
 
     private class RecoveringGroupOutbox(

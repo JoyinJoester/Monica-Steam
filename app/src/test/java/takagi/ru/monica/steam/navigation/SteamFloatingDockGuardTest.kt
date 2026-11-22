@@ -77,8 +77,8 @@ class SteamFloatingDockGuardTest {
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
         val pageModifier = activity
-            .substringAfter("AnimatedContent(")
-            .substringBefore("targetState = currentPage")
+            .substringAfter("SteamTabPageHost(")
+            .substringBefore("targetPage = currentPage")
 
         assertFalse(activity.contains(".steamDockProgressiveBlur("))
         assertFalse(activity.contains("dockBlurHeightPx"))

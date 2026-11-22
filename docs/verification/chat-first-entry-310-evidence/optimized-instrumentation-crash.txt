@@ -1,0 +1,16 @@
+FATAL EXCEPTION: main
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: Process: takagi.ru.monica.steamapp.gamedetail, PID: 42787
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/tracing/Trace;
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at androidx.test.runner.AndroidJUnitRunner.onCreate(r8-map-id-f900bf84e49b5acee6c5f002eadb8d8f8bf742e765e8c8266a122a4929b78b73:26)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7726)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2511)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:109)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:232)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:317)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8971)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: androidx.tracing.Trace
+11-20 15:51:06.923 42787 42787 E AndroidRuntime: 	... 11 more

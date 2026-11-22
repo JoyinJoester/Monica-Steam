@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -68,12 +67,13 @@ if (hasCompleteReleaseSigning && !releaseStoreFile.isFile()) {
 def requireReleaseSigning = project.findProperty('requireReleaseSigning')?.toString()?.toBoolean() ?: false
 
 android {
+    androidResources { noCompress += 'pack' }
     namespace 'takagi.ru.monica'
-    compileSdk 35
+    compileSdk 37
 
     def previewVersionSuffix = project.findProperty('previewVersionSuffix')?.toString()?.trim()
     def appVersionCode = 18 // Intentionally fixed; releases advance through versionName.
-    def baseVersionName = previewVersionSuffix ? "1.0.310-${previewVersionSuffix}" : "1.0.310"
+    def baseVersionName = previewVersionSuffix ? "1.0.311-${previewVersionSuffix}" : "1.0.311"
     def normalizeTwoDigits = { raw ->
         def value = raw?.toString()?.trim()?.replaceAll('\\D', '')
         if (!value) {
@@ -102,23 +102,16 @@ android {
         if (manualArch?.toString()?.trim()) {
             return sanitizeTag(manualArch, 'universal')
         }
-
-        if (output?.metaClass?.respondsTo(output, 'getFilters')) {
-            def abiFilter = output.filters?.find {
-                def typeText = it?.filterType?.toString()
-                typeText?.equalsIgnoreCase('ABI') || typeText?.toUpperCase()?.endsWith('.ABI')
-            }
-            if (abiFilter?.identifier?.toString()?.trim()) {
-                return sanitizeTag(abiFilter.identifier, 'universal')
-            }
+        def abiFilter = output.filters.find {
+            it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI
         }
-
-        def configuredAbis = defaultConfig.ndk?.abiFilters
-        if (configuredAbis && !configuredAbis.isEmpty()) {
-            return sanitizeTag(configuredAbis.toList().sort().join('+'), 'universal')
+        if (abiFilter != null) {
+            return sanitizeTag(abiFilter.identifier, 'universal')
         }
-
-        'universal'
+        def configuredAbis = defaultConfig.ndk.abiFilters
+        configuredAbis && !configuredAbis.isEmpty()
+                ? sanitizeTag(configuredAbis.toList().sort().join('+'), 'universal')
+                : 'universal'
     }
 
     def findNextDailySeqForVersion = { String versionNameTag, String dateTag, String versionTag ->
@@ -212,7 +205,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             if (hasCompleteReleaseSigning) {
                 signingConfig signingConfigs.release
             } else {
@@ -227,33 +220,29 @@ android {
             debuggable false
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '11'
-        // Miuix 0.9.3 is published with Kotlin 2.4 metadata. Its Android AAR
-        // only uses stable JVM/Compose APIs here, so keep Monica Steam's
-        // existing compiler and permit reading the newer library metadata.
-        freeCompilerArgs += ['-Xskip-metadata-version-check']
-    }
+
     buildFeatures {
         compose true
         buildConfig true
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            // 目标格式: Monica-Steam-Android-[架构]-[版本号]-yyMMddVV-SS.APK
-            def apkPrefix = 'Monica-Steam'
+    // Kept inside this closure to retain the existing version/naming helpers.
+    def components = project.extensions.getByName('androidComponents')
+    components.onVariants(components.selector().all()) { variant ->
+        variant.outputs.each { output ->
             def archTag = resolveArchTag(output)
-            def versionNameTag = sanitizeTag(project.findProperty('apkVersionName') ?: variant.versionName ?: defaultConfig.versionName, '0.0.0')
-            def namePrefix = "${apkPrefix}-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}"
-            outputFileName = "${namePrefix}-${buildDailySeq}.APK"
+            def manualVersionName = project.findProperty('apkVersionName')
+            output.outputFileName.set(output.versionName.map { outputVersionName ->
+                def versionNameTag = sanitizeTag(manualVersionName ?: outputVersionName, '0.0.0')
+                "Monica-Steam-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}-${buildDailySeq}.APK".toString()
+            })
         }
     }
 
@@ -357,21 +346,6 @@ tasks.withType(Test).configureEach {
     exclude '**/viewmodel/TotpPasswordBindingRegressionGuardTest*'
 }
 
-configurations.configureEach {
-    resolutionStrategy.force(
-        "org.jetbrains.kotlin:kotlin-bom:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-common:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.20",
-        "org.jetbrains.kotlinx:kotlinx-serialization-bom:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0"
-    )
-}
-
 // Legacy tests are compiled as one source set even when only Steam tests run.
 // Make removed feature APIs visible to the test compiler without packaging them.
 configurations.named('testCompileOnly') {
@@ -379,22 +353,24 @@ configurations.named('testCompileOnly') {
 }
 
 dependencies {
+    implementation 'io.github.kyant0:backdrop:2.0.1'
+    implementation project(':telegram-chat-ui')
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
     // SteamPipe compressed content; keep Monica's existing CM/network stack.
     implementation 'org.tukaani:xz:1.10'
-    implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'androidx.documentfile:documentfile:1.1.0'
     implementation 'com.github.luben:zstd-jni:1.5.7-3@aar'
     implementation project(':mdbx-engine')
 
-    constraints {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    }
+    // One selected runtime family, without forcing older transitive requirements.
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}")
+    implementation platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:${libs.versions.kotlinxSerialization.get()}")
 
     // Core Android libraries
     implementation libs.androidx.core.ktx
     implementation libs.androidx.core.splashscreen  // 添加splashscreen依赖
     implementation libs.androidx.lifecycle.runtime.ktx
-    implementation "androidx.lifecycle:lifecycle-process:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-process:${libs.versions.lifecycleRuntimeKtx.get()}"
     implementation libs.androidx.activity.compose
     // Pin profileinstaller to the latest stable patch and avoid older transitive copies.
     implementation "androidx.profileinstaller:profileinstaller:1.4.1"
@@ -544,10 +520,17 @@ dependencies {
     testImplementation libs.junit
     testImplementation libs.kotlin.coroutines.test
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    testImplementation 'org.robolectric:robolectric:4.16.1'
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation platform(libs.androidx.compose.bom)
     androidTestImplementation libs.androidx.ui.test.junit4
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
 }

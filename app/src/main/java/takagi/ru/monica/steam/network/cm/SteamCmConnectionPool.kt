@@ -2,6 +2,11 @@ package takagi.ru.monica.steam.network.cm
 
 import java.io.Closeable
 import java.io.IOException
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -30,6 +35,10 @@ internal class SteamCmConnectionPool(
     private val bootstraps = mutableMapOf<String, CachedBootstrap>()
     private val bootstrapLocks = mutableMapOf<String, Any>()
     private val latestEvents = mutableMapOf<String, MutableMap<Int, SteamCmEnvelope>>()
+    private val disconnects = MutableSharedFlow<String>(extraBufferCapacity = 64,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    fun disconnectsFor(accountKey: String): Flow<Unit> = disconnects.filter { it == accountKey }.map { }
 
     fun execute(
         account: SteamAccount,
@@ -38,21 +47,22 @@ internal class SteamCmConnectionPool(
     ): ByteArray {
         val session = loadBootstrap(account, accountKey)
         var lastFailure: Throwable? = null
-        session.endpoints.take(MAX_ENDPOINT_ATTEMPTS).forEach { endpoint ->
-            val connection = connectionFor(accountKey, session, endpoint)
+        endpointsFor(account, accountKey, session).forEach { endpoint ->
+            val connection = connectionFor(account, accountKey, session, endpoint)
             try {
                 return connection.execute(operation)
             } catch (error: SteamApiException) {
                 throw error
             } catch (error: SteamCmResponseTimeoutException) {
                 remove(accountKey, connection)
-                invalidateBootstrap(accountKey)
                 // The request was sent; retrying could duplicate a successful mutation.
+                throw error
+            } catch (error: SteamCmRequestOutcomeUnknownException) {
+                remove(accountKey, connection)
                 throw error
             } catch (error: Exception) {
                 lastFailure = error
                 remove(accountKey, connection)
-                invalidateBootstrap(accountKey)
             }
         }
         throw IOException("Steam CM is unavailable", lastFailure)
@@ -65,8 +75,8 @@ internal class SteamCmConnectionPool(
     ) {
         val session = loadBootstrap(account, accountKey)
         var lastFailure: Throwable? = null
-        session.endpoints.take(MAX_ENDPOINT_ATTEMPTS).forEach { endpoint ->
-            val connection = connectionFor(accountKey, session, endpoint)
+        endpointsFor(account, accountKey, session).forEach { endpoint ->
+            val connection = connectionFor(account, accountKey, session, endpoint)
             try {
                 connection.send(operation)
                 return
@@ -75,7 +85,6 @@ internal class SteamCmConnectionPool(
             } catch (error: Exception) {
                 lastFailure = error
                 remove(accountKey, connection)
-                invalidateBootstrap(accountKey)
             }
         }
         throw IOException("Steam CM is unavailable", lastFailure)
@@ -88,8 +97,8 @@ internal class SteamCmConnectionPool(
     ) {
         val session = loadBootstrap(account, accountKey)
         var lastFailure: Throwable? = null
-        session.endpoints.take(MAX_ENDPOINT_ATTEMPTS).forEach { endpoint ->
-            val connection = connectionFor(accountKey, session, endpoint)
+        endpointsFor(account, accountKey, session).forEach { endpoint ->
+            val connection = connectionFor(account, accountKey, session, endpoint)
             try {
                 connection.connect()
                 return
@@ -98,7 +107,6 @@ internal class SteamCmConnectionPool(
             } catch (error: Exception) {
                 lastFailure = error
                 remove(accountKey, connection)
-                invalidateBootstrap(accountKey)
             }
         }
         throw IOException("Steam CM is unavailable", lastFailure)
@@ -108,7 +116,8 @@ internal class SteamCmConnectionPool(
         account: SteamAccount,
         accountKey: String = steamCmAccountKey(account)
     ): Boolean = synchronized(lock) {
-        connections[accountKey]?.connection?.isHealthy() == true
+        connections[accountKey]?.takeIf { it.fingerprint == accountFingerprint(account) }
+            ?.connection?.isHealthy() == true
     }
 
     fun latestEvent(accountKey: String, eMsg: Int): SteamCmEnvelope? = synchronized(lock) {
@@ -146,6 +155,14 @@ internal class SteamCmConnectionPool(
         }
         return synchronized(accountBootstrapLock) bootstrap@{
             val fingerprint = accountFingerprint(account)
+            // Bootstrap expiry applies to the next logon, not an already
+            // authenticated socket (including a logon shared by concurrent callers).
+            val live = synchronized(lock) {
+                connections[accountKey]?.takeIf {
+                    it.fingerprint == fingerprint && it.connection.canBeReused()
+                }?.session
+            }
+            if (live != null) return@bootstrap live
             val cached = synchronized(lock) {
                 bootstraps[accountKey]
                     ?.takeIf { it.fingerprint == fingerprint && it.expiresAtMillis > nowMillis() }
@@ -165,20 +182,22 @@ internal class SteamCmConnectionPool(
     }
 
     private fun connectionFor(
+        account: SteamAccount,
         accountKey: String,
         session: SteamCmBootstrapData,
         endpoint: String
     ): SteamCmPersistentConnection {
         synchronized(lock) {
             val current = connections[accountKey]
+            val fingerprint = accountFingerprint(account)
             if (current != null &&
-                current.webLogonToken == session.webLogonToken &&
-                current.endpoint == endpoint &&
+                current.fingerprint == fingerprint &&
                 current.connection.canBeReused()
             ) {
                 return current.connection
             }
             current?.connection?.close()
+            val identity = Any()
             val created = SteamCmPersistentConnection(
                 socketFactory = socketFactory,
                 endpoint = endpoint,
@@ -186,15 +205,24 @@ internal class SteamCmConnectionPool(
                 webLogonToken = session.webLogonToken,
                 timeoutMillis = timeoutMillis,
                 eventSink = { envelope ->
-                    synchronized(lock) {
+                    val active = synchronized(lock) {
+                        if (connections[accountKey]?.identity !== identity) return@synchronized false
                         latestEvents.getOrPut(accountKey) { mutableMapOf() }[envelope.eMsg] = envelope
+                        true
                     }
-                    eventSink(SteamCmEvent(accountKey, envelope))
+                    if (active) eventSink(SteamCmEvent(accountKey, envelope))
+                },
+                disconnectSink = {
+                    if (synchronized(lock) { connections[accountKey]?.identity === identity }) {
+                        disconnects.tryEmit(accountKey)
+                    }
                 }
             )
             connections[accountKey] = Entry(
                 endpoint = endpoint,
-                webLogonToken = session.webLogonToken,
+                session = session,
+                fingerprint = fingerprint,
+                identity = identity,
                 connection = created
             )
             return created
@@ -202,29 +230,40 @@ internal class SteamCmConnectionPool(
     }
 
     private fun remove(accountKey: String, connection: SteamCmPersistentConnection) {
-        synchronized(lock) {
+        val removed = synchronized(lock) {
             if (connections[accountKey]?.connection === connection) {
                 connections.remove(accountKey)
-            }
+                bootstraps.remove(accountKey)
+                true
+            } else false
         }
-        connection.invalidate()
+        connection.close()
+        if (removed) disconnects.tryEmit(accountKey)
     }
 
-    private fun invalidateBootstrap(accountKey: String) {
-        synchronized(lock) { bootstraps.remove(accountKey) }
+    private fun endpointsFor(account: SteamAccount, accountKey: String, session: SteamCmBootstrapData): List<String> = synchronized(lock) {
+        (listOfNotNull(connections[accountKey]?.takeIf {
+            it.fingerprint == accountFingerprint(account) && it.connection.canBeReused()
+        }?.endpoint) +
+            session.endpoints).distinct().take(MAX_ENDPOINT_ATTEMPTS)
     }
 
-    private fun accountFingerprint(account: SteamAccount): String =
-        "${account.id}|${account.steamId}|${account.accessToken.orEmpty()}"
+    private fun accountFingerprint(account: SteamAccount) = Fingerprint(
+        account.id, account.steamId, account.accessToken, account.refreshToken, account.steamLoginSecure)
+
+    private data class Fingerprint(val id: Long, val steamId: String, val accessToken: String?,
+        val refreshToken: String?, val steamLoginSecure: String?)
 
     private data class Entry(
         val endpoint: String,
-        val webLogonToken: String,
+        val session: SteamCmBootstrapData,
+        val fingerprint: Fingerprint,
+        val identity: Any,
         val connection: SteamCmPersistentConnection
     )
 
     private data class CachedBootstrap(
-        val fingerprint: String,
+        val fingerprint: Fingerprint,
         val data: SteamCmBootstrapData,
         val expiresAtMillis: Long
     )

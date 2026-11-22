@@ -18,7 +18,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -38,7 +39,7 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 
 /** Uses public store fixtures, never account credentials or a live purchase endpoint. */
 class SteamStoreHomeUiTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
     private val events = mutableListOf<String>()
     private val home by lazy {
         SteamStoreParser.parseFeatured(InstrumentationRegistry.getInstrumentation().context.assets

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.components
 
+import androidx.compose.material3.ExposedDropdownMenu
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -285,7 +287,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -326,7 +328,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = mdbxMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -367,7 +369,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_vault)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -410,7 +412,7 @@ fun PasswordEntryPickerBottomSheet(
                             label = { Text(stringResource(R.string.password_picker_filter_folder)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = folderMenuExpanded) },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true
                         )

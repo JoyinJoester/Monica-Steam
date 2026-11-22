@@ -1,0 +1,29 @@
+{
+  "label": "enrolled-settings",
+  "seconds": 6.239337099992554,
+  "exit": 0,
+  "command": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "emulator-5558",
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "10",
+    "-w",
+    "-r",
+    "-e",
+    "fingerprintRegression",
+    "true",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsShowsRealStatusWithoutClearingSavedPreference",
+    "-e",
+    "expectedStatus",
+    "0",
+    "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "events": [],
+  "runnerPass": true
+}

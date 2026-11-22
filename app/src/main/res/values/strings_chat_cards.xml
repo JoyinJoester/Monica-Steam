@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_card_trade_link">Trade link</string>
+    <string name="steam_card_trade_offer">Trade offer</string>
+    <string name="steam_card_profile">Steam profile</string>
+    <string name="steam_card_published_file">Workshop &amp; community content</string>
+    <string name="steam_card_screenshot">Screenshot or artwork</string>
+    <string name="steam_card_video">Video or clip</string>
+    <string name="steam_card_guide">Steam guide</string>
+    <string name="steam_card_collection">Workshop collection</string>
+    <string name="steam_card_bundle">Steam bundle</string>
+    <string name="steam_card_package">Steam package</string>
+    <string name="steam_card_broadcast">Steam broadcast</string>
+    <string name="steam_card_broadcast_request">Broadcast viewing request</string>
+    <string name="steam_card_playtest">Steam Playtest invitation</string>
+    <string name="steam_card_remote_play">Remote Play Together invitation</string>
+    <string name="steam_card_gift">Steam gift notification</string>
+    <string name="steam_card_inventory">Inventory item</string>
+    <string name="steam_card_friend_request">Friend invitation</string>
+    <string name="steam_card_group">Group or chat invitation</string>
+    <string name="steam_card_event">Community event or news</string>
+    <string name="steam_card_comment">Comment notification</string>
+    <string name="steam_card_market">Community Market</string>
+    <string name="steam_card_effect">Chat effect</string>
+    <string name="steam_card_unknown">Steam message</string>
+    <string name="steam_card_start_trade">Start trade</string>
+    <string name="steam_card_view_trade">View trade offer</string>
+    <string name="steam_card_watch">Watch broadcast</string>
+    <string name="steam_card_view_group">View group or invitation</string>
+    <string name="steam_card_view_profile">View profile</string>
+    <string name="steam_card_view_inventory">View inventory item</string>
+    <string name="steam_card_view_market">View in Market</string>
+    <string name="steam_card_open_invite">Open invitation</string>
+    <string name="steam_card_open">Open in Steam</string>
+    <string name="steam_card_no_handler">No app can open this link. Install a compatible Steam app or copy the link to another device.</string>
+    <string name="steam_card_offer_id">Offer #%1$s</string>
+    <string name="steam_card_no_action">This message has no supported action link. View the original message for details.</string>
+    <string name="steam_card_copy_link">Copy link</string>
+    <string name="steam_card_details">Original message</string>
+    <string name="steam_chat_local_delete_title">Delete this message on this device?</string>
+    <string name="steam_chat_local_delete_description">This hides the message from this conversation and its shared history on this device. It stays hidden after refreshing or reopening. It does not recall the message or delete the copies on Steam or other devices.</string>
+    <string name="steam_chat_local_delete_failed">Could not save the local message deletion. Please try again.</string>
+    <string name="steam_chat_load_older_messages">Load older messages</string>
+    <string name="steam_chat_group_delete_title">Delete this group message?</string>
+</resources>

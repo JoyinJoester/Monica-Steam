@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_tab_store">ストア</string>
+    <string name="steam_game_tab_stats">自分の統計</string>
+    <string name="steam_game_stats_sign_in">ログインするとプレイ記録と実績を確認できます</string>
+    <string name="steam_game_stats_unknown">データなし</string>
+    <string name="steam_game_stats_cached">保存済みのデータです。最新ではない可能性があります</string>
+    <string name="steam_game_stats_last_played">最後のプレイ</string>
+    <string name="steam_game_stats_no_activity">このアカウントのプレイ時間は取得できません。</string>
+    <string name="steam_game_stats_game_data">ゲームデータ</string>
+    <string name="steam_game_stats_screenshots">スクリーンショット</string>
+    <string name="steam_game_stats_workshop">ワークショップ</string>
+    <string name="steam_game_stats_all">すべて</string>
+    <string name="steam_game_stats_completed">解除済み</string>
+    <string name="steam_game_stats_incomplete">未解除</string>
+    <string name="steam_game_stats_hours">%1$.1f 時間</string>
+</resources>

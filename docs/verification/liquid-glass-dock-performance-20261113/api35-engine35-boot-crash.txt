@@ -1,0 +1,25 @@
+--------- beginning of crash
+11-13 14:34:22.723   594   594 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 594 (system_server), pid 594 (system_server)
+11-13 14:34:24.278   876   876 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:34:24.278   876   876 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:34:24.278   876   876 F DEBUG   : Revision: '0'
+11-13 14:34:24.279   876   876 F DEBUG   : ABI: 'x86_64'
+11-13 14:34:24.279   876   876 F DEBUG   : Timestamp: 2026-11-13 14:34:23.175733800+0000
+11-13 14:34:24.279   876   876 F DEBUG   : Process uptime: 16s
+11-13 14:34:24.279   876   876 F DEBUG   : Page size: 16384 bytes
+11-13 14:34:24.279   876   876 F DEBUG   : Cmdline: system_server
+11-13 14:34:24.279   876   876 F DEBUG   : pid: 594, tid: 594, name: system_server  >>> system_server <<<
+11-13 14:34:24.279   876   876 F DEBUG   : uid: 1000
+11-13 14:34:24.283   876   876 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000000
+11-13 14:34:24.283   876   876 F DEBUG   : Cause: null pointer dereference
+11-13 14:34:24.283   876   876 F DEBUG   :     rax 00000000700b0cb8  rbx 0000000014a8d8c0  rcx 0000000000000000  rdx 0000000014977458
+11-13 14:34:24.283   876   876 F DEBUG   :     r8  000000006fe905d0  r9  0000000000000001  r10 000000006fee2260  r11 00000000155ea288
+11-13 14:34:24.284   876   876 F DEBUG   :     r12 00000000149606b8  r13 0000000000000000  r14 0000000000000000  r15 0000000000000000
+11-13 14:34:24.284   876   876 F DEBUG   :     rdi 000077010c14ffe0  rsi 00000000149606b8
+11-13 14:34:24.284   876   876 F DEBUG   :     rbp 0000000014977458  rsp 00007ff0855c5e08  rip 0000000000000000
+11-13 14:34:24.284   876   876 F DEBUG   : 4 total frames
+11-13 14:34:24.284   876   876 F DEBUG   : backtrace:
+11-13 14:34:24.285   876   876 F DEBUG   :       #00 pc 0000000000000000  <unknown>
+11-13 14:34:24.285   876   876 F DEBUG   :       #01 pc 00000000004bdcec  /system/framework/oat/x86_64/services.odex (com.android.server.pm.resolution.ComponentResolver$ActivityIntentResolver.getIntentFilter+156) (BuildId: d252778afdcd06d3834ad876c5147792af2ee8d0)
+11-13 14:34:24.285   876   876 F DEBUG   :       #02 pc 00000000011fc867  [anon:dalvik-main space]
+11-13 14:34:24.286   876   876 F DEBUG   :       #03 pc 00000000002263fe  /system/framework/oat/x86_64/services.odex (com.android.server.IntentResolver.buildResolveList+1022) (BuildId: d252778afdcd06d3834ad876c5147792af2ee8d0)

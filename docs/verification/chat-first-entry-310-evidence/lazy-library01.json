@@ -1,0 +1,520 @@
+{
+  "mode": "library-screen",
+  "origin": "LIBRARY",
+  "pid": 41690,
+  "chatStyle": "LIQUID_GLASS",
+  "samples": [
+    {
+      "round": 0,
+      "selectToCommitMs": 228.415362,
+      "touchToCommitMs": 275.168957,
+      "frames": [
+        {
+          "totalNs": 4465892,
+          "layoutNs": 58769,
+          "drawNs": 1776680,
+          "syncNs": 95130,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6566044,
+          "layoutNs": 37212,
+          "drawNs": 1475833,
+          "syncNs": 119974,
+          "dropped": 0
+        },
+        {
+          "totalNs": 4817969,
+          "layoutNs": 54341,
+          "drawNs": 2102637,
+          "syncNs": 103220,
+          "dropped": 0
+        },
+        {
+          "totalNs": 214990386,
+          "layoutNs": 109010,
+          "drawNs": 125240905,
+          "syncNs": 938581,
+          "dropped": 0
+        },
+        {
+          "totalNs": 234359394,
+          "layoutNs": 61207,
+          "drawNs": 13554083,
+          "syncNs": 284073,
+          "dropped": 0
+        },
+        {
+          "totalNs": 68272466,
+          "layoutNs": 45680,
+          "drawNs": 1749799,
+          "syncNs": 187805,
+          "dropped": 0
+        },
+        {
+          "totalNs": 51946614,
+          "layoutNs": 49282,
+          "drawNs": 1977370,
+          "syncNs": 196814,
+          "dropped": 0
+        },
+        {
+          "totalNs": 35185246,
+          "layoutNs": 48435,
+          "drawNs": 1991657,
+          "syncNs": 186655,
+          "dropped": 0
+        },
+        {
+          "totalNs": 34838118,
+          "layoutNs": 48963,
+          "drawNs": 2158302,
+          "syncNs": 264722,
+          "dropped": 0
+        },
+        {
+          "totalNs": 34799756,
+          "layoutNs": 48106,
+          "drawNs": 2011085,
+          "syncNs": 324833,
+          "dropped": 0
+        },
+        {
+          "totalNs": 35100353,
+          "layoutNs": 47845,
+          "drawNs": 1831791,
+          "syncNs": 188773,
+          "dropped": 0
+        },
+        {
+          "totalNs": 34592462,
+          "layoutNs": 54634,
+          "drawNs": 2247298,
+          "syncNs": 188867,
+          "dropped": 0
+        },
+        {
+          "totalNs": 35007093,
+          "layoutNs": 50338,
+          "drawNs": 2138932,
+          "syncNs": 238819,
+          "dropped": 0
+        },
+        {
+          "totalNs": 34967883,
+          "layoutNs": 53727,
+          "drawNs": 2141066,
+          "syncNs": 226479,
+          "dropped": 0
+        },
+        {
+          "totalNs": 34664213,
+          "layoutNs": 41405,
+          "drawNs": 1803673,
+          "syncNs": 209212,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18268129,
+          "layoutNs": 69606,
+          "drawNs": 1685281,
+          "syncNs": 190966,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17965011,
+          "layoutNs": 56931,
+          "drawNs": 1876200,
+          "syncNs": 217381,
+          "dropped": 0
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "selectToCommitMs": 36.985175,
+      "touchToCommitMs": 74.253522,
+      "frames": [
+        {
+          "totalNs": 18150620,
+          "layoutNs": 65687,
+          "drawNs": 1565631,
+          "syncNs": 184577,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18268155,
+          "layoutNs": 54065,
+          "drawNs": 1753097,
+          "syncNs": 170070,
+          "dropped": 0
+        },
+        {
+          "totalNs": 5312853,
+          "layoutNs": 60476,
+          "drawNs": 2125293,
+          "syncNs": 194275,
+          "dropped": 0
+        },
+        {
+          "totalNs": 19083641,
+          "layoutNs": 82862,
+          "drawNs": 4129935,
+          "syncNs": 234708,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18513511,
+          "layoutNs": 42383,
+          "drawNs": 2051335,
+          "syncNs": 256612,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18177515,
+          "layoutNs": 65116,
+          "drawNs": 2146953,
+          "syncNs": 563240,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17904468,
+          "layoutNs": 58242,
+          "drawNs": 1994040,
+          "syncNs": 205052,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18221762,
+          "layoutNs": 53965,
+          "drawNs": 1924352,
+          "syncNs": 199195,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17960382,
+          "layoutNs": 54398,
+          "drawNs": 2005208,
+          "syncNs": 197763,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18151933,
+          "layoutNs": 50389,
+          "drawNs": 1701980,
+          "syncNs": 232967,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18218203,
+          "layoutNs": 87103,
+          "drawNs": 1829431,
+          "syncNs": 211549,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17981823,
+          "layoutNs": 60992,
+          "drawNs": 2142587,
+          "syncNs": 204599,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18178759,
+          "layoutNs": 50189,
+          "drawNs": 2129804,
+          "syncNs": 200024,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18369519,
+          "layoutNs": 44183,
+          "drawNs": 1732091,
+          "syncNs": 388544,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18094184,
+          "layoutNs": 52961,
+          "drawNs": 1738466,
+          "syncNs": 332249,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18222546,
+          "layoutNs": 43190,
+          "drawNs": 2150082,
+          "syncNs": 232367,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18287404,
+          "layoutNs": 40200,
+          "drawNs": 1607523,
+          "syncNs": 187030,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18016565,
+          "layoutNs": 46430,
+          "drawNs": 1840241,
+          "syncNs": 236647,
+          "dropped": 0
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "selectToCommitMs": 36.572124,
+      "touchToCommitMs": 58.410899,
+      "frames": [
+        {
+          "totalNs": 17968767,
+          "layoutNs": 42088,
+          "drawNs": 1529173,
+          "syncNs": 236203,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18523232,
+          "layoutNs": 44282,
+          "drawNs": 1425269,
+          "syncNs": 209954,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18212338,
+          "layoutNs": 67615,
+          "drawNs": 2893236,
+          "syncNs": 198059,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18187305,
+          "layoutNs": 49766,
+          "drawNs": 1697094,
+          "syncNs": 222578,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17873466,
+          "layoutNs": 61292,
+          "drawNs": 1655069,
+          "syncNs": 197690,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18176799,
+          "layoutNs": 49877,
+          "drawNs": 1992509,
+          "syncNs": 237059,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18049705,
+          "layoutNs": 48817,
+          "drawNs": 1775157,
+          "syncNs": 201262,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18549430,
+          "layoutNs": 47429,
+          "drawNs": 1756416,
+          "syncNs": 226411,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17935335,
+          "layoutNs": 52420,
+          "drawNs": 1193540,
+          "syncNs": 252632,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17913526,
+          "layoutNs": 62553,
+          "drawNs": 1740994,
+          "syncNs": 185630,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18025958,
+          "layoutNs": 50260,
+          "drawNs": 1721887,
+          "syncNs": 203166,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18060502,
+          "layoutNs": 43853,
+          "drawNs": 1513076,
+          "syncNs": 187837,
+          "dropped": 0
+        },
+        {
+          "totalNs": 17898980,
+          "layoutNs": 55204,
+          "drawNs": 1523709,
+          "syncNs": 279572,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18361599,
+          "layoutNs": 51014,
+          "drawNs": 1881847,
+          "syncNs": 224186,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18196212,
+          "layoutNs": 44697,
+          "drawNs": 1960060,
+          "syncNs": 247139,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18374094,
+          "layoutNs": 47853,
+          "drawNs": 1589265,
+          "syncNs": 176954,
+          "dropped": 0
+        },
+        {
+          "totalNs": 18004354,
+          "layoutNs": 58410,
+          "drawNs": 1510621,
+          "syncNs": 226468,
+          "dropped": 0
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "selectToCommitMs": 26.910891,
+      "touchToCommitMs": 46.684135,
+      "frames": [
+        {
+          "totalNs": 18279235,
+          "layoutNs": 45803,
+          "drawNs": 1202135,
+          "syncNs": 192500,
+          "dropped": 0
+        },
+        {
+          "totalNs": 4462618,
+          "layoutNs": 54972,
+          "drawNs": 1581248,
+          "syncNs": 175182,
+          "dropped": 0
+        },
+        {
+          "totalNs": 15339577,
+          "layoutNs": 57653,
+          "drawNs": 2575795,
+          "syncNs": 205778,
+          "dropped": 0
+        },
+        {
+          "totalNs": 10682880,
+          "layoutNs": 50293,
+          "drawNs": 1762965,
+          "syncNs": 222468,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7802587,
+          "layoutNs": 49176,
+          "drawNs": 1658952,
+          "syncNs": 220727,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7459837,
+          "layoutNs": 44883,
+          "drawNs": 1467962,
+          "syncNs": 227037,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7038786,
+          "layoutNs": 44259,
+          "drawNs": 1471196,
+          "syncNs": 186788,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7251528,
+          "layoutNs": 63060,
+          "drawNs": 1529501,
+          "syncNs": 192902,
+          "dropped": 0
+        },
+        {
+          "totalNs": 5061517,
+          "layoutNs": 34906,
+          "drawNs": 892352,
+          "syncNs": 225279,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6697184,
+          "layoutNs": 49438,
+          "drawNs": 1453312,
+          "syncNs": 203529,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6805883,
+          "layoutNs": 41790,
+          "drawNs": 1344786,
+          "syncNs": 166038,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6915442,
+          "layoutNs": 51365,
+          "drawNs": 1325626,
+          "syncNs": 183210,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7271822,
+          "layoutNs": 51241,
+          "drawNs": 1860724,
+          "syncNs": 249663,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6535775,
+          "layoutNs": 37822,
+          "drawNs": 1517739,
+          "syncNs": 301442,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7141329,
+          "layoutNs": 71442,
+          "drawNs": 1478681,
+          "syncNs": 181263,
+          "dropped": 0
+        },
+        {
+          "totalNs": 7721713,
+          "layoutNs": 48875,
+          "drawNs": 1718023,
+          "syncNs": 226638,
+          "dropped": 0
+        },
+        {
+          "totalNs": 6891233,
+          "layoutNs": 38295,
+          "drawNs": 1969223,
+          "syncNs": 221761,
+          "dropped": 0
+        }
+      ]
+    }
+  ],
+  "mounts": 1
+}

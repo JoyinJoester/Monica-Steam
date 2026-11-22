@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -107,6 +108,7 @@ import top.yukonga.miuix.kmp.blur.sensor.rememberDeviceTilt
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.cos
+import kotlin.math.ceil
 import kotlin.math.sign
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -134,12 +136,6 @@ private val SteamLiquidGlassIndicatorHighlight = Highlight(
 private const val LIGHT_REFERENCE_X = 0.5f
 private const val LIGHT_REFERENCE_Y = 0.7f
 private const val GRAVITY_DIRECTION_THRESHOLD_SQUARED = 0.01f
-private const val INDICATOR_DRAG_SCALE_TARGET = 88f / 56f
-private const val VELOCITY_NORMALIZATION_DIVISOR = 10f
-private const val VELOCITY_SCALE_X_MULTIPLIER = 0.75f
-private const val VELOCITY_SCALE_Y_MULTIPLIER = 0.25f
-private const val VELOCITY_SCALE_CLAMP = 0.2f
-private const val LIQUID_GLASS_CAPTURE_ALPHA = 0.001f
 private const val REDUCED_MOTION_DURATION_MILLIS = 120
 private const val REDUCED_MOTION_FADE_OUT_DURATION_MILLIS = 90
 
@@ -258,7 +254,7 @@ internal fun SteamLiquidGlassDock(
         }
         val shellShape = CircleShape
         val shellContainerColor = if (runtimeSupported) {
-            (if (isDarkTheme) Color(0xFF242424) else Color.White).copy(alpha = 0.4f)
+            MaterialTheme.colorScheme.steamGlassTint()
         } else {
             MaterialTheme.colorScheme.surfaceContainer
         }
@@ -269,14 +265,7 @@ internal fun SteamLiquidGlassDock(
             backdrop.delegate,
             tabsBackdrop
         )
-        val shellHighlight = rememberGravityRotatedHighlight(
-            base = SteamLiquidGlassIndicatorHighlight,
-            extraDegrees = -45f
-        )
-        val pillHighlight = rememberGravityRotatedHighlight(
-            base = SteamLiquidGlassIndicatorHighlight,
-            extraDegrees = 90f
-        )
+        val highlights = rememberSteamGlassHighlights(runtimeSupported)
         val dragScaleProgress = rememberIndicatorDragScaleProgress(
             isDragging = motionState.isDragging,
             reduceAnimations = reduceAnimations
@@ -313,7 +302,7 @@ internal fun SteamLiquidGlassDock(
                                         refractionAmount = 24.dp.toPx()
                                     )
                                 },
-                                highlight = { shellHighlight.copy(alpha = 0.75f) },
+                                highlight = { highlights.value.shell.copy(alpha = 0.75f) },
                                 layerBlock = {
                                     val width = size.width.coerceAtLeast(1f)
                                     val scale = lerp(
@@ -402,64 +391,26 @@ internal fun SteamLiquidGlassDock(
                 Box(
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
-                        .graphicsLayer {
-                            translationX = itemWidthPx * indicatorPosition + panelOffsetPx
-                            val indicatorTransform = resolveIndicatorTransform(
-                                scaleProgress = maxOf(dragScaleProgress.value, motionState.pressProgress),
-                                velocityItemsPerSecond = motionState.deformationVelocityItemsPerSecond
-                            )
-                            scaleX = indicatorTransform.scaleX
-                            scaleY = indicatorTransform.scaleY
-                        }
-                        .then(
-                            if (runtimeSupported) {
-                                Modifier
-                                    .drawBackdrop(
-                                        backdrop = combinedBackdrop,
-                                        shape = { shellShape },
-                                        effects = {
-                                            val progress = motionState.pressProgress
-                                            liquidGlassLens(
-                                                refractionHeight = 10.dp.toPx() * progress,
-                                                refractionAmount = 14.dp.toPx() * progress,
-                                                depthEffect = true,
-                                                chromaticAberration = 0.5f
-                                            )
-                                        },
-                                        highlight = {
-                                            pillHighlight.copy(alpha = motionState.pressProgress)
-                                        },
-                                        onDrawSurface = {
-                                            val progress = motionState.pressProgress
-                                            drawRect(
-                                                color = if (isDarkTheme) {
-                                                    Color.White.copy(alpha = 0.1f)
-                                                } else {
-                                                    Color.Black.copy(alpha = 0.1f)
-                                                },
-                                                alpha = 1f - progress
-                                            )
-                                            drawRect(Color.Black.copy(alpha = 0.03f * progress))
-                                        }
-                                    )
-                                    .liquidGlassInnerShadow(shape = shellShape) {
-                                        LiquidGlassInnerShadow(
-                                            radius = 8.dp * motionState.pressProgress,
-                                            color = Color.Black.copy(alpha = 0.15f),
-                                            alpha = motionState.pressProgress
-                                        )
-                                    }
-                            } else {
-                                Modifier.background(
-                                    selectedColor.copy(alpha = 0.15f),
-                                    shellShape
-                                )
-                            }
+                        .steamGlassSelectionLens(
+                            backdrop = combinedBackdrop.takeIf { runtimeSupported },
+                            fallback = selectedColor.copy(alpha = 0.15f),
+                            highlights = highlights,
+                            dark = isDarkTheme,
+                            layerBlock = {
+                                translationX = itemWidthPx * indicatorPosition + panelOffsetPx
+                                val transform = resolveIndicatorTransform(
+                                    maxOf(dragScaleProgress.value, motionState.pressProgress),
+                                    motionState.deformationVelocityItemsPerSecond)
+                                scaleX = transform.scaleX
+                                scaleY = transform.scaleY
+                            },
+                            press = { motionState.pressProgress }
                         )
                         .height(56.dp)
                         .width(itemWidth)
                         .align(Alignment.CenterStart)
                         .zIndex(2f)
+                        .testTag("steam-dock-selection-lens")
                 )
             }
 
@@ -583,96 +534,55 @@ private fun RowScope.SteamLiquidGlassDockInputTarget(
     )
 }
 
-private data class IndicatorTransform(val scaleX: Float, val scaleY: Float)
-
-private fun resolveIndicatorTransform(
-    scaleProgress: Float,
-    velocityItemsPerSecond: Float
-): IndicatorTransform {
-    val baseScale = lerp(
-        1f,
-        INDICATOR_DRAG_SCALE_TARGET,
-        scaleProgress.coerceIn(0f, 1f)
-    )
-    val velocity = velocityItemsPerSecond / VELOCITY_NORMALIZATION_DIVISOR
-    val velocityScaleX = (velocity * VELOCITY_SCALE_X_MULTIPLIER)
-        .coerceIn(-VELOCITY_SCALE_CLAMP, VELOCITY_SCALE_CLAMP)
-    val velocityScaleY = (velocity * VELOCITY_SCALE_Y_MULTIPLIER)
-        .coerceIn(-VELOCITY_SCALE_CLAMP, VELOCITY_SCALE_CLAMP)
-    return IndicatorTransform(
-        scaleX = baseScale / (1f - velocityScaleX),
-        scaleY = baseScale * (1f - velocityScaleY)
-    )
-}
+internal data class SteamGlassHighlights(val shell: Highlight, val pill: Highlight)
 
 @Composable
-private fun rememberIndicatorDragScaleProgress(
-    isDragging: Boolean,
-    reduceAnimations: Boolean
-): State<Float> {
-    val progress = remember { Animatable(0f) }
-    LaunchedEffect(isDragging, reduceAnimations) {
-        progress.animateTo(
-            targetValue = if (isDragging) 1f else 0f,
-            animationSpec = tween(
-                durationMillis = if (reduceAnimations) {
-                    REDUCED_MOTION_FADE_OUT_DURATION_MILLIS
-                } else if (isDragging) {
-                    90
-                } else {
-                    220
-                },
-                easing = if (isDragging) EaseOut else FastOutSlowInEasing
+internal fun rememberSteamGlassHighlights(enabled: Boolean): State<SteamGlassHighlights> {
+    // Both surfaces share one sensor subscription. Read its value inside the
+    // effect callbacks through this derived state, not in the Dock composition.
+    val tilt = if (enabled) rememberDeviceTilt() else null
+    return remember(tilt) {
+        derivedStateOf {
+            val sample = tilt?.value
+            val gravityX = sample?.gravityX ?: 0f
+            val gravityY = sample?.gravityY ?: -1f
+            val magnitudeSquared = gravityX * gravityX + gravityY * gravityY
+            val inverseMagnitude = if (magnitudeSquared > GRAVITY_DIRECTION_THRESHOLD_SQUARED) {
+                1f / sqrt(magnitudeSquared)
+            } else {
+                0f
+            }
+            val lightX = gravityX * inverseMagnitude
+            val lightY = if (inverseMagnitude > 0f) gravityY * inverseMagnitude else -1f
+            SteamGlassHighlights(
+                shell = gravityRotatedHighlight(lightX, lightY, -45f),
+                pill = gravityRotatedHighlight(lightX, lightY, 90f)
             )
-        )
+        }
     }
-    return progress.asState()
 }
 
-@Composable
-private fun rememberGravityRotatedHighlight(
-    base: Highlight,
-    extraDegrees: Float
-): Highlight {
-    val tilt by rememberDeviceTilt()
+private fun gravityRotatedHighlight(lightX: Float, lightY: Float, extraDegrees: Float): Highlight {
+    val base = SteamLiquidGlassIndicatorHighlight
     val baseStyle = base.style as BloomStroke
-    val rotatedPrimary = remember(tilt, baseStyle.primaryLight, extraDegrees) {
-        val gravityX = tilt.gravityX
-        val gravityY = tilt.gravityY
-        val magnitudeSquared = gravityX * gravityX + gravityY * gravityY
-        val (lightX, lightY) = if (magnitudeSquared > GRAVITY_DIRECTION_THRESHOLD_SQUARED) {
-            val inverseMagnitude = 1f / sqrt(magnitudeSquared)
-            gravityX * inverseMagnitude to gravityY * inverseMagnitude
-        } else {
-            0f to -1f
-        }
-        val radians = extraDegrees * PI / 180.0
-        val cosine = cos(radians).toFloat()
-        val sine = sin(radians).toFloat()
-        val rotatedX = cosine * lightX - sine * lightY
-        val rotatedY = sine * lightX + cosine * lightY
-        baseStyle.primaryLight.copy(
+    val radians = extraDegrees * PI / 180.0
+    val cosine = cos(radians).toFloat()
+    val sine = sin(radians).toFloat()
+    val rotatedX = cosine * lightX - sine * lightY
+    val rotatedY = sine * lightX + cosine * lightY
+    return base.copy(style = baseStyle.copy(
+        primaryLight = baseStyle.primaryLight.copy(
             position = LightPosition(
                 x = LIGHT_REFERENCE_X + rotatedX,
                 y = LIGHT_REFERENCE_Y + rotatedY,
                 z = baseStyle.primaryLight.position.z
             )
         )
-    }
-    return remember(base, rotatedPrimary) {
-        base.copy(style = baseStyle.copy(primaryLight = rotatedPrimary))
-    }
+    ))
 }
 
 private fun BackdropEffectScope.liquidGlassVibrancy() {
     colorControls(brightness = 0f, contrast = 1f, saturation = 1.5f)
-}
-
-// A zero-alpha RenderEffect layer may be elided or leak through on some Android GPUs.
-// A near-zero offscreen layer keeps the backdrop recording alive without a visible export band.
-private fun Modifier.liquidGlassCaptureLayer(): Modifier = graphicsLayer {
-    alpha = LIQUID_GLASS_CAPTURE_ALPHA
-    compositingStrategy = CompositingStrategy.Offscreen
 }
 
 private fun resolveLiquidGlassDockWidth(containerWidth: Dp, itemCount: Int): Dp {

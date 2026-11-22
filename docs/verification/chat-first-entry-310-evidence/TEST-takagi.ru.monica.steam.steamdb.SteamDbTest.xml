@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.steamdb.SteamDbTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-20T07:50:30.655Z" hostname="JOYIN" time="0.647">
+  <properties/>
+  <testcase name="freeAndUnknownRegionSkipPricesWhileOtherDataStillLoads" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.057"/>
+  <testcase name="rejectsInvalidReviewCounts" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.416"/>
+  <testcase name="forceRefreshStillHonorsRetryAfter" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.003"/>
+  <testcase name="rateLimitStopsBothSteamDbEndpointsWithoutBlockingSteam" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.03"/>
+  <testcase name="cacheCoalescesInFlightRequestsAndSurvivesObserverCancellation" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.005"/>
+  <testcase name="cacheSeparatesRegionsExpiresAndLabelsStaleResults" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.007"/>
+  <testcase name="ratingAccountsForSampleSizeAndEmptyReviews" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.0"/>
+  <testcase name="retryAfterSupportsSecondsDatesAndBounds" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.015"/>
+  <testcase name="malformedResponsesAndNoDataRemainUnavailable" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.045"/>
+  <testcase name="invalidAppNeverReachesNetwork" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.003"/>
+  <testcase name="officialPlayerAndReviewQueriesAreIndependentOfSteamDb" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.022"/>
+  <testcase name="priceKeepsRegionOccurrenceAndDate" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.016"/>
+  <testcase name="parsesMissingFieldsWithoutTurningThemIntoZero" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.014"/>
+  <testcase name="mapsActualDollarRegionsWithoutGuessingFromLanguage" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.0"/>
+  <testcase name="httpFailureIsNotRetriedAsAnotherTransport" classname="takagi.ru.monica.steam.steamdb.SteamDbTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

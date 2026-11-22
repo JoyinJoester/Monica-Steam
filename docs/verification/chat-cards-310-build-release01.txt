@@ -1,0 +1,192 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/.gradle-user-home/wrapper/dists/gradle-9.7.0-bin/d4tj7w02tcgubx9zk9hbippn6/gradle-9.7.0/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preReleaseBuild UP-TO-DATE
+> Task :mdbx-engine:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeReleaseNativeLibs UP-TO-DATE
+> Task :mdbx-engine:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :telegram-chat-ui:preBuild UP-TO-DATE
+> Task :telegram-chat-ui:preReleaseBuild UP-TO-DATE
+> Task :telegram-chat-ui:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :telegram-chat-ui:mergeReleaseNativeLibs NO-SOURCE
+> Task :telegram-chat-ui:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeReleaseNativeLibs UP-TO-DATE
+> Task :app:stripReleaseDebugSymbols UP-TO-DATE
+> Task :app:extractReleaseNativeSymbolTables UP-TO-DATE
+> Task :app:mergeReleaseNativeDebugMetadata UP-TO-DATE
+> Task :telegram-chat-ui:generateReleaseResources UP-TO-DATE
+> Task :telegram-chat-ui:packageReleaseResources UP-TO-DATE
+> Task :telegram-chat-ui:processReleaseNavigationResources UP-TO-DATE
+> Task :telegram-chat-ui:parseReleaseLocalResources UP-TO-DATE
+> Task :telegram-chat-ui:generateReleaseRFile UP-TO-DATE
+> Task :telegram-chat-ui:compileReleaseKotlin NO-SOURCE
+> Task :telegram-chat-ui:javaPreCompileRelease UP-TO-DATE
+> Task :telegram-chat-ui:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :telegram-chat-ui:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :telegram-chat-ui:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :mdbx-engine:generateReleaseResources UP-TO-DATE
+> Task :mdbx-engine:packageReleaseResources UP-TO-DATE
+> Task :mdbx-engine:processReleaseNavigationResources UP-TO-DATE
+> Task :mdbx-engine:parseReleaseLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateReleaseRFile UP-TO-DATE
+> Task :mdbx-engine:compileReleaseKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileRelease UP-TO-DATE
+> Task :mdbx-engine:compileReleaseJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :mdbx-engine:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :app:checkReleaseDuplicateClasses UP-TO-DATE
+> Task :app:generateReleaseBuildConfig
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:processReleaseNavigationResources
+> Task :app:parseReleaseLocalResources
+> Task :app:generateReleaseRFile
+> Task :mdbx-engine:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :telegram-chat-ui:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :app:kspReleaseKotlin
+
+> Task :app:compileReleaseKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/diagnostics/SteamCrashDiagnostics.kt:64:57 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt:85:30 'val Icons.Filled.HelpOutline: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.HelpOutline.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt:86:27 'val Icons.Filled.OpenInNew: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.OpenInNew.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt:39:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt:81:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt:88:26 Unnecessary safe call on a non-null receiver of type 'SteamVoiceTarget'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt:232:34 Unnecessary safe call on a non-null receiver of type 'SteamVoiceTarget'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt:461:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt:125:43 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:989:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1029:38 Unnecessary safe call on a non-null receiver of type 'ComposableFunction3<Float, Float, Boolean, Unit>'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1189:63 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1199:64 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1219:57 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1283:62 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1320:52 Unnecessary safe call on a non-null receiver of type 'ComposableFunction0<Unit>'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1463:64 Unnecessary non-null assertion (!!) on a non-null receiver of type 'FragmentActivity'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1606:40 Unnecessary non-null assertion (!!) on a non-null receiver of type 'FragmentActivity'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2094:26 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2192:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2207:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2222:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2237:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2252:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2752:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2780:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2936:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3120:66 Unnecessary non-null assertion (!!) on a non-null receiver of type 'AnimatedVisibilityScope'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3134:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3225:21 'fun ListItem(headlineContent: ComposableFunction0<Unit>, modifier: Modifier = ..., overlineContent: ComposableFunction0<Unit>? = ..., supportingContent: ComposableFunction0<Unit>? = ..., leadingContent: ComposableFunction0<Unit>? = ..., trailingContent: ComposableFunction0<Unit>? = ..., colors: ListItemColors = ..., tonalElevation: Dp = ..., shadowElevation: Dp = ...): Unit' is deprecated. Use the overload where `headlineContent` is now a trailing `content` lambda.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3331:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/diagnostics/SteamCrashDiagnostics.kt:64:57 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt:85:30 'val Icons.Filled.HelpOutline: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.HelpOutline.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt:86:27 'val Icons.Filled.OpenInNew: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.OpenInNew.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt:39:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt:81:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt:88:26 Unnecessary safe call on a non-null receiver of type 'SteamVoiceTarget'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt:232:34 Unnecessary safe call on a non-null receiver of type 'SteamVoiceTarget'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt:461:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt:125:43 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:989:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1029:38 Unnecessary safe call on a non-null receiver of type 'ComposableFunction3<Float, Float, Boolean, Unit>'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1189:63 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1199:64 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1219:57 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1283:62 Elvis operator (?:) always returns the left operand of non-nullable type '() -> Unit'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1320:52 Unnecessary safe call on a non-null receiver of type 'ComposableFunction0<Unit>'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1463:64 Unnecessary non-null assertion (!!) on a non-null receiver of type 'FragmentActivity'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1606:40 Unnecessary non-null assertion (!!) on a non-null receiver of type 'FragmentActivity'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2094:26 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2192:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2207:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2222:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2237:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2252:25 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2752:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2780:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2936:22 'fun rememberModalBottomSheetState(skipPartiallyExpanded: Boolean = ..., confirmValueChange: (SheetValue) -> Boolean = ...): SheetState' is deprecated. Use rememberBottomSheetState with Hidden initial value.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3120:66 Unnecessary non-null assertion (!!) on a non-null receiver of type 'AnimatedVisibilityScope'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3134:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3225:21 'fun ListItem(headlineContent: ComposableFunction0<Unit>, modifier: Modifier = ..., overlineContent: ComposableFunction0<Unit>? = ..., supportingContent: ComposableFunction0<Unit>? = ..., leadingContent: ComposableFunction0<Unit>? = ..., trailingContent: ComposableFunction0<Unit>? = ..., colors: ListItemColors = ..., tonalElevation: Dp = ..., shadowElevation: Dp = ...): Unit' is deprecated. Use the overload where `headlineContent` is now a trailing `content` lambda.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:3331:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+
+> Task :app:javaPreCompileRelease UP-TO-DATE
+> Task :app:compileReleaseJavaWithJavac
+> Task :mdbx-engine:prepareReleaseArtProfile UP-TO-DATE
+> Task :telegram-chat-ui:prepareReleaseArtProfile UP-TO-DATE
+> Task :app:mergeReleaseArtProfile UP-TO-DATE
+> Task :mdbx-engine:writeReleaseAarMetadata UP-TO-DATE
+> Task :telegram-chat-ui:writeReleaseAarMetadata UP-TO-DATE
+> Task :app:checkReleaseAarMetadata UP-TO-DATE
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:compileReleaseNavigationResources UP-TO-DATE
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :mdbx-engine:extractDeepLinksRelease UP-TO-DATE
+> Task :mdbx-engine:processReleaseManifest UP-TO-DATE
+> Task :telegram-chat-ui:extractDeepLinksRelease UP-TO-DATE
+> Task :telegram-chat-ui:processReleaseManifest UP-TO-DATE
+
+> Task :app:processReleaseMainManifest
+C:\Users\joyins\Desktop\Monica-all\Monica Steam\.codex-tasks\20261110-chat-cards\offline-release.xml Warning:
+	activity#androidx.slice.compat.SlicePermissionActivity was tagged at offline-release.xml:0 to remove other declarations but no other declaration present
+
+> Task :app:processReleaseManifest
+> Task :app:processReleaseManifestForPackage
+> Task :mdbx-engine:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :mdbx-engine:compileReleaseLibraryResources UP-TO-DATE
+> Task :telegram-chat-ui:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :telegram-chat-ui:compileReleaseLibraryResources UP-TO-DATE
+> Task :app:processReleaseResources
+> Task :mdbx-engine:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :telegram-chat-ui:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :app:expandReleaseArtProfileWildcards
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :app:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :app:compressReleaseJavaRes
+> Task :mdbx-engine:compressReleaseJavaRes UP-TO-DATE
+> Task :telegram-chat-ui:compressReleaseJavaRes NO-SOURCE
+> Task :app:mergeReleaseJavaResource UP-TO-DATE
+> Task :app:mergeReleaseStartupProfile UP-TO-DATE
+> Task :app:minifyReleaseWithR8
+> Task :app:produceReleaseComposeMapping
+> Task :app:reportReleaseComposeMappingErrors
+> Task :app:mergeReleaseComposeMapping
+> Task :app:compileReleaseArtProfile
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :mdbx-engine:generateReleaseAssets UP-TO-DATE
+> Task :mdbx-engine:mergeReleaseAssets UP-TO-DATE
+> Task :telegram-chat-ui:generateReleaseAssets UP-TO-DATE
+> Task :telegram-chat-ui:mergeReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets UP-TO-DATE
+> Task :app:compressReleaseAssets UP-TO-DATE
+> Task :app:extractReleaseVersionControlInfo UP-TO-DATE
+> Task :app:convertShrunkResourcesToBinaryRelease
+> Task :app:optimizeReleaseResources
+> Task :app:collectReleaseDependencies UP-TO-DATE
+> Task :app:sdkReleaseDependencyData UP-TO-DATE
+> Task :app:validateSigningRelease UP-TO-DATE
+> Task :app:writeReleaseAppMetadata UP-TO-DATE
+> Task :app:writeReleaseSigningConfigVersions UP-TO-DATE
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+
+[Incubating] Problems report is available at: file:///C:/Users/joyins/Desktop/Monica-all/Monica%20Steam/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 56s
+92 actionable tasks: 28 executed, 64 up-to-date

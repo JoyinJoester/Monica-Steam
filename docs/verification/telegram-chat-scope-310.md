@@ -1,0 +1,29 @@
+# Monica Steam 1.0.310 — Telegram chat scope and attachment policy
+
+The final accepted scope keeps Telegram-derived UI in chat, contacts, conversation details/search and their menus. The user rejected the proposed app-wide Telegram style. Its global selector, dock, settings rows and Store/Library/Tokens integrations were removed; M3E and the existing Liquid Glass design remain. The Activity matches its pre-Telegram-task snapshot, 15 non-chat files match their task-start snapshots, four other page integrations were narrowly removed, and generic settings components match their prior versions. Unrelated uncommitted changes are retained.
+
+Chat uses native rows, message/header/composer components, dedicated search and popup menus. Steam Space has one chat overflow entry; its existing page design is retained. The sibling glass source never contains its overlay. Its explicit parent-density propagation fixes a demonstrated 1.5x-font loss at the separate ComposeView boundary. Native contact rows measure font padding rather than relying on the old fixed-height label. This is component reuse, with existing Steam actions and protocols preserved.
+
+The actual Valve chat frontend routes attachments through its image/video uploader: JPG/JPEG/PNG/GIF/WebP/AVIF and WebM/MPG/MPEG/MP4/OGV, maximum 30 MiB. Its generic ZIP uploader is not called from this chat path. Monica now shares one metadata/size policy across picker, file list, inspection and upload, rejecting ZIP/PDF/unknown types before opening a stream or making an upload request. Received archive links still work. EResult 20 is treated as service unavailable; 50 as an authentication/session conflict with the existing bounded retry. The user's exact remote server rejection was not reproduced, and metadata filtering does not validate file signatures.
+
+README, application attribution and license references were checked against Steam-Nova main 0a03e75b784fee0a5c92720c73cca0322a8b455a and its MIT text. No live account or outbound Steam message was used.
+
+## Verification
+
+Final unified Debug main/test build completed in 615.708 seconds (10m15s Gradle). All 257 selected JVM tests passed, with zero failures/errors/skips. The final MuMu batch completed all 27 methods in 53.320 seconds, with no failures or skipped methods. It covers native search composition/selection/submission, real PixelCopy blur and source refresh, parent text scale, retired-style preference fallback, the two existing style choices, 6 native private/group-chat cases, 3 local attachment checks and 11 social/menu/detail cases.
+
+The final source/resource freeze contains 2325 paths with no subsequent source changes. Final APK hashes are recorded in `telegram-chat-scope-310-results.json`; packages remain build outputs and are not delivered. Thirteen explicitly selected native screenshots are kept locally, excluding stale global-style images retained in the guest's historical evidence folders. Reviewed outputs include the actual chat menus, large search text, both blur-source colors, the two-option design page, selected group channel and native composer. A screenshot named private-ime shows editor focus; it does not establish a visible software keyboard. The fixture tests exercise IME-facing calls separately.
+
+The source audit verifies 132 upstream records and 114 reproducibly generated files with an identical manifest. Current task resource families contain 55 keys / 275 values across English, Chinese, Japanese, Russian and Vietnamese. No production Telegram design references remain outside chat and its dedicated adapters. Source snapshots, APK hashes, command receipts and failures are preserved in the local task directory.
+
+## Earlier failures and limitations
+
+The abandoned global proposal had five JVM guard failures and device batches of 15/28 and 25/28. Those are not final-scope acceptance. Its last build was interrupted when the user narrowed scope. For the retained scope, the first device setup omitted reconnecting ADB, the next auxiliary uiautomator process exited 139 during a user switch, and the observed SystemUI guest-reset dialog obstructed the first two tests. It was canceled without resetting the guest. Further unrestricted runs exposed the font-density defect and stale ZIP test expectation; test helpers also scrolled while awaiting a popup, disposing its source row, or tapped a channel while a native attachment panel was still exiting. The original receipts and diagnostic windows/screenshots remain; no failure was rewritten as a pass.
+
+Tests use synthetic MuMu API35/x86_64 Debug fixtures and production controls/callbacks, not a signed-in user's complete Activity session. There is no physical-device/OEM/R8, true-account upload or frame-rate claim. Legacy message composer/header typography and full Telegram runtime parity are outside this acceptance. Hybrid accessibility lookup was not universally validated: some filter tests invoke the mounted Compose semantic action directly.
+
+The local Canvas was reduced to three editable chat pages with a new project id, full saved link and reproducible source. Structural/routing/link-roundtrip checks passed; new live preview was queued because no browser automation surface was available. The user's unrelated foreground chat was not displaced. Historical chat previews and final native screenshots are separate evidence. All designs/images remain ignored locally and are not embedded in this document.
+
+MuMu was restored to Owner 0, its physical density 280 with no override was verified, and only the owned guest 10 (Monica_Telegram_Style_20261107) was removed. The first density reset raced with the user transition; it was repeated after Owner settled and then verified. Self-started instance0 is stopped, instance1 remains stopped and untouched, and both existing disks/configurations are retained. The public AVD was not used.
+
+No commit, push, tag, release or APK delivery was performed.

@@ -4,10 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -48,6 +44,10 @@ import takagi.ru.monica.steam.navigation.liquidglass.render.rememberSteamLiquidG
 import takagi.ru.monica.steam.navigation.liquidglass.render.steamLiquidGlassBackdropSource
 import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamLiquidGlassDock
 import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamLiquidGlassDockVisibility
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamDesignStyle
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamGlassBackdrop
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamGlassEffectsEnabled
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamPopupBackdrop
 import takagi.ru.monica.steam.navigation.ui.SteamAdaptiveNavigationRail
 import takagi.ru.monica.steam.navigation.ui.SteamFixedBottomBar
 import takagi.ru.monica.steam.navigation.ui.SteamDockContentClearance
@@ -95,8 +95,8 @@ import takagi.ru.monica.ui.screens.MdbxOneDriveCreateScreen
 import takagi.ru.monica.ui.screens.MdbxOneDriveOpenScreen
 import takagi.ru.monica.ui.screens.MdbxWebDavCreateScreen
 import takagi.ru.monica.ui.screens.MdbxWebDavOpenScreen
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
+import takagi.ru.monica.steam.navigation.SteamTabPageHost
 import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.viewmodel.MdbxViewModel
@@ -125,7 +125,6 @@ private enum class MonicaSteamPage {
 }
 
 private const val MONICA_BACK_EXIT_TIMEOUT_MS = 2_000L
-private const val MONICA_STEAM_DOCK_CONTENT_KEY = "monica_steam_dock_root"
 private const val STEAM_AUTO_BACKUP_PREFS_NAME = "webdav_config"
 private const val STEAM_AUTO_BACKUP_ENABLED_KEY = "auto_backup_enabled"
 private const val STEAM_LAST_BACKUP_TIME_KEY = "last_backup_time"
@@ -283,6 +282,10 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 var pendingSteamNotifications by rememberSaveable { mutableStateOf(false) }
                 var pendingAddSteamAccount by rememberSaveable { mutableStateOf(false) }
                 var isSteamChatThreadOpen by rememberSaveable { mutableStateOf(false) }
+                var isStoreCollectionOpen by remember { mutableStateOf(false) }
+                var isStoreDetailOpen by remember { mutableStateOf(false) }
+                var isLibraryDetailOpen by remember { mutableStateOf(false) }
+                var isLibraryStoreCollectionOpen by remember { mutableStateOf(false) }
                 var activePlatformViewCount by remember { mutableIntStateOf(0) }
                 val isPlatformViewActive = activePlatformViewCount > 0
                 val onPlatformViewVisibilityChanged: (Boolean) -> Unit = { active ->
@@ -299,7 +302,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 val useNavigationRail = adaptiveLayout.useNavigationRail && !imeVisible
                 val dockVisible = shouldShowSteamDock(
                     hasConfiguration = true,
-                    isDockPage = currentPage.isDockPage(dockStyle),
+                    isDockPage = currentPage.isDockPage(dockStyle) &&
+                        !(currentPage == MonicaSteamPage.STORE && (isStoreCollectionOpen || isStoreDetailOpen)) &&
+                        !(currentPage == MonicaSteamPage.LIBRARY && (isLibraryStoreCollectionOpen || isLibraryDetailOpen)),
                     chatThreadOpen = isSteamChatThreadOpen,
                     platformViewActive = isPlatformViewActive,
                     imeVisible = imeVisible
@@ -414,7 +419,10 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                 )
 
                 CompositionLocalProvider(
-                    LocalReduceAnimations provides settings.reduceAnimations
+                    LocalReduceAnimations provides settings.reduceAnimations,
+                    LocalSteamDesignStyle provides dockStyle,
+                    LocalSteamGlassEffectsEnabled provides !isPlatformViewActive,
+                    LocalSteamPopupBackdrop provides liquidGlassBackdrop.takeIf { !isPlatformViewActive }
                 ) {
                     SteamStartupGate(
                         settings = settings,
@@ -469,36 +477,29 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                             0.dp
                                         }
                                     ) {
-                                        AnimatedContent(
+                                        SteamTabPageHost(
                                             modifier = Modifier
                                                 .fillMaxSize()
                                                 .padding(
-                                                    start = if (useNavigationRail) 80.dp else 0.dp
+                                                    start = if (useNavigationRail && dockVisible) 80.dp else 0.dp
                                                 )
                                                 .steamWindowHorizontalPadding()
                                                 .steamLiquidGlassBackdropSource(
                                                     backdrop = liquidGlassBackdrop,
-                                                    enabled = liquidGlassEffectsEnabled
+                                                    enabled = liquidGlassEffectsEnabled ||
+                                                        (!isPlatformViewActive && liquidGlassBackdrop.consumers > 0)
                                                 ),
-                                            targetState = currentPage,
+                                            targetPage = currentPage,
+                                            retainedPages = remember(activeDockOrder) {
+                                                activeDockOrder.map { it.toPage() }.toSet()
+                                            },
+                                            retentionEnabled = !isPlatformViewActive,
                                             label = "monica_steam_page_transition",
-                                            contentKey = { page -> page.transitionContentKey(dockStyle) },
-                                            transitionSpec = {
-                                                if (
-                                                    initialState.isDockPage(dockStyle) &&
-                                                    targetState.isDockPage(dockStyle)
-                                                ) {
-                                                    // Monica Android's SimpleMainScreen swaps top-level tabs
-                                                    // directly; only the NavigationBar selection animates.
-                                                    EnterTransition.None togetherWith ExitTransition.None
-                                                } else {
-                                                    // Every secondary route in Monica Android uses the
-                                                    // EasyNotes scale/fade transition for both push and pop.
-                                                    easyNotesScreenEnter(settings.reduceAnimations)
-                                                        .togetherWith(
-                                                            easyNotesScreenExit(settings.reduceAnimations)
-                                                        )
-                                                }
+                                            transitionSpec = { initialPage, targetPage ->
+                                                steamPageTransition(settings.reduceAnimations,
+                                                    forward = if (initialPage.isDockPage(dockStyle) && targetPage.isDockPage(dockStyle)) {
+                                                        activeDockOrder.indexOf(targetPage.toDockTab()) > activeDockOrder.indexOf(initialPage.toDockTab())
+                                                    } else !targetPage.isDockPage(dockStyle))
                                             }
                                         ) { page ->
                                             when (page) {
@@ -586,6 +587,14 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     navigateTo(MonicaSteamPage.STEAM)
                                 },
                                 onAddSteamAccount = ::openSteamAccountAddition,
+                                onCollectionVisibilityChanged = { isLibraryStoreCollectionOpen = it },
+                                onDetailVisibilityChanged = { isLibraryDetailOpen = it },
+                                onOpenChatShare = { partnerSteamId, share ->
+                                    pendingChatPartnerSteamId = partnerSteamId
+                                    pendingChatGameShare = share
+                                    pendingChatGameSharePartnerSteamId = partnerSteamId
+                                    navigateTo(MonicaSteamPage.CHAT)
+                                },
                                 onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
                                 onOpenStoreApp = { appId ->
                                     pendingStoreAppId = appId
@@ -610,13 +619,15 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     pendingChatGameSharePartnerSteamId = partnerSteamId
                                     navigateTo(MonicaSteamPage.CHAT)
                                 },
-                                initialAppId = pendingStoreAppId,
+                                initialAppId = pendingStoreAppId.takeIf { currentPage == MonicaSteamPage.STORE },
                                 onInitialAppIdConsumed = { pendingStoreAppId = null },
-                                initialWebUrl = pendingStoreWebUrl,
+                                initialWebUrl = pendingStoreWebUrl.takeIf { currentPage == MonicaSteamPage.STORE },
                                 onInitialWebUrlConsumed = { pendingStoreWebUrl = null },
-                                initialWorkshopShare = pendingWorkshopShare,
+                                initialWorkshopShare = pendingWorkshopShare.takeIf { currentPage == MonicaSteamPage.STORE },
                                 onInitialWorkshopShareConsumed = { pendingWorkshopShare = null },
                                 onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
+                                onCollectionVisibilityChanged = { isStoreCollectionOpen = it },
+                                onDetailVisibilityChanged = { isStoreDetailOpen = it },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -624,11 +635,15 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                         MonicaSteamPage.CHAT -> {
                             SteamChatScreen(
                                 standalone = true,
-                                requestedPartnerSteamId = pendingChatPartnerSteamId,
+                                requestedPartnerSteamId = pendingChatPartnerSteamId.takeIf {
+                                    currentPage == MonicaSteamPage.CHAT
+                                },
                                 onConsumeRequestedPartner = {
                                     pendingChatPartnerSteamId = null
                                 },
-                                requestedGameShare = pendingChatGameShare,
+                                requestedGameShare = pendingChatGameShare.takeIf {
+                                    currentPage == MonicaSteamPage.CHAT
+                                },
                                 requestedGameSharePartnerSteamId =
                                     pendingChatGameSharePartnerSteamId,
                                 onConsumeRequestedGameShare = {
@@ -636,7 +651,9 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     pendingChatGameSharePartnerSteamId = null
                                 },
                                 onThreadVisibilityChange = { open ->
-                                    isSteamChatThreadOpen = open
+                                    if (currentPage == MonicaSteamPage.CHAT) {
+                                        isSteamChatThreadOpen = open
+                                    }
                                 },
                                 onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
                                 onOpenStoreApp = { appId ->
@@ -769,11 +786,11 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         pendingCommunitySteamId = steamId
                                         navigateTo(MonicaSteamPage.COMMUNITY)
                                     },
-                                    openNotificationsOnEntry = pendingSteamNotifications,
+                                    openNotificationsOnEntry = pendingSteamNotifications && currentPage == MonicaSteamPage.STEAM,
                                     onNotificationsEntryConsumed = {
                                         pendingSteamNotifications = false
                                     },
-                                    openAddAccountOnEntry = pendingAddSteamAccount,
+                                    openAddAccountOnEntry = pendingAddSteamAccount && currentPage == MonicaSteamPage.STEAM,
                                     onAddAccountEntryConsumed = {
                                         pendingAddSteamAccount = false
                                     },
@@ -787,7 +804,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         pendingChatPartnerSteamId = partnerSteamId
                                         navigateTo(MonicaSteamPage.CHAT)
                                     },
-                                    pendingSteamQrResult = pendingQrResult,
+                                    pendingSteamQrResult = pendingQrResult.takeIf { currentPage == MonicaSteamPage.STEAM },
                                     pendingSteamQrAccountId = pendingQrAccountId,
                                     onConsumePendingSteamQrResult = {
                                         pendingQrResult = null
@@ -808,6 +825,8 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                     }
                     }
 
+                            CompositionLocalProvider(LocalSteamGlassBackdrop provides
+                                liquidGlassBackdrop.takeIf { !isPlatformViewActive }) {
                             if (useNavigationRail && dockVisible) {
                                 SteamAdaptiveNavigationRail(
                                     modifier = Modifier
@@ -860,6 +879,7 @@ class MonicaSteamActivity : BaseMonicaActivity() {
                                         currentPage = tab.toPage()
                                     }
                                 )
+                            }
                             }
                 }
             }
@@ -954,9 +974,6 @@ private fun MonicaSteamPage.isDockPage(style: SteamDockStyle): Boolean = when (t
     MonicaSteamPage.MDBX_ONEDRIVE_CREATE,
     MonicaSteamPage.MDBX_ONEDRIVE_OPEN -> false
 }
-
-private fun MonicaSteamPage.transitionContentKey(style: SteamDockStyle): Any =
-    if (isDockPage(style)) MONICA_STEAM_DOCK_CONTENT_KEY else this
 
 private fun MonicaSteamPage.toDockTab(): SteamDockTab = when (this) {
     MonicaSteamPage.LIBRARY -> SteamDockTab.LIBRARY

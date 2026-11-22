@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_attachment_file_summary">Изображения и видео · до 30 МиБ</string>
+    <string name="steam_chat_attachment_unsupported_type">Чат Steam принимает только изображения и видео JPG, JPEG, PNG, GIF, WebP, AVIF, WebM, MPG, MPEG, MP4 и OGV. ZIP, PDF и другие файлы отправлять здесь нельзя.</string>
+    <string name="steam_chat_attachment_invalid_size">Выберите непустое изображение или видео размером не более 30 МиБ.</string>
+    <string name="steam_chat_attachment_limited_account">Этот ограниченный аккаунт Steam не может загружать вложения. Сначала снимите ограничения аккаунта.</string>
+    <string name="steam_chat_attachment_session_expired">Сеанс Steam истёк. Обновите сеанс аккаунта и повторите попытку.</string>
+    <string name="steam_chat_attachment_rejected">Steam отклонил вложение. Проверьте его формат и размер или выберите другое изображение или видео.</string>
+    <string name="steam_chat_attachment_service_failed">Сервис вложений Steam не смог завершить загрузку. Повторите попытку позже.</string>
+</resources>

@@ -1,0 +1,484 @@
+{
+  "runs": {
+    "device01": {
+      "receipt": {
+        "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+        "test": "59c0722b3d5726863b07e1208772486b7a50dc728ae29db62c1aa5354fd184ef",
+        "exitCode": 0,
+        "seconds": 9.93645039992407
+      },
+      "runnerSeconds": 6.408,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.unknownOutcomeKeepsDraftPreventsResubmitAndOffersOfficialVerificationInLargeText",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.largeTextStillShowsNamesAndKeepsPublishFabReachable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.screenshotIdsResolveThroughPublicFallbackAndM3eFabClearsDock",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.leavingUnsentDraftRequiresExplicitDiscardAndCancelRetainsIt",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.glassFabClearsDockAndUsesAccessiblePublishLabel",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.nativeDraftSubmitsOnlyOnUserClickAndKeepsExactText",
+          "code": 0
+        }
+      ],
+      "passes": 6,
+      "failures": 0,
+      "batchPassed": true
+    },
+    "device02": {
+      "receipt": {
+        "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+        "test": "59c0722b3d5726863b07e1208772486b7a50dc728ae29db62c1aa5354fd184ef",
+        "exitCode": 0,
+        "seconds": 75.69437610008754
+      },
+      "runnerSeconds": 72.179,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.gameActivityPreservesNamesAndMissingAppIds",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.loginEmptyAndNetworkStatesRemainDistinct",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.backDismissesSheetFirstAndAccountSwitchRevokesIt",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.originalActivityAndSensitiveMediaUseReadOnlyActions",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_hideOnlyAchievementsAndRestoreAll",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.publishingRequiresExplicitClickAndKeepsTheCurrentFeedInBothSizes",
+          "code": -2
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.liveFeedColorReachesBothGlassMaterialsAndFallbackRemainsUsable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.cachedAchievementOldUrlLoadsActualImageThroughCanonicalCacheKey",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.narrowLargeTextMeasuresHeaderAndKeepsAllActionsClearOfFeed",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.activeFilterIsAnnouncedAndLoadingNeverDispatchesRefresh",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.floatingHeaderKeepsBackFiltersRefreshAndPublishInBothStyles",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.officialMetadataAppearsInFeedAndExpandedAchievementThenOpensBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.absentMetadataRetainsAnExplicitIdInsteadOfInventingAName",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.actualOriginalOpenLeavesMonicaAndResumesInInstalledBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.largeTextKeepsResolvedGameNameAndBrowserActionReachable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.everyAllowedSourceUsesBrowserSelectionAndUnsafeUrlsNeverDispatch",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceContentSettingsDeviceTest.categoriesPersistByNameAcrossStoreRecreationAndIgnoreUnknownFutureKinds",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest.encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.unknownOutcomeKeepsDraftPreventsResubmitAndOffersOfficialVerificationInLargeText",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.largeTextStillShowsNamesAndKeepsPublishFabReachable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.screenshotIdsResolveThroughPublicFallbackAndM3eFabClearsDock",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.leavingUnsentDraftRequiresExplicitDiscardAndCancelRetainsIt",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.glassFabClearsDockAndUsesAccessiblePublishLabel",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.nativeDraftSubmitsOnlyOnUserClickAndKeepsExactText",
+          "code": 0
+        }
+      ],
+      "passes": 41,
+      "failures": 1,
+      "batchPassed": false
+    },
+    "device03": {
+      "receipt": {
+        "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+        "test": "ee6737ac03ae90b389ea4f23470a5ea4bdbaf8722a572f73f4eaccfeef96df30",
+        "exitCode": 0,
+        "seconds": 64.43663990008645
+      },
+      "runnerSeconds": 61.767,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.gameActivityPreservesNamesAndMissingAppIds",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.loginEmptyAndNetworkStatesRemainDistinct",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.backDismissesSheetFirstAndAccountSwitchRevokesIt",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.originalActivityAndSensitiveMediaUseReadOnlyActions",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_hideOnlyAchievementsAndRestoreAll",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.publishingRequiresExplicitClickAndKeepsTheCurrentFeedInBothSizes",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceUiTest.expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.liveFeedColorReachesBothGlassMaterialsAndFallbackRemainsUsable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.cachedAchievementOldUrlLoadsActualImageThroughCanonicalCacheKey",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.narrowLargeTextMeasuresHeaderAndKeepsAllActionsClearOfFeed",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.activeFilterIsAnnouncedAndLoadingNeverDispatchesRefresh",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.floatingHeaderKeepsBackFiltersRefreshAndPublishInBothStyles",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.officialMetadataAppearsInFeedAndExpandedAchievementThenOpensBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.absentMetadataRetainsAnExplicitIdInsteadOfInventingAName",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.actualOriginalOpenLeavesMonicaAndResumesInInstalledBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.largeTextKeepsResolvedGameNameAndBrowserActionReachable",
+          "code": -2
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.everyAllowedSourceUsesBrowserSelectionAndUnsafeUrlsNeverDispatch",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceContentSettingsDeviceTest.categoriesPersistByNameAcrossStoreRecreationAndIgnoreUnknownFutureKinds",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest.encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.unknownOutcomeKeepsDraftPreventsResubmitAndOffersOfficialVerificationInLargeText",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.largeTextStillShowsNamesAndKeepsPublishFabReachable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.screenshotIdsResolveThroughPublicFallbackAndM3eFabClearsDock",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.leavingUnsentDraftRequiresExplicitDiscardAndCancelRetainsIt",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.glassFabClearsDockAndUsesAccessiblePublishLabel",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.nativeDraftSubmitsOnlyOnUserClickAndKeepsExactText",
+          "code": 0
+        }
+      ],
+      "passes": 41,
+      "failures": 1,
+      "batchPassed": false
+    },
+    "device04": {
+      "receipt": {
+        "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+        "test": "ee6737ac03ae90b389ea4f23470a5ea4bdbaf8722a572f73f4eaccfeef96df30",
+        "exitCode": 0,
+        "seconds": 8.040412199916318
+      },
+      "runnerSeconds": 5.329,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.officialMetadataAppearsInFeedAndExpandedAchievementThenOpensBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.absentMetadataRetainsAnExplicitIdInsteadOfInventingAName",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.actualOriginalOpenLeavesMonicaAndResumesInInstalledBrowser",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.largeTextKeepsResolvedGameNameAndBrowserActionReachable",
+          "code": 0
+        },
+        {
+          "method": "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.everyAllowedSourceUsesBrowserSelectionAndUnsafeUrlsNeverDispatch",
+          "code": 0
+        }
+      ],
+      "passes": 5,
+      "failures": 0,
+      "batchPassed": true
+    }
+  },
+  "distinctPassingMethods": [
+    "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest.encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts",
+    "takagi.ru.monica.steam.space.SteamSpaceContentSettingsDeviceTest.categoriesPersistByNameAcrossStoreRecreationAndIgnoreUnknownFutureKinds",
+    "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.absentMetadataRetainsAnExplicitIdInsteadOfInventingAName",
+    "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.actualOriginalOpenLeavesMonicaAndResumesInInstalledBrowser",
+    "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.everyAllowedSourceUsesBrowserSelectionAndUnsafeUrlsNeverDispatch",
+    "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.largeTextKeepsResolvedGameNameAndBrowserActionReachable",
+    "takagi.ru.monica.steam.space.SteamSpaceGameBrowserDeviceTest.officialMetadataAppearsInFeedAndExpandedAchievementThenOpensBrowser",
+    "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.activeFilterIsAnnouncedAndLoadingNeverDispatchesRefresh",
+    "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.cachedAchievementOldUrlLoadsActualImageThroughCanonicalCacheKey",
+    "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.floatingHeaderKeepsBackFiltersRefreshAndPublishInBothStyles",
+    "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.liveFeedColorReachesBothGlassMaterialsAndFallbackRemainsUsable",
+    "takagi.ru.monica.steam.space.SteamSpaceHeaderUiTest.narrowLargeTextMeasuresHeaderAndKeepsAllActionsClearOfFeed",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+    "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest.stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.glassFabClearsDockAndUsesAccessiblePublishLabel",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.largeTextStillShowsNamesAndKeepsPublishFabReachable",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.leavingUnsentDraftRequiresExplicitDiscardAndCancelRetainsIt",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.nativeDraftSubmitsOnlyOnUserClickAndKeepsExactText",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.screenshotIdsResolveThroughPublicFallbackAndM3eFabClearsDock",
+    "takagi.ru.monica.steam.space.SteamSpacePublishDeviceTest.unknownOutcomeKeepsDraftPreventsResubmitAndOffersOfficialVerificationInLargeText",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.backDismissesSheetFirstAndAccountSwitchRevokesIt",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.contentFilters_hideOnlyAchievementsAndRestoreAll",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.gameActivityPreservesNamesAndMissingAppIds",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.loginEmptyAndNetworkStatesRemainDistinct",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.originalActivityAndSensitiveMediaUseReadOnlyActions",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.publishingRequiresExplicitClickAndKeepsTheCurrentFeedInBothSizes",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+    "takagi.ru.monica.steam.space.SteamSpaceUiTest.updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears"
+  ]
+}

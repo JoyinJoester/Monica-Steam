@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-20T06:56:13.525Z" hostname="JOYIN" time="0.328">
+  <properties/>
+  <testcase name="missingClientRecordsUseAllRecentGamesForSelectedPlayerWithoutSummingSources" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.256"/>
+  <testcase name="invalidOrIncompleteRecentResponsesAreUnavailableInsteadOfZeroMinutes" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.021"/>
+  <testcase name="successfulZeroMinutesClearsPreviousRecentActivity" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.014"/>
+  <testcase name="explicitEmptyRecentResponseIsSuccessful" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.003"/>
+  <testcase name="noSharedGamesOrMissingSessionDoesNotMakeRequests" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.001"/>
+  <testcase name="failedSupplementKeepsSuccessfulClientRecords" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.002"/>
+  <testcase name="partialRefreshKeepsCachedMinutesOnlyForUnavailableGamesOfSameAccount" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.017"/>
+  <testcase name="clientActivityUsesSelectedTokenAndOnlyEnrichesSharedLicenseIds" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.002"/>
+  <testcase name="clientParserPreservesZeroMinutesAndUnsignedTimestamps" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.001"/>
+  <testcase name="emptyMalformedAndRejectedClientResponsesUseRecentEndpoint" classname="takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

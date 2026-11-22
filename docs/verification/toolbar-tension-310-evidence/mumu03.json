@@ -1,0 +1,22 @@
+{
+  "main": "2122003ed6f08e365feefc842fc0df8a15d7e9e9e5eeeb3d21157fd3f80fe6db",
+  "test": "63bd5f6be337809f6257c43f3d58adc5b31d315f7016e3f9f3fabe3071b734bd",
+  "exitCode": 0,
+  "seconds": 77.27279620000627,
+  "args": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "127.0.0.1:16416",
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.store.SteamToolbarTensionUiTest,takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+    "takagi.ru.monica.steamapp.toolbartension.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramPopupLayout.java": "00c824f7284b669f6305cd8ae1f7d24de86ff3439c57d42d82edf372b3a88a39",
+  "telegram-chat-ui/src/androidTest/java/com/monica/telegramchat/MenuPopupTestActivity.java": "e3eef1b1f606906f9c0517933d6eb9a1d3390394c97be49e17784c43378bdbab",
+  "telegram-chat-ui/src/androidTest/java/com/monica/telegramchat/TelegramPopupSizeTest.java": "f6b64b2b53271ea370e866f38ac311b3f2879e3e955e604a8e7310a75cfd9c6f",
+  "telegram-chat-ui/src/androidTest/AndroidManifest.xml": "244ea4313eee7c1d3888bdfb0e570b81689026844d6749b896bc235dddb07805",
+  "docs/releases/Monica-Steam-Unreleased.md": "ddee489f7034c0e022eb9a264bc39d8f4585c9b76ad76a45573a7f7c92a455c0"
+}

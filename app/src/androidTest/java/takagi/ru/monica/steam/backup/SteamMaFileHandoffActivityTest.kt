@@ -28,7 +28,7 @@ class SteamMaFileHandoffActivityTest {
 
     @Before fun prepare() = runBlocking<Unit> {
         assumeTrue(InstrumentationRegistry.getArguments().getString("monicaHandoffHost") == "true")
-        check(context.packageName == "takagi.ru.monica.steam.recoverytest")
+        check(context.packageName in setOf("takagi.ru.monica.steam.recoverytest", "takagi.ru.monica.steamapp.toolchainpilot"))
         val host = context.packageManager.getApplicationInfo(STEAM, 0)
         check(context.packageManager.getApplicationLabel(host).toString() == "Monica maFile test host")
         automation.serviceInfo = automation.serviceInfo.apply {

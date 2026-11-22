@@ -1,0 +1,741 @@
+Performing Streamed Install
+
+Success
+
+
+Performing Streamed Install
+
+Success
+
+
+
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.TelegramChatUiTest:
+
+INSTRUMENTATION_STATUS: test=olderReadingAnchorSurvivesImeAndReopening
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=olderReadingAnchorSurvivesImeAndReopening
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=lightThemeNativeTitleAndLongHistoryRemainInteractive
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=lightThemeNativeTitleAndLongHistoryRemainInteractive
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=directNativeEditorSendsKeepsImeAndRetries
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=directNativeEditorSendsKeepsImeAndRetries
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramChatUiTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest:
+
+INSTRUMENTATION_STATUS: test=longPressMenuFollowsTheTouchPointInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=longPressMenuFollowsTheTouchPointInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=nativeTapDispatchHasNoGestureTimeout
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeTapDispatchHasNoGestureTimeout
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=preferenceReadRunsOffTheUiThread
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=preferenceReadRunsOffTheUiThread
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=bottomEdgeLargeTypeAndKeyboardMenusRemainInsideTheWindow
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=10
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=bottomEdgeLargeTypeAndKeyboardMenusRemainInsideTheWindow
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cancelledPreferenceReadCannotRestoreThePreviousConversation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=11
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cancelledPreferenceReadCannotRestoreThePreviousConversation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=conversationTransitionSettlesWithoutTheLongScalePause
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=12
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=conversationTransitionSettlesWithoutTheLongScalePause
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest:
+
+INSTRUMENTATION_STATUS: test=shortAndCancelledGesturesSpringBackWithoutAction
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=13
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=shortAndCancelledGesturesSpringBackWithoutAction
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=14
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=15
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=bothDirectionsFollowTheFingerAndRevealActionsInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=16
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=bothDirectionsFollowTheFingerAndRevealActionsInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest
+
+INSTRUMENTATION_STATUS: current=17
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest:
+
+INSTRUMENTATION_STATUS: test=nativeInboxAvatarUsesItsOwnSlotAndDockAndUnreadRemainVisible
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=18
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=nativeInboxAvatarUsesItsOwnSlotAndDockAndUnreadRemainVisible
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=memberRenameRefreshesBitmapWithoutAnAvatarUrlChange
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=19
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=memberRenameRefreshesBitmapWithoutAnAvatarUrlChange
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=cjkAvatarsRenderAt40_56_88DpInBothThemesAndLargeType
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=20
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=cjkAvatarsRenderAt40_56_88DpInBothThemesAndLargeType
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=membersBeyondTheFourVisibleTilesDoNotChangeTheBitmap
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest
+
+INSTRUMENTATION_STATUS: current=21
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=membersBeyondTheFourVisibleTilesDoNotChangeTheBitmap
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest:
+
+INSTRUMENTATION_STATUS: test=transparentPhotosKeepAnOpaqueGroupTone
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=22
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=transparentPhotosKeepAnOpaqueGroupTone
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=chineseInkStaysAwayFromTheCircleAndSeamsAtEveryAvatarSize
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=23
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=chineseInkStaysAwayFromTheCircleAndSeamsAtEveryAvatarSize
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=fourPhotosFillTheCorrectQuadrantsWithCentreCropping
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=24
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=fourPhotosFillTheCorrectQuadrantsWithCentreCropping
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=maskIsTransparentOutsideAndOpaqueInsideForEveryMemberCount
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest
+
+INSTRUMENTATION_STATUS: current=25
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=25
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=maskIsTransparentOutsideAndOpaqueInsideForEveryMemberCount
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 89.917
+
+
+
+OK (25 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+s_glBindAttribLocation: bind attrib 0 name position
+
+s_glBindAttribLocation: bind attrib 1 name localCoord

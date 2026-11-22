@@ -1,5 +1,14 @@
 package takagi.ru.monica.steam.library.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshActionIcon
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
+import takagi.ru.monica.steam.library.collections.*
+import androidx.compose.runtime.DisposableEffect
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterTransition
@@ -8,6 +17,8 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,27 +28,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material.icons.filled.SwitchAccount
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,20 +58,20 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.alpha
@@ -80,6 +93,7 @@ import java.util.Date
 import java.util.Locale
 import takagi.ru.monica.steam.workshop.SteamWorkshopEntry
 import takagi.ru.monica.steam.workshop.SteamWorkshopScreen
+import takagi.ru.monica.steam.library.steamAchievementImageUrls
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.data.AppSettings
@@ -100,7 +114,6 @@ import takagi.ru.monica.steam.library.resolvedSteamLibraryCurrency
 import takagi.ru.monica.steam.library.analytics.domain.SteamPlayActivityHistory
 import takagi.ru.monica.steam.library.analytics.ui.SteamGameDistributionCard
 import takagi.ru.monica.steam.library.analytics.ui.SteamPlayHeatMapCard
-import takagi.ru.monica.steam.library.filter.domain.SteamLibraryFilterSelection
 import takagi.ru.monica.steam.library.filter.domain.countSteamLibraryGames
 import takagi.ru.monica.steam.library.filter.ui.SteamLibraryFilterEntry
 import takagi.ru.monica.steam.library.filter.ui.SteamLibraryFilterSheet
@@ -117,7 +130,9 @@ import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 import takagi.ru.monica.steam.profile.SteamMiniProfileDecor
 import takagi.ru.monica.steam.profile.SteamMiniProfileDecorRepository
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
+import takagi.ru.monica.steam.foundation.ui.SteamAccountAvatarButton
 import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
+import takagi.ru.monica.steam.foundation.ui.SteamEmptyState
 import takagi.ru.monica.steam.foundation.ui.LocalSteamAvatarFrameShape
 import takagi.ru.monica.steam.foundation.ui.SteamAccountSwitcherSheet
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
@@ -127,13 +142,13 @@ import takagi.ru.monica.steam.profile.ui.SteamMiniProfileBackgroundLayer
 import takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerTarget
 import takagi.ru.monica.steam.profile.viewer.ui.SteamProfileViewerScreen
 import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import takagi.ru.monica.ui.theme.GoogleSansFlexFontFamily
 import takagi.ru.monica.utils.SettingsManager
 
 private sealed interface SteamLibraryDestination {
     data object Overview : SteamLibraryDestination
+    data object Collections : SteamLibraryDestination
     data object Account : SteamLibraryDestination
     data class Profile(val steamId: String) : SteamLibraryDestination
     data class Game(val appId: Int) : SteamLibraryDestination
@@ -155,14 +170,18 @@ fun SteamLibraryScreen(
     onAddSteamAccount: () -> Unit = {},
     onPlatformViewVisibilityChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
-    onOpenStoreApp: (Int) -> Unit = {}
+    onCollectionVisibilityChanged: (Boolean) -> Unit = {},
+    onDetailVisibilityChanged: (Boolean) -> Unit = {},
+    onOpenStoreApp: (Int) -> Unit = {},
+    onOpenChatShare: (String, takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare) -> Unit = { _, _ -> }
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val reduceAnimations = LocalReduceAnimations.current
     val viewModel: SteamLibraryViewModel = viewModel(
         factory = remember(context) { SteamLibraryViewModel.factory(context) }
     )
-    val state by viewModel.uiState.collectAsState()
+    // A retained hidden page has a stopped lifecycle; avoid rebuilding its library UI.
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedGame = state.selectedGame
     var query by rememberSaveable { mutableStateOf("") }
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
@@ -175,7 +194,13 @@ fun SteamLibraryScreen(
     var screenshotsAppId by rememberSaveable { mutableStateOf<Int?>(null) }
     val selectedAccount = state.accounts.firstOrNull { it.id == state.selectedAccountId }
         ?: state.accounts.firstOrNull()
+    val collectionScope = "${state.storageSource}|${state.selectedAccountId}|${selectedAccount?.steamId}"
+    var showCollectionsPage by rememberSaveable(collectionScope) { mutableStateOf(false) }
+    val collectionPageState = rememberSaveableStateHolder()
     val accountDetailsVisible = showAccountDetails && selectedAccount != null
+    val reportDetailVisibility by androidx.compose.runtime.rememberUpdatedState(onDetailVisibilityChanged)
+    androidx.compose.runtime.SideEffect { reportDetailVisibility(selectedGame != null) }
+    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { reportDetailVisibility(false) } }
     val libraryDestination = when {
         workshopAppId != null && selectedGame != null -> SteamLibraryDestination.Workshop(requireNotNull(workshopAppId))
         screenshotsAppId != null && selectedGame != null ->
@@ -183,6 +208,7 @@ fun SteamLibraryScreen(
         gameDataAppId != null && selectedGame != null ->
             SteamLibraryDestination.GameData(requireNotNull(gameDataAppId))
         selectedGame != null -> SteamLibraryDestination.Game(selectedGame.appId)
+        showCollectionsPage -> SteamLibraryDestination.Collections
         showSteamProfile && selectedAccount?.hasRealSteamId == true ->
             SteamLibraryDestination.Profile(selectedAccount.steamId)
         accountDetailsVisible -> SteamLibraryDestination.Account
@@ -190,13 +216,14 @@ fun SteamLibraryScreen(
     }
     BackHandler(
         enabled = workshopAppId != null || screenshotsAppId != null || gameDataAppId != null || selectedGame != null ||
-            showSteamProfile || accountDetailsVisible
+            showSteamProfile || accountDetailsVisible || showCollectionsPage
     ) {
         when {
             workshopAppId != null -> workshopAppId = null
             screenshotsAppId != null -> screenshotsAppId = null
             gameDataAppId != null -> gameDataAppId = null
             selectedGame != null -> viewModel.closeGame()
+            showCollectionsPage -> showCollectionsPage = false
             showSteamProfile -> showSteamProfile = false
             else -> showAccountDetails = false
         }
@@ -208,8 +235,7 @@ fun SteamLibraryScreen(
             if (initialState.isSteamWebDestination() || targetState.isSteamWebDestination()) {
                 EnterTransition.None togetherWith ExitTransition.None
             } else {
-                easyNotesScreenEnter(reduceAnimations)
-                    .togetherWith(easyNotesScreenExit(reduceAnimations))
+                steamPageTransition(reduceAnimations, forward = targetState != SteamLibraryDestination.Overview)
             }
         },
         label = "SteamLibraryNavigation"
@@ -238,16 +264,12 @@ fun SteamLibraryScreen(
                             }
                         } else null,
                         actions = {
-                            IconButton(
+                            SteamAccountAvatarButton(
+                                account = selectedAccount,
                                 onClick = { showAccountSheet = true },
                                 enabled = state.accounts.isNotEmpty() ||
                                     state.mdbxDatabases.isNotEmpty()
-                            ) {
-                                Icon(
-                                    Icons.Default.SwitchAccount,
-                                    contentDescription = stringResource(R.string.steam_switch_account)
-                                )
-                            }
+                            )
                             IconButton(onClick = { searchExpanded = true }) {
                                 Icon(
                                     Icons.Default.Search,
@@ -260,6 +282,12 @@ fun SteamLibraryScreen(
                                 onOpenNotifications = onOpenNotifications,
                                 onOpenSettings = onOpenSettings,
                                 additionalActions = listOf(
+                                    SteamPageOverflowAction(
+                                        label = steamCollectionsMenuLabel(state.collectionSelection, state.collections),
+                                        icon = Icons.Default.Folder,
+                                        enabled = state.snapshot != null,
+                                        onClick = { showCollectionsPage = true }
+                                    ),
                                     SteamPageOverflowAction(
                                         label = stringResource(
                                             if (state.syncingAchievementProgress) {
@@ -298,6 +326,12 @@ fun SteamLibraryScreen(
             }
         ) { padding ->
             when (destination) {
+                SteamLibraryDestination.Collections -> collectionPageState.SaveableStateProvider(collectionScope) {
+                    SteamCollectionsScreen(state.collections, state.snapshot?.games.orEmpty(), state.collectionSelection,
+                        onSelect = viewModel::selectCollection, onRefresh = viewModel::refreshCollections,
+                        onChange = viewModel::changeCollection, onBack = { showCollectionsPage = false },
+                        onOpenGame = { viewModel.openGame(it, loadDetails = false) }, modifier = Modifier.fillMaxSize().padding(padding))
+                }
                 is SteamLibraryDestination.Workshop -> SteamWorkshopScreen(
                     appId = destination.appId,
                     gameName = selectedGame?.name.orEmpty(),
@@ -310,36 +344,21 @@ fun SteamLibraryScreen(
                     val game = selectedGame
                         ?: state.snapshot?.games?.firstOrNull { it.appId == destination.appId }
                     if (game != null) {
-                        val gameDataPage = steamGameDataPage(
-                            steamId = selectedAccount?.steamId,
-                            appId = game.appId
-                        )
-                        val screenshotsPage = steamGameScreenshotsPage(
-                            steamId = selectedAccount?.steamId,
-                            appId = game.appId
-                        )
-                        SteamGameDetail(
-                            game = game,
-                            priceRegion = state.snapshot?.region.orEmpty(),
-                            gameDataPage = gameDataPage,
-                            screenshotsPage = screenshotsPage,
-                            achievements = state.achievements,
-                            loading = state.loadingAchievements,
-                            fromCache = state.achievementsFromCache,
-                            failure = state.achievementFailure,
-                            onRetry = { viewModel.openGame(game) },
+                        takagi.ru.monica.steam.store.ui.SteamStoreScreen(
+                            initialAppId = game.appId,
+                            initialPersonalStats = true,
+                            initialDetailName = game.name,
+                            onDetailClosed = viewModel::closeGame,
                             onNavigateBack = viewModel::closeGame,
-                            onOpenRegionalPrices = {
-                                showRegionalPriceSheet = true
-                                viewModel.loadRegionalPrices(game)
-                            },
-                            onOpenStoreApp = onOpenStoreApp,
-                            onOpenGameData = { gameDataAppId = game.appId },
-                            onOpenScreenshots = { screenshotsAppId = game.appId },
-                            onOpenWorkshop = { workshopAppId = game.appId },
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(padding)
+                            onAddSteamAccount = onAddSteamAccount,
+                            onOpenChatShare = onOpenChatShare,
+                            onCollectionVisibilityChanged = onCollectionVisibilityChanged,
+                            onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
+                            modifier = Modifier.fillMaxSize().padding(padding),
+                            viewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                                key = "library_game_detail",
+                                factory = takagi.ru.monica.steam.store.presentation.SteamStoreViewModel.factory(context)
+                            )
                         )
                     }
                 }
@@ -394,7 +413,7 @@ fun SteamLibraryScreen(
                     val settingsManager = remember(context) {
                         SettingsManager(context.applicationContext)
                     }
-                    val appSettings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
+                    val appSettings by settingsManager.settingsFlow.collectAsStateWithLifecycle(initialValue = AppSettings())
                     selectedAccount?.let { account ->
                         SteamAccountDetail(
                             account = account,
@@ -429,6 +448,7 @@ fun SteamLibraryScreen(
                     }
                 }
                 SteamLibraryDestination.Overview -> SteamExpressivePullToRefresh(
+                    showIndicator = false,
                     refreshing = state.loadingLibrary,
                     onRefresh = viewModel::refreshLibrary,
                     modifier = Modifier.fillMaxSize().padding(padding)
@@ -436,10 +456,13 @@ fun SteamLibraryScreen(
                     SteamLibraryOverview(
                         state = state,
                         query = query,
-                        onOpenGame = viewModel::openGame,
+                        onOpenGame = { viewModel.openGame(it, loadDetails = false) },
                         onOpenAccountDetails = { showAccountDetails = true },
                         onRetry = viewModel::refreshLibrary,
                         onSyncAllAchievements = { viewModel.syncAllAchievementProgress() },
+                        onRefreshCollections = viewModel::refreshCollections,
+                        onSelectCollection = viewModel::selectCollection,
+                        onAddAccount = onAddSteamAccount,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -483,6 +506,9 @@ private fun SteamLibraryOverview(
     onOpenAccountDetails: () -> Unit,
     onRetry: () -> Unit,
     onSyncAllAchievements: () -> Unit,
+    onRefreshCollections: () -> Unit,
+    onSelectCollection: (String?) -> Unit,
+    onAddAccount: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val adaptiveLayout = rememberSteamAdaptiveLayout()
@@ -490,7 +516,7 @@ private fun SteamLibraryOverview(
     val dockContentClearance = LocalSteamDockContentClearance.current
     val context = androidx.compose.ui.platform.LocalContext.current
     val settingsManager = remember(context) { SettingsManager(context.applicationContext) }
-    val appSettings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
+    val appSettings by settingsManager.settingsFlow.collectAsStateWithLifecycle(initialValue = AppSettings())
     val filterPreferences = remember(context) {
         SteamLibraryFilterPreferences(context.applicationContext)
     }
@@ -499,8 +525,26 @@ private fun SteamLibraryOverview(
     }
     var showFilterSheet by rememberSaveable(state.selectedAccountId) { mutableStateOf(false) }
     val snapshot = state.snapshot
-    val sections = remember(snapshot, query, filterSelection) {
-        buildSteamLibrarySections(snapshot?.games.orEmpty(), query, filterSelection)
+    val collectionScope = "${state.storageSource}|${state.selectedAccountId}|${state.accounts.firstOrNull { it.id == state.selectedAccountId }?.steamId}"
+    val selectedCollection = state.collectionSelection
+    val collectionSnapshot = state.collections.snapshot
+    LaunchedEffect(collectionSnapshot) {
+        if (collectionSnapshot != null && selectedCollection != null &&
+            (selectedCollection == "" && !collectionSnapshot.canIdentifyUnfiled ||
+            selectedCollection != "" && collectionSnapshot.collections.none { it.id == selectedCollection && it.editable })) onSelectCollection(null)
+    }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle, collectionScope) {
+        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) onRefreshCollections() }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+    val collectionSourceGames = remember(snapshot, collectionSnapshot, selectedCollection) {
+        val ids = collectionGames(snapshot?.games.orEmpty().map { it.appId }.toSet(), selectedCollection, collectionSnapshot)
+        snapshot?.games.orEmpty().filter { it.appId in ids }
+    }
+    val sections = remember(collectionSourceGames, query, filterSelection) {
+        buildSteamLibrarySections(collectionSourceGames, query, filterSelection)
     }
     val filteredCount = remember(sections) { sections.sumOf { it.games.size } }
     LazyColumn(
@@ -540,16 +584,24 @@ private fun SteamLibraryOverview(
         if (snapshot == null) {
             item {
                 if (state.accounts.isEmpty()) {
-                    Text(
-                        stringResource(R.string.steam_library_no_accounts),
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    SteamEmptyState(
+                        icon = Icons.Default.SportsEsports,
+                        title = stringResource(R.string.steam_empty_title),
+                        message = stringResource(R.string.steam_library_no_accounts),
+                        modifier = Modifier.fillParentMaxHeight(0.8f)
+                    ) {
+                        Button(onClick = onAddAccount) {
+                            Icon(Icons.Default.Add, contentDescription = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.steam_add_account_button))
+                        }
+                    }
                 } else {
                     LibraryStateMessage(
                         failure = state.libraryFailure,
                         loading = state.loadingLibrary,
                         onRetry = onRetry,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.fillParentMaxHeight(0.8f)
                     )
                 }
             }
@@ -617,7 +669,7 @@ private fun SteamLibraryOverview(
             selection = filterSelection,
             totalCount = sheetSnapshot.games.distinctBy(SteamGame::appId).size,
             filteredCount = { pending ->
-                countSteamLibraryGames(sheetSnapshot.games, query, pending)
+                countSteamLibraryGames(collectionSourceGames, query, pending)
             },
             onApply = { applied ->
                 filterSelection = applied
@@ -1041,10 +1093,7 @@ private fun SteamAccountDetailHero(
             tonalElevation = 2.dp
         ) {
             IconButton(onClick = onRefresh, enabled = !loading) {
-                Icon(
-                    Icons.Default.Refresh,
-                    contentDescription = stringResource(R.string.refresh)
-                )
+                SteamRefreshActionIcon(loading, Icons.Default.Refresh, stringResource(R.string.refresh))
             }
         }
         Column(
@@ -1088,9 +1137,6 @@ private fun SteamAccountDetailHero(
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-            }
-            if (loading) {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             }
         }
     }
@@ -1284,20 +1330,22 @@ private fun SteamGameSectionHeader(section: SteamLibraryGameSection) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
+internal fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit, modifier: Modifier = Modifier,
+    onLongClick: (() -> Unit)? = null, selected: Boolean? = null, showDivider: Boolean = true, enabled: Boolean = true, smallIcon: Boolean = false) {
     val achievementSummary = game.achievementSummaryOrNull()
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 84.dp)
-                .clickable(onClick = onClick)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .heightIn(min = if (smallIcon) 68.dp else 84.dp)
+                .combinedClickable(enabled = enabled, onClick = onClick, onLongClick = onLongClick)
+                .padding(horizontal = if (smallIcon) 12.dp else 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(if (smallIcon) 12.dp else 10.dp)
         ) {
-            SteamGameBanner(game)
+            if (smallIcon) GameIcon(game, size = 44.dp, modifier = Modifier.testTag("collection_game_icon_${game.appId}")) else SteamGameBanner(game)
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -1346,7 +1394,8 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                     }
                 }
             }
-            if (achievementSummary != null) {
+            if (selected != null) { Checkbox(selected, null) }
+            if (achievementSummary != null && selected == null) {
                 val achievementColor = if (achievementSummary.isPerfect) {
                     MaterialTheme.colorScheme.tertiary
                 } else {
@@ -1393,7 +1442,7 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                         maxLines = 1
                     )
                 }
-            } else if (game.achievementTotalCount == 0) {
+            } else if (selected == null && game.achievementTotalCount == 0) {
                 Text(
                     text = "-/-",
                     style = MaterialTheme.typography.labelMedium,
@@ -1403,7 +1452,7 @@ private fun SteamGameLibraryRow(game: SteamGame, onClick: () -> Unit) {
                 )
             }
         }
-        HorizontalDivider(modifier = Modifier.padding(start = 144.dp, end = 16.dp))
+        if (showDivider) HorizontalDivider(modifier = Modifier.padding(start = 144.dp, end = 16.dp))
     }
 }
 
@@ -1584,7 +1633,7 @@ private fun SummaryCell(label: String, value: String, modifier: Modifier = Modif
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SteamGameDetail(
+internal fun SteamGameDetail(
     game: SteamGame,
     priceRegion: String,
     gameDataPage: SteamGameDataPage?,
@@ -1609,12 +1658,16 @@ private fun SteamGameDetail(
     val filter = SteamAchievementFilter.entries
         .firstOrNull { it.name == filterName }
         ?: SteamAchievementFilter.ALL
-    val visibleAchievements = remember(achievements, filter) {
+    var selectedSetId by rememberSaveable(game.appId) { mutableStateOf<Long?>(null) }
+    val sets = remember(achievements) { achievements?.selectableSets.orEmpty() }
+    val effectiveSetId = selectedSetId.takeIf { id -> sets.any { it.groupId == id } }
+    val visibleAchievements = remember(achievements, filter, effectiveSetId) {
+        val members = achievements?.achievementsInSet(effectiveSetId).orEmpty()
         when (filter) {
-            SteamAchievementFilter.ALL -> achievements?.achievements.orEmpty()
+            SteamAchievementFilter.ALL -> members
                 .sortedByDescending(SteamAchievement::achieved)
-            SteamAchievementFilter.COMPLETED -> achievements?.completed.orEmpty()
-            SteamAchievementFilter.INCOMPLETE -> achievements?.incomplete.orEmpty()
+            SteamAchievementFilter.COMPLETED -> members.filter { it.achieved }
+            SteamAchievementFilter.INCOMPLETE -> members.filterNot { it.achieved }
         }
     }
     LazyColumn(
@@ -1707,6 +1760,10 @@ private fun SteamGameDetail(
             }
         }
         if (achievements != null) {
+            if (sets.isNotEmpty()) item(key = "achievement_sets") {
+                SteamAchievementSetSelector(sets, effectiveSetId, { selectedSetId = it }, achievements::setProgress,
+                    Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+            }
             if (achievements.achievements.isNotEmpty()) {
                 item {
                     Column(
@@ -1745,7 +1802,7 @@ private fun SteamGameDetail(
                     }
                 }
                 itemsIndexed(visibleAchievements, key = ::steamAchievementLazyKey) { _, achievement ->
-                    AchievementItem(achievement)
+                    AchievementItem(achievement, achievements.appId)
                 }
             }
         }
@@ -1925,64 +1982,6 @@ private fun SteamGameDetailMetric(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-        }
-    }
-}
-
-@Composable
-private fun AchievementItem(achievement: SteamAchievement) {
-    ListItem(
-        headlineContent = { Text(achievement.displayName) },
-        supportingContent = {
-            Column {
-                if (achievement.description.isNotBlank()) Text(achievement.description)
-                if (achievement.unlockTimeSeconds != null) {
-                    Text(
-                        stringResource(
-                            R.string.steam_library_unlocked_at,
-                            formatDateTime(achievement.unlockTimeSeconds * 1_000L)
-                        ),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        },
-        leadingContent = {
-            SteamAchievementIcon(achievement)
-        },
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
-    HorizontalDivider(modifier = Modifier.padding(start = 72.dp))
-}
-
-@Composable
-private fun SteamAchievementIcon(achievement: SteamAchievement) {
-    val image = rememberSteamRemoteImage(
-        if (achievement.achieved) achievement.iconUrl else achievement.lockedIconUrl
-    )
-    Surface(
-        modifier = Modifier
-            .size(48.dp)
-            .alpha(if (achievement.achieved) 1f else 0.62f),
-        color = MaterialTheme.colorScheme.surfaceContainerHighest,
-        shape = MaterialTheme.shapes.small
-    ) {
-        if (image != null) {
-            Image(
-                bitmap = image,
-                contentDescription = achievement.displayName,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        } else {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Icon(
-                    if (achievement.achieved) Icons.Default.CheckCircle else Icons.Default.Help,
-                    contentDescription = null,
-                    tint = if (achievement.achieved) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
     }
 }
@@ -2223,13 +2222,13 @@ internal enum class SteamAchievementFilter {
 }
 
 @Composable
-private fun GameIcon(game: SteamGame, large: Boolean = false) {
+private fun GameIcon(game: SteamGame, large: Boolean = false, size: androidx.compose.ui.unit.Dp = if (large) 64.dp else 48.dp, modifier: Modifier = Modifier) {
     val iconUrl = game.iconHash.takeIf(String::isNotBlank)?.let {
         "https://media.steampowered.com/steamcommunity/public/images/apps/${game.appId}/$it.jpg"
     }
     val bitmap = rememberSteamRemoteImage(iconUrl)
     Surface(
-        modifier = Modifier.size(if (large) 64.dp else 48.dp),
+        modifier = modifier.size(size),
         color = MaterialTheme.colorScheme.primaryContainer,
         shape = MaterialTheme.shapes.small
     ) {
@@ -2275,34 +2274,36 @@ private fun LibraryStateMessage(
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (loading) {
+    if (loading) {
+        Box(modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
-        } else {
-            Icon(
-                when (failure) {
-                    SteamLibraryFailureReason.PRIVATE_PROFILE -> Icons.Default.Warning
-                    SteamLibraryFailureReason.SESSION_REQUIRED -> Icons.Default.Error
-                    SteamLibraryFailureReason.RATE_LIMITED -> Icons.Default.Warning
-                    SteamLibraryFailureReason.NETWORK -> Icons.Default.Help
-                    SteamLibraryFailureReason.INVALID_RESPONSE, null -> Icons.Default.Help
-                },
-                contentDescription = null
+        }
+        return
+    }
+    SteamEmptyState(
+        icon = when (failure) {
+            SteamLibraryFailureReason.PRIVATE_PROFILE -> Icons.Default.Warning
+            SteamLibraryFailureReason.SESSION_REQUIRED -> Icons.Default.Error
+            SteamLibraryFailureReason.RATE_LIMITED -> Icons.Default.Warning
+            SteamLibraryFailureReason.NETWORK -> Icons.Default.Help
+            SteamLibraryFailureReason.INVALID_RESPONSE, null -> Icons.Default.Help
+        },
+        title = stringResource(R.string.steam_library_title),
+        message = libraryFailureLabel(failure),
+        modifier = modifier
+    ) {
+        FilledTonalButton(onClick = onRetry) {
+            Icon(Icons.Default.Refresh, contentDescription = null)
+            Text(
+                text = stringResource(R.string.refresh),
+                modifier = Modifier.padding(start = 8.dp)
             )
-            Text(libraryFailureLabel(failure))
-            FilledTonalButton(onClick = onRetry) {
-                Icon(Icons.Default.Refresh, contentDescription = null)
-                Text(
-                    text = stringResource(R.string.refresh),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
         }
     }
 }
 
 @Composable
-private fun libraryFailureLabel(failure: SteamLibraryFailureReason?): String {
+internal fun libraryFailureLabel(failure: SteamLibraryFailureReason?): String {
     return stringResource(
         when (failure) {
             SteamLibraryFailureReason.PRIVATE_PROFILE -> R.string.steam_library_private_profile

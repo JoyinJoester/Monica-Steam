@@ -40,6 +40,7 @@ import takagi.ru.monica.steam.network.optimization.domain.SteamDnsScanStage
 import takagi.ru.monica.steam.network.optimization.ui.SteamAutoOptimizationUiState
 import takagi.ru.monica.steam.network.optimization.ui.isBusy
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun SteamNetworkAutomaticScanCard(
     state: SteamAutoOptimizationUiState,

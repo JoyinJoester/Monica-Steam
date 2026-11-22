@@ -12,6 +12,9 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.steam.navigation.SteamDockTab
@@ -26,9 +29,11 @@ internal fun SteamAdaptiveNavigationRail(
     onSelected: (SteamDockTab) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val glass = steamGlassAvailable()
     NavigationRail(
-        modifier = modifier.fillMaxHeight(),
-        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.96f),
+        modifier = modifier.fillMaxHeight().then(if (glass) Modifier.steamGlassSurface(
+            RectangleShape, MaterialTheme.colorScheme.surface, SteamGlassRole.TOOLBAR) else Modifier),
+        containerColor = if (glass) Color.Transparent else MaterialTheme.colorScheme.surface.copy(alpha = 0.96f),
         windowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0)
     ) {
         Column(

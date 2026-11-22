@@ -1,0 +1,8 @@
+<resources>
+    <string name="steam_chat_wallpaper_title">Chat background</string>
+    <string name="steam_chat_wallpaper_pattern">TG pattern</string>
+    <string name="steam_chat_wallpaper_soft">TG soft pattern</string>
+    <string name="steam_chat_wallpaper_plain">Theme solid color</string>
+    <string name="steam_chat_wallpaper_apply">Done</string>
+    <string name="steam_chat_wallpaper_preview">Chat preview</string>
+</resources>

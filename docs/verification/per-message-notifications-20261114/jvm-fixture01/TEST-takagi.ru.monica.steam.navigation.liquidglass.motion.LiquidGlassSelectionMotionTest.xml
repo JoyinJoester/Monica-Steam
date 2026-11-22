@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-14T14:43:53.622Z" hostname="JOYIN" time="0.145">
+  <properties/>
+  <testcase name="stoppedPageRejectsLateReleaseFromAnyOption" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.138"/>
+  <testcase name="draggingFromUnselectedOptionCommitsOnlyReleasedTarget" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.003"/>
+  <testcase name="unselectedPressDoesNotCommitAndCancellationRestoresOriginalBounds" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/steamdb/data/SteamDbApi.kt": "9c9a62c8dec074d4098aee37b32f8904420603f0f2d2ac227d4393ea1927f130",
+  "app/src/main/java/takagi/ru/monica/steam/store/data/SteamStoreReviewParser.kt": "19f5662594915cf59e0950b8c1ba0a94cf63882189c6d9ecc8f5b1a661808ea7",
+  "app/src/main/java/takagi/ru/monica/steam/store/data/SteamStoreReviewService.kt": "a9d9b0a4e6a765471be548c91e767b07e9635c5be98073b3a9aa621bd0217498",
+  "app/src/main/java/takagi/ru/monica/steam/store/domain/SteamStoreReviews.kt": "7efb6c23d395008b953ee4371b5c566c4622a701ff7b9fa4644eeaf174368015",
+  "app/src/main/java/takagi/ru/monica/steam/store/presentation/SteamStoreViewModel.kt": "f5054085ba5473a59d887d50baacebdd12853162310cd1e69b95504fb57fe507",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreReviewList.kt": "172909942bad580e404b014f0c50b185127659e1edd8e4cbc7e41faaae6200d3",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "af10224917d401ebcd08144a19f9f2a0623a73664d1aa58c566ed244ef76feeb"
+}

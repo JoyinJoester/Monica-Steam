@@ -1,0 +1,18 @@
+[
+  {
+    "file": "Monica-Steam-Android-armeabi-v7a-1.0.310-26110218-05.APK",
+    "abi": "armeabi-v7a",
+    "size": 33072019,
+    "sha256": "b8284e4d50f4957658e9a62fac7cd863bcf205cc1072aa7abbd2c23011272d08",
+    "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+    "signatureVerified": true
+  },
+  {
+    "file": "Monica-Steam-Android-arm64-v8a-1.0.310-26110218-05.APK",
+    "abi": "arm64-v8a",
+    "size": 37948807,
+    "sha256": "d408e6daaad12ac94b849eede510f5cf3a10a93eeece97723e9fa51f8d9977d4",
+    "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+    "signatureVerified": true
+  }
+]

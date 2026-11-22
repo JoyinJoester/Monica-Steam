@@ -1,0 +1,33 @@
+--- before/telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramPopupLayout.java
++++ telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramPopupLayout.java
+@@ -50,6 +50,30 @@
+         LayoutParams params = new LayoutParams(-1, -2);
+         params.setMargins(dp(8),dp(8),dp(8),dp(8));
+         addView(rows, params);
++    }
++
++    @Override protected void onMeasure(int widthSpec, int heightSpec) {
++        // A bare MATCH_PARENT View consumes AT_MOST's whole height. The glass is decoration:
++        // measure only the rows first, then fit the backdrop inside that resolved content size.
++        measureChildWithMargins(rows, widthSpec, 0, heightSpec, 0);
++        LayoutParams rowParams = (LayoutParams) rows.getLayoutParams();
++        int width = rows.getMeasuredWidth() + rowParams.leftMargin + rowParams.rightMargin
++                + getPaddingLeft() + getPaddingRight();
++        int height = rows.getMeasuredHeight() + rowParams.topMargin + rowParams.bottomMargin
++                + getPaddingTop() + getPaddingBottom();
++        int state = rows.getMeasuredState();
++        setMeasuredDimension(resolveSizeAndState(Math.max(width, getSuggestedMinimumWidth()), widthSpec, state),
++                resolveSizeAndState(Math.max(height, getSuggestedMinimumHeight()), heightSpec,
++                        state << MEASURED_HEIGHT_STATE_SHIFT));
++        if (glass.getVisibility() != GONE) {
++            LayoutParams glassParams = (LayoutParams) glass.getLayoutParams();
++            int glassWidth = Math.max(0, getMeasuredWidth() - getPaddingLeft() - getPaddingRight()
++                    - glassParams.leftMargin - glassParams.rightMargin);
++            int glassHeight = Math.max(0, getMeasuredHeight() - getPaddingTop() - getPaddingBottom()
++                    - glassParams.topMargin - glassParams.bottomMargin);
++            glass.measure(MeasureSpec.makeMeasureSpec(glassWidth, MeasureSpec.EXACTLY),
++                    MeasureSpec.makeMeasureSpec(glassHeight, MeasureSpec.EXACTLY));
++        }
+     }
+
+     public void setGlassSource(View source, boolean liquidStyle) {

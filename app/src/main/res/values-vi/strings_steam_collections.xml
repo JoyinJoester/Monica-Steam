@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_collections_title">Bộ sưu tập Steam</string>
+    <string name="steam_collections_unfiled">Chưa phân loại</string>
+    <string name="steam_collections_all">Tất cả trò chơi</string>
+    <string name="steam_collections_create">Tạo bộ sưu tập</string>
+    <string name="steam_collections_rename">Đổi tên bộ sưu tập</string>
+    <string name="steam_collections_delete">Xóa bộ sưu tập</string>
+    <string name="steam_collections_name">Tên bộ sưu tập</string>
+    <string name="steam_collections_edit_games">Chỉnh sửa trò chơi</string>
+    <string name="steam_collections_actions">Thao tác bộ sưu tập</string>
+    <string name="steam_collections_refresh">Làm mới bộ sưu tập</string>
+    <string name="steam_collections_count">%1$d trò chơi</string>
+    <string name="steam_collections_sync_hint">Sắp xếp thư viện Steam. Các bộ sưu tập không có cấp con; một trò chơi có thể thuộc nhiều bộ.</string>
+    <string name="steam_collections_dynamic">Bộ sưu tập động · quản lý trên Steam máy tính</string>
+    <string name="steam_collections_readonly">Chỉ đọc · quản lý trên Steam máy tính</string>
+    <string name="steam_collections_delete_hint">Xóa “%1$s” khỏi Steam? Trò chơi vẫn ở trong thư viện.</string>
+    <string name="steam_collections_members_hint">Có thể chọn trò chơi sở hữu và trò chơi được chia sẻ trong gia đình. Các thành viên khác vẫn được giữ.</string>
+    <string name="steam_collections_search">Tìm trò chơi</string>
+    <string name="steam_collections_save">Lưu lên Steam</string>
+    <string name="steam_collections_cancel">Hủy</string>
+    <string name="steam_collections_saving">Đang lưu và kiểm tra trên Steam…</string>
+    <string name="steam_collections_loading">Đang tải bộ sưu tập Steam…</string>
+    <string name="steam_collections_saved">Đã lưu và xác minh trên Steam.</string>
+    <string name="steam_collections_error_login">Đăng nhập lại để truy cập bộ sưu tập.</string>
+    <string name="steam_collections_error_unavailable">Steam không cho phép phiên này truy cập bộ sưu tập.</string>
+    <string name="steam_collections_error_conflict">Bộ sưu tập đã đổi trên thiết bị khác. Đóng trình chỉnh sửa, làm mới rồi xem lại.</string>
+    <string name="steam_collections_error_unknown">Không thể xác minh kết quả lưu. Đóng trình chỉnh sửa và làm mới trước khi sửa tiếp.</string>
+    <string name="steam_collections_error_invalid">Kiểm tra tên hoặc dữ liệu bộ sưu tập.</string>
+    <string name="steam_collections_error_network">Không thể tải bộ sưu tập. Kiểm tra kết nối rồi làm mới.</string>
+    <string name="steam_collections_search_folders">Tìm bộ sưu tập</string>
+    <string name="steam_collections_manage">Quản lý bộ sưu tập</string>
+    <string name="steam_collections_select_visible">Chọn tất cả trò chơi đang hiển thị</string>
+    <string name="steam_collections_clear_visible">Bỏ chọn trò chơi đang hiển thị</string>
+    <string name="steam_collections_discard_title">Bỏ thay đổi?</string>
+    <string name="steam_collections_discard_message">Các thay đổi chưa được lưu lên Steam.</string>
+    <string name="steam_collections_discard_confirm">Bỏ thay đổi</string>
+    <string name="steam_collections_empty">Không có trò chơi hoặc bộ sưu tập phù hợp.</string>
+    <string name="steam_collections_folders">Thư mục</string>
+    <string name="steam_collections_games">Trò chơi</string>
+    <string name="steam_collections_sort_ascending">Tên: A–Z</string>
+    <string name="steam_collections_sort_descending">Tên: Z–A</string>
+    <string name="steam_collections_about">Về thư mục trò chơi</string>
+    <string name="steam_collections_add_to">Thêm vào thư mục</string>
+    <string name="steam_collections_remove_from">Xóa khỏi thư mục</string>
+    <string name="steam_collections_remove_hint">Xóa %1$d trò chơi khỏi “%2$s”? Chúng vẫn ở trong thư viện Steam của bạn.</string>
+</resources>

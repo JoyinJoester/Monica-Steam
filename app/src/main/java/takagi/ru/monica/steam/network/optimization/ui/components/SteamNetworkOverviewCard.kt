@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import androidx.compose.ui.res.stringResource
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun SteamNetworkOverviewCard(
     enabled: Boolean,

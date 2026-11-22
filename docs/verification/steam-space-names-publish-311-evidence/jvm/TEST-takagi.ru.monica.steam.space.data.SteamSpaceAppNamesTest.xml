@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-21T17:00:06.653Z" hostname="JOYIN" time="0.377">
+  <properties/>
+  <testcase name="authenticationFailureReachesOwnerInsteadOfBecomingAnEmptyNameMap" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.287"/>
+  <testcase name="officialHttpBatchSuppliesActualNamesBeforeSlowMediaAndNeverCallsCmForMetadata" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.031"/>
+  <testcase name="emptyBatchStillResolvesScreenshotIdsFromPublicStoreAndCachesOnlySuccessfulNames" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.044"/>
+  <testcase name="failedBatchUsesBoundedFallbackAndWrongPublicIdentityRemainsUnknown" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.006"/>
+  <testcase name="failedWrongTypeOrConflictingIdentitiesNeverSupplyAGameName" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.001"/>
+  <testcase name="publicMetadataRequiresExplicitSuccessRequestedIdAndBoundedText" classname="takagi.ru.monica.steam.space.data.SteamSpaceAppNamesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

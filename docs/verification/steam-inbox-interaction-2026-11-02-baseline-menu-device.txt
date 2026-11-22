@@ -1,0 +1,97 @@
+Performing Streamed Install
+
+Success
+
+
+Performing Streamed Install
+
+Success
+
+
+
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=1
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest:
+
+INSTRUMENTATION_STATUS: test=longPressMenuFollowsTheTouchPointInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=1
+
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Menu must move with the horizontal touch position
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest.longPressMenuFollowsTheTouchPointInBothThemes(SteamInboxInteractionUiTest.kt:185)
+
+
+
+INSTRUMENTATION_STATUS: stream=
+
+Error in longPressMenuFollowsTheTouchPointInBothThemes(takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest):
+
+java.lang.AssertionError: Menu must move with the horizontal touch position
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest.longPressMenuFollowsTheTouchPointInBothThemes(SteamInboxInteractionUiTest.kt:185)
+
+
+
+INSTRUMENTATION_STATUS: test=longPressMenuFollowsTheTouchPointInBothThemes
+
+INSTRUMENTATION_STATUS_CODE: -2
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 12.387
+
+There was 1 failure:
+
+1) longPressMenuFollowsTheTouchPointInBothThemes(takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest)
+
+java.lang.AssertionError: Menu must move with the horizontal touch position
+
+	at org.junit.Assert.fail(Assert.java:89)
+
+	at org.junit.Assert.assertTrue(Assert.java:42)
+
+	at takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest.longPressMenuFollowsTheTouchPointInBothThemes(SteamInboxInteractionUiTest.kt:185)
+
+
+
+FAILURES!!!
+
+Tests run: 1,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+s_glBindAttribLocation: bind attrib 0 name position
+
+s_glBindAttribLocation: bind attrib 1 name localCoord

@@ -73,6 +73,7 @@ class SteamDbTest {
         server.enqueue(json("""{"success":1,"query_summary":{"total_positive":900,"total_negative":100}}"""))
         assertEquals(1000L, ready(api.rating(620)).total)
         val query = server.takeRequest().requestUrl!!
+        assertEquals("/ajaxappreviews/620", query.encodedPath)
         assertEquals("all", query.queryParameter("language"))
         assertEquals("steam", query.queryParameter("purchase_type"))
         assertEquals("all", query.queryParameter("review_type"))

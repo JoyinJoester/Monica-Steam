@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-20T16:40:42.203Z" hostname="JOYIN" time="0.029">
+  <properties/>
+  <testcase name="previewCountMatchesFilteredResultsWithoutDependingOnSortOrder" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.025"/>
+  <testcase name="activeChoiceCountIncludesSortAndFeatureToggle" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.0"/>
+  <testcase name="totalPlaytimeAndNameSortsAreStable" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.002"/>
+  <testcase name="noAchievementsDoesNotTreatUnknownProgressAsNoAchievements" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.002"/>
+  <testcase name="ownershipAchievementPlaytimeAndCloudCanBeCombined" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.0"/>
+  <testcase name="familySharedScopeCanBeSelectedWithoutChangingOtherDimensions" classname="takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

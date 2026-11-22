@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-07",
+  "version": "1.0.310-26110718-17",
+  "builds": {
+    "main_and_test": "5m18s successful",
+    "test_only_internal_evidence": "53s successful",
+    "test_only_window_capture": "47s successful",
+    "takeover_rebuilt": false
+  },
+  "device": {
+    "emulator": "existing MuMu instance 0",
+    "api": 35,
+    "abi": "x86_64",
+    "final_takeover_runs": [
+      {
+        "font_scale": 1.0,
+        "tests": 1,
+        "passed": 1,
+        "runner_seconds": 2.298
+      },
+      {
+        "font_scale": 1.5,
+        "tests": 1,
+        "passed": 1,
+        "runner_seconds": 1.577
+      }
+    ],
+    "distinct_test_methods": 1,
+    "previous_final_runs": [
+      {
+        "font_scale": 1.0,
+        "runner_seconds": 1.555,
+        "passed": 1
+      },
+      {
+        "font_scale": 1.5,
+        "runner_seconds": 1.508,
+        "passed": 1
+      }
+    ],
+    "note": "Existing method covers EmojiPack decoding and selection callback on the default recent page, plus window capture. No live Steam account."
+  },
+  "visual": {
+    "previous": {
+      "capture": "application-window PixelCopy",
+      "image_size": [
+        1080,
+        1920
+      ],
+      "category_cell_pixels": 105,
+      "category_strip_identical_between_font_scales": true,
+      "outer_ring_pixel_bounds_inclusive": [
+        11,
+        11,
+        93,
+        93
+      ],
+      "clock_pixel_bounds_inclusive": [
+        27,
+        27,
+        77,
+        77
+      ],
+      "shared_center_pixels": [
+        52.0,
+        52.0
+      ]
+    },
+    "takeover": {
+      "capture": "application-window PixelCopy",
+      "image_size": [
+        1080,
+        1920
+      ],
+      "category_cell_pixels": 70,
+      "category_strip_identical_between_font_scales": true,
+      "outer_ring_pixel_bounds_inclusive": [
+        8,
+        8,
+        61,
+        61
+      ],
+      "clock_pixel_bounds_inclusive": [
+        18,
+        18,
+        51,
+        51
+      ],
+      "shared_center_pixels": [
+        34.5,
+        34.5
+      ]
+    }
+  },
+  "density_limitation": "Takeover driver requested and observed wm override420, but actual window category cell is70px (280dpi geometry), unlike prior105px captures. Do not label takeover images as420dpi. Font-scale settings were read back and lower labels visibly scale. Original owner density280 restored after switching back.",
+  "cleanup": {
+    "owned_guest_removed": true,
+    "user_restored": "0",
+    "density_restored": "Physical density: 280",
+    "only_owner_remains": "Users:\n\tUserInfo{0:Owner:4c13} running",
+    "owner_packages": "none installed",
+    "package_manager_uninstalled_records": "pm list packages -u still showed Steam records immediately after guest removal; no global uninstall or user data clearing performed",
+    "mumu_instance_0_stopped": true,
+    "mumu_instance_1_remained_stopped": true
+  },
+  "previous_achievement_source_paths_unchanged": [
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceLinks.kt",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceParser.kt",
+    "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceServiceTest.kt",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt"
+  ],
+  "sha256": {
+    "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26110718-17.APK": "2d1fb806bab199bf97b8628471f65a9e188991236b0f246573da3afa91dea84c",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "1c6b2de96c9fa1abdba097aada899ea3853444473154303dc5e841c680ce7c7f",
+    "docs/design/steam-emoji-recent-20261107/takeover/emoji-recent-normal.png": "8e0b1c33a340e1483f300d3756d3670b117e7150ff58130b02bb22ab029e6393",
+    "docs/design/steam-emoji-recent-20261107/takeover/emoji-recent-large.png": "673c4be2bf6df204c0998d45e3b401aa1f6fe528e06cce164263642aefca8a31",
+    "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramEmojiPickerView.java": "cfa5d37176e5485c451adb9cc6cc9bd3028a514c4e64e3496cac45c38b3b74d3",
+    "app/src/androidTest/java/takagi/ru/monica/steam/chat/TelegramSocialUiTest.kt": "98c8f4a301fadd13206361268c4926968203f8b17833672d66078747fd346fcd",
+    "docs/releases/Monica-Steam-Unreleased.md": "ae5d1c9bd1f42b6e87dab8cf19df0f8c7181333c22d9fe5acbe20ca812c0d480"
+  }
+}

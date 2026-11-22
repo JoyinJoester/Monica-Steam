@@ -27,9 +27,9 @@ class SteamStoreGiftUiGuardTest {
         assertTrue(splitButton.contains("size(PurchaseActionHeight)"))
         assertTrue(splitButton.contains("onAddAsGift()"))
         assertTrue(picker.contains("MonicaModalBottomSheet("))
-        assertTrue(picker.contains("OutlinedTextField("))
+        assertTrue(picker.contains("SteamSheetSearchField(query, { query = it },"))
         assertTrue(picker.contains("FriendAvatar(friend = friend, size = 48)"))
-        assertTrue(picker.contains("heightIn(min = 72.dp)"))
+        assertTrue(picker.contains("heightIn(min = 80.dp)"))
         assertTrue(store.contains("SteamStoreGiftPurchaseSplitButton("))
         assertTrue(store.contains("SteamStoreGiftRecipientSheet("))
     }

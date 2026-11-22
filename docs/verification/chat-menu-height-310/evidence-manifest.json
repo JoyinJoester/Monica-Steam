@@ -1,0 +1,52 @@
+[
+  {
+    "file": "build-before.json",
+    "sourceSha256": "dbc810f0c94ee4366539616715644b3a9bef54b2522898dbae8f707bb6a25e17",
+    "documentSha256": "40bb3b007771d88b3721ab9b47189f870d54b735bb1061cf185137f5f93e92c7"
+  },
+  {
+    "file": "build-fixed.json",
+    "sourceSha256": "0dd2499252f629befe98a4337a448cbab887554628f7286425292cf0f883186b",
+    "documentSha256": "a0f650bdbbb7ff158f42dd4e7511812b1b74361833ac4133f2da7284cb38c07b"
+  },
+  {
+    "file": "build-app-debug.json",
+    "sourceSha256": "d600c4d9e9a78855a9fd4a048c0e0b30e22d136bb708dfc1429f417ad1af16b5",
+    "documentSha256": "c872262943ee4dfa53fee6e6b7872d26ded71e02bfdeb59863f7f6eabf1fc4c6"
+  },
+  {
+    "file": "device-before.txt",
+    "sourceSha256": "200d35300c11aae11def4e6885fbcff25ff86c42ca10675a919676bbd3990c45",
+    "documentSha256": "200d35300c11aae11def4e6885fbcff25ff86c42ca10675a919676bbd3990c45"
+  },
+  {
+    "file": "device-fixed.txt",
+    "sourceSha256": "0a2f71959d3925ed1fd2690063b9f9fd60bb95bf808b9687d53e23d70ea434d7",
+    "documentSha256": "0a2f71959d3925ed1fd2690063b9f9fd60bb95bf808b9687d53e23d70ea434d7"
+  },
+  {
+    "file": "device-summary.json",
+    "sourceSha256": "4f32f1d517a5534722ca889381c941d720e4c6ca278e64d47927c5fcd1f2d306",
+    "documentSha256": "e805dc5f71e73268e3de62cc716e32f5a85da1c30f039166c211170108f02552"
+  },
+  {
+    "file": "cleanup.json",
+    "sourceSha256": "38de5d80daae83de154a522be39e1f4a45839ec8d28374918cf7f78ac0d24927",
+    "documentSha256": "47f94a950c7356a0ac77ed9141dca4e6c7285328c00d92df074bc7e92c1c1ec6"
+  },
+  {
+    "file": "final-source-hashes.json",
+    "sourceSha256": "bb74383e93356db2c78f9144f83d448d7e32c9b6f06062395ed798257e08f42f",
+    "documentSha256": "5cfd34131792c315edab0f1cdaac278cf39a0504c278e0ecbf7518a208f06e70"
+  },
+  {
+    "file": "app-bytecode-check.json",
+    "sourceSha256": "ac2b542d1e58b634b142323a072efa98fb099f955d982d9f260e8992129280dc",
+    "documentSha256": "422c8cde5bfac903ade2ef6fc77c54c1a495ef4ecdc32939af4b665b924c9cfe"
+  },
+  {
+    "file": "fix.patch",
+    "sourceSha256": "3ee8f1217607324908a103163f4d5ee9bda92cfcfe2a3077434f1461f949abcc",
+    "documentSha256": "87bd32d0f0070479cd0f19514f7d077af223886a2a1771296014b67e57ce0506"
+  }
+]

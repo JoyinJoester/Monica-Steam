@@ -1,0 +1,6 @@
+{
+  "exitCode": 0,
+  "seconds": 4.897170500014909,
+  "unchangedApks": true,
+  "classes": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassLightThreadAndAttachments,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#pastedProfileLinkSendsNormallyAndServerEchoBecomesACard"
+}

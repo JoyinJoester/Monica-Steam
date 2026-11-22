@@ -31,6 +31,8 @@ class SteamStandaloneNavigationGuardTest {
         assertFalse(activity.contains("SteamStandaloneDock("))
         assertTrue(activity.contains("Box(modifier = Modifier.fillMaxSize())"))
         assertTrue(activity.contains(".align(Alignment.BottomCenter)"))
+        assertFalse(activity.contains("SteamTelegramTheme"))
+        assertFalse(activity.contains("SteamTelegramDock"))
         assertFalse(activity.contains("bottomBar ="))
         assertTrue(fixedBar.contains("SteamDockTab.completeFixedOrder(order)"))
         assertTrue(fixedBar.contains("selected = selected == tab"))
@@ -56,10 +58,12 @@ class SteamStandaloneNavigationGuardTest {
         val reorderableList = dockOrderScreen.substringAfter("LazyColumn(")
         assertTrue(dockOrderScreen.contains("reorderFixedDockOrder(localOrder, from.index, to.index)"))
         assertTrue(dockOrderScreen.contains("LaunchedEffect(reorderableState.isAnyItemDragging)"))
-        assertTrue(dockOrderScreen.contains("showSwitch = false"))
+        // Every destination is always shown: rows only carry a drag handle, never a switch.
+        assertFalse(dockOrderScreen.contains("Switch("))
+        assertTrue(dockOrderScreen.contains("longPressDraggableHandle()"))
         assertFalse(dockOrderScreen.contains("enabledTabs"))
         assertFalse(dragCallback.contains("onOrderChange("))
-        assertFalse(reorderableList.substringBefore("items(localOrder").contains("steam_dock_order_hint"))
+        assertFalse(reorderableList.substringBefore("itemsIndexed(localOrder").contains("steam_dock_order_hint"))
         assertTrue(steamScreen.contains("Modifier.steamWindowTopPadding()"))
 
         val menu = steamScreen

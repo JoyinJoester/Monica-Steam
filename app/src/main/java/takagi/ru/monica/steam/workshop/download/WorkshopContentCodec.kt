@@ -156,11 +156,11 @@ internal object WorkshopContentCodec {
         } finally { data.fill(0) }
     }
 
-    fun verified(file: File, size: Long, sha: ByteArray): Boolean = file.isFile && file.length() == size &&
+    fun verified(file: File, size: Long, sha: ByteArray, checkActive: () -> Unit = {}): Boolean = file.isFile && file.length() == size &&
         file.inputStream().use { input ->
             val digest = MessageDigest.getInstance("SHA-1")
             val buffer = ByteArray(64 * 1024)
-            while (true) { val n = input.read(buffer); if (n < 0) break; digest.update(buffer, 0, n) }
+            while (true) { checkActive(); val n = input.read(buffer); if (n < 0) break; digest.update(buffer, 0, n) }
             digest.digest().contentEquals(sha)
         }
 

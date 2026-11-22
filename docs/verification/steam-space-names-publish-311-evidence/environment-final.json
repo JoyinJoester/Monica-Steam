@@ -1,0 +1,29 @@
+{
+  "cleanup": {
+    "baselineChecks": {
+      "current": true,
+      "size": true,
+      "density": true,
+      "font": true,
+      "userIdentitiesAndFlagsRetained": true,
+      "originalPackagesRetained": true,
+      "taskPackagesAbsent": true
+    },
+    "taskPackagesUninstalled": true,
+    "taskStartedInstanceStopped": true,
+    "preExistingMuMu2Preserved": true,
+    "configurationAndDataDiskRetained": true,
+    "userRuntimeRunningFlagsChanged": false
+  },
+  "otherInstancesSamePidAndRunning": {
+    "0": true,
+    "1": true
+  },
+  "originalConfigurationAndDiskPathsExist": {
+    "configs": true,
+    "data": true,
+    "data.vdi": true,
+    "MuMuPlayerGlobal-15.0-2.nemu": true
+  },
+  "dataDiskBytes": 13716044288
+}

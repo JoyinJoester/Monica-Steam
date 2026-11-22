@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_verifying">Verifying file checksums</string>
+    <string name="wallpaper_checking_size">Checking file size</string>
+    <string name="workshop_stage_prepare">Prepare</string>
+    <string name="workshop_stage_download">Download</string>
+    <string name="workshop_stage_check">Check</string>
+    <string name="workshop_stage_save">Save</string>
+    <string name="workshop_progress_files">%1$d / %2$d files</string>
+</resources>

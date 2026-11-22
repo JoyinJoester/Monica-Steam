@@ -44,7 +44,7 @@ class SteamFriendsIntegrationGuardTest {
         assertFalse(friendsScreen.contains("onNavigateBack: () -> Unit"))
         assertTrue(friendsScreen.contains("BackHandler"))
         assertTrue(friendsScreen.contains("easyNotesScreenEnter(reduceAnimations)"))
-        assertTrue(friendsList.contains("FlowRow("))
+        assertTrue(friendsList.contains("TelegramContactsFilter("))
         assertFalse(friendsList.contains("horizontalScroll("))
         assertFalse(friendsList.contains("friends-summary"))
         assertFalse(friendsList.contains("FriendsSummaryCard("))

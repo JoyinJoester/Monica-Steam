@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.030Z" hostname="JOYIN" time="0.01">
+  <properties/>
+  <testcase name="conversationKeyIsStableAndIsolatesAccountAndConversation" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest" time="0.005"/>
+  <testcase name="wallpaperPresetsRoundTripWithoutChangingOtherPreferences" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest" time="0.004"/>
+  <testcase name="oldPreferencesKeepMuteAndPinAndDefaultToTelegramPattern" classname="takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

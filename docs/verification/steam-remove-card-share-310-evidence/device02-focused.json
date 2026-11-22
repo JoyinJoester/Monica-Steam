@@ -1,0 +1,6 @@
+{
+  "exitCode": 0,
+  "seconds": 11.321941700065508,
+  "unchangedApks": true,
+  "classes": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontOpenGraphProfileStillHasReachableDetails,takagi.ru.monica.steam.chat.SteamChatCardsUiTest#directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending,takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft,takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries"
+}

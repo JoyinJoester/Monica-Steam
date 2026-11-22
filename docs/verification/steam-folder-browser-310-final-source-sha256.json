@@ -1,0 +1,15 @@
+{
+  "RELEASE_NOTES.md": "13eada2e44b985b48200564d6b413b16e5ffee583c4a820e7e113d8e8481f8f8",
+  "docs/releases/Monica-Steam-Unreleased.md": "f434b0210652260f30df4afd06a166c8a11bfeaaf693e0507762334111c7ad99",
+  "app/src/main/res/values/strings_steam_collections.xml": "9800aa5049979ac37fd04fff625d2238f43e48cac05e26690ffa9a6769dd3140",
+  "app/src/main/res/values-ja/strings_steam_collections.xml": "49218e4fc732c79999d07a9fbb8b3cd41c86915e453003d638669795404f53e9",
+  "app/src/main/res/values-ru/strings_steam_collections.xml": "b2f4bc116dd42e10366d1c36f5bbe1d1edc1311b84556fe9be5e20bf1d61ff44",
+  "app/src/main/res/values-vi/strings_steam_collections.xml": "16218f5f2c42a35aa264a06b863f0ce0305cdc7c8e59d7e900fc474202c01e30",
+  "app/src/main/res/values-zh/strings_steam_collections.xml": "81aad77bd0c23a003ee9737006ca426191bca6696163c53a87b2b35a766c9054",
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollectionsScreen.kt": "a4cc6f560b5062b2e90879b1f128c5da775f56dc78ecf1d0561d3df36812152e",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "afcaa3cf78e786410d59d5fe2743febe07d90f23daa8b8c51814b3d6cd22cf91",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/collections/SteamCollectionsUiTest.kt": "d2d01ced6d8edd0e5c3567b12f5237ee0c0ffcb26d7164a94a71bb794b55a220",
+  "app/src/main/java/takagi/ru/monica/ui/folders/MonicaFolderBrowserPage.kt": "d1659c306a005c13fb55bc10d83522e278dae6607ed656ec7e9cb404c3bcc6e2",
+  "app/src/main/java/takagi/ru/monica/ui/password/FolderActionsDialog.kt": "ce79103bf2eb0b2cadccc12f09ef644295a21c09893d438fe358a1144f376500",
+  "app/src/main/java/takagi/ru/monica/ui/components/GroupedItemDefaults.kt": "cf850cf894f989457c04ea74c87dadb458e1be97d5414d0f71029aa5d44ab1ab"
+}

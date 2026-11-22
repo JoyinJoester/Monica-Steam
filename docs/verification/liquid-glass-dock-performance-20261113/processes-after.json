@@ -1,0 +1,14 @@
+[
+  {
+    "ProcessId": 3824,
+    "Name": "adb.exe",
+    "ExecutablePath": "D:\\AndroidSDK\\platform-tools\\adb.exe",
+    "CommandLine": "adb -L tcp:5037 fork-server server --reply-fd 804"
+  },
+  {
+    "ProcessId": 48244,
+    "Name": "Emulator.exe",
+    "ExecutablePath": "D:\\DevEco Studio\\tools\\emulator\\Emulator.exe",
+    "CommandLine": "\"D:\\DevEco Studio\\tools\\emulator\\Emulator.exe\" -hvd \"Mate 70 Pro\" -path D:/huaweixnj -imageRoot C:/Users/joyins/AppData/Local/Huawei/Sdk -hdcport 16222"
+  }
+]

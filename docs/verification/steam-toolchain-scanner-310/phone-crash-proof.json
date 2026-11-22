@@ -1,0 +1,25 @@
+{
+  "phoneLogSha256": "3ffc1125d09dfb3d9c0a52d5120fe4e93785c13a661a6e10b66442a8208b134d",
+  "apkSha256": "0a0954dccf306cd792fcaf92c6682cc4aeb9d127ea67a3ffb91d6f80d21cfa6e",
+  "mapId": "54783c22e86745ead957784d6a4f0a864dda4deaa008b8b8e3aa99313f72fe59",
+  "version": "1.0.310-26110918-24",
+  "androidApi": 36,
+  "constructors": {
+    "com.google.mlkit.common.internal.CommonComponentRegistrar": {
+      "classPresent": true,
+      "publicNoArgConstructor": false
+    },
+    "com.google.mlkit.vision.barcode.internal.BarcodeRegistrar": {
+      "classPresent": true,
+      "publicNoArgConstructor": false
+    },
+    "com.google.mlkit.vision.common.internal.VisionCommonRegistrar": {
+      "classPresent": true,
+      "publicNoArgConstructor": false
+    },
+    "androidx.work.OverwritingInputMerger": {
+      "classPresent": true,
+      "publicNoArgConstructor": false
+    }
+  }
+}

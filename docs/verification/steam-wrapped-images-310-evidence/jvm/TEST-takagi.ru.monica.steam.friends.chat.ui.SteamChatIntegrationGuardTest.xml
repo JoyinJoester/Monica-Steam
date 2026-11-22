@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.775Z" hostname="JOYIN" time="0.079">
+  <properties/>
+  <testcase name="retryableMessageHasADedicatedAccessibleRetryButton" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.001"/>
+  <testcase name="privateChatUsesTheSharedSourceAwareSessionBoundary" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.007"/>
+  <testcase name="openingAThreadCanHideRootSteamChrome" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.004"/>
+  <testcase name="storeShareOpensTheSelectedChatAsAnEditableCardDraft" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.003"/>
+  <testcase name="cacheUsesMonicaEncryptionAndAccountThreadIsolation" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.002"/>
+  <testcase name="attachmentButtonExpandsSourcePanelAndKeepsDocumentProviderFallback" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.002"/>
+  <testcase name="friendPickerAndAddFriendUseTheStandaloneChatTopBar" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.005"/>
+  <testcase name="chatKeepsDataPresentationAndTelegramStyleUiSeparated" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.045"/>
+  <testcase name="chatIsAnIndependentCapsuleMenuPageWithFriendEntry" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.005"/>
+  <testcase name="richMediaUsesOwnedOfficialCatalogAndSeparateSteamTabs" classname="takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

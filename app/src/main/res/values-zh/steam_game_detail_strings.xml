@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_tab_store">商店</string>
+    <string name="steam_game_tab_stats">个人统计</string>
+    <string name="steam_game_stats_sign_in">登录后查看你的游玩记录和成就</string>
+    <string name="steam_game_stats_unknown">暂无数据</string>
+    <string name="steam_game_stats_cached">已保存的数据，可能不是最新结果</string>
+    <string name="steam_game_stats_last_played">最后游玩</string>
+    <string name="steam_game_stats_no_activity">当前账号暂无可用的游玩时长记录。</string>
+    <string name="steam_game_stats_game_data">游戏数据</string>
+    <string name="steam_game_stats_screenshots">截图</string>
+    <string name="steam_game_stats_workshop">创意工坊</string>
+    <string name="steam_game_stats_all">全部</string>
+    <string name="steam_game_stats_completed">已完成</string>
+    <string name="steam_game_stats_incomplete">未完成</string>
+    <string name="steam_game_stats_hours">%1$.1f 小时</string>
+</resources>

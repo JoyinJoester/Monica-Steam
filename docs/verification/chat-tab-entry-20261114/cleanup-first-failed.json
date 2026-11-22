@@ -1,0 +1,26 @@
+[
+  {
+    "args": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "am",
+      "get-current-user"
+    ],
+    "exit": 0,
+    "output": "0\r\n"
+  },
+  {
+    "args": [
+      "D:/AndroidSDK/platform-tools/adb.exe",
+      "-s",
+      "127.0.0.1:16448",
+      "shell",
+      "wm",
+      "density"
+    ],
+    "exit": 0,
+    "output": "Physical density: 280\r\nOverride density: 480\r\n"
+  }
+]

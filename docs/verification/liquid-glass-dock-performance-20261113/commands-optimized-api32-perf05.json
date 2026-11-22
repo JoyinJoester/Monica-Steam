@@ -1,0 +1,30 @@
+[
+  {
+    "args": [
+      "shell",
+      "input",
+      "keyevent",
+      "KEYCODE_WAKEUP"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "wm",
+      "dismiss-keyguard"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "pull",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\captures-optimized-api32-perf05"
+    ],
+    "exit": 0,
+    "output": "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/: 4 files pulled, 0 skipped. 3.1 MB/s (96191 bytes in 0.030s)\n"
+  }
+]

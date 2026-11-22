@@ -11,6 +11,7 @@ class SteamLiquidGlassDockGuardTest {
         val dock = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamLiquidGlassDock.kt"
         ).readText()
+        val indicator = projectFile("app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionLens.kt").readText()
         val motion = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassDockMotion.kt"
         ).readText()
@@ -21,18 +22,18 @@ class SteamLiquidGlassDockGuardTest {
         assertTrue(dock.contains("blur(4.dp.toPx(), 4.dp.toPx())"))
         assertTrue(dock.contains("refractionHeight = 24.dp.toPx()"))
         assertTrue(dock.contains("refractionAmount = 24.dp.toPx()"))
-        assertTrue(dock.contains("refractionHeight = 10.dp.toPx() * progress"))
-        assertTrue(dock.contains("refractionAmount = 14.dp.toPx() * progress"))
-        assertTrue(dock.contains("chromaticAberration = 0.5f"))
+        assertTrue(indicator.contains("refractionHeight = 10.dp.toPx() * progress"))
+        assertTrue(indicator.contains("refractionAmount = 14.dp.toPx() * progress"))
+        assertTrue(indicator.contains("chromaticAberration = 0.5f"))
         assertTrue(dock.contains("rememberDeviceTilt()"))
-        assertTrue(dock.contains("INDICATOR_DRAG_SCALE_TARGET = 88f / 56f"))
-        assertTrue(dock.contains("VELOCITY_SCALE_X_MULTIPLIER = 0.75f"))
-        assertTrue(dock.contains("VELOCITY_SCALE_Y_MULTIPLIER = 0.25f"))
-        assertTrue(dock.contains("VELOCITY_SCALE_CLAMP = 0.2f"))
+        assertTrue(indicator.contains("88f / 56f"))
+        assertTrue(dock.contains(".steamGlassSelectionLens("))
+        assertTrue(indicator.contains("VELOCITY_SCALE_X_MULTIPLIER = 0.75f"))
+        assertTrue(indicator.contains("VELOCITY_SCALE_Y_MULTIPLIER = 0.25f"))
+        assertTrue(indicator.contains("VELOCITY_SCALE_CLAMP = 0.2f"))
         assertTrue(dock.contains("rememberSteamCombinedBackdrop("))
         assertTrue(dock.contains(".layerBackdrop(tabsBackdrop)"))
         assertTrue(dock.contains(".steamWindowBottomPadding()"))
-        assertTrue(motion.contains("KERNEL_SU_PRESSED_SCALE = 78f / 56f"))
         assertTrue(motion.contains("flingProjectionTimeSeconds: Float = 0.20f"))
         assertTrue(motion.contains("maxReleaseStepCount: Int = 1"))
         assertTrue(motion.contains("overscrollLimitItems: Float = 0.5f"))
@@ -46,6 +47,9 @@ class SteamLiquidGlassDockGuardTest {
         val settings = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).readText()
+        val designStyle = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/SteamDesignStyleScreen.kt"
+        ).readText()
 
         assertFalse(activity.contains("SteamStandaloneDock("))
         assertTrue(activity.contains("SteamFixedBottomBar("))
@@ -56,9 +60,12 @@ class SteamLiquidGlassDockGuardTest {
         assertTrue(activity.contains("dockStyle == SteamDockStyle.LIQUID_GLASS"))
         assertTrue(activity.contains("currentPage.isDockPage(dockStyle)"))
         assertTrue(activity.contains("LaunchedEffect(currentPage, dockStyle)"))
-        assertTrue(settings.contains("SingleChoiceSegmentedButtonRow("))
-        assertTrue(settings.contains("SteamDockStyle.entries.forEachIndexed"))
-        assertTrue(settings.contains("showSwitch = false"))
+        assertTrue(activity.contains("LocalSteamDesignStyle provides dockStyle"))
+        // The style is its own Appearance entry; the Dock page only orders destinations.
+        assertTrue(settings.contains("SteamSettingsChild.DESIGN_STYLE -> SteamDesignStyleScreen("))
+        assertFalse(settings.contains("SingleChoiceSegmentedButtonRow("))
+        assertTrue(designStyle.contains("SteamDockStyle.entries.forEach"))
+        assertTrue(designStyle.contains("role = Role.RadioButton"))
         assertFalse(settings.contains("SteamDockStyle.M3E"))
         assertTrue(settings.contains("LocalSteamDockContentClearance.current"))
         assertTrue(settings.contains("bottom = dockContentClearance + 16.dp"))
@@ -74,8 +81,9 @@ class SteamLiquidGlassDockGuardTest {
             .substringAfter(".height(56.dp)")
             .substringBefore("if (selectedIndex >= 0)")
 
-        assertTrue(dock.contains("LIQUID_GLASS_CAPTURE_ALPHA = 0.001f"))
-        assertTrue(dock.contains("CompositingStrategy.Offscreen"))
+        val indicator = projectFile("app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionLens.kt").readText()
+        assertTrue(indicator.contains("LIQUID_GLASS_CAPTURE_ALPHA = 0.001f"))
+        assertTrue(indicator.contains("CompositingStrategy.Offscreen"))
         assertTrue(captureLayer.contains(".liquidGlassCaptureLayer()"))
         assertTrue(captureLayer.contains(".layerBackdrop(tabsBackdrop)"))
         assertFalse(captureLayer.contains(".alpha(0f)"))

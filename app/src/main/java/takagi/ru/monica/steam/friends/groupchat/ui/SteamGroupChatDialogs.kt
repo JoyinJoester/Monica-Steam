@@ -1,5 +1,10 @@
 package takagi.ru.monica.steam.friends.groupchat.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamPopupBackdrop
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassRole
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSupported
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -158,14 +163,20 @@ private fun GroupDialogFrame(
             contentAlignment = Alignment.Center
         ) {
             val dialogHeight = minOf(maxHeight, 680.dp)
+            val glassSource = LocalSteamPopupBackdrop.current
+            val glassActive = glassSource != null && steamGlassSupported()
+            val panelShape = RoundedCornerShape(30.dp)
+            val panelColor = MaterialTheme.colorScheme.surfaceContainerHigh
             Surface(
                 modifier = Modifier
                     .widthIn(max = 520.dp)
                     .fillMaxWidth()
-                    .height(dialogHeight),
-                shape = RoundedCornerShape(30.dp),
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                tonalElevation = 6.dp
+                    .height(dialogHeight)
+                    .then(if (glassActive) Modifier.steamGlassSurface(panelShape, panelColor,
+                        SteamGlassRole.PANEL, glassSource) else Modifier),
+                shape = panelShape,
+                color = if (glassActive) androidx.compose.ui.graphics.Color.Transparent else panelColor,
+                tonalElevation = if (glassActive) 0.dp else 6.dp
             ) {
                 Column(
                     modifier = Modifier.padding(20.dp),
@@ -192,14 +203,11 @@ private fun GroupDialogFrame(
 
 @Composable
 private fun FriendSearch(query: String, onQueryChange: (String) -> Unit) {
-    OutlinedTextField(
+    takagi.ru.monica.steam.foundation.ui.SteamListSearchField(
         value = query,
         onValueChange = onQueryChange,
         modifier = Modifier.fillMaxWidth(),
-        leadingIcon = { Icon(Icons.Default.Search, null) },
-        placeholder = { Text(stringResource(R.string.steam_chat_search_hint)) },
-        singleLine = true,
-        shape = RoundedCornerShape(18.dp)
+        placeholder = stringResource(R.string.steam_chat_search_hint)
     )
 }
 

@@ -276,6 +276,72 @@ class SteamChatRichMediaViewModelTest {
         assertEquals(0L, viewModel.uiState.value.uploadCompletedAt)
     }
 
+    @Test
+    fun unsupportedSelectionCannotCreatePendingUploadAndExposesLocalizedError() = runTest(scheduler) {
+        var uploads = 0
+        val gateway = FakeAttachmentGateway().apply {
+            inspectBlock = { throw SteamChatUploadException.unsupportedType() }
+            uploadBlock = { _, _, _, _, _ -> uploads++; error("Must not upload rejected selection") }
+        }
+        val viewModel = viewModel(gateway)
+        viewModel.selectAccount(account(1L, "76561198000000001"))
+        viewModel.selectPartner(PARTNER_A)
+        runCurrent()
+        viewModel.selectAttachment("content://files/archive.zip")
+        runCurrent()
+        assertNull(viewModel.uiState.value.pendingAttachment)
+        assertFalse(viewModel.uiState.value.attachmentPreparing)
+        assertEquals(takagi.ru.monica.R.string.steam_chat_attachment_unsupported_type, viewModel.uiState.value.attachmentFailureResource)
+        viewModel.uploadAttachment()
+        runCurrent()
+        assertEquals(0, uploads)
+        assertEquals(0L, viewModel.uiState.value.uploadCompletedAt)
+        viewModel.clearAttachmentFailure()
+        assertNull(viewModel.uiState.value.attachmentFailureResource)
+        assertNull(viewModel.uiState.value.attachmentFailure)
+    }
+
+    @Test
+    fun serviceAndSessionFailuresUseCorrectResourcesAndRetryPolicy() = runTest(scheduler) {
+        for (code in listOf(20, 50)) {
+            var uploads = 0
+            var forcedRefreshes = 0
+            val gateway = FakeAttachmentGateway().apply {
+                uploadBlock = { _, _, _, _, _ ->
+                    uploads++
+                    throw SteamChatUploadException.steamRejected(code, "Synthetic error $code")
+                }
+            }
+            val viewModel = SteamChatRichMediaViewModel(
+                catalogGateway = SteamChatCatalogGateway { SteamChatRichMediaCatalog() },
+                attachmentGateway = gateway,
+                sessionResolver = { account, forceRefresh ->
+                    if (forceRefresh) forcedRefreshes++
+                    account
+                },
+                ioDispatcher = dispatcher,
+                nowMillis = { 123_456L }
+            )
+            viewModel.selectAccount(account(1L, "76561198000000001"))
+            viewModel.selectPartner(PARTNER_A)
+            runCurrent()
+            viewModel.selectAttachment("content://images/1")
+            runCurrent()
+            viewModel.uploadAttachment()
+            runCurrent()
+
+            assertEquals(if (code == 20) 1 else 2, uploads)
+            assertEquals(if (code == 20) 0 else 1, forcedRefreshes)
+            assertEquals(
+                if (code == 20) takagi.ru.monica.R.string.steam_chat_attachment_service_failed
+                else takagi.ru.monica.R.string.steam_chat_attachment_session_expired,
+                viewModel.uiState.value.attachmentFailureResource
+            )
+            assertFalse(viewModel.uiState.value.attachmentUploading)
+            assertEquals(0L, viewModel.uiState.value.uploadCompletedAt)
+        }
+    }
+
     private fun viewModel(gateway: SteamChatAttachmentGateway) = SteamChatRichMediaViewModel(
         catalogGateway = SteamChatCatalogGateway { SteamChatRichMediaCatalog() },
         attachmentGateway = gateway,

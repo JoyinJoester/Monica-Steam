@@ -30,8 +30,14 @@ class SteamChatImeBottomAnchorIntegrationGuardTest {
         assertTrue(source.contains("scrollToLatestSteamChatMessage"))
         assertTrue(source.contains("rememberUpdatedState(messagesBelow)"))
         assertTrue(readingPositionUi.contains("SteamChatImeBottomAnchorEffect("))
-        assertTrue(direct.contains("SteamChatAutoScrollToLatestEffect("))
-        assertTrue(group.contains("SteamChatAutoScrollToLatestEffect("))
+        val nativeList = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramMessageList.kt"
+        ).readText()
+        assertTrue(direct.contains("TelegramChatScaffold("))
+        assertTrue(group.contains("TelegramChatScaffold("))
+        assertTrue(nativeList.contains("OnLayoutChangeListener"))
+        assertTrue(nativeList.contains("followBottom"))
+        assertTrue(nativeList.contains("jumpToLatest(animated = false)"))
     }
 
     private fun projectFile(path: String): File {

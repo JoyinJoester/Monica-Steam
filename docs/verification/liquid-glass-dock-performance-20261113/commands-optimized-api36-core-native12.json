@@ -1,0 +1,63 @@
+[
+  {
+    "args": [
+      "install",
+      "--user",
+      "0",
+      "-r",
+      "-t",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-native\\main.apk"
+    ],
+    "exit": 0,
+    "output": "Performing Streamed Install\nSuccess\n"
+  },
+  {
+    "args": [
+      "install",
+      "--user",
+      "0",
+      "-r",
+      "-t",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-native\\test.apk"
+    ],
+    "exit": 0,
+    "output": "Performing Streamed Install\nSuccess\n"
+  },
+  {
+    "args": [
+      "shell",
+      "input",
+      "keyevent",
+      "KEYCODE_WAKEUP"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "wm",
+      "dismiss-keyguard"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "rm",
+      "-f",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames-native.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dispatch.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-large-reduced.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-large.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-large.png"
+    ],
+    "exit": 1,
+    "output": "rm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames-native.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dispatch.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-large-reduced.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-large.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-large.png: Permission denied\n"
+  }
+]

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-20T07:50:30.160Z" hostname="JOYIN" time="0.219">
+  <properties/>
+  <testcase name="preferencesCache_encryptsAndIsolatesAccountAndThreadPayloads" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest" time="0.169"/>
+  <testcase name="largeThreadCacheKeepsRecentHistoryAndOlderFailedMessages" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest" time="0.04"/>
+  <testcase name="pendingMessageBecomesRetryableAfterProcessRestore" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

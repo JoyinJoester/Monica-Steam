@@ -17,12 +17,16 @@ internal object RustAchievementDetailsParser {
             definitionsResponse = definitionsResponse,
             userResponse = userResponse
         ) ?: return null
+        // Older native binaries do not preserve group membership or archive flags.
+        if (payload.getOrNull(3) != '2'.code.toByte()) return null
         val achievements = decodeOrNull(payload) ?: return null
+        val sets = SteamAchievementSetsParser.parse(definitionsResponse, userResponse)
         return SteamGameAchievements(
             accountId = accountId,
             appId = appId,
             gameName = gameName,
-            achievements = achievements,
+            achievements = achievements.filterNot { it.groupId in sets.excludedGroupIds },
+            sets = sets.sets,
             fetchedAt = System.currentTimeMillis()
         )
     }
@@ -39,23 +43,28 @@ internal object RustAchievementDetailsParser {
             "Rust achievement-details bridge is truncated"
         }
         val magic = ByteArray(4).also(buffer::get)
-        require(magic.contentEquals(MAGIC)) {
+        val version2 = magic.contentEquals(MAGIC_V2)
+        require(version2 || magic.contentEquals(MAGIC)) {
             "Rust achievement-details bridge version is unsupported"
         }
         val count = buffer.int
         require(count in 0..MAX_ITEMS) { "Rust achievement-details count is invalid" }
-        require(buffer.remaining().toLong() >= count.toLong() * MIN_ITEM_BYTES) {
+        val minimumItemBytes = MIN_ITEM_BYTES + if (version2) 8 else 0
+        require(buffer.remaining().toLong() >= count.toLong() * minimumItemBytes) {
             "Rust achievement-details bridge is truncated"
         }
 
         val achievements = ArrayList<SteamAchievement>(count)
         repeat(count) {
-            require(buffer.remaining() >= MIN_ITEM_BYTES) {
+            require(buffer.remaining() >= minimumItemBytes) {
                 "Rust achievement-details item is truncated"
             }
             val achievedRaw = buffer.int
             val hasUnlockTime = buffer.int
             val unlockTime = buffer.long
+            val groupId = if (version2) buffer.int.toLong() and 0xffffffffL else 0L
+            val flags = if (version2) buffer.int else 0
+            require(flags in 0..3) { "Rust achievement-details flags are invalid" }
             require(achievedRaw == 0 || achievedRaw == 1) {
                 "Rust achievement-details achieved flag is invalid"
             }
@@ -72,7 +81,10 @@ internal object RustAchievementDetailsParser {
                 achieved = achievedRaw == 1,
                 unlockTimeSeconds = unlockTime.takeIf { hasUnlockTime == 1 },
                 iconUrl = readOptionalString(buffer),
-                lockedIconUrl = readOptionalString(buffer)
+                lockedIconUrl = readOptionalString(buffer),
+                groupId = groupId,
+                archived = flags and 1 != 0,
+                hidden = flags and 2 != 0
             )
         }
         require(!buffer.hasRemaining()) {
@@ -108,6 +120,7 @@ internal object RustAchievementDetailsParser {
         'M'.code.toByte(), 'S'.code.toByte(), 'A'.code.toByte(), '1'.code.toByte()
     )
     private const val HEADER_BYTES = 8
+    private val MAGIC_V2 = byteArrayOf('M'.code.toByte(), 'S'.code.toByte(), 'A'.code.toByte(), '2'.code.toByte())
     private const val MIN_ITEM_BYTES = 36
     private const val MAX_ITEMS = 100_000
 }

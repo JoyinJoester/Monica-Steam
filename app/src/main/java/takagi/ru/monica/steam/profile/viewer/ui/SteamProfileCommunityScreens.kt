@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.profile.viewer.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshIconButton
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -296,9 +297,11 @@ private fun SteamProfileCommunityListScreen(
         SteamProfileSubpageHeader(
             title = title,
             subtitle = countText,
+            refreshAction = { SteamRefreshIconButton(loading, onRefresh) },
             onNavigateBack = onNavigateBack
         )
         SteamExpressivePullToRefresh(
+            showIndicator = false,
             refreshing = loading,
             onRefresh = onRefresh,
             enabled = !loading,
@@ -338,6 +341,7 @@ private fun SteamProfileCommunityListScreen(
 private fun SteamProfileSubpageHeader(
     title: String,
     subtitle: String,
+    refreshAction: @Composable () -> Unit = {},
     onNavigateBack: () -> Unit
 ) {
     Row(
@@ -370,6 +374,7 @@ private fun SteamProfileSubpageHeader(
                 overflow = TextOverflow.Ellipsis
             )
         }
+        refreshAction()
     }
 }
 

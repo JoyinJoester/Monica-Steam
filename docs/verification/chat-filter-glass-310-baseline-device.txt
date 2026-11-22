@@ -1,0 +1,41 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest:
+INSTRUMENTATION_STATUS: test=holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Held glass must grow visibly outside the entire filter container: 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt(SteamLiquidGlassFilterDragTest.kt:310)
+
+INSTRUMENTATION_STATUS: stream=
+Error in holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest):
+java.lang.AssertionError: Held glass must grow visibly outside the entire filter container: 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt(SteamLiquidGlassFilterDragTest.kt:310)
+
+INSTRUMENTATION_STATUS: test=holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.605
+There was 1 failure:
+1) holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt(takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest)
+java.lang.AssertionError: Held glass must grow visibly outside the entire filter container: 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest.holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt(SteamLiquidGlassFilterDragTest.kt:310)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

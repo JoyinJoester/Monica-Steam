@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:56.481Z" hostname="JOYIN" time="0.055">
+  <properties/>
+  <testcase name="storageKeysIsolateAccountsAndPeers" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" time="0.009"/>
+  <testcase name="refreshKeepsMessageHiddenWithoutChangingRawPaginationHistory" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" time="0.041"/>
+  <testcase name="queuedAndUnconfirmedMessagesCannotBeDeletedWhileSending" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" time="0.001"/>
+  <testcase name="historyIsNotShownBeforeLocalDeletionMarkersAreRead" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" time="0.001"/>
+  <testcase name="serverIdentitySurvivesEchoIdsAndDoesNotHideNearbyMessages" classname="takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

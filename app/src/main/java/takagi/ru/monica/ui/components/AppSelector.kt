@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager

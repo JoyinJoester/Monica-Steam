@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.friends.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +26,6 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +44,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import takagi.ru.monica.steam.friends.chat.telegram.*
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.domain.SteamFriend
 import takagi.ru.monica.steam.friends.domain.SteamFriendRelationship
@@ -84,110 +94,81 @@ internal fun SteamFriendDetailScreen(
             }
         )
     }
+    TelegramSocialTheme {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            start = 16.dp,
-            end = 16.dp,
+            start = 0.dp,
+            end = 0.dp,
             top = 8.dp,
             bottom = dockContentClearance + 32.dp
         ),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item(key = "friend-detail-hero") { FriendDetailHero(friend) }
-        if (friend.isPlaying) {
-            item(key = "friend-detail-game") {
-                DetailSectionCard(
-                    icon = { Icon(Icons.Default.SportsEsports, contentDescription = null) },
-                    title = stringResource(R.string.steam_friend_current_game),
-                    value = friend.gameName.ifBlank { friend.gameId },
-                    emphasized = true
-                )
-            }
-        }
-        item(key = "friend-detail-information-title") {
-            Text(
-                text = stringResource(R.string.steam_friend_profile_information),
-                modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        item(key = "friend-detail-steamid") {
-            SteamIdentityInfoCard(steamId64 = friend.steamId)
-        }
-        if (friend.friendSince > 0L) {
-            item(key = "friend-detail-friends-since") {
-                DetailSectionCard(
-                    icon = { Icon(Icons.Default.Groups, contentDescription = null) },
-                    title = stringResource(R.string.steam_friend_friends_since),
-                    value = formatSteamFriendTime(friend.friendSince)
-                )
-            }
-        }
-        item(key = "friend-detail-last-online") {
-            DetailSectionCard(
-                icon = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                title = stringResource(R.string.steam_friend_last_online),
-                value = if (friend.lastLogoff > 0L) {
-                    formatSteamFriendTime(friend.lastLogoff)
-                } else {
-                    stringResource(R.string.steam_friend_unknown_time)
-                }
-            )
-        }
-        if (friend.countryCode.isNotBlank()) {
-            item(key = "friend-detail-location") {
-                DetailSectionCard(
-                    icon = { Icon(Icons.Default.Person, contentDescription = null) },
-                    title = stringResource(R.string.steam_friend_location),
-                    value = friend.countryCode
-                )
-            }
-        }
         item(key = "friend-detail-chat") {
-            FilledTonalButton(
-                onClick = onStartChat,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-            ) {
-                Icon(Icons.Default.ChatBubble, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.steam_chat_send_message))
-            }
+            val clipboard = LocalClipboardManager.current
+            TelegramNativeProfileActions(
+                message = stringResource(R.string.steam_chat_send_message), profile = "Steam 主页", copy = "复制 ID",
+                onMessage = onStartChat,
+                onProfile = { onOpenProfile?.invoke() ?: openSteamProfile(context, friend) },
+                onCopy = { clipboard.setText(AnnotatedString(friend.steamId)) }
+            )
         }
-        if (onOpenProfile != null) {
-            item(key = "friend-detail-game-profile") {
-                FilledTonalButton(
-                    onClick = onOpenProfile,
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-                ) {
-                    Icon(Icons.Default.Person, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.steam_profile_open_game_profile))
+        item(key = "friend-detail-information") {
+            TelegramSocialSection(stringResource(R.string.steam_friend_profile_information)) {
+                if (friend.isPlaying) {
+                    TelegramSocialInfoRow(
+                        friend.gameName.ifBlank { friend.gameId },
+                        stringResource(R.string.steam_friend_current_game), Icons.Default.SportsEsports
+                    )
+                    TelegramSocialDivider(20)
+                }
+                val clipboard = LocalClipboardManager.current
+                TelegramSocialInfoRow(friend.steamId, "Steam ID", Icons.Default.ContentCopy,
+                    onClick = { clipboard.setText(AnnotatedString(friend.steamId)) })
+                SteamIdentityInfoCard(steamId64 = friend.steamId, modifier = Modifier.padding(horizontal = 20.dp), embedded = true)
+                if (friend.friendSince > 0L) {
+                    TelegramSocialDivider(20)
+                    TelegramSocialInfoRow(formatSteamFriendTime(friend.friendSince),
+                        stringResource(R.string.steam_friend_friends_since), Icons.Default.Groups)
+                }
+                TelegramSocialDivider(20)
+                TelegramSocialInfoRow(
+                    if (friend.lastLogoff > 0L) formatSteamFriendTime(friend.lastLogoff)
+                    else stringResource(R.string.steam_friend_unknown_time),
+                    stringResource(R.string.steam_friend_last_online), Icons.Default.Schedule
+                )
+                if (friend.countryCode.isNotBlank()) {
+                    TelegramSocialDivider(20)
+                    TelegramSocialInfoRow(friend.countryCode,
+                        stringResource(R.string.steam_friend_location), Icons.Default.Person)
                 }
             }
         }
-        item(key = "friend-detail-open-profile") {
-            FilledTonalButton(
-                onClick = { openSteamProfile(context, friend) },
-                modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-            ) {
-                Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.steam_friend_open_profile))
+        item(key = "friend-detail-links") {
+            TelegramSocialSection(stringResource(R.string.steam_friend_open_profile)) {
+                if (onOpenProfile != null) {
+                    TelegramSocialInfoRow(stringResource(R.string.steam_profile_open_game_profile),
+                        icon = Icons.Default.Person, onClick = onOpenProfile)
+                    TelegramSocialDivider(20)
+                }
+                TelegramSocialInfoRow(stringResource(R.string.steam_friend_open_profile),
+                    icon = Icons.AutoMirrored.Filled.OpenInNew,
+                    onClick = { openSteamProfile(context, friend) })
             }
         }
         relationshipActions(friend.relationship).forEach { action ->
             item(key = "friend-detail-action-${action.name}") {
-                FilledTonalButton(
-                    onClick = { pendingAction = action },
-                    enabled = !actionInProgress,
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
-                ) {
-                    Text(action.label(friend.relationship))
+                Surface(Modifier.fillMaxWidth().padding(horizontal = 12.dp), shape = RoundedCornerShape(16.dp)) {
+                    TelegramSocialInfoRow(
+                        action.label(friend.relationship), enabled = !actionInProgress,
+                        onClick = { pendingAction = action }
+                    )
                 }
             }
         }
+    }
     }
 }
 
@@ -220,29 +201,22 @@ private fun relationshipActions(
 
 @Composable
 private fun FriendDetailHero(friend: SteamFriend) {
-    Card(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (friend.isPlaying) {
-                MaterialTheme.colorScheme.secondaryContainer
-            } else {
-                MaterialTheme.colorScheme.surfaceContainerHigh
-            }
-        )
+        shape = RectangleShape,
+        color = Color.Transparent
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(22.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            FriendAvatar(friend = friend, size = 96)
+            TelegramFriendAvatar(friend = friend, size = 110)
+            Spacer(Modifier.size(6.dp))
             Text(
                 text = friend.displayName,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontFamily = GoogleSansFlexFontFamily
-                ),
-                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -253,67 +227,7 @@ private fun FriendDetailHero(friend: SteamFriend) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            Surface(
-                shape = RoundedCornerShape(50),
-                color = friend.statusColor().copy(alpha = 0.18f),
-                contentColor = MaterialTheme.colorScheme.onSurface
-            ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Surface(
-                        modifier = Modifier.size(9.dp),
-                        shape = CircleShape,
-                        color = friend.statusColor()
-                    ) {}
-                    Text(friend.personaState.label(), style = MaterialTheme.typography.labelLarge)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun DetailSectionCard(
-    icon: @Composable () -> Unit,
-    title: String,
-    value: String,
-    emphasized: Boolean = false
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (emphasized) {
-                MaterialTheme.colorScheme.primaryContainer
-            } else {
-                MaterialTheme.colorScheme.surfaceContainerLow
-            }
-        )
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Surface(
-                modifier = Modifier.size(44.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                contentColor = MaterialTheme.colorScheme.primary
-            ) {
-                Box(contentAlignment = Alignment.Center) { icon() }
-            }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-            }
+            Text(friend.personaState.label(), fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

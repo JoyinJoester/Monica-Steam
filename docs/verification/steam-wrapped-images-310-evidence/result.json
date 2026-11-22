@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "version": "1.0.310",
+  "rootCause": "Image content regex rejected a nested Steam URL wrapper, causing whole-message text fallback",
+  "userPayload": "same structure with synthetic URL only in tests; user image not fetched",
+  "jvm": {
+    "tests": 304,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "baselineTests": 12,
+    "baselineFailures": 3
+  },
+  "device": {
+    "tests": 40,
+    "failures": 0,
+    "runnerSeconds": 47.292,
+    "firstBatchTests": 40,
+    "firstBatchFailures": 1,
+    "firstFailure": "single-image viewer hides page counter; corrected assertion only"
+  },
+  "buildSeconds": 119,
+  "finalTestBuildSeconds": 32,
+  "deviceProfile": "MuMu API35 x86_64 Debug",
+  "limitations": [
+    "cached synthetic image bytes",
+    "no live Steam send/receive or user-device/R8 verification"
+  ],
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apkDelivered": false
+}

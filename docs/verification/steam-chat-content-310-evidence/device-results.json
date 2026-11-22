@@ -1,0 +1,193 @@
+{
+  "device01": {
+    "cases": [
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "mediaImageIsRealVideoIsTypedAndSpoilerStaysCovered",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "dragCommitsOnReleaseCancelRestoresAndRowsOpenOriginalMessages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "titlesAndMediaTypesResolveInAllSupportedLanguages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionStillChangesCategoryAndEmptyTitleIsChatContent",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "glassTitleGapMediaGridAndHeldLensRender",
+        "passed": false,
+        "status": -2
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "m3eLightLargeTextKeepsGapRowsAndIndependentScroll",
+        "passed": true,
+        "status": 0
+      }
+    ],
+    "tests": 6,
+    "passed": 5,
+    "runnerSeconds": 9.004
+  },
+  "device02": {
+    "cases": [
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "mediaImageIsRealVideoIsTypedAndSpoilerStaysCovered",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "dragCommitsOnReleaseCancelRestoresAndRowsOpenOriginalMessages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionDragStillCommitsAndCancels",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "titlesAndMediaTypesResolveInAllSupportedLanguages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "glassTitleGapMediaGridAndHeldLensRender",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionEmptyStateUsesChatContentTitle",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "m3eLightLargeTextKeepsGapRowsAndIndependentScroll",
+        "passed": true,
+        "status": 0
+      }
+    ],
+    "tests": 7,
+    "passed": 7,
+    "runnerSeconds": 11.934
+  },
+  "device03": {
+    "cases": [
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "mediaImageIsRealVideoIsTypedAndSpoilerStaysCovered",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "dragCommitsOnReleaseCancelRestoresAndRowsOpenOriginalMessages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionDragStillCommitsAndCancels",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "titlesAndMediaTypesResolveInAllSupportedLanguages",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "glassTitleGapMediaGridAndHeldLensRender",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionEmptyStateUsesChatContentTitle",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "m3eLightLargeTextKeepsGapRowsAndIndependentScroll",
+        "passed": true,
+        "status": 0
+      }
+    ],
+    "tests": 7,
+    "passed": 7,
+    "runnerSeconds": 11.671
+  },
+  "regression01": {
+    "cases": [
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "directSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "groupSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true,
+        "status": 0
+      }
+    ],
+    "tests": 3,
+    "passed": 3,
+    "runnerSeconds": 29.185
+  },
+  "regression02": {
+    "cases": [
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "directSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true,
+        "status": 0
+      },
+      {
+        "cls": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "groupSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true,
+        "status": 0
+      }
+    ],
+    "tests": 3,
+    "passed": 3,
+    "runnerSeconds": 29.145
+  }
+}

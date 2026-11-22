@@ -1552,7 +1552,7 @@ class MdbxVaultStore(
                             payload_json, payload_hash, created_at
                         ) VALUES (?, ?, ?, ?, ?, ?, ?)
                         """.trimIndent(),
-                        arrayOf(
+                        arrayOf<Any?>(
                             bundle.bundleId,
                             bundle.baseCommitId,
                             bundle.headCommitId,
@@ -1706,7 +1706,7 @@ class MdbxVaultStore(
                     run_id, scenario, operation_count, elapsed_ms, file_delta_bytes, created_at
                 ) VALUES (?, ?, ?, ?, ?, ?)
                 """.trimIndent(),
-                arrayOf(
+                arrayOf<Any?>(
                     result.runId,
                     result.scenario,
                     result.operationCount,
@@ -2334,7 +2334,7 @@ class MdbxVaultStore(
                         updated_by_device_id = ?, attachment_updated_at = ?
                     WHERE attachment_id = ?
                     """.trimIndent(),
-                    arrayOf(commitId, now, deviceId, System.currentTimeMillis(), attachmentId)
+                    arrayOf<Any?>(commitId, now, deviceId, System.currentTimeMillis(), attachmentId)
                 )
                 db.execSQL(
                     """
@@ -3366,7 +3366,7 @@ class MdbxVaultStore(
                 head_commit_id, updated_at, deleted
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """.trimIndent(),
-            arrayOf(
+            arrayOf<Any?>(
                 objectType,
                 objectId,
                 parentFolderId,
@@ -5555,7 +5555,7 @@ class MdbxVaultStore(
                     head_commit_id, updated_at, deleted
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """.trimIndent(),
-                arrayOf(
+                arrayOf<Any?>(
                     cursor.getString(0),
                     cursor.getString(1),
                     if (cursor.isNull(2)) null else cursor.getString(2),

@@ -1,0 +1,16 @@
+[
+  {
+    "stage": "before",
+    "runnerSeconds": 7.874,
+    "passed": 0,
+    "failed": 2,
+    "assertionsUnchangedAfterFix": true
+  },
+  {
+    "stage": "fixed",
+    "runnerSeconds": 16.546,
+    "passed": 7,
+    "failed": 0,
+    "assertionsUnchangedAfterFix": true
+  }
+]

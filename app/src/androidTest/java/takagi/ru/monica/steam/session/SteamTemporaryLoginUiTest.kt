@@ -6,7 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
 import androidx.compose.ui.unit.dp
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
@@ -19,7 +20,7 @@ import org.junit.Assert.assertEquals
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class SteamTemporaryLoginUiTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
     @Test fun temporaryOptionIsAccessibleAndRendersAtDialogWidth() {
         compose.setContent {
             MonicaTheme(darkTheme = false) {

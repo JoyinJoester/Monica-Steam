@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.gift.SteamStoreGiftDomainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-21T07:53:55.654Z" hostname="JOYIN" time="0.006">
+  <properties/>
+  <testcase name="steamId64ConvertsToTheAccountIdExpectedBySteamCart" classname="takagi.ru.monica.steam.store.gift.SteamStoreGiftDomainTest" time="0.003"/>
+  <testcase name="checkoutLinesRetainPerItemGiftRecipients" classname="takagi.ru.monica.steam.store.gift.SteamStoreGiftDomainTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

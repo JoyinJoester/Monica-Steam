@@ -1,0 +1,27 @@
+{
+  "values": {
+    "steam_store_reviews_unavailable": "Unable to load reviews. Please try again.",
+    "steam_store_reviews_empty": "No reviews match these filters.",
+    "steam_store_reviews_retry": "Retry"
+  },
+  "values-zh": {
+    "steam_store_reviews_unavailable": "暂时无法加载评测，请重试。",
+    "steam_store_reviews_empty": "没有符合当前筛选的评测。",
+    "steam_store_reviews_retry": "重试"
+  },
+  "values-ja": {
+    "steam_store_reviews_unavailable": "レビューを読み込めませんでした。もう一度お試しください。",
+    "steam_store_reviews_empty": "条件に一致するレビューはありません。",
+    "steam_store_reviews_retry": "再試行"
+  },
+  "values-ru": {
+    "steam_store_reviews_unavailable": "Не удалось загрузить обзоры. Повторите попытку.",
+    "steam_store_reviews_empty": "Нет обзоров, соответствующих фильтрам.",
+    "steam_store_reviews_retry": "Повторить"
+  },
+  "values-vi": {
+    "steam_store_reviews_unavailable": "Không thể tải đánh giá. Vui lòng thử lại.",
+    "steam_store_reviews_empty": "Không có đánh giá phù hợp với bộ lọc.",
+    "steam_store_reviews_retry": "Thử lại"
+  }
+}

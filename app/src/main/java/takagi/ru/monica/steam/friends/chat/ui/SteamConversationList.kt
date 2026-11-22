@@ -1,56 +1,48 @@
 package takagi.ru.monica.steam.friends.chat.ui
 
+import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
+import takagi.ru.monica.R
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ChatBubbleOutline
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material3.Badge
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import java.text.DateFormat
-import java.util.Date
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatSession
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatFailureReason
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatUiState
 import takagi.ru.monica.steam.friends.domain.SteamFriend
-import takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupAvatarImage
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoom
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatSummary
 import takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatUiState
-import takagi.ru.monica.steam.friends.ui.FriendAvatar
-import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceAudioRoute
+import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceTargetType
 import takagi.ru.monica.steam.friends.voice.ui.SteamVoiceStatusBanner
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.steamDockActionClearance
+import takagi.ru.monica.steam.design.telegram.SteamTelegramGlassHost
 
 internal enum class SteamConversationType { DIRECT, GROUP }
 
@@ -67,9 +59,13 @@ internal data class SteamConversationListEntry(
     val avatarUrl: String = "",
     val groupMembers: List<SteamFriend> = emptyList(),
     val voiceActive: Boolean = false,
-    val voiceMemberCount: Int = 0
+    val voiceMemberCount: Int = 0,
+    val archived: Boolean = false,
+    /** Local delete marker: the row stays hidden until a newer message arrives. */
+    val hiddenAt: Long? = null
 ) {
     val stableKey: String get() = "${type.name}:$id:$chatId"
+    val hidden: Boolean get() = hiddenAt != null && timestamp <= hiddenAt
 }
 
 internal fun buildSteamConversationEntries(
@@ -79,7 +75,11 @@ internal fun buildSteamConversationEntries(
     query: String,
     pinnedPartnerSteamIds: Set<String>,
     pinnedGroupIds: Set<String>,
-    voiceState: SteamVoiceCallState = SteamVoiceCallState()
+    voiceState: SteamVoiceCallState = SteamVoiceCallState(),
+    archivedPartnerSteamIds: Set<String> = emptySet(),
+    archivedGroupIds: Set<String> = emptySet(),
+    hiddenPartnerAt: Map<String, Long> = emptyMap(),
+    hiddenGroupAt: Map<String, Long> = emptyMap()
 ): List<SteamConversationListEntry> {
     val normalizedQuery = query.trim()
     val friendsById = friends.associateBy(SteamFriend::steamId)
@@ -106,7 +106,9 @@ internal fun buildSteamConversationEntries(
             unreadCount = session.unreadCount,
             pinned = session.partnerSteamId in pinnedPartnerSteamIds,
             friend = friend,
-            voiceActive = session.partnerSteamId == activeDirectPartner
+            voiceActive = session.partnerSteamId == activeDirectPartner,
+            archived = session.partnerSteamId in archivedPartnerSteamIds,
+            hiddenAt = hiddenPartnerAt[session.partnerSteamId]
         )
     }.toMutableList()
     if (normalizedQuery.isNotBlank()) {
@@ -127,7 +129,9 @@ internal fun buildSteamConversationEntries(
                 unreadCount = 0,
                 pinned = friend.steamId in pinnedPartnerSteamIds,
                 friend = friend,
-                voiceActive = friend.steamId == activeDirectPartner
+                voiceActive = friend.steamId == activeDirectPartner,
+                archived = friend.steamId in archivedPartnerSteamIds,
+                hiddenAt = hiddenPartnerAt[friend.steamId]
             )
         }
     }
@@ -160,7 +164,9 @@ internal fun buildSteamConversationEntries(
             voiceMemberCount = maxOf(
                 group.activeVoiceMemberCount,
                 if (localVoiceActive) localVoiceMemberCount else 0
-            )
+            ),
+            archived = group.groupId in archivedGroupIds,
+            hiddenAt = hiddenGroupAt[group.groupId]
         )
     }
     return (direct + groupEntries)
@@ -168,11 +174,29 @@ internal fun buildSteamConversationEntries(
             normalizedQuery.isBlank() || entry.title.contains(normalizedQuery, true) ||
                 entry.subtitle.contains(normalizedQuery, true) || entry.id.contains(normalizedQuery)
         }
+        .filterNot { it.hidden }
         .sortedWith(
             compareByDescending<SteamConversationListEntry> { it.pinned }
                 .thenByDescending { it.timestamp }
                 .thenBy { it.title.lowercase() }
         )
+}
+
+/** Tabs of the inbox. Order matters: it is the chip order left to right. */
+internal enum class SteamConversationFilter { ALL, UNREAD, DIRECT, GROUP, PINNED, ARCHIVED }
+
+internal fun filterSteamConversationEntries(
+    entries: List<SteamConversationListEntry>,
+    filter: SteamConversationFilter
+): List<SteamConversationListEntry> = entries.filter { entry ->
+    when (filter) {
+        SteamConversationFilter.ALL -> !entry.archived
+        SteamConversationFilter.UNREAD -> !entry.archived && entry.unreadCount > 0
+        SteamConversationFilter.DIRECT -> !entry.archived && entry.type == SteamConversationType.DIRECT
+        SteamConversationFilter.GROUP -> !entry.archived && entry.type == SteamConversationType.GROUP
+        SteamConversationFilter.PINNED -> !entry.archived && entry.pinned
+        SteamConversationFilter.ARCHIVED -> entry.archived
+    }
 }
 
 internal fun shouldShowDirectConversationFailure(state: SteamChatUiState): Boolean =
@@ -187,8 +211,8 @@ internal fun SteamConversationList(
     groupState: SteamGroupChatUiState,
     friends: List<SteamFriend>,
     query: String,
-    pinnedPartnerSteamIds: Set<String>,
-    pinnedGroupIds: Set<String>,
+    flags: SteamConversationFlags = SteamConversationFlags(),
+    actions: SteamConversationActions = SteamConversationActions(),
     onOpenDirect: (String) -> Unit,
     onOpenGroup: (String, String) -> Unit,
     onRefresh: () -> Unit,
@@ -198,152 +222,175 @@ internal fun SteamConversationList(
     onToggleVoiceMicrophone: () -> Unit = {},
     onToggleVoiceOutput: () -> Unit = {},
     onSelectVoiceAudioRoute: (SteamVoiceAudioRoute) -> Unit = {},
+    onNewChat: () -> Unit = onCreateGroup,
     modifier: Modifier = Modifier
 ) {
     val dockClearance = LocalSteamDockContentClearance.current
-    val entries = buildSteamConversationEntries(
-        sessions = chatState.sessions?.sessions.orEmpty(),
-        groups = groupState.groups,
-        friends = friends,
-        query = query,
-        pinnedPartnerSteamIds = pinnedPartnerSteamIds,
-        pinnedGroupIds = pinnedGroupIds,
-        voiceState = voiceState
-    )
-    SteamExpressivePullToRefresh(
-        refreshing = chatState.sessionsRefreshing || groupState.groupsRefreshing,
-        onRefresh = onRefresh,
-        modifier = modifier
-    ) {
-        LazyColumn(
+    var filter by rememberSaveable { mutableStateOf(SteamConversationFilter.ALL) }
+    var selectionMode by remember { mutableStateOf(false) }
+    var selectedKeys by remember { mutableStateOf(emptySet<String>()) }
+    var deleting by remember { mutableStateOf<List<SteamConversationListEntry>>(emptyList()) }
+    val allEntries = rememberSteamConversationEntries(chatState, groupState, friends, query, flags, voiceState)
+    val entries = remember(allEntries, filter) { filterSteamConversationEntries(allEntries, filter) }
+    val selectedEntries = remember(selectedKeys, entries) { entries.filter { it.stableKey in selectedKeys } }
+    val unreadConversations = remember(allEntries) { allEntries.count { it.unreadCount > 0 && !it.archived } }
+    // Each visit and each search/filter/account has its own scroll state. Recreate it with the
+    // new rows, rather than drawing a stale offset for one frame before a coroutine resets it.
+    // Live updates within this result set retain LazyColumn's stable-key reading anchor.
+    val listState = remember(filter, query.trim(), chatState.accountSteamId, groupState.accountSteamId) {
+        LazyListState()
+    }
+    fun endSelection() {
+        selectionMode = false
+        selectedKeys = emptySet()
+    }
+    fun toggle(key: String) {
+        selectedKeys = if (key in selectedKeys) selectedKeys - key else selectedKeys + key
+    }
+    // Back closes the multi-selection before it navigates: leaving the page with rows still
+    // ticked reads as a lost action.
+    BackHandler(enabled = selectionMode) { endSelection() }
+    val density = LocalDensity.current
+    var filterHeight by remember(density) { mutableIntStateOf(with(density) { 60.dp.roundToPx() }) }
+    // The floating filters cover both the list and its refresh indicator.
+    val listTopInset = with(density) { filterHeight.toDp() } + 4.dp
+    ConversationGlassHost(modifier.fillMaxSize(), content = {
+        SteamExpressivePullToRefresh(
+            refreshing = chatState.sessionsRefreshing || groupState.groupsRefreshing,
+            onRefresh = onRefresh,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                end = 12.dp,
-                top = 8.dp,
-                bottom = dockClearance + 32.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            showIndicator = false,
+            indicatorTopInset = listTopInset
         ) {
-            if (voiceState.isActive) {
-                item("active-voice-call") {
-                    SteamVoiceStatusBanner(
-                        state = voiceState,
-                        fallbackTitle = "Steam 语音通话",
-                        onLeave = onLeaveVoice,
-                        onToggleMicrophone = onToggleVoiceMicrophone,
-                        onToggleOutput = onToggleVoiceOutput,
-                        onSelectAudioRoute = onSelectVoiceAudioRoute
-                    )
-                }
-            }
-            if (shouldShowDirectConversationFailure(chatState)) {
-                item("conversation-error") {
-                    ChatFailureBanner(requireNotNull(chatState.sessionsFailure), onRefresh)
-                }
-            }
-            if (shouldShowGroupConversationFailure(groupState)) {
-                item("group-conversation-error") {
-                    ChatFailureBanner(SteamChatFailureReason.UNAVAILABLE, onRefresh)
-                }
-            }
-            if ((chatState.sessionsLoading || groupState.groupsLoading) && entries.isEmpty()) {
-                item("conversation-loading") {
-                    Box(Modifier.fillParentMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+            LazyColumn(
+                state = listState,
+                // Keep the rendered rows and the floating backdrop in one coordinate space
+                // at either edge. Pull-to-refresh retains its own top-edge gesture.
+                overscrollEffect = null,
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 0.dp,
+                    end = 0.dp,
+                    top = listTopInset,
+                    bottom = dockClearance + 108.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(0.dp)
+            ) {
+                if (voiceState.isActive) {
+                    item("active-voice-call") {
+                        SteamVoiceStatusBanner(
+                            state = voiceState,
+                            fallbackTitle = "Steam 语音通话",
+                            onLeave = onLeaveVoice,
+                            onToggleMicrophone = onToggleVoiceMicrophone,
+                            onToggleOutput = onToggleVoiceOutput,
+                            onSelectAudioRoute = onSelectVoiceAudioRoute
+                        )
                     }
                 }
-            } else if (entries.isEmpty()) {
-                item("conversation-empty") {
-                    Column(
-                        Modifier.fillMaxWidth().padding(vertical = 56.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        Icon(Icons.Default.ChatBubbleOutline, null, Modifier.size(46.dp), tint = MaterialTheme.colorScheme.primary)
-                        Text("暂无聊天", style = MaterialTheme.typography.titleMedium)
+                if (shouldShowDirectConversationFailure(chatState)) {
+                    item("conversation-error") {
+                        ChatFailureBanner(requireNotNull(chatState.sessionsFailure), onRefresh)
                     }
                 }
-            } else {
-                items(entries, key = SteamConversationListEntry::stableKey) { entry ->
-                    SteamConversationRow(
-                        entry = entry,
-                        onClick = {
-                            if (entry.type == SteamConversationType.DIRECT) onOpenDirect(entry.id)
-                            else onOpenGroup(entry.id, entry.chatId)
-                        },
-                        modifier = Modifier.animateItem()
-                    )
+                if (shouldShowGroupConversationFailure(groupState)) {
+                    item("group-conversation-error") {
+                        ChatFailureBanner(SteamChatFailureReason.UNAVAILABLE, onRefresh)
+                    }
+                }
+                if ((!flags.loaded || chatState.sessionsLoading || groupState.groupsLoading) && entries.isEmpty()) {
+                    item("conversation-loading") {
+                        Box(Modifier.fillParentMaxSize(), contentAlignment = Alignment.Center) {
+                            Text(stringResource(R.string.loading))
+                        }
+                    }
+                } else if (entries.isEmpty()) {
+                    item("conversation-empty") {
+                        SteamConversationEmptyState(filter)
+                    }
+                } else {
+                    items(entries, key = SteamConversationListEntry::stableKey) { entry ->
+                        SteamConversationRow(
+                            entry = entry,
+                            selectionMode = selectionMode,
+                            selected = entry.stableKey in selectedKeys,
+                            actions = actions,
+                            onToggleSelected = { toggle(entry.stableKey) },
+                            onSwipeSelect = {
+                                if (selectionMode) {
+                                    toggle(entry.stableKey)
+                                } else {
+                                    selectionMode = true
+                                    selectedKeys = setOf(entry.stableKey)
+                                }
+                            },
+                            onRequestDelete = { deleting = it },
+                            onClick = {
+                                when {
+                                    selectionMode -> toggle(entry.stableKey)
+                                    entry.type == SteamConversationType.DIRECT -> onOpenDirect(entry.id)
+                                    else -> onOpenGroup(entry.id, entry.chatId)
+                                }
+                            },
+                            modifier = Modifier.animateItem()
+                        )
+                    }
                 }
             }
         }
-        ExtendedFloatingActionButton(
-            onClick = onCreateGroup,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .navigationBarsPadding()
-                .steamDockActionClearance(extraBottomSpacing = 12.dp)
-                .padding(end = 18.dp),
-            icon = { Icon(Icons.Default.Add, null) },
-            text = { Text("新建群聊") }
+    }, overlay = {
+        SteamConversationFilters(
+            selected = filter,
+            onSelect = { endSelection(); filter = it },
+            unreadCount = unreadConversations,
+            modifier = Modifier.align(Alignment.TopCenter).onSizeChanged { filterHeight = it.height }
+        )
+            // Liquid glass refracts the conversations scrolling underneath; M3E keeps tonal containers.
+            if (selectionMode) {
+                SteamConversationSelectionBar(
+                    count = selectedEntries.size,
+                    onCancel = ::endSelection,
+                    onSelectAll = { selectedKeys = entries.map { it.stableKey }.toSet() },
+                    onTogglePin = {
+                        selectedEntries.forEach(actions.onTogglePin)
+                        endSelection()
+                    },
+                    onToggleArchive = {
+                        selectedEntries.forEach(actions.onToggleArchive)
+                        endSelection()
+                    },
+                    onDelete = { deleting = selectedEntries },
+                    modifier = Modifier.align(Alignment.BottomStart)
+                        .navigationBarsPadding()
+                        .steamDockActionClearance(extraBottomSpacing = 16.dp)
+                        .padding(horizontal = 12.dp)
+                )
+            } else SteamInboxActionsBar(
+                onNewChat = onNewChat,
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
+                    .navigationBarsPadding()
+                    .steamDockActionClearance(extraBottomSpacing = 16.dp)
+                    .padding(horizontal = 24.dp)
+            )
+    })
+    if (deleting.isNotEmpty()) {
+        SteamConversationDeleteDialog(
+            deleting = deleting,
+            onDismiss = { deleting = emptyList() },
+            onConfirm = { deleteContent ->
+                actions.onDelete(deleting, deleteContent)
+                deleting = emptyList()
+                endSelection()
+            }
         )
     }
 }
 
 @Composable
-private fun SteamConversationRow(
-    entry: SteamConversationListEntry,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+private fun ConversationGlassHost(
+    modifier: Modifier,
+    content: @Composable BoxScope.() -> Unit,
+    overlay: @Composable BoxScope.() -> Unit
 ) {
-    Surface(
-        onClick = onClick,
-        modifier = modifier.fillMaxWidth().heightIn(min = 72.dp),
-        shape = RoundedCornerShape(18.dp),
-        color = if (entry.unreadCount > 0) MaterialTheme.colorScheme.secondaryContainer
-        else MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Row(
-            Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            when {
-                entry.friend != null -> FriendAvatar(entry.friend, 50)
-                entry.type == SteamConversationType.GROUP -> SteamGroupAvatarImage(
-                    url = entry.avatarUrl,
-                    members = entry.groupMembers,
-                    contentDescription = entry.title,
-                    modifier = Modifier.size(50.dp)
-                )
-                else -> Surface(Modifier.size(50.dp), CircleShape, MaterialTheme.colorScheme.primaryContainer) {
-                    Box(contentAlignment = Alignment.Center) { Icon(Icons.Default.Groups, null) }
-                }
-            }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(entry.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                if (entry.subtitle.isNotBlank()) {
-                    Text(entry.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                }
-                if (entry.voiceActive) {
-                    Text(
-                        text = "语音通话中${entry.voiceMemberCount.takeIf { it > 0 }?.let { " · $it 人" }.orEmpty()}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                if (entry.timestamp > 0L) Text(
-                    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(entry.timestamp * 1_000L)),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                if (entry.unreadCount > 0) Badge { Text(entry.unreadCount.coerceAtMost(99).toString()) }
-                if (entry.voiceActive) Icon(Icons.Default.Call, contentDescription = "语音通话中", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
-            }
-        }
-    }
+    takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassHost(modifier = modifier, content = content, overlay = overlay)
 }

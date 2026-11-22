@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_card_trade_link">トレードリンク</string>
+    <string name="steam_card_trade_offer">トレードオファー</string>
+    <string name="steam_card_profile">Steam プロフィール</string>
+    <string name="steam_card_published_file">ワークショップ・コミュニティコンテンツ</string>
+    <string name="steam_card_screenshot">スクリーンショット・アートワーク</string>
+    <string name="steam_card_video">動画・クリップ</string>
+    <string name="steam_card_guide">Steam ガイド</string>
+    <string name="steam_card_collection">ワークショップコレクション</string>
+    <string name="steam_card_bundle">Steam バンドル</string>
+    <string name="steam_card_package">Steam パッケージ</string>
+    <string name="steam_card_broadcast">Steam ブロードキャスト</string>
+    <string name="steam_card_broadcast_request">ブロードキャスト視聴リクエスト</string>
+    <string name="steam_card_playtest">Steam Playtest への招待</string>
+    <string name="steam_card_remote_play">Remote Play Together への招待</string>
+    <string name="steam_card_gift">Steam ギフト通知</string>
+    <string name="steam_card_inventory">インベントリアイテム</string>
+    <string name="steam_card_friend_request">フレンド招待</string>
+    <string name="steam_card_group">グループ・チャット招待</string>
+    <string name="steam_card_event">コミュニティイベント・ニュース</string>
+    <string name="steam_card_comment">コメント通知</string>
+    <string name="steam_card_market">コミュニティマーケット</string>
+    <string name="steam_card_effect">チャットエフェクト</string>
+    <string name="steam_card_unknown">Steam メッセージ</string>
+    <string name="steam_card_start_trade">トレードを開始</string>
+    <string name="steam_card_view_trade">トレードオファーを見る</string>
+    <string name="steam_card_watch">ブロードキャストを見る</string>
+    <string name="steam_card_view_group">グループ・招待を見る</string>
+    <string name="steam_card_view_profile">プロフィールを見る</string>
+    <string name="steam_card_view_inventory">インベントリアイテムを見る</string>
+    <string name="steam_card_view_market">マーケットで見る</string>
+    <string name="steam_card_open_invite">招待を開く</string>
+    <string name="steam_card_open">Steam で開く</string>
+    <string name="steam_card_no_handler">このリンクを開けるアプリがありません。対応する Steam アプリをインストールするか、別の端末にリンクをコピーしてください。</string>
+    <string name="steam_card_offer_id">オファー #%1$s</string>
+    <string name="steam_card_no_action">このメッセージには対応する操作リンクがありません。詳細は原文を確認してください。</string>
+    <string name="steam_card_copy_link">リンクをコピー</string>
+    <string name="steam_card_details">原文を見る</string>
+    <string name="steam_chat_local_delete_title">この端末でのみメッセージを削除しますか？</string>
+    <string name="steam_chat_local_delete_description">この端末の会話と共有履歴からメッセージを非表示にします。更新したり開き直したりしても非表示のままです。送信は取り消されず、Steam や他の端末のコピーは削除されません。</string>
+    <string name="steam_chat_local_delete_failed">この端末のメッセージ削除状態を保存できませんでした。もう一度お試しください。</string>
+    <string name="steam_chat_load_older_messages">以前のメッセージを読み込む</string>
+    <string name="steam_chat_group_delete_title">このグループメッセージを削除しますか？</string>
+</resources>

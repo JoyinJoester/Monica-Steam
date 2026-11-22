@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-20T08:20:11.607Z" hostname="JOYIN" time="0.022">
+  <properties/>
+  <testcase name="detailDestinationIsTrackedBeforePayloadArrives" classname="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" time="0.007"/>
+  <testcase name="purchaseContextRequiresTheSameSteamIdAsTheSelectedAccount" classname="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" time="0.01"/>
+  <testcase name="staleDetailResponsesCannotReplaceClosedOrDifferentDetail" classname="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" time="0.0"/>
+  <testcase name="reviewPaginationIsScopedToTheCurrentDetailAndCached" classname="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" time="0.002"/>
+  <testcase name="onlySuccessfulKnownPurchaseContextsArePersisted" classname="takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

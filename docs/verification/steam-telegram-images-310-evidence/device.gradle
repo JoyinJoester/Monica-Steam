@@ -1,0 +1,18 @@
+allprojects {
+    plugins.withId('com.android.application') {
+        androidComponents.finalizeDsl { android ->
+            android.defaultConfig.applicationIdSuffix = '.tgimages'
+            android.buildTypes.debug.debuggable = true
+            android.buildTypes.debug.minifyEnabled = false
+            android.buildTypes.debug.shrinkResources = false
+            android.splits.abi.enable = false
+            android.splits.abi.reset()
+            android.defaultConfig.ndk.abiFilters.clear()
+            android.defaultConfig.ndk.abiFilters.add('x86_64')
+        }
+    }
+    tasks.withType(Test).configureEach {
+        maxParallelForks = 1
+        maxHeapSize = '768m'
+    }
+}

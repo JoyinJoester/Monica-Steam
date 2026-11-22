@@ -1,0 +1,7 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailTabs.kt": "6e891839b09e91c49180d2d888b7157fde33944725de5e924f40d63814a087db",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailChrome.kt": "0eca0d82537243126aed0de49f36ee7405a661616f07641fbd1f670c029430a7",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamSelectionIndicator.kt": "5fe283c86fa18e8b63bcce23d67b66ba4a96bb4dfaf19d1012e32a2b3566817b",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "27ffcf768bd57594726cbcaa89b939b0c8e60f73dd0be1ded81f617244d4fade",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamGameDetailTabsUiTest.kt": "dee2f43f946532b80e294b92723f1fb456fcbf1d6bf61c3c8194cf104d1de328"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest",
+    "tests": "17",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.105"
+  },
+  {
+    "name": "takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.029"
+  },
+  {
+    "name": "takagi.ru.monica.steam.library.SteamLibraryStateRaceTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.059"
+  }
+]

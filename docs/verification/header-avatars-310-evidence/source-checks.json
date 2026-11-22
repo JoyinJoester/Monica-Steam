@@ -1,0 +1,18 @@
+{
+  "scopedDiffCheck": [
+    "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountAvatarButton.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamInboxUi.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamFriendsTopBar.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialSearchTopBar.kt",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
+    "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt",
+    "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStatsRefreshUiTest.kt",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSearchUnificationDeviceTest.kt",
+    "RELEASE_NOTES.md",
+    "docs/releases/Monica-Steam-Unreleased.md",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatIntegrationGuardTest.kt"
+  ],
+  "newAvatarTrailingWhitespace": false
+}

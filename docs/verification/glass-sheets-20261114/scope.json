@@ -1,0 +1,10 @@
+[
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassComponents.kt",
+  "app/src/main/java/takagi/ru/monica/steam/library/filter/ui/SteamLibraryFilterSheet.kt",
+  "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountSwitcherSheet.kt",
+  "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendUiSupport.kt",
+  "app/src/main/java/takagi/ru/monica/steam/store/share/ui/SteamStoreGameShareSheet.kt",
+  "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/SteamStoreGiftRecipientSheet.kt",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt"
+]

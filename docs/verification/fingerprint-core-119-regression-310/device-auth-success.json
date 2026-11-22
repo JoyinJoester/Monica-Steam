@@ -1,0 +1,29 @@
+{
+  "label": "auth-success",
+  "seconds": 4.430051399991498,
+  "exit": 0,
+  "command": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "emulator-5558",
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "10",
+    "-w",
+    "-r",
+    "-e",
+    "fingerprintRegression",
+    "true",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptAuthenticates",
+    "-e",
+    "helper",
+    "auth",
+    "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "events": [],
+  "runnerPass": false
+}

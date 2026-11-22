@@ -138,16 +138,18 @@ fun CategoryListItem(
     selected: Boolean,
     onClick: () -> Unit,
     menu: (@Composable () -> Unit)? = null,
-    badge: (@Composable () -> Unit)? = null
+    badge: (@Composable () -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     val containerColor = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow
     val contentColor = if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
 
     ListItem(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick),
+            .clickable(enabled = enabled, onClick = onClick),
         colors = ListItemDefaults.colors(
             containerColor = containerColor,
             headlineColor = contentColor,

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-21T11:12:18.908Z" hostname="JOYIN" time="0.466">
+  <properties/>
+  <testcase name="selectorMatchesDockOnEveryFrameOfTapTravelAndRapidReversal" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.399"/>
+  <testcase name="measuredWidthsAndPhysicalRtlInterpolateWithoutResizingTheLabels" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.0"/>
+  <testcase name="heldAndCancelledDragUsesDockVelocityAndCannotCommit" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.033"/>
+  <testcase name="childClickBeforeParentReleaseCannotLeaveCurrentLensHeld" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.008"/>
+  <testcase name="reducedClickAndDragKeepCallbacksAndSkipAnimation" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.004"/>
+  <testcase name="externalSelectionAndDisposeSuppressPendingDragSelection" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.015"/>
+  <testcase name="reflowStopAndStyleChangeRevokeOldGesture" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

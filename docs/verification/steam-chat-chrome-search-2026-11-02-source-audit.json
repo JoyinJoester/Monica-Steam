@@ -1,0 +1,97 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatSurface.kt",
+    "sha256": "7e2305ba9f05276cd297322409152bc726b5efcbfe0fbd20d50353b303d4506f",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt",
+    "sha256": "b2e160b53e66a450df3681f05a1ad2a234683e59af584c25788d40171e9f49ff",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamThreadSearch.kt",
+    "sha256": "4a0cde5c1173fe45b01fee168d06471dcccbfbd5ab21ed9a7be41cfaa856d2aa",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt",
+    "sha256": "da9cf9bc815ce186ed50c476f5386047752f121699c65f7b97b4ae91f487886a",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatSelectedContent.kt",
+    "sha256": "0a14afbd859ff3a97e9722a3b3888f719491298f59cddd219f5fbf8a7281436b",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatBackHandlers.kt",
+    "sha256": "a4ec498d05bf2a27307615fe164ab82cd379e79ca8430f03e74d8b3e71a62b52",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreenContracts.kt",
+    "sha256": "ff278daed8afb8b1c4bed50b830f835246434bb3f0c901e34c1c790ef4290441",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt",
+    "sha256": "a949d81efac041eb8629cbcc1620ca1bfb3d5acc9c7f42de09e8f7295588d7a3",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoScreen.kt",
+    "sha256": "c3481c10851a529cb63f7612f2595977bfa463c6a5b7f6a73e5d4433cd355157",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamSharedHistory.kt",
+    "sha256": "86d7fa0089faae58e878a6163e7f6903033c0fc23ae57c61d60a02450ddfd237",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamHistoryLabels.kt",
+    "sha256": "7658854bf72d201851f2f325e8d06ea545890a8da1d0ea56e715a05e6f45dd36",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatHistorySearchRows.kt",
+    "sha256": "4710679922df3456dbcb1d4e5585325f8b99cccac712f866ecbe580cb9032e26",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramEdgeBlurView.java",
+    "sha256": "6f5a4cb43758c366557cde4317e29efea22163ceb8f63bf87f002f0e3c3a4427",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/res/values/steam_thread_search.xml",
+    "sha256": "972ea6b02fac775c86c176f06471b515ac78a5cae09b0a9943f0c4d56bbc54a2",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/res/values-zh/steam_thread_search.xml",
+    "sha256": "d9c4a6bf178003d3b82a4c8afd16f5d1647cdd8b6abe323c513b9bc20973aeb5",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/debug/java/takagi/ru/monica/steam/TelegramChatFixtureActivity.kt",
+    "sha256": "4ab27147493539bcf3e4aeee8f6ba07d92dafa9ae21f638c4e04f47389918d16",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/debug/java/takagi/ru/monica/steam/TelegramSocialFixtureActivity.kt",
+    "sha256": "c029a228ee37f96463f131b4bf712b75618ba04240ae0a1a81c939ceec3a0252",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatChromeUiTest.kt",
+    "sha256": "4b757e849ef26f4713e7d9753002f309f64af8e6a3f58ab99d3847eb48791092",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoIntegrationGuardTest.kt",
+    "sha256": "e4b830c2836a0eff898d97d79f336f2daf13ae50c8ba4a8b2844b6558605d954",
+    "whitespaceAndConflictCheck": "passed"
+  }
+]

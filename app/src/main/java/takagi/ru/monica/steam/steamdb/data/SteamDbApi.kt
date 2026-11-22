@@ -57,7 +57,7 @@ internal class SteamDbApi(
         response?.takeIf { it.count("result") == 1L }?.count("player_count")
     }
 
-    override fun rating(appId: Int) = get(store.newBuilder().addPathSegment("appreviews").addPathSegment("$appId")
+    override fun rating(appId: Int) = get(store.newBuilder().addPathSegment("ajaxappreviews").addPathSegment("$appId")
         .addQueryParameter("json", "1").addQueryParameter("language", "all")
         .addQueryParameter("purchase_type", "steam").addQueryParameter("review_type", "all")
         .addQueryParameter("filter", "all").addQueryParameter("num_per_page", "1")
@@ -74,7 +74,7 @@ internal class SteamDbApi(
         if (steamDb && retryAt.get() > clock()) return SteamDbResult.Failed(SteamDbFailure.RATE_LIMITED, retryAt.get())
         val request = Request.Builder().url(url).header("Accept", "application/json").apply {
             if (steamDb) {
-                // The extension endpoint requires its browser protocol headers (Millennium reference).
+                // The extension endpoint requires its browser protocol headers (SteamNova, formerly Millennium).
                 header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36")
                 header("Origin", "chrome-extension://kdbmhfkmnlmbkgbabkdealhhbfhlmmon")
                 header("X-Requested-With", "SteamDB")

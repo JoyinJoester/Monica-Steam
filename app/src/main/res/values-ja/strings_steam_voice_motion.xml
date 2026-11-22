@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_voice_status_connected">ボイスチャット中 · %1$d 人</string>
+    <string name="steam_voice_status_waiting">応答を待っています</string>
+    <string name="steam_voice_status_reconnecting">再接続中</string>
+    <string name="steam_voice_status_connecting">ボイスチャットに接続中</string>
+    <string name="steam_voice_status_members">%1$d 人がボイスチャット中</string>
+    <string name="steam_voice_status_channel">音声チャンネル</string>
+    <string name="steam_voice_status_joined">ボイスチャットに参加しました</string>
+    <string name="steam_voice_status_empty">まだ誰も参加していません</string>
+</resources>

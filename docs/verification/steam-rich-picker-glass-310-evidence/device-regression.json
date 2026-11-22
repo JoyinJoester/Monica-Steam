@@ -1,0 +1,11 @@
+{
+  "exitCode": 0,
+  "seconds": 57.91932659992017,
+  "classes": [
+    "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+    "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest#darkGlassHeaderPressRendersLensAndCancelKeepsSection",
+    "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest#liquidGlassTabsKeepBothSectionsReachable",
+    "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation"
+  ]
+}

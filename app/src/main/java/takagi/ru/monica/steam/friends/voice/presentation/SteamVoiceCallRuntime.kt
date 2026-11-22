@@ -14,6 +14,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,6 +36,8 @@ import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceRealtimeEvent
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceTarget
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceTargetType
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceWebRtcSession
+import takagi.ru.monica.steam.friends.voice.media.SteamVoiceAudioLevels
+import takagi.ru.monica.steam.friends.voice.media.SteamVoiceAudioSample
 import takagi.ru.monica.steam.friends.voice.media.SteamVoiceWebViewCallbacks
 import takagi.ru.monica.steam.friends.voice.media.SteamVoiceWebViewEngine
 import takagi.ru.monica.steam.friends.voice.media.SteamVoiceMediaHealth
@@ -61,6 +65,10 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
     private val _state = MutableStateFlow(SteamVoiceCallState())
     val state: StateFlow<SteamVoiceCallState> = _state.asStateFlow()
 
+    private val audioMeter = SteamVoiceAudioLevels()
+    private val _audioLevels = MutableStateFlow<Map<String, Float>>(emptyMap())
+    val audioLevels: StateFlow<Map<String, Float>> = _audioLevels.asStateFlow()
+
     private var account: SteamAccount? = null
     private var accountKey: String = ""
     private var mediaEngine: SteamVoiceWebViewEngine? = null
@@ -78,6 +86,23 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
     private val mediaHealthMonitor = SteamVoiceMediaHealthMonitor()
     private val recoveryBudget = SteamVoiceRecoveryBudget()
     private val signalingRetrier = SteamVoiceSignalingRetrier()
+
+    init {
+        scope.launch {
+            combine(state, _audioLevels.subscriptionCount) { call, count -> call to count }
+                .collectLatest { (call, count) ->
+                    val revision = audioMeter.invalidate()
+                    _audioLevels.value = emptyMap()
+                    val enabled = call.isConnected && count > 0
+                    mediaEngine?.configureAudioMeter(enabled, revision)
+                    if (enabled) while (true) {
+                        delay(120)
+                        audioMeter.expire(android.os.SystemClock.elapsedRealtime())
+                        _audioLevels.value = audioMeter.values
+                    }
+                }
+        }
+    }
 
     fun startGroup(
         account: SteamAccount,
@@ -333,6 +358,13 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
                     }
                 }
 
+                override fun onAudioLevels(stats: String) {
+                    if (!isCurrentMedia(generation) || _audioLevels.subscriptionCount.value == 0) return
+                    val sample = SteamVoiceAudioSample.parse(stats) ?: return
+                    audioMeter.accept(sample, _state.value, android.os.SystemClock.elapsedRealtime())
+                    _audioLevels.value = audioMeter.values
+                }
+
                 override fun onMediaStats(stats: String) {
                     if (isCurrentMedia(generation)) {
                         evaluateMediaStats(stats, generation)
@@ -367,6 +399,8 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
             }
         )
         mediaEngine = engine
+        engine.configureAudioMeter(false, audioMeter.replaceMapping(emptyMap()))
+        _audioLevels.value = emptyMap()
         engine.setMicrophoneMuted(_state.value.microphoneMuted)
         engine.setOutputMuted(_state.value.outputMuted)
         engine.start()
@@ -581,6 +615,8 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
         iceDisconnectJob?.cancel()
         iceDisconnectJob = null
         mediaGeneration++
+        audioMeter.replaceMapping(emptyMap())
+        _audioLevels.value = emptyMap()
         mediaEngine?.stop()
         mediaEngine = null
         webRtcSession = null
@@ -708,8 +744,11 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
             }
             is SteamVoiceRealtimeEvent.RemoteDescriptionUpdated -> {
                 if (_state.value.isActive) {
+                    val revision = audioMeter.replaceMapping(event.description.ssrcToSteamIds)
+                    _audioLevels.value = emptyMap()
                     remoteDescriptionVersion = event.description.version
-                    mediaEngine?.setRemoteDescription(event.description.descriptionJson)
+                    mediaEngine?.setRemoteDescription(event.description.descriptionJson,
+                        _state.value.isConnected && _audioLevels.subscriptionCount.value > 0, revision)
                 }
             }
         }
@@ -721,6 +760,7 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
             current[steamId] = current[steamId]?.copy(joined = true)
                 ?: SteamVoiceParticipant(steamId)
         } else {
+            audioMeter.removeParticipant(steamId)
             current.remove(steamId)
         }
         _state.value = _state.value.copy(participants = current.values.toList())
@@ -779,6 +819,8 @@ class SteamVoiceCallRuntime private constructor(context: Context) {
         iceDisconnectJob?.cancel()
         iceDisconnectJob = null
         mediaGeneration++
+        audioMeter.replaceMapping(emptyMap())
+        _audioLevels.value = emptyMap()
         mediaEngine?.stop()
         mediaEngine = null
         webRtcSession = null

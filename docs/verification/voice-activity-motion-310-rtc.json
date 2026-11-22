@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "localPeak": 0.4499954222235786,
+  "remotePeak": 0.04550309762871181,
+  "ssrc": 612192875,
+  "samples": 26,
+  "mute": true,
+  "silence": true,
+  "stopped": true,
+  "energyFallback": true,
+  "staleTimestamp": true,
+  "latePromiseRejected": true
+}

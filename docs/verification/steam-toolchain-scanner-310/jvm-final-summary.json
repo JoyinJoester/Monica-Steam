@@ -1,0 +1,3219 @@
+{
+  "stage": "dependencies-final02",
+  "suites": [
+    {
+      "suite": "takagi.ru.monica.steam.alerts.SteamAlertAccountSessionsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.159"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.alerts.SteamAlertIntegrationGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.alerts.SteamAlertPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.analytics.SteamMarketAnalyticsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.architecture.SteamModuleArchitectureGuardTest",
+      "tests": 10,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.098"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.share.OneShotMaFileStoreTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.027"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.share.SteamMaFileShareContractTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamBackupCryptoTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.537"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamBackupPayloadTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamBackupRestoreTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamMaFileZipCodecTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.016"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamRemoteBackupLazyKeyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamStandaloneDataBoundaryTest",
+      "tests": 4,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.027"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.backup.SteamWebDavEncryptionGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.data.SteamCommunityBadgeCatalogLoaderTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.133"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.data.SteamCommunityCacheTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.025"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.data.SteamCommunityParserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.data.SteamCommunityServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.025"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.eligibility.SteamCommunityBudgetSuggestionsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.048"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.eligibility.SteamCommunityEligibilityTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.016"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.eligibility.SteamCommunityPurchaseHistoryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.eligibility.SteamLimitedAccountSupportServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.presentation.SteamCommunityViewModelTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.076"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.ui.SteamCommunityIntegrationGuardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.039"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.community.ui.SteamCommunityUnlockContentTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamConfirmationIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamConfirmationKindTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamConfirmationRefreshGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamConfirmationRiskTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamConfirmationSessionRecoveryTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.018"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.confirmations.SteamGiftInboxIntegrationGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.core.SteamNativeIntegrationTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 5,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.data.SteamAccountCapabilitiesTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.data.SteamAccountSourceSessionGuardTest",
+      "tests": 4,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.data.SteamMdbx2RoutingGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.diagnostics.LogcatCommandRunnerTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.diagnostics.SteamCrashDiagnosticsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.diagnostics.SteamDiagLoggerTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.diagnostics.SteamSupportLogExporterTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.media.SteamImageDownloaderGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.media.SteamImageDownloadPolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.SteamFoundationModelsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.SteamFoundationSchemaGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.ui.SteamRemoteImageCachePolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.foundation.ui.SteamRemoteImageUrlTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.cache.SteamMessageCachePolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.actions.data.SteamChatMessageActionServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.actions.ui.SteamChatMessageActionPositionTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationHistoryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.03"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.background.SteamChatNotificationPresentationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.145"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.045"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoIntegrationGuardTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.036"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatImeBottomAnchorPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatJumpToLatestPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatReadingPositionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatImeBottomAnchorIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatJumpToLatestIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatReadingPositionIntegrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.033"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeOutboxReconcilerTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeReducerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.04"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatSendRecoveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatStateUpdatesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.027"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentCallTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.024"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatGameInviteParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.038"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.058"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatImagePayloadTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatMediaViewerIntegrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.telegram.TelegramListScrollPolicyTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatEmoticonSizingTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatFriendPickerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.155"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMediaRenderingRegressionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMenuPopupGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.data.SteamFriendDiscoveryParserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.data.SteamFriendsServiceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.038"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.data.SteamPendingFriendRequestsParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.domain.SteamFriendsModelsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.avatar.data.SteamGroupAvatarUploaderTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupAvatarRetryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupMemberAvatarGridTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.RustGroupChatHistoryParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.RustGroupChatSummariesParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatAdminParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatCachePolicyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatParserTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatRealtimeParserTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatRealtimeServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatOutboxCoordinatorTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.018"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatRealtimeOutboxReconcilerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatViewModelTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.082"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.ui.SteamGroupChatIntegrationTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.031"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.groupchat.ui.TelegramGroupMessageRowsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.nickname.data.RustFriendNicknameParserTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.nickname.data.SteamFriendNicknameServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.presentation.SteamFriendsViewModelTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.ui.SteamFriendsIntegrationGuardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.034"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.background.SteamVoiceCallServicePolicyTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.background.SteamVoiceMediaIntegrationGuardTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.03"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.data.SteamVoiceRealtimeParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.data.SteamVoiceRealtimeServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.data.SteamVoiceServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.data.SteamVoiceSignalingRetryPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.friends.voice.media.SteamVoiceMediaRecoveryPolicyTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.health.SteamAccountHealthEvaluatorTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.health.SteamHealthIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.io.SteamSafWriterTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadApiClientTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.157"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadApiKeyPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadCountryPolicyTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadCredentialSecurityGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadHistoryLowCompatibilityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadHistoryLowRepositoryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.024"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.itad.ItadStoreUiGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.analytics.domain.SteamGameDistributionTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.analytics.domain.SteamPlayActivityTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.analytics.ui.SteamGameDistributionUiGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.context.data.SteamLibraryGameContextCacheTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.context.data.SteamLibraryGameContextParserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.context.data.SteamLibraryGameContextServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.family.RustFamilySharedAppsParserTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.filter.data.SteamLibraryFilterPreferencesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.filter.ui.SteamLibraryFilterUiGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.gamedata.domain.SteamGameDataPageTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.gamedata.ui.SteamGameDataIntegrationGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.RustAchievementDetailsParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.RustAchievementProgressParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.RustOwnedGamesParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.RustStoreItemsParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.screenshots.data.SteamGameScreenshotsParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.screenshots.domain.SteamGameScreenshotsPageTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.screenshots.ui.SteamGameScreenshotsIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamAccountHeroLayoutGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamAchievementForceRestartGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamFamilyLibraryServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.024"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamFamilyLibraryUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamFamilyRecentActivityTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryCloudMetadataTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryDashboardTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryGameContextUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryIntegrationGuardTest",
+      "tests": 6,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.032"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryModelsTest",
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.057"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryPlaytimeServiceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.024"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryProgressSpacingGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryPullRefreshGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryStateRaceTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.SteamLibraryStoreNavigationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.sync.SteamAchievementSyncModelsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.sync.SteamAchievementSyncRunnerTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.library.ui.SteamDuplicateLazyKeyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.links.domain.SteamExternalLinkRouterTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.links.ui.SteamLinkHandlingSettingsGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.market.SteamInventoryLazyKeyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamDockStyleTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamDockTabTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamEssentialsFloatingToolbarGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamFixedBottomBarGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamFloatingDockGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.022"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamLiquidGlassWebViewCompatibilityTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamPredictiveBackGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.021"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.ui.SteamBottomSafeAreaGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmClientEventRoutingTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmConnectionGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmConnectionPoolConcurrencyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmConnectionReuseTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmDisconnectRecoveryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.018"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmPersistentConnectionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.cm.SteamCmProtocolTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.diagnostics.SteamDnsOptimizationScannerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "5.078"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.diagnostics.SteamHostsDiagnosticsRunnerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.diagnostics.SteamResolverBenchmarkTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.508"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamAutoHostsFormatterTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamBuiltInHostsPresetTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamDnsWireCodecTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamHostsRuleParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamNetworkResolverSettingsTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.domain.SteamNetworkTargetCatalogTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.SteamCustomHostsDnsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.SteamDynamicDnsTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.186"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.SteamHostSessionStatsTrackerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationDataExchangeGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationIntegrationGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.056"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationPullCardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.optimization.ui.SteamNetworkOptimizationViewModelTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.RustAuthorizedDeviceParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.RustAuthSessionParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.SteamAuthorizedDeviceServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.SteamCommunityRedirectCookieTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.SteamConfirmationServiceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.026"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.network.SteamProtoTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamGiftServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationCacheTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationContentServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationDetailParserTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationReadIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationReadStateTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.notifications.SteamNotificationServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.organization.SteamOrganizationRemovalGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.outbox.data.SteamOutboxDatabaseGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.outbox.data.SteamOutboxStoreTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.outbox.domain.SteamOutboxStateMachineTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.SteamRemoteImageCacheUrlTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.viewer.data.SteamProfileViewerCacheTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.viewer.data.SteamProfileViewerParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.viewer.data.SteamProfileViewerServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerDomainTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.profile.viewer.ui.SteamProfileViewerUiGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.027"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.quickaccess.SteamQuickAccessPrivacyGuardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.023"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.quickaccess.SteamWidgetImageSyncTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.refresh.SteamExpressivePullRefreshMotionGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.refresh.SteamPullToRefreshGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.release.SteamReleaseIntegrityGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.035"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.richtext.domain.SteamRichTextParserTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.richtext.ui.SteamRichTextInteractionGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.security.SteamAppLockIntegrationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.security.SteamAppLockPolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.security.SteamStartupPreparationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.028"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.security.SteamSystemBackupSecurityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.062"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.security.SteamTokenPageLockScopeGuardTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.048"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.session.SteamAccountSessionManagerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.027"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.session.SteamSessionReloginTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.022"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.session.SteamTemporaryAccountsTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.DeveloperLogShareGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamDeveloperSettingsAccessGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamDeveloperSettingsScopeGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.016"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamPlusPaymentFlowRegressionGuardTest",
+      "tests": 3,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamSettingsDeadCodeGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamSettingsScrollStateGuardTest",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.settings.SteamSettingsVersionLabelGuardTest",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.059"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.034"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.space.presentation.SteamSpaceContentSettingsViewModelTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.019"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest",
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "2.657"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.057"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamAccountSwitcherIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.136"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamBatchPricingTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.026"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamBoundaryGuardTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.348"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamCoreAlgorithmsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.steamdb.SteamDbTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.247"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamInventoryLiveTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamInventoryMarketParserTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.076"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamLoginImportServiceGuardTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.083"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamLoginOnlyCodeCrashTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamLoginOnlyMarketCapabilityTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamMaFileParserTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.509"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamMarketBulkActionsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamMarketFeesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamMiniProfileBackgroundTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.051"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamQrChallengeParserTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamSearchFiltersTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamSessionRefreshServiceTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.101"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamSharedOverflowMenuGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamStabilityBoundaryGuardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.025"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.SteamSupportedPageAccountCapabilityTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.activation.SteamStoreProductActivationUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.data.RustSteamWishlistParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.freebie.data.SteamFreebieParserTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.023"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.freebie.data.SteamFreebieProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.freebie.data.SteamFreebieServiceTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.freebie.ui.SteamFreebieUiGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.gift.SteamStoreGiftCheckoutProtocolTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.gift.SteamStoreGiftDomainTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.gift.SteamStoreGiftUiGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.interest.data.SteamStoreInterestPreferencesDataSourceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.interest.data.SteamStoreInterestRepositoryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.interest.domain.SteamStoreInterestReconciliationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.navigation.domain.SteamStoreDetailHistoryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.presentation.SteamStoreAccountLoadTrackerTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextCacheTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseContextServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.purchase.data.SteamStorePurchaseParserTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.share.domain.SteamStoreGameShareTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamHomeGameRankingTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.065"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamNativeCartTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamPointsShopProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamScreenshotDownloadPolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreAccountCurrencyRequestTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreAccountRegionApiTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreBrowseMenuUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreBundleParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreBundleUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreCacheVersionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreCatalogParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreCollectionUiGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreCompactDetailTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreCurrencyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest",
+      "tests": 6,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.028"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreDetailRegionalPriceGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.014"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreDiscoveryTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreDiscoveryUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreFilterMetadataTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreFilterServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreFilterUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreFreeLicenseModelTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreGlobalSearchTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreHintDomainTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreHintPreferencesTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreHintUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreIgnoredGamesServiceTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.017"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreIgnoredUiStateTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreLazyKeyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreLiquidGlassBackdropTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStorePackageMetadataParserTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreParserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.01"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStorePullRefreshGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStorePurchaseContextUiGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStorePurchasePageParserTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreRegionalPricesTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreRegionParserTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreRelatedContentTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreRelatedContentUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreResponsiveLayoutGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreReviewServiceTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.009"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreReviewTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.012"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreSessionRetryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreSystemRequirementsUiGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreUiPolishGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreViewModelRaceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreWebSecurityGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.015"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamStoreWebsiteNavigationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamWishlistProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.SteamWishlistTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.store.ui.SteamStoreDetailActionToolbarTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamAccountCapabilityUiPolicyTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamLoginErrorPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamLoginImportServiceConcurrencyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamLoginOnlyAccountMapperTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamLoginRiskIntegrationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamLoginRsaKeyProviderTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.005"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.data.SteamTemporaryLoginProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.025"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.identity.domain.SteamIdentityConverterTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.identity.ui.SteamIdentityInfoCardGuardTest",
+      "tests": 3,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.loginchallenge.data.SteamLoginCaptchaUrlTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.loginchallenge.domain.SteamLoginCaptchaPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.loginsecurity.data.SteamMobileAuthRequestProfileTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.token.SteamGuardCodeGroupingIntegrationGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.011"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.trade.RustTradeOfferParserTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.trade.SteamTradeOfferIntegrationGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.trade.SteamTradeOfferLazyKeyTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.0"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.trade.SteamTradeOfferServiceTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamAccountRequestGuardTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.003"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamAvatarShapeSettingsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamProgressBarStyleSettingTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamSettingsChildPagesTest",
+      "tests": 3,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.008"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamUiScaleSettingsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.031"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.ui.SteamViewModelCollectorGuardTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.web.domain.SteamFamilyViewSessionTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.web.domain.SteamWebSessionPolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.006"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.download.WorkshopContentDownloadTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.173"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.download.WorkshopProgressTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopBatchProtocolTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.078"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopCmReadTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.042"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopManagementTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.095"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopParserTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.034"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopPresetTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.053"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopProtocolTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopServiceTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.049"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.SteamWorkshopViewModelTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.083"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopBulkPersistenceTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.112"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopLiveDownloadTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "time": "0.002"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopPresetRepositoryTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.132"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopPresetSwitchTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.317"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopReloginRecoveryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.007"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopShareCodeTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.013"
+    },
+    {
+      "suite": "takagi.ru.monica.steam.workshop.WorkshopSubscriptionOrderTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "time": "0.021"
+    },
+    {
+      "suite": "takagi.ru.monica.ui.scanner.QrFrameLifecycleGateTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.001"
+    },
+    {
+      "suite": "takagi.ru.monica.ui.scanner.QrScanHealthPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": "0.004"
+    }
+  ],
+  "totals": {
+    "tests": 1705,
+    "failures": 12,
+    "errors": 0,
+    "skipped": 8
+  }
+}

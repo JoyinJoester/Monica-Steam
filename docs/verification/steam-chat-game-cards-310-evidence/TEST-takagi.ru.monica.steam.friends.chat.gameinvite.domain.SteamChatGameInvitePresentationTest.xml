@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-21T09:24:04.618Z" hostname="JOYIN" time="0.045">
+  <properties/>
+  <testcase name="replacesTheGenericSteamLabelWithResolvedStoreMetadata" classname="takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest" time="0.016"/>
+  <testcase name="providesAStableSteamArtworkFallbackBeforeMetadataLoads" classname="takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest" time="0.005"/>
+  <testcase name="keepsARealGameNameAndDropsGenericOrAppOnlyLabels" classname="takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

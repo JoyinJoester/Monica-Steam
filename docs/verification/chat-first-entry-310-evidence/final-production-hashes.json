@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/data/SteamChatCache.kt": "20fd667048f0dd5e4368bee289c52154a9fe9c44d6b43e7a373493b3530c019a",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/data/SteamChatInfoPreferencesStore.kt": "d90c948fc3e85c8b8d4537687bd38c9b44e63e280dd98facfcba22f8e61c311d",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationEntries.kt": "3fd7e3c9829c8fc786a8ba6ea8b3a4bd2e17bc558a137ef268be49661a6e1d49",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFlags.kt": "a6faafc1f7fd03d838bc3ebb71d4697997e0228c4af823d0542cc4de4f297fc5",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt": "edcd6ab5e7fcbcfaa35511affd22240e09d3a1a98f700f459d9fc0d8abe7b379",
+  "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/data/SteamGroupChatCache.kt": "b7f4bf05ff9f21d4cf1425b45c0fac04a11319c95105ec95f2f88992e3ac8e20",
+  "app/src/main/java/takagi/ru/monica/steam/outbox/data/SteamOutboxStore.kt": "6261a63e8ea399c1c15724094aff87789bf9863c7870086fc8593b29c9e6367f"
+}

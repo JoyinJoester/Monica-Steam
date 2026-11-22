@@ -11,7 +11,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import takagi.ru.monica.MainActivity
+import takagi.ru.monica.MonicaSteamActivity
 import takagi.ru.monica.R
 
 object BitwardenSyncNotificationHelper {
@@ -26,7 +26,7 @@ object BitwardenSyncNotificationHelper {
         }
 
         val detailText = summary.buildDetailLine(context)
-        val launchIntent = Intent(context, MainActivity::class.java).apply {
+        val launchIntent = Intent(context, MonicaSteamActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
         val pendingIntent = PendingIntent.getActivity(

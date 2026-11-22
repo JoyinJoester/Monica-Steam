@@ -237,7 +237,25 @@ data class SteamAchievement(
     val achieved: Boolean,
     val unlockTimeSeconds: Long?,
     val iconUrl: String?,
-    val lockedIconUrl: String?
+    val lockedIconUrl: String?,
+    val groupId: Long = 0L,
+    val archived: Boolean = false,
+    val hidden: Boolean = false
+)
+
+@Serializable
+data class SteamAchievementSet(
+    val groupId: Long,
+    val name: String,
+    val dlcAppId: Long? = null,
+    val archived: Boolean = false,
+    val order: Long = 0L,
+    val totalAchievements: Int? = null,
+    val completionAchievements: Int? = null,
+    val completedAchievements: Int? = null,
+    val isAchievable: Boolean? = null,
+    val isCompleted: Boolean? = null,
+    val timeCompletedSeconds: Long? = null
 )
 
 @Serializable
@@ -246,12 +264,35 @@ data class SteamGameAchievements(
     val appId: Int,
     val gameName: String,
     val achievements: List<SteamAchievement>,
-    val fetchedAt: Long
+    val fetchedAt: Long,
+    val sets: List<SteamAchievementSet> = emptyList()
 ) {
     val completed: List<SteamAchievement> get() = achievements.filter { it.achieved }
     val incomplete: List<SteamAchievement> get() = achievements.filterNot { it.achieved }
     val completionRate: Float
         get() = if (achievements.isEmpty()) 0f else completed.size.toFloat() / achievements.size.toFloat()
+
+    fun achievementsInSet(groupId: Long?): List<SteamAchievement> =
+        if (groupId == null) achievements else achievements.filter { it.groupId == groupId }
+
+    val selectableSets: List<SteamAchievementSet>
+        get() {
+            if (sets.isEmpty() && achievements.all { it.groupId == 0L }) return emptyList()
+            val known = sets.mapTo(mutableSetOf()) { it.groupId }
+            val populated = achievements.mapTo(mutableSetOf()) { it.groupId }
+            return sets.filterNot { it.totalAchievements == 0 && it.completionAchievements == 0 &&
+                it.groupId !in populated && it.isCompleted != true } +
+                achievements.map { it.groupId }.distinct().filterNot { it in known }
+                .map { SteamAchievementSet(it, "") }
+        }
+
+    fun setProgress(set: SteamAchievementSet): Pair<Int, Int> {
+        val members = achievementsInSet(set.groupId).filterNot { it.archived }
+        val total = set.completionAchievements ?: members.size
+        // A retained completion flag is separate from the server's current counts.
+        val completed = (set.completedAchievements ?: members.count { it.achieved }).coerceIn(0, total)
+        return completed to total
+    }
 }
 
 @Serializable

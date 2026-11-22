@@ -1,0 +1,18 @@
+[
+  {
+    "abi": "armeabi-v7a",
+    "versionName": "1.0.310",
+    "versionCode": 18,
+    "apk": "Monica-Steam-Android-armeabi-v7a-1.0.310-26110218-03.APK",
+    "sha256": "fa42c79f33b9afd664898e8c075e6ca906db4bf09209d376f0e66695c17498e1",
+    "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0"
+  },
+  {
+    "abi": "arm64-v8a",
+    "versionName": "1.0.310",
+    "versionCode": 18,
+    "apk": "Monica-Steam-Android-arm64-v8a-1.0.310-26110218-03.APK",
+    "sha256": "dea652c0766f9daa725cc68a9373c1af0631dff127cb6e07bef66476ca7c3701",
+    "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0"
+  }
+]

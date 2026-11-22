@@ -1,0 +1,70 @@
+{
+  "status": "complete",
+  "version": "1.0.311",
+  "versionCode": 18,
+  "changes": [
+    "official batch + bounded public-store names + account-library cache",
+    "style-aware bottom-right FAB clears actual Dock",
+    "native text composer with acknowledged send and unknown-outcome protection"
+  ],
+  "jvm": {
+    "tests": 110,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "device": {
+    "distinctPassingMethods": 42,
+    "fullBatchFailuresRetained": true,
+    "finalTargetedBrowserClass": {
+      "passes": 5,
+      "runnerSeconds": 5.329
+    }
+  },
+  "resources": {
+    "languages": 5,
+    "newValues": 70
+  },
+  "releaseNotes": {
+    "entriesPerLanguage": 57,
+    "updatedPerLanguage": 3
+  },
+  "apkHashes": {
+    "device01": {
+      "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+      "test": "59c0722b3d5726863b07e1208772486b7a50dc728ae29db62c1aa5354fd184ef",
+      "exitCode": 0,
+      "seconds": 9.93645039992407
+    },
+    "device02": {
+      "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+      "test": "59c0722b3d5726863b07e1208772486b7a50dc728ae29db62c1aa5354fd184ef",
+      "exitCode": 0,
+      "seconds": 75.69437610008754
+    },
+    "device03": {
+      "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+      "test": "ee6737ac03ae90b389ea4f23470a5ea4bdbaf8722a572f73f4eaccfeef96df30",
+      "exitCode": 0,
+      "seconds": 64.43663990008645
+    },
+    "device04": {
+      "main": "a1b025a4bbaafc6b2f5c2ce7e66cda8682fa0412fb46e28a9114601ffd50ec8e",
+      "test": "ee6737ac03ae90b389ea4f23470a5ea4bdbaf8722a572f73f4eaccfeef96df30",
+      "exitCode": 0,
+      "seconds": 8.040412199916318
+    }
+  },
+  "validationLimits": [
+    "synthetic CM publishing, no real-account remote post",
+    "user incident network cause not captured",
+    "no physical/OEM/new R8",
+    "device03 Compose root failure not independently diagnosed; same package targeted rerun passed"
+  ],
+  "cleanupVerified": true,
+  "otherInstancesRetained": true,
+  "configurationAndDataDiskRetained": true,
+  "report": "docs/verification/steam-space-names-publish-311.md",
+  "reportSha256": "2392972e0deb9fda2c42ae3777e60634a90810e331dfed66698c8a0d1ccbf704",
+  "noCommitPushReleaseOrApkDelivery": true
+}

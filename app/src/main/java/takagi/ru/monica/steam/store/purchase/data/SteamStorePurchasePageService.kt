@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.store.purchase.data
 
+import kotlinx.serialization.json.*
 import okhttp3.OkHttpClient
 import org.jsoup.Jsoup
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
@@ -12,11 +13,14 @@ import takagi.ru.monica.steam.store.related.data.SteamStoreRelatedContentService
 internal data class SteamStorePurchasePage(
     val visiblePackageIds: Set<Int> = emptySet(),
     val tags: List<String> = emptyList(),
-    val bundles: List<SteamStoreBundle> = emptyList()
+    val bundles: List<SteamStoreBundle> = emptyList(),
+    val discounts: Map<Int, SteamPackageDiscount> = emptyMap()
 )
 
+internal data class SteamPackageDiscount(val priceCents: Int, val percent: Int, val endEpochSeconds: Long)
+
 internal object SteamStorePurchasePageParser {
-    fun parse(html: String): SteamStorePurchasePage {
+    fun parse(html: String, appId: Int? = null): SteamStorePurchasePage {
         val document = Jsoup.parse(html)
         val visiblePackageIds = document
             .select(
@@ -32,8 +36,45 @@ internal object SteamStorePurchasePageParser {
                 .map { it.text().trim() }
                 .filter(String::isNotBlank)
                 .distinct(),
-            bundles = SteamStoreBundleParser.parse(html)
+            bundles = SteamStoreBundleParser.parse(html),
+            discounts = if (appId == null) emptyMap() else parseDiscounts(document, appId)
         )
+    }
+    private fun parseDiscounts(document: org.jsoup.nodes.Document, appId: Int): Map<Int, SteamPackageDiscount> {
+        val candidates = mutableMapOf<Int, MutableSet<SteamPackageDiscount>>()
+        fun option(value: JsonElement?) {
+            val obj = value as? JsonObject ?: return
+            if (obj["bundleid"]?.jsonPrimitive?.intOrNull?.let { it > 0 } == true) return
+            val id = obj["packageid"]?.jsonPrimitive?.intOrNull?.takeIf { it > 0 } ?: return
+            val price = obj["final_price_in_cents"]?.jsonPrimitive?.intOrNull?.takeIf { it >= 0 } ?: return
+            val percent = obj["discount_pct"]?.jsonPrimitive?.intOrNull?.takeIf { it in 1..100 } ?: return
+            val end = obj["discount_end_date"]?.jsonPrimitive?.longOrNull
+                ?.takeIf { it in 1..253402300799L } ?: return
+            candidates.getOrPut(id) { mutableSetOf() }.add(SteamPackageDiscount(price, percent, end))
+        }
+        fun visit(node: JsonElement, depth: Int) {
+            if (depth > 24) return
+            when (node) {
+                is JsonObject -> {
+                    (node["rgStoreItems"] as? JsonArray)?.forEach { value ->
+                        val item = value as? JsonObject ?: return@forEach
+                        if (item["appid"]?.jsonPrimitive?.intOrNull == appId) {
+                            option(item["best_purchase_option"])
+                            (item["purchase_options"] as? JsonArray)?.forEach(::option)
+                        }
+                    }
+                    node.values.filter { it is JsonObject || it is JsonArray }.forEach { visit(it, depth + 1) }
+                }
+                is JsonArray -> node.forEach { visit(it, depth + 1) }
+                else -> Unit
+            }
+        }
+        document.select("[data-props]").forEach { element ->
+            val raw = element.attr("data-props")
+            if (raw.length <= 2_000_000) runCatching { visit(Json.parseToJsonElement(raw), 0) }
+        }
+        // Conflicting metadata cannot provide a trustworthy countdown.
+        return candidates.mapNotNull { (id, values) -> values.singleOrNull()?.let { id to it } }.toMap()
     }
 }
 
@@ -59,7 +100,7 @@ internal class SteamStorePurchasePageService(
                 throw SteamStoreFamilyViewException()
             }
             if (!response.isSuccessful) return@use SteamStorePurchasePage()
-            SteamStorePurchasePageParser.parse(response.body?.string().orEmpty())
+            SteamStorePurchasePageParser.parse(response.body?.string().orEmpty(), appId)
         }
         val metadata = relatedContentService.fetch(
             appIds = page.bundles.flatMap { bundle -> bundle.items.map { it.appId } },

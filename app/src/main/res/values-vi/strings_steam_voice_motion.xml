@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_voice_status_connected">Trò chuyện thoại · %1$d người</string>
+    <string name="steam_voice_status_waiting">Đang chờ trả lời</string>
+    <string name="steam_voice_status_reconnecting">Đang kết nối lại</string>
+    <string name="steam_voice_status_connecting">Đang kết nối trò chuyện thoại</string>
+    <string name="steam_voice_status_members">%1$d người đang trò chuyện thoại</string>
+    <string name="steam_voice_status_channel">Kênh thoại</string>
+    <string name="steam_voice_status_joined">Đã tham gia trò chuyện thoại</string>
+    <string name="steam_voice_status_empty">Chưa có ai tham gia</string>
+</resources>

@@ -1,0 +1,152 @@
+[
+  {
+    "config": "en",
+    "key": "steam_chat_background_section",
+    "value": "Steam chat"
+  },
+  {
+    "config": "en",
+    "key": "steam_chat_background_title",
+    "value": "Chat message notifications"
+  },
+  {
+    "config": "en",
+    "key": "steam_chat_background_description",
+    "value": "Notifies you when friends send chat messages, without connection status notifications. Reopen the app to resume receiving messages after the system ends its process."
+  },
+  {
+    "config": "en",
+    "key": "steam_chat_background_permission_required",
+    "value": "Notification permission is required for chat message alerts."
+  },
+  {
+    "config": "en",
+    "key": "steam_chat_background_start_failed",
+    "value": "Unable to enable chat message notifications."
+  },
+  {
+    "config": "en",
+    "key": "steam_chat_background_target_unavailable",
+    "value": "The Steam account for this notification is no longer available."
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_section",
+    "value": "Steam 聊天"
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_title",
+    "value": "聊天消息通知"
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_description",
+    "value": "收到好友聊天消息时通知，不显示连接状态通知。系统结束应用进程后，重新打开应用可恢复接收。"
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_permission_required",
+    "value": "聊天消息提醒需要通知权限。"
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_start_failed",
+    "value": "无法启用聊天消息通知。"
+  },
+  {
+    "config": "zh",
+    "key": "steam_chat_background_target_unavailable",
+    "value": "这条通知对应的 Steam 账号已不可用。"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_section",
+    "value": "Steam チャット"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_title",
+    "value": "チャットメッセージ通知"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_description",
+    "value": "フレンドからのチャットメッセージを通知します。接続状態の通知は表示しません。システムがアプリのプロセスを終了した場合は、アプリを開き直すと受信を再開します。"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_permission_required",
+    "value": "チャットメッセージの通知には通知権限が必要です。"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_start_failed",
+    "value": "チャットメッセージ通知を有効にできませんでした。"
+  },
+  {
+    "config": "ja",
+    "key": "steam_chat_background_target_unavailable",
+    "value": "この通知の Steam アカウントは利用できなくなりました。"
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_section",
+    "value": "Чат Steam"
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_title",
+    "value": "Уведомления о сообщениях"
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_description",
+    "value": "Уведомляет о сообщениях от друзей, без уведомлений о состоянии подключения. Если система завершит процесс приложения, откройте его снова для возобновления получения сообщений."
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_permission_required",
+    "value": "Для уведомлений о сообщениях требуется разрешение на уведомления."
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_start_failed",
+    "value": "Не удалось включить уведомления о сообщениях."
+  },
+  {
+    "config": "ru",
+    "key": "steam_chat_background_target_unavailable",
+    "value": "Аккаунт Steam для этого уведомления больше недоступен."
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_section",
+    "value": "Trò chuyện Steam"
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_title",
+    "value": "Thông báo tin nhắn trò chuyện"
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_description",
+    "value": "Thông báo khi bạn bè gửi tin nhắn, không hiển thị thông báo trạng thái kết nối. Nếu hệ thống kết thúc tiến trình ứng dụng, hãy mở lại ứng dụng để tiếp tục nhận tin nhắn."
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_permission_required",
+    "value": "Cần cấp quyền thông báo để nhận thông báo tin nhắn."
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_start_failed",
+    "value": "Không thể bật thông báo tin nhắn trò chuyện."
+  },
+  {
+    "config": "vi",
+    "key": "steam_chat_background_target_unavailable",
+    "value": "Tài khoản Steam của thông báo này không còn khả dụng."
+  }
+]

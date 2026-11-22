@@ -1,0 +1,15 @@
+{
+  "currentUser": 0,
+  "retainedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "createdUserRemoved": 16,
+  "testPackagesRemoved": true,
+  "emulator": "127.0.0.1:16384",
+  "emulatorKeptRunning": true,
+  "firstRemoveUserFailed": true,
+  "retryRemoveUserSucceeded": true
+}

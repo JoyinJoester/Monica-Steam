@@ -1,32 +1,35 @@
 package takagi.ru.monica.steam.friends.groupchat.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamDesignStyle
+import takagi.ru.monica.steam.navigation.SteamDockStyle
+
+import android.view.Gravity
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.TextView
+import takagi.ru.monica.steam.foundation.ui.SteamCardPreviewHost
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.GroupAdd
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,24 +38,43 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import takagi.ru.monica.steam.friends.chat.ui.SteamThreadSearchState
+import takagi.ru.monica.steam.friends.chat.ui.SteamThreadSearchHeader
+import takagi.ru.monica.steam.friends.chat.ui.SteamThreadSearchBottom
+import takagi.ru.monica.steam.friends.chat.ui.steamThreadSearchResults
+import takagi.ru.monica.steam.friends.chat.ui.buildSteamChatHistory
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.viewinterop.AndroidView
+import com.monica.telegramchat.TelegramMessageTextView
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramTextMessage
+import takagi.ru.monica.steam.friends.chat.telegram.nativeTelegramText
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContentParser
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContent
+import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentKind
+import takagi.ru.monica.steam.friends.chat.richmedia.ui.isSingleSteamEmoticonMessage
+import com.monica.telegramchat.TelegramGlassView
 import java.text.DateFormat
 import java.util.Date
-import kotlinx.coroutines.launch
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage
 import takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaUiState
 import takagi.ru.monica.steam.friends.chat.actions.domain.SteamChatReportReason
 import takagi.ru.monica.steam.friends.chat.actions.ui.SteamChatMessageActionMenu
@@ -60,27 +82,35 @@ import takagi.ru.monica.steam.friends.chat.actions.ui.SteamChatReactionPicker
 import takagi.ru.monica.steam.friends.chat.actions.ui.SteamChatReportDialog
 import takagi.ru.monica.steam.friends.chat.position.domain.SteamChatReadingConversationKey
 import takagi.ru.monica.steam.friends.chat.position.domain.SteamChatJumpMessage
-import takagi.ru.monica.steam.friends.chat.position.ui.SteamChatAutoScrollToLatestEffect
 import takagi.ru.monica.steam.friends.chat.position.ui.SteamChatJumpToLatestButton
-import takagi.ru.monica.steam.friends.chat.position.ui.animateToLatestSteamChatMessage
 import takagi.ru.monica.steam.friends.chat.position.ui.rememberSteamChatJumpToLatestState
-import takagi.ru.monica.steam.friends.chat.position.ui.rememberSteamChatReadingPosition
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramChatAction
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramChatHeader
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramChatScaffold
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramDatePill
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageList
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageHighlight
+import takagi.ru.monica.steam.friends.chat.telegram.TELEGRAM_HIGHLIGHT_HOLD_MILLIS
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageSurface
+import takagi.ru.monica.steam.friends.chat.telegram.rememberTelegramChatListState
+import takagi.ru.monica.steam.friends.chat.telegram.telegramChatColors
+import takagi.ru.monica.steam.friends.chat.telegram.telegramMessageDay
+import takagi.ru.monica.steam.friends.chat.telegram.telegramMessagesShareGroup
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRichMessageContent
 import takagi.ru.monica.steam.friends.chat.ui.SteamChatComposer
 import takagi.ru.monica.steam.friends.domain.SteamFriend
-import takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupAvatarImage
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatDeliveryState
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatMessage
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatReactionType
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatReportReason
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatSummary
+import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoom
 import takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatUiState
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceAudioRoute
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceTargetType
 import takagi.ru.monica.steam.friends.voice.ui.SteamVoiceChannelPanel
 import takagi.ru.monica.steam.friends.voice.ui.SteamVoiceStatusBanner
-import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
 import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 
 @Composable
@@ -90,6 +120,9 @@ internal fun SteamGroupChatThread(
     group: SteamGroupChatSummary,
     friends: List<SteamFriend>,
     targetMessageId: String? = null,
+    targetMessageNonce: Int = 0,
+    highlightMessageId: String? = null,
+    onHighlightConsumed: () -> Unit = {},
     onBack: () -> Unit,
     onOpenInfo: () -> Unit,
     onOpenRoom: (String, String) -> Unit,
@@ -113,15 +146,11 @@ internal fun SteamGroupChatThread(
     onToggleVoiceOutput: () -> Unit = {},
     onSelectVoiceAudioRoute: (SteamVoiceAudioRoute) -> Unit = {},
     onOpenStoreApp: (Int) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    wallpaperPreset: takagi.ru.monica.steam.friends.chat.info.domain.SteamChatWallpaperPreset = takagi.ru.monica.steam.friends.chat.info.domain.SteamChatWallpaperPreset.TELEGRAM_PATTERN
 ) {
     val messages = state.thread?.messages.orEmpty()
     val friendsById = remember(friends) { friends.associateBy(SteamFriend::steamId) }
-    val groupMembers = remember(group.topMemberSteamIds, friends) {
-        group.topMemberSteamIds.mapNotNull(friendsById::get)
-    }
-    val listState = rememberLazyListState()
-    val scrollScope = rememberCoroutineScope()
     val conversationKey = remember(state.accountSteamId, group.groupId, state.selectedChatId) {
         SteamChatReadingConversationKey.group(
             state.accountSteamId,
@@ -129,16 +158,26 @@ internal fun SteamGroupChatThread(
             state.selectedChatId.orEmpty()
         )
     }
-    val messageIds = remember(messages) { messages.map(SteamGroupChatMessage::stableId) }
-    val leadingItemCount = if (state.loadingOlder) 1 else 0
+    val listState = rememberTelegramChatListState(conversationKey)
+    val search = remember(conversationKey) { SteamThreadSearchState() }
+    val composerState = rememberSaveableStateHolder()
+    val searchItems = remember(search.active, messages, friendsById) {
+        if (!search.active) emptyList() else buildSteamChatHistory(
+            null, null, friendsById, emptyList(), "", messages, state.accountSteamId
+        )
+    }
+    val searchResults = steamThreadSearchResults(search, searchItems)
+    LaunchedEffect(targetMessageId, targetMessageNonce) { search.jump.clear() }
+    val activeHighlight = search.jump.highlightId ?: highlightMessageId
+    LaunchedEffect(search.jump.highlightId) {
+        if (search.jump.highlightId != null) {
+            delay(TELEGRAM_HIGHLIGHT_HOLD_MILLIS)
+            search.jump.consumeHighlight()
+        }
+    }
+    val messageRows = remember(messages) { groupTelegramMessageRows(messages) }
     val selectedRoom = group.rooms.firstOrNull { it.chatId == state.selectedChatId }
-    val readingUi by rememberSteamChatReadingPosition(
-        conversationKey = conversationKey,
-        messageIds = messageIds,
-        requestedMessageId = targetMessageId,
-        leadingItemCount = leadingItemCount,
-        listState = listState
-    )
+    val readingUi = listState.readingUi
     val jumpMessages = remember(messages, state.accountSteamId) {
         messages.map { message ->
             SteamChatJumpMessage(
@@ -156,126 +195,145 @@ internal fun SteamGroupChatThread(
         messagesBelow = readingUi.messagesBelow,
         restored = readingUi.restored
     )
-    val shouldLoadOlder by remember(listState, state.loadingOlder, state.thread?.moreAvailable) {
-        derivedStateOf {
-            state.thread?.moreAvailable == true && !state.loadingOlder &&
-                listState.layoutInfo.visibleItemsInfo.firstOrNull()?.index?.let { it <= 2 } == true
+    val voiceRoom = selectedRoom?.takeIf { it.voiceAllowed }
+    val inviteLabel = stringResource(R.string.steam_group_chat_invite)
+    LaunchedEffect(highlightMessageId) {
+        if (highlightMessageId != null) {
+            delay(TELEGRAM_HIGHLIGHT_HOLD_MILLIS)
+            onHighlightConsumed()
         }
     }
-    LaunchedEffect(shouldLoadOlder) { if (shouldLoadOlder) onLoadOlder() }
-    SteamChatAutoScrollToLatestEffect(
-        conversationKey = conversationKey,
-        latestMessageId = messages.lastOrNull()?.stableId,
-        latestMessageIsOutgoing = messages.lastOrNull()?.senderSteamId == state.accountSteamId,
-        messageCount = messages.size,
-        leadingItemCount = leadingItemCount,
-        messagesBelow = readingUi.messagesBelow,
-        restored = readingUi.restored,
-        listState = listState
-    )
-
-    Column(
-        modifier
-            .fillMaxSize()
-            .steamWindowBottomPadding(suppressWhenImeVisible = true)
-            .imePadding()
-    ) {
-        GroupThreadHeader(group, groupMembers, onBack, onOpenInfo, onInvite)
-        SteamGroupChannelQuickFilter(
-            rooms = group.rooms,
-            selectedChatId = state.selectedChatId,
-            onSelect = { chatId -> onOpenRoom(group.groupId, chatId) }
-        )
-        val voiceRoom = selectedRoom?.takeIf { it.voiceAllowed }
-        val activeVoiceRoom = group.rooms.firstOrNull { it.isVoiceActive }
-        val joinVoiceRoom = voiceRoom ?: activeVoiceRoom
-        val localGroupCall = voiceState.isActive &&
-            voiceState.target?.type == SteamVoiceTargetType.GROUP &&
-            voiceState.target?.groupId == group.groupId
-        if (voiceState.isActive || group.isVoiceActive) {
-            SteamVoiceStatusBanner(
-                state = voiceState,
-                fallbackTitle = group.name,
-                activeMemberCount = if (!voiceState.isActive || localGroupCall) {
-                    group.activeVoiceMemberCount
-                } else 0,
-                onJoin = joinVoiceRoom?.takeIf { !voiceState.isActive }
-                    ?.let { { onJoinVoice(it.chatId) } },
-                onLeave = voiceState.isActive.takeIf { it }?.let { { onLeaveVoice() } },
-                onToggleMicrophone = voiceState.isActive.takeIf { it }?.let { { onToggleVoiceMicrophone() } },
-                onToggleOutput = voiceState.isActive.takeIf { it }?.let { { onToggleVoiceOutput() } },
-                onSelectAudioRoute = voiceState.isActive.takeIf { it }
-                    ?.let { { route -> onSelectVoiceAudioRoute(route) } }
-            )
-        }
-        Box(Modifier.weight(1f).fillMaxWidth()) {
-            when {
-                voiceRoom != null -> SteamVoiceChannelPanel(
-                    room = voiceRoom,
-                    state = voiceState,
-                    friends = friends,
-                    accountSteamId = state.accountSteamId,
-                    onJoin = { onJoinVoice(voiceRoom.chatId) },
-                    onLeave = onLeaveVoice,
-                    onToggleMicrophone = onToggleVoiceMicrophone,
-                    onToggleOutput = onToggleVoiceOutput,
-                    onSelectAudioRoute = onSelectVoiceAudioRoute,
-                    modifier = Modifier.fillMaxSize()
+    SteamCardPreviewHost(conversationKey) {
+        TelegramChatScaffold(
+            state = listState,
+            wallpaperPreset = wallpaperPreset,
+            modifier = modifier,
+            top = {
+                if (search.active) SteamThreadSearchHeader(search, searchItems, Modifier.steamWindowTopPadding())
+                else TelegramChatHeader(
+                    title = group.name,
+                    subtitle = stringResource(R.string.steam_group_chat_members, group.activeMemberCount),
+                    avatarUrl = group.avatarUrl,
+                    refreshing = state.threadLoading,
+                    onBack = onBack,
+                    onInfo = onOpenInfo,
+                    actions = listOf(TelegramChatAction(stringResource(R.string.steam_thread_search), { search.active = true }),
+                        TelegramChatAction(inviteLabel, onInvite)),
+                    sourceView = listState.sourceView,
+                    modifier = Modifier.steamWindowTopPadding()
                 )
-                state.threadLoading && state.thread == null -> CircularProgressIndicator(Modifier.align(Alignment.Center))
-                else -> LazyColumn(
-                    state = listState,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    if (state.loadingOlder) item("older-loading") {
-                        Box(Modifier.fillMaxWidth().padding(8.dp), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                        }
-                    }
-                    items(messages, key = SteamGroupChatMessage::stableId) { message ->
-                        GroupMessageBubble(
-                            message = message,
-                            outgoing = message.senderSteamId == state.accountSteamId,
-                            senderName = friendsById[message.senderSteamId]?.displayName
-                                ?: message.senderSteamId.takeLast(8),
-                            richMediaState = richMediaState,
-                            onRetryMessage = onRetryMessage,
-                            onUpdateReaction = onUpdateReaction,
-                            onReportMessage = onReportMessage,
-                            onDeleteMessage = onDeleteMessage,
-                            onOpenStoreApp = onOpenStoreApp
-                        )
-                    }
+                TelegramGroupChannelPill(
+                    rooms = group.rooms,
+                    selectedChatId = state.selectedChatId,
+                    onSelect = { chatId -> onOpenRoom(group.groupId, chatId) },
+                    sourceView = listState.sourceView
+                )
+                val activeVoiceRoom = group.rooms.firstOrNull { it.isVoiceActive }
+                val joinVoiceRoom = voiceRoom ?: activeVoiceRoom
+                val localGroupCall = voiceState.isActive &&
+                    voiceState.target?.type == SteamVoiceTargetType.GROUP &&
+                    voiceState.target?.groupId == group.groupId
+                if (voiceState.isActive || group.isVoiceActive) {
+                    SteamVoiceStatusBanner(
+                        state = voiceState,
+                        fallbackTitle = group.name,
+                        activeMemberCount = if (!voiceState.isActive || localGroupCall) {
+                            group.activeVoiceMemberCount
+                        } else 0,
+                        onJoin = joinVoiceRoom?.takeIf { !voiceState.isActive }
+                            ?.let { { onJoinVoice(it.chatId) } },
+                        onLeave = voiceState.isActive.takeIf { it }?.let { { onLeaveVoice() } },
+                        onToggleMicrophone = voiceState.isActive.takeIf { it }?.let { { onToggleVoiceMicrophone() } },
+                        onToggleOutput = voiceState.isActive.takeIf { it }?.let { { onToggleVoiceOutput() } },
+                        onSelectAudioRoute = voiceState.isActive.takeIf { it }
+                            ?.let { { route -> onSelectVoiceAudioRoute(route) } }
+                    )
+                }
+            },
+            bottom = {
+                if (search.active) SteamThreadSearchBottom(search, searchResults)
+                else if (voiceRoom == null) composerState.SaveableStateProvider(conversationKey) {
+                    SteamChatComposer(
+                        draftKey = conversationKey,
+                        richMediaState = richMediaState,
+                        onSend = onSend,
+                        onAttachmentSelected = onAttachmentSelected,
+                        onAttachmentSpoilerChanged = onAttachmentSpoilerChanged,
+                        onUploadAttachment = onUploadAttachment,
+                        onClearAttachment = onClearAttachment,
+                        onClearAttachmentFailure = onClearAttachmentFailure,
+                        onRefreshCatalogs = onRefreshCatalogs,
+                        onOpenStoreApp = onOpenStoreApp,
+                        sourceView = listState.sourceView,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
-            SteamChatJumpToLatestButton(
-                visible = jumpUi.visible,
-                messagesBelow = jumpUi.unreadBelowCount,
-                onClick = {
-                    scrollScope.launch {
-                        listState.animateToLatestSteamChatMessage(messages.size, leadingItemCount)
+        ) { contentPadding ->
+            Box(Modifier.fillMaxSize()) {
+                when {
+                    voiceRoom != null -> SteamVoiceChannelPanel(
+                        room = voiceRoom,
+                        state = voiceState,
+                        friends = friends,
+                        accountSteamId = state.accountSteamId,
+                        onJoin = { onJoinVoice(voiceRoom.chatId) },
+                        onLeave = onLeaveVoice,
+                        onToggleMicrophone = onToggleVoiceMicrophone,
+                        onToggleOutput = onToggleVoiceOutput,
+                        onSelectAudioRoute = onSelectVoiceAudioRoute,
+                        modifier = Modifier.fillMaxSize().padding(contentPadding)
+                    )
+                    state.threadLoading && state.thread == null -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+                    else -> TelegramMessageList(
+                        items = messageRows,
+                        itemKey = { it.message.stableId },
+                        state = listState,
+                        conversationKey = conversationKey,
+                        requestedMessageId = search.jump.messageId ?: targetMessageId,
+                        requestedNonce = if (search.jump.messageId != null) search.jump.nonce else targetMessageNonce,
+                        loadingOlder = state.loadingOlder,
+                        moreAvailable = state.thread?.moreAvailable == true,
+                        latestMessageOutgoing = messages.lastOrNull()?.senderSteamId == state.accountSteamId,
+                        onLoadOlder = onLoadOlder,
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = contentPadding
+                    ) { row ->
+                        Column(Modifier.fillMaxWidth()) {
+                            if (row.showDate) {
+                                TelegramDatePill(
+                                    row.message.timestamp,
+                                    Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp)
+                                )
+                            }
+                            GroupMessageHighlighted(
+                                active = row.message.stableId == activeHighlight,
+                                message = row.message,
+                                outgoing = row.message.senderSteamId == state.accountSteamId,
+                                groupedWithPrevious = row.groupedWithPrevious,
+                                groupedWithNext = row.groupedWithNext,
+                                sender = friendsById[row.message.senderSteamId],
+                                richMediaState = richMediaState,
+                                onRetryMessage = onRetryMessage,
+                                onUpdateReaction = onUpdateReaction,
+                                onReportMessage = onReportMessage,
+                                onDeleteMessage = onDeleteMessage,
+                                onOpenStoreApp = onOpenStoreApp
+                            )
+                        }
                     }
-                },
-                modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp)
-            )
-        }
-        if (voiceRoom == null) {
-            SteamChatComposer(
-                draftKey = conversationKey,
-                richMediaState = richMediaState,
-                onSend = onSend,
-                onAttachmentSelected = onAttachmentSelected,
-                onAttachmentSpoilerChanged = onAttachmentSpoilerChanged,
-                onUploadAttachment = onUploadAttachment,
-                onClearAttachment = onClearAttachment,
-                onClearAttachmentFailure = onClearAttachmentFailure,
-                onRefreshCatalogs = onRefreshCatalogs,
-                modifier = Modifier.fillMaxWidth()
-            )
+                }
+                SteamChatJumpToLatestButton(
+                    visible = jumpUi.visible,
+                    messagesBelow = jumpUi.unreadBelowCount,
+                    onClick = listState::jumpToLatest,
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                        .padding(bottom = contentPadding.calculateBottomPadding() + 8.dp, end = 12.dp)
+                )
+            }
         }
     }
+
 }
 
 @Composable
@@ -284,6 +342,9 @@ internal fun SteamGroupChatThreadHost(
     richMediaState: SteamChatRichMediaUiState,
     friends: List<SteamFriend>,
     targetMessageId: String? = null,
+    targetMessageNonce: Int = 0,
+    highlightMessageId: String? = null,
+    onHighlightConsumed: () -> Unit = {},
     onBack: () -> Unit,
     onOpenInfo: () -> Unit,
     onOpenRoom: (String, String) -> Unit,
@@ -307,15 +368,20 @@ internal fun SteamGroupChatThreadHost(
     onToggleVoiceOutput: () -> Unit = {},
     onSelectVoiceAudioRoute: (SteamVoiceAudioRoute) -> Unit = {},
     onOpenStoreApp: (Int) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    wallpaperPreset: takagi.ru.monica.steam.friends.chat.info.domain.SteamChatWallpaperPreset = takagi.ru.monica.steam.friends.chat.info.domain.SteamChatWallpaperPreset.TELEGRAM_PATTERN
 ) {
     val group = state.groups.firstOrNull { it.groupId == state.selectedGroupId } ?: return
     SteamGroupChatThread(
         state = state,
+        wallpaperPreset = wallpaperPreset,
         richMediaState = richMediaState,
         group = group,
         friends = friends,
         targetMessageId = targetMessageId,
+        targetMessageNonce = targetMessageNonce,
+        highlightMessageId = highlightMessageId,
+        onHighlightConsumed = onHighlightConsumed,
         onBack = onBack,
         onOpenInfo = onOpenInfo,
         onOpenRoom = onOpenRoom,
@@ -343,38 +409,36 @@ internal fun SteamGroupChatThreadHost(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun GroupThreadHeader(
-    group: SteamGroupChatSummary,
-    members: List<SteamFriend>,
-    onBack: () -> Unit,
-    onOpenInfo: () -> Unit,
-    onInvite: () -> Unit
+private fun GroupMessageHighlighted(
+    active: Boolean,
+    message: SteamGroupChatMessage,
+    outgoing: Boolean,
+    groupedWithPrevious: Boolean,
+    groupedWithNext: Boolean,
+    sender: SteamFriend?,
+    richMediaState: SteamChatRichMediaUiState,
+    onRetryMessage: (String) -> Unit,
+    onUpdateReaction: (SteamGroupChatMessage, SteamGroupChatReactionType, String, Boolean) -> Unit,
+    onReportMessage: (SteamGroupChatMessage, SteamGroupChatReportReason) -> Unit,
+    onDeleteMessage: (SteamGroupChatMessage) -> Unit,
+    onOpenStoreApp: (Int) -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .steamWindowTopPadding()
-            .padding(horizontal = 4.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
-        SteamGroupAvatarImage(
-            url = group.avatarUrl,
-            members = members,
-            contentDescription = group.name,
-            modifier = Modifier.size(40.dp).clickable(onClick = onOpenInfo)
+    TelegramMessageHighlight(active = active) {
+        GroupMessageBubble(
+            message = message,
+            outgoing = outgoing,
+            groupedWithPrevious = groupedWithPrevious,
+            groupedWithNext = groupedWithNext,
+            sender = sender,
+            richMediaState = richMediaState,
+            onRetryMessage = onRetryMessage,
+            onUpdateReaction = onUpdateReaction,
+            onReportMessage = onReportMessage,
+            onDeleteMessage = onDeleteMessage,
+            onOpenStoreApp = onOpenStoreApp
         )
-        Spacer(Modifier.width(10.dp))
-        Column(Modifier.weight(1f).clickable(onClick = onOpenInfo).padding(vertical = 4.dp)) {
-            Text(group.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(
-                stringResource(R.string.steam_group_chat_members, group.activeMemberCount),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        IconButton(onClick = onInvite) { Icon(Icons.Default.GroupAdd, stringResource(R.string.steam_group_chat_invite)) }
     }
 }
 
@@ -383,7 +447,9 @@ private fun GroupThreadHeader(
 private fun GroupMessageBubble(
     message: SteamGroupChatMessage,
     outgoing: Boolean,
-    senderName: String,
+    groupedWithPrevious: Boolean,
+    groupedWithNext: Boolean,
+    sender: SteamFriend?,
     richMediaState: SteamChatRichMediaUiState,
     onRetryMessage: (String) -> Unit,
     onUpdateReaction: (SteamGroupChatMessage, SteamGroupChatReactionType, String, Boolean) -> Unit,
@@ -398,35 +464,79 @@ private fun GroupMessageBubble(
     var reportReason by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(SteamChatReportReason.HARASSMENT) }
     val clipboard = LocalClipboardManager.current
     val haptics = LocalHapticFeedback.current
+    val colors = telegramChatColors()
+    val senderName = sender?.displayName ?: message.senderSteamId.takeLast(8)
+    val richContent = remember(message.body) { SteamChatRichContentParser.parse(message.body) }
+    val plainText = richContent.nativeTelegramText()
+    val transparentMedia = richContent is SteamChatRichContent.Sticker ||
+        (richContent is SteamChatRichContent.Attachment && richContent.kind == SteamChatAttachmentKind.IMAGE) ||
+        isSingleSteamEmoticonMessage(message.body)
     if (message.serverEventType > 0) {
         val eventText = if (message.senderSteamId.isNotBlank() && senderName.isNotBlank()) {
             "$senderName ${message.body}"
         } else message.body
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            Surface(shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.surfaceContainer) {
-                Text(eventText, Modifier.padding(horizontal = 12.dp, vertical = 7.dp), style = MaterialTheme.typography.labelMedium)
+            Surface(shape = RoundedCornerShape(14.dp), color = colors.glass, contentColor = colors.text) {
+                Text(eventText, Modifier.padding(horizontal = 12.dp, vertical = 5.dp), style = MaterialTheme.typography.labelMedium)
             }
         }
         return
     }
-    Box(Modifier.fillMaxWidth(), contentAlignment = if (outgoing) Alignment.CenterEnd else Alignment.CenterStart) {
-        Surface(
-            modifier = Modifier.combinedClickable(
+    Row(
+        Modifier.fillMaxWidth().padding(
+            start = if (outgoing) 46.dp else 0.dp,
+            end = if (outgoing) 0.dp else 42.dp,
+            top = if (groupedWithPrevious) 0.dp else 4.dp
+        ),
+        horizontalArrangement = if (outgoing) Arrangement.End else Arrangement.Start,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        if (!outgoing) {
+            // ChatMessageCell uses a 42dp avatar with a 21dp round radius.
+            Box(Modifier.size(42.dp)) {
+                if (!groupedWithNext) GroupSenderAvatar(senderName, sender?.avatarUrl.orEmpty())
+            }
+            Spacer(Modifier.width(6.dp))
+        }
+        TelegramMessageSurface(
+            outgoing = outgoing,
+            groupedWithPrevious = groupedWithPrevious,
+            groupedWithNext = groupedWithNext,
+            modifier = Modifier.weight(1f, fill = false).combinedClickable(
                 onClick = {},
                 onLongClick = {
                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                     showMenu = true
                 }
             ),
-            shape = RoundedCornerShape(18.dp),
-            color = if (outgoing) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh
+            color = if (transparentMedia) androidx.compose.ui.graphics.Color.Transparent else if (outgoing) colors.outgoing else colors.incoming
         ) {
-            Column(Modifier.padding(horizontal = 12.dp, vertical = 9.dp)) {
-                if (!outgoing) Text(senderName, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+            Column(Modifier.padding(horizontal = 11.dp, vertical = 7.dp)) {
+                if (!outgoing && !groupedWithPrevious) {
+                    Text(senderName, fontSize = 14.sp, fontWeight = FontWeight.Medium, color = colors.accent)
+                }
                 if (message.deleted) {
-                    Text("Message deleted", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                } else SteamChatRichMessageContent(
+                    Text("Message deleted", color = colors.secondary)
+                } else if (plainText != null) TelegramTextMessage(
+                    content = plainText,
+                    timestamp = message.timestamp,
+                    outgoing = outgoing,
+                    delivery = when (message.deliveryState) {
+                        SteamGroupChatDeliveryState.SENT -> TelegramMessageTextView.DELIVERY_SENT
+                        SteamGroupChatDeliveryState.QUEUED, SteamGroupChatDeliveryState.SENDING, SteamGroupChatDeliveryState.VERIFYING -> TelegramMessageTextView.DELIVERY_PENDING
+                        else -> TelegramMessageTextView.DELIVERY_NONE
+                    },
+                    groupedWithPrevious = groupedWithPrevious,
+                    groupedWithNext = groupedWithNext,
+                    onLongClick = { showMenu = true },
+                    showBubble = false
+                ) else SteamChatRichMessageContent(
                     body = message.body,
+                    messageSenderSteamId = message.senderSteamId,
+                    onLongClick = { showMenu = true },
+                    onDeleteMessage = if (outgoing && !message.deleted && message.ordinal != Int.MAX_VALUE) {
+                        { showDelete = true }
+                    } else null,
                     onOpenStoreApp = onOpenStoreApp
                 )
                 if (message.reactions.isNotEmpty()) {
@@ -458,11 +568,14 @@ private fun GroupMessageBubble(
                         }
                     }
                 }
+                if (plainText == null || message.deleted || message.deliveryState in listOf(
+                        SteamGroupChatDeliveryState.FAILED, SteamGroupChatDeliveryState.FAILED_RETRYABLE,
+                        SteamGroupChatDeliveryState.FAILED_PERMANENT))
                 Row(Modifier.align(Alignment.End), verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(message.timestamp * 1_000L)),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = colors.secondary
                     )
                     if (outgoing) {
                         Spacer(Modifier.width(3.dp))
@@ -540,14 +653,134 @@ private fun GroupMessageBubble(
     if (showDelete) {
         AlertDialog(
             onDismissRequest = { showDelete = false },
-            title = { Text("删除这条群组消息？") },
+            title = { Text(stringResource(R.string.steam_chat_group_delete_title)) },
             confirmButton = {
-                TextButton(onClick = { onDeleteMessage(message); showDelete = false }) { Text("删除") }
+                TextButton(onClick = { onDeleteMessage(message); showDelete = false }) { Text(stringResource(R.string.delete)) }
             },
-            dismissButton = { TextButton(onClick = { showDelete = false }) { Text("取消") } }
+            dismissButton = { TextButton(onClick = { showDelete = false }) { Text(stringResource(R.string.cancel)) } }
         )
     }
 }
+
+/** Steam room navigation, hosted in the same native Telegram glass as its toolbar. */
+@Composable
+private fun TelegramGroupChannelPill(
+    rooms: List<SteamGroupChatRoom>,
+    selectedChatId: String?,
+    onSelect: (String) -> Unit,
+    sourceView: View?
+) {
+    val liquid = LocalSteamDesignStyle.current == SteamDockStyle.LIQUID_GLASS
+    if (rooms.isEmpty()) return
+    val colors = telegramChatColors()
+    val orderedRooms = remember(rooms) {
+        rooms.sortedWith(compareBy<SteamGroupChatRoom> { it.sortOrder }.thenBy { it.chatId })
+    }
+    AndroidView(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp).padding(bottom = 6.dp).height(38.dp),
+        factory = { context ->
+            FrameLayout(context).apply {
+                addView(TelegramGlassView(context).apply { setCornerRadius(19 * resources.displayMetrics.density) },
+                    FrameLayout.LayoutParams(-1, -1))
+                addView(android.widget.HorizontalScrollView(context).apply {
+                    isHorizontalScrollBarEnabled = false
+                    addView(android.widget.LinearLayout(context).apply {
+                        gravity = Gravity.CENTER_VERTICAL
+                        setPadding(6, 0, 6, 0)
+                    }, FrameLayout.LayoutParams(-2, -1))
+                }, FrameLayout.LayoutParams(-1, -1))
+            }
+        },
+        onRelease = { (it.getChildAt(0) as TelegramGlassView).setSourceView(null) },
+        update = { frame ->
+            (frame.getChildAt(0) as TelegramGlassView).apply {
+                setLiquidStyle(liquid)
+                setSourceView(sourceView); setTintColor(colors.native.glassTint); setDark(colors.native.dark)
+            }
+            val scroll = frame.getChildAt(1) as android.widget.HorizontalScrollView
+            val strip = scroll.getChildAt(0) as android.widget.LinearLayout
+            val density = frame.resources.displayMetrics.density
+            // Reuse native buttons during typing/reactions so focus and horizontal position survive.
+            if (strip.childCount != orderedRooms.size) {
+                strip.removeAllViews()
+                orderedRooms.forEach { _ ->
+                    strip.addView(TextView(frame.context).apply {
+                        gravity = Gravity.CENTER
+                        textSize = 14f
+                        setSingleLine()
+                        setPadding((14 * density).toInt(), 0, (14 * density).toInt(), 0)
+                        isClickable = true; isFocusable = true
+                    }, android.widget.LinearLayout.LayoutParams(-2, (30 * density).toInt()).apply {
+                        setMargins((2 * density).toInt(), 0, (2 * density).toInt(), 0)
+                    })
+                }
+            }
+            orderedRooms.forEachIndexed { index, room ->
+                val selected = room.chatId == (selectedChatId ?: orderedRooms.first().chatId)
+                (strip.getChildAt(index) as TextView).apply {
+                    text = (if (room.voiceAllowed) "♫ " else "# ") + room.name + if (room.unread) " •" else ""
+                    setTextColor(if (selected) colors.native.accent else colors.native.secondaryText)
+                    isSelected = selected
+                    setTypeface(null, if (selected) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
+                    background = android.graphics.drawable.RippleDrawable(
+                        android.content.res.ColorStateList.valueOf(0x20ffffff),
+                        android.graphics.drawable.GradientDrawable().apply {
+                            setColor(if (selected) colors.native.outgoing else android.graphics.Color.TRANSPARENT)
+                            cornerRadius = 15 * density
+                        }, null
+                    )
+                    setOnClickListener { onSelect(room.chatId) }
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun GroupSenderAvatar(name: String, avatarUrl: String) {
+    val context = LocalContext.current
+    val colors = telegramChatColors()
+    val bitmap by produceState<ImageBitmap?>(initialValue = null, context, avatarUrl) {
+        value = avatarUrl.takeIf(String::isNotBlank)?.let { loadSteamRemoteImage(context, it) }
+    }
+    Surface(Modifier.fillMaxSize(), shape = CircleShape, color = colors.accent, contentColor = colors.accentText) {
+        val image = bitmap
+        if (image != null) {
+            Image(image, name, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+        } else {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(name.take(1).uppercase(), style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+internal data class TelegramGroupMessageRow(
+    val message: SteamGroupChatMessage,
+    val showDate: Boolean,
+    val groupedWithPrevious: Boolean,
+    val groupedWithNext: Boolean
+)
+
+internal fun groupTelegramMessageRows(messages: List<SteamGroupChatMessage>): List<TelegramGroupMessageRow> =
+    messages.mapIndexed { index, message ->
+        val previous = messages.getOrNull(index - 1)
+        val next = messages.getOrNull(index + 1)
+        fun sharesGroup(other: SteamGroupChatMessage?) = telegramMessagesShareGroup(
+            senderId = message.senderSteamId,
+            timestampSeconds = message.timestamp,
+            otherSenderId = other?.senderSteamId,
+            otherTimestampSeconds = other?.timestamp,
+            serviceMessage = message.serverEventType > 0,
+            otherServiceMessage = other?.serverEventType?.let { it > 0 } == true
+        )
+        TelegramGroupMessageRow(
+            message = message,
+            showDate = previous == null || telegramMessageDay(previous.timestamp) != telegramMessageDay(message.timestamp),
+            groupedWithPrevious = sharesGroup(previous),
+            groupedWithNext = sharesGroup(next)
+        )
+    }
 
 private fun SteamChatReportReason.toGroupReason(): SteamGroupChatReportReason = when (this) {
     SteamChatReportReason.HARASSMENT -> SteamGroupChatReportReason.HARASSMENT

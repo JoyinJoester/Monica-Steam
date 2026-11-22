@@ -1,0 +1,62 @@
+[
+  {
+    "args": [
+      "emu",
+      "avd",
+      "name"
+    ],
+    "exit": 0,
+    "output": "Monica_Issue136_API_32\n\nOK\n\n"
+  },
+  {
+    "args": [
+      "shell",
+      "pm",
+      "list",
+      "users"
+    ],
+    "exit": 0,
+    "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+  },
+  {
+    "args": [
+      "uninstall",
+      "takagi.ru.monica.steamapp.janktest.test"
+    ],
+    "exit": 0,
+    "output": "Success\n"
+  },
+  {
+    "args": [
+      "uninstall",
+      "takagi.ru.monica.steamapp.janktest"
+    ],
+    "exit": 0,
+    "output": "Success\n"
+  },
+  {
+    "args": [
+      "shell",
+      "pm",
+      "list",
+      "users"
+    ],
+    "exit": 0,
+    "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+  },
+  {
+    "args": [
+      "emu",
+      "kill"
+    ],
+    "exit": 0,
+    "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+  },
+  {
+    "args": [
+      "get-state"
+    ],
+    "exit": 1,
+    "output": "error: device 'emulator-5558' not found\n"
+  }
+]

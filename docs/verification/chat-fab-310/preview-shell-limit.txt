@@ -1,0 +1,1 @@
+Initial preview attempts: run-as am start returned exit 1; adb root reports adbd cannot run as root in production builds; shell start of unexported debug fixture was rejected. No privilege or manifest changes applied. Existing instrumentation launcher is used for subsequent previews.

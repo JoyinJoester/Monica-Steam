@@ -1,0 +1,20 @@
+{
+  "startedAVD": false,
+  "stoppedAVD": false,
+  "records": [
+    {
+      "package": "takagi.ru.monica.steamapp.messagenotifications.test",
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "package": "takagi.ru.monica.steamapp.messagenotifications",
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "action": "AVD remains running",
+      "output": "Monica_Issue136_API_32\r\r\nOK"
+    }
+  ]
+}

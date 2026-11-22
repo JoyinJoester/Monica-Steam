@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_preview_open">Xem trước</string>
+    <string name="steam_preview_close">Đóng bản xem trước</string>
+    <string name="steam_preview_message_actions">Thao tác với tin nhắn</string>
+    <string name="steam_space_publish">Đăng trạng thái</string>
+    <string name="steam_space_event_details">Xem thêm chi tiết hoạt động</string>
+</resources>

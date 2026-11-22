@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import takagi.ru.monica.R
 import takagi.ru.monica.security.MasterPasswordPolicy
@@ -170,25 +171,19 @@ fun PasswordVerificationContent(
             },
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(top = 12.dp, bottom = 10.dp)
         )
         
+        // One muted sentence, capped to a readable measure: the old four-line centred
+        // paragraph read as a wall of text right under the title.
         if (isFirstTime && setupDescription != null) {
             Text(
                 text = setupDescription,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-        }
-
-        if (isFirstTime && !internalIsConfirming) {
-            Text(
-                text = stringResource(R.string.password_min_6_digits),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
+                lineHeight = 18.sp,
+                modifier = Modifier.widthIn(max = 300.dp)
             )
         }
         
@@ -203,7 +198,7 @@ fun PasswordVerificationContent(
             )
         }
         
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         
         // Master Password Field
         MasterPasswordTextField(
@@ -219,15 +214,15 @@ fun PasswordVerificationContent(
             onUnsupportedCharacterAttempt = {
                 errorMessage = context.getString(R.string.error_password_contains_unsupported_characters)
             },
-            label = { 
-                Text(
-                    if (internalIsConfirming) 
-                        stringResource(R.string.confirm_master_password)
-                    else 
-                        stringResource(R.string.master_password)
-                ) 
-            },
+            // The subtitle already switches to "Confirm Master Password"; repeating it as the
+            // floating label put the same sentence on screen twice.
+            label = { Text(stringResource(R.string.master_password)) },
             visible = if (internalIsConfirming) confirmPasswordVisible else passwordVisible,
+            // The length requirement belongs to the field, not to the title block: as a free
+            // floating line it was one more string competing with the hint above it.
+            supportingText = if (isFirstTime && !internalIsConfirming) {
+                { Text(stringResource(R.string.password_min_6_digits)) }
+            } else null,
             onVisibilityChange = { visible ->
                 if (internalIsConfirming) {
                     confirmPasswordVisible = visible

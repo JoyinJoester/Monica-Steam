@@ -91,8 +91,8 @@ class SteamWindowChromeInsetsTest {
             "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamWindowChromeInsets.kt"
         ).readText()
         val pageContainer = activity
-            .substringAfter("AnimatedContent(")
-            .substringBefore("targetState = currentPage")
+            .substringAfter("SteamTabPageHost(")
+            .substringBefore("targetPage = currentPage")
 
         assertTrue(pageContainer.contains(".steamWindowHorizontalPadding()"))
         assertTrue(insets.contains("internal fun Modifier.steamWindowHorizontalPadding()"))

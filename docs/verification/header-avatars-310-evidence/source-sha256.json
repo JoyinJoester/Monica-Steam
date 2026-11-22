@@ -1,0 +1,15 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountAvatarButton.kt": "750e40ee1101dfdee0e4436198da986a9e38975c510a2333da48db915a3d6a7a",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamInboxUi.kt": "8b9e10405baab08dbc00aff86374c181aa5c0c3dbce0c6068faea1644c098a76",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamFriendsTopBar.kt": "f6be830f9f258dc15d7fc12eae76fc4589b066c2f994e3fec9de549f7d215624",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt": "f8aff0bf22b9c8edd0cea5f950dc113d5696e9aec91b1bc58570af8bdea426ba",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialSearchTopBar.kt": "2bab6d604974f5f09963835280ae6b5d86924aeb650dd1a7b63f2086f096ba2d",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "12268b38250f89d8fdef6bcefb41ebea481aff400b5268bf1bf304f0a2d6395a",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt": "fdc8a55f78b391caf1e2761e27abd105221731a566a012c7afb6eb29c25611ab",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStatsRefreshUiTest.kt": "e03e35700fb6652f1fdc8d3df32c16fdee7b57de826fd1d8a32e0c10414b348d",
+  "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "718cd152a7186f0979b79ff0385316840e9beaa9da03de9f6023da2e26d8cf40",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSearchUnificationDeviceTest.kt": "1d522333508419f9777888bc00d564287df824f1697e966b0b038b3cdbfe5d10",
+  "RELEASE_NOTES.md": "f5a7c6041aa1444c821cbc10b86935050c82840af28090fee72cf5199222dd18",
+  "docs/releases/Monica-Steam-Unreleased.md": "750ee11c35895135b511a76f83de9b7d2c3c0c0bb112f73ddd61593b753c56fc",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatIntegrationGuardTest.kt": "7296da45073c6bcb1d641f640f7216c85fd3dfdfd7f4c657505a7805089555c9"
+}

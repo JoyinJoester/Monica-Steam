@@ -1,0 +1,50 @@
+{
+  "label": "basic-invalid",
+  "seconds": 10.20736620000389,
+  "exit": 0,
+  "command": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "emulator-5558",
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "10",
+    "-w",
+    "-r",
+    "-e",
+    "fingerprintRegression",
+    "true",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#unrecognizedFingerprintDoesNotAuthenticate",
+    "-e",
+    "helper",
+    "basic",
+    "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "events": [
+    {
+      "args": [
+        "emu",
+        "finger",
+        "touch",
+        "99"
+      ],
+      "exit": 0,
+      "output": "OK\n\n"
+    },
+    {
+      "args": [
+        "shell",
+        "input",
+        "keyevent",
+        "4"
+      ],
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "runnerPass": true
+}

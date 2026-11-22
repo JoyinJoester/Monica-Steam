@@ -15,6 +15,9 @@ interface SteamChatCache {
     fun saveSessions(accountSteamId: String, snapshot: SteamChatSessionsSnapshot)
     fun loadThread(accountSteamId: String, partnerSteamId: String): SteamChatThreadSnapshot?
     fun saveThread(accountSteamId: String, partnerSteamId: String, snapshot: SteamChatThreadSnapshot)
+
+    /** Drops the locally cached messages of one conversation ("delete conversation content"). */
+    fun removeThread(accountSteamId: String, partnerSteamId: String)
 }
 
 class SteamChatPreferencesCache private constructor(
@@ -25,7 +28,7 @@ class SteamChatPreferencesCache private constructor(
         store = SharedPreferencesSteamChatStore(
             context.applicationContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         ),
-        cipher = MonicaSteamChatCipher(SecurityManager(context.applicationContext))
+        cipher = MonicaSteamChatCipher(context.applicationContext)
     )
 
     internal constructor(
@@ -86,6 +89,10 @@ class SteamChatPreferencesCache private constructor(
         runCatching { store.put(key, cipher.encrypt(raw)) }
     }
 
+    override fun removeThread(accountSteamId: String, partnerSteamId: String) {
+        runCatching { store.remove(threadKey(accountSteamId, partnerSteamId)) }
+    }
+
     private fun sessionsKey(accountSteamId: String): String = hashedKey("sessions|$accountSteamId")
 
     private fun threadKey(accountSteamId: String, partnerSteamId: String): String =
@@ -122,6 +129,7 @@ internal fun boundSteamChatThreadForCache(
 internal interface SteamChatKeyValueStore {
     fun get(key: String): String?
     fun put(key: String, value: String)
+    fun remove(key: String)
 }
 
 private class SharedPreferencesSteamChatStore(
@@ -132,6 +140,10 @@ private class SharedPreferencesSteamChatStore(
     override fun put(key: String, value: String) {
         preferences.edit().putString(key, value).apply()
     }
+
+    override fun remove(key: String) {
+        preferences.edit().remove(key).apply()
+    }
 }
 
 private interface SteamChatCipher {
@@ -140,8 +152,11 @@ private interface SteamChatCipher {
 }
 
 private class MonicaSteamChatCipher(
-    private val securityManager: SecurityManager
+    context: Context
 ) : SteamChatCipher {
+    // Cache construction runs during composition; open encrypted storage only on actual I/O.
+    private val securityManager by lazy { SecurityManager(context) }
+
     override fun encrypt(value: String): String = securityManager.encryptDataLegacyCompat(value)
 
     override fun decrypt(value: String): String = securityManager.decryptDataIfMonicaCiphertext(value)

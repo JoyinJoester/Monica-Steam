@@ -1,0 +1,16 @@
+{
+  "version": "1.0.310",
+  "versionCode": 18,
+  "jvmMethods": 39,
+  "nativeMethods": 22,
+  "runnerSeconds": 26.367,
+  "mainSha256": "9d729ee5ebd3c9823c0155373dfe58c073ac3007b34fdc0110ca689cc8860b44",
+  "testSha256": "c119c4d20011b990186df6765aec36d7fd80628b1ee0635a7db3468dbd36ad66",
+  "productionSourceUnchangedAfterNativeTesting": true,
+  "syntheticOnly": true,
+  "cleanupComplete": true,
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

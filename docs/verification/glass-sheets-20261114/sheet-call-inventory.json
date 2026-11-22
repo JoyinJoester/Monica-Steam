@@ -1,0 +1,192 @@
+[
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/workshop/WorkshopFilters.kt",
+    "lines": [
+      19
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/trade/ui/SteamTradeOffersContent.kt",
+    "lines": [
+      370
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt",
+    "lines": [
+      2581,
+      4188,
+      5532
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreRegionalPrices.kt",
+    "lines": [
+      46
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreReviewList.kt",
+    "lines": [
+      216
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/share/ui/SteamStoreGameShareSheet.kt",
+    "lines": [
+      76
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/SteamStoreGiftRecipientSheet.kt",
+    "lines": [
+      79
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt",
+    "lines": [
+      92
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/store/bundle/ui/SteamStoreBundleSection.kt",
+    "lines": [
+      80
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/steamdb/ui/SteamDbSection.kt",
+    "lines": [
+      46
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceContentFilters.kt",
+    "lines": [
+      46
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt",
+    "lines": [
+      191
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/scanner/ui/SteamQrScannerScreen.kt",
+    "lines": [
+      304
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationsScreen.kt",
+    "lines": [
+      260
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassComponents.kt",
+    "lines": [
+      27,
+      42
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/market/ui/SteamBatchSellSheet.kt",
+    "lines": [
+      221
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
+    "lines": [
+      2025
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/filter/ui/SteamLibraryFilterSheet.kt",
+    "lines": [
+      129
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/analytics/ui/SteamGameDistributionDetailSheet.kt",
+    "lines": [
+      90
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/library/analytics/ui/SteamPlayHeatMapCard.kt",
+    "lines": [
+      236
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt",
+    "lines": [
+      542
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendUiSupport.kt",
+    "lines": [
+      67
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt",
+    "lines": [
+      34
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt",
+    "lines": [
+      205,
+      213
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamThreadSearch.kt",
+    "lines": [
+      152
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatAttachmentSheet.kt",
+    "lines": [
+      50
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatWallpaperPicker.kt",
+    "lines": [
+      24
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountSwitcherSheet.kt",
+    "lines": [
+      94
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountUi.kt",
+    "lines": [
+      133
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/community/ui/SteamCommunityBadgeDetailSheet.kt",
+    "lines": [
+      42
+    ]
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/community/ui/SteamCommunityBudgetGamesSheet.kt",
+    "lines": [
+      55
+    ]
+  }
+]

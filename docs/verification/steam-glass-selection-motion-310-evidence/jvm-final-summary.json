@@ -1,0 +1,29 @@
+{
+  "tests": 15,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

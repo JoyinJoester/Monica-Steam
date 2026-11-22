@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2026-11-21T08:03:19.331Z" hostname="JOYIN" time="2.655">
+  <properties/>
+  <testcase name="pageLimitStopsEvenIfServerOnlyRepeatsAnEventWithNewCursors" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.04"/>
+  <testcase name="pageTimeoutInterruptsBlockingTransportAndClearsLoading" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="1.009"/>
+  <testcase name="ordinaryFailuresAndCancellationDoNotForceSessionRefresh" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="paginationKeepsItsOriginalLanguageUntilRefresh" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="diskCacheFailureDoesNotDiscardSuccessfulNetworkPage" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="refreshFailureRetainsOriginalPageAndMarksItStaleThenRetryReplacesIt" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="responseReturningAfterAccountChangeCannotPublishOldCards" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="sessionResolutionAuthenticationErrorAlsoGetsOneForceRefresh" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="itemLimitDoesNotPretendTruncatedFeedIsComplete" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="cacheReadReturningAfterAccountChangeCannotPublishOrStartOldRequest" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="localeMappingUsesSupportedSteamLanguageNames" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.001"/>
+  <testcase name="successfulFeedIsVisibleAndReusableBeforeSlowDiskWriteFinishes" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="lateAuthenticationFailureAfterLeavingCannotTriggerTokenRefresh" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="interruptibleSlowCacheReadFallsBackToNetwork" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="1.504"/>
+  <testcase name="leavingInterruptsBlockingTransportWithoutPublishingAnError" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="resolverCannotSubstituteAnotherAccount" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="switchedAccountRejectsLateNonCancellableSessionResolution" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.008"/>
+  <testcase name="reentryImmediatelyRestoresCompletedPagesAndDoesNotRequestAgain" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="expiredFeedRemainsVisibleWhileRefreshingAndAfterNetworkFailure" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="allAuthenticationSignalsRetryOnlyOnceAndRemainDistinctFromEmptyFeed" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.005"/>
+  <testcase name="duplicateForeignAndNonDecreasingCursorsTerminateAsPartial" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.006"/>
+  <testcase name="inlineCacheMissKeepsTheNetworkJobCancellableWhenLeaving" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="cacheSeparatesAccountIdentityAndLanguageAndReturnsToPreviousFeed" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.006"/>
+  <testcase name="bothAccountIdAndSteamIdIsolateTheFeed" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="successfulEmptyPageIsCachedButManualRefreshStillFetches" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="absentOrNonSteamAccountNeverLoads" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="failedMoreCanRetrySameCursorWithoutDroppingOrDuplicatingCards" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.003"/>
+  <testcase name="leavingRevokesPendingResultAndReentryStartsFresh" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="refreshSupersedesPendingMoreEvenIfItsResolverIgnoresCancellation" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.004"/>
+  <testcase name="authenticationFailureUsesSharedResolverOnceBeforeRetry" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="sameAccountTokenUpdateKeepsFeedAndNextRequestUsesNewToken" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="firstPagePreservesServerOrderAndDeduplicatesStableIds" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <testcase name="mdbxReloadUsesStableSourceIdentityDespiteProjectedCreationTime" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

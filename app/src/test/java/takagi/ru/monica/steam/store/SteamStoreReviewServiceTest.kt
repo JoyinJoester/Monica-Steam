@@ -19,7 +19,7 @@ class SteamStoreReviewServiceTest {
     fun reviewPageUsesOfficialCursorPagination() {
         lateinit var captured: Request
         val payload = """{
-          "query_summary":{"review_score":8,"total_positive":8,"total_negative":2,"total_reviews":10},
+          "success":1,"query_summary":{"review_score":8,"total_positive":8,"total_negative":2,"total_reviews":10},
           "reviews":[{"recommendationid":"1","review":"Great","voted_up":true}],
           "cursor":"next"
         }""".trimIndent()
@@ -41,7 +41,7 @@ class SteamStoreReviewServiceTest {
             cursor = "page-token"
         )
 
-        assertEquals("/appreviews/570", captured.url.encodedPath)
+        assertEquals("/ajaxappreviews/570", captured.url.encodedPath)
         assertEquals("all", captured.url.queryParameter("filter"))
         assertEquals("all", captured.url.queryParameter("review_type"))
         assertNull(captured.url.queryParameter("day_range"))
@@ -63,7 +63,7 @@ class SteamStoreReviewServiceTest {
                     .code(200)
                     .message("OK")
                     .body(
-                        """{"query_summary":{},"reviews":[],"cursor":""}"""
+                        """{"success":1,"query_summary":{},"reviews":[],"cursor":""}"""
                             .toResponseBody("application/json".toMediaType())
                     )
                     .build()
@@ -81,5 +81,30 @@ class SteamStoreReviewServiceTest {
         assertEquals("negative", captured.url.queryParameter("review_type"))
         assertEquals("recent", captured.url.queryParameter("filter"))
         assertEquals("30", captured.url.queryParameter("day_range"))
+    }
+
+    @Test fun unavailablePageKeepsSummaryAndOffersAnExplicitRetryState() {
+        val service = SteamStoreReviewService(OkHttpClient.Builder().addInterceptor { chain ->
+            val histogram = chain.request().url.encodedPath.startsWith("/appreviewhistogram")
+            Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1).code(200).message("OK")
+                .body((if (histogram) """{"results":{"recent":[{"recommendations_up":4,"recommendations_down":1}]}}"""
+                    else "<html>Welcome to Steam</html>").toResponseBody("application/json".toMediaType())).build()
+        }.build())
+        val result = requireNotNull(service.fetch(620))
+        org.junit.Assert.assertTrue(result.pageLoadFailed)
+        assertEquals(5, result.recent!!.total)
+        org.junit.Assert.assertTrue(result.items.isEmpty())
+    }
+
+    @Test fun totalFailureRemainsVisibleAndRetryCanRecover() {
+        var fail = true
+        val service = SteamStoreReviewService(OkHttpClient.Builder().addInterceptor { chain ->
+            Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1).code(if (fail) 503 else 200).message("fixture")
+                .body("""{"success":1,"reviews":[{"recommendationid":"1","review":"Recovered","voted_up":true}]}"""
+                    .toResponseBody("application/json".toMediaType())).build()
+        }.build())
+        org.junit.Assert.assertTrue(requireNotNull(service.fetch(620)).pageLoadFailed)
+        fail = false
+        assertEquals("Recovered", service.fetchPage(620).items.single().body)
     }
 }

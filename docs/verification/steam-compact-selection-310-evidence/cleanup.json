@@ -1,0 +1,34 @@
+{
+  "removed": {
+    "takagi.ru.monica.steamapp.compactselection.test": "Success",
+    "takagi.ru.monica.steamapp.compactselection": "Success"
+  },
+  "baselineChecks": {
+    "users": true,
+    "current": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "originalPackagesRetained": true,
+    "taskPackagesAbsent": true
+  },
+  "originalUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "realAccountUsed": false,
+  "packageSetExactlyMatchesBaseline": false,
+  "unrelatedAddedPackagesPreserved": [
+    "package:takagi.ru.monica",
+    "package:takagi.ru.monica.fdroid",
+    "package:takagi.ru.monica.fdroid.test"
+  ],
+  "shutdownExitCode": 0,
+  "shutdownOutput": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}",
+  "stoppedConfirmed": true,
+  "preExistingMuMu0Retained": true,
+  "mumu1FinalState": false,
+  "mumu0FinalPid": 15892
+}

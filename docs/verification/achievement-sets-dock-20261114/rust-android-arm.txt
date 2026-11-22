@@ -1,0 +1,27 @@
+    Building arm64-v8a (aarch64-linux-android)
+   Compiling monica-steam-core v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-core)
+warning: constant `STEAM_ID64_OFFSET` is never used
+ --> monica-steam-core\src\trade_offer.rs:4:7
+  |
+4 | const STEAM_ID64_OFFSET: i64 = 76_561_197_960_265_728;
+  |       ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: `monica-steam-core` (lib) generated 1 warning
+   Compiling monica-steam-android v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-android)
+    Finished `release` profile [optimized] target(s) in 5.06s
+    Building armeabi-v7a (armv7-linux-androideabi)
+   Compiling monica-steam-core v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-core)
+warning: constant `STEAM_ID64_OFFSET` is never used
+ --> monica-steam-core\src\trade_offer.rs:4:7
+  |
+4 | const STEAM_ID64_OFFSET: i64 = 76_561_197_960_265_728;
+  |       ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: `monica-steam-core` (lib) generated 1 warning
+   Compiling monica-steam-android v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-android)
+    Finished `release` profile [optimized] target(s) in 3.96s
+     Copying libraries to C:\Users\joyins\Desktop\Monica-all\Monica Steam\app\src\main\jniLibs

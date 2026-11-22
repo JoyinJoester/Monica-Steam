@@ -1,0 +1,44 @@
+[
+  {
+    "database": "PasswordDatabase_Impl.kt",
+    "ddlCount": 98,
+    "oldIdentity": [
+      [
+        "76",
+        "1a3cf060c1b8e7ad4cb88bfaa4fd6814",
+        "56f4aded47d02dab1ba3bcb1ba2d9bba"
+      ]
+    ],
+    "newIdentity": [
+      [
+        "76",
+        "1a3cf060c1b8e7ad4cb88bfaa4fd6814",
+        "56f4aded47d02dab1ba3bcb1ba2d9bba"
+      ]
+    ],
+    "contractEqual": true,
+    "oldSha256": "ba837e298a950dd71db316028ee97e300d0912abff874afbeb0909f328db9ee4",
+    "newSha256": "ba837e298a950dd71db316028ee97e300d0912abff874afbeb0909f328db9ee4"
+  },
+  {
+    "database": "SteamDatabase_Impl.kt",
+    "ddlCount": 11,
+    "oldIdentity": [
+      [
+        "6",
+        "29ad4256271bcfc7d00ce4a60c9dfd9a",
+        "b185472504b7df4b82f3744b430b7229"
+      ]
+    ],
+    "newIdentity": [
+      [
+        "6",
+        "29ad4256271bcfc7d00ce4a60c9dfd9a",
+        "b185472504b7df4b82f3744b430b7229"
+      ]
+    ],
+    "contractEqual": true,
+    "oldSha256": "e8b10184a0195b524d812a4c0745f9e2523e190109399a423994d879661e9e19",
+    "newSha256": "e8b10184a0195b524d812a4c0745f9e2523e190109399a423994d879661e9e19"
+  }
+]

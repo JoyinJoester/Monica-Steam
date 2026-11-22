@@ -1,0 +1,23 @@
+[
+  {
+    "args": [
+      "shell",
+      "settings",
+      "put",
+      "system",
+      "font_scale",
+      "1.5"
+    ],
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "settings",
+      "get",
+      "system",
+      "font_scale"
+    ],
+    "output": "1.5"
+  }
+]

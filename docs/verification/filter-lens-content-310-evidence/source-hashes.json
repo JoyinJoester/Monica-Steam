@@ -1,0 +1,8 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionLens.kt": "0145b16543c9e76e28dee3521d4dcdff3471f674ada24eb267df1113a347ac51",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "ad14fd3401ca79f57ed0cca3165c2dc738c70b7d511f968c2be88f048b5dfad5",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamLiquidGlassDock.kt": "a9bf0230c614b4a855f5e2d71871ad409bf93837b73352a482de6f7338c6dc5b",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "031aa81894602168010f320db683279c84a94a347b7b4c2376014f26952e3c3c",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatGlassPresentationTest.kt": "41a269a52c476d354f621b00e119c6350aa6563c0074009a152e226f8faceb6b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "e2ca2df69c88c49cdfab34770527026d4f796441b67a75163946ca03f89a970d"
+}

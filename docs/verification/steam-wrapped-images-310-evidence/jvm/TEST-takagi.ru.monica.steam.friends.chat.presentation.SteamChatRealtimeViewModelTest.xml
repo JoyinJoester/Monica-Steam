@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.336Z" hostname="JOYIN" time="0.039">
+  <properties/>
+  <testcase name="backgroundConversationUnreadIsDeduplicated" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest" time="0.021"/>
+  <testcase name="switchingAccountsCancelsThePreviousRealtimeCollector" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest" time="0.004"/>
+  <testcase name="foregroundThreadUpdatesImmediatelyWithoutWaitingForPolling" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest" time="0.009"/>
+  <testcase name="typingIndicatorExpiresAndRealtimeModeDoesNotPollEveryFifteenSeconds" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

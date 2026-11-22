@@ -2,7 +2,6 @@ package takagi.ru.monica.steam.friends.chat.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +14,6 @@ import takagi.ru.monica.steam.friends.chat.actions.presentation.SteamChatMessage
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationPreferences
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryItem
 import takagi.ru.monica.steam.friends.chat.info.ui.SteamChatFriendDetailScreen
-import takagi.ru.monica.steam.friends.chat.info.ui.SteamChatHistorySearchScreen
 import takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoScreen
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatUiState
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModel
@@ -32,8 +30,7 @@ import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 import takagi.ru.monica.steam.friends.voice.presentation.SteamVoiceCallRuntime
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
 import takagi.ru.monica.ui.LocalReduceAnimations
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 
 @Composable
 internal fun SteamChatSelectedContent(
@@ -48,6 +45,9 @@ internal fun SteamChatSelectedContent(
     voiceState: SteamVoiceCallState,
     conversationPreferences: SteamChatConversationPreferences,
     targetMessageId: String?,
+    targetMessageNonce: Int = 0,
+    highlightMessageId: String? = null,
+    onHighlightConsumed: () -> Unit = {},
     gameShareDraft: SteamStoreGameShare?,
     chatViewModel: SteamChatViewModel,
     friendsViewModel: SteamFriendsViewModel,
@@ -65,6 +65,29 @@ internal fun SteamChatSelectedContent(
     onOpenStoreApp: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val localDeletion = rememberSteamChatLocalDeletion(chatState.accountSteamId, partnerSteamId)
+    val visibleThread = remember(chatState.thread, partnerSteamId, localDeletion, localDeletion.markers, localDeletion.failed) {
+        if (partnerSteamId == null) chatState.thread else localDeletion.visibleState(chatState).thread
+    }
+    val visibleChatState = if (partnerSteamId != null && localDeletion.markers != null) {
+        chatState.copy(thread = visibleThread)
+    } else {
+        if (partnerSteamId == null) chatState else localDeletion.visibleState(chatState)
+    }
+    // Classify history only when a consumer needs it, so opening the thread does not parse
+    // every cached message a second time for counters which are not displayed there.
+    val needsHistory = currentSubpage == SteamChatSubpage.INFO
+    val historyItems = remember(needsHistory, partnerSteamId, visibleChatState.thread, groupChatState.thread, friendsState.snapshot) {
+        if (!needsHistory) emptyList() else buildSteamChatHistory(
+            partnerSteamId = partnerSteamId,
+            selectedFriend = selectedFriend,
+            friendsById = friendsState.snapshot?.friends.orEmpty().associateBy(SteamFriend::steamId),
+            directMessages = visibleChatState.thread?.messages.orEmpty(),
+            directAccountSteamId = chatState.accountSteamId,
+            groupMessages = groupChatState.thread?.messages.orEmpty(),
+            groupAccountSteamId = groupChatState.accountSteamId
+        )
+    }
     when (currentSubpage) {
         SteamChatSubpage.INFO -> SteamChatInfoContent(
             partnerSteamId = partnerSteamId,
@@ -80,6 +103,8 @@ internal fun SteamChatSelectedContent(
             voiceRuntime = voiceRuntime,
             runVoiceAction = runVoiceAction,
             onSubpageChange = onSubpageChange,
+            sharedHistoryItems = historyItems,
+            onOpenSharedMessage = onOpenTargetMessage,
             onCreateGroupFromFriend = onCreateGroupFromFriend,
             onInviteFriend = onInviteFriend,
             onPreferencesChange = onPreferencesChange,
@@ -92,26 +117,21 @@ internal fun SteamChatSelectedContent(
             onSubpageChange = onSubpageChange,
             modifier = modifier
         )
-        SteamChatSubpage.SEARCH -> SteamChatSearchContent(
-            partnerSteamId = partnerSteamId,
-            selectedFriend = selectedFriend,
-            friendsState = friendsState,
-            chatState = chatState,
-            groupChatState = groupChatState,
-            onSubpageChange = onSubpageChange,
-            onOpenTargetMessage = onOpenTargetMessage,
-            modifier = modifier
-        )
         null -> if (partnerSteamId != null) {
             SteamChatThread(
-                state = chatState,
+                state = visibleChatState,
+                onDeleteMessageLocally = if (localDeletion.markers != null && !localDeletion.saving) localDeletion.delete else null,
+                wallpaperPreset = conversationPreferences.wallpaper,
                 richMediaState = richMediaState,
                 friend = selectedFriend,
                 targetMessageId = targetMessageId,
+                targetMessageNonce = targetMessageNonce,
+                highlightMessageId = highlightMessageId,
+                onHighlightConsumed = onHighlightConsumed,
                 gameShareDraft = gameShareDraft,
                 onNavigateBack = chatViewModel::closeThread,
                 onOpenInfo = { onSubpageChange(SteamChatSubpage.INFO) },
-                onRefresh = chatViewModel::refreshThread,
+                onRefresh = { localDeletion.revision++; chatViewModel.refreshThread() },
                 onLoadOlder = chatViewModel::loadOlder,
                 onSend = chatViewModel::sendMessage,
                 onRetryMessage = chatViewModel::retryMessage,
@@ -150,9 +170,13 @@ internal fun SteamChatSelectedContent(
         } else {
             SteamGroupChatThreadHost(
                 state = groupChatState,
+                wallpaperPreset = conversationPreferences.wallpaper,
                 richMediaState = richMediaState,
                 friends = friendsState.snapshot?.friends.orEmpty(),
                 targetMessageId = targetMessageId,
+                targetMessageNonce = targetMessageNonce,
+                highlightMessageId = highlightMessageId,
+                onHighlightConsumed = onHighlightConsumed,
                 onBack = groupChatViewModel::closeRoom,
                 onOpenInfo = { onSubpageChange(SteamChatSubpage.INFO) },
                 onOpenRoom = groupChatViewModel::openRoom,
@@ -211,6 +235,8 @@ private fun SteamChatInfoContent(
     voiceRuntime: SteamVoiceCallRuntime,
     runVoiceAction: (() -> Unit) -> Unit,
     onSubpageChange: (SteamChatSubpage?) -> Unit,
+    sharedHistoryItems: List<SteamChatHistoryItem>,
+    onOpenSharedMessage: (String) -> Unit,
     onCreateGroupFromFriend: (String) -> Unit,
     onInviteFriend: () -> Unit,
     onPreferencesChange: (SteamChatConversationPreferences) -> Unit,
@@ -230,8 +256,7 @@ private fun SteamChatInfoContent(
         targetState = detailFriendSteamId,
         modifier = modifier.fillMaxSize(),
         transitionSpec = {
-            easyNotesScreenEnter(reduceAnimations)
-                .togetherWith(easyNotesScreenExit(reduceAnimations))
+            steamPageTransition(reduceAnimations, forward = targetState != null)
         },
         label = "SteamChatInfoFriendDetails"
     ) { animatedSteamId ->
@@ -256,7 +281,7 @@ private fun SteamChatInfoContent(
             )
         } else {
             SteamChatInfoScreen(
-                title = if (partnerSteamId != null) "聊天信息" else "群聊信息",
+                account = selectedAccount,
                 directFriend = if (partnerSteamId != null) selectedFriend else null,
                 group = group,
                 members = groupMembers,
@@ -272,7 +297,8 @@ private fun SteamChatInfoContent(
                     else onInviteFriend()
                 },
                 onOpenFriendDetails = { detailFriendSteamId = it.steamId },
-                onSearchHistory = { onSubpageChange(SteamChatSubpage.SEARCH) },
+                sharedHistoryItems = sharedHistoryItems,
+                onOpenSharedMessage = onOpenSharedMessage,
                 onOpenGroupAdmin = { onSubpageChange(SteamChatSubpage.ADMIN) },
                 onPreferencesChange = onPreferencesChange,
                 onUpdateGroup = groupChatViewModel::updateGroup,
@@ -339,47 +365,6 @@ private fun SteamChatAdminContent(
         onAddRoleToUser = groupChatViewModel::addRoleToUser,
         onRemoveRoleFromUser = groupChatViewModel::removeRoleFromUser,
         onClearCreatedInviteLink = groupChatViewModel::clearCreatedInviteLink,
-        modifier = modifier.fillMaxSize()
-    )
-}
-
-@Composable
-private fun SteamChatSearchContent(
-    partnerSteamId: String?,
-    selectedFriend: SteamFriend?,
-    friendsState: SteamFriendsUiState,
-    chatState: SteamChatUiState,
-    groupChatState: SteamGroupChatUiState,
-    onSubpageChange: (SteamChatSubpage?) -> Unit,
-    onOpenTargetMessage: (String) -> Unit,
-    modifier: Modifier
-) {
-    val friendsById = friendsState.snapshot?.friends.orEmpty().associateBy { it.steamId }
-    val items = if (partnerSteamId != null) {
-        chatState.thread?.messages.orEmpty().map { message ->
-            SteamChatHistoryItem(
-                id = message.stableId,
-                senderName = if (message.senderSteamId == chatState.accountSteamId) "我"
-                    else selectedFriend?.displayName ?: message.senderSteamId,
-                body = message.body,
-                timestamp = message.timestamp
-            )
-        }
-    } else {
-        groupChatState.thread?.messages.orEmpty().map { message ->
-            SteamChatHistoryItem(
-                id = message.stableId,
-                senderName = if (message.senderSteamId == groupChatState.accountSteamId) "我"
-                    else friendsById[message.senderSteamId]?.displayName ?: message.senderSteamId,
-                body = message.body,
-                timestamp = message.timestamp
-            )
-        }
-    }
-    SteamChatHistorySearchScreen(
-        items = items,
-        onBack = { onSubpageChange(SteamChatSubpage.INFO) },
-        onOpenMessage = onOpenTargetMessage,
         modifier = modifier.fillMaxSize()
     )
 }

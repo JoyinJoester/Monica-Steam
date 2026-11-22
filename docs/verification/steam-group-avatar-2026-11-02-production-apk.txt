@@ -1,0 +1,53 @@
+app/build/outputs/apk/debug/Monica-Steam-Android-arm64-v8a-1.0.310-26110218-02.APK
+package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='15' platform
+BuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'34'
+native-code: 'arm64-v8a'
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0
+Signer #1 certificate SHA-1 digest: 6db4c41982d788cc6b71b6730fcbd7d44377d401
+Signer #1 certificate MD5 digest: 8f0ea32085c3a5873dca15bcf33f771b
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 3ed1473d5b5a4232032a05def473b53ece273331abdf2aa3a5b6c57b0d30ae8a
+Signer #1 public key SHA-1 digest: 2529624435c422f25224aaa4c0daa92cd0b25765
+Signer #1 public key MD5 digest: 4ea298712b8c0a7b04ce50228e0f9f74
+
+
+Hash : F17DAD9377110C0B68E1A75DB9B51BA56E6DDDA914E5F4E847BF910C7F20CF44
+
+app/build/outputs/apk/debug/Monica-Steam-Android-armeabi-v7a-1.0.310-26110218-02.APK
+package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='15' platform
+BuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'34'
+native-code: 'armeabi-v7a'
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0
+Signer #1 certificate SHA-1 digest: 6db4c41982d788cc6b71b6730fcbd7d44377d401
+Signer #1 certificate MD5 digest: 8f0ea32085c3a5873dca15bcf33f771b
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 3ed1473d5b5a4232032a05def473b53ece273331abdf2aa3a5b6c57b0d30ae8a
+Signer #1 public key SHA-1 digest: 2529624435c422f25224aaa4c0daa92cd0b25765
+Signer #1 public key MD5 digest: 4ea298712b8c0a7b04ce50228e0f9f74
+
+
+Hash : 0EA781C40066DE4FA881F391E76A9382ED1295C72072001A9D4B013333F7C4B1

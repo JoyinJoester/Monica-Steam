@@ -1,0 +1,97 @@
+[
+  {
+    "locale": "values",
+    "strings": 13,
+    "names": [
+      "steam_game_stats_friends",
+      "steam_game_stats_you",
+      "steam_game_stats_friend_average",
+      "steam_game_stats_readable_friends",
+      "steam_game_stats_no_friend_times",
+      "steam_game_stats_badges",
+      "steam_game_stats_no_badges",
+      "steam_game_stats_card_owned",
+      "steam_game_stats_card_missing",
+      "steam_game_stats_no_points",
+      "steam_game_stats_points_cost",
+      "steam_game_stats_view_all",
+      "steam_game_stats_section_unavailable"
+    ]
+  },
+  {
+    "locale": "values-zh",
+    "strings": 13,
+    "names": [
+      "steam_game_stats_friends",
+      "steam_game_stats_you",
+      "steam_game_stats_friend_average",
+      "steam_game_stats_readable_friends",
+      "steam_game_stats_no_friend_times",
+      "steam_game_stats_badges",
+      "steam_game_stats_no_badges",
+      "steam_game_stats_card_owned",
+      "steam_game_stats_card_missing",
+      "steam_game_stats_no_points",
+      "steam_game_stats_points_cost",
+      "steam_game_stats_view_all",
+      "steam_game_stats_section_unavailable"
+    ]
+  },
+  {
+    "locale": "values-ja",
+    "strings": 13,
+    "names": [
+      "steam_game_stats_friends",
+      "steam_game_stats_you",
+      "steam_game_stats_friend_average",
+      "steam_game_stats_readable_friends",
+      "steam_game_stats_no_friend_times",
+      "steam_game_stats_badges",
+      "steam_game_stats_no_badges",
+      "steam_game_stats_card_owned",
+      "steam_game_stats_card_missing",
+      "steam_game_stats_no_points",
+      "steam_game_stats_points_cost",
+      "steam_game_stats_view_all",
+      "steam_game_stats_section_unavailable"
+    ]
+  },
+  {
+    "locale": "values-ru",
+    "strings": 13,
+    "names": [
+      "steam_game_stats_friends",
+      "steam_game_stats_you",
+      "steam_game_stats_friend_average",
+      "steam_game_stats_readable_friends",
+      "steam_game_stats_no_friend_times",
+      "steam_game_stats_badges",
+      "steam_game_stats_no_badges",
+      "steam_game_stats_card_owned",
+      "steam_game_stats_card_missing",
+      "steam_game_stats_no_points",
+      "steam_game_stats_points_cost",
+      "steam_game_stats_view_all",
+      "steam_game_stats_section_unavailable"
+    ]
+  },
+  {
+    "locale": "values-vi",
+    "strings": 13,
+    "names": [
+      "steam_game_stats_friends",
+      "steam_game_stats_you",
+      "steam_game_stats_friend_average",
+      "steam_game_stats_readable_friends",
+      "steam_game_stats_no_friend_times",
+      "steam_game_stats_badges",
+      "steam_game_stats_no_badges",
+      "steam_game_stats_card_owned",
+      "steam_game_stats_card_missing",
+      "steam_game_stats_no_points",
+      "steam_game_stats_points_cost",
+      "steam_game_stats_view_all",
+      "steam_game_stats_section_unavailable"
+    ]
+  }
+]

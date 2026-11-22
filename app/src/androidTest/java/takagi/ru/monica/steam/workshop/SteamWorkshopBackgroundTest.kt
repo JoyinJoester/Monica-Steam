@@ -45,6 +45,13 @@ class SteamWorkshopBackgroundTest {
     private val context get() = instrumentation.targetContext
 
     @Before fun allowProgressNotifications() {
+        check(context.packageName in setOf("takagi.ru.monica.steam.recoverytest", "takagi.ru.monica.steamapp.toolchainpilot"))
+        val security = takagi.ru.monica.security.SecurityManager(context)
+        if (!security.isMasterPasswordSet()) {
+            check(runBlocking { takagi.ru.monica.steam.data.SteamDatabase.getDatabase(context).steamAccountDao().count() } == 0)
+            security.setMasterPassword("workshop-synthetic-73194628")
+        }
+        runBlocking { takagi.ru.monica.utils.SettingsManager(context).prepareSteamMasterPasswordSetup() }
         val automation = instrumentation.uiAutomation
         automation.serviceInfo = automation.serviceInfo.apply {
             flags = flags or AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
@@ -177,8 +184,10 @@ class SteamWorkshopBackgroundTest {
     }
 
     private fun goHome() {
-        // A fire-and-forget shell keyevent can execute after the next test opens its Activity.
-        instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_HOME)
+        // Instrumentation key injection may be delivered only to the target Activity.
+        // Launch the actual HOME destination and retain the observed-background assertion.
+        context.startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         instrumentation.waitForIdleSync()
         val deadline = SystemClock.elapsedRealtime() + 5000
         while (instrumentation.uiAutomation.rootInActiveWindow?.packageName == context.packageName &&

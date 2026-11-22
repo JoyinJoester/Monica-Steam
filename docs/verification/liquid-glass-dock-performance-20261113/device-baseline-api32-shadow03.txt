@@ -1,0 +1,46 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest:
+INSTRUMENTATION_STATUS: test=cachedMaskRespondsToAlphaColorOffsetAndSize
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(BaselineShadowDeviceTest.kt:73)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedMaskRespondsToAlphaColorOffsetAndSize(takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest):
+java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(BaselineShadowDeviceTest.kt:73)
+
+INSTRUMENTATION_STATUS: test=cachedMaskRespondsToAlphaColorOffsetAndSize
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.912
+There was 1 failure:
+1) cachedMaskRespondsToAlphaColorOffsetAndSize(takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest)
+java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(BaselineShadowDeviceTest.kt:73)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

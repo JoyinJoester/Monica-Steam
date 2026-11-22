@@ -1,0 +1,9 @@
+{
+  "users": "Users:\n\tUserInfo{0:Owner:4c13} running\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030}\n",
+  "currentUser": "0\n",
+  "size": "Physical size: 1080x1920\n",
+  "density": "Physical density: 280\n",
+  "font": "1.0\n",
+  "packages": "package:takagi.ru.monica.fdroid.test\npackage:me.weishu.kernelsu\npackage:takagi.ru.monica\npackage:takagi.ru.monica.test\npackage:takagi.ru.monica.fdroid\n",
+  "rotation": "free\n"
+}

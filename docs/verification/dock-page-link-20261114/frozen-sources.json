@@ -1,0 +1,12 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt": "619b830fee1c9eced9e12605280bc7fa76abb5bf98df77d4c7c8b1b0f0166f68",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "b7e1520b40bdc9502303cedc57a7c13a97fd99e8c885ef34c86cae1927781d25",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt": "06d3f8136849b26282bc9c1496745fed794c473bb22b1409b588c8a228b9975b",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationEntries.kt": "74167d89762480e42d2efd64526a626eacbfecd03dc475272ee73a59874dcfa9",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedPageStateDeviceTest.kt": "55e22f6d060924cb073690f7fc101646f031f31e9f1e7ea5878a40c0a0d12960",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedNativeChatDeviceTest.kt": "3ece5de07c9af33a18640de62d079ecf56ad3b557eddc20b79697959f8d062a1",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamConversationEntriesDeviceTest.kt": "ddeada599d6d850783c988e5db327fca0687a51d7b0d515f0a6c21a9ae007cd2",
+  "app/src/main/jniLibs/arm64-v8a/libmonica_steam_android.so": "e906f6e12516356739200e7b82f3cba72cdfc0603bbaa45770474684378c5d79",
+  "app/src/main/jniLibs/armeabi-v7a/libmonica_steam_android.so": "37c74afcf7c10857bc7e7c55b7f1055dd55579cc6e5e8e8614831730adc61597",
+  "app/src/main/jniLibs/x86_64/libmonica_steam_android.so": "bf15a0bc25a5aabc0f387bb2446f910ebdd8354fc94a1c2fd2080e29b7c32aa2"
+}

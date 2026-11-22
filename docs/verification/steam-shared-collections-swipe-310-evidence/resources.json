@@ -1,0 +1,22 @@
+{
+  "values": {
+    "steam_collections_members_hint": "Owned and family-shared games can be selected. Existing members outside this list are kept.",
+    "steam_collections_search": "Search games"
+  },
+  "values-zh": {
+    "steam_collections_members_hint": "自购和家庭共享游戏均可分类，当前未显示的已有成员会保留。",
+    "steam_collections_search": "搜索游戏"
+  },
+  "values-ru": {
+    "steam_collections_members_hint": "Можно выбирать свои игры и игры семейного доступа. Остальные участники сохранятся.",
+    "steam_collections_search": "Поиск игр"
+  },
+  "values-ja": {
+    "steam_collections_members_hint": "所有するゲームとファミリー共有のゲームを選択できます。表示されない既存メンバーは保持されます。",
+    "steam_collections_search": "ゲームを検索"
+  },
+  "values-vi": {
+    "steam_collections_members_hint": "Có thể chọn trò chơi sở hữu và trò chơi được chia sẻ trong gia đình. Các thành viên khác vẫn được giữ.",
+    "steam_collections_search": "Tìm trò chơi"
+  }
+}

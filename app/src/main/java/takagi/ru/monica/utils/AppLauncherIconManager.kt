@@ -70,6 +70,13 @@ object AppLauncherIconManager {
     }
 
     fun applyBiometricPromptBranding(context: Context, promptInfoBuilder: Any) {
+        // Android 15+ reserves custom biometric logos for privileged apps. Newer
+        // AndroidX versions expose these setters, but the permission is enforced
+        // later by authenticate(), outside the reflective setter's runCatching.
+        if (context.checkSelfPermission("android.permission.SET_BIOMETRIC_DIALOG_ADVANCED") !=
+            PackageManager.PERMISSION_GRANTED
+        ) return
+
         val builderClass = promptInfoBuilder.javaClass
         val iconRes = resolveBrandingIconRes(context)
 

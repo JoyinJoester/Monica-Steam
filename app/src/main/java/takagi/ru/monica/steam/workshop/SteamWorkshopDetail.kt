@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.workshop
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import android.text.format.Formatter
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll

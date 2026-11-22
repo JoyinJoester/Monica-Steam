@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-10T07:43:42.129Z" hostname="JOYIN" time="4.025">
+  <properties/>
+  <testcase name="api26WithoutFingerprintHardwareRemainsUnavailable" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="1.859"/>
+  <testcase name="api26EnrolledFingerprintRemainsAvailableAlthoughCoreCompatIsNoOp" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.029"/>
+  <testcase name="fingerprintFeatureGateStillRejectsAnUnadvertisedSensor[26]" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.019"/>
+  <testcase name="api26HardwareWithoutEnrollmentRemainsUnavailable" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.017"/>
+  <testcase name="api28EnrolledFingerprintRemainsAvailableAlthoughCoreCompatIsNoOp" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="1.669"/>
+  <testcase name="api28WithoutFingerprintHardwareRemainsUnavailable" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.018"/>
+  <testcase name="fingerprintFeatureGateStillRejectsAnUnadvertisedSensor" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.019"/>
+  <testcase name="api28SecuredDeviceWithoutFingerprintEnrollmentRemainsUnknown" classname="takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

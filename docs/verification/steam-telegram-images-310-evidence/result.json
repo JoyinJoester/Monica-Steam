@@ -1,0 +1,201 @@
+{
+  "status": "complete",
+  "version": "1.0.310",
+  "jvm": {
+    "tests": 300,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "device": {
+    "tests": 39,
+    "runnerSeconds": 47.305,
+    "firstImageUiTests": 11,
+    "firstRunnerSeconds": 8.927,
+    "methods": [
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "failedPhotoRetryDoesNotOpenImageOrLongPressAction"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "captionPlacesTimeBelowPhotoAtLargeFontAndSmallWidth"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "longPressUsesExistingMessageActionWithoutOpeningViewer"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "captionLongPressUsesMessageActionAndPreservesRetry"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "outgoingLandscapeKeepsWideImageAndWhiteDeliveryOverlay"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "reducedMotionViewerDoesNotCreateImageFlight"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "incomingPhotoUsesRealPortraitRatioAndOverlaysTime"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "albumContainsAllTenImagesAndReplyPreviewSurvives"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "actualChatPhotoFliesFromAndReturnsToItsOwnTile"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "decodedSizeUpdatesPhotoWithoutMetadata"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "threePhotoAlbumMatchesPortraitMosaicAndOpensSelectedPage"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatImageMessageUiTest",
+        "spoilerFirstClickRevealsAlbumAndSecondClickOpensImage"
+      ],
+      [
+        "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest",
+        "dismissDuringEntryRemovesOnlyTheViewerAndAllowsReopening"
+      ],
+      [
+        "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest",
+        "differentGalleryPageFadesInsteadOfReturningToTheWrongThumbnail"
+      ],
+      [
+        "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest",
+        "actualThumbnailFliesIntoViewerAndReturnsBeforeDismissal"
+      ],
+      [
+        "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest",
+        "unmountedThumbnailFallsBackToFadeAndViewerDisposalRestoresAnchor"
+      ],
+      [
+        "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest",
+        "reducedMotionOpensAndClosesWithoutImageFlight"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "largeFontOpenGraphProfileStillHasReachableDetails"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "choosingCardOnlyAddsDraftAfterExplicitAction"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "sentOpenGraphProfileIsACardInM3eThread"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "receivedOpenGraphProfileUsesTheSameParser"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "actualComposerSendsCardOnlyThroughExistingSendButton"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "localDeleteRequiresConfirmationAndCancelKeepsMessage"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "m3eDarkThreadAndShare"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "personalProfileShortcutSendsOnlyTheLinkAndServerEchoBecomesACard"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "tradeOfferOpenAndCopyUseExactParsedOffer"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "glassDarkThreadAndShare"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "m3eLightThreadAndShare"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "sentOpenGraphProfileIsACardInGlassThread"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "switchingConversationDoesNotReuseUnconfirmedLink"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "unsupportedCardRetainsOriginalMessageWithoutActionButton"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "longPressLiftsTheActualChatCardAndBackRestoresTheThread"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "largeFontCanReachDraftActionAfterMyProfileShortcut"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "glassLightThreadAndShare"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "gameInvitationKeepsSteamActionSeparateFromStore"
+      ],
+      [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored"
+      ]
+    ]
+  },
+  "finalBuild": "build-04.txt",
+  "finalBuildSeconds": 77,
+  "sourceFiles": 15,
+  "cleanup": {
+    "currentUser": 0,
+    "retainedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "createdUserRemoved": 16,
+    "testPackagesRemoved": true,
+    "emulator": "127.0.0.1:16384",
+    "emulatorKeptRunning": true,
+    "firstRemoveUserFailed": true,
+    "retryRemoveUserSucceeded": true
+  },
+  "limitations": [
+    "synthetic local cached images and messages",
+    "API35 x86_64 Debug only",
+    "no live Steam send/receive, OEM or R8 validation"
+  ],
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apkDelivered": false
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_history_all">Tất cả</string>
+    <string name="steam_history_text">Văn bản</string>
+    <string name="steam_history_media">Phương tiện</string>
+    <string name="steam_history_files">Tệp</string>
+    <string name="steam_history_links">Liên kết</string>
+    <string name="steam_history_invites">Lời mời</string>
+    <string name="steam_history_stickers">Nhãn dán</string>
+    <string name="steam_history_any_time">Mọi lúc</string>
+    <string name="steam_history_today">Hôm nay</string>
+    <string name="steam_history_last_week">7 ngày qua</string>
+    <string name="steam_history_last_month">30 ngày qua</string>
+    <string name="steam_thread_search">Tìm tin nhắn</string>
+    <string name="steam_thread_search_filters">Bộ lọc tìm kiếm</string>
+    <string name="steam_thread_all_senders">Tất cả người gửi</string>
+    <string name="steam_thread_older_match">Kết quả cũ hơn</string>
+    <string name="steam_thread_newer_match">Kết quả mới hơn</string>
+    <string name="steam_thread_no_matches">Không có kết quả</string>
+    <string name="steam_thread_results_list">Hiện kết quả</string>
+    <string name="steam_thread_shared_content">Nội dung trò chuyện</string>
+    <string name="steam_thread_no_shared_content">Chưa có nội dung trò chuyện</string>
+    <string name="steam_chat_content_image">Ảnh</string>
+    <string name="steam_chat_content_video">Video</string>
+    <string name="steam_chat_content_spoiler">Nội dung tiết lộ</string>
+    <string name="steam_thread_open_shared_message">Mở tin nhắn: %1$s</string>
+</resources>

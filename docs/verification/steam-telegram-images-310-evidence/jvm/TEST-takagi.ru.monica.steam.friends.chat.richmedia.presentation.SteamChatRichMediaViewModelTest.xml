@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.748Z" hostname="JOYIN" time="0.066">
+  <properties/>
+  <testcase name="lateUploadCannotCompleteInsideANewGroupRoom" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.022"/>
+  <testcase name="groupRoomUploadUsesTheSelectedSteamGroupAndChatIds" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.004"/>
+  <testcase name="unsupportedSelectionCannotCreatePendingUploadAndExposesLocalizedError" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.011"/>
+  <testcase name="serviceAndSessionFailuresUseCorrectResourcesAndRetryPolicy" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.006"/>
+  <testcase name="expiredAttachmentSessionRefreshesAndRetriesExactlyOnce" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.009"/>
+  <testcase name="lateUploadCannotCompleteInsideANewFriendConversation" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.005"/>
+  <testcase name="currentFriendImageUploadReportsCompletionOnlyAfterGatewaySuccess" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.004"/>
+  <testcase name="limitedAccountUploadIsNotRetriedAndShowsUsefulChineseMessage" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_space_post_audience">Поделитесь текстовой записью с друзьями в Steam.</string>
+    <string name="steam_space_post_text">Чем хотите поделиться?</string>
+    <string name="steam_space_post_count">%1$d / %2$d символов</string>
+    <string name="steam_space_post_prepare_failed">Не удалось подготовить сеанс Steam. Войдите снова или попробуйте позже.</string>
+    <string name="steam_space_post_unknown">Steam не подтвердил результат. Перед повторной публикацией проверьте ленту Steam, чтобы не создать дубликат.</string>
+    <string name="steam_space_post_sending">Публикация…</string>
+    <string name="steam_space_post_check_web">Проверить в Steam</string>
+    <string name="steam_space_post_use_web">Открыть страницу Steam</string>
+    <string name="steam_space_post_success">Запись опубликована</string>
+    <string name="steam_space_post_discard_title">Закрыть черновик?</string>
+    <string name="steam_space_post_discard_body">Неопубликованный текст будет удалён.</string>
+    <string name="steam_space_post_discard_unknown">Черновик будет удалён. Закрытие не отменит запись, которую Steam уже мог получить.</string>
+    <string name="steam_space_post_discard">Закрыть</string>
+    <string name="steam_space_post_keep_editing">Остаться</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-14T12:58:01.794Z" hostname="JOYIN" time="0.004">
+  <properties/>
+  <testcase name="releaseProjectionMovesAtMostOneDestination" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest" time="0.004"/>
+  <testcase name="velocityIsNormalizedByTheVisibleItemWidth" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

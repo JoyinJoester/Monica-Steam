@@ -1,0 +1,27 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/avatar/ui/SteamGroupAvatarRenderer.kt",
+    "sha256": "bcfad467a547b6630c000ed6a0d73f90c464325ea8510591395acaf9fa03e029",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/avatar/ui/SteamGroupAvatarImage.kt",
+    "sha256": "82613aa92ff0739d2acaca0884a09996119d3c294926dcf5526ffa5797ed1092",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/avatar/ui/SteamGroupMemberAvatarGrid.kt",
+    "sha256": "642bf98b646d3d23eac480c4b326ac123b7e82328d4ab5cde67356cf691a2620",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamGroupAvatarRendererTest.kt",
+    "sha256": "e7a4a08995d9e33e1b91652f47c08d85894fbc97918291f1ab2b246b41dcdc5d",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamGroupAvatarUiTest.kt",
+    "sha256": "a286ff0aa8da24d25516658f8f8b06b69ed431f4e500b586d05f07eb7c329983",
+    "whitespaceAndConflictCheck": "passed"
+  }
+]

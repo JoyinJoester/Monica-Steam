@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.foundation.media
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassAvailable
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassRole
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,13 +51,16 @@ internal fun ImageViewerTopControls(
         contentColor = Color.White,
         disabledContentColor = Color.White.copy(alpha = 0.38f)
     )
+    val glass = steamGlassAvailable()
+    val shape = RoundedCornerShape(24.dp)
     Surface(
         modifier = modifier
             .statusBarsPadding()
             .padding(horizontal = 16.dp, vertical = 10.dp)
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        color = Color.Black.copy(alpha = 0.78f),
+            .fillMaxWidth()
+            .then(if (glass) Modifier.steamGlassSurface(shape, Color.Black, SteamGlassRole.PANEL) else Modifier),
+        shape = shape,
+        color = if (glass) Color.Transparent else Color.Black.copy(alpha = 0.78f),
         contentColor = Color.White
     ) {
         Row(
@@ -112,10 +119,13 @@ internal fun ImageViewerPageControls(
         contentColor = Color.White,
         disabledContentColor = Color.White.copy(alpha = 0.28f)
     )
+    val glass = steamGlassAvailable()
+    val shape = RoundedCornerShape(28.dp)
     Surface(
-        modifier = modifier.navigationBarsPadding().padding(16.dp),
-        shape = RoundedCornerShape(28.dp),
-        color = Color.Black.copy(alpha = 0.78f),
+        modifier = modifier.navigationBarsPadding().padding(16.dp)
+            .then(if (glass) Modifier.steamGlassSurface(shape, Color.Black, SteamGlassRole.PANEL) else Modifier),
+        shape = shape,
+        color = if (glass) Color.Transparent else Color.Black.copy(alpha = 0.78f),
         contentColor = Color.White
     ) {
         Row(

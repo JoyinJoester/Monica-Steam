@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.435Z" hostname="JOYIN" time="0.032">
+  <properties/>
+  <testcase name="parsesOfficialBeginResponseAndKeepsSteamIssuedCloudAuthorization" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" time="0.026"/>
+  <testcase name="serviceUnavailableAndSessionConflictAreNotFileRejections" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" time="0.002"/>
+  <testcase name="rejectsNestedCommitFailureAndMissingSecureMediaUrl" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" time="0.001"/>
+  <testcase name="parsesCommitOnlyAfterTopLevelAndNestedSteamSuccess" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" time="0.002"/>
+  <testcase name="rejectsSteamBeginBusinessFailureAndInsecureCloudUrl" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

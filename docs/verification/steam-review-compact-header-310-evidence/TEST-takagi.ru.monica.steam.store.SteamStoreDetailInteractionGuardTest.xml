@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-21T04:06:37.880Z" hostname="JOYIN" time="0.063">
+  <properties/>
+  <testcase name="websiteAndAboutSectionsUseFocusedActionsInsteadOfRawLinkRows" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.016"/>
+  <testcase name="fullDetailsAndInformationValuesAreSelectable" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.006"/>
+  <testcase name="heroClearsTheStatusBarAndOpensTheNativeViewer" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.005"/>
+  <testcase name="screenshotsOpenTheDedicatedFullscreenViewer" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.013"/>
+  <testcase name="fixedDetailTopBarKeepsPurchaseReviewsAndOfficialActions" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.005"/>
+  <testcase name="reviewExpansionActionFollowsThePreviewCards" classname="takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

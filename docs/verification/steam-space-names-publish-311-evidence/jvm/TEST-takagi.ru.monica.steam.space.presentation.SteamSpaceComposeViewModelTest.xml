@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-21T17:00:10.129Z" hostname="JOYIN" time="0.02">
+  <properties/>
+  <testcase name="leavingOrSwitchingAccountCancelsPendingPreparationAndClearsOnlyItsMemoryDraft" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" time="0.007"/>
+  <testcase name="lostResponseKeepsDraftAndBlocksAutomaticOrRepeatedUserSubmission" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" time="0.003"/>
+  <testcase name="preparationFailureIsEditableAndNeverSendsOrSilentlySwitchesAccounts" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" time="0.003"/>
+  <testcase name="onlyExplicitSubmissionSendsAndRepeatedClicksWhilePreparingSendExactlyOnce" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" time="0.003"/>
+  <testcase name="backgroundAndTimeoutBeforeDispatchKeepEditableDraftAndDoNotPost" classname="takagi.ru.monica.steam.space.presentation.SteamSpaceComposeViewModelTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

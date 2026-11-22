@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.419Z" hostname="JOYIN" time="0.004">
+  <properties/>
+  <testcase name="groupRoomTargetUsesTheOfficialGroupCommitFields" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest" time="0.001"/>
+  <testcase name="invalidTargetsFailBeforeAnyUploadStarts" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest" time="0.002"/>
+  <testcase name="friendTargetUsesTheOfficialFriendCommitFields" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -637,6 +637,7 @@ class SteamStoreViewModel internal constructor(
                     recent = previousReviews.recent,
                     items = page.items,
                     nextCursor = page.nextCursor,
+                    pageLoadFailed = false,
                     fetchedAt = System.currentTimeMillis()
                 )
                 _uiState.value = _uiState.value.copy(
@@ -650,8 +651,9 @@ class SteamStoreViewModel internal constructor(
                 }
                 val currentDetail = _uiState.value.detail ?: return@onFailure
                 _uiState.value = _uiState.value.copy(
-                    detail = currentDetail.copy(reviews = previousReviews),
-                    reviewFilters = initialState.reviewFilters,
+                    // Keep the requested filters so Retry reloads their first page. Never
+                    // show the old filter's rows under the newly selected filter labels.
+                    detail = currentDetail.copy(reviews = currentDetail.reviews?.copy(pageLoadFailed = true)),
                     loadingMoreReviews = false,
                     reviewLoadError = error.message ?: "Steam 评价筛选失败"
                 )
@@ -663,7 +665,9 @@ class SteamStoreViewModel internal constructor(
         val initialState = _uiState.value
         if (initialState.loadingMoreReviews) return
         val detail = initialState.detail ?: return
-        val cursor = detail.reviews?.nextCursor?.takeIf(String::isNotBlank) ?: return
+        val previousReviews = detail.reviews ?: return
+        val retryFirstPage = previousReviews.pageLoadFailed
+        val cursor = if (retryFirstPage) "*" else previousReviews.nextCursor?.takeIf(String::isNotBlank) ?: return
         val accountId = initialState.selectedAccountId
         val appId = detail.appId
         val generation = detailRequestGeneration
@@ -686,7 +690,7 @@ class SteamStoreViewModel internal constructor(
                     page
                 }
                 val updatedDetail = currentDetail.copy(
-                    reviews = currentDetail.reviews
+                    reviews = (if (retryFirstPage) currentDetail.reviews?.copy(items = emptyList()) else currentDetail.reviews)
                         ?.mergePage(terminalPage)
                         ?: SteamStoreReviews(
                             overall = terminalPage.summary,

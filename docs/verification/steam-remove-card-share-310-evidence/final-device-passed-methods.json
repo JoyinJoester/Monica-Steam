@@ -1,0 +1,33 @@
+{
+  "methods": [
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#actualComposerSendsCardOnlyThroughExistingSendButton",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#gameInvitationKeepsSteamActionSeparateFromStore",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassDarkThreadAndAttachments",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassLightThreadAndAttachments",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontOpenGraphProfileStillHasReachableDetails",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#localDeleteRequiresConfirmationAndCancelKeepsMessage",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eDarkThreadAndAttachments",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eLightThreadAndAttachments",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#receivedOpenGraphProfileUsesTheSameParser",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#sentOpenGraphProfileIsACardInGlassThread",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#sentOpenGraphProfileIsACardInM3eThread",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#tradeOfferOpenAndCopyUseExactParsedOffer",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedCardRetainsOriginalMessageWithoutActionButton",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#lightThemeNativeTitleAndLongHistoryRemainInteractive",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#olderReadingAnchorSurvivesImeAndReopening",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft"
+  ],
+  "fullBatchPassed": 22,
+  "fullBatchTotal": 24,
+  "focusedPassed": 2,
+  "focusedTotal": 2,
+  "apksUnchangedBetweenFinalRuns": true
+}

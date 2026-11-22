@@ -1,22 +1,18 @@
 package takagi.ru.monica.steam.store.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +29,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -44,14 +39,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.CompareArrows
-import androidx.compose.material.icons.automirrored.filled.Label
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -60,27 +51,25 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.AssistChip
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.carousel.CarouselItemScope
 import androidx.compose.material3.carousel.HorizontalCenteredHeroCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
@@ -93,6 +82,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -100,7 +90,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -115,6 +104,8 @@ import takagi.ru.monica.steam.workshop.SteamWorkshopEntry
 import takagi.ru.monica.steam.workshop.SteamWorkshopScreen
 import takagi.ru.monica.steam.workshop.WorkshopImportCodeDialog
 import takagi.ru.monica.steam.workshop.WorkshopShareCode
+import takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerTarget
+import takagi.ru.monica.steam.profile.viewer.ui.SteamProfileViewerScreen
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.steam.foundation.ui.SteamAccountSwitcherSheet
@@ -124,7 +115,6 @@ import takagi.ru.monica.steam.library.isSteamSouthAsiaPriceCountry
 import takagi.ru.monica.steam.steamdb.domain.SteamDbQuery
 import takagi.ru.monica.steam.steamdb.data.SteamDbRepository
 import takagi.ru.monica.steam.steamdb.ui.SteamDbDetailsEntry
-import takagi.ru.monica.steam.steamdb.ui.SteamDbPriceSection
 import takagi.ru.monica.steam.store.domain.*
 import takagi.ru.monica.steam.store.interest.ui.SteamStoreIgnoreButton
 import takagi.ru.monica.steam.store.interest.domain.SteamStoreIgnoreSyncState
@@ -157,17 +147,14 @@ import takagi.ru.monica.steam.store.share.domain.toGameShare
 import takagi.ru.monica.steam.store.share.ui.SteamStoreGameShareSheet
 import takagi.ru.monica.steam.store.bundle.ui.SteamStoreBundleSection
 import takagi.ru.monica.steam.store.ui.gallery.SteamStoreScreenshotViewer
+import takagi.ru.monica.steam.foundation.media.steamImageThumbnail
 import takagi.ru.monica.steam.store.activation.domain.SteamStoreProductActivation
 import takagi.ru.monica.steam.store.wallet.domain.SteamStoreWalletLinks
-import takagi.ru.monica.steam.library.sortedRegionalPricesForDisplay
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
-import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
-import takagi.ru.monica.steam.navigation.ui.steamWindowTopPadding
 import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 import takagi.ru.monica.steam.web.ui.SteamWebBrowserScreen
 import takagi.ru.monica.steam.web.domain.SteamWebNavigationPolicy
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import java.util.Locale
 import kotlinx.coroutines.launch
 
@@ -177,6 +164,7 @@ private sealed interface SteamStoreDestination {
     data object PointsShop : SteamStoreDestination
     data object Freebies : SteamStoreDestination
     data class Workshop(val appId: Int) : SteamStoreDestination
+    data class Profile(val steamId: String) : SteamStoreDestination
     data class Detail(val appId: Int) : SteamStoreDestination
     data class Web(val url: String) : SteamStoreDestination
 }
@@ -191,20 +179,30 @@ fun SteamStoreScreen(
     onAddSteamAccount: () -> Unit = {},
     onOpenChatShare: (String, SteamStoreGameShare) -> Unit = { _, _ -> },
     initialAppId: Int? = null,
+    initialPersonalStats: Boolean = false,
+    initialDetailName: String = "",
+    onDetailClosed: (() -> Unit)? = null,
     onInitialAppIdConsumed: () -> Unit = {},
     initialWebUrl: String? = null,
     onInitialWebUrlConsumed: () -> Unit = {},
     initialWorkshopShare: String? = null,
     onInitialWorkshopShareConsumed: () -> Unit = {},
     onPlatformViewVisibilityChanged: (Boolean) -> Unit = {},
+    onCollectionVisibilityChanged: (Boolean) -> Unit = {},
+    onDetailVisibilityChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: SteamStoreViewModel = viewModel(factory = SteamStoreViewModel.factory(LocalContext.current))
 ) {
+    val closeDetail = {
+        viewModel.closeDetail()
+        if (viewModel.uiState.value.detailAppId == null) onDetailClosed?.invoke()
+        Unit
+    }
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val hintPreferences = remember(context) { SteamStoreHintPreferences(context) }
-    val hintSettings by hintPreferences.settings.collectAsState(
-        initial = SteamStoreHintSettings()
+    val hintSettings by hintPreferences.settings.collectAsStateWithLifecycle(
+        initialValue = SteamStoreHintSettings()
     )
     val wishlistAppIds = remember(state.wishlist) {
         state.wishlist.mapTo(linkedSetOf()) { it.appId }
@@ -251,13 +249,15 @@ fun SteamStoreScreen(
     var showWorkshopImport by rememberSaveable { mutableStateOf(false) }
     var freebiesOpen by rememberSaveable { mutableStateOf(false) }
     var pendingGameShare by remember { mutableStateOf<SteamStoreGameShare?>(null) }
-    var lastDetail by remember { mutableStateOf<SteamStoreDetail?>(null) }
+    var lastDetail by remember(state.selectedAccountId, state.storageSource) { mutableStateOf<SteamStoreDetail?>(null) }
     LaunchedEffect(state.detail) {
         state.detail?.let { lastDetail = it }
     }
-    LaunchedEffect(initialAppId) {
+    var rootRequested by remember(initialAppId, state.selectedAccountId, state.storageSource) { mutableStateOf(false) }
+    LaunchedEffect(initialAppId, state.selectedAccountId, state.storageSource) {
         initialAppId?.let { appId ->
             viewModel.openDetail(appId)
+            rootRequested = true
             onInitialAppIdConsumed()
         }
     }
@@ -281,12 +281,16 @@ fun SteamStoreScreen(
         viewModel.loadStoreFilterMetadata()
     }
     val webUrl = state.webUrl
-    val detailAppId = state.detailAppId
+    val detailAppId = if (onDetailClosed != null && !rootRequested) initialAppId
+        else state.detailAppId
     val selectedStoreAccount = viewModel.selectedAccount()
+    var reviewAuthorId by rememberSaveable(state.storageSource, state.selectedAccountId, detailAppId) { mutableStateOf<String?>(null) }
+    val detailPageStates = rememberSaveableStateHolder()
     val checkoutAutomationFactory = remember(state.checkoutLines) {
         steamStoreCheckoutAutomationFactory(state.checkoutLines)
     }
     val storeDestination = when {
+        reviewAuthorId != null -> SteamStoreDestination.Profile(requireNotNull(reviewAuthorId))
         workshopAppId != null -> SteamStoreDestination.Workshop(requireNotNull(workshopAppId))
         webUrl != null -> SteamStoreDestination.Web(webUrl)
         detailAppId != null -> SteamStoreDestination.Detail(detailAppId)
@@ -295,17 +299,28 @@ fun SteamStoreScreen(
         freebiesOpen -> SteamStoreDestination.Freebies
         else -> SteamStoreDestination.Home
     }
+    val reportDetailVisibility by androidx.compose.runtime.rememberUpdatedState(onDetailVisibilityChanged)
+    androidx.compose.runtime.SideEffect { reportDetailVisibility(detailAppId != null) }
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        onDispose { reportDetailVisibility(false) }
+    }
+    val reportCollectionVisibility by androidx.compose.runtime.rememberUpdatedState(onCollectionVisibilityChanged)
+    androidx.compose.runtime.SideEffect { reportCollectionVisibility(state.cartOpen) }
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        onDispose { reportCollectionVisibility(false) }
+    }
 
     BackHandler(
         enabled = state.webUrl == null && (
-            workshopAppId != null || state.regionalPriceSheetOpen || state.cartOpen || state.detailAppId != null ||
+            reviewAuthorId != null || workshopAppId != null || state.regionalPriceSheetOpen || state.cartOpen || state.detailAppId != null ||
                 state.pointsShopOpen || freebiesOpen
             )
     ) {
         when {
+            reviewAuthorId != null -> reviewAuthorId = null
             workshopAppId != null -> workshopAppId = null
             state.regionalPriceSheetOpen -> viewModel.closeRegionalPrices()
-            state.detailAppId != null -> viewModel.closeDetail()
+            state.detailAppId != null -> closeDetail()
             state.cartOpen -> viewModel.closeCart()
             state.pointsShopOpen -> viewModel.closePointsShop()
             freebiesOpen -> freebiesOpen = false
@@ -323,13 +338,18 @@ fun SteamStoreScreen(
             ) {
                 EnterTransition.None togetherWith ExitTransition.None
             } else {
-                easyNotesScreenEnter(reduceAnimations)
-                    .togetherWith(easyNotesScreenExit(reduceAnimations))
+                steamPageTransition(reduceAnimations, forward = targetState != SteamStoreDestination.Home)
             }
         },
         label = "SteamStoreNavigation"
     ) { destination ->
         when (destination) {
+            is SteamStoreDestination.Profile -> {
+                if (selectedStoreAccount?.hasRealSteamId == true) SteamProfileViewerScreen(
+                    viewerAccount = selectedStoreAccount, target = SteamProfileViewerTarget(destination.steamId),
+                    onNavigateBack = { reviewAuthorId = null }, modifier = Modifier.fillMaxSize())
+                else LaunchedEffect(destination.steamId) { reviewAuthorId = null }
+            }
             is SteamStoreDestination.Workshop -> SteamWorkshopScreen(
                 appId = destination.appId,
                 gameName = state.detail?.takeIf { it.appId == destination.appId }?.name.orEmpty(),
@@ -390,120 +410,164 @@ fun SteamStoreScreen(
                 modifier = Modifier.fillMaxSize()
             )
             is SteamStoreDestination.Detail -> {
-                val detail = state.detail ?: lastDetail?.takeIf { it.appId == destination.appId }
-                if (detail == null) {
-                    SteamStoreDetailUnavailableContent(
-                        loading = state.loadingDetail,
-                        error = state.error,
-                        familyViewUnlockRequired = state.familyViewUnlockRequired,
-                        onBack = viewModel::closeDetail,
-                        onRetry = viewModel::retryDetail,
-                        onUnlockFamilyView = viewModel::openFamilyViewUnlock,
-                        onOpenOfficial = {
-                            viewModel.openStoreWeb(
-                                "https://store.steampowered.com/app/${destination.appId}/"
-                            )
-                        },
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    val detailHints = resolveSteamStoreDetailHints(
-                        detail = detail,
-                        settings = hintSettings,
-                        owned = state.purchaseContext?.ownership ==
-                            SteamStoreOwnershipStatus.OWNED || detail.appId in state.ownedAppIds,
-                        familyShared = detail.appId in state.familySharedAppIds,
-                        inWishlist = detail.appId in wishlistAppIds
-                    )
-                    val filterableDetailTags = remember(detail.tags, state.filterMetadata) {
-                        detail.tags.filterTo(linkedSetOf()) { label ->
-                            state.filterMetadata?.findTagId(label) != null
-                        }
-                    }
-                    SteamStoreDetailContent(
-                        detail = detail,
-                        onOpenWorkshop = { workshopAppId = detail.appId },
-                        hints = detailHints,
-                        showTags = hintSettings.storeTagsEnabled,
-                        filterableTags = filterableDetailTags,
-                        loading = state.loadingDetail,
-                        cached = state.detailFromCache,
-                        purchaseContext = state.purchaseContext,
-                        purchaseContextFromCache = state.purchaseContextFromCache,
-                        loadingPurchaseContext = state.loadingPurchaseContext,
-                        purchaseContextFailure = state.purchaseContextFailure,
-                        alreadyOwned = state.purchaseContext?.ownership ==
-                            SteamStoreOwnershipStatus.OWNED || detail.appId in state.ownedAppIds,
-                        freeLicenseOption = detail.freeLicenseOption.takeIf {
-                            detail.availableInAccountRegion != false
-                        },
-                        freeLicenseClaiming = detail.appId in state.freeLicenseClaimingAppIds,
-                        freeLicenseClaimResult = state.freeLicenseClaimResults[detail.appId],
-                        onBack = viewModel::closeDetail,
-                        onOpenOfficial = { viewModel.openStoreWeb(detail.storeUrl) },
-                        onOpenOfficialReviews = {
-                            viewModel.openStoreWeb(detail.reviewsUrl)
-                        },
-                        onShare = {
-                            pendingGameShare = detail.toGameShare()
-                            viewModel.prepareShareFriends()
-                        },
-                        onOpenWebsite = { rawUrl ->
-                            val normalizedUrl = normalizeSteamStoreWebsiteUrl(rawUrl)
-                            when {
-                                normalizedUrl == null -> showStoreWebsiteOpenFailure(context)
-                                SteamWebNavigationPolicy.isAllowed(normalizedUrl) ->
-                                    viewModel.openStoreWeb(normalizedUrl)
-                                else -> openExternalStoreWebsite(context, normalizedUrl)
-                            }
-                        },
-                        reviewFilters = state.reviewFilters,
-                        loadingMoreReviews = state.loadingMoreReviews,
-                        reviewLoadError = state.reviewLoadError,
-                        onReviewFiltersChanged = viewModel::updateReviewFilters,
-                        onLoadMoreReviews = viewModel::loadMoreReviews,
-                        cartItem = state.cart.firstOrNull { it.appId == detail.appId },
-                        inWishlist = state.wishlist.any { it.appId == detail.appId },
-                        wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
-                        wishlistMutating = detail.appId in state.wishlistMutatingAppIds,
-                        wishlistError = state.wishlistError,
-                        ignored = detail.ignored,
-                        ignoreAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
-                        ignoreMutating = detail.appId in state.ignoredMutatingAppIds,
-                        ignoreSyncState = state.ignoredSyncStates[detail.appId],
-                        ignoredError = state.ignoredError,
-                        regionalPrices = state.regionalPrices,
-                        regionalPricesFromCache = state.regionalPricesFromCache,
-                        loadingRegionalPrices = state.loadingRegionalPrices,
-                        regionalPriceFailure = state.regionalPriceFailure,
-                        showRegionalPrices = state.regionalPriceSheetOpen,
-                        onAddToCart = { packageOption ->
-                            viewModel.addDetailToCart(detail, packageOption)
-                        },
-                        onAddAsGift = { packageOption ->
-                            viewModel.beginGiftPurchase(detail, packageOption)
-                        },
-                        onClaimFreeLicense = {
-                            if (selectedStoreAccount == null) {
-                                showAccounts = true
+                val detail = state.detail?.takeIf { it.appId == destination.appId } ?: lastDetail?.takeIf { it.appId == destination.appId }
+                val alreadyOwned = state.purchaseContext?.takeIf {
+                    it.appId == destination.appId && it.accountSteamId == selectedStoreAccount?.steamId
+                }?.ownership == SteamStoreOwnershipStatus.OWNED || destination.appId in state.ownedAppIds
+                detailPageStates.SaveableStateProvider("${state.storageSource}:${state.selectedAccountId}:${destination.appId}") {
+                androidx.compose.runtime.key(state.storageSource, state.selectedAccountId, destination.appId) {
+                    var purchaseSheetRequested by rememberSaveable { mutableStateOf(false) }
+                    SteamGameDetailTabs(
+                        appId = destination.appId,
+                        name = detail?.name ?: initialDetailName.takeIf { destination.appId == initialAppId }.orEmpty(),
+                        initialPersonalStats = initialPersonalStats && destination.appId == initialAppId,
+                        heroImageUrl = detail?.backgroundImageUrl?.ifBlank { detail.headerImageUrl }.orEmpty(),
+                        account = selectedStoreAccount,
+                        source = state.storageSource,
+                        onBack = closeDetail,
+                        onChooseAccount = { showAccounts = true },
+                        onOpenWeb = viewModel::openStoreWeb,
+                        onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
+                        onShare = detail?.let { value -> { pendingGameShare = value.toGameShare(); viewModel.prepareShareFriends() } },
+                        bottomBar = detail?.let { value -> { openStore ->
+                            SteamGamePurchaseBar(value,
+                                inWishlist = value.appId in wishlistAppIds,
+                                wishlistAvailable = selectedStoreAccount?.hasRealSteamId == true,
+                                wishlistMutating = value.appId in state.wishlistMutatingAppIds,
+                                onWishlist = { viewModel.toggleWishlist(value) },
+                                onPurchase = { purchaseSheetRequested = true; openStore() },
+                                alreadyOwned = alreadyOwned)
+                        } },
+                        storeContent = { storeState, header ->
+                            if (detail == null) {
+                                Column(Modifier.fillMaxSize()) {
+                                    header(null, null)
+                                    SteamStoreDetailUnavailableContent(
+                                        loading = state.loadingDetail,
+                                        error = state.error,
+                                        familyViewUnlockRequired = state.familyViewUnlockRequired,
+                                        onBack = closeDetail,
+                                        onRetry = viewModel::retryDetail,
+                                        onUnlockFamilyView = viewModel::openFamilyViewUnlock,
+                                        onOpenOfficial = {
+                                            viewModel.openStoreWeb(
+                                                "https://store.steampowered.com/app/${destination.appId}/"
+                                            )
+                                        },
+                                        modifier = Modifier.weight(1f),
+                                        showTopBar = false
+                                    )
+                                }
                             } else {
-                                viewModel.openAuthenticatedStoreWeb(detail.storeUrl)
+                                val detailHints = resolveSteamStoreDetailHints(
+                                    detail = detail,
+                                    settings = hintSettings,
+                                    owned = alreadyOwned,
+                                    familyShared = detail.appId in state.familySharedAppIds,
+                                    inWishlist = detail.appId in wishlistAppIds
+                                )
+                                val filterableDetailTags = remember(detail.tags, state.filterMetadata) {
+                                    detail.tags.filterTo(linkedSetOf()) { label ->
+                                        state.filterMetadata?.findTagId(label) != null
+                                    }
+                                }
+                                SteamStoreDetailContent(
+                                    detail = detail,
+                                    onOpenWorkshop = { workshopAppId = detail.appId },
+                                    hints = detailHints,
+                                    showTags = hintSettings.storeTagsEnabled,
+                                    filterableTags = filterableDetailTags,
+                                    loading = state.loadingDetail,
+                                    cached = state.detailFromCache,
+                                    purchaseContext = state.purchaseContext,
+                                    purchaseContextFromCache = state.purchaseContextFromCache,
+                                    loadingPurchaseContext = state.loadingPurchaseContext,
+                                    purchaseContextFailure = state.purchaseContextFailure,
+                                    alreadyOwned = alreadyOwned,
+                                    freeLicenseOption = detail.freeLicenseOption.takeIf {
+                                        detail.availableInAccountRegion != false
+                                    },
+                                    freeLicenseClaiming = detail.appId in state.freeLicenseClaimingAppIds,
+                                    freeLicenseClaimResult = state.freeLicenseClaimResults[detail.appId],
+                                    onBack = closeDetail,
+                                    onOpenOfficial = { viewModel.openStoreWeb(detail.storeUrl) },
+                                    onOpenOfficialReviews = {
+                                        viewModel.openStoreWeb(detail.reviewsUrl)
+                                    },
+                                    onShare = {
+                                        pendingGameShare = detail.toGameShare()
+                                        viewModel.prepareShareFriends()
+                                    },
+                                    onOpenWebsite = { rawUrl ->
+                                        val normalizedUrl = normalizeSteamStoreWebsiteUrl(rawUrl)
+                                        when {
+                                            normalizedUrl == null -> showStoreWebsiteOpenFailure(context)
+                                            SteamWebNavigationPolicy.isAllowed(normalizedUrl) ->
+                                                viewModel.openStoreWeb(normalizedUrl)
+                                            else -> openExternalStoreWebsite(context, normalizedUrl)
+                                        }
+                                    },
+                                    onOpenReviewAuthor = { id ->
+                                        if (isSteamReviewAuthorId(id)) {
+                                            if (selectedStoreAccount?.hasRealSteamId == true) reviewAuthorId = id
+                                            else viewModel.openStoreWeb("https://steamcommunity.com/profiles/$id/")
+                                        }
+                                    },
+                                    reviewFilters = state.reviewFilters,
+                                    loadingMoreReviews = state.loadingMoreReviews,
+                                    reviewLoadError = state.reviewLoadError,
+                                    onReviewFiltersChanged = viewModel::updateReviewFilters,
+                                    onLoadMoreReviews = viewModel::loadMoreReviews,
+                                    cartItem = state.cart.firstOrNull { it.appId == detail.appId },
+                                    inWishlist = state.wishlist.any { it.appId == detail.appId },
+                                    wishlistAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
+                                    wishlistMutating = detail.appId in state.wishlistMutatingAppIds,
+                                    wishlistError = state.wishlistError,
+                                    ignored = detail.ignored,
+                                    ignoreAvailable = viewModel.selectedAccount()?.hasRealSteamId == true,
+                                    ignoreMutating = detail.appId in state.ignoredMutatingAppIds,
+                                    ignoreSyncState = state.ignoredSyncStates[detail.appId],
+                                    ignoredError = state.ignoredError,
+                                    regionalPrices = state.regionalPrices,
+                                    regionalPricesFromCache = state.regionalPricesFromCache,
+                                    loadingRegionalPrices = state.loadingRegionalPrices,
+                                    regionalPriceFailure = state.regionalPriceFailure,
+                                    showRegionalPrices = state.regionalPriceSheetOpen,
+                                    onAddToCart = { packageOption ->
+                                        viewModel.addDetailToCart(detail, packageOption)
+                                    },
+                                    onAddAsGift = { packageOption ->
+                                        viewModel.beginGiftPurchase(detail, packageOption)
+                                    },
+                                    onClaimFreeLicense = {
+                                        if (selectedStoreAccount == null) {
+                                            showAccounts = true
+                                        } else {
+                                            viewModel.openAuthenticatedStoreWeb(detail.storeUrl)
+                                        }
+                                    },
+                                    onRemoveFromCart = { viewModel.removeFromCart(detail.appId) },
+                                    onOpenCart = viewModel::openCart,
+                                    onToggleWishlist = { viewModel.toggleWishlist(detail) },
+                                    onToggleIgnored = { viewModel.toggleIgnored(detail) },
+                                    onOpenRegionalPrices = { viewModel.openRegionalPrices(detail.appId) },
+                                    onCloseRegionalPrices = viewModel::closeRegionalPrices,
+                                    onRetryRegionalPrices = {
+                                        viewModel.loadRegionalPrices(detail.appId, force = true)
+                                    },
+                                    onOpenRelatedApp = viewModel::openRelatedDetail,
+                                    onOpenBundle = viewModel::openStoreWeb,
+                                    onFilterByTag = viewModel::filterByDetailTag,
+                                    modifier = Modifier.fillMaxSize(),
+                                    listState = storeState,
+                                    header = header,
+                                    purchaseSheetRequested = purchaseSheetRequested,
+                                    onPurchaseSheetDismissed = { purchaseSheetRequested = false }
+                                )
                             }
-                        },
-                        onRemoveFromCart = { viewModel.removeFromCart(detail.appId) },
-                        onOpenCart = viewModel::openCart,
-                        onToggleWishlist = { viewModel.toggleWishlist(detail) },
-                        onToggleIgnored = { viewModel.toggleIgnored(detail) },
-                        onOpenRegionalPrices = { viewModel.openRegionalPrices(detail.appId) },
-                        onCloseRegionalPrices = viewModel::closeRegionalPrices,
-                        onRetryRegionalPrices = {
-                            viewModel.loadRegionalPrices(detail.appId, force = true)
-                        },
-                        onOpenRelatedApp = viewModel::openRelatedDetail,
-                        onOpenBundle = viewModel::openStoreWeb,
-                        onFilterByTag = viewModel::filterByDetailTag,
-                        modifier = Modifier.fillMaxSize()
+                        }
                     )
+                }
                 }
             }
             SteamStoreDestination.Home -> SteamStoreHomePage(
@@ -615,11 +679,13 @@ private fun SteamStoreDetailUnavailableContent(
     onRetry: () -> Unit,
     onUnlockFamilyView: () -> Unit,
     onOpenOfficial: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showTopBar: Boolean = true
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
+            if (showTopBar) {
             TopAppBar(
                 title = { Text(stringResource(R.string.steam_store_open_detail)) },
                 navigationIcon = {
@@ -631,6 +697,7 @@ private fun SteamStoreDetailUnavailableContent(
                     }
                 }
             )
+            }
         }
     ) { padding ->
         Column(
@@ -991,11 +1058,15 @@ internal fun SteamStoreDetailContent(
     onOpenBundle: (String) -> Unit,
     onFilterByTag: (String) -> Boolean,
     modifier: Modifier,
-    steamDbRepository: SteamDbRepository = SteamDbRepository.shared
+    steamDbRepository: SteamDbRepository = SteamDbRepository.shared,
+    listState: androidx.compose.foundation.lazy.LazyListState = rememberLazyListState(),
+    header: (@Composable (() -> Unit, () -> Unit) -> Unit)? = null,
+    onOpenReviewAuthor: ((String) -> Unit)? = null,
+    purchaseSheetRequested: Boolean = false,
+    onPurchaseSheetDismissed: () -> Unit = {}
 ) {
     val dockContentClearance = LocalSteamDockContentClearance.current
     val reduceAnimations = LocalReduceAnimations.current
-    val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     val heroBackgroundUrl = detail.backgroundImageUrl.ifBlank { detail.headerImageUrl }
     val heroViewerUrl = detail.headerImageUrl.ifBlank { heroBackgroundUrl }
@@ -1018,17 +1089,13 @@ internal fun SteamStoreDetailContent(
     val selectedPackage = detail.packageOptions.firstOrNull {
         it.packageId == selectedPackageId
     }
-    val hasReviews = detail.reviews?.let { reviews ->
-        reviews.overall != null || reviews.recent != null || reviews.items.isNotEmpty()
-    } == true
+    val hasReviews = detail.reviews != null
     val purchaseSectionIndex = 1 + listOf(
         hints.isNotEmpty(),
-        cached,
-        freeLicenseOption != null
+        cached
     ).count { it }
-    val reviewSectionIndex = purchaseSectionIndex + 4 + listOf(
+    val reviewSectionIndex = purchaseSectionIndex + 3 + listOf(
         detail.fullGame != null || detail.demos.isNotEmpty() || detail.relatedDlc.isNotEmpty(),
-        detail.bundles.isNotEmpty(),
         aboutText.isNotBlank(),
         detail.systemRequirements.hasContent,
         detail.screenshots.isNotEmpty()
@@ -1042,22 +1109,30 @@ internal fun SteamStoreDetailContent(
             }
         }
     }
-    Column(modifier = modifier.fillMaxSize()) {
-        SteamStoreDetailTopBar(detail.name, onBack, onShare,
-            onPurchase = { scrollToSection(purchaseSectionIndex) },
+    var showPurchaseSheet by rememberSaveable(detail.appId) { mutableStateOf(false) }
+    LaunchedEffect(purchaseSheetRequested) { if (purchaseSheetRequested) showPurchaseSheet = true }
+    val purchase = { showPurchaseSheet = true }
+    val reviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() }
+    SteamGameDetailSectionHost(modifier = modifier, header = {
+        if (header != null) header(purchase, reviews)
+        else SteamStoreDetailTopBar(detail.name, onBack, onShare,
+            onPurchase = purchase,
             onReviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() },
             onOfficial = onOpenOfficial)
+    }, toolbar = {
+        if (header != null) SteamStoreDetailActionToolbar(purchase, onOpenOfficial, reviews, onShare)
+    }) { topPadding ->
         LazyColumn(
-            modifier = Modifier.weight(1f).fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             state = listState,
-            contentPadding = PaddingValues(bottom = dockContentClearance + 24.dp),
+            contentPadding = PaddingValues(top = topPadding, bottom = dockContentClearance + 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
         item {
             SteamStoreDetailHeader(detail, loading, onOpenRegionalPrices,
                 onImage = { showHeroViewer = heroViewerUrl.isNotBlank() },
                 modifier = Modifier.padding(horizontal = 12.dp),
-                steamDbRepository = steamDbRepository,
+                steamDbRepository = steamDbRepository, showGameName = header != null,
                 tags = {
                     if (showTags && detail.tags.isNotEmpty()) SteamStoreDetailTags(
                         labels = detail.tags, filterableLabels = filterableTags, onTagClick = onFilterByTag)
@@ -1072,17 +1147,6 @@ internal fun SteamStoreDetailContent(
             }
         }
         if (cached) item { CachedNotice() }
-        if (freeLicenseOption != null) {
-            item(key = "store_free_license_${detail.appId}") {
-                SteamStoreFreeLicenseButton(
-                    alreadyOwned = alreadyOwned,
-                    claiming = freeLicenseClaiming,
-                    result = freeLicenseClaimResult,
-                    onOpenOfficial = onClaimFreeLicense,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
-                )
-            }
-        }
         item {
             SteamStorePurchaseContextSection(
                 detail = detail,
@@ -1092,44 +1156,9 @@ internal fun SteamStoreDetailContent(
                 contextFailure = purchaseContextFailure,
                 selectedPackageId = selectedPackageId,
                 onSelectPackage = { selectedPackageId = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+                showPackageOptions = false
             )
-        }
-        item {
-            Column(
-                Modifier.padding(horizontal = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                SteamStorePurchaseActions(
-                    cartItem = cartItem,
-                    inWishlist = inWishlist,
-                    purchaseAvailable = detail.availableInAccountRegion != false,
-                    alreadyOwned = alreadyOwned,
-                    hasPurchasablePackage = selectedPackage?.let { option ->
-                        !option.isFreeLicense &&
-                            !option.canGetFreeLicense &&
-                            (option.priceCents?.let { it > 0 } ?: !detail.isFree)
-                    } == true,
-                    wishlistAvailable = wishlistAvailable,
-                    wishlistMutating = wishlistMutating,
-                    wishlistError = wishlistError,
-                    ignored = ignored,
-                    ignoreAvailable = ignoreAvailable,
-                    ignoreMutating = ignoreMutating,
-                    ignoreSyncState = ignoreSyncState,
-                    ignoredError = ignoredError,
-                    onAddForSelf = { onAddToCart(selectedPackage) },
-                    onAddAsGift = { onAddAsGift(selectedPackage) },
-                    onRemoveFromCart = onRemoveFromCart,
-                    onOpenCart = onOpenCart,
-                    onToggleWishlist = onToggleWishlist,
-                    onToggleIgnored = onToggleIgnored,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(stringResource(R.string.steam_store_security_note),
-                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-            }
         }
         if (detail.fullGame != null || detail.demos.isNotEmpty() || detail.relatedDlc.isNotEmpty()) {
             item(key = "store_related_${detail.appId}") {
@@ -1139,17 +1168,6 @@ internal fun SteamStoreDetailContent(
                     relatedDlc = detail.relatedDlc,
                     onOpenApp = onOpenRelatedApp,
                     modifier = Modifier.padding(horizontal = 12.dp)
-                )
-            }
-        }
-        if (detail.bundles.isNotEmpty()) {
-            item(key = "store_bundles_${detail.appId}") {
-                SteamStoreBundleSection(
-                    bundles = detail.bundles,
-                    currency = detail.currency,
-                    onOpenApp = onOpenRelatedApp,
-                    onOpenBundle = onOpenBundle,
-                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
         }
@@ -1225,7 +1243,7 @@ internal fun SteamStoreDetailContent(
         }
         item(key = "store_steamdb_${detail.appId}") {
             Column(Modifier.padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            SteamWorkshopEntry(detail.appId, onOpenWorkshop)
+            if (header == null) SteamWorkshopEntry(detail.appId, onOpenWorkshop)
             SteamDbDetailsEntry(
                 query = SteamDbQuery(detail.appId, detail.priceCountryCode,
                     detail.currency.takeIf { detail.finalPriceCents != null }, detail.isFree),
@@ -1289,7 +1307,7 @@ internal fun SteamStoreDetailContent(
             }
         }
         detail.reviews?.let { reviews ->
-            if (reviews.overall != null || reviews.recent != null || reviews.items.isNotEmpty()) {
+            if (hasReviews) {
                 item(key = "store_reviews_${detail.appId}") {
                     SteamStoreReviewsSection(
                         appId = detail.appId,
@@ -1299,14 +1317,68 @@ internal fun SteamStoreDetailContent(
                         loadError = reviewLoadError,
                         onFiltersChanged = onReviewFiltersChanged,
                         onLoadMore = onLoadMoreReviews,
-                        onOpenAuthor = { steamId ->
-                            onOpenWebsite("https://steamcommunity.com/profiles/$steamId/")
+                        onOpenAuthor = onOpenReviewAuthor ?: { steamId ->
+                            if (isSteamReviewAuthorId(steamId)) onOpenWebsite("https://steamcommunity.com/profiles/$steamId/")
                         },
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
             }
         }
+        }
+    }
+
+
+    if (showPurchaseSheet) {
+        ModalBottomSheet(onDismissRequest = { showPurchaseSheet = false; onPurchaseSheetDismissed() },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
+            Column(Modifier.fillMaxWidth().testTag("game_purchase_sheet")
+                .verticalScroll(rememberScrollState()).padding(horizontal = 16.dp).padding(bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                takagi.ru.monica.steam.store.purchase.ui.SteamPurchaseSheetHeader(detail)
+                SteamStorePurchaseContextSection(detail, purchaseContext, purchaseContextFromCache,
+                    loadingPurchaseContext, purchaseContextFailure, selectedPackageId,
+                    { selectedPackageId = it }, showPackageHeading = false)
+                if (freeLicenseOption != null) SteamStoreFreeLicenseButton(alreadyOwned, freeLicenseClaiming,
+                    freeLicenseClaimResult, { showPurchaseSheet = false; onPurchaseSheetDismissed(); onClaimFreeLicense() },
+                    modifier = Modifier.fillMaxWidth())
+                SteamStorePurchaseActions(
+                    cartItem = cartItem,
+                    inWishlist = inWishlist,
+                    purchaseAvailable = detail.availableInAccountRegion != false,
+                    alreadyOwned = alreadyOwned,
+                    hasPurchasablePackage = selectedPackage?.let { option ->
+                        !option.isFreeLicense &&
+                            !option.canGetFreeLicense &&
+                            (option.priceCents?.let { it > 0 } ?: !detail.isFree)
+                    } == true,
+                    wishlistAvailable = wishlistAvailable,
+                    wishlistMutating = wishlistMutating,
+                    wishlistError = wishlistError,
+                    ignored = ignored,
+                    ignoreAvailable = ignoreAvailable,
+                    ignoreMutating = ignoreMutating,
+                    ignoreSyncState = ignoreSyncState,
+                    ignoredError = ignoredError,
+                    onAddForSelf = { onAddToCart(selectedPackage) },
+                    onAddAsGift = { showPurchaseSheet = false; onPurchaseSheetDismissed(); onAddAsGift(selectedPackage) },
+                    onRemoveFromCart = onRemoveFromCart,
+                    onOpenCart = { showPurchaseSheet = false; onPurchaseSheetDismissed(); onOpenCart() },
+                    onToggleWishlist = onToggleWishlist,
+                    onToggleIgnored = onToggleIgnored,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                if (detail.bundles.isNotEmpty()) SteamStoreBundleSection(detail.bundles, detail.currency,
+                    onOpenApp = { showPurchaseSheet = false; onPurchaseSheetDismissed(); onOpenRelatedApp(it) },
+                    onOpenBundle = { showPurchaseSheet = false; onPurchaseSheetDismissed(); onOpenBundle(it) })
+                if (detail.packageOptions.isEmpty() || detail.availableInAccountRegion == false) {
+                    OutlinedButton(onClick = { showPurchaseSheet = false; onPurchaseSheetDismissed(); onOpenOfficial() },
+                        modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.steam_store_open_official)) }
+                }
+                Text(stringResource(R.string.steam_store_security_note), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
     }
 
@@ -1393,6 +1465,7 @@ private fun SteamStorePurchaseActions(
             SteamStoreGiftPurchaseSplitButton(
                 cartItem = cartItem,
                 canAdd = purchaseAvailable && !alreadyOwned,
+                canGift = purchaseAvailable,
                 alreadyOwned = alreadyOwned,
                 onAddForSelf = onAddForSelf,
                 onAddAsGift = onAddAsGift,
@@ -1743,7 +1816,7 @@ internal fun SteamStoreImage(
         value = url.takeIf(String::isNotBlank)?.let { cache.load(it)?.asImageBitmap() }
     }
     val loadedImage = image
-    Box(modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
+    Box(modifier.steamImageThumbnail(url, loadedImage, contentScale).background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
         if (loadedImage != null) Image(
             loadedImage,
             contentDescription = contentDescription,

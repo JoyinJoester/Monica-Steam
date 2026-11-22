@@ -1,0 +1,31 @@
+--------- beginning of crash
+11-09 04:52:39.887   588   588 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 588 (system_server), pid 588 (system_server)
+11-09 04:52:40.009   588   701 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: NativeTombstoneManager:tombstoneWatcher
+11-09 04:52:40.009   588   701 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke interface method 'boolean com.android.internal.os.IDropBoxManagerService.isTagEnabled(java.lang.String)' on a null object reference
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.DropBoxManager.isTagEnabled(DropBoxManager.java:377)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.BootReceiver.addFileWithFootersToDropBox(BootReceiver.java:465)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.BootReceiver.addFileToDropBox(BootReceiver.java:458)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.BootReceiver.addTombstoneToDropBox(BootReceiver.java:385)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.os.NativeTombstoneManager.handleTombstone(NativeTombstoneManager.java:145)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.os.NativeTombstoneManager.lambda$onSystemReady$0(NativeTombstoneManager.java:113)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.os.NativeTombstoneManager.$r8$lambda$gBT9xmTreiWpNj0UDSi2eO2Yau4(NativeTombstoneManager.java:0)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.os.NativeTombstoneManager$$ExternalSyntheticLambda1.run(R8$$SyntheticClass:0)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:959)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:100)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:232)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:317)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+11-09 04:52:40.009   588   701 E AndroidRuntime: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+11-09 04:52:40.023   588   701 E AndroidRuntime: Error reporting crash
+11-09 04:52:40.023   588   701 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke interface method 'boolean com.android.internal.os.IDropBoxManagerService.isTagEnabled(java.lang.String)' on a null object reference
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at android.os.DropBoxManager.isTagEnabled(DropBoxManager.java:377)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.addErrorToDropBox(ActivityManagerService.java:9892)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.handleApplicationCrashInner(ActivityManagerService.java:9469)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at com.android.server.am.ActivityManagerService.handleApplicationCrash(ActivityManagerService.java:9362)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:170)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1071)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1066)
+11-09 04:52:40.023   588   701 E AndroidRuntime: 	at java.lang.Thread.dispatchUncaughtException(Thread.java:2306)
+11-09 04:52:40.583   870   870 E AndroidRuntime: FATAL EXCEPTION: main
+11-09 04:52:40.583   870   870 E AndroidRuntime: Process: com.android.systemui, PID: 870
+11-09 04:52:40.583   870   870 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause

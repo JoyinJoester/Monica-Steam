@@ -1,0 +1,36 @@
+{
+  "sha256": "3539eed7c769cfde23250d9b74e47f2219995708acb101841f2508f87525aa45",
+  "sections": [
+    {
+      "language": "zh",
+      "entries": 57,
+      "changedIndices": [
+        1,
+        15,
+        28
+      ],
+      "changedEntries": [
+        "- 蒸蒸空间动态独立补齐作者姓名／头像，并通过官方 Web API 批量读取成就等事件的游戏名，批量缺项时按当前语言补查 Steam 公开商店名称，并缓存已确认结果；同时复用当前账号的游戏库名称缓存，旧动态在网络失败时也可补全已有名称。名称优先于图片补全；修复有效游戏 ID 被冗余的 appid=0 遮蔽，缺名称的缓存重新核验，缺失内容仍明确保留未知状态。收起好友区域时同步缩窄头像占位，从左向右连续排列。“在 Steam 查看”交给浏览器打开原始 Steam 网页，避免被应用自己的链接入口接回社区；无可用浏览器时提示打开失败。",
+        "- 蒸蒸空间顶栏改为独立返回圆钮与标题、筛选、刷新胶囊，M3E 使用高斯磨砂、液态玻璃使用动态折射；刷新中显示进度并禁用重复刷新，分类生效时突出筛选按钮。保留紧凑动态标题，将发布入口移为右下 FAB 并避让实际 Dock；列表按顶栏、好友区域及 FAB 高度避让，大字号和好友收拢保持可用。",
+        "- 消息卡片与蒸蒸空间支持长按浮起预览，背景高斯模糊，前景显示完整详情与操作；好友动态按日期分组，新增原生文字发布页面，通过 Steam 官方好友状态接口发布，保留官方网页入口。草稿仅在内存中保存，空白或超限不可发送；提交后禁止重复点击，切换账号或离开清理草稿。收到确认后才提示成功并刷新；会话准备失败可继续编辑，进入发送后因断线、超时或后台中断无法确认结果时，保留草稿并提示先在 Steam 核实，不自动重发。Android 12 以下保留遮罩回退。"
+      ],
+      "normalizedDuplicates": []
+    },
+    {
+      "language": "en",
+      "entries": 57,
+      "changedIndices": [
+        1,
+        15,
+        28
+      ],
+      "changedEntries": [
+        "- Steam Space loads author names and avatars independently and resolves game names for achievements and other activity through an official Web API batch, with bounded public-store lookups for missing names and a cache of confirmed results per language. The current account’s library name cache also fills missing labels in retained activity, including when news refresh fails. Names load before optional media enrichment. A valid game ID is retained when redundant appid is zero; cached entries with missing names are revalidated and unavailable data stays unknown. Collapsed friend avatars use narrower consecutive slots from the start edge. View on Steam selects a browser for the original Steam web URL, avoiding the app’s own community handler; unavailable browsers report an open failure.",
+        "- Give Steam Space a floating back button and a compact title/filter/refresh capsule with Gaussian frost in M3E and live refraction in Liquid Glass. Show refresh progress, disable duplicate refresh and highlight active filters, keep the feed heading compact and move publishing to a bottom-right FAB above the measured Dock. Feed padding clears the header and FAB, including large text and the collapsing playing-friends header.",
+        "- Message cards and Steam Space support lifted previews above a Gaussian-blurred background, with full details and actions. Friends' activity is grouped by date, with a native text composer using Steam’s official friends-status service and an optional official webpage entry. Drafts stay in memory; blank or oversized text cannot be sent, pending submissions block repeat taps, and account changes or leaving clear the draft. Success and refresh require acknowledgement. Session-preparation failures allow editing. After dispatch begins, a lost response, timeout or background interruption retains the draft and asks the user to check Steam before posting again, without automatic resubmission. Android versions below 12 use a dimmed fallback."
+      ],
+      "normalizedDuplicates": []
+    }
+  ],
+  "review": "Matching bilingual name/FAB/native-post entries updated; other 54 entries per language retained. Steam source-view browser action and optional embedded publishing webpage are separate actions. Historical verification reports retain their original tested behavior."
+}

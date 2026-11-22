@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.password
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ColumnScope
@@ -17,7 +18,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -72,7 +72,6 @@ internal fun MonicaTopActionsDropdownMenu(
                 modifier = passwordTopActionsMenuLayoutModifier(modifier)
                     .shadow(10.dp, PasswordTopActionsMenuShape)
                     .clip(PasswordTopActionsMenuShape)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                     .border(
                         width = 1.dp,
                         color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.28f),

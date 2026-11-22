@@ -1,0 +1,346 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest:
+INSTRUMENTATION_STATUS: test=selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[floating-0, floating-1]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks$lambda$36(SteamChatFloatingSelectionTest.kt:276)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$1m7j26M-RBbVLV2LnJHNwy-d0yY(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda22.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest):
+java.lang.AssertionError: expected:<[floating-0, floating-1]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks$lambda$36(SteamChatFloatingSelectionTest.kt:276)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$1m7j26M-RBbVLV2LnJHNwy-d0yY(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda22.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: 置顶 is disabled at zero selected
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection$lambda$55(SteamChatFloatingSelectionTest.kt:358)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$FO8VJuTqtv624bSU8NpYzeAIpkw(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest):
+java.lang.AssertionError: 置顶 is disabled at zero selected
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection$lambda$55(SteamChatFloatingSelectionTest.kt:358)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$FO8VJuTqtv624bSU8NpYzeAIpkw(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: 置顶 keeps its 40dp height
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType$lambda$42(SteamChatFloatingSelectionTest.kt:317)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$OFSAYvZUtbOuM27eoA4VEx706pA(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda25.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest):
+java.lang.AssertionError: 置顶 keeps its 40dp height
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType$lambda$42(SteamChatFloatingSelectionTest.kt:317)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$OFSAYvZUtbOuM27eoA4VEx706pA(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda25.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deleteRequiresConfirmationAndCancelPreservesTheSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deleteRequiresConfirmationAndCancelPreservesTheSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Selection does not move the first row expected:<Rect(0, 185 - 840, 390)> but was:<Rect(0, 185 - 787, 390)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType$lambda$32(SteamChatFloatingSelectionTest.kt:246)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$MlmGMTqqqoiT_4m_8OygCjGXLT8(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda31.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest):
+java.lang.AssertionError: Selection does not move the first row expected:<Rect(0, 185 - 840, 390)> but was:<Rect(0, 185 - 787, 390)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType$lambda$32(SteamChatFloatingSelectionTest.kt:246)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$MlmGMTqqqoiT_4m_8OygCjGXLT8(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda31.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 21.592
+There were 4 failures:
+1) selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest)
+java.lang.AssertionError: expected:<[floating-0, floating-1]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks$lambda$36(SteamChatFloatingSelectionTest.kt:276)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$1m7j26M-RBbVLV2LnJHNwy-d0yY(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda22.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+2) emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest)
+java.lang.AssertionError: 置顶 is disabled at zero selected
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection$lambda$55(SteamChatFloatingSelectionTest.kt:358)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$FO8VJuTqtv624bSU8NpYzeAIpkw(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+3) selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest)
+java.lang.AssertionError: 置顶 keeps its 40dp height
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType$lambda$42(SteamChatFloatingSelectionTest.kt:317)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$OFSAYvZUtbOuM27eoA4VEx706pA(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda25.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+4) floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType(takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest)
+java.lang.AssertionError: Selection does not move the first row expected:<Rect(0, 185 - 840, 390)> but was:<Rect(0, 185 - 787, 390)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType$lambda$32(SteamChatFloatingSelectionTest.kt:246)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$MlmGMTqqqoiT_4m_8OygCjGXLT8(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda31.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.main$lambda$5(SteamChatFloatingSelectionTest.kt:82)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest.$r8$lambda$Jc1UxtelJCxubl9DVNQeztfhEbk(Unknown Source:0)
+	at takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest$$ExternalSyntheticLambda44.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 5,  Failures: 4
+
+
+INSTRUMENTATION_CODE: -1

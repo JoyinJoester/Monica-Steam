@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.SteamDockTabTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-13T13:11:44.095Z" hostname="JOYIN" time="0.011">
+  <properties/>
+  <testcase name="dockSwipeMovesOnlyToAdjacentContentTab" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.001"/>
+  <testcase name="defaultOrderContainsChatWithTheSortableContentTabs" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="reorderHandlesFirstAndLastItemsWithoutIndexErrors" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.001"/>
+  <testcase name="fixedOrderAlwaysContainsAllFiveDestinationsAndCanBeReordered" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="liquidGlassOrderCanMoveEveryDestination" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="legacyDefaultOrderMigratesButCustomOrderIsPreserved" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="sanitizeKeepsOnlyEnabledContentTabs" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.004"/>
+  <testcase name="reorderIgnoresLazyListHeaderIndicesInsteadOfThrowing" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="tokenSwipeEntersTheNearestEdgeOfTheContentDock" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.0"/>
+  <testcase name="liquidGlassOrderAlwaysContainsAllFiveDestinations" classname="takagi.ru.monica.steam.navigation.SteamDockTabTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

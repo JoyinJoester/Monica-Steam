@@ -1,0 +1,330 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest:
+INSTRUMENTATION_STATUS: test=replayUsesPersistentDedupAndDoesNotResurrectDismissedMessage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=replayUsesPersistentDedupAndDoesNotResurrectDismissedMessage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=eachChildKeepsPrivatePublicVersionAndImmutableConversationRoute
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=eachChildKeepsPrivatePublicVersionAndImmutableConversationRoute
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=installedPackageHasNoChatKeepaliveServiceOrBootReceiver
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=installedPackageHasNoChatKeepaliveServiceOrBootReceiver
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:243)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound(SteamChatMessageNotificationsTest.kt:232)
+
+INSTRUMENTATION_STATUS: stream=
+Error in disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest):
+java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:243)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound(SteamChatMessageNotificationsTest.kt:232)
+
+INSTRUMENTATION_STATUS: test=disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies(SteamChatMessageNotificationsTest.kt:196)
+
+INSTRUMENTATION_STATUS: stream=
+Error in waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest):
+java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies(SteamChatMessageNotificationsTest.kt:196)
+
+INSTRUMENTATION_STATUS: test=waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recreatedPublisherCancelsOnlyTheExactSourceAndConversationIncludingLegacy
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recreatedPublisherCancelsOnlyTheExactSourceAndConversationIncludingLegacy
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=consecutiveMessagesKeepSeparateContentAndCanBeRemovedIndividually
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=consecutiveMessagesKeepSeparateContentAndCanBeRemovedIndividually
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reconnectAfterGatewayFailureDoesNotPostAConnectionNotification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$reconnectAfterGatewayFailureDoesNotPostAConnectionNotification$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:282)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.reconnectAfterGatewayFailureDoesNotPostAConnectionNotification(SteamChatMessageNotificationsTest.kt:263)
+
+INSTRUMENTATION_STATUS: stream=
+Error in reconnectAfterGatewayFailureDoesNotPostAConnectionNotification(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$reconnectAfterGatewayFailureDoesNotPostAConnectionNotification$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:282)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.reconnectAfterGatewayFailureDoesNotPostAConnectionNotification(SteamChatMessageNotificationsTest.kt:263)
+
+INSTRUMENTATION_STATUS: test=reconnectAfterGatewayFailureDoesNotPostAConnectionNotification
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemShadeShowsIndependentMessageNotifications
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=systemShadeShowsIndependentMessageNotifications
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=oldestMessagesAreBoundedWithoutRemovingOtherNotifications
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=oldestMessagesAreBoundedWithoutRemovingOtherNotifications
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=upgradeRemovesBothConnectionChannelsAndKeepsMessagesAndChannelSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=upgradeRemovesBothConnectionChannelsAndKeepsMessagesAndChannelSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 31.157
+There were 3 failures:
+1) disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest)
+java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:243)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.disableAndSourceSwitchCancelOldListenerAndKeepNotificationsSourceBound(SteamChatMessageNotificationsTest.kt:232)
+2) waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest)
+java.lang.AssertionError: NotificationManager did not reach the expected state
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.await(SteamChatMessageNotificationsTest.kt:308)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.access$await(SteamChatMessageNotificationsTest.kt:39)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.waitingConnectionReconnectAndTypingStaySilentAndOnlyIncomingMessageNotifies(SteamChatMessageNotificationsTest.kt:196)
+3) reconnectAfterGatewayFailureDoesNotPostAConnectionNotification(takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest$reconnectAfterGatewayFailureDoesNotPostAConnectionNotification$1.invokeSuspend(SteamChatMessageNotificationsTest.kt:282)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source:1)
+	at takagi.ru.monica.steam.friends.chat.background.data.SteamChatMessageNotificationsTest.reconnectAfterGatewayFailureDoesNotPostAConnectionNotification(SteamChatMessageNotificationsTest.kt:263)
+
+FAILURES!!!
+Tests run: 11,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

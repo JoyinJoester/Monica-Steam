@@ -1,0 +1,97 @@
+[
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt",
+    "before": "50800b5fe77c9dcbe2ffb38fb7d0e4735dcdc445be73c08b468fc6f518727ad3",
+    "after": "d871522e1a87fd6b4590f2cf7289254d12f2601eddeb389d07078043c972a8ba"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt",
+    "before": "9e78a7153f6d4d47b1ad26c86265fb50b56380d52b3cf22b6fb05a21495bc9d9",
+    "after": "1cbb009045db6cd46960da103732990e834c852008d8b7e80e48c28d705edb81"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt",
+    "before": "90f8572b3781b449f7a5c0bd5474c6ab12ffc1dd0734fc6884e244382d30233f",
+    "after": null
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatControls.kt",
+    "before": "159c1fc90d82359d15d788807d126846de515ad25f757776658abad9cb55afaa",
+    "after": "3d0d003509c00b221a9c0e6f94dc132d9b08f2fbdb2481859b67ffc50317c871"
+  },
+  {
+    "file": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramChatComposerView.java",
+    "before": "f4c533cc6dcdf75f09b2d3b8c8e80843fa147b2d66979aa13e335527280bbb6f",
+    "after": "1cd91ccdf7bff18849125b373a51ab77d3e43d84f77812e542b8ac402b4b098b"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt",
+    "before": "c2d136538f4a684d3eabbdf720c2a0ea3fc41eeca294fe271945c209740537dd",
+    "after": "6cce4265be473c4fa1e218f8d18dd275b320cf6dfc9234221652a67bff7b36ba"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/chat/TelegramChatUiTest.kt",
+    "before": "7b87e85e0c3ba338fe7cba35155afc6faed29f5bad499ae5f4b356ee6d33e908",
+    "after": "fa73c31af842add67656bfb336b356987fa2ec00c2fda990285efb79a3e5e7c3"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetDesignDeviceTest.kt",
+    "before": "2259a4edc6bb1825eaaca2b4a0356407c3efd943c6ff15401d9f2d0938091387",
+    "after": "c6dd3c1672f0474ab81f5f82a9a517a3386350c2b306a81594f189f70fc3e433"
+  },
+  {
+    "file": "RELEASE_NOTES.md",
+    "before": "3d54d3f85512e115d8e2fb9ec7f018e7a1fa9477dab1a9519b535d6b38cea207",
+    "after": "3301d75f8c110e08cf9d3b9c5a779bb1f4c6a1c618dca3090ef0a9f51d44fb1e"
+  },
+  {
+    "file": "docs/releases/Monica-Steam-Unreleased.md",
+    "before": "0d1f0905a334ebc2e2bc1b2b0d4882c3d7255bf7ada3d15d88933bd81fe136ac",
+    "after": "89ca0fe1ca887ec1b4e137da54fc9d4a8a4be031be665e501a56cf069088b510"
+  },
+  {
+    "file": "app/src/main/res/values/strings_chat_cards.xml",
+    "before": "ac1a145c37f72dd86288025c3a90ce3d5dcf3d3521d9763c88e978bcdc794141",
+    "after": "d2b495812f2879f259a51c3b040cf698ede9924a37cd31f1a56eac440916b341"
+  },
+  {
+    "file": "app/src/main/res/values-zh/strings_chat_cards.xml",
+    "before": "8d9703b17bc0273f55d05322d61d7d3350d3e5a1c83885107aa3a1072db75cd4",
+    "after": "92a7c31182a4479962cbce9d118acf11d04ff029421851e4c8d300068df4b07d"
+  },
+  {
+    "file": "app/src/main/res/values-ru/strings_chat_cards.xml",
+    "before": "7f9eabc71ffb339f57e2cd4083dbbc7e86b9c33e8c32548791d49ce42f9f484f",
+    "after": "221842ca964d9dba935af681cf790b299b7195524d3aa5cc56477c9f16cb6c05"
+  },
+  {
+    "file": "app/src/main/res/values-ja/strings_chat_cards.xml",
+    "before": "6c48f1a72dad2663bd8832618219ba86c139a8f2bc4801726c843903e5183971",
+    "after": "d8efe7573f64669235fe00f24701673c92ecdb725e720a0575c35be0b9a62849"
+  },
+  {
+    "file": "app/src/main/res/values-vi/strings_chat_cards.xml",
+    "before": "a5ca1b920b24132f90d4fd839b8179097c24cfa1109909fba14b55c2ad860acd",
+    "after": "4ee1d05bd2ff1360d65b039a58048e1da408a4efb74d58b7c091f9a723cee508"
+  },
+  {
+    "file": "app/src/debug/java/takagi/ru/monica/steam/SteamSheetImeFixtureActivity.kt",
+    "before": "209334d2dea4f4b4220b59b4ee944af05433976f62f054ac13bfb94f09073881",
+    "after": null
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetImeDeviceTest.kt",
+    "before": "b8b3a402b007293879c514e1e86d97d5716cf9671bfe60578e4e87e5a975da7d",
+    "after": null
+  },
+  {
+    "file": "app/src/debug/AndroidManifest.xml",
+    "before": "8f4610f8f2c459d737d044e49b81aab1b2860acf19d31f337babcda4aa212352",
+    "after": "e8aa9fef96800cfd1b7f73e213a60211407be65d3c4b271e12c2caea8c9462ae"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt",
+    "before": "47908f9c3ace5e044c5519c64629c843d92e3b983bd7193a970549a7d5c2f4c5",
+    "after": "f58b6dbd073c1a51e0cb5146d1d634cf7e695e68d2d2229801e4d0adf0a6e800"
+  }
+]

@@ -1,0 +1,73 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest:
+INSTRUMENTATION_STATUS: test=disabledRefreshDoesNotMountIndicatorOrAcceptPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledRefreshDoesNotMountIndicatorOrAcceptPull
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: (ProgressBarRangeInfo is defined)
+Node found:
+Node #43 at (l=492.0, t=-48.0, r=588.0, b=48.0)px
+ProgressBarRangeInfo = 'ProgressBarRangeInfo(current=0.0, range=0.0..1.0, steps=0)'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 50.0%), topEnd = CornerSize(size = 50.0%), bottomEnd = CornerSize(size = 50.0%), bottomStart = CornerSize(size = 50.0%))'
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:311)
+	at takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest.hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh(SteamRefreshIndicatorDeviceTest.kt:39)
+
+INSTRUMENTATION_STATUS: stream=
+Error in hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh(takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest):
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: (ProgressBarRangeInfo is defined)
+Node found:
+Node #43 at (l=492.0, t=-48.0, r=588.0, b=48.0)px
+ProgressBarRangeInfo = 'ProgressBarRangeInfo(current=0.0, range=0.0..1.0, steps=0)'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 50.0%), topEnd = CornerSize(size = 50.0%), bottomEnd = CornerSize(size = 50.0%), bottomStart = CornerSize(size = 50.0%))'
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:311)
+	at takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest.hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh(SteamRefreshIndicatorDeviceTest.kt:39)
+
+INSTRUMENTATION_STATUS: test=hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.267
+There was 1 failure:
+1) hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh(takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest)
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: (ProgressBarRangeInfo is defined)
+Node found:
+Node #43 at (l=492.0, t=-48.0, r=588.0, b=48.0)px
+ProgressBarRangeInfo = 'ProgressBarRangeInfo(current=0.0, range=0.0..1.0, steps=0)'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 50.0%), topEnd = CornerSize(size = 50.0%), bottomEnd = CornerSize(size = 50.0%), bottomStart = CornerSize(size = 50.0%))'
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:311)
+	at takagi.ru.monica.steam.navigation.SteamRefreshIndicatorDeviceTest.hiddenIndicatorIsAbsentAndReturnsForPullAndRefresh(SteamRefreshIndicatorDeviceTest.kt:39)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

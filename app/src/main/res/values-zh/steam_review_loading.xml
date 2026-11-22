@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_reviews_unavailable">暂时无法加载评测，请重试。</string>
+    <string name="steam_store_reviews_empty">没有符合当前筛选的评测。</string>
+    <string name="steam_store_reviews_retry">重试</string>
+</resources>

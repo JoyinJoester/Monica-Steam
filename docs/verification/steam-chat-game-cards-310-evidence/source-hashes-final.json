@@ -1,0 +1,12 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichCard.kt": "eb815cb2eed592cedb161df8960d2aec39c8059020fd5c1ed813405f16865c0e",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatStoreGameCard.kt": "06974a9eb8f48d16a85beb6d4b2b4d6153fa9262ad84ba1c5697e93eb0606c97",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/gameinvite/ui/SteamChatGameInviteCard.kt": "bae10d709f22d1073eda66b404a4dd371a718aeb32b5ead809af91c6a9e1d34b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "01da90655d8f40a8280f446defc6f0b53f27ec2421b790723c6489344b2d6820",
+  "RELEASE_NOTES.md": "585308c0b2c575c90ddbff49a19b2f3a5fe1e9927d9b6212829896b0bf1f9427",
+  "docs/releases/Monica-Steam-Unreleased.md": "cc4192f0032f18ef42752d7c52e68d9ab4d35dfcd8c3f35467033a13cbe7477c",
+  "app/src/debug/java/takagi/ru/monica/steam/SteamChineseComposeFixtureActivity.kt": "6e45eaf2e00c5028c8eb6ce91953fafbd4383cac2fae7755623621e4073e3349",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatGameShareCardUiTest.kt": "1f15c6c99d0d2a0022864381af934f7684bd397012a4ee902b0d520e2930c10b",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamCardPreview.kt": "b2819b6401a87e3dac009ec8c54a00cc3fcda08e644cd103001ae98942561057",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamGameCardExpansionDeviceTest.kt": "26045190d9cdb844914917814cc4fd69fa2364374db60cf53ad18e3bebde0bd2"
+}

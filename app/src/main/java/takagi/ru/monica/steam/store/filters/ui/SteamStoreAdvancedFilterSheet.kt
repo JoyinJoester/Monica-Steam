@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.store.filters.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -14,6 +18,10 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.platform.testTag
+import androidx.compose.runtime.key
+import takagi.ru.monica.steam.foundation.ui.SteamListFilterRow
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -34,7 +42,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -57,6 +64,8 @@ import takagi.ru.monica.steam.store.filters.domain.SteamStoreFilterOption
 import takagi.ru.monica.steam.store.filters.domain.SteamStoreFilterSelection
 import takagi.ru.monica.steam.store.filters.domain.SteamStoreTagOption
 
+private enum class StoreFilterSection { PRICE, LANGUAGES, TAGS }
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun SteamStoreAdvancedFilterSheet(
@@ -71,13 +80,15 @@ internal fun SteamStoreAdvancedFilterSheet(
     var draft by remember(selection) { mutableStateOf(selection) }
     var tagsExpanded by rememberSaveable { mutableStateOf(false) }
     var tagQuery by rememberSaveable { mutableStateOf("") }
+    var languageQuery by rememberSaveable { mutableStateOf("") }
+    var section by rememberSaveable { mutableStateOf(StoreFilterSection.PRICE) }
     val selectedTagOptions = remember(metadata, draft.tagIds) {
         metadata?.tags.orEmpty().filter { it.id in draft.tagIds }
     }
-    val visibleTagOptions = remember(metadata, draft.tagIds, tagQuery) {
+    val visibleTagOptions = remember(metadata, draft.tagIds, tagQuery, tagsExpanded) {
         val all = metadata?.tags.orEmpty()
         val matching = if (tagQuery.isBlank()) {
-            all.take(DEFAULT_VISIBLE_TAGS)
+            all.take(if (tagsExpanded) MAX_SEARCHED_TAGS else DEFAULT_VISIBLE_TAGS)
         } else {
             all.filter { option ->
                 option.label.contains(tagQuery.trim(), ignoreCase = true)
@@ -86,37 +97,33 @@ internal fun SteamStoreAdvancedFilterSheet(
         (selectedTagOptions + matching).distinctBy(SteamStoreTagOption::id)
     }
 
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(onDismissRequest = onDismiss,
+        sheetState = androidx.compose.material3.rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.9f)
-                .navigationBarsPadding()
+
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.steam_store_advanced_filters),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Text(
-                        text = stringResource(
-                            R.string.steam_store_active_filter_count,
-                            draft.activeCount
-                        ),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
-                }
-            }
+            SteamSheetHeader(
+                title = stringResource(R.string.steam_store_advanced_filters),
+                subtitle = stringResource(R.string.steam_store_active_filter_count, draft.activeCount),
+                onDismiss = onDismiss
+            )
 
             if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+            SteamListFilterRow(StoreFilterSection.entries, section, { section = it },
+                label = { stringResource(when(it) {
+                    StoreFilterSection.PRICE -> R.string.steam_store_filter_price
+                    StoreFilterSection.LANGUAGES -> R.string.steam_store_filter_languages
+                    StoreFilterSection.TAGS -> R.string.steam_store_filter_tags
+                }) }, modifier = Modifier.testTag("store-filter-sections"), count = {
+                    when(it) {
+                        StoreFilterSection.PRICE -> if(draft.maxPrice != null) 1 else 0
+                        StoreFilterSection.LANGUAGES -> draft.supportedLanguageIds.size
+                        StoreFilterSection.TAGS -> draft.tagIds.size
+                    }
+                })
 
             LazyColumn(
                 modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -172,49 +179,39 @@ internal fun SteamStoreAdvancedFilterSheet(
                     }
                 }
                 metadata?.let { options ->
-                    item(key = "filter_price") {
+                    if (section == StoreFilterSection.PRICE) item(key = "filter_price") {
                         FilterSectionCard(
                             title = stringResource(R.string.steam_store_filter_price)
                         ) {
-                            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                item(key = "price_any") {
-                                    StoreOptionChip(
-                                        label = stringResource(R.string.steam_store_filter_any_price),
-                                        selected = draft.maxPrice == null,
-                                        onClick = { draft = draft.copy(maxPrice = null) }
-                                    )
-                                }
-                                items(options.priceOptions, key = SteamStoreFilterOption::value) { option ->
-                                    StoreOptionChip(
-                                        label = option.label,
-                                        selected = draft.maxPrice == option.value,
-                                        onClick = { draft = draft.copy(maxPrice = option.value) }
-                                    )
+                            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                StoreOptionChip(stringResource(R.string.steam_store_filter_any_price), draft.maxPrice == null,
+                                    { draft = draft.copy(maxPrice = null) }, role = androidx.compose.ui.semantics.Role.RadioButton,
+                                    modifier = Modifier.fillMaxWidth())
+                                options.priceOptions.forEach { option ->
+                                    StoreOptionChip(option.label, draft.maxPrice == option.value,
+                                        { draft = draft.copy(maxPrice = option.value) }, role = androidx.compose.ui.semantics.Role.RadioButton,
+                                        modifier = Modifier.fillMaxWidth())
                                 }
                             }
                         }
                     }
-                    item(key = "filter_languages") {
-                        FilterSectionCard(
-                            title = stringResource(R.string.steam_store_filter_languages)
-                        ) {
-                            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                items(options.languages, key = SteamStoreFilterOption::value) { option ->
-                                    StoreOptionChip(
-                                        label = option.label,
-                                        selected = option.value in draft.supportedLanguageIds,
-                                        onClick = {
-                                            draft = draft.copy(
-                                                supportedLanguageIds = draft.supportedLanguageIds
-                                                    .toggle(option.value)
-                                            )
-                                        }
-                                    )
+                    if (section == StoreFilterSection.LANGUAGES) item(key = "filter_languages") {
+                        FilterSectionCard(title = stringResource(R.string.steam_store_filter_languages)) {
+                            SteamSheetSearchField(languageQuery, { languageQuery = it }, stringResource(R.string.search))
+                            options.languages.filter { languageQuery.isBlank() || it.label.contains(languageQuery.trim(),true) }
+                                .chunked(2).forEach { pair ->
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    pair.forEach { option ->
+                                        StoreOptionChip(option.label, option.value in draft.supportedLanguageIds,
+                                            { draft = draft.copy(supportedLanguageIds = draft.supportedLanguageIds.toggle(option.value)) },
+                                            modifier = Modifier.weight(1f))
+                                    }
+                                    if (pair.size == 1) Spacer(Modifier.weight(1f))
                                 }
                             }
                         }
                     }
-                    item(key = "filter_tags") {
+                    if (section == StoreFilterSection.TAGS) item(key = "filter_tags") {
                         FilterSectionCard(
                             title = stringResource(R.string.steam_store_filter_tags),
                             action = {
@@ -242,78 +239,33 @@ internal fun SteamStoreAdvancedFilterSheet(
                                 }
                             }
                         ) {
-                            Text(
-                                text = stringResource(R.string.steam_store_filter_tag_hint),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            if (tagsExpanded) {
-                                OutlinedTextField(
-                                    value = tagQuery,
-                                    onValueChange = { tagQuery = it },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    singleLine = true,
-                                    label = { Text(stringResource(R.string.steam_store_filter_tag_search)) },
-                                    leadingIcon = {
-                                        Icon(Icons.Default.Search, contentDescription = null)
-                                    }
-                                )
-                                FlowRow(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    visibleTagOptions.forEach { option ->
-                                        StoreOptionChip(
-                                            label = option.label,
-                                            selected = option.id in draft.tagIds,
-                                            onClick = {
-                                                draft = draft.copy(tagIds = draft.tagIds.toggle(option.id))
-                                            }
-                                        )
-                                    }
-                                }
-                            } else if (selectedTagOptions.isEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.steam_store_filter_no_tags_selected),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            } else {
-                                FlowRow(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    selectedTagOptions.forEach { option ->
-                                        StoreOptionChip(
-                                            label = option.label,
-                                            selected = true,
-                                            onClick = {
-                                                draft = draft.copy(tagIds = draft.tagIds - option.id)
-                                            }
-                                        )
-                                    }
+                            SteamSheetSearchField(tagQuery, { tagQuery = it },
+                                stringResource(R.string.steam_store_filter_tag_search))
+                            FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                visibleTagOptions.forEach { option ->
+                                    StoreOptionChip(option.label, option.id in draft.tagIds,
+                                        { draft = draft.copy(tagIds = draft.tagIds.toggle(option.id)) })
                                 }
                             }
                         }
+
                     }
                 }
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { draft = SteamStoreFilterSelection() },
-                    modifier = Modifier.weight(1f).heightIn(min = 52.dp)
-                ) {
-                    Text(stringResource(R.string.steam_store_filter_reset))
-                }
-                Button(
-                    onClick = { onApply(draft.normalized()) },
-                    modifier = Modifier.weight(1f).heightIn(min = 52.dp)
-                ) {
-                    Text(stringResource(R.string.steam_store_filter_apply))
+            SteamSheetFooter {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(onClick = { draft = SteamStoreFilterSelection() },
+                        modifier = Modifier.heightIn(min = 56.dp)) {
+                        Text(stringResource(R.string.steam_store_filter_reset))
+                    }
+                    Button(onClick = { onApply(draft.normalized()) },
+                        modifier = Modifier.weight(1f).heightIn(min = 56.dp),
+                        shape = RoundedCornerShape(28.dp)) {
+                        Text(stringResource(R.string.steam_store_filter_apply))
+                    }
                 }
             }
         }
@@ -326,27 +278,8 @@ private fun FilterSectionCard(
     action: (@Composable () -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Surface(
-        shape = RoundedCornerShape(22.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.weight(1f)
-                )
-                action?.invoke()
-            }
-            content()
-        }
+    SteamSheetSection(title, action = action) {
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp), content = content)
     }
 }
 
@@ -354,25 +287,11 @@ private fun FilterSectionCard(
 private fun StoreOptionChip(
     label: String,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    role: androidx.compose.ui.semantics.Role = androidx.compose.ui.semantics.Role.Checkbox,
+    modifier: Modifier = Modifier
 ) {
-    FilterChip(
-        selected = selected,
-        onClick = onClick,
-        label = {
-            Text(label, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        leadingIcon = if (selected) {
-            {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
-        } else null,
-        modifier = Modifier.heightIn(min = 48.dp)
-    )
+    SteamSheetChoice(label, selected, onClick, role = role, modifier = modifier)
 }
 
 @Composable
@@ -489,5 +408,5 @@ internal fun SteamStoreTagBadges(
 
 private fun <T> Set<T>.toggle(value: T): Set<T> = if (value in this) this - value else this + value
 
-private const val DEFAULT_VISIBLE_TAGS = 30
+private const val DEFAULT_VISIBLE_TAGS = 12
 private const val MAX_SEARCHED_TAGS = 60

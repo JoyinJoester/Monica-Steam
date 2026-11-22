@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:47:46.579Z" hostname="JOYIN" time="0.031">
+  <properties/>
+  <testcase name="unsafeOrUnrelatedDestinationsCannotBecomeCardActions" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.002"/>
+  <testcase name="sharedLinkFamiliesRecognizeExactSteamDestinations" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.005"/>
+  <testcase name="newSharesAreIndexedAsLinksAndPublishedImagesAsMedia" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.004"/>
+  <testcase name="cardTypeCannotDisguiseDifferentAction" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.002"/>
+  <testcase name="officialTradeOfferIdAndAccountIdBecomeActionable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.0"/>
+  <testcase name="multipleCardsAndMultipleUrlsStayReadable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="unknownNotificationPreservesSourceAndDoesNotTrustAction" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.0"/>
+  <testcase name="econItemUsesInventoryAssetAndOnlySteamImageToken" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="broadcastInvitationCanUseEnvelopeSenderWithoutGuessingViewer" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="plainAndBbcodeTradeLinksKeepSurroundingWords" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="malformedIdsAndImagesHaveNoInventedAction" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="supportedOutgoingLinksRoundTripThroughRealParser" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.002"/>
+  <testcase name="groupInviteCodeAndBroadcastUseActualOfficialArguments" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.0"/>
+  <testcase name="displayedOfferIdAndDestinationCannotDisagree" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="accountConversionRejectsClanAndOutOfRangeIds" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.003"/>
+  <testcase name="legacyTradeTagWithNewOfferUrlIsTradeLink" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.001"/>
+  <testcase name="publishedFilesCoverWorkshopCollectionScreenshotVideoAndGuide" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.004"/>
+  <testcase name="gameInviteUsesEnvelopeSenderAndKeepsCaptionForSharedLink" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.002"/>
+  <testcase name="officialTradeLinkKeepsTokenAndCaption" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

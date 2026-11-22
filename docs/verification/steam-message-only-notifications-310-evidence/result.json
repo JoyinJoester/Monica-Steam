@@ -1,0 +1,174 @@
+{
+  "version": "1.0.310",
+  "package": "takagi.ru.monica.steamapp.messagenotifications",
+  "main_apk_sha256": "15bda73a32a334eb455bf404f76ec53235667990a5a2189ab12b0e110a9123fe",
+  "test_apk_sha256": "685204198f3772da1b9282a4bc05e850f1273ae7647d8c64065e4c90defb9ec8",
+  "baseline_unchanged": [
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundPreferences.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAccountActivator.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAddress.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationContract.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationHistory.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatBackgroundSettings.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecision.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationRequest.kt",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationAddressTest.kt",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationHistoryTest.kt",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecisionTest.kt"
+  ],
+  "baseline_changed": [
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/SteamChatBackground.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationPublisher.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/ui/SteamChatBackgroundSettingsContent.kt",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/SteamChatBackgroundIntegrationGuardTest.kt",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/background/SteamChatNotificationPresentationGuardTest.kt",
+    "app/src/androidTest/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatMessageNotificationsTest.kt",
+    "app/src/main/AndroidManifest.xml",
+    "app/src/main/java/takagi/ru/monica/MonicaSteamApplication.kt",
+    "app/src/main/java/takagi/ru/monica/steam/notifications/settings/ui/SteamNotificationSettingsScreen.kt",
+    "app/src/main/res/values/strings.xml",
+    "app/src/main/res/values-zh/strings.xml",
+    "app/src/main/res/values-ja/strings.xml",
+    "app/src/main/res/values-ru/strings.xml",
+    "app/src/main/res/values-vi/strings.xml"
+  ],
+  "removed": [
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundReceiver.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundService.kt",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundServiceController.kt"
+  ],
+  "new_runtime_files": [
+    "SteamChatNotificationRuntime.kt",
+    "SteamChatNotificationMonitor.kt",
+    "SteamChatNotificationUpgradeReceiver.kt"
+  ],
+  "jvm_suites": [
+    {
+      "name": "takagi.ru.monica.steam.alerts.SteamAlertAccountSessionsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.alerts.SteamAlertIntegrationGuardTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.alerts.SteamAlertPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationHistoryTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatNotificationPresentationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "jvm_tests": 35,
+  "compiled_resource_values_checked": 30,
+  "manifest": {
+    "chat_foreground_service": false,
+    "chat_boot_receiver": false,
+    "upgrade_cleanup_receiver": true,
+    "special_use_permission": false,
+    "voice_service_retained": true,
+    "workmanager_boot_permission_retained": true
+  },
+  "device": {
+    "serial": "127.0.0.1:16384",
+    "emulator": "existing MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "owned_user": 14,
+    "final_runs": [
+      {
+        "file": "device-05-final.txt",
+        "passed": 11,
+        "seconds": 17.341
+      },
+      {
+        "file": "device-06-repeat.txt",
+        "passed": 3,
+        "seconds": 5.474
+      },
+      {
+        "file": "device-07-disabled.txt",
+        "passed": 1,
+        "seconds": 0.07
+      }
+    ],
+    "different_methods_passed": 12,
+    "final_invocations_passed": 15
+  },
+  "limits": [
+    "Synthetic friend events; no real Steam account/server delivery test",
+    "App process only; reopen after Android ends it",
+    "No new R8, physical device, OEM or doze reliability verification"
+  ],
+  "submitted": false,
+  "pushed": false,
+  "published": false,
+  "apk_delivered": false,
+  "earlier_failures": [
+    "device-02-disabled: test class added after first package compilation; not present in that APK",
+    "device-03-final: 3 monitor fixtures reused persisted message identities and were correctly deduplicated; fixed per-run fixture timestamps",
+    "First screenshot adb pull denied secondary-user storage; private fixture export used instead"
+  ],
+  "cleanup": {
+    "original_users_retained": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "own_user_removed": 14,
+    "current_user": 0,
+    "existing_mumu_kept_running": true,
+    "isolated_packages_absent_including_uninstalled_list": true,
+    "initial_owner_uninstall_failed": true,
+    "packages_disappeared_after_user_removal": true,
+    "later_uninstall_nonexistent_packages_failed": true
+  },
+  "audit": {
+    "git_diff_check": true,
+    "new_or_changed_line_whitespace": true,
+    "prior_whitespace_preserved": true,
+    "screenshot_ignored_and_viewed": true
+  }
+}

@@ -1,64 +1,81 @@
 package takagi.ru.monica.steam.friends.chat.info.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import takagi.ru.monica.steam.friends.chat.telegram.*
+import takagi.ru.monica.steam.friends.ui.label
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.NotificationsOff
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
+import takagi.ru.monica.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.steam.data.SteamAccount
+import takagi.ru.monica.steam.foundation.ui.LocalSteamAvatarShape
+import takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStore
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationPreferences
+import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryCategory
+import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryItem
 import takagi.ru.monica.steam.friends.domain.SteamFriend
+import takagi.ru.monica.steam.friends.domain.SteamPersonaState
+import takagi.ru.monica.steam.friends.groupchat.avatar.ui.SteamGroupAvatarImage
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatSummary
 import takagi.ru.monica.steam.friends.groupchat.ui.SteamGroupChannelManagement
 import takagi.ru.monica.steam.friends.ui.FriendAvatar
+import takagi.ru.monica.steam.friends.ui.formatSteamFriendTime
 import takagi.ru.monica.steam.friends.voice.domain.SteamVoiceCallState
 
 @Composable
 internal fun SteamChatInfoScreen(
-    title: String,
+    account: SteamAccount?,
     directFriend: SteamFriend?,
     group: SteamGroupChatSummary?,
     members: List<SteamFriend>,
@@ -69,7 +86,8 @@ internal fun SteamChatInfoScreen(
     onBack: () -> Unit,
     onAddMember: () -> Unit,
     onOpenFriendDetails: (SteamFriend) -> Unit,
-    onSearchHistory: () -> Unit,
+    sharedHistoryItems: List<SteamChatHistoryItem> = emptyList(),
+    onOpenSharedMessage: (String) -> Unit = {},
     onOpenGroupAdmin: () -> Unit = {},
     onPreferencesChange: (SteamChatConversationPreferences) -> Unit,
     onUpdateGroup: (String, String) -> Unit,
@@ -85,109 +103,145 @@ internal fun SteamChatInfoScreen(
     modifier: Modifier = Modifier
 ) {
     var editing by remember { mutableStateOf(false) }
+    var wallpaperPickerOpen by remember { mutableStateOf(false) }
+    var memberQuery by remember(group?.groupId, directFriend?.steamId) { mutableStateOf("") }
+    var sharedCategory by remember(group?.groupId, directFriend?.steamId) { mutableStateOf(SteamChatHistoryCategory.MEDIA) }
+    val visibleMembers = remember(members, directFriend, memberQuery) {
+        (listOfNotNull(directFriend) + members).distinctBy { it.steamId }.filter {
+            memberQuery.isBlank() || it.displayName.contains(memberQuery.trim(), true) ||
+                it.steamId.contains(memberQuery.trim())
+        }
+    }
     val avatarPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.toString()?.let(onUpdateGroupAvatar)
     }
-    Column(modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
-        Row(
-            Modifier.fillMaxWidth().height(56.dp).padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
-            }
-            Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
-            Spacer(Modifier.weight(1f))
-            if (group != null && canEditGroup) {
-                IconButton(onClick = { editing = true }, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.Edit, "Edit group")
-                }
-            }
-        }
+    val context = LocalContext.current
+    val backgroundStore = remember(context) { SteamProfileBackgroundStore(context) }
+    var backgroundUrl by remember(directFriend?.steamId, account?.steamId) {
+        mutableStateOf<String?>(null)
+    }
+    LaunchedEffect(directFriend?.steamId, account?.steamId) {
+        // Cookies are only needed for friends-only profiles; public ones resolve anonymously.
+        backgroundUrl = directFriend?.let { backgroundStore.backgroundUrl(account, it.steamId) }
+    }
+    val heroName = group?.name ?: directFriend?.displayName.orEmpty()
+    val heroSubtitle = when {
+        group != null -> "${group.activeMemberCount} 位成员"
+        directFriend == null -> ""
+        directFriend.personaState == SteamPersonaState.OFFLINE && directFriend.lastLogoff > 0L ->
+            "最近上线于 ${formatSteamFriendTime(directFriend.lastLogoff)}"
+        else -> directFriend.personaState.label()
+    }
+    TelegramSocialTheme {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp)
+            modifier = modifier.fillMaxSize().navigationBarsPadding(),
+            contentPadding = PaddingValues(bottom = 32.dp),
+            verticalArrangement = Arrangement.Top
         ) {
-            if (group != null) {
-                item("group-header") {
-                    Row(
-                        Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        SteamGroupAvatarEditor(
-                            group = group,
-                            members = members,
-                            canEdit = canEditGroup,
-                            updating = updatingGroupAvatar,
-                            onPick = { avatarPicker.launch("image/*") }
-                        )
-                        Column(Modifier.padding(start = 16.dp).weight(1f)) {
-                            Text(group.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                            Text("${group.activeMemberCount} 位成员", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            profileItem("profile-hero") {
+                SteamChatInfoHero(
+                    title = heroName,
+                    subtitle = heroSubtitle,
+                    backgroundUrl = backgroundUrl,
+                    avatarUrl = group?.avatarUrl ?: directFriend?.avatarUrl,
+                    onBack = onBack,
+                    avatar = {
+                        if (group != null) {
+                            HeroAvatarFrame(shape = CircleShape) {
+                                Box(
+                                    Modifier
+                                        .fillMaxSize()
+                                        .then(
+                                            if (canEditGroup && !updatingGroupAvatar) {
+                                                Modifier.clickable { avatarPicker.launch("image/*") }
+                                            } else Modifier
+                                        ),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    SteamGroupAvatarImage(
+                                        url = group.avatarUrl,
+                                        members = members,
+                                        contentDescription = group.name,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                }
+                            }
+                        } else if (directFriend != null) {
+                            HeroAvatarFrame {
+                                CompositionLocalProvider(
+                                    LocalSteamAvatarShape provides RoundedCornerShape(18)
+                                ) {
+                                    FriendAvatar(directFriend, 74, showStatus = false)
+                                }
+                            }
                         }
+                    }
+                ) {
+                    if (group != null && canEditGroup && !updatingGroupAvatar) {
+                        HeroIconButton(
+                            onClick = { avatarPicker.launch("image/*") },
+                            icon = Icons.Default.PhotoCamera,
+                            contentDescription = "更换群组头像"
+                        )
+                    }
+                    if (group != null && canEditGroup) {
+                        HeroIconButton(
+                            onClick = { editing = true },
+                            icon = Icons.Default.Edit,
+                            contentDescription = "编辑群组信息"
+                        )
                     }
                 }
             }
-            item("members") {
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                    directFriend?.let { friend ->
-                        item(friend.steamId) {
-                            MemberAvatar(friend, onClick = { onOpenFriendDetails(friend) })
-                        }
-                    }
-                    items(
-                        members.filter { it.steamId != directFriend?.steamId },
-                        key = SteamFriend::steamId
-                    ) { friend ->
-                        MemberAvatar(friend, onClick = { onOpenFriendDetails(friend) })
-                    }
-                    item("add") {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Surface(
-                                modifier = Modifier.size(58.dp).clickable(onClick = onAddMember),
-                                shape = CircleShape,
-                                color = MaterialTheme.colorScheme.secondaryContainer
-                            ) { Box(contentAlignment = Alignment.Center) { Icon(Icons.Default.Add, "Add member") } }
-                            Text("添加", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 6.dp))
-                        }
-                    }
+            profileItem("profile-actions") {
+                Row(
+                    Modifier.fillMaxWidth().padding(horizontal = 14.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    TelegramSocialAction("消息", Icons.Default.ChatBubble) { onBack() }
+                    TelegramSocialAction(
+                        label = if (preferences.muted) "取消静音" else "静音",
+                        icon = if (preferences.muted) Icons.Default.NotificationsActive else Icons.Default.NotificationsOff
+                    ) { onPreferencesChange(preferences.copy(muted = !preferences.muted)) }
+                    TelegramSocialAction(
+                        label = if (group != null) "邀请成员" else "添加成员",
+                        icon = Icons.Default.PersonAdd,
+                        onClick = onAddMember
+                    )
                 }
             }
             if (group != null && group.tagline.isNotBlank()) {
-                item("tagline") {
-                    Surface(
-                        shape = RoundedCornerShape(16.dp),
-                        color = MaterialTheme.colorScheme.surfaceContainer
-                    ) {
-                        Column(Modifier.fillMaxWidth().padding(16.dp)) {
-                            Text("群组简介", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                            Text(group.tagline, Modifier.padding(top = 6.dp), style = MaterialTheme.typography.bodyMedium)
-                        }
+                profileItem("tagline") {
+                    TelegramSocialSection("群组信息") {
+                        // Title first, description second — the other order read as a caption
+                        // belonging to a value that had no label.
+                        TelegramSocialInfoRow("群组简介", value = group.tagline, multiline = true)
                     }
                 }
             }
-            item("settings") {
-                Surface(
-                    shape = RoundedCornerShape(18.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainer
-                ) {
-                    Column {
-                        if (group != null) {
-                            InfoRow("群组管理", Icons.Default.Security, onOpenGroupAdmin)
-                        }
-                        InfoRow("查找聊天记录", Icons.Default.Search, onSearchHistory)
-                        ToggleRow("消息免打扰", preferences.muted) {
-                            onPreferencesChange(preferences.copy(muted = it))
-                        }
-                        ToggleRow("置顶聊天", preferences.pinned) {
-                            onPreferencesChange(preferences.copy(pinned = it))
-                        }
+            profileItem("settings") {
+                TelegramSocialSection("聊天设置") {
+                    TelegramSocialTitleRow(
+                        label = stringResource(R.string.steam_chat_wallpaper_title),
+                        showChevron = true,
+                        onClick = { wallpaperPickerOpen = true }
+                    )
+                    TelegramSocialDivider(21)
+                    if (group != null) {
+                        TelegramSocialTitleRow("群组管理", showChevron = true, onClick = onOpenGroupAdmin)
+                        TelegramSocialDivider(21)
+                    }
+                    ToggleRow("消息免打扰", preferences.muted) {
+                        onPreferencesChange(preferences.copy(muted = it))
+                    }
+                    TelegramSocialDivider(21)
+                    ToggleRow("置顶聊天", preferences.pinned) {
+                        onPreferencesChange(preferences.copy(pinned = it))
                     }
                 }
             }
             if (group != null) {
-                item("channels") {
+                profileItem("channels") {
                     SteamGroupChannelManagement(
                         group = group,
                         canEdit = canEditGroup,
@@ -202,52 +256,60 @@ internal fun SteamChatInfoScreen(
                     )
                 }
             }
+            if (group != null) {
+                profileItem("member-search") {
+                    TelegramSocialSearch(
+                        query = memberQuery,
+                        onQueryChange = { memberQuery = it },
+                        hint = "搜索成员"
+                    )
+                }
+                items(visibleMembers, key = SteamFriend::steamId) { friend ->
+                    Column(Modifier.padding(bottom = 12.dp)) {
+                        TelegramNativeContactRow(friend, friend.personaState.label(), onClick = { onOpenFriendDetails(friend) }, modifier = Modifier.padding(horizontal = 14.dp))
+                        TelegramSocialDivider(70)
+                    }
+                }
+                if (visibleMembers.isEmpty()) profileItem("no-members") {
+                    Text("没有匹配的成员", Modifier.padding(20.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            steamSharedHistory(sharedHistoryItems, sharedCategory, { sharedCategory = it }, onOpenSharedMessage)
         }
-    }
-    if (editing && group != null) {
-        EditGroupDialog(
-            group = group,
-            saving = updatingGroup,
-            onDismiss = { if (!updatingGroup) editing = false },
-            onSave = { name, tagline -> onUpdateGroup(name, tagline); editing = false }
+        if (editing && group != null) {
+            EditGroupDialog(
+                group = group,
+                saving = updatingGroup,
+                onDismiss = { if (!updatingGroup) editing = false },
+                onSave = { name, tagline -> onUpdateGroup(name, tagline); editing = false }
+            )
+        }
+        if (wallpaperPickerOpen) SteamChatWallpaperPicker(
+            selected = preferences.wallpaper,
+            onDismiss = { wallpaperPickerOpen = false },
+            onSelect = { preset -> onPreferencesChange(preferences.copy(wallpaper = preset)); wallpaperPickerOpen = false }
         )
     }
 }
 
-@Composable
-private fun MemberAvatar(friend: SteamFriend, onClick: () -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .width(70.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
-            .padding(vertical = 4.dp)
-    ) {
-        FriendAvatar(friend, 58)
-        Text(friend.displayName, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelMedium)
-    }
-}
-
-@Composable
-private fun InfoRow(label: String, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
-    Row(
-        Modifier.fillMaxWidth().height(58.dp).clickable(onClick = onClick).padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
-        Text(label, Modifier.padding(start = 14.dp), style = MaterialTheme.typography.bodyLarge)
-    }
+/** Keeps profile section spacing independent from the tight media grid below it. */
+private fun LazyListScope.profileItem(key: String, content: @Composable () -> Unit) {
+    item(key) { Box(Modifier.fillMaxWidth().padding(bottom = 12.dp)) { content() } }
 }
 
 @Composable
 private fun ToggleRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Row(
-        Modifier.fillMaxWidth().height(58.dp).padding(horizontal = 16.dp),
+        Modifier.fillMaxWidth().heightIn(min = 52.dp)
+            .toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)
+            .padding(start = 21.dp, end = 17.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
-        Switch(checked, onCheckedChange)
+        Text(label, Modifier.weight(1f), fontSize = 16.sp)
+        // Material's switch is 52x32dp; Telegram's is ~37x21dp, which is what the 16dp rows expect.
+        Box(Modifier.size(width = 40.dp, height = 24.dp), contentAlignment = Alignment.Center) {
+            Switch(checked, onCheckedChange = null, modifier = Modifier.scale(.72f))
+        }
     }
 }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_reviews_unavailable">Не удалось загрузить обзоры. Повторите попытку.</string>
+    <string name="steam_store_reviews_empty">Нет обзоров, соответствующих фильтрам.</string>
+    <string name="steam_store_reviews_retry">Повторить</string>
+</resources>

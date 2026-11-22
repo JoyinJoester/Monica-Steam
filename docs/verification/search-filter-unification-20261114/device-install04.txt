@@ -1,0 +1,627 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest:
+INSTRUMENTATION_STATUS: test=storeLargeDarkChoicesWrapAndTagsRemainReadable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLargeDarkChoicesWrapAndTagsRemainReadable(SteamSearchUnificationDeviceTest.kt:116)
+
+INSTRUMENTATION_STATUS: stream=
+Error in storeLargeDarkChoicesWrapAndTagsRemainReadable(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest):
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLargeDarkChoicesWrapAndTagsRemainReadable(SteamSearchUnificationDeviceTest.kt:116)
+
+INSTRUMENTATION_STATUS: test=storeLargeDarkChoicesWrapAndTagsRemainReadable
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=inboxUsesLibrarySearchExpansionAndBackClearsQuery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inboxUsesLibrarySearchExpansionAndBackClearsQuery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=storeDraftAppliesTogetherAndDismissLeavesOriginalSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeDraftAppliesTogetherAndDismissLeavesOriginalSelection(SteamSearchUnificationDeviceTest.kt:158)
+
+INSTRUMENTATION_STATUS: stream=
+Error in storeDraftAppliesTogetherAndDismissLeavesOriginalSelection(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest):
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeDraftAppliesTogetherAndDismissLeavesOriginalSelection(SteamSearchUnificationDeviceTest.kt:158)
+
+INSTRUMENTATION_STATUS: test=storeDraftAppliesTogetherAndDismissLeavesOriginalSelection
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=storeChoicesWrapAndTagsAreAvailableBeforeExpanding
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeChoicesWrapAndTagsAreAvailableBeforeExpanding(SteamSearchUnificationDeviceTest.kt:115)
+
+INSTRUMENTATION_STATUS: stream=
+Error in storeChoicesWrapAndTagsAreAvailableBeforeExpanding(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest):
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeChoicesWrapAndTagsAreAvailableBeforeExpanding(SteamSearchUnificationDeviceTest.kt:115)
+
+INSTRUMENTATION_STATUS: test=storeChoicesWrapAndTagsAreAvailableBeforeExpanding
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSearchAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSearchAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest:
+INSTRUMENTATION_STATUS: test=draggingSelectedGlassBlockCommitsUnreadExactlyOnce
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draggingSelectedGlassBlockCommitsUnreadExactlyOnce
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draggedBlockMovesBeforeReleaseWithoutFilteringTheList
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draggedBlockMovesBeforeReleaseWithoutFilteringTheList
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rtlDragUsesPhysicalMeasuredSlots
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rtlDragUsesPhysicalMeasuredSlots
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=draggingAnUnselectedOptionCommitsTheReleasedFilter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=draggingAnUnselectedOptionCommitsTheReleasedFilter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=verticalParentScrollingKeepsTheFilterUnchanged
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verticalParentScrollingKeepsTheFilterUnchanged
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedPageCancelsPendingReleaseAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedPageCancelsPendingReleaseAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=externalSelectionCannotBeOverwrittenByReleasedOldGesture
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalSelectionCannotBeOverwrittenByReleasedOldGesture
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingTheFilterCancelsLateSelectionAndCanRemount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingTheFilterCancelsLateSelectionAndCanRemount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=badgeReflowRevokesAnInProgressDrag
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=badgeReflowRevokesAnInProgressDrag
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=edgeScrollReachesOffscreenArchivedFilter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=edgeScrollReachesOffscreenArchivedFilter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=m3eSupportsTheSameDragAndClickSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=m3eSupportsTheSameDragAndClickSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedPageCancelsHeldPointerAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedPageCancelsHeldPointerAndCanDragAfterReturn
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledDragRestoresCommittedFilter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancelledDragRestoresCommittedFilter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeFontBadgeAndReducedMotionStillSelectCorrectSlot
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeFontBadgeAndReducedMotionStillSelectCorrectSlot
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest:
+INSTRUMENTATION_STATUS: test=cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundDropsInactivePageBeforeResume
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundDropsInactivePageBeforeResume
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=platformViewModeEvictsInactivePageWithoutRemountingCurrentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=platformViewModeEvictsInactivePageWithoutRemountingCurrentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameFrameNavigationAndBackgroundCannotRestoreInactivePage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sameFrameNavigationAndBackgroundCannotRestoreInactivePage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=switchingTabsReleasesNativeEditorFocusAndRoutesKeysToCurrentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=switchingTabsReleasesNativeEditorFocusAndRoutesKeysToCurrentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest:
+INSTRUMENTATION_STATUS: test=hiddenChatStopsCollectingAndDisplaysLatestInboxOnReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=hiddenChatStopsCollectingAndDisplaysLatestInboxOnReturn
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest:
+INSTRUMENTATION_STATUS: test=hiddenLibraryStopsCollectingAndRendersLatestGamesOnReturn
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=hiddenLibraryStopsCollectingAndRendersLatestGamesOnReturn
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedContentViewUsesTheRetainedPageLifecycle
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedContentViewUsesTheRetainedPageLifecycle
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest:
+INSTRUMENTATION_STATUS: test=libraryLiquidLight
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=libraryLiquidLight
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=storeFilterKeepsPendingChoicesUntilApply
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=storeFilterKeepsPendingChoicesUntilApply
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryM3eDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=libraryM3eDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=libraryFallbackLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=libraryFallbackLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest:
+INSTRUMENTATION_STATUS: test=largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeBridgePreservesMembershipArchiveAndHiddenFlags
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeBridgePreservesMembershipArchiveAndHiddenFlags
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realGameDetailCombinesCategoryAndStatusFilters
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realGameDetailCombinesCategoryAndStatusFilters
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreHomeUiTest
+INSTRUMENTATION_STATUS: current=38
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.store.SteamStoreHomeUiTest:
+INSTRUMENTATION_STATUS: test=integratedSearchBarKeepsCartAccountAndFiltersVisible
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreHomeUiTest
+INSTRUMENTATION_STATUS: current=38
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=integratedSearchBarKeepsCartAccountAndFiltersVisible
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreHomeUiTest
+INSTRUMENTATION_STATUS: current=39
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=categorySelectionAndSeeAllLeadToCatalogAndGameCardsRemainClickable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.store.SteamStoreHomeUiTest
+INSTRUMENTATION_STATUS: current=39
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=39
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=categorySelectionAndSeeAllLeadToCatalogAndGameCardsRemainClickable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 52.501
+There were 3 failures:
+1) storeLargeDarkChoicesWrapAndTagsRemainReadable(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest)
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLargeDarkChoicesWrapAndTagsRemainReadable(SteamSearchUnificationDeviceTest.kt:116)
+2) storeDraftAppliesTogetherAndDismissLeavesOriginalSelection(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest)
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeDraftAppliesTogetherAndDismissLeavesOriginalSelection(SteamSearchUnificationDeviceTest.kt:158)
+3) storeChoicesWrapAndTagsAreAvailableBeforeExpanding(takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest)
+java.lang.AssertionError: Each wrapped line must be centered: 免费
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.assertChoiceCentered(SteamSearchUnificationDeviceTest.kt:144)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeLayout(SteamSearchUnificationDeviceTest.kt:127)
+	at takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest.storeChoicesWrapAndTagsAreAvailableBeforeExpanding(SteamSearchUnificationDeviceTest.kt:115)
+
+FAILURES!!!
+Tests run: 39,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.576Z" hostname="JOYIN" time="0.011">
+  <properties/>
+  <testcase name="serverEnrichedProfileRetainsTitleBioImageAndOriginal" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.002"/>
+  <testcase name="duplicateAttributesMalformedHeadersAndMultipleCardsStayReadable" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.002"/>
+  <testcase name="storeWrapperUsesExistingGameCardAndPreservesCaption" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.0"/>
+  <testcase name="singleQuotedAndEmptyMetadataKeepAnActionableProfile" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.001"/>
+  <testcase name="mismatchedInnerUrlAndMetadataCannotHideDifferentDestination" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.0"/>
+  <testcase name="unsafePreviewImageDoesNotPreventSafeProfileFromRendering" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.001"/>
+  <testcase name="multilineHeaderAndBracketedBiographyAreParsedAsMetadata" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.002"/>
+  <testcase name="inventoryAndBroadcastEnrichmentRoundTripToTheCorrectKind" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.001"/>
+  <testcase name="entitiesDecodeOnceWithoutHtmlRendering" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.001"/>
+  <testcase name="notificationPreviewDoesNotExposeOpenGraphMarkupOrImageUrl" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.0"/>
+  <testcase name="wrappedTradeRetainsTokenAndOfferId" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.001"/>
+  <testcase name="unsupportedUrlCannotBecomeAnActionableOpenGraphCard" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

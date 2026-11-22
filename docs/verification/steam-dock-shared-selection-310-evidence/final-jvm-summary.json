@@ -1,0 +1,32 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+    "tests": "2",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-21T10:43:07.244Z",
+    "hostname": "JOYIN",
+    "time": "0.005"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+    "tests": "7",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-21T10:43:07.253Z",
+    "hostname": "JOYIN",
+    "time": "0.33"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest",
+    "tests": "3",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-21T10:43:07.206Z",
+    "hostname": "JOYIN",
+    "time": "0.035"
+  }
+]

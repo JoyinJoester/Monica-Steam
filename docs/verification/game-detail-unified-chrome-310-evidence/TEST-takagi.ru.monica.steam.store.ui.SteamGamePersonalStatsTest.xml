@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-20T11:19:42.913Z" hostname="JOYIN" time="0.203">
+  <properties/>
+  <testcase name="cancellationRejectsNonCooperativeLatePlayerResult" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.173"/>
+  <testcase name="wrongAccountOrGameCacheAndServerAchievementsAreRejected" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.012"/>
+  <testcase name="partialFailureDoesNotHideSuccessfulPlaytimeOrInventAchievements" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.003"/>
+  <testcase name="cancellationDuringAchievementsDoesNotPublishLateSuccess" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.007"/>
+  <testcase name="unknownActivityDoesNotBecomeZeroButConfirmedZeroRemainsVisible" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.005"/>
+  <testcase name="cachedDataAppearsBeforeNetworkAndFailuresKeepItsProvenance" classname="takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

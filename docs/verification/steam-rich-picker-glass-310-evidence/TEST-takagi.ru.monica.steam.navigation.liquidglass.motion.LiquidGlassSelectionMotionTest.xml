@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-21T04:34:39.266Z" hostname="JOYIN" time="0.099">
+  <properties/>
+  <testcase name="stoppedPageRejectsLateReleaseFromAnyOption" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.025"/>
+  <testcase name="quickTapOnAnotherOptionSurvivesImmediateSelectionRecomposition" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.051"/>
+  <testcase name="draggingFromUnselectedOptionCommitsOnlyReleasedTarget" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.004"/>
+  <testcase name="newPressAndDisposeCancelOldPulseAndRepeatedTapRestartsIt" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.006"/>
+  <testcase name="reducedAndInactiveClickCommitWithoutExpansion" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.003"/>
+  <testcase name="externalSelectionReflowStopAndReducedMotionRevokeTapFeedback" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.006"/>
+  <testcase name="unselectedPressDoesNotCommitAndCancellationRestoresOriginalBounds" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.002"/>
+  <testcase name="quickTapOnSelectedOptionKeepsExpansionThenReleasesWithOneImmediateCallback" classname="takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

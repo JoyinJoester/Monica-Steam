@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_tab_store">Магазин</string>
+    <string name="steam_game_tab_stats">Моя статистика</string>
+    <string name="steam_game_stats_sign_in">Войдите, чтобы увидеть время в игре и достижения</string>
+    <string name="steam_game_stats_unknown">Нет данных</string>
+    <string name="steam_game_stats_cached">Сохранённые данные могут быть устаревшими</string>
+    <string name="steam_game_stats_last_played">Последний запуск</string>
+    <string name="steam_game_stats_no_activity">Для этого аккаунта нет доступных данных о времени в игре.</string>
+    <string name="steam_game_stats_game_data">Данные игры</string>
+    <string name="steam_game_stats_screenshots">Скриншоты</string>
+    <string name="steam_game_stats_workshop">Мастерская</string>
+    <string name="steam_game_stats_all">Все</string>
+    <string name="steam_game_stats_completed">Открытые</string>
+    <string name="steam_game_stats_incomplete">Закрытые</string>
+    <string name="steam_game_stats_hours">%1$.1f ч</string>
+</resources>

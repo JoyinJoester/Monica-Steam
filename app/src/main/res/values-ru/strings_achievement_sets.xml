@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_achievement_sets">Наборы достижений</string>
+    <string name="steam_achievement_sets_all">Все наборы</string>
+    <string name="steam_achievement_set_base">Основная игра</string>
+    <string name="steam_achievement_set_unnamed">Набор %1$d</string>
+    <string name="steam_achievement_set_progress">%1$d / %2$d</string>
+    <string name="steam_achievement_set_complete">Набор завершён</string>
+    <string name="steam_achievement_set_unavailable">Сейчас недоступно</string>
+    <string name="steam_achievement_set_archived">В архиве</string>
+    <string name="steam_achievement_set_dlc">DLC</string>
+    <string name="steam_achievement_hidden">Скрытое достижение</string>
+    <string name="steam_achievement_archived">В архиве · не учитывается в завершении набора</string>
+</resources>

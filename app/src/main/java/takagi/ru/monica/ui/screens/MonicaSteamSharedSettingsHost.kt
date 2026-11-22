@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Straighten
@@ -24,6 +25,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.InterfaceScale
 import takagi.ru.monica.data.ProgressBarStyle
+import takagi.ru.monica.steam.navigation.SteamDockStyle
 import takagi.ru.monica.steam.navigation.SteamDockTab
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.links.ui.SteamLinkHandlingSettingsEntry
@@ -58,6 +60,8 @@ internal fun MonicaSteamSharedSettingsHost(
     onOpenMdbx: () -> Unit,
     onOpenDock: () -> Unit,
     onOpenColors: () -> Unit,
+    designStyle: SteamDockStyle,
+    onOpenDesignStyle: () -> Unit,
     onOpenMasterPasswordLocking: () -> Unit,
     onOpenPlus: () -> Unit,
     onOpenDeveloper: () -> Unit,
@@ -194,7 +198,7 @@ internal fun MonicaSteamSharedSettingsHost(
                     SettingsItem(
                         icon = Icons.Default.ViewList,
                         title = context.getString(R.string.bottom_nav_settings),
-                        subtitle = context.getString(R.string.bottom_nav_settings_entry_subtitle),
+                        subtitle = context.getString(R.string.steam_dock_entry_subtitle),
                         onClick = onOpenDock
                     )
                     SettingsItemWithSwitch(
@@ -215,6 +219,17 @@ internal fun MonicaSteamSharedSettingsHost(
             }
         },
         additionalAppearanceContent = {
+            SettingsItem(
+                icon = Icons.Default.AutoAwesome,
+                title = context.getString(R.string.steam_design_style_title),
+                subtitle = context.getString(
+                    when (designStyle) {
+                        SteamDockStyle.FIXED -> R.string.steam_dock_style_fixed
+                        SteamDockStyle.LIQUID_GLASS -> R.string.steam_dock_style_liquid_glass
+                    }
+                ),
+                onClick = onOpenDesignStyle
+            )
             InterfaceScaleSettingsItem(
                 scalePercent = currentUiScale,
                 onClick = { showUiScaleSheet = true }
@@ -257,6 +272,10 @@ internal fun MonicaSteamSharedSettingsHost(
             )
         },
         additionalAppearanceSearchTexts = listOf(
+            context.getString(R.string.steam_design_style_title),
+            context.getString(R.string.steam_dock_style_fixed),
+            context.getString(R.string.steam_dock_style_liquid_glass),
+            context.getString(R.string.steam_design_style_liquid_glass_description),
             context.getString(R.string.interface_scale_title),
             context.getString(R.string.interface_scale_description),
             context.getString(R.string.steam_avatar_shape_title),

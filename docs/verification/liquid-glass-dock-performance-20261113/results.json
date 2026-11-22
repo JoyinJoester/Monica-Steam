@@ -1,0 +1,779 @@
+{
+  "scope": "Monica Steam Dock; synthetic fixtures; x86_64; no Steam account or network",
+  "sources": {
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\navigation\\liquidglass\\motion\\LiquidGlassDockMotion.kt": {
+      "currentSha256": "7403b1b6045e1d7d267ff61e05d83a13816ce0b19c5d3696e65b077be6ae65f1",
+      "beforeVerificationSha256": "7403b1b6045e1d7d267ff61e05d83a13816ce0b19c5d3696e65b077be6ae65f1",
+      "unchangedDuringVerification": true,
+      "baselineSha256": "f38505cce13be5622086f008d40490f0fe4a185e26cd0ac7cb20882924065786"
+    },
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\navigation\\liquidglass\\render\\LiquidGlassInnerShadow.kt": {
+      "currentSha256": "8c3aa620b5613c9c4ba138b20320529d25463946bad18d8c08f84c1eb5f93d14",
+      "beforeVerificationSha256": "8c3aa620b5613c9c4ba138b20320529d25463946bad18d8c08f84c1eb5f93d14",
+      "unchangedDuringVerification": true,
+      "baselineSha256": "eef55698a9f32f6e674e5b09e0e3cd2037477b794892659b76b571d663ee5fcf"
+    },
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\navigation\\liquidglass\\ui\\SteamLiquidGlassDock.kt": {
+      "currentSha256": "dbec5b5ea70c6ee85d446814b99f19d3f0ffe925b601353bc10e9d34e75bda9c",
+      "beforeVerificationSha256": "dbec5b5ea70c6ee85d446814b99f19d3f0ffe925b601353bc10e9d34e75bda9c",
+      "unchangedDuringVerification": true,
+      "baselineSha256": "5883eb0a7627fbc47e099c690d7cd73e4ad4c183d4ad6e5adc253e385c465c8b"
+    },
+    "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\navigation\\LiquidGlassDockMotionDeviceTest.kt": {
+      "currentSha256": "286bedf7c5a9961d678122d09829b75a1585657f2d19666225c1b3f23312880e"
+    },
+    "app\\src\\androidTest\\java\\takagi\\ru\\monica\\steam\\navigation\\LiquidGlassInnerShadowDeviceTest.kt": {
+      "currentSha256": "23e426e72d9600b3b2f9e36cfd389e5d9ca61150675584b584aef685f9821c4a"
+    },
+    "app\\src\\test\\java\\takagi\\ru\\monica\\steam\\navigation\\SteamLiquidGlassDockGuardTest.kt": {
+      "currentSha256": "e25fcffe8ee997720f8ba490860c41bb38d4f4a2aecf4f34a33f8e9ca1b36c68"
+    }
+  },
+  "jvm": {
+    "tests": 54,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "builds": {
+    "fixture-comparison02": {
+      "exit": 0,
+      "seconds": 44.576286599971354,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        "-PdockFixture=true",
+        "-PdockComparison=true",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "332f7d524fa63d4b72a4a7fdec9cb2bba9a63ee04952eeff7a60ecb00b2792cc",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "0cec668fbd1585699699d1dfeb18f4de76c79c13a32396238847c0c90b75101b"
+      }
+    },
+    "fixture-comparison03": {
+      "exit": 0,
+      "seconds": 66.7863367999671,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        "-PdockFixture=true",
+        "-PdockComparison=true",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "332f7d524fa63d4b72a4a7fdec9cb2bba9a63ee04952eeff7a60ecb00b2792cc",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "d082b5fcbf92044da6fbb347df29a9c9fa9235adb800e29eb03cdc1951fc23f2"
+      }
+    },
+    "fixture-comparison04": {
+      "exit": 0,
+      "seconds": 50.360925299988594,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        "-PdockFixture=true",
+        "-PdockComparison=true",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "332f7d524fa63d4b72a4a7fdec9cb2bba9a63ee04952eeff7a60ecb00b2792cc",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "5eff0c48cdacf75e5b2023bc400c5f3b9b5684813b486d57d4b4b4b8defc5c96"
+      }
+    },
+    "fixture-comparison05": {
+      "exit": 0,
+      "seconds": 27.555234499974176,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        "-PdockFixture=true",
+        "-PdockComparison=true",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "332f7d524fa63d4b72a4a7fdec9cb2bba9a63ee04952eeff7a60ecb00b2792cc",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "74171de245f2da9d70f44671567f32d3408ff203ccfebf33db5ef0002741a638"
+      }
+    },
+    "fixture01": {
+      "exit": 0,
+      "seconds": 1203.2005199000123,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        "-PdockFixture=true",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "332f7d524fa63d4b72a4a7fdec9cb2bba9a63ee04952eeff7a60ecb00b2792cc",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "0cec668fbd1585699699d1dfeb18f4de76c79c13a32396238847c0c90b75101b"
+      }
+    },
+    "jvm02": {
+      "exit": 0,
+      "seconds": 216.39160460000858,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.store.SteamStoreLiquidGlassBackdropTest"
+      ],
+      "apks": {
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111318-45.APK": "df35adeca2d6fc66ce4dc6c4227f4dd1cf1861a49059cdb395a65b34c3af0f2c",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "82adb4f24850c5b537c33e956aeb362c68acb19914eb995a6cf3950eaf3e5d06"
+      }
+    },
+    "optimized01": {
+      "exit": 1,
+      "seconds": 1468.1573124999995,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=45",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\isolation.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.store.SteamStoreLiquidGlassBackdropTest"
+      ]
+    }
+  },
+  "packages": {
+    "apks-fixture-core": [
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-core\\main.apk",
+        "Hash": "332F7D524FA63D4B72A4A7FDEC9CB2BBA9A63EE04952EEFF7A60ECB00B2792CC"
+      },
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-core\\test.apk",
+        "Hash": "0CEC668FBD1585699699D1DFEB18F4DE76C79C13A32396238847C0C90B75101B"
+      }
+    ],
+    "apks-fixture-final": [
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-final\\main.apk",
+        "Hash": "332F7D524FA63D4B72A4A7FDEC9CB2BBA9A63EE04952EEFF7A60ECB00B2792CC"
+      },
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-final\\test.apk",
+        "Hash": "5EFF0C48CDACF75E5B2023BC400C5F3B9B5684813B486D57D4B4B4B8DEFC5C96"
+      }
+    ],
+    "apks-fixture-native": [
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-native\\main.apk",
+        "Hash": "332F7D524FA63D4B72A4A7FDEC9CB2BBA9A63EE04952EEFF7A60ECB00B2792CC"
+      },
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-fixture-native\\test.apk",
+        "Hash": "74171DE245F2DA9D70F44671567F32D3408FF203CCFEBF33DB5EF0002741A638"
+      }
+    ],
+    "apks-optimized": [
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-optimized\\main.apk",
+        "Hash": "DF35ADECA2D6FC66CE4DC6C4227F4DD1CF1861A49059CDB395A65B34C3AF0F2C"
+      },
+      {
+        "Path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\apks-optimized\\test.apk",
+        "Hash": "82ADB4F24850C5B537C33E956AEB362C68ACB19914EB995A6CF3950EAF3E5D06"
+      }
+    ]
+  },
+  "deviceRuns": {
+    "baseline-api32-native08": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 45.94325429998571,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest",
+          "-e",
+          "dockVariant",
+          "baseline",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 2,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#nativeClicksDragAndLargeFontPreserveCallbacks",
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames"
+      ],
+      "reportedTestCount": 2
+    },
+    "baseline-api32-native09": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 36.767980200005695,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames",
+          "-e",
+          "dockVariant",
+          "baseline",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 1,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames"
+      ],
+      "reportedTestCount": 1
+    },
+    "baseline-api32-perf06": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 59.31380280002486,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest",
+          "-e",
+          "dockVariant",
+          "baseline",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 1,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget"
+      ],
+      "reportedTestCount": null
+    },
+    "baseline-api32-shadow03": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 12.076110900030471,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+          "-e",
+          "dockVariant",
+          "baseline",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 0,
+      "passingMethods": [],
+      "reportedTestCount": null
+    },
+    "fixture-api32-core02": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 26.930884700035676,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 5,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#reducedMotionAndOverscrollReturnToValidDestination",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#disposalCancelsMotionAndCannotPublishLateSelection",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#newSelectionSuppressesPendingDragCallbackAndSettles",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath"
+      ],
+      "reportedTestCount": null
+    },
+    "fixture-api32-core04": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 39.60334660002263,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sharedPageMotionDisposesOldContentAndSupportsReducedMotion",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 10,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#reducedMotionAndOverscrollReturnToValidDestination",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#disposalCancelsMotionAndCannotPublishLateSelection",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#newSelectionSuppressesPendingDragCallbackAndSettles",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath",
+        "takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sharedPageMotionDisposesOldContentAndSupportsReducedMotion"
+      ],
+      "reportedTestCount": 10
+    },
+    "optimized-api32-core01": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 12.4923002999858,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 0,
+      "passingMethods": [],
+      "reportedTestCount": null
+    },
+    "optimized-api32-native07": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 49.64149250002811,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget,takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 3,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget",
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#nativeClicksDragAndLargeFontPreserveCallbacks",
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames"
+      ],
+      "reportedTestCount": 3
+    },
+    "optimized-api32-native10": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 35.940964700013865,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 1,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest#measureNativeWindowFrames"
+      ],
+      "reportedTestCount": 1
+    },
+    "optimized-api32-perf05": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 75.78160809999099,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": true,
+      "passingMethodCountInRun": 3,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget",
+        "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureRealWindowDragAndClickFrames",
+        "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#clickDragAndLargeFontKeepOneSelectionInBothMotionModes"
+      ],
+      "reportedTestCount": 3
+    },
+    "optimized-api35-core-native11": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 56.44883770000888,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sharedPageMotionDisposesOldContentAndSupportsReducedMotion,takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget,takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 8,
+      "passingMethods": [
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#reducedMotionAndOverscrollReturnToValidDestination",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#disposalCancelsMotionAndCannotPublishLateSelection",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#newSelectionSuppressesPendingDragCallbackAndSettles",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath",
+        "takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath"
+      ],
+      "reportedTestCount": null
+    },
+    "optimized-api36-core-native13": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 12.515340799989644,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sharedPageMotionDisposesOldContentAndSupportsReducedMotion,takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget,takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 0,
+      "passingMethods": [],
+      "reportedTestCount": null
+    },
+    "optimized-api36-core-native14": {
+      "receipt": {
+        "exit": 0,
+        "seconds": 15.306682499998715,
+        "serial": "emulator-5558",
+        "args": [
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "0",
+          "-w",
+          "-r",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.dockbaseline.validation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sharedPageMotionDisposesOldContentAndSupportsReducedMotion,takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest#measureDragDispatchCoroutineBudget,takagi.ru.monica.steam.navigation.SteamDockNativeFrameTest",
+          "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+        ]
+      },
+      "completedWithAllPassing": false,
+      "passingMethodCountInRun": 0,
+      "passingMethods": [],
+      "reportedTestCount": null
+    }
+  },
+  "nativeFrames": {
+    "baseline-api32-native08": {
+      "api": 32,
+      "variant": "baseline",
+      "runtimeShader": false,
+      "clock": "native Android Choreographer",
+      "drag": {
+        "frames": 954,
+        "medianMs": 20.820593,
+        "p95Ms": 23.38127,
+        "p99Ms": 29.545607,
+        "over16_67Ms": 926,
+        "drawMedianMs": 0.244232,
+        "drawP95Ms": 1.492789,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "frames": 445,
+        "medianMs": 20.620848,
+        "p95Ms": 22.414336,
+        "p99Ms": 24.749634,
+        "over16_67Ms": 427,
+        "drawMedianMs": 0.708768,
+        "drawP95Ms": 2.529392,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "baseline-api32-native09": {
+      "api": 32,
+      "variant": "baseline",
+      "runtimeShader": false,
+      "clock": "native Android Choreographer",
+      "drag": {
+        "frames": 952,
+        "medianMs": 20.817249,
+        "p95Ms": 25.93674,
+        "p99Ms": 37.18212,
+        "over16_67Ms": 927,
+        "drawMedianMs": 0.223775,
+        "drawP95Ms": 1.578575,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "frames": 458,
+        "medianMs": 20.70183,
+        "p95Ms": 27.952506,
+        "p99Ms": 38.815458,
+        "over16_67Ms": 435,
+        "drawMedianMs": 0.594654,
+        "drawP95Ms": 2.145519,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "optimized-api32-native07": {
+      "api": 32,
+      "variant": "optimized",
+      "runtimeShader": false,
+      "clock": "native Android Choreographer",
+      "drag": {
+        "frames": 963,
+        "medianMs": 20.336032,
+        "p95Ms": 21.744207,
+        "p99Ms": 23.013176,
+        "over16_67Ms": 796,
+        "drawMedianMs": 0.154275,
+        "drawP95Ms": 0.984617,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "frames": 622,
+        "medianMs": 10.662925,
+        "p95Ms": 20.257824,
+        "p99Ms": 20.98892,
+        "over16_67Ms": 89,
+        "drawMedianMs": 0.34479,
+        "drawP95Ms": 1.045187,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "optimized-api32-native10": {
+      "api": 32,
+      "variant": "optimized",
+      "runtimeShader": false,
+      "clock": "native Android Choreographer",
+      "drag": {
+        "frames": 961,
+        "medianMs": 20.368991,
+        "p95Ms": 22.115537,
+        "p99Ms": 25.32985,
+        "over16_67Ms": 901,
+        "drawMedianMs": 0.200533,
+        "drawP95Ms": 1.244628,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "frames": 624,
+        "medianMs": 11.595051,
+        "p95Ms": 23.190031,
+        "p99Ms": 37.546939,
+        "over16_67Ms": 176,
+        "drawMedianMs": 0.383637,
+        "drawP95Ms": 1.284672,
+        "droppedMetricCallbacks": 0
+      }
+    }
+  },
+  "pairedPressure": {
+    "optimized-api32-native07": {
+      "samples": {
+        "baseline-0": {
+          "events": 1001,
+          "dispatchMs": 531.142275,
+          "threadCpuMs": 407.171966,
+          "allocatedBytesDelta": 6668784,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        },
+        "optimized-0": {
+          "events": 1001,
+          "dispatchMs": 14.063749,
+          "threadCpuMs": 11.450773,
+          "allocatedBytesDelta": 1458176,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        },
+        "optimized-1": {
+          "events": 1001,
+          "dispatchMs": 14.901673,
+          "threadCpuMs": 11.572213,
+          "allocatedBytesDelta": 1458176,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        },
+        "baseline-1": {
+          "events": 1001,
+          "dispatchMs": 171.290841,
+          "threadCpuMs": 146.766437,
+          "allocatedBytesDelta": 6422528,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        },
+        "baseline-2": {
+          "events": 1001,
+          "dispatchMs": 156.966014,
+          "threadCpuMs": 139.627382,
+          "allocatedBytesDelta": 6474008,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        },
+        "optimized-2": {
+          "events": 1001,
+          "dispatchMs": 14.714601,
+          "threadCpuMs": 13.638767,
+          "allocatedBytesDelta": 1458176,
+          "childrenAfterFirstEvent": 2,
+          "childrenAfterBurst": 2
+        }
+      },
+      "medians": {
+        "baseline": {
+          "threadCpuMs": 146.766437,
+          "dispatchMs": 171.290841,
+          "allocatedBytesDelta": 6474008
+        },
+        "optimized": {
+          "threadCpuMs": 11.572213,
+          "dispatchMs": 14.714601,
+          "allocatedBytesDelta": 1458176
+        }
+      }
+    }
+  }
+}

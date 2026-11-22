@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamPageRefreshControls.kt": "5464d0cdd69b3fab323908cadb121900646ad5eaff3527f12bb38e2367ddbc87",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamInboxUi.kt": "c9e34cee3b7734ff50b47b9d23837340b3ad23c22001af41b0861ba63eed8ed9",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamFriendsTopBar.kt": "eabaeab4287e67f511e5121e29c3f9ad478709f2e147ab15e4f296fc383f3b9d",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStatsRefreshUiTest.kt": "b85b59cf41810ef8cc4803c4f7a9f75f4d9ce09cae098c668c4e13af1d49a88f",
+  "RELEASE_NOTES.md": "c6d0b0a7d2f9417ba3bac0a6394f6a5b709e52c82e11406e1b6950c26cf44303",
+  "docs/releases/Monica-Steam-Unreleased.md": "08248e73e44431b022d8cbe1ae60c8f32b36b7bc7ca2194a54a82fc338b6532b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "5c725ce656f858f9666abda19d8c16acd303a9b35ed514bc5c01da81715b137f"
+}

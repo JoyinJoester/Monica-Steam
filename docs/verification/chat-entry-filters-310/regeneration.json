@@ -1,0 +1,17 @@
+{
+  "source_records": 132,
+  "unique_recorded_files": 122,
+  "generated_files": 114,
+  "preserved_host_files": [
+    "src/main/java/com/monica/telegramchat/TelegramAttachmentTabsView.java",
+    "src/main/java/com/monica/telegramchat/TelegramChatComposerView.java",
+    "src/main/java/com/monica/telegramchat/TelegramChatHeaderView.java",
+    "src/main/java/com/monica/telegramchat/TelegramGlassView.java",
+    "src/main/java/com/monica/telegramchat/TelegramMenuRow.java",
+    "src/main/java/com/monica/telegramchat/TelegramMessageTextView.java",
+    "src/main/java/com/monica/telegramchat/TelegramPopupLayout.java",
+    "src/main/java/com/monica/telegramchat/TelegramWallpaperDrawable.java"
+  ],
+  "manifest_matches": true,
+  "errors": []
+}

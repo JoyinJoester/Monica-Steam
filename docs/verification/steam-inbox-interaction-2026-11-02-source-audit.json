@@ -1,0 +1,56 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatConversationPreferences.kt",
+    "sha256": "64cd6d9090356924e817ae879fe8d41298cc0c80e7b43feb6733cbcc730e9cbe",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatNavigation.kt",
+    "sha256": "b4d9a0d86e218db418ff02cae2c8b260eeaf9449d90bc300ea44a7baaaa0e3e4",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt",
+    "sha256": "da9cf9bc815ce186ed50c476f5386047752f121699c65f7b97b4ae91f487886a",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatSelectedContent.kt",
+    "sha256": "0a14afbd859ff3a97e9722a3b3888f719491298f59cddd219f5fbf8a7281436b",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationMenuPositionProvider.kt",
+    "sha256": "023392661db4a6190c27581da0ef8059ca6fd6aa428e0c9c0b4a2f450101ba2b",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationRow.kt",
+    "sha256": "170bb04f16caf1175ac9744ce8d5cb30dfa1a02cc61f08936366f7205cc3624f",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramNativeSocial.kt",
+    "sha256": "4bec5b96beaa6fccb4d955fa6660ea392c2bcdccb59cb392afebd0eeea897cfd",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamInboxInteractionUiTest.kt",
+    "sha256": "0a5989ff43cf47af58fa93fcbfde4c362dda926e4a6e7ae8595eab6c56087a93",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatIntegrationGuardTest.kt",
+    "sha256": "da3d32c99fb268c849ba3735c637b5c1c0f1559c76a75c2f9aea950a37e0ee0e",
+    "state": "final combined source",
+    "whitespaceAndConflictCheck": "passed"
+  }
+]

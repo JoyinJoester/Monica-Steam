@@ -165,6 +165,7 @@ internal fun Throwable.requiresSteamChatSessionRefresh(): Boolean {
 }
 
 internal fun Throwable.isTransientSteamChatNetworkFailure(): Boolean = when (this) {
+    is takagi.ru.monica.steam.network.cm.SteamCmRequestOutcomeUnknownException -> true
     is java.net.SocketTimeoutException,
     is java.net.ConnectException,
     is java.net.UnknownHostException -> true

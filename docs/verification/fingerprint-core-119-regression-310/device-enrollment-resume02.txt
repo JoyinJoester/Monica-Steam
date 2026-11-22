@@ -1,0 +1,43 @@
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: SharedPreferences in credential encrypted storage are not available until after user (id 10) is unlocked
+	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:632)
+	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:610)
+	at android.content.ContextWrapper.getSharedPreferences(ContextWrapper.java:223)
+	at takagi.ru.monica.steam.network.optimization.SteamNetworkOptimizationRuntime.initialize(SteamNetworkOptimizationRuntime.kt:39)
+	at takagi.ru.monica.MonicaSteamApplication.onCreate(MonicaSteamApplication.kt:25)
+	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1386)
+	at androidx.test.runner.MonitoringInstrumentation.callApplicationOnCreate(MonitoringInstrumentation.java:470)
+	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7504)
+	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2416)
+	at android.os.Handler.dispatchMessage(Handler.java:107)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS: stream=
+Process crashed before executing the test(s):
+java.lang.IllegalStateException: SharedPreferences in credential encrypted storage are not available until after user (id 10) is unlocked
+	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:632)
+	at android.app.ContextImpl.getSharedPreferences(ContextImpl.java:610)
+	at android.content.ContextWrapper.getSharedPreferences(ContextWrapper.java:223)
+	at takagi.ru.monica.steam.network.optimization.SteamNetworkOptimizationRuntime.initialize(SteamNetworkOptimizationRuntime.kt:39)
+	at takagi.ru.monica.MonicaSteamApplication.onCreate(MonicaSteamApplication.kt:25)
+	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1386)
+	at androidx.test.runner.MonitoringInstrumentation.callApplicationOnCreate(MonitoringInstrumentation.java:470)
+	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7504)
+	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2416)
+	at android.os.Handler.dispatchMessage(Handler.java:107)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8705)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: shortMsg=Process crashed.
+INSTRUMENTATION_CODE: 0

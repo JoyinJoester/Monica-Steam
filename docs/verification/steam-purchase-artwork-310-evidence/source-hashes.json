@@ -1,0 +1,10 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "952ab713b1879685aa0ed9994ec7804d0275793ad2d6ad93b573ff6b084db34c",
+  "app/src/main/java/takagi/ru/monica/steam/store/bundle/ui/SteamStoreBundleSection.kt": "bf264c56516c1f0aa82c75c2e386ed714e39c98d90e4fe8c1e698b41779f28fc",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStoreDetailPricesUiTest.kt": "8e572211f6a32167293c25d8a4aa8d310405fd5111bba38f7e43ce64bac34a4d",
+  "app/src/test/java/takagi/ru/monica/steam/store/SteamStoreBundleUiGuardTest.kt": "04991c7c5e7e0e93c62836eb1d09e518cabc6eea9e18f2c5a1ad21a5214e7784",
+  "RELEASE_NOTES.md": "05a3a723d32860f71a2d610f83001799ab4e0e8ee490108cb094f4c1bfaeaed0",
+  "docs/releases/Monica-Steam-Unreleased.md": "91772e4ece7258243b604ba8a0e6b466d718bed11185eaffaca8037e4148b3c1",
+  "app/src/main/java/takagi/ru/monica/steam/store/purchase/ui/SteamPurchaseSheetHeader.kt": "4f6aa4699f2d178c029eb0064fe060d1a274dc34df00cda17169a6aee8adf568",
+  "app/src/debug/java/takagi/ru/monica/steam/SteamChineseComposeFixtureActivity.kt": "e50b79417e574b0fc5c581385e3a039305b84f47c03edbb3d64ac366097965f4"
+}

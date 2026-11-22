@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-13T13:11:44.335Z" hostname="JOYIN" time="0.069">
+  <properties/>
+  <testcase name="scrollableSettingsChildrenExposeContentBottomPadding" classname="takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest" time="0.033"/>
+  <testcase name="existingSteamSettingsListsAlsoKeepTheirFinalItemsAboveTheDock" classname="takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest" time="0.01"/>
+  <testcase name="steamSettingsHostPassesClearanceToEveryScrollableChild" classname="takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

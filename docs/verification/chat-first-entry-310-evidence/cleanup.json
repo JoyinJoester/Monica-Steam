@@ -1,0 +1,22 @@
+{
+  "time": "2026-11-20T16:22:16",
+  "checks": {
+    "users": true,
+    "size": true,
+    "density": true,
+    "font": true
+  },
+  "originalPackagesPreserved": true,
+  "unrelatedAdditionalPackagesPreserved": [
+    "package:com.monicapass.kmp",
+    "package:takagi.ru.monica"
+  ],
+  "strictPackageEqualityCheck": "Failed: two additional unrelated packages; preserved both. This task removed only its two named packages.",
+  "rotationRestored": true,
+  "removedPackages": [
+    "takagi.ru.monica.steamapp.gamedetail",
+    "takagi.ru.monica.steamapp.gamedetail.test"
+  ],
+  "removedOwnFile": "/sdcard/monica-gamedetail-ui.xml",
+  "existingMumuLeftRunning": true
+}

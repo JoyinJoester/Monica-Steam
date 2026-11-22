@@ -1,0 +1,42 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.library.RustAchievementDetailsParserTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.018"
+  },
+  {
+    "name": "takagi.ru.monica.steam.library.SteamAchievementImagesTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.061"
+  },
+  {
+    "name": "takagi.ru.monica.steam.library.SteamAchievementSetsTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.056"
+  },
+  {
+    "name": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+    "tests": "20",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.067"
+  },
+  {
+    "name": "takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.071"
+  }
+]

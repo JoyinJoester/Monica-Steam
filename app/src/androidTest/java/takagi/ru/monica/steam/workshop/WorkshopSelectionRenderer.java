@@ -20,7 +20,7 @@ final class WorkshopSelectionRenderer {
                        List<SteamToolbarItem> dockItems, Composer composer) {
         Function0<Unit> noOp = () -> Unit.INSTANCE;
         SteamWorkshopScreenKt.SteamWorkshopScreen(550, "Left 4 Dead 2", account, source,
-                noOp, Modifier.Companion, null, noOp, composer, 0, 0);
+                noOp, Modifier.Companion, null, noOp, null, null, composer, 0, 0);
         SteamEssentialsFloatingToolbarKt.SteamEssentialsFloatingToolbar(dockModifier,
                 dockItems, 0, null, null, true, composer, 0, 0);
     }

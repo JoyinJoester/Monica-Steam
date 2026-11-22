@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_title">Trò chuyện</string>
+    <string name="steam_chat_search_hint">Tìm cuộc trò chuyện hoặc bạn bè</string>
+    <string name="steam_chat_unread_count">%1$d tin chưa đọc</string>
+    <string name="steam_switch_account">Đổi tài khoản Steam</string>
+    <string name="steam_chat_options">Tùy chọn trò chuyện</string>
+    <string name="steam_chat_create_group">Tạo nhóm trò chuyện</string>
+    <string name="steam_chat_search">Tìm cuộc trò chuyện</string>
+    <string name="steam_chat_close_search">Đóng tìm kiếm</string>
+    <string name="steam_chat_filter_all">Tất cả</string>
+    <string name="steam_chat_filter_direct">Riêng tư</string>
+    <string name="steam_chat_filter_group">Nhóm</string>
+    <string name="steam_chat_filter_pinned">Đã ghim</string>
+    <string name="steam_chat_filter_archived">Lưu trữ</string>
+    <string name="steam_chat_unread">Chưa đọc</string>
+    <string name="steam_chat_no_unread">Không có cuộc trò chuyện chưa đọc</string>
+    <string name="steam_chat_no_conversations">Chưa có cuộc trò chuyện nào</string>
+    <string name="steam_chat_no_archived">Chưa có cuộc trò chuyện được lưu trữ</string>
+    <string name="steam_chat_no_pinned">Chưa ghim cuộc trò chuyện nào</string>
+    <string name="steam_chat_no_messages">Chưa có tin nhắn</string>
+    <string name="steam_chat_new_chat">Trò chuyện mới</string>
+    <string name="steam_contacts_search_hint">Tìm liên hệ</string>
+    <string name="steam_friends_refresh">Làm mới danh bạ</string>
+    <string name="steam_chat_pin">Ghim</string>
+    <string name="steam_chat_unpin">Bỏ ghim</string>
+    <string name="steam_chat_archive">Lưu trữ</string>
+    <string name="steam_chat_unarchive">Bỏ lưu trữ</string>
+    <string name="steam_chat_delete">Xóa cuộc trò chuyện</string>
+    <string name="steam_chat_delete_title">Xóa cuộc trò chuyện này?</string>
+    <string name="steam_chat_delete_keep_messages">Giữ tin nhắn</string>
+    <string name="steam_chat_delete_keep_messages_hint">Chỉ ẩn cuộc trò chuyện khỏi danh sách này. Tin nhắn vẫn được giữ trong tài khoản.</string>
+    <string name="steam_chat_delete_with_messages">Xóa tin nhắn</string>
+    <string name="steam_chat_delete_with_messages_hint">Đồng thời xóa tin nhắn được lưu trong bộ nhớ đệm trên thiết bị này.</string>
+    <string name="steam_chat_delete_title_many">Xóa %1$d cuộc trò chuyện?</string>
+    <string name="steam_chat_delete_cancel">Hủy</string>
+    <string name="steam_chat_selection_count">Đã chọn %1$d</string>
+    <string name="steam_chat_selection_cancel">Hủy chọn</string>
+    <string name="steam_chat_selection_hint">Vuốt cuộc trò chuyện sang phải để chọn nhiều mục</string>
+</resources>

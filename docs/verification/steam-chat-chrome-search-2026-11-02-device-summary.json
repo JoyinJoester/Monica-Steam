@@ -1,0 +1,43 @@
+[
+  {
+    "source": "complete-device.txt",
+    "methods": [
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#directSearchRetainsMessagesAndDraftInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#groupSearchRetainsMessagesAndDraftInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles"
+    ],
+    "runnerSeconds": 97.887
+  },
+  {
+    "source": "regression-device.txt",
+    "methods": [
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest#chineseInkStaysAwayFromTheCircleAndSeamsAtEveryAvatarSize",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest#fourPhotosFillTheCorrectQuadrantsWithCentreCropping",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest#maskIsTransparentOutsideAndOpaqueInsideForEveryMemberCount",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest#transparentPhotosKeepAnOpaqueGroupTone",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest#cjkAvatarsRenderAt40_56_88DpInBothThemesAndLargeType",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest#memberRenameRefreshesBitmapWithoutAnAvatarUrlChange",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest#membersBeyondTheFourVisibleTilesDoNotChangeTheBitmap",
+      "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest#nativeInboxAvatarUsesItsOwnSlotAndDockAndUnreadRemainVisible",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#bottomEdgeLargeTypeAndKeyboardMenusRemainInsideTheWindow",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#cancelledPreferenceReadCannotRestoreThePreviousConversation",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#conversationTransitionSettlesWithoutTheLongScalePause",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#longPressMenuFollowsTheTouchPointInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#nativeTapDispatchHasNoGestureTimeout",
+      "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest#preferenceReadRunsOffTheUiThread",
+      "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest#bothDirectionsFollowTheFingerAndRevealActionsInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest#leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation",
+      "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest#narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress",
+      "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest#rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe",
+      "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest#shortAndCancelledGesturesSpringBackWithoutAction",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#lightThemeNativeTitleAndLongHistoryRemainInteractive",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#olderReadingAnchorSurvivesImeAndReopening",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+      "takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft"
+    ],
+    "runnerSeconds": 89.917
+  }
+]

@@ -327,6 +327,9 @@ class SteamChatViewModelTest {
         ) {
             threads[accountSteamId to partnerSteamId] = snapshot
         }
+        override fun removeThread(accountSteamId: String, partnerSteamId: String) {
+            threads.remove(accountSteamId to partnerSteamId)
+        }
     }
 
     private class FakeGateway : SteamChatGateway {

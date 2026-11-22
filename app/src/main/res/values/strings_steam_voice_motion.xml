@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_voice_status_connected">Voice chat · %1$d members</string>
+    <string name="steam_voice_status_waiting">Waiting for an answer</string>
+    <string name="steam_voice_status_reconnecting">Reconnecting</string>
+    <string name="steam_voice_status_connecting">Connecting voice chat</string>
+    <string name="steam_voice_status_members">%1$d members in voice chat</string>
+    <string name="steam_voice_status_channel">Voice channel</string>
+    <string name="steam_voice_status_joined">Joined voice chat</string>
+    <string name="steam_voice_status_empty">No members have joined</string>
+</resources>

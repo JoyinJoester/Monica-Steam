@@ -1,0 +1,176 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamR8ReflectionEntryTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.scanner.SteamR8ReflectionEntryTest:
+INSTRUMENTATION_STATUS: test=manifestRegistrarsAndWorkInputMergerRetainPublicConstructors
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamR8ReflectionEntryTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=manifestRegistrarsAndWorkInputMergerRetainPublicConstructors
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.pilot.SteamR8NativeTest:
+INSTRUMENTATION_STATUS: test=nativeOwnedGamesAcceptsMinimalSyntheticProtobuf
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeOwnedGamesAcceptsMinimalSyntheticProtobuf
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeMalformedPayloadAndMismatchedArraysReturnNullWithoutFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeMalformedPayloadAndMismatchedArraysReturnNullWithoutFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeWorkshopOrderingKeepsSignedScoresUnsignedIdsAndStableTies
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeWorkshopOrderingKeepsSignedScoresUnsignedIdsAndStableTies
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCmEncodeDecodePreservesHeaderUnicodeAndBody
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.pilot.SteamR8NativeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCmEncodeDecodePreservesHeaderUnicodeAndBody
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest:
+INSTRUMENTATION_STATUS: test=coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.IncompatibleClassChangeError: Class 'oc4' does not implement interface 'nt1' in call to 'java.lang.Object nt1.u(yd3, java.lang.Object)' (declaration of 'mte' appears in /data/app/~~lyfRe8Y5wCQN12U7jFoJmQ==/takagi.ru.monica.steamapp.toolchainpilot-da4K7sJe1wHNobLEhfrlOQ==/base.apk)
+	at mte.d(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:16)
+	at hg1.E(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:1)
+	at oc4.<init>(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:8)
+	at ise.e(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:19)
+	at nc5.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:87)
+	at qj1.c(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:39)
+	at qj1.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:9)
+	at aze.d(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:13)
+	at hf3.n(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:82)
+	at ym1.j(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:37)
+	at ym7.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:74)
+	at ym1.A(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:42)
+	at ud.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:115)
+	at og.setOnReadyForComposition(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:21)
+	at emd.b(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:12)
+	at emd.l(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:19)
+	at jl4.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:18)
+	at kl4.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:279)
+	at ud.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:86)
+	at og.onAttachedToWindow(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:253)
+	at android.view.View.dispatchAttachedToWindow(View.java:20812)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3490)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:2675)
+	at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:2179)
+	at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:8793)
+	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1037)
+	at android.view.Choreographer.doCallbacks(Choreographer.java:845)
+	at android.view.Choreographer.doFrame(Choreographer.java:780)
+	at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1022)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Process crashed while executing coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation(takagi.ru.monica.steam.scanner.SteamScannerReleaseActivityTest):
+java.lang.IncompatibleClassChangeError: Class 'oc4' does not implement interface 'nt1' in call to 'java.lang.Object nt1.u(yd3, java.lang.Object)' (declaration of 'mte' appears in /data/app/~~lyfRe8Y5wCQN12U7jFoJmQ==/takagi.ru.monica.steamapp.toolchainpilot-da4K7sJe1wHNobLEhfrlOQ==/base.apk)
+	at mte.d(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:16)
+	at hg1.E(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:1)
+	at oc4.<init>(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:8)
+	at ise.e(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:19)
+	at nc5.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:87)
+	at qj1.c(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:39)
+	at qj1.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:9)
+	at aze.d(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:13)
+	at hf3.n(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:82)
+	at ym1.j(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:37)
+	at ym7.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:74)
+	at ym1.A(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:42)
+	at ud.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:115)
+	at og.setOnReadyForComposition(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:21)
+	at emd.b(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:12)
+	at emd.l(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:19)
+	at jl4.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:18)
+	at kl4.a(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:279)
+	at ud.invoke(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:86)
+	at og.onAttachedToWindow(r8-map-id-a6b908f7ab28601072d76e68312d5b2189b7f91123afae963bb5ca40aaed5124:253)
+	at android.view.View.dispatchAttachedToWindow(View.java:20812)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3490)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3497)
+	at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:2675)
+	at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:2179)
+	at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:8793)
+	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1037)
+	at android.view.Choreographer.doCallbacks(Choreographer.java:845)
+	at android.view.Choreographer.doFrame(Choreographer.java:780)
+	at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1022)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=coldReleaseUnlocksTokenPageAllowsCameraAndReturnsThroughRealNavigation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: shortMsg=Process crashed.
+INSTRUMENTATION_CODE: 0

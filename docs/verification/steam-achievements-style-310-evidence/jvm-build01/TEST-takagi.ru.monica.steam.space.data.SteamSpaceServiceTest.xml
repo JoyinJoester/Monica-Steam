@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" tests="20" skipped="0" failures="1" errors="0" timestamp="2026-11-21T05:35:27.569Z" hostname="JOYIN" time="0.098">
+  <properties/>
+  <testcase name="missingSessionNeverStartsACmRequest" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.009"/>
+  <testcase name="mediaIsBatchedAndSensitivityIsPreservedWithoutExecutingContent" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.021"/>
+  <testcase name="repeatedAndPackedAppsDoNotTreatNonSteamGameIdAsAnApp" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="fullPageUsesOldestServerTimeAndBindsCursorToAccount" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.018"/>
+  <testcase name="truncatedWrongWireAndOversizedResponsesAreNotEmptySuccess" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.003"/>
+  <testcase name="sourceAndImageUrlsRejectCredentialRedirectAndHostConfusion" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="changedStatusIdentityIsPartialAndDeletedStatusIsOmitted" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.006"/>
+  <testcase name="unknownEventsPreserveServerTimeAndDoNotTurnIntoGameActivity" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="enrichmentNetworkFailureIsPartialButAuthenticationAndCancellationEscape" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.003"/>
+  <testcase name="officialWireContractUsesFixedNewsIdsButVarintStatusIdentity" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="invalidTimeAndActorAreNotInventedAndStillMarkPartial" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="expiredEnrichmentBudgetMakesNoFurtherRequests" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="singleGameActivityKeepsAllIdsWhenOnlySomeNamesResolve" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="aMixedHistoryResponseOutsideRequestedTimeIsRejectedBeforeEnrichment" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="boundedStatusEnrichmentKeepsUnloadedEventsAsPartial" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.007"/>
+  <testcase name="achievementTextComesOnlyFromMatchingAppAndNamedDisplayData" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.009">
+    <failure message="org.junit.ComparisonFailure: expected:&lt;https://[community.cloudflare.steamstatic.com/steamcommunity/public]/images/apps/570/92a...&gt; but was:&lt;https://[shared.akamai.steamstatic.com/community_assets]/images/apps/570/92a...&gt;" type="org.junit.ComparisonFailure">org.junit.ComparisonFailure: expected:&lt;https://[community.cloudflare.steamstatic.com/steamcommunity/public]/images/apps/570/92a...&gt; but was:&lt;https://[shared.akamai.steamstatic.com/community_assets]/images/apps/570/92a...&gt;
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.space.data.SteamSpaceServiceTest.achievementTextComesOnlyFromMatchingAppAndNamedDisplayData(SteamSpaceServiceTest.kt:124)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.runRequest(JUnitTestExecutor.java:174)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:84)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:47)
+	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestDefinitionProcessor.processTestDefinition(AbstractJUnitTestDefinitionProcessor.java:65)
+	at org.gradle.api.internal.tasks.testing.SuiteTestDefinitionProcessor.processTestDefinition(SuiteTestDefinitionProcessor.java:53)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.processTestDefinition(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:178)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
+  <testcase name="duplicateRowsCollapseButDifferentPublishedFilesRemainDistinct" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="gameNamesAreReadInOneBatchAndUnrelatedOrFailedIdsAreIgnored" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="privateDeletedBannedOrMisattributedMediaNeverReleasesPreview" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="achievementIconAcceptsCdnUrlsAndConfinesFilenamesToTheirGame" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

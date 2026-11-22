@@ -1,0 +1,1 @@
+/sdcard/Android/data/takagi.ru.monica.steamapp.sharedcollections/files/collections-page/: 12 files pulled, 0 skipped. 21.7 MB/s (1495421 bytes in 0.066s)

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationHistoryTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatNotificationPresentationGuardTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

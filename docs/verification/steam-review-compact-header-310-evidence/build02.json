@@ -1,0 +1,25 @@
+{
+  "exitCode": 1,
+  "seconds": 493.7452073999448,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx8g -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261121-steam-review-compact-header\\device.gradle",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.steam.store.SteamStoreReviewTest",
+    "--tests",
+    "takagi.ru.monica.steam.store.SteamStoreReviewServiceTest",
+    "--tests",
+    "takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.library.SteamAchievementImagesTest"
+  ]
+}

@@ -26,7 +26,7 @@ class SteamLibraryFilterUiGuardTest {
         assertTrue(sheet.contains("SteamLibraryAchievementStatusFilter.entries"))
         assertTrue(sheet.contains("SteamLibraryPlaytimeFilter.entries"))
         assertTrue(sheet.contains("SteamLibrarySortOrder.entries"))
-        assertTrue(sheet.contains("Modifier.heightIn(min = 48.dp)"))
+        assertTrue(sheet.contains("heightIn(min = 48.dp)"))
         assertTrue(preferences.contains("account_${'$'}{accountId ?: 0L}_"))
     }
 

@@ -3623,4 +3623,15 @@
     <string name="extensions_steam_settings">Steam</string>
     <string name="steam_mini_profile_background_title">Фон мини-профиля</string>
     <string name="steam_mini_profile_background_description">Показывать фон мини-профиля Steam на карточках токена и аккаунта. Анимация работает только на экране, размер кэша ограничен 64 МБ.</string>
+    <string name="steam_chat_background_section">Чат Steam</string>
+    <string name="steam_chat_background_title">Уведомления о сообщениях</string>
+    <string name="steam_chat_background_description">Уведомляет о сообщениях от друзей, без уведомлений о состоянии подключения. Если система завершит процесс приложения, откройте его снова для возобновления получения сообщений.</string>
+    <string name="steam_chat_background_permission_required">Для уведомлений о сообщениях требуется разрешение на уведомления.</string>
+    <string name="steam_chat_background_start_failed">Не удалось включить уведомления о сообщениях.</string>
+    <string name="steam_chat_background_target_unavailable">Аккаунт Steam для этого уведомления больше недоступен.</string>
+
+    <string name="steam_store_price_buy">%1$s · Купить</string>
+    <string name="steam_store_offer_days">Осталось %1$d дн.</string>
+    <string name="steam_store_offer_hours">Осталось %1$d ч.</string>
+    <string name="steam_store_offer_minutes">Осталось %1$d мин.</string>
 </resources>

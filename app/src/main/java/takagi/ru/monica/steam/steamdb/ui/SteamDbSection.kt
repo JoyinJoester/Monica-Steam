@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.steamdb.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
 import android.content.ActivityNotFoundException
 import android.widget.Toast
 import androidx.compose.foundation.layout.*

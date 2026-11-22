@@ -7,19 +7,16 @@ import org.junit.Test
 
 class SteamChatNotificationPresentationGuardTest {
     @Test
-    fun foregroundServiceNotificationIsSilentAndDoesNotAdvertiseListeningState() {
-        val publisher = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationPublisher.kt"
-        ).readText()
-        val foreground = publisher
-            .substringAfter("fun foregroundNotification(")
-            .substringBefore("fun updateForeground(")
-
-        assertFalse(foreground.contains("steam_chat_background_connected"))
-        assertTrue(foreground.contains("FOREGROUND_SERVICE_DEFERRED"))
-        assertTrue(foreground.contains("setShowWhen(false)"))
+    fun connectionNotificationsCannotBeCreatedAndLegacyChannelsAreRetired() {
+        val publisher = projectFile("app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationPublisher.kt").readText()
+        assertFalse(publisher.contains("fun foregroundNotification("))
+        assertFalse(publisher.contains("fun updateForeground("))
+        assertFalse(publisher.contains("setOngoing("))
+        assertFalse(publisher.contains("FOREGROUND_SERVICE_DEFERRED"))
+        assertTrue(publisher.contains("notificationManager.cancel(LEGACY_SERVICE_NOTIFICATION_ID)"))
+        assertTrue(publisher.contains("deleteNotificationChannel"))
         assertTrue(publisher.contains("steam_chat_background_runtime_v2"))
-        assertTrue(publisher.contains("setShowBadge(false)"))
+        assertTrue(publisher.contains("steam_chat_background_service"))
     }
 
     @Test
@@ -40,7 +37,7 @@ class SteamChatNotificationPresentationGuardTest {
     @Test
     fun failedNotificationPostsReleaseTheirDeduplicationClaim() {
         val service = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundService.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationMonitor.kt"
         ).readText()
         val processMessage = service
             .substringAfter("private suspend fun processMessage(")
@@ -49,9 +46,11 @@ class SteamChatNotificationPresentationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundPreferences.kt"
         ).readText()
 
-        assertTrue(processMessage.contains("val published ="))
+        assertTrue(processMessage.contains("var published = false"))
         assertTrue(processMessage.contains("preferences.releaseNotification(decision.identity)"))
-        assertTrue(processMessage.contains("chat_background_notify failed"))
+        assertTrue(processMessage.contains("ensureActive()"))
+        assertTrue(processMessage.contains("withContext(NonCancellable)"))
+        assertTrue(processMessage.contains("chat_notification_notify failed"))
         assertTrue(preferences.contains("suspend fun releaseNotification("))
     }
 

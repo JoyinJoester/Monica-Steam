@@ -1,0 +1,5 @@
+[
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/collections/SteamCollectionsUiTest.kt"
+]

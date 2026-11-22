@@ -1,0 +1,19 @@
+{
+  "version": "1.0.310",
+  "versionCode": 18,
+  "jvmMethods": 29,
+  "nativeDistinctMethods": 42,
+  "nativeSystemFontRepeatMethods": 2,
+  "mainSha256": "71a0da983f4be9d1cf18faa872bc15563e9c80cb818b9fc62fbfd7ff03cfee32",
+  "testSha256": "734f708c0e8f5ba332de46bdd7cef936fa2896387c626f72f022f5d3c98de4de",
+  "deviceRunnerSeconds": 54.249,
+  "systemFontRunnerSeconds": 4.871,
+  "compiledSourceUnchanged": true,
+  "syntheticOnly": true,
+  "cloudCoreUnchanged": true,
+  "cleanupComplete": true,
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

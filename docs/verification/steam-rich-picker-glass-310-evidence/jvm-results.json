@@ -1,0 +1,23 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+    "tests": "29",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

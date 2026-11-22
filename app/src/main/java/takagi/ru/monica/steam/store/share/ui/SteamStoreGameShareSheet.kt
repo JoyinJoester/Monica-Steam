@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.share.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -73,77 +78,27 @@ internal fun SteamStoreGameShareSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.84f)
-                .navigationBarsPadding()
+
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-                Surface(
-                    modifier = Modifier.size(52.dp),
-                    shape = RoundedCornerShape(18.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(Icons.Default.SportsEsports, contentDescription = null)
+            SteamSheetHeader(
+                title = stringResource(R.string.steam_store_share_title),
+                subtitle = share.name, onDismiss = onDismiss,
+                actions = {
+                    IconButton(onClick = onRefresh, enabled = !friendsState.loading && !friendsState.refreshing) {
+                        Icon(Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
                 }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.steam_store_share_title),
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = share.name,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-                IconButton(
-                    onClick = onRefresh,
-                    enabled = !friendsState.loading && !friendsState.refreshing
-                ) {
-                    Icon(
-                        Icons.Default.Refresh,
-                        contentDescription = stringResource(R.string.steam_store_share_refresh)
-                    )
-                }
-            }
-            FilledTonalButton(
-                onClick = onShareExternal,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 8.dp)
-                    .heightIn(min = 52.dp),
-                shape = RoundedCornerShape(18.dp)
-            ) {
-                Icon(Icons.Default.Share, contentDescription = null)
-                Text(
-                    text = stringResource(R.string.steam_store_share_external),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
-                singleLine = true,
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                placeholder = { Text(stringResource(R.string.steam_store_share_search_hint)) },
-                shape = RoundedCornerShape(18.dp)
             )
+            SteamSheetSearchField(query, { query = it }, stringResource(R.string.steam_store_share_search_hint),
+                Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
             when {
                 friendsState.loading && friendsState.friends.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().weight(1f),
                     contentAlignment = Alignment.Center
                 ) { CircularProgressIndicator() }
                 friendsState.failure != null && friendsState.friends.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -152,7 +107,7 @@ internal fun SteamStoreGameShareSheet(
                     )
                 }
                 friends.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -163,14 +118,14 @@ internal fun SteamStoreGameShareSheet(
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxWidth().weight(1f),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(friends, key = SteamFriend::steamId) { friend ->
+                    itemsIndexed(friends, key = { _, friend -> friend.steamId }) { index, friend ->
                         Surface(
                             onClick = { onOpenChat(friend) },
                             modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp),
-                            shape = RoundedCornerShape(20.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainerLow
+                            shape = steamSheetRowShape(index, friends.size),
+                            color = steamSheetGroupColor()
                         ) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
@@ -195,6 +150,14 @@ internal fun SteamStoreGameShareSheet(
                             }
                         }
                     }
+                }
+            }
+            SteamSheetFooter {
+                FilledTonalButton(onClick = onShareExternal,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                    shape = RoundedCornerShape(28.dp)) {
+                    Icon(Icons.Default.Share, contentDescription = null)
+                    Text(stringResource(R.string.steam_store_share_external), Modifier.padding(start = 8.dp))
                 }
             }
         }

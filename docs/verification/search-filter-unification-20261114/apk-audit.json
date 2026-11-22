@@ -1,0 +1,113 @@
+{
+  "productionR8": {
+    "sha256": "5f73b96b9ea614361591f73eb848913514f4a17354f969ddc025b50b65d4852a",
+    "bytes": 34016854,
+    "packageLine": "package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+    "debuggable": false,
+    "internet": true,
+    "nativeCode": "native-code: 'x86_64'"
+  },
+  "fixture": {
+    "sha256": "aab61568b9dd1678fc98d2ef904441366242d3ed8b783f21c2f068dcf01058c3",
+    "bytes": 89706073,
+    "packageLine": "package: name='takagi.ru.monica.steamapp.searchfilters' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+    "debuggable": true,
+    "internet": false,
+    "nativeCode": "native-code: 'x86_64'"
+  },
+  "test": {
+    "sha256": "1efeb8d473a9d715d9dfca855a01b4d77b60e3e39b6d8edd85f94d721e6e715c",
+    "bytes": 2336202,
+    "packageLine": "package: name='takagi.ru.monica.steamapp.searchfilters.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+    "debuggable": true,
+    "internet": false,
+    "nativeCode": null
+  },
+  "native": {
+    "lib/x86_64/libandroidx.graphics.path.so": {
+      "production": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0",
+      "fixture": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0"
+    },
+    "lib/x86_64/libargon2jni.so": {
+      "production": "053e720a1b1df8e814d479600f9fa3e71556da5f674687cb72f0bd0651286dbf",
+      "fixture": "053e720a1b1df8e814d479600f9fa3e71556da5f674687cb72f0bd0651286dbf"
+    },
+    "lib/x86_64/libargon2native.so": {
+      "production": "89d0c70653791539ac67e0f1ad123d49c0fbd8986f7775bf108e7dbc7d21e2d2",
+      "fixture": "89d0c70653791539ac67e0f1ad123d49c0fbd8986f7775bf108e7dbc7d21e2d2"
+    },
+    "lib/x86_64/libbarhopper_v3.so": {
+      "production": "6c5deea87d962af008fd48c3229db13ab68eef2e9feeccb2df5b33a920c0579a",
+      "fixture": "6c5deea87d962af008fd48c3229db13ab68eef2e9feeccb2df5b33a920c0579a"
+    },
+    "lib/x86_64/libdatastore_shared_counter.so": {
+      "production": "537b910d1601ba234dfe17228bf22a48e5336529cf00796213bcc1a7e0e8367a",
+      "fixture": "537b910d1601ba234dfe17228bf22a48e5336529cf00796213bcc1a7e0e8367a"
+    },
+    "lib/x86_64/libimage_processing_util_jni.so": {
+      "production": "112703727717651e69e91f3ea2c3c2311737ee5809a909c9d342a811b6c7c069",
+      "fixture": "112703727717651e69e91f3ea2c3c2311737ee5809a909c9d342a811b6c7c069"
+    },
+    "lib/x86_64/libjnidispatch.so": {
+      "production": "288eafff19a70e833498201071c3d724f03f32ee8ff64a14fca50b57d975db70",
+      "fixture": "288eafff19a70e833498201071c3d724f03f32ee8ff64a14fca50b57d975db70"
+    },
+    "lib/x86_64/libmdbx_ffi.so": {
+      "production": "c9d0f94503db9429b3e1c4f2468a29af0641ca6ac216e972aff919eee2fa341a",
+      "fixture": "c9d0f94503db9429b3e1c4f2468a29af0641ca6ac216e972aff919eee2fa341a"
+    },
+    "lib/x86_64/libmonica_steam_android.so": {
+      "production": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d",
+      "fixture": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d"
+    },
+    "lib/x86_64/libsurface_util_jni.so": {
+      "production": "e5311942b4fce0f7f2505d41150cf9921e558a6368929cb73127450f74dd4fe4",
+      "fixture": "e5311942b4fce0f7f2505d41150cf9921e558a6368929cb73127450f74dd4fe4"
+    },
+    "lib/x86_64/libzstd-jni-1.5.7-3.so": {
+      "production": "543898ed84da9d48ff92665e1d4a6dad3fb001f96ea3044c97690534e4d27bb4",
+      "fixture": "543898ed84da9d48ff92665e1d4a6dad3fb001f96ea3044c97690534e4d27bb4"
+    }
+  },
+  "mapping": {
+    "bytes": 220186107,
+    "sha256": "8c3b0ac69a1fa7540d88c3e37e0282784a1187370de1df348db4f7444f5eb1f8"
+  },
+  "metadata": {
+    "version": 3,
+    "artifactType": {
+      "type": "APK",
+      "kind": "Directory"
+    },
+    "applicationId": "takagi.ru.monica.steamapp",
+    "variantName": "debug",
+    "elements": [
+      {
+        "type": "SINGLE",
+        "filters": [],
+        "attributes": [],
+        "versionCode": 18,
+        "versionName": "1.0.310",
+        "outputFile": "Monica-Steam-Android-x86_64-1.0.310-26111418-46.APK"
+      }
+    ],
+    "elementType": "File",
+    "baselineProfiles": [
+      {
+        "minApi": 28,
+        "maxApi": 30,
+        "baselineProfiles": [
+          "baselineProfiles/1/Monica-Steam-Android-x86_64-1.0.310-26111418-46.dm"
+        ]
+      },
+      {
+        "minApi": 31,
+        "maxApi": 2147483647,
+        "baselineProfiles": [
+          "baselineProfiles/0/Monica-Steam-Android-x86_64-1.0.310-26111418-46.dm"
+        ]
+      }
+    ],
+    "minSdkVersionForDexing": 26
+  }
+}

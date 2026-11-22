@@ -1,6 +1,11 @@
 package takagi.ru.monica.steam.store.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
+import takagi.ru.monica.steam.navigation.steamPageTransition
+import takagi.ru.monica.ui.LocalReduceAnimations
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,19 +42,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -58,8 +63,10 @@ import takagi.ru.monica.steam.store.domain.*
 import java.text.DateFormat
 import java.util.Date
 import takagi.ru.monica.R
-import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
-import takagi.ru.monica.steam.navigation.ui.steamDockActionClearance
+import takagi.ru.monica.steam.navigation.SteamDockStyle
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamDesignStyle
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
+import takagi.ru.monica.steam.navigation.ui.steamWindowBottomPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,7 +87,8 @@ fun SteamNativeCartScreen(
     onOpenWishlistItem: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dockContentClearance = LocalSteamDockContentClearance.current
+    val reduceAnimations = LocalReduceAnimations.current
+    val liquid = LocalSteamDesignStyle.current == SteamDockStyle.LIQUID_GLASS
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -171,7 +179,8 @@ fun SteamNativeCartScreen(
                 SteamCheckoutBar(
                     items = cartItems,
                     onCheckout = onCheckout,
-                    modifier = Modifier.steamDockActionClearance()
+                    liquid = liquid,
+                    modifier = Modifier.steamWindowBottomPadding()
                 )
             }
         }
@@ -181,6 +190,7 @@ fun SteamNativeCartScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
+            transitionSpec = { steamPageTransition(reduceAnimations, forward = targetState.ordinal > initialState.ordinal) },
             label = "SteamStoreCollectionTab"
         ) { tab ->
             when (tab) {
@@ -196,8 +206,7 @@ fun SteamNativeCartScreen(
                     error = wishlistError,
                     onRefresh = onRefreshWishlist,
                     onOpenItem = onOpenWishlistItem,
-                    bottomContentPadding = dockContentClearance +
-                        SteamStoreLayoutTokens.CollectionBottomSpacing
+                    bottomContentPadding = SteamStoreLayoutTokens.CollectionBottomSpacing
                 )
             }
         }
@@ -556,16 +565,23 @@ private fun SteamCollectionEmptyState(
 private fun SteamCheckoutBar(
     items: List<SteamCartItem>,
     onCheckout: () -> Unit,
+    liquid: Boolean,
     modifier: Modifier = Modifier
 ) {
     val currency = items.map { it.currency }.distinct().singleOrNull()
     val total = steamCartTotalCents(items)
     val giftCount = items.count { it.giftRecipient != null }
+    val shape = if (liquid) RoundedCornerShape(28.dp) else RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+    val surface = MaterialTheme.colorScheme.surfaceContainerHigh
     Surface(
-        modifier = modifier,
-        tonalElevation = 5.dp,
-        shadowElevation = 6.dp,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh
+        modifier = modifier.fillMaxWidth().testTag("steam-cart-checkout").then(
+            if (liquid) Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                .steamGlassSurface(shape, surface) else Modifier
+        ),
+        shape = shape,
+        border = if (liquid) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .6f)) else null,
+        color = if (liquid) Color.Transparent else surface,
+        contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         Column(
             modifier = Modifier
@@ -601,8 +617,8 @@ private fun SteamCheckoutBar(
                 Button(
                     onClick = onCheckout,
                     enabled = items.any { it.packageId != null },
-                    modifier = Modifier.heightIn(min = 56.dp),
-                    shape = RoundedCornerShape(20.dp),
+                    modifier = Modifier.heightIn(min = 48.dp),
+                    shape = if (liquid) CircleShape else RoundedCornerShape(16.dp),
                     contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp)
                 ) {
                     Icon(Icons.Default.Lock, contentDescription = null)
@@ -610,7 +626,6 @@ private fun SteamCheckoutBar(
                     Text(stringResource(R.string.steam_store_checkout))
                 }
             }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             if (giftCount > 0) {
                 Text(
                     text = stringResource(R.string.steam_store_gift_checkout_summary, giftCount),

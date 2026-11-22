@@ -1,0 +1,207 @@
+[
+  {
+    "path": "build01.json",
+    "rawSha256": "1b1cca446dd0d0d2ea9078a561c559ebfffc83bf43623510c28470238d2ccd17",
+    "normalizedSha256": "1b1cca446dd0d0d2ea9078a561c559ebfffc83bf43623510c28470238d2ccd17"
+  },
+  {
+    "path": "build01.txt",
+    "rawSha256": "603464552739a90e26b2aa9edd5e424106aa64a94327c5bfaa721282840ea185",
+    "normalizedSha256": "88aaefc041e1efec932336f869a7420d24ffb52bc9e28382cd5ca471903ebd51"
+  },
+  {
+    "path": "build02.json",
+    "rawSha256": "fa25ffd133171b2957e16dddfc63d7c81e187d140e25addf01deb3d99d9f3446",
+    "normalizedSha256": "fa25ffd133171b2957e16dddfc63d7c81e187d140e25addf01deb3d99d9f3446"
+  },
+  {
+    "path": "build02.txt",
+    "rawSha256": "c3b2a1952557722d137a3e74395d23a7a220312970f319261323a1737af704ec",
+    "normalizedSha256": "fdb59dab86aadb13db7462f68b9cb70981f3737789bd37ccfdaad29d47c54297"
+  },
+  {
+    "path": "cdn-check.json",
+    "rawSha256": "e53a3261f22ddfcd898028ede85bae09e36a09ba443d4144e2dab6499551e7e7",
+    "normalizedSha256": "e53a3261f22ddfcd898028ede85bae09e36a09ba443d4144e2dab6499551e7e7"
+  },
+  {
+    "path": "cleanup.json",
+    "rawSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924",
+    "normalizedSha256": "3905326090a868328451e9c1cbae78cd4a3ec69ba005385a920e3f4ab6166924"
+  },
+  {
+    "path": "compiled-resource-check.json",
+    "rawSha256": "f80434baddb963bc41e8c0cf5c0c795f6f8bd187f476180cb3452c4d1a3f0709",
+    "normalizedSha256": "f80434baddb963bc41e8c0cf5c0c795f6f8bd187f476180cb3452c4d1a3f0709"
+  },
+  {
+    "path": "device-results.json",
+    "rawSha256": "cce83f32f071aaa72cc511fc25337001ac6720d9ba5cf3dad2fc03675abf7937",
+    "normalizedSha256": "cce83f32f071aaa72cc511fc25337001ac6720d9ba5cf3dad2fc03675abf7937"
+  },
+  {
+    "path": "device01.txt",
+    "rawSha256": "386caa6ffe13a39a5a734bc7aa4a9efc78324f3c99cae81f39c690405ba2b74d",
+    "normalizedSha256": "386caa6ffe13a39a5a734bc7aa4a9efc78324f3c99cae81f39c690405ba2b74d"
+  },
+  {
+    "path": "device02-install-before-ready.txt",
+    "rawSha256": "d120c07932dff31f88d96d257b9d37aab9292b2e88f856c8c76685065bc071a3",
+    "normalizedSha256": "d120c07932dff31f88d96d257b9d37aab9292b2e88f856c8c76685065bc071a3"
+  },
+  {
+    "path": "device03.txt",
+    "rawSha256": "28c6ceb66e5c99c38e5addd71c1c6de6d121a4e1b94259c8cdd487f1c61d3510",
+    "normalizedSha256": "28c6ceb66e5c99c38e5addd71c1c6de6d121a4e1b94259c8cdd487f1c61d3510"
+  },
+  {
+    "path": "frozen-apks.json",
+    "rawSha256": "966b06900187b9af02b2291406addf9a515db8cbbf192eea9f31b0f14c54245c",
+    "normalizedSha256": "966b06900187b9af02b2291406addf9a515db8cbbf192eea9f31b0f14c54245c"
+  },
+  {
+    "path": "jvm-results.json",
+    "rawSha256": "fee596d3fe822ecf3560e77fdd502bebaa9d3c172a38e075fba0e86cf71c44e9",
+    "normalizedSha256": "fee596d3fe822ecf3560e77fdd502bebaa9d3c172a38e075fba0e86cf71c44e9"
+  },
+  {
+    "path": "jvm02.json",
+    "rawSha256": "5914b2b27fe8bda5badb14e59b631e61e0aceb82391afb0d3a27910bbf235c78",
+    "normalizedSha256": "5914b2b27fe8bda5badb14e59b631e61e0aceb82391afb0d3a27910bbf235c78"
+  },
+  {
+    "path": "jvm02.txt",
+    "rawSha256": "ceb8d63e94f1e424c38fe0d495465a07f20fa320d0e10d8e6573278dbf283f03",
+    "normalizedSha256": "25c2a5dcbdfcb1fa63f0a17679fefa61d1459f470a3857b1fda3d88d33ea8b5d"
+  },
+  {
+    "path": "regression01.txt",
+    "rawSha256": "5dbdc2bd492ac1387112c997eb527c1ad52581f2c2c367f7f3634e5e8eab3980",
+    "normalizedSha256": "5dbdc2bd492ac1387112c997eb527c1ad52581f2c2c367f7f3634e5e8eab3980"
+  },
+  {
+    "path": "regression02.txt",
+    "rawSha256": "fb89d122b9ed6d2d81f30a7b88ff3f7a0251e45610d004ebe8bbe47d87121508",
+    "normalizedSha256": "fb89d122b9ed6d2d81f30a7b88ff3f7a0251e45610d004ebe8bbe47d87121508"
+  },
+  {
+    "path": "source-hashes-build02.json",
+    "rawSha256": "62c9491e3c9b37fd45b2bcf782cc82bffc5f244a113934a9f8db5ea6752c61ff",
+    "normalizedSha256": "62c9491e3c9b37fd45b2bcf782cc82bffc5f244a113934a9f8db5ea6752c61ff"
+  },
+  {
+    "path": "build03.txt",
+    "rawSha256": "e18e0688ed69377608cb00cb07c8998ccb628b4c07058f05cb778e9838aabd9e",
+    "normalizedSha256": "5c816d79ee8685e51dc53d701147d878ab013440cfd950b0524f58d7abca3d78"
+  },
+  {
+    "path": "build03.json",
+    "rawSha256": "2cf58571fb10e8a5bd9ac2ff687aa2401c8e874c933793459d9b93f69f1deb0a",
+    "normalizedSha256": "2cf58571fb10e8a5bd9ac2ff687aa2401c8e874c933793459d9b93f69f1deb0a"
+  },
+  {
+    "path": "device03.json",
+    "rawSha256": "907dc3e5256613aa081a0b0e28cf363186924b5ed4bd238f4781335b33bd8a80",
+    "normalizedSha256": "907dc3e5256613aa081a0b0e28cf363186924b5ed4bd238f4781335b33bd8a80"
+  },
+  {
+    "path": "device04.txt",
+    "rawSha256": "21e078d10472f02bd9ec2adbb3a0631f7cb0b86d39936353017affc120de307c",
+    "normalizedSha256": "21e078d10472f02bd9ec2adbb3a0631f7cb0b86d39936353017affc120de307c"
+  },
+  {
+    "path": "device04.json",
+    "rawSha256": "ccb560a734b466336d54bff4521753d2f74a64d999421cfa91fdf279c5f0426d",
+    "normalizedSha256": "ccb560a734b466336d54bff4521753d2f74a64d999421cfa91fdf279c5f0426d"
+  },
+  {
+    "path": "regression03.txt",
+    "rawSha256": "cd024d7123b0e277ad2f69bdf740b85c258078f65cd90d92828c38bd0a6f41c6",
+    "normalizedSha256": "cd024d7123b0e277ad2f69bdf740b85c258078f65cd90d92828c38bd0a6f41c6"
+  },
+  {
+    "path": "regression03.json",
+    "rawSha256": "414f20411a12391b3c78bc5981b53095b395fb95d54c4e701a41eeb1ac0039ef",
+    "normalizedSha256": "414f20411a12391b3c78bc5981b53095b395fb95d54c4e701a41eeb1ac0039ef"
+  },
+  {
+    "path": "source-hashes-build03.json",
+    "rawSha256": "7411cf8a9b417f1d17c2704c1351aa06c94e3b84792b76fa452e4f152dc82353",
+    "normalizedSha256": "7411cf8a9b417f1d17c2704c1351aa06c94e3b84792b76fa452e4f152dc82353"
+  },
+  {
+    "path": "jvm-build01/TEST-takagi.ru.monica.steam.library.RustAchievementDetailsParserTest.xml",
+    "rawSha256": "e403c6165acbdc9df0240e91682ddd84d38166fa879a39ebc4f2984c6fb4c309",
+    "normalizedSha256": "e403c6165acbdc9df0240e91682ddd84d38166fa879a39ebc4f2984c6fb4c309"
+  },
+  {
+    "path": "jvm-build01/TEST-takagi.ru.monica.steam.library.SteamAchievementImagesTest.xml",
+    "rawSha256": "c9fb20a142f970add5447073711cb057087bc8e6a6740b5b7f4ba3f9558b4bf5",
+    "normalizedSha256": "c9fb20a142f970add5447073711cb057087bc8e6a6740b5b7f4ba3f9558b4bf5"
+  },
+  {
+    "path": "jvm-build01/TEST-takagi.ru.monica.steam.library.SteamAchievementSetsTest.xml",
+    "rawSha256": "761de28c9e94123a025dfaa031272ddae0c5c6eddb508e76e5d6a7a23e4698e1",
+    "normalizedSha256": "761de28c9e94123a025dfaa031272ddae0c5c6eddb508e76e5d6a7a23e4698e1"
+  },
+  {
+    "path": "jvm-build01/TEST-takagi.ru.monica.steam.space.data.SteamSpaceServiceTest.xml",
+    "rawSha256": "c0bebf15629a1407f5bc86ae29828ec10f62c487078afd5d35639c0ef4a06d7e",
+    "normalizedSha256": "c0bebf15629a1407f5bc86ae29828ec10f62c487078afd5d35639c0ef4a06d7e"
+  },
+  {
+    "path": "jvm-build01/TEST-takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest.xml",
+    "rawSha256": "9d9b9929791dce8095ab4a1be46c1845f72cecd1fd77f99abdaefedb79bf0671",
+    "normalizedSha256": "9d9b9929791dce8095ab4a1be46c1845f72cecd1fd77f99abdaefedb79bf0671"
+  },
+  {
+    "path": "jvm-build02/TEST-takagi.ru.monica.steam.library.RustAchievementDetailsParserTest.xml",
+    "rawSha256": "831a221e4c539235d7b65b558713f1f3df7ba6571e389f99afb5408ed6e597b3",
+    "normalizedSha256": "831a221e4c539235d7b65b558713f1f3df7ba6571e389f99afb5408ed6e597b3"
+  },
+  {
+    "path": "jvm-build02/TEST-takagi.ru.monica.steam.library.SteamAchievementImagesTest.xml",
+    "rawSha256": "d5428d0ecf8ced1a547fef9eca31174e0cbe25d50f45dc9e2624f1df08efc968",
+    "normalizedSha256": "d5428d0ecf8ced1a547fef9eca31174e0cbe25d50f45dc9e2624f1df08efc968"
+  },
+  {
+    "path": "jvm-build02/TEST-takagi.ru.monica.steam.library.SteamAchievementSetsTest.xml",
+    "rawSha256": "32a58bfdbcd2c1dac72a5dc2bc3e0435873128dc1f3ceca8680004071063bd08",
+    "normalizedSha256": "32a58bfdbcd2c1dac72a5dc2bc3e0435873128dc1f3ceca8680004071063bd08"
+  },
+  {
+    "path": "jvm-build02/TEST-takagi.ru.monica.steam.space.data.SteamSpaceServiceTest.xml",
+    "rawSha256": "078ba289f37b4739324b3be9a31249a677622932e26f68f4c206ce99f39bd0c6",
+    "normalizedSha256": "078ba289f37b4739324b3be9a31249a677622932e26f68f4c206ce99f39bd0c6"
+  },
+  {
+    "path": "jvm-build02/TEST-takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest.xml",
+    "rawSha256": "3ffcd6fe7e34812bec380772bdf8758ef41351266c3aa66720d381adc9d0abe6",
+    "normalizedSha256": "3ffcd6fe7e34812bec380772bdf8758ef41351266c3aa66720d381adc9d0abe6"
+  },
+  {
+    "path": "jvm-build03/TEST-takagi.ru.monica.steam.library.RustAchievementDetailsParserTest.xml",
+    "rawSha256": "1fbae463d5eb1d25e46b598fa76e39c35292ec3b00a4c856a9044df834c0bbb2",
+    "normalizedSha256": "1fbae463d5eb1d25e46b598fa76e39c35292ec3b00a4c856a9044df834c0bbb2"
+  },
+  {
+    "path": "jvm-build03/TEST-takagi.ru.monica.steam.library.SteamAchievementImagesTest.xml",
+    "rawSha256": "b6c88fee1e1e55febf8883df4a4773e4bdc284a936d300f820babc663390946a",
+    "normalizedSha256": "b6c88fee1e1e55febf8883df4a4773e4bdc284a936d300f820babc663390946a"
+  },
+  {
+    "path": "jvm-build03/TEST-takagi.ru.monica.steam.library.SteamAchievementSetsTest.xml",
+    "rawSha256": "d3f08da6137e5324139d099c3015c355fdeeab4132e8c3528d6eb21338c8bc79",
+    "normalizedSha256": "d3f08da6137e5324139d099c3015c355fdeeab4132e8c3528d6eb21338c8bc79"
+  },
+  {
+    "path": "jvm-build03/TEST-takagi.ru.monica.steam.space.data.SteamSpaceServiceTest.xml",
+    "rawSha256": "5e94a6c275342726b19718d11a414334fea936cb684eb6d8e8950d9103af2aa6",
+    "normalizedSha256": "5e94a6c275342726b19718d11a414334fea936cb684eb6d8e8950d9103af2aa6"
+  },
+  {
+    "path": "jvm-build03/TEST-takagi.ru.monica.steam.store.ui.SteamGamePersonalStatsTest.xml",
+    "rawSha256": "f1e588c7c03c95e23c8629da4d47bb3701377b8e1f9676b98cc5b1dd58142daa",
+    "normalizedSha256": "f1e588c7c03c95e23c8629da4d47bb3701377b8e1f9676b98cc5b1dd58142daa"
+  }
+]

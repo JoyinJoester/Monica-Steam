@@ -106,6 +106,33 @@ class SteamGameLibraryService internal constructor(
         )
     }
 
+    /** Player activity only: do not fetch prices or enumerate family licenses for one detail page. */
+    internal fun fetchPlayerGame(account: SteamAccount, appId: Int, language: String): SteamLibraryResult<SteamGame?> {
+        val token = account.accessToken?.takeIf(String::isNotBlank)
+            ?: return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
+        if (!account.hasRealSteamId || appId <= 0) {
+            return SteamLibraryResult.Failure(SteamLibraryFailureReason.SESSION_REQUIRED)
+        }
+        return runCatching {
+            val owned = fetchOwnedGamesWithNetworkFallback(account, language, token)
+            owned.games.firstOrNull { it.appId == appId }?.let {
+                return@runCatching SteamLibraryResult.Success(it)
+            }
+            val activity = SteamLibraryPlaytimeService(owned.api).fetch(account, setOf(appId))
+            if (appId in activity.unavailableAppIds) {
+                SteamLibraryResult.Failure(SteamLibraryFailureReason.NETWORK)
+            } else {
+                SteamLibraryResult.Success(activity.items[appId]?.let { playtime ->
+                    // A missing total is not a confirmed zero-hour record.
+                    playtime.totalMinutes?.let { total ->
+                        SteamGame(appId, "", total, playtime.recentMinutes,
+                            lastPlayedAt = playtime.lastPlayedAt ?: 0L)
+                    }
+                })
+            }
+        }.getOrElse { mapFailure(it) }
+    }
+
     private fun fetchOwnedGamesWithNetworkFallback(
         account: SteamAccount,
         language: String,
@@ -831,15 +858,20 @@ class SteamGameLibraryService internal constructor(
                         achieved = status?.first == true,
                         unlockTimeSeconds = status?.second,
                         iconUrl = definition[4]?.asString?.takeIf(String::isNotBlank),
-                        lockedIconUrl = definition[5]?.asString?.takeIf(String::isNotBlank)
+                        lockedIconUrl = definition[5]?.asString?.takeIf(String::isNotBlank),
+                        groupId = definition[11]?.asLong ?: 0L,
+                        archived = definition[12]?.asBool == true,
+                        hidden = definition[6]?.asBool == true
                     )
                 }
                 .toList()
+            val sets = SteamAchievementSetsParser.parse(definitionsResponse, userResponse)
             return SteamGameAchievements(
                 accountId = accountId,
                 appId = appId,
                 gameName = gameName,
-                achievements = achievements,
+                achievements = achievements.filterNot { it.groupId in sets.excludedGroupIds },
+                sets = sets.sets,
                 fetchedAt = System.currentTimeMillis()
             )
         }

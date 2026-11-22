@@ -1,0 +1,549 @@
+{
+  "normalDistinctPassed": 45,
+  "jvm": {
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "runs": [
+    {
+      "label": "floating-five",
+      "tests": 5,
+      "passed": 1,
+      "seconds": 21.592,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "stack": "java.lang.AssertionError: expected:<[floating-0, floating-1]> but was:<[]>",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "stack": "java.lang.AssertionError: 置顶 is disabled at zero selected",
+          "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "stack": "java.lang.AssertionError: 置顶 keeps its 40dp height",
+          "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "stack": "java.lang.AssertionError: Selection does not move the first row expected:<Rect(0, 185 - 840, 390)> but was:<Rect(0, 185 - 787, 390)>",
+          "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+          "code": -2
+        }
+      ],
+      "logSha256": "2adc9fd5b9dfcc683a8c4829ee37ff07f897e715dd2e432d045599d6ae6cabbf"
+    },
+    {
+      "label": "floating-regression",
+      "tests": 40,
+      "passed": 38,
+      "seconds": 202.895,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamAvatarLoadingRegressionTest",
+          "test": "cachedGroupPhotosPublishTogetherAndSurvivePresenceUpdates",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamAvatarLoadingRegressionTest",
+          "test": "replacingMembersInTheSameCompositionPublishesTheirOwnDiscAndPhotos",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamAvatarLoadingRegressionTest",
+          "test": "cancellingSelectionRestoresTheLoadedRemotePhotoOnItsFirstDraw",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "test": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "test": "directSearchRetainsMessagesAndDraftInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "test": "gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "test": "groupSearchRetainsMessagesAndDraftInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "interruptedDismissCannotDispatchAnActionOnReopenedPopup",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "selectingLongPressTogglesWithoutOpeningTheActionMenu",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "incomingSessionUpdatesKeepTheVisibleAnchor",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "returningFromRealThreadStartsAtTopEvenWhenRowsArriveLater",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "popupDrawFramesGrowMonotonicallyFromHiddenToVisible",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "changingSearchReturnsToTheFirstResult",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "dismissedPopupCanBeShownAgainWithoutStaleAlphaOrCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "emptyThenRepopulatedListStartsAtTop",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "recordsRepeatedAvatarRenderCost",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "transparentPhotosKeepAnOpaqueGroupTone",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "reorderedAndMissingPhotosStayWithTheirMember",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "chineseInkStaysAwayFromTheCircleAndSeamsAtEveryAvatarSize",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "fourPhotosFillTheCorrectQuadrantsWithCentreCropping",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarRendererTest",
+          "test": "maskIsTransparentOutsideAndOpaqueInsideForEveryMemberCount",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest",
+          "test": "nativeInboxAvatarUsesItsOwnSlotAndDockAndUnreadRemainVisible",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest",
+          "test": "presenceUpdatesKeepTheExistingCompositeBitmap",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest",
+          "test": "memberRenameRefreshesBitmapWithoutAnAvatarUrlChange",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest",
+          "test": "cjkAvatarsRenderAt40_56_88DpInBothThemesAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamGroupAvatarUiTest",
+          "test": "membersBeyondTheFourVisibleTilesDoNotChangeTheBitmap",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "longPressMenuFollowsTheTouchPointInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "nativeTapDispatchHasNoGestureTimeout",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "preferenceReadRunsOffTheUiThread",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "bottomEdgeLargeTypeAndKeyboardMenusRemainInsideTheWindow",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "cancelledPreferenceReadCannotRestoreThePreviousConversation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxInteractionUiTest",
+          "test": "conversationTransitionSettlesWithoutTheLongScalePause",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "shortAndCancelledGesturesSpringBackWithoutAction",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "stack": "java.lang.AssertionError: Timed out waiting for swipe state",
+          "test": "actualSystemBackCancelsSelectionInBothThemes",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "unreadRippleStaysInsidePillInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "stack": "java.lang.AssertionError: Timed out waiting for swipe state",
+          "test": "rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "bothDirectionsFollowTheFingerAndRevealActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "test": "inboxUnreadSearchPinsAndToolbarKeepNavigation",
+          "code": 0
+        }
+      ],
+      "logSha256": "33245b38c1eeb61297c0769d641530a020c79d143c50f8e4a5fa58f8bfe023ef"
+    },
+    {
+      "label": "floating-five-fixed",
+      "tests": 5,
+      "passed": 5,
+      "seconds": 29.773,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+          "code": 0
+        }
+      ],
+      "logSha256": "62ba3382a83cba61099aa10640042d4ce7ce326586500c8f57bb3e62acebde92"
+    },
+    {
+      "label": "floating-final-targeted",
+      "tests": 12,
+      "passed": 11,
+      "seconds": 53.042,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "shortAndCancelledGesturesSpringBackWithoutAction",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "actualSystemBackCancelsSelectionInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "unreadRippleStaysInsidePillInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "bothDirectionsFollowTheFingerAndRevealActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "stack": "java.lang.AssertionError: Selection does not move the first row expected:<Rect(0, 185 - 840, 390)> but was:<Rect(0, 185 - 839, 390)>",
+          "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+          "code": -2
+        }
+      ],
+      "logSha256": "77536de83e5edd00738039737571b66c4f2ad1adca7a12fa6358f398761f353e"
+    },
+    {
+      "label": "floating-final-five",
+      "tests": 5,
+      "passed": 5,
+      "seconds": 21.14,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+          "code": 0
+        }
+      ],
+      "logSha256": "b399ba05c4809f8d204c9355b025d750d13929a4dc179f5e0ff17b97baec3dc8"
+    },
+    {
+      "label": "floating-reduced-motion",
+      "tests": 20,
+      "passed": 20,
+      "seconds": 53.443,
+      "cases": [
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "interruptedDismissCannotDispatchAnActionOnReopenedPopup",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "selectingLongPressTogglesWithoutOpeningTheActionMenu",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "incomingSessionUpdatesKeepTheVisibleAnchor",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "returningFromRealThreadStartsAtTopEvenWhenRowsArriveLater",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "popupDrawFramesGrowMonotonicallyFromHiddenToVisible",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "changingSearchReturnsToTheFirstResult",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "dismissedPopupCanBeShownAgainWithoutStaleAlphaOrCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatHandoffRegressionTest",
+          "test": "emptyThenRepopulatedListStartsAtTop",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "shortAndCancelledGesturesSpringBackWithoutAction",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "leftSwipeOpensExistingDeleteConfirmationAndCancelKeepsTheConversation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "actualSystemBackCancelsSelectionInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "unreadRippleStaysInsidePillInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "rightSwipeTogglesMultipleSelectionsAndSelectionModeBlocksDeleteSwipe",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "bothDirectionsFollowTheFingerAndRevealActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamInboxSwipeUiTest",
+          "test": "narrowLargeTypeListKeepsVerticalScrollingAndTapAndLongPress",
+          "code": 0
+        }
+      ],
+      "logSha256": "61388111fc8a69b6f4f2b03d0c99e53c01a73cd0cf5df3f7e4d08823265b35da"
+    }
+  ],
+  "apkSha256": {
+    "app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26110718-13.APK": "7f2d87b96bcbd8ba93dcce21da1e73b8cb1f2a35a36ef20ca94ad759b2dbb191",
+    "app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "ce9aedd74c84b94a3c80008aa0efea3e0b709455b617e32cd4b152abdcc57d0d"
+  },
+  "productionFiles": [
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\telegram\\TelegramNativeSocial.kt",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationFilters.kt",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationList.kt",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\chat\\ui\\SteamConversationRow.kt",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\groupchat\\avatar\\ui\\SteamGroupAvatarImage.kt",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\steam\\friends\\groupchat\\avatar\\ui\\SteamGroupAvatarRenderer.kt",
+    "telegram-chat-ui\\src\\main\\java\\com\\monica\\telegramchat\\TelegramPopupLayout.java",
+    "app\\src\\main\\java\\takagi\\ru\\monica\\ui\\common\\selection\\SelectionActionBar.kt"
+  ],
+  "cleanup": {
+    "avd": "Monica_Issue136_API_32\r\r\nOK",
+    "usersBefore": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{13:Monica_SteamChat_Rework:414} running",
+    "stopUser": "",
+    "removeUser": "Success: removed user",
+    "usersAfter": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}",
+    "currentUser": "0",
+    "restoredAnimationSettings": {
+      "window_animation_scale": "1.0",
+      "transition_animation_scale": "1.0",
+      "animator_duration_scale": "null"
+    },
+    "stopEmulator": "OK: killing emulator, bye bye\r\r\nOK",
+    "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": {
+      "exists": true,
+      "sha256": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205"
+    },
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": {
+      "exists": true,
+      "sha256": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c"
+    },
+    "preservedDataDisks": {
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img": 12884901888,
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2": 22325035008,
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata.img": 1048576
+    }
+  },
+  "scope": "Synthetic API32/x86_64 Debug; no real Steam accounts, OEM/physical devices or R8 validation"
+}

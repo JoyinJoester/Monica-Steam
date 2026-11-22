@@ -1,0 +1,26 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.065"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.voice.background.SteamVoiceCallServicePolicyTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.001"
+  },
+  {
+    "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.176"
+  }
+]

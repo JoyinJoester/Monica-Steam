@@ -1,0 +1,35 @@
+{
+  "status": "complete",
+  "version": "1.0.310",
+  "code": 18,
+  "buildSeconds": 210,
+  "testOnlyBuildSeconds": 67,
+  "jvmPassed": 15,
+  "deviceDistinctPassed": 23,
+  "deviceRunnerSeconds": 43.901,
+  "voiceRepeatPassed": 2,
+  "voiceRepeatRunnerSeconds": 3.301,
+  "baselineExpectedFailures": 1,
+  "mainApkUnchangedForVoiceRepeat": true,
+  "sourceHashes": {
+    "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "432485a52a05f970fa8694f741a4bfb934735cf9881d8d633412bd3cc559a0d0",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt": "b31957fe696d17446369c43e0dd80a9419426779cd55d50a56e4d19564d35601",
+    "app/src/main/java/takagi/ru/monica/steam/friends/voice/ui/SteamVoiceCallUi.kt": "43b943ef5c293ea1fd501ed3b1e6e88a3b7288e662952f4eb2ea277e3aad981c",
+    "app/src/main/java/takagi/ru/monica/steam/friends/voice/ui/SteamVoiceControlMotion.kt": "6243a6090e4a8d16c698119a79eda1440919227799a547b243f2ea0b0e580192",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "eb4f9717c1de030eb79cba9002898772e849667f81f780fed7bf0e333255e5ca",
+    "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatGlassPresentationTest.kt": "be4a1b6bcfbe087ebb012c520452907b29d5f011d37e52ee06f3c3f42cde16b6"
+  },
+  "apkHashes": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26112018-42.APK": "d285e39b69f0dc894ced959511e121f652fcaf6d5bd2158d53272c80eff43b79",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "708b00739397e8463c85f1619bded35b16bffe20b61cb13f4b4f462fbc9f3077"
+  },
+  "limitations": [
+    "synthetic MuMu API35 x86_64 Debug",
+    "no real call/audio/OEM/R8/performance test"
+  ],
+  "cleanup": "Only two owned .chatglass packages removed; original users, packages, display settings preserved; pre-running MuMu kept running",
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apkDelivered": false
+}

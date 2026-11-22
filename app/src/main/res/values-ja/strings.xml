@@ -3527,4 +3527,15 @@
     <string name="extensions_steam_settings">Steam</string>
     <string name="steam_mini_profile_background_title">ミニプロフィール背景</string>
     <string name="steam_mini_profile_background_description">トークンとアカウント詳細カードに Steam のミニプロフィール背景を表示します。動画は表示中のみ再生され、キャッシュは最大 64 MB です。</string>
+    <string name="steam_chat_background_section">Steam チャット</string>
+    <string name="steam_chat_background_title">チャットメッセージ通知</string>
+    <string name="steam_chat_background_description">フレンドからのチャットメッセージを通知します。接続状態の通知は表示しません。システムがアプリのプロセスを終了した場合は、アプリを開き直すと受信を再開します。</string>
+    <string name="steam_chat_background_permission_required">チャットメッセージの通知には通知権限が必要です。</string>
+    <string name="steam_chat_background_start_failed">チャットメッセージ通知を有効にできませんでした。</string>
+    <string name="steam_chat_background_target_unavailable">この通知の Steam アカウントは利用できなくなりました。</string>
+
+    <string name="steam_store_price_buy">%1$s で購入</string>
+    <string name="steam_store_offer_days">残り %1$d 日</string>
+    <string name="steam_store_offer_hours">残り %1$d 時間</string>
+    <string name="steam_store_offer_minutes">残り %1$d 分</string>
 </resources>

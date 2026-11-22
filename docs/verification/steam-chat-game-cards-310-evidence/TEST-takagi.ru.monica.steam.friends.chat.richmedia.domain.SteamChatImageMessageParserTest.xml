@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-21T09:24:04.838Z" hostname="JOYIN" time="0.024">
+  <properties/>
+  <testcase name="spoilerAppliesToEntireAlbumAndRetainsCaption" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.004"/>
+  <testcase name="singlePhotoRetainsCaptionAndDimensions" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.001"/>
+  <testcase name="albumsKeepEveryImageInOriginalOrder" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.005"/>
+  <testcase name="invalidDimensionsDoNotPreventViewingAndAmpersandsAreDecoded" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.001"/>
+  <testcase name="mixedPairedAndUnclosedSteamTagsDoNotDuplicatePhotosOrUrls" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.004"/>
+  <testcase name="tooManyInvalidOrIncompleteImagesRetainOriginalText" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.003"/>
+  <testcase name="unclosedSteamImageWithRepeatedUrlDoesNotDisplayUrlAsCaption" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.0"/>
+  <testcase name="responsivePhotoWithSteamUrlWrapperDoesNotFallBackToRawBbcode" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.0"/>
+  <testcase name="plainImageUrlStillUsesSinglePhotoPath" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.001"/>
+  <testcase name="mismatchedWrapperOrMeaningfulLabelIsRetainedAsText" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.002"/>
+  <testcase name="wrappedPhotoWithoutSrcAndMixedAlbumRetainOrderAndCaption" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.001"/>
+  <testcase name="wrappedPhotoWithOmittedImageClosingTagStillUsesPhotoPath" classname="takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

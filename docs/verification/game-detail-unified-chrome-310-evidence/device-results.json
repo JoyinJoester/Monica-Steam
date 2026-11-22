@@ -1,0 +1,787 @@
+{
+  "device02": {
+    "tests": 39,
+    "passed": 38,
+    "runnerSeconds": 71.022,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkGlassHeaderPressRendersLensAndCancelKeepsSection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "nativeWorkshopUsesCombinedHeaderAndKeepsBrowseAndBack",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "lateOldAccountCannotReplaceCurrentPlayersStats",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "noActivityShowsUnavailableWhileAchievementsRemainUsable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "storeAndPersonalStatsRetainIndependentScrollAndFilter",
+        "passed": false,
+        "code": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "workshopAppearsOnlyForSupportedGameAndKeepsSameHeader",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "compactHeaderIsOneRowAndDoesNotStretchTheTabs",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkLargeFontKeepsHeaderMetricsAndControlsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "achievementFilterSurvivesTabRoundTripAndConcealsHiddenNames",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "personalEntryRemainsUsableWhenStoreUnavailable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "restoredToolbarSharesOpensReviewsAndDragsToOtherEdge",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "liquidGlassTabsKeepBothSectionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "failureSupportsExplicitRetryAndDoesNotShowZero",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "signedOutHasAccountActionAndNoInventedHours",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableAndFreeRegionsDoNotRequestHistory",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "detailShowsGameBeforePriceAndKeepsNavigationActionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableDetailSeparatesReferencePriceInLargeDarkLayout",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "collapsedRowsPinAccountAndKeepPricesCompact",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "rtlDragUsesPhysicalMeasuredSlots",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingAnUnselectedOptionCommitsTheReleasedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "verticalParentScrollingKeepsTheFilterUnchanged",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eIgnoresDragAndSupportsClickSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "themeChangeCancelsHeldGlassSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "badgeReflowRevokesAnInProgressDrag",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "edgeScrollReachesOffscreenArchivedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eLargeFontShowsEveryFilterWithoutHorizontalScrolling",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancelledDragRestoresCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "heldLensHasVisibleGlassRimOnFlatDarkChatBackground",
+        "passed": true,
+        "code": 0
+      }
+    ]
+  },
+  "device03": {
+    "tests": 39,
+    "passed": 37,
+    "runnerSeconds": 76.587,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkGlassHeaderPressRendersLensAndCancelKeepsSection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "nativeWorkshopUsesCombinedHeaderAndKeepsBrowseAndBack",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "lateOldAccountCannotReplaceCurrentPlayersStats",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "noActivityShowsUnavailableWhileAchievementsRemainUsable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "storeAndPersonalStatsRetainIndependentScrollAndFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "workshopAppearsOnlyForSupportedGameAndKeepsSameHeader",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "compactHeaderIsOneRowAndDoesNotStretchTheTabs",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkLargeFontKeepsHeaderMetricsAndControlsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "achievementFilterSurvivesTabRoundTripAndConcealsHiddenNames",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "personalEntryRemainsUsableWhenStoreUnavailable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "restoredToolbarSharesOpensReviewsAndDragsToOtherEdge",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "liquidGlassTabsKeepBothSectionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "failureSupportsExplicitRetryAndDoesNotShowZero",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "signedOutHasAccountActionAndNoInventedHours",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableAndFreeRegionsDoNotRequestHistory",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "detailShowsGameBeforePriceAndKeepsNavigationActionsReachable",
+        "passed": false,
+        "code": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableDetailSeparatesReferencePriceInLargeDarkLayout",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "collapsedRowsPinAccountAndKeepPricesCompact",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "rtlDragUsesPhysicalMeasuredSlots",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingAnUnselectedOptionCommitsTheReleasedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "verticalParentScrollingKeepsTheFilterUnchanged",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eIgnoresDragAndSupportsClickSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "themeChangeCancelsHeldGlassSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+        "passed": false,
+        "code": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "badgeReflowRevokesAnInProgressDrag",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "edgeScrollReachesOffscreenArchivedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eLargeFontShowsEveryFilterWithoutHorizontalScrolling",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancelledDragRestoresCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "heldLensHasVisibleGlassRimOnFlatDarkChatBackground",
+        "passed": true,
+        "code": 0
+      }
+    ]
+  },
+  "device04": {
+    "tests": 2,
+    "passed": 2,
+    "runnerSeconds": 7.797,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "detailShowsGameBeforePriceAndKeepsNavigationActionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      }
+    ]
+  },
+  "device05": {
+    "tests": 39,
+    "passed": 38,
+    "runnerSeconds": 76.531,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkGlassHeaderPressRendersLensAndCancelKeepsSection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "nativeWorkshopUsesCombinedHeaderAndKeepsBrowseAndBack",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "lateOldAccountCannotReplaceCurrentPlayersStats",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "noActivityShowsUnavailableWhileAchievementsRemainUsable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "storeAndPersonalStatsRetainIndependentScrollAndFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "workshopAppearsOnlyForSupportedGameAndKeepsSameHeader",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "compactHeaderIsOneRowAndDoesNotStretchTheTabs",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "darkLargeFontKeepsHeaderMetricsAndControlsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "achievementFilterSurvivesTabRoundTripAndConcealsHiddenNames",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "personalEntryRemainsUsableWhenStoreUnavailable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "restoredToolbarSharesOpensReviewsAndDragsToOtherEdge",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "liquidGlassTabsKeepBothSectionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "failureSupportsExplicitRetryAndDoesNotShowZero",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest",
+        "name": "signedOutHasAccountActionAndNoInventedHours",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableAndFreeRegionsDoNotRequestHistory",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "detailShowsGameBeforePriceAndKeepsNavigationActionsReachable",
+        "passed": false,
+        "code": -2
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableDetailSeparatesReferencePriceInLargeDarkLayout",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "collapsedRowsPinAccountAndKeepPricesCompact",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "rtlDragUsesPhysicalMeasuredSlots",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "draggingAnUnselectedOptionCommitsTheReleasedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "verticalParentScrollingKeepsTheFilterUnchanged",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eIgnoresDragAndSupportsClickSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "themeChangeCancelsHeldGlassSelection",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "badgeReflowRevokesAnInProgressDrag",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "edgeScrollReachesOffscreenArchivedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "m3eLargeFontShowsEveryFilterWithoutHorizontalScrolling",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "cancelledDragRestoresCommittedFilter",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "name": "heldLensHasVisibleGlassRimOnFlatDarkChatBackground",
+        "passed": true,
+        "code": 0
+      }
+    ]
+  },
+  "device06": {
+    "tests": 6,
+    "passed": 6,
+    "runnerSeconds": 11.33,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableAndFreeRegionsDoNotRequestHistory",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "detailShowsGameBeforePriceAndKeepsNavigationActionsReachable",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "historyLoadsOnlyExpandedRegionAndResetsForAccountOrGame",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "unavailableDetailSeparatesReferencePriceInLargeDarkLayout",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "collapsedRowsPinAccountAndKeepPricesCompact",
+        "passed": true,
+        "code": 0
+      },
+      {
+        "class": "takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+        "name": "largeFontDarkRowsKeepLocalCurrenciesAndDisclosureAccessible",
+        "passed": true,
+        "code": 0
+      }
+    ]
+  }
+}

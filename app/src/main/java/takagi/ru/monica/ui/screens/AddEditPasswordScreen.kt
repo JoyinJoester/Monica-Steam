@@ -1,5 +1,13 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassFloatingActionButton as FloatingActionButton
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import android.content.Context
@@ -2591,7 +2599,7 @@ fun AddEditPasswordScreen(
                                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = authenticatorTypeExpanded)
                                     },
                                     modifier = Modifier
-                                        .menuAnchor()
+                                        .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                         .fillMaxWidth()
                                         .padding(top = 10.dp),
                                     shape = RoundedCornerShape(12.dp)
@@ -3532,7 +3540,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -3573,7 +3581,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = mdbxMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -3614,7 +3622,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_vault)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -3657,7 +3665,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                             label = { Text(stringResource(R.string.password_picker_filter_folder)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = folderMenuExpanded) },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true
                         )
@@ -4864,7 +4872,7 @@ private fun LoginTypeSelector(
                         },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showProviderMenu) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(androidx.compose.material3.ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp)
                     )

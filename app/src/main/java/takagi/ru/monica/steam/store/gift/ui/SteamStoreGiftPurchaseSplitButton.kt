@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.store.gift.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -24,7 +25,6 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -60,7 +60,8 @@ internal fun SteamStoreGiftPurchaseSplitButton(
     onAddAsGift: () -> Unit,
     onOpenCart: () -> Unit,
     onRemove: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    canGift: Boolean = canAdd
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val rotation by animateFloatAsState(
@@ -111,7 +112,7 @@ internal fun SteamStoreGiftPurchaseSplitButton(
                 SplitButtonDefaults.TonalTrailingButton(
                     checked = expanded,
                     onCheckedChange = { expanded = it },
-                    enabled = interactive,
+                    enabled = cartItem != null || canGift,
                     modifier = Modifier.size(PurchaseActionHeight)
                 ) {
                     Icon(
@@ -140,6 +141,7 @@ internal fun SteamStoreGiftPurchaseSplitButton(
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 SteamStorePurchaseModeMenuItem(
+                    enabled = canAdd,
                     label = stringResource(R.string.steam_store_purchase_for_self),
                     icon = Icons.Default.Person,
                     selected = cartItem != null && recipient == null,
@@ -149,6 +151,7 @@ internal fun SteamStoreGiftPurchaseSplitButton(
                     }
                 )
                 SteamStorePurchaseModeMenuItem(
+                    enabled = canGift,
                     label = stringResource(R.string.steam_store_purchase_as_gift),
                     icon = Icons.Default.CardGiftcard,
                     selected = recipient != null,
@@ -178,10 +181,12 @@ private fun SteamStorePurchaseModeMenuItem(
     label: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true
 ) {
     Surface(
         onClick = onClick,
+        enabled = enabled,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)

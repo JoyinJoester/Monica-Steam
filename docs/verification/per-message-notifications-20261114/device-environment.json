@@ -1,0 +1,5 @@
+{
+  "ro.build.version.sdk": "32",
+  "ro.product.cpu.abi": "x86_64",
+  "ro.product.model": "sdk_gphone64_x86_64"
+}

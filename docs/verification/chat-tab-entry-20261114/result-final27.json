@@ -1,0 +1,4005 @@
+{
+  "variant": "candidate",
+  "api": 35,
+  "runtimeShader": true,
+  "callbacks": 30,
+  "injectedUpdates": 371,
+  "hiddenChatSubscriptions": 0,
+  "lostMetrics": 0,
+  "layoutRebuilds": 0,
+  "retainedCells": 84,
+  "frames": [
+    {
+      "target": "CHAT",
+      "total": 35.069481,
+      "draw": 7.040197,
+      "layout": 0.159174,
+      "sync": 0.444765,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 63.542685,
+      "draw": 8.700199,
+      "layout": 0.108108,
+      "sync": 0.537277,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 68.071224,
+      "draw": 8.171563,
+      "layout": 0.09476,
+      "sync": 0.481041,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 51.93895,
+      "draw": 2.093658,
+      "layout": 0.111349,
+      "sync": 0.491543,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 38.440214,
+      "draw": 7.240185,
+      "layout": 0.099492,
+      "sync": 0.506656,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 58.909988,
+      "draw": 8.465364,
+      "layout": 0.086756,
+      "sync": 0.817093,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 39.641875,
+      "draw": 3.156542,
+      "layout": 0.121968,
+      "sync": 0.487978,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 43.509861,
+      "draw": 8.87299,
+      "layout": 0.114843,
+      "sync": 0.523991,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 40.37227,
+      "draw": 3.106445,
+      "layout": 0.079682,
+      "sync": 0.511716,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 37.877164,
+      "draw": 6.022672,
+      "layout": 0.11213,
+      "sync": 0.660727,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.425948,
+      "draw": 1.788476,
+      "layout": 0.286722,
+      "sync": 0.410644,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 31.631738,
+      "draw": 5.75809,
+      "layout": 0.106037,
+      "sync": 0.45328,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 44.544252,
+      "draw": 4.889942,
+      "layout": 0.077172,
+      "sync": 0.453119,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 38.051325,
+      "draw": 5.71874,
+      "layout": 0.071284,
+      "sync": 0.402497,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.706171,
+      "draw": 6.931046,
+      "layout": 0.176133,
+      "sync": 0.391409,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.348324,
+      "draw": 8.545419,
+      "layout": 0.16373,
+      "sync": 0.404039,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 28.346155,
+      "draw": 6.432682,
+      "layout": 0.088767,
+      "sync": 0.573364,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.865528,
+      "draw": 6.132115,
+      "layout": 0.060872,
+      "sync": 0.463418,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 28.310763,
+      "draw": 6.127925,
+      "layout": 0.111455,
+      "sync": 0.410486,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 39.954472,
+      "draw": 5.978018,
+      "layout": 0.0825,
+      "sync": 0.738623,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 51.09628,
+      "draw": 10.609066,
+      "layout": 0.091865,
+      "sync": 0.822644,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 57.313714,
+      "draw": 4.720488,
+      "layout": 0.130305,
+      "sync": 1.15231,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.184602,
+      "draw": 2.536062,
+      "layout": 0.07963,
+      "sync": 0.491577,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.580856,
+      "draw": 1.422323,
+      "layout": 0.068784,
+      "sync": 0.437818,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.586157,
+      "draw": 2.372725,
+      "layout": 0.099638,
+      "sync": 0.61183,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.438987,
+      "draw": 3.02385,
+      "layout": 0.117149,
+      "sync": 0.649268,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.514594,
+      "draw": 3.923043,
+      "layout": 0.104231,
+      "sync": 0.674101,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.517539,
+      "draw": 3.877106,
+      "layout": 0.098124,
+      "sync": 0.608113,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.427965,
+      "draw": 2.638184,
+      "layout": 0.102243,
+      "sync": 0.473776,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.675535,
+      "draw": 2.644543,
+      "layout": 0.103476,
+      "sync": 0.525819,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.883172,
+      "draw": 3.492436,
+      "layout": 0.087575,
+      "sync": 0.605964,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.578901,
+      "draw": 3.536002,
+      "layout": 0.097838,
+      "sync": 0.689552,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.474264,
+      "draw": 1.744943,
+      "layout": 0.073032,
+      "sync": 0.472182,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.952527,
+      "draw": 5.239752,
+      "layout": 0.160267,
+      "sync": 0.665216,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 61.682809,
+      "draw": 9.916025,
+      "layout": 0.068708,
+      "sync": 0.523445,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 43.036033,
+      "draw": 3.303748,
+      "layout": 0.081299,
+      "sync": 0.756678,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 40.065481,
+      "draw": 6.271402,
+      "layout": 0.077691,
+      "sync": 0.529142,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.423934,
+      "draw": 2.169595,
+      "layout": 0.074262,
+      "sync": 0.48771,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 32.727994,
+      "draw": 7.297969,
+      "layout": 0.083342,
+      "sync": 0.463405,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 44.729906,
+      "draw": 6.319213,
+      "layout": 0.097356,
+      "sync": 0.480894,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 40.110129,
+      "draw": 2.236583,
+      "layout": 0.068261,
+      "sync": 0.628983,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.154024,
+      "draw": 7.169705,
+      "layout": 0.090018,
+      "sync": 0.906151,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.466067,
+      "draw": 2.848162,
+      "layout": 0.090953,
+      "sync": 0.432681,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 42.370655,
+      "draw": 6.375061,
+      "layout": 0.077404,
+      "sync": 0.699187,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.32179,
+      "draw": 1.578041,
+      "layout": 0.13209,
+      "sync": 0.422842,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.241279,
+      "draw": 5.89434,
+      "layout": 0.10144,
+      "sync": 0.466032,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.897874,
+      "draw": 5.679652,
+      "layout": 0.057549,
+      "sync": 0.417558,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.255636,
+      "draw": 4.437229,
+      "layout": 0.105212,
+      "sync": 0.441767,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 32.465256,
+      "draw": 5.121108,
+      "layout": 0.118402,
+      "sync": 0.402352,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 44.150815,
+      "draw": 6.179176,
+      "layout": 0.107425,
+      "sync": 0.454172,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 50.20235,
+      "draw": 4.611574,
+      "layout": 0.302258,
+      "sync": 0.741191,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.079648,
+      "draw": 2.541942,
+      "layout": 0.082186,
+      "sync": 0.532796,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.876915,
+      "draw": 1.993351,
+      "layout": 0.067124,
+      "sync": 0.564225,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.040524,
+      "draw": 1.343026,
+      "layout": 0.05912,
+      "sync": 0.422993,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.389645,
+      "draw": 2.395031,
+      "layout": 0.082106,
+      "sync": 0.44632,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.657286,
+      "draw": 2.4838,
+      "layout": 0.08608,
+      "sync": 0.421897,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.250739,
+      "draw": 3.698787,
+      "layout": 0.086993,
+      "sync": 0.420951,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.220463,
+      "draw": 2.33569,
+      "layout": 0.073996,
+      "sync": 0.58049,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.137146,
+      "draw": 1.89622,
+      "layout": 0.063218,
+      "sync": 0.442662,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.009516,
+      "draw": 1.96273,
+      "layout": 0.066585,
+      "sync": 0.616184,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.156444,
+      "draw": 1.979978,
+      "layout": 0.065716,
+      "sync": 0.404292,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.079073,
+      "draw": 2.357582,
+      "layout": 0.085112,
+      "sync": 0.539976,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.320852,
+      "draw": 1.762731,
+      "layout": 0.423572,
+      "sync": 0.651165,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 5.864173,
+      "draw": 2.004246,
+      "layout": 0.109212,
+      "sync": 0.460795,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 6.273162,
+      "draw": 2.292872,
+      "layout": 0.089569,
+      "sync": 0.391982,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.472278,
+      "draw": 3.826908,
+      "layout": 0.079124,
+      "sync": 0.653565,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 40.553775,
+      "draw": 8.853463,
+      "layout": 0.099769,
+      "sync": 0.713393,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 49.281206,
+      "draw": 6.92795,
+      "layout": 0.093124,
+      "sync": 0.464152,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 28.123279,
+      "draw": 3.221632,
+      "layout": 0.089963,
+      "sync": 0.459477,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 38.021746,
+      "draw": 5.255599,
+      "layout": 0.07324,
+      "sync": 0.663939,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.250734,
+      "draw": 2.325674,
+      "layout": 0.084215,
+      "sync": 0.520047,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 28.59382,
+      "draw": 7.891054,
+      "layout": 0.084669,
+      "sync": 0.441907,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 38.212779,
+      "draw": 6.909109,
+      "layout": 0.06899,
+      "sync": 0.607575,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.995078,
+      "draw": 2.633909,
+      "layout": 0.089656,
+      "sync": 0.577061,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 31.197252,
+      "draw": 9.140249,
+      "layout": 0.110434,
+      "sync": 0.480457,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 36.988748,
+      "draw": 5.960381,
+      "layout": 0.074953,
+      "sync": 0.454324,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.729687,
+      "draw": 2.256321,
+      "layout": 0.079631,
+      "sync": 0.845762,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 31.381607,
+      "draw": 8.285562,
+      "layout": 0.216268,
+      "sync": 0.42467,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 33.714545,
+      "draw": 4.403196,
+      "layout": 0.072814,
+      "sync": 0.401805,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.881674,
+      "draw": 3.92267,
+      "layout": 0.065583,
+      "sync": 0.655564,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 39.029984,
+      "draw": 10.408,
+      "layout": 0.096307,
+      "sync": 0.624695,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 44.922217,
+      "draw": 5.141004,
+      "layout": 0.366313,
+      "sync": 0.485779,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.475914,
+      "draw": 2.260418,
+      "layout": 0.073323,
+      "sync": 0.5973,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.186103,
+      "draw": 2.391132,
+      "layout": 0.07792,
+      "sync": 0.609275,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.674281,
+      "draw": 1.380366,
+      "layout": 0.074991,
+      "sync": 0.448687,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.172997,
+      "draw": 2.210912,
+      "layout": 0.084065,
+      "sync": 0.64533,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.629468,
+      "draw": 2.276219,
+      "layout": 0.092788,
+      "sync": 0.449965,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.861945,
+      "draw": 2.413255,
+      "layout": 0.090822,
+      "sync": 0.466053,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.090537,
+      "draw": 1.980654,
+      "layout": 0.09891,
+      "sync": 0.467776,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 24.482693,
+      "draw": 2.321318,
+      "layout": 0.057209,
+      "sync": 0.622254,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.44356,
+      "draw": 2.340284,
+      "layout": 0.058969,
+      "sync": 0.395982,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.221999,
+      "draw": 1.748572,
+      "layout": 0.057918,
+      "sync": 0.419499,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.522726,
+      "draw": 1.851879,
+      "layout": 0.128235,
+      "sync": 0.418451,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.576809,
+      "draw": 1.521986,
+      "layout": 0.063814,
+      "sync": 0.549475,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 29.203739,
+      "draw": 7.246077,
+      "layout": 0.113765,
+      "sync": 0.644004,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 48.730686,
+      "draw": 9.874587,
+      "layout": 0.085587,
+      "sync": 0.556457,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 43.129423,
+      "draw": 2.831472,
+      "layout": 0.065564,
+      "sync": 0.686955,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.775332,
+      "draw": 8.42141,
+      "layout": 0.079742,
+      "sync": 0.497647,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.224918,
+      "draw": 1.476399,
+      "layout": 0.173375,
+      "sync": 0.477151,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.391762,
+      "draw": 7.305336,
+      "layout": 0.082857,
+      "sync": 0.621628,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.492252,
+      "draw": 5.943266,
+      "layout": 0.074844,
+      "sync": 0.467826,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.215823,
+      "draw": 2.117179,
+      "layout": 0.098002,
+      "sync": 0.508713,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.343152,
+      "draw": 5.834005,
+      "layout": 0.073432,
+      "sync": 0.702741,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.971317,
+      "draw": 2.731458,
+      "layout": 0.05891,
+      "sync": 0.425181,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.899858,
+      "draw": 7.752057,
+      "layout": 0.076522,
+      "sync": 0.751023,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.995137,
+      "draw": 2.330796,
+      "layout": 0.072056,
+      "sync": 0.425108,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.295286,
+      "draw": 6.993786,
+      "layout": 0.07098,
+      "sync": 0.457988,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.38478,
+      "draw": 1.451573,
+      "layout": 0.068137,
+      "sync": 0.417212,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.156882,
+      "draw": 5.797606,
+      "layout": 0.071568,
+      "sync": 0.4603,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.690085,
+      "draw": 5.66225,
+      "layout": 0.079012,
+      "sync": 0.423979,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.126687,
+      "draw": 7.181266,
+      "layout": 0.069062,
+      "sync": 0.404385,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.842757,
+      "draw": 4.89107,
+      "layout": 0.087925,
+      "sync": 0.400011,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 30.002749,
+      "draw": 6.589557,
+      "layout": 0.081738,
+      "sync": 0.499172,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.089309,
+      "draw": 6.789004,
+      "layout": 0.097214,
+      "sync": 0.431806,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 28.744761,
+      "draw": 5.080098,
+      "layout": 0.073187,
+      "sync": 0.396565,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 20.425473,
+      "draw": 3.961447,
+      "layout": 0.068032,
+      "sync": 0.435694,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 24.793975,
+      "draw": 6.540126,
+      "layout": 0.092485,
+      "sync": 0.729326,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 42.955755,
+      "draw": 8.81122,
+      "layout": 0.091395,
+      "sync": 0.440968,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 50.08576,
+      "draw": 3.66986,
+      "layout": 0.092647,
+      "sync": 0.748429,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.601033,
+      "draw": 2.117595,
+      "layout": 0.079439,
+      "sync": 0.472182,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 36.068729,
+      "draw": 1.955316,
+      "layout": 0.079521,
+      "sync": 0.607085,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.570581,
+      "draw": 1.566477,
+      "layout": 0.081989,
+      "sync": 0.59829,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.399852,
+      "draw": 2.153388,
+      "layout": 0.105223,
+      "sync": 0.491586,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.600298,
+      "draw": 1.881188,
+      "layout": 0.087171,
+      "sync": 0.459655,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.312131,
+      "draw": 2.286928,
+      "layout": 0.081226,
+      "sync": 0.475153,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.299181,
+      "draw": 1.761602,
+      "layout": 0.074793,
+      "sync": 0.706129,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.031374,
+      "draw": 1.92191,
+      "layout": 0.064834,
+      "sync": 0.461216,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.541494,
+      "draw": 1.980275,
+      "layout": 0.086118,
+      "sync": 0.515622,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.229941,
+      "draw": 2.268492,
+      "layout": 0.081699,
+      "sync": 0.426032,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.507673,
+      "draw": 2.892895,
+      "layout": 0.095463,
+      "sync": 0.769822,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.533765,
+      "draw": 1.80258,
+      "layout": 0.170593,
+      "sync": 0.466581,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 5.596366,
+      "draw": 1.636481,
+      "layout": 0.084682,
+      "sync": 0.42142,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.158147,
+      "draw": 5.181511,
+      "layout": 0.114775,
+      "sync": 0.446743,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 37.183823,
+      "draw": 6.61642,
+      "layout": 0.074576,
+      "sync": 0.540183,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.9627,
+      "draw": 1.883983,
+      "layout": 0.100265,
+      "sync": 0.419369,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.366085,
+      "draw": 6.104175,
+      "layout": 0.06001,
+      "sync": 0.433908,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.043242,
+      "draw": 5.15005,
+      "layout": 0.072373,
+      "sync": 0.922787,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.381136,
+      "draw": 2.043066,
+      "layout": 0.066778,
+      "sync": 0.517426,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 25.245441,
+      "draw": 6.573161,
+      "layout": 0.094012,
+      "sync": 0.428918,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.283802,
+      "draw": 2.354317,
+      "layout": 0.067061,
+      "sync": 0.435733,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.540268,
+      "draw": 6.120163,
+      "layout": 0.076706,
+      "sync": 0.484609,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 25.892191,
+      "draw": 5.977085,
+      "layout": 0.070298,
+      "sync": 0.476327,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.254011,
+      "draw": 2.385045,
+      "layout": 0.070756,
+      "sync": 0.491983,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.70999,
+      "draw": 6.399717,
+      "layout": 0.165995,
+      "sync": 0.487297,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.660948,
+      "draw": 6.979126,
+      "layout": 0.073071,
+      "sync": 0.449944,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.878601,
+      "draw": 1.536588,
+      "layout": 0.133234,
+      "sync": 0.41518,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.758137,
+      "draw": 3.674075,
+      "layout": 0.062862,
+      "sync": 0.583061,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.163701,
+      "draw": 3.911388,
+      "layout": 0.073629,
+      "sync": 0.460851,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 30.967808,
+      "draw": 4.311456,
+      "layout": 0.110724,
+      "sync": 0.398438,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 31.396191,
+      "draw": 3.081799,
+      "layout": 0.076731,
+      "sync": 0.447931,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.655789,
+      "draw": 2.340242,
+      "layout": 0.067113,
+      "sync": 0.490686,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.672766,
+      "draw": 1.747274,
+      "layout": 0.070368,
+      "sync": 0.525112,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.517097,
+      "draw": 2.186501,
+      "layout": 0.064587,
+      "sync": 0.451557,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.079945,
+      "draw": 1.127139,
+      "layout": 0.060472,
+      "sync": 0.425351,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.740034,
+      "draw": 2.28516,
+      "layout": 0.078024,
+      "sync": 0.427832,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.64823,
+      "draw": 1.567138,
+      "layout": 0.063331,
+      "sync": 0.443446,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.412682,
+      "draw": 1.687915,
+      "layout": 0.069386,
+      "sync": 0.485266,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.502066,
+      "draw": 2.031922,
+      "layout": 0.38691,
+      "sync": 0.458772,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.425832,
+      "draw": 2.022835,
+      "layout": 0.066732,
+      "sync": 0.542868,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.800326,
+      "draw": 2.031625,
+      "layout": 0.100955,
+      "sync": 0.470196,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.755402,
+      "draw": 2.043848,
+      "layout": 0.061576,
+      "sync": 0.437564,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.430395,
+      "draw": 2.114973,
+      "layout": 0.06825,
+      "sync": 0.446082,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.312646,
+      "draw": 2.119174,
+      "layout": 0.103228,
+      "sync": 0.587697,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.84229,
+      "draw": 5.011947,
+      "layout": 0.085293,
+      "sync": 0.414941,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.44536,
+      "draw": 7.034548,
+      "layout": 0.067817,
+      "sync": 0.499094,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 49.815262,
+      "draw": 14.186691,
+      "layout": 0.086622,
+      "sync": 1.093131,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.073439,
+      "draw": 2.064313,
+      "layout": 0.07228,
+      "sync": 0.530788,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 30.307219,
+      "draw": 4.630946,
+      "layout": 0.072714,
+      "sync": 0.452421,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.095768,
+      "draw": 2.106783,
+      "layout": 0.076023,
+      "sync": 0.750166,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.064283,
+      "draw": 6.414054,
+      "layout": 0.072737,
+      "sync": 0.471579,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.245044,
+      "draw": 1.7102,
+      "layout": 0.074615,
+      "sync": 0.422549,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.831921,
+      "draw": 6.297555,
+      "layout": 0.068393,
+      "sync": 0.880254,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.423069,
+      "draw": 2.930435,
+      "layout": 0.095722,
+      "sync": 0.535495,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.830037,
+      "draw": 5.370247,
+      "layout": 0.063322,
+      "sync": 0.533076,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.766465,
+      "draw": 7.467928,
+      "layout": 0.076886,
+      "sync": 0.475689,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.73632,
+      "draw": 2.20617,
+      "layout": 0.071833,
+      "sync": 0.441564,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.417851,
+      "draw": 7.03412,
+      "layout": 0.065103,
+      "sync": 0.4722,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.835641,
+      "draw": 5.071444,
+      "layout": 0.057083,
+      "sync": 0.572799,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.596611,
+      "draw": 5.598119,
+      "layout": 0.215309,
+      "sync": 0.411268,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.586588,
+      "draw": 3.71562,
+      "layout": 0.063451,
+      "sync": 0.41909,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 31.63012,
+      "draw": 7.303299,
+      "layout": 0.091336,
+      "sync": 0.536432,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 30.21964,
+      "draw": 2.74831,
+      "layout": 0.073417,
+      "sync": 0.40948,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 24.022711,
+      "draw": 2.02399,
+      "layout": 0.08096,
+      "sync": 0.652463,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.709883,
+      "draw": 2.382296,
+      "layout": 0.071974,
+      "sync": 0.426732,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.517444,
+      "draw": 1.83687,
+      "layout": 0.164923,
+      "sync": 0.444707,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.698609,
+      "draw": 1.059368,
+      "layout": 0.053661,
+      "sync": 0.419078,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.548902,
+      "draw": 1.683753,
+      "layout": 0.109452,
+      "sync": 0.443604,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.586158,
+      "draw": 1.949278,
+      "layout": 0.072934,
+      "sync": 0.574928,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.499841,
+      "draw": 1.897598,
+      "layout": 0.112184,
+      "sync": 0.451801,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.788295,
+      "draw": 2.267385,
+      "layout": 0.069964,
+      "sync": 0.463503,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.631803,
+      "draw": 1.961099,
+      "layout": 0.067253,
+      "sync": 0.516831,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.99576,
+      "draw": 2.678261,
+      "layout": 0.062964,
+      "sync": 0.468216,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.399287,
+      "draw": 2.502195,
+      "layout": 0.0699,
+      "sync": 0.46513,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.819653,
+      "draw": 1.741764,
+      "layout": 0.055803,
+      "sync": 0.471758,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.650018,
+      "draw": 1.407558,
+      "layout": 0.07648,
+      "sync": 0.463849,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 20.267317,
+      "draw": 3.27963,
+      "layout": 0.08657,
+      "sync": 0.4936,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 30.320759,
+      "draw": 7.738068,
+      "layout": 0.113531,
+      "sync": 0.473219,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.92436,
+      "draw": 6.443634,
+      "layout": 0.077824,
+      "sync": 0.601182,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.294538,
+      "draw": 2.115913,
+      "layout": 0.087383,
+      "sync": 0.559947,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.263742,
+      "draw": 6.622003,
+      "layout": 0.066163,
+      "sync": 0.51416,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.212629,
+      "draw": 1.833353,
+      "layout": 0.065986,
+      "sync": 0.434989,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.481094,
+      "draw": 7.76221,
+      "layout": 0.07755,
+      "sync": 0.50048,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 34.962877,
+      "draw": 2.188711,
+      "layout": 0.088165,
+      "sync": 0.510038,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.249388,
+      "draw": 7.657822,
+      "layout": 0.079234,
+      "sync": 0.51698,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.374585,
+      "draw": 1.648024,
+      "layout": 0.08018,
+      "sync": 0.698658,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.059573,
+      "draw": 6.860967,
+      "layout": 0.073823,
+      "sync": 0.639866,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.147673,
+      "draw": 2.31005,
+      "layout": 0.067073,
+      "sync": 0.506268,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.258694,
+      "draw": 6.061425,
+      "layout": 0.067046,
+      "sync": 0.572408,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.211506,
+      "draw": 2.075146,
+      "layout": 0.069754,
+      "sync": 0.408128,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.45598,
+      "draw": 5.162662,
+      "layout": 0.077194,
+      "sync": 0.487774,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.204487,
+      "draw": 3.73907,
+      "layout": 0.054587,
+      "sync": 0.465575,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.293947,
+      "draw": 3.178026,
+      "layout": 0.064389,
+      "sync": 0.549426,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.318969,
+      "draw": 4.73636,
+      "layout": 0.065971,
+      "sync": 0.562585,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 17.338174,
+      "draw": 3.284021,
+      "layout": 0.061238,
+      "sync": 0.457798,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.126866,
+      "draw": 4.796071,
+      "layout": 0.057913,
+      "sync": 0.647769,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.342474,
+      "draw": 4.57922,
+      "layout": 0.063192,
+      "sync": 0.43519,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 17.667381,
+      "draw": 3.837502,
+      "layout": 0.070006,
+      "sync": 0.427318,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.698848,
+      "draw": 3.292974,
+      "layout": 0.057312,
+      "sync": 0.503553,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.993622,
+      "draw": 4.315612,
+      "layout": 0.060218,
+      "sync": 0.47025,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 32.493606,
+      "draw": 7.036405,
+      "layout": 0.091672,
+      "sync": 0.543959,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 33.01121,
+      "draw": 2.682751,
+      "layout": 0.061089,
+      "sync": 0.86732,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 25.135919,
+      "draw": 2.230359,
+      "layout": 0.079132,
+      "sync": 0.589106,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.638802,
+      "draw": 1.53388,
+      "layout": 0.058816,
+      "sync": 0.66689,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.31652,
+      "draw": 1.746574,
+      "layout": 0.066033,
+      "sync": 0.469283,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.49527,
+      "draw": 1.274786,
+      "layout": 0.050703,
+      "sync": 0.58825,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.727504,
+      "draw": 2.016729,
+      "layout": 0.098666,
+      "sync": 0.441837,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.749213,
+      "draw": 1.511084,
+      "layout": 0.058841,
+      "sync": 0.404315,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.56597,
+      "draw": 1.402685,
+      "layout": 0.067257,
+      "sync": 0.499384,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.201127,
+      "draw": 1.49402,
+      "layout": 0.073556,
+      "sync": 0.483127,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.509228,
+      "draw": 1.788565,
+      "layout": 0.085982,
+      "sync": 0.415282,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.345301,
+      "draw": 1.712096,
+      "layout": 0.063486,
+      "sync": 0.606947,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.387511,
+      "draw": 1.49275,
+      "layout": 0.059849,
+      "sync": 0.731238,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.815788,
+      "draw": 1.859741,
+      "layout": 0.053323,
+      "sync": 0.627975,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.524665,
+      "draw": 1.016006,
+      "layout": 0.056449,
+      "sync": 0.560293,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.374188,
+      "draw": 2.696049,
+      "layout": 0.077665,
+      "sync": 0.678701,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 31.640094,
+      "draw": 6.977593,
+      "layout": 0.078279,
+      "sync": 0.495708,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.482318,
+      "draw": 2.202002,
+      "layout": 0.072658,
+      "sync": 0.464571,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.136143,
+      "draw": 6.56372,
+      "layout": 0.061474,
+      "sync": 0.508853,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.371654,
+      "draw": 1.622396,
+      "layout": 0.058073,
+      "sync": 0.4543,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.908953,
+      "draw": 4.844736,
+      "layout": 0.068328,
+      "sync": 0.504779,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.75724,
+      "draw": 1.758801,
+      "layout": 0.069146,
+      "sync": 0.692016,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.054866,
+      "draw": 6.510218,
+      "layout": 0.067766,
+      "sync": 0.546862,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.340474,
+      "draw": 6.64043,
+      "layout": 0.066709,
+      "sync": 0.499633,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.717605,
+      "draw": 1.972744,
+      "layout": 0.067942,
+      "sync": 0.499281,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.818587,
+      "draw": 5.606683,
+      "layout": 0.068902,
+      "sync": 0.459694,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.128758,
+      "draw": 4.975208,
+      "layout": 0.081037,
+      "sync": 1.016337,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.713984,
+      "draw": 1.807137,
+      "layout": 0.078956,
+      "sync": 0.454175,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.086786,
+      "draw": 5.055802,
+      "layout": 0.066552,
+      "sync": 0.757617,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.737404,
+      "draw": 4.741464,
+      "layout": 0.099929,
+      "sync": 0.461397,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.690196,
+      "draw": 4.057644,
+      "layout": 0.060906,
+      "sync": 0.464368,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 24.390925,
+      "draw": 4.196295,
+      "layout": 0.099599,
+      "sync": 0.599321,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 31.889592,
+      "draw": 3.625396,
+      "layout": 0.115028,
+      "sync": 0.532716,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 32.098771,
+      "draw": 2.958799,
+      "layout": 0.073426,
+      "sync": 0.783235,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.161847,
+      "draw": 3.444226,
+      "layout": 0.073836,
+      "sync": 0.583393,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.841781,
+      "draw": 1.359711,
+      "layout": 0.060816,
+      "sync": 0.588196,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.773841,
+      "draw": 1.57079,
+      "layout": 0.088501,
+      "sync": 0.475765,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.771401,
+      "draw": 1.803247,
+      "layout": 0.103461,
+      "sync": 0.787506,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.551977,
+      "draw": 1.683157,
+      "layout": 0.076379,
+      "sync": 0.583221,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.531064,
+      "draw": 1.952621,
+      "layout": 0.085672,
+      "sync": 0.501535,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.516705,
+      "draw": 2.329937,
+      "layout": 0.08178,
+      "sync": 0.727679,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.493349,
+      "draw": 2.060427,
+      "layout": 0.070883,
+      "sync": 0.597036,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.821239,
+      "draw": 1.829666,
+      "layout": 0.056478,
+      "sync": 0.836601,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.529763,
+      "draw": 1.57947,
+      "layout": 0.059168,
+      "sync": 0.608859,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.192467,
+      "draw": 1.96389,
+      "layout": 0.066657,
+      "sync": 0.464295,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.092966,
+      "draw": 1.659865,
+      "layout": 0.064835,
+      "sync": 0.478283,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.998414,
+      "draw": 1.620282,
+      "layout": 0.074861,
+      "sync": 0.444069,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.839759,
+      "draw": 1.156802,
+      "layout": 0.075051,
+      "sync": 0.422155,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.246563,
+      "draw": 4.016427,
+      "layout": 0.116139,
+      "sync": 0.400032,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 25.723533,
+      "draw": 5.969687,
+      "layout": 0.068192,
+      "sync": 0.518232,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.666984,
+      "draw": 1.409065,
+      "layout": 0.063802,
+      "sync": 0.437203,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.833331,
+      "draw": 4.618452,
+      "layout": 0.072685,
+      "sync": 0.550334,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.468508,
+      "draw": 7.892332,
+      "layout": 0.075757,
+      "sync": 0.512506,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.721464,
+      "draw": 1.739834,
+      "layout": 0.081981,
+      "sync": 0.569122,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 26.184488,
+      "draw": 6.805254,
+      "layout": 0.071242,
+      "sync": 0.822151,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.43282,
+      "draw": 2.469111,
+      "layout": 0.079357,
+      "sync": 0.46323,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.06883,
+      "draw": 6.250883,
+      "layout": 0.067696,
+      "sync": 0.716233,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.903195,
+      "draw": 4.622256,
+      "layout": 0.080857,
+      "sync": 0.628565,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.616979,
+      "draw": 1.489415,
+      "layout": 0.057284,
+      "sync": 0.565497,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.316256,
+      "draw": 4.674291,
+      "layout": 0.06788,
+      "sync": 0.462243,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.202236,
+      "draw": 5.927322,
+      "layout": 0.167576,
+      "sync": 0.429568,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.018792,
+      "draw": 1.852289,
+      "layout": 0.079131,
+      "sync": 0.475041,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.131509,
+      "draw": 5.671801,
+      "layout": 0.072743,
+      "sync": 0.765041,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.161826,
+      "draw": 3.279416,
+      "layout": 0.075057,
+      "sync": 0.661627,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 25.717195,
+      "draw": 4.438109,
+      "layout": 0.088044,
+      "sync": 0.412157,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.632929,
+      "draw": 3.320875,
+      "layout": 0.062396,
+      "sync": 0.91296,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.37391,
+      "draw": 2.453744,
+      "layout": 0.067381,
+      "sync": 0.797304,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.543628,
+      "draw": 1.942284,
+      "layout": 0.068197,
+      "sync": 0.452933,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.2332,
+      "draw": 1.444206,
+      "layout": 0.072611,
+      "sync": 0.683205,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.356208,
+      "draw": 1.473208,
+      "layout": 0.053675,
+      "sync": 0.786676,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.529906,
+      "draw": 1.577711,
+      "layout": 0.074654,
+      "sync": 0.61553,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.47262,
+      "draw": 1.605493,
+      "layout": 0.098852,
+      "sync": 0.879643,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.086743,
+      "draw": 1.343124,
+      "layout": 0.09247,
+      "sync": 0.439456,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.366148,
+      "draw": 1.291128,
+      "layout": 0.061816,
+      "sync": 0.530906,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.984671,
+      "draw": 1.775462,
+      "layout": 0.058951,
+      "sync": 0.453631,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.579556,
+      "draw": 1.864249,
+      "layout": 0.067584,
+      "sync": 0.417867,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.2453,
+      "draw": 2.047341,
+      "layout": 0.063388,
+      "sync": 0.872847,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.466068,
+      "draw": 1.744754,
+      "layout": 0.068686,
+      "sync": 0.679925,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.125332,
+      "draw": 1.17622,
+      "layout": 0.064248,
+      "sync": 0.47599,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.331538,
+      "draw": 2.932329,
+      "layout": 0.075733,
+      "sync": 0.671931,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.633987,
+      "draw": 8.165478,
+      "layout": 0.060049,
+      "sync": 0.695672,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 27.023162,
+      "draw": 5.332679,
+      "layout": 0.08485,
+      "sync": 0.438571,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.523841,
+      "draw": 1.673681,
+      "layout": 0.063242,
+      "sync": 0.49836,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.328136,
+      "draw": 4.834834,
+      "layout": 0.069046,
+      "sync": 0.60352,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.815172,
+      "draw": 4.959062,
+      "layout": 0.064246,
+      "sync": 0.589607,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.658584,
+      "draw": 1.849655,
+      "layout": 0.105539,
+      "sync": 0.692725,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.714011,
+      "draw": 4.632553,
+      "layout": 0.058527,
+      "sync": 1.301503,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.412143,
+      "draw": 5.794535,
+      "layout": 0.10188,
+      "sync": 0.489418,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.777831,
+      "draw": 1.660614,
+      "layout": 0.077361,
+      "sync": 0.621465,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.909779,
+      "draw": 4.334628,
+      "layout": 0.085388,
+      "sync": 0.489872,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.752412,
+      "draw": 5.685588,
+      "layout": 0.103826,
+      "sync": 0.524867,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.472631,
+      "draw": 1.684937,
+      "layout": 0.075637,
+      "sync": 0.429468,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.610881,
+      "draw": 4.445876,
+      "layout": 0.05712,
+      "sync": 0.46216,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.03288,
+      "draw": 4.864211,
+      "layout": 0.062061,
+      "sync": 0.487132,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.365756,
+      "draw": 4.236444,
+      "layout": 0.060206,
+      "sync": 0.41487,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.789924,
+      "draw": 3.520394,
+      "layout": 0.091902,
+      "sync": 0.46921,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.077178,
+      "draw": 2.659811,
+      "layout": 0.059161,
+      "sync": 0.487985,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.737736,
+      "draw": 1.346206,
+      "layout": 0.070044,
+      "sync": 0.464674,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.35007,
+      "draw": 1.339053,
+      "layout": 0.069364,
+      "sync": 0.834434,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.517834,
+      "draw": 1.702489,
+      "layout": 0.063579,
+      "sync": 0.69404,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.567972,
+      "draw": 0.994912,
+      "layout": 0.055126,
+      "sync": 0.53249,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.510296,
+      "draw": 1.281657,
+      "layout": 0.063359,
+      "sync": 0.664134,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.652148,
+      "draw": 1.496706,
+      "layout": 0.053266,
+      "sync": 0.415447,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.778589,
+      "draw": 1.347732,
+      "layout": 0.066814,
+      "sync": 0.493272,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.830991,
+      "draw": 1.289539,
+      "layout": 0.052192,
+      "sync": 0.483574,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.181463,
+      "draw": 1.623324,
+      "layout": 0.764877,
+      "sync": 0.412402,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.458024,
+      "draw": 1.38982,
+      "layout": 0.065411,
+      "sync": 0.435136,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.519392,
+      "draw": 1.95415,
+      "layout": 0.060135,
+      "sync": 0.576577,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.298703,
+      "draw": 1.294471,
+      "layout": 0.049109,
+      "sync": 0.50418,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.710295,
+      "draw": 4.637591,
+      "layout": 0.080591,
+      "sync": 0.808995,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 29.908357,
+      "draw": 6.447942,
+      "layout": 0.092373,
+      "sync": 0.582495,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 32.658806,
+      "draw": 6.040311,
+      "layout": 0.076748,
+      "sync": 0.569864,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.451479,
+      "draw": 1.257711,
+      "layout": 0.058398,
+      "sync": 0.427136,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.648041,
+      "draw": 4.690831,
+      "layout": 0.081242,
+      "sync": 0.78897,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.321018,
+      "draw": 1.193473,
+      "layout": 0.080433,
+      "sync": 0.400086,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.786231,
+      "draw": 5.359787,
+      "layout": 0.093946,
+      "sync": 0.460318,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.065251,
+      "draw": 3.954824,
+      "layout": 0.067457,
+      "sync": 0.457407,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.597993,
+      "draw": 1.334298,
+      "layout": 0.062179,
+      "sync": 0.466619,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.37931,
+      "draw": 4.446286,
+      "layout": 0.070223,
+      "sync": 0.62645,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.902305,
+      "draw": 4.529533,
+      "layout": 0.180956,
+      "sync": 0.53088,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.58845,
+      "draw": 1.83322,
+      "layout": 0.294939,
+      "sync": 0.592893,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.680745,
+      "draw": 5.067042,
+      "layout": 0.058574,
+      "sync": 0.603531,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.797612,
+      "draw": 5.666823,
+      "layout": 0.077477,
+      "sync": 0.488665,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.646608,
+      "draw": 1.215644,
+      "layout": 0.066119,
+      "sync": 0.53767,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.892618,
+      "draw": 3.097834,
+      "layout": 0.059716,
+      "sync": 0.41756,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.638499,
+      "draw": 3.676442,
+      "layout": 0.05168,
+      "sync": 0.448552,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.263743,
+      "draw": 5.616224,
+      "layout": 0.066464,
+      "sync": 0.448593,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.153922,
+      "draw": 1.58372,
+      "layout": 0.085019,
+      "sync": 0.628066,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.314986,
+      "draw": 3.530348,
+      "layout": 0.054605,
+      "sync": 0.446383,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.277624,
+      "draw": 2.993892,
+      "layout": 0.077439,
+      "sync": 0.466849,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.442445,
+      "draw": 2.793012,
+      "layout": 0.078023,
+      "sync": 0.422561,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.536637,
+      "draw": 2.765303,
+      "layout": 0.069552,
+      "sync": 0.73594,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.672139,
+      "draw": 1.602685,
+      "layout": 0.073787,
+      "sync": 0.811296,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.014014,
+      "draw": 1.550389,
+      "layout": 0.094688,
+      "sync": 0.511034,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.531729,
+      "draw": 2.337849,
+      "layout": 0.085051,
+      "sync": 0.696952,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.546594,
+      "draw": 1.047661,
+      "layout": 0.053592,
+      "sync": 0.415768,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.239132,
+      "draw": 1.385692,
+      "layout": 0.070319,
+      "sync": 0.561614,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.172175,
+      "draw": 1.450537,
+      "layout": 0.067555,
+      "sync": 0.574011,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.217064,
+      "draw": 1.367863,
+      "layout": 0.144351,
+      "sync": 0.588872,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 20.015154,
+      "draw": 1.887089,
+      "layout": 0.055957,
+      "sync": 0.469675,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.455079,
+      "draw": 1.300095,
+      "layout": 0.071437,
+      "sync": 0.507683,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.542986,
+      "draw": 1.900581,
+      "layout": 0.176705,
+      "sync": 0.359965,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.459295,
+      "draw": 1.874559,
+      "layout": 0.073962,
+      "sync": 0.42867,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.599672,
+      "draw": 2.524447,
+      "layout": 0.077624,
+      "sync": 0.601116,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.062832,
+      "draw": 1.221607,
+      "layout": 0.062086,
+      "sync": 0.478319,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 24.226327,
+      "draw": 5.374599,
+      "layout": 0.080902,
+      "sync": 0.485194,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 33.577407,
+      "draw": 7.115768,
+      "layout": 0.073033,
+      "sync": 0.556872,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.339432,
+      "draw": 1.725057,
+      "layout": 0.076052,
+      "sync": 0.478475,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.419814,
+      "draw": 4.318062,
+      "layout": 0.07793,
+      "sync": 0.4626,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.451821,
+      "draw": 2.092794,
+      "layout": 0.082487,
+      "sync": 0.499315,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.575094,
+      "draw": 4.648742,
+      "layout": 0.063199,
+      "sync": 0.720622,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.419687,
+      "draw": 1.425205,
+      "layout": 0.068783,
+      "sync": 0.435702,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.340193,
+      "draw": 6.161962,
+      "layout": 0.0654,
+      "sync": 0.473945,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.646672,
+      "draw": 1.407472,
+      "layout": 0.061179,
+      "sync": 0.422216,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.302304,
+      "draw": 4.125276,
+      "layout": 0.063895,
+      "sync": 1.170288,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.213503,
+      "draw": 1.831023,
+      "layout": 0.090693,
+      "sync": 0.727869,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.515433,
+      "draw": 5.699169,
+      "layout": 0.073624,
+      "sync": 0.471885,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.563376,
+      "draw": 2.11202,
+      "layout": 0.073901,
+      "sync": 0.568727,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.742587,
+      "draw": 4.355759,
+      "layout": 0.066926,
+      "sync": 0.500188,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.215417,
+      "draw": 1.23513,
+      "layout": 0.083202,
+      "sync": 0.593978,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 35.361378,
+      "draw": 3.225045,
+      "layout": 0.058697,
+      "sync": 0.49433,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.866935,
+      "draw": 3.429251,
+      "layout": 0.049019,
+      "sync": 0.429374,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.736696,
+      "draw": 4.172647,
+      "layout": 0.057532,
+      "sync": 0.403402,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.603638,
+      "draw": 0.990083,
+      "layout": 0.078384,
+      "sync": 0.446603,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.173739,
+      "draw": 3.911921,
+      "layout": 0.068451,
+      "sync": 0.484958,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.159869,
+      "draw": 3.262946,
+      "layout": 0.056308,
+      "sync": 0.442215,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.862352,
+      "draw": 3.845843,
+      "layout": 0.060006,
+      "sync": 0.399373,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 15.763838,
+      "draw": 4.100709,
+      "layout": 0.055352,
+      "sync": 0.399354,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 14.390853,
+      "draw": 2.813326,
+      "layout": 0.065935,
+      "sync": 0.448824,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 15.492529,
+      "draw": 3.19823,
+      "layout": 0.054786,
+      "sync": 0.395746,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 32.213906,
+      "draw": 8.645112,
+      "layout": 0.088592,
+      "sync": 0.425783,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 29.58325,
+      "draw": 2.782953,
+      "layout": 0.07785,
+      "sync": 0.580817,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.091126,
+      "draw": 1.383408,
+      "layout": 0.064995,
+      "sync": 0.459108,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.791714,
+      "draw": 1.368737,
+      "layout": 0.083691,
+      "sync": 0.436034,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.701882,
+      "draw": 1.555238,
+      "layout": 0.089385,
+      "sync": 0.672872,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.370504,
+      "draw": 0.983521,
+      "layout": 0.070553,
+      "sync": 0.513013,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.61809,
+      "draw": 1.607751,
+      "layout": 0.10269,
+      "sync": 0.48491,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.873515,
+      "draw": 2.33242,
+      "layout": 0.079539,
+      "sync": 0.53435,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.874117,
+      "draw": 2.184113,
+      "layout": 0.132668,
+      "sync": 0.467278,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.115083,
+      "draw": 1.643611,
+      "layout": 0.087408,
+      "sync": 0.593029,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.532913,
+      "draw": 1.879488,
+      "layout": 0.074225,
+      "sync": 0.56333,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.951666,
+      "draw": 1.732375,
+      "layout": 0.117842,
+      "sync": 0.536207,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.811261,
+      "draw": 2.26772,
+      "layout": 0.080654,
+      "sync": 0.511975,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.063785,
+      "draw": 1.720602,
+      "layout": 0.088242,
+      "sync": 0.889339,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.539268,
+      "draw": 1.31219,
+      "layout": 0.095551,
+      "sync": 0.560977,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.125637,
+      "draw": 3.532483,
+      "layout": 0.079325,
+      "sync": 0.439539,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 30.039151,
+      "draw": 7.783091,
+      "layout": 0.078348,
+      "sync": 0.654711,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 31.970546,
+      "draw": 6.907151,
+      "layout": 0.092787,
+      "sync": 0.485792,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.891987,
+      "draw": 1.820626,
+      "layout": 0.065631,
+      "sync": 0.42757,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.679376,
+      "draw": 5.35197,
+      "layout": 0.086316,
+      "sync": 0.705979,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.535333,
+      "draw": 1.494528,
+      "layout": 0.070978,
+      "sync": 0.448608,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.177591,
+      "draw": 5.353172,
+      "layout": 0.086378,
+      "sync": 0.83298,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.54451,
+      "draw": 4.088089,
+      "layout": 0.069773,
+      "sync": 0.667829,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.615975,
+      "draw": 2.60729,
+      "layout": 0.085267,
+      "sync": 0.44229,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.85065,
+      "draw": 4.729927,
+      "layout": 0.061691,
+      "sync": 0.484563,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.361649,
+      "draw": 4.955684,
+      "layout": 0.064729,
+      "sync": 0.630171,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.969976,
+      "draw": 1.482712,
+      "layout": 0.058442,
+      "sync": 0.545392,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.67271,
+      "draw": 4.322532,
+      "layout": 0.075133,
+      "sync": 0.458703,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.397158,
+      "draw": 4.251631,
+      "layout": 0.060138,
+      "sync": 0.47621,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.497967,
+      "draw": 1.348055,
+      "layout": 0.080441,
+      "sync": 0.621625,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.440938,
+      "draw": 3.476499,
+      "layout": 0.069428,
+      "sync": 0.414482,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.767782,
+      "draw": 2.75396,
+      "layout": 0.061947,
+      "sync": 0.513408,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.973565,
+      "draw": 4.044853,
+      "layout": 0.055988,
+      "sync": 0.418916,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 33.13042,
+      "draw": 9.608349,
+      "layout": 0.134288,
+      "sync": 0.581545,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 30.749201,
+      "draw": 2.753343,
+      "layout": 0.08297,
+      "sync": 0.505424,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 22.462995,
+      "draw": 1.808151,
+      "layout": 0.231039,
+      "sync": 0.453016,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.373267,
+      "draw": 2.322828,
+      "layout": 0.091071,
+      "sync": 0.465183,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.538675,
+      "draw": 2.60261,
+      "layout": 0.068719,
+      "sync": 0.456341,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.335043,
+      "draw": 1.267187,
+      "layout": 0.073037,
+      "sync": 0.553524,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.708338,
+      "draw": 1.71883,
+      "layout": 0.070562,
+      "sync": 0.601656,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.680845,
+      "draw": 1.218202,
+      "layout": 0.05825,
+      "sync": 0.485891,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.881802,
+      "draw": 1.087487,
+      "layout": 0.052774,
+      "sync": 0.437336,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.593965,
+      "draw": 1.43467,
+      "layout": 0.080443,
+      "sync": 0.430563,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.833043,
+      "draw": 2.223839,
+      "layout": 0.082883,
+      "sync": 0.436927,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.5534,
+      "draw": 2.035814,
+      "layout": 0.066402,
+      "sync": 0.44097,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.800481,
+      "draw": 1.269939,
+      "layout": 0.054235,
+      "sync": 0.522143,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.584541,
+      "draw": 1.426633,
+      "layout": 0.110488,
+      "sync": 0.524322,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.443348,
+      "draw": 1.360717,
+      "layout": 0.056066,
+      "sync": 0.600477,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.685877,
+      "draw": 2.341835,
+      "layout": 0.072943,
+      "sync": 0.396315,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.164455,
+      "draw": 5.003024,
+      "layout": 0.067255,
+      "sync": 0.565169,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.186219,
+      "draw": 5.100416,
+      "layout": 0.078145,
+      "sync": 0.421624,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.537609,
+      "draw": 1.80167,
+      "layout": 0.124471,
+      "sync": 0.602915,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.86759,
+      "draw": 4.657465,
+      "layout": 0.058441,
+      "sync": 0.503792,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.154047,
+      "draw": 3.919706,
+      "layout": 0.076088,
+      "sync": 0.497374,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.749316,
+      "draw": 1.95997,
+      "layout": 0.085667,
+      "sync": 0.497817,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.53671,
+      "draw": 4.447698,
+      "layout": 0.063903,
+      "sync": 0.467723,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 21.968686,
+      "draw": 3.924464,
+      "layout": 0.066578,
+      "sync": 0.45295,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.451881,
+      "draw": 4.075217,
+      "layout": 0.067745,
+      "sync": 0.561379,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.537502,
+      "draw": 1.521273,
+      "layout": 0.062424,
+      "sync": 0.511441,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.403612,
+      "draw": 4.399461,
+      "layout": 0.061633,
+      "sync": 0.544747,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.907272,
+      "draw": 4.065032,
+      "layout": 0.06558,
+      "sync": 0.620138,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.163707,
+      "draw": 1.494934,
+      "layout": 0.051964,
+      "sync": 0.623643,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 34.464783,
+      "draw": 8.611704,
+      "layout": 0.064965,
+      "sync": 0.501383,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 35.27532,
+      "draw": 3.158823,
+      "layout": 0.091688,
+      "sync": 0.658686,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.52592,
+      "draw": 1.7474,
+      "layout": 0.079205,
+      "sync": 0.469614,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.533128,
+      "draw": 1.518731,
+      "layout": 0.069703,
+      "sync": 0.741979,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.480816,
+      "draw": 1.035649,
+      "layout": 0.065384,
+      "sync": 0.431727,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.281314,
+      "draw": 2.079116,
+      "layout": 0.078131,
+      "sync": 0.4572,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.283548,
+      "draw": 0.985034,
+      "layout": 0.058783,
+      "sync": 0.466876,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.273546,
+      "draw": 1.104622,
+      "layout": 0.062189,
+      "sync": 0.403726,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.545743,
+      "draw": 2.040865,
+      "layout": 0.066056,
+      "sync": 0.506834,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.457903,
+      "draw": 1.119249,
+      "layout": 0.054045,
+      "sync": 0.403856,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.407186,
+      "draw": 1.2156,
+      "layout": 0.066986,
+      "sync": 0.501665,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.670263,
+      "draw": 1.427392,
+      "layout": 0.056695,
+      "sync": 0.54613,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.391722,
+      "draw": 1.477932,
+      "layout": 0.070454,
+      "sync": 0.505958,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.737681,
+      "draw": 1.174112,
+      "layout": 0.151125,
+      "sync": 0.814737,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 19.066101,
+      "draw": 3.476485,
+      "layout": 0.180583,
+      "sync": 0.525905,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 23.275274,
+      "draw": 5.411005,
+      "layout": 0.062801,
+      "sync": 0.720958,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 22.871677,
+      "draw": 4.169835,
+      "layout": 0.086726,
+      "sync": 0.561642,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.363669,
+      "draw": 1.37914,
+      "layout": 0.058218,
+      "sync": 0.566627,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.511145,
+      "draw": 4.56728,
+      "layout": 0.064678,
+      "sync": 0.519062,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.123463,
+      "draw": 3.382251,
+      "layout": 0.064013,
+      "sync": 0.466365,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.281142,
+      "draw": 1.290886,
+      "layout": 0.06061,
+      "sync": 0.4602,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.018205,
+      "draw": 3.573012,
+      "layout": 0.081419,
+      "sync": 0.410488,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.236849,
+      "draw": 4.136132,
+      "layout": 0.063253,
+      "sync": 0.559948,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.388555,
+      "draw": 4.089814,
+      "layout": 0.067313,
+      "sync": 0.506737,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.437971,
+      "draw": 1.164865,
+      "layout": 0.052228,
+      "sync": 0.509922,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.208449,
+      "draw": 4.520874,
+      "layout": 0.058083,
+      "sync": 0.524246,
+      "gpu": 0
+    },
+    {
+      "target": "CHAT",
+      "total": 18.683499,
+      "draw": 3.777812,
+      "layout": 0.058373,
+      "sync": 0.423887,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 23.126219,
+      "draw": 4.991078,
+      "layout": 0.074186,
+      "sync": 0.47733,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.321808,
+      "draw": 1.560541,
+      "layout": 0.089248,
+      "sync": 0.55137,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 28.592953,
+      "draw": 6.640817,
+      "layout": 0.114985,
+      "sync": 0.441507,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 28.178624,
+      "draw": 3.66832,
+      "layout": 0.161437,
+      "sync": 0.642354,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.49891,
+      "draw": 1.943722,
+      "layout": 0.091473,
+      "sync": 0.464075,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.43521,
+      "draw": 1.935686,
+      "layout": 0.063494,
+      "sync": 0.489446,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.607038,
+      "draw": 1.407932,
+      "layout": 0.068359,
+      "sync": 0.736294,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.706448,
+      "draw": 0.959912,
+      "layout": 0.102364,
+      "sync": 0.495263,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.832321,
+      "draw": 1.651513,
+      "layout": 0.059441,
+      "sync": 0.849155,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.86967,
+      "draw": 1.777904,
+      "layout": 0.063305,
+      "sync": 0.604407,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.787075,
+      "draw": 2.086267,
+      "layout": 0.104097,
+      "sync": 0.441694,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.82755,
+      "draw": 1.69184,
+      "layout": 0.069167,
+      "sync": 0.54461,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.562729,
+      "draw": 1.758916,
+      "layout": 0.073396,
+      "sync": 0.57878,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.743634,
+      "draw": 1.872608,
+      "layout": 0.070012,
+      "sync": 0.538442,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.695769,
+      "draw": 1.628009,
+      "layout": 0.06236,
+      "sync": 0.626929,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 19.119491,
+      "draw": 1.298705,
+      "layout": 0.060749,
+      "sync": 0.535482,
+      "gpu": 0
+    },
+    {
+      "target": "LIBRARY",
+      "total": 18.638601,
+      "draw": 1.01057,
+      "layout": 0.067439,
+      "sync": 0.496047,
+      "gpu": 0
+    }
+  ],
+  "commitMs": [
+    36.511392,
+    48.031716,
+    73.977362,
+    33.665679,
+    52.751513,
+    44.850652,
+    61.164116,
+    42.135367,
+    25.729297,
+    28.075385,
+    60.421239,
+    43.977816,
+    55.044263,
+    52.477677,
+    42.048396,
+    29.806107,
+    48.113417,
+    34.823152,
+    49.204618,
+    33.200417,
+    39.978964,
+    30.601155,
+    54.223172,
+    42.638403,
+    51.266754,
+    42.528167,
+    32.92886,
+    42.647771,
+    34.342151,
+    44.431831
+  ]
+}

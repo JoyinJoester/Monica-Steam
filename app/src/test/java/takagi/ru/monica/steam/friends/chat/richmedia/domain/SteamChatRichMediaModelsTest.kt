@@ -252,9 +252,9 @@ class SteamChatRichMediaModelsTest {
     }
 
     @Test
-    fun keepsNonStoreLinksAsOrdinaryTextLinks() {
+    fun keepsUnrecognizedLinksAsOrdinaryTextLinks() {
         val content = SteamChatRichContentParser.parse(
-            "https://steamcommunity.com/profiles/76561198000000000/"
+            "https://example.org/community/"
         ) as SteamChatRichContent.Text
 
         assertEquals(1, content.links.size)
@@ -305,7 +305,7 @@ class SteamChatRichMediaModelsTest {
         val body = "Trade: https://steamcommunity.com/tradeoffer/new/?partner=123&token=abc"
         val trade = SteamChatRichContentParser.parse(body) as SteamChatRichContent.OfficialMessage
 
-        assertEquals(SteamChatOfficialMessageKind.TRADE_OFFER, trade.message.kind)
+        assertEquals(SteamChatOfficialMessageKind.TRADE_LINK, trade.message.kind)
         assertEquals(
             "https://steamcommunity.com/tradeoffer/new/?partner=123&token=abc",
             trade.message.url

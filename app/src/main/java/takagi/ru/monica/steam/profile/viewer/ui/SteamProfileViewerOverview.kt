@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.profile.viewer.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshIconButton
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -111,6 +112,7 @@ internal fun SteamProfileViewerOverview(
                 loading = state.loading,
                 animatedBackgroundEnabled = animatedBackgroundEnabled,
                 allowBackgroundMotion = allowBackgroundMotion,
+                onRefresh = onRefresh,
                 onNavigateBack = onNavigateBack
             )
         }
@@ -247,6 +249,7 @@ private fun SteamProfileViewerHero(
     loading: Boolean,
     animatedBackgroundEnabled: Boolean,
     allowBackgroundMotion: Boolean,
+    onRefresh: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     val summary = snapshot?.target
@@ -296,6 +299,7 @@ private fun SteamProfileViewerHero(
                 )
             }
         }
+        SteamRefreshIconButton(loading, onRefresh, Modifier.align(Alignment.TopEnd).statusBarsPadding().padding(8.dp))
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
@@ -354,9 +358,6 @@ private fun SteamProfileViewerHero(
                                 )
                             }
                         }
-                    }
-                    if (loading) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                     }
                 }
             }

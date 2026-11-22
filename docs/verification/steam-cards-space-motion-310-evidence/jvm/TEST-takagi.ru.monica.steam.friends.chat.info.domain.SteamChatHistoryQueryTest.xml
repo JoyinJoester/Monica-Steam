@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:03:54.726Z" hostname="JOYIN" time="0.016">
+  <properties/>
+  <testcase name="senderListIsOrderedByMessageCount" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.007"/>
+  <testcase name="anyTimeKeepsEverything" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.001"/>
+  <testcase name="queryMatchesSenderAndBody" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.004"/>
+  <testcase name="categoryChipCountsIgnoreTheSelectedChipButKeepOtherFilters" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.003"/>
+  <testcase name="senderFilterKeepsOnlyThatPersonsMessages" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.0"/>
+  <testcase name="periodFilterCountsFromTheStartOfTheWindowDay" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.0"/>
+  <testcase name="searchingNarrowsChipCountsToo" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.0"/>
+  <testcase name="sortFlipsBetweenNewestAndOldest" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.0"/>
+  <testcase name="selectingACategoryNarrowsTheList" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

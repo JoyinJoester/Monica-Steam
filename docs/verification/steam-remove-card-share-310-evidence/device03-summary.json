@@ -1,0 +1,15 @@
+{
+  "stage": "device03",
+  "failed": [
+    {
+      "test": "glassLightThreadAndAttachments",
+      "error": "androidx.test.espresso.NoMatchingViewException: No views in hierarchy found matching: (view.getContentDescription() is \"More options\" and is descendant of a view matching is assignable from class <class com.monica.telegramchat.TelegramChatComposerView>)"
+    },
+    {
+      "test": "pastedProfileLinkSendsNormallyAndServerEchoBecomesACard",
+      "error": "java.lang.AssertionError: expected:<[https://steamcommunity.com/profiles/76561198000000001/]> but was:<[]>"
+    }
+  ],
+  "passed": 22,
+  "fullLogRetainedLocally": true
+}

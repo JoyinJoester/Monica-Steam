@@ -9,7 +9,7 @@ class SteamChatMediaViewerIntegrationTest {
     @Test
     fun trustedChatImagesOpenTheSharedInAppViewer() {
         val attachment = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatAttachmentContent.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatImageMessage.kt"
         ).readText()
         val viewer = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/foundation/media/SteamFullscreenImageViewer.kt"
@@ -21,10 +21,10 @@ class SteamChatMediaViewerIntegrationTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRemoteImage.kt"
         ).readText()
 
-        assertTrue(attachment.contains("SteamImageDownloadPolicy.isAllowedUrl(content.url)"))
+        assertTrue(attachment.contains("SteamImageDownloadPolicy.isAllowedUrl(source.url)"))
         assertTrue(attachment.contains("SteamFullscreenImageViewer("))
-        assertTrue(attachment.contains("showImageViewer = true"))
-        assertTrue(attachment.contains("if (content.kind != SteamChatAttachmentKind.IMAGE)"))
+        assertTrue(attachment.contains("selectedImage = index"))
+        assertTrue(attachment.contains("images = sources.map { it.url }"))
         assertFalse(attachment.contains("SteamStoreScreenshotViewer"))
         assertTrue(viewer.contains("HorizontalPager("))
         assertTrue(viewer.contains("SteamImageDownloader("))

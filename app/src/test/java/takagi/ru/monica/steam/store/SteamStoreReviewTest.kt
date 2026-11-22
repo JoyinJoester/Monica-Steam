@@ -23,7 +23,7 @@ class SteamStoreReviewTest {
     fun parsesNativeReviewBodiesAuthorMetadataAndCursor() {
         val page = SteamStoreReviewParser.parsePage(
             """{
-              "query_summary": {
+              "success": 1, "query_summary": {
                 "review_score": 8,
                 "total_positive": 80,
                 "total_negative": 20,
@@ -81,7 +81,7 @@ class SteamStoreReviewTest {
     @Test
     fun parsesLifetimeSummaryAndRecentHistogramSeparately() {
         val overall = SteamStoreReviewParser.parseOverall(
-            """{"query_summary":{"review_score":6,"total_positive":161869,"total_negative":43575,"total_reviews":205444}}"""
+            """{"success":1,"reviews":[],"query_summary":{"review_score":6,"total_positive":161869,"total_negative":43575,"total_reviews":205444}}"""
         )
         val recent = SteamStoreReviewParser.parseRecent(
             """{"results":{"recent":[{"recommendations_up":12,"recommendations_down":3},{"recommendations_up":13,"recommendations_down":2}]}}"""
@@ -112,7 +112,7 @@ class SteamStoreReviewTest {
         assertSame(reviews, cached.preserveCachedReviews(refreshed).reviews)
 
         val recent = SteamReviewSummary(score = 6, positive = 70, negative = 30, total = 100)
-        val partialRefresh = oldDetail.copy(reviews = SteamStoreReviews(recent = recent))
+        val partialRefresh = oldDetail.copy(reviews = SteamStoreReviews(recent = recent, pageLoadFailed = true))
             .preserveCachedReviews(cached)
         assertSame(reviews.overall, partialRefresh.reviews?.overall)
         assertSame(recent, partialRefresh.reviews?.recent)
@@ -183,6 +183,27 @@ class SteamStoreReviewTest {
         assertTrue(reviewUi.contains("onApply ="))
         assertFalse(reviewUi.contains("SingleChoiceSegmentedButtonRow"))
         assertTrue(viewModel.contains("fun updateReviewFilters("))
+    }
+
+    @Test fun rejectsFailureAndMissingReviewPayloads() {
+        for (payload in listOf("{}", """{"success":0,"reviews":[]}""", """{"success":1}""", "<html>Welcome to Steam</html>")) {
+            assertTrue(runCatching { SteamStoreReviewParser.parsePage(payload) }.isFailure)
+        }
+    }
+
+    @Test fun successfulEmptyPageEndsPaginationAndDoesNotResurrectCachedRows() {
+        val page = SteamStoreReviewParser.parsePage("""{"success":1,"reviews":[],"cursor":"same"}""")
+        assertTrue(page.items.isEmpty())
+        assertNull(page.nextCursor)
+        val cached = SteamStoreDetail(620, "Portal 2", reviews = SteamStoreReviews(
+            items = listOf(SteamUserReview("old", body = "Old", votedUp = true)), nextCursor = "old-cursor"))
+        val fresh = cached.copy(reviews = SteamStoreReviews()).preserveCachedReviews(cached)
+        assertTrue(fresh.reviews!!.items.isEmpty())
+        assertNull(fresh.reviews!!.nextCursor)
+        val failed = cached.copy(reviews = SteamStoreReviews(pageLoadFailed = true)).preserveCachedReviews(cached)
+        assertTrue(failed.reviews!!.pageLoadFailed)
+        assertEquals("Old", failed.reviews!!.items.single().body)
+        assertFalse(failed.reviews!!.mergePage(SteamReviewPage()).pageLoadFailed)
     }
 
     private fun projectFile(path: String): File {

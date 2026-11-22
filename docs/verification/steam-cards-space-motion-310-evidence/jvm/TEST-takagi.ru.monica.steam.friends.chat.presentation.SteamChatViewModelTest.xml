@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:03:54.999Z" hostname="JOYIN" time="0.03">
+  <properties/>
+  <testcase name="refreshDoesNotRestoreUnreadAfterThreadWasAcknowledged" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.007"/>
+  <testcase name="requestGuardRejectsLateAccountAndThreadResponses" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.0"/>
+  <testcase name="failedOptimisticMessageCanRetryInPlace" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.009"/>
+  <testcase name="retriesSendOnceAfterSteamRejectsTheSession" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.006"/>
+  <testcase name="timeoutReconcilesServerEchoWithoutSendingADuplicate" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.004"/>
+  <testcase name="stickerReplyKeepsItsLocalReplyTargetAfterServerConfirmation" classname="takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

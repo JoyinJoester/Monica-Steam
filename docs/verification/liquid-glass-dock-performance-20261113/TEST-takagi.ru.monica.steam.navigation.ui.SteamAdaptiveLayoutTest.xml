@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-13T13:11:44.285Z" hostname="JOYIN" time="0.027">
+  <properties/>
+  <testcase name="portraitPhoneKeepsCompactLayout" classname="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" time="0.003"/>
+  <testcase name="landscapePhoneUsesRailAndTwoPanes" classname="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" time="0.0"/>
+  <testcase name="narrowMultiWindowFallsBackToCompactLayout" classname="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" time="0.0"/>
+  <testcase name="tabletUsesExpandedLayoutInEitherOrientation" classname="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" time="0.0"/>
+  <testcase name="coreScreensReadTheSharedAdaptivePolicy" classname="takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

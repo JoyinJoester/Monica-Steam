@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassExtendedFloatingActionButton as ExtendedFloatingActionButton
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -7,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -18,21 +19,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassHost
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassAvailable
+import takagi.ru.monica.steam.navigation.liquidglass.ui.steamGlassSurface
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.data.SteamAccount
-import takagi.ru.monica.steam.foundation.ui.SteamAvatarImage
+import takagi.ru.monica.steam.foundation.ui.SteamAccountAvatarButton
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.navigation.ui.rememberSteamAdaptiveLayout
@@ -104,7 +111,8 @@ internal fun SteamStoreHomePage(
             Column(Modifier.steamWindowTopPadding()) {
                 TextField(
                     value = state.query, onValueChange = actions.query,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp).testTag("store_home_search"),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp).testTag("store_home_search")
+                        .then(if (steamGlassAvailable()) Modifier.steamGlassSurface(RoundedCornerShape(28.dp)) else Modifier),
                     placeholder = { Text(stringResource(R.string.store_home_search_hint), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     leadingIcon = {
                         if (actions.back != null) IconButton(onClick = actions.back) {
@@ -117,28 +125,18 @@ internal fun SteamStoreHomePage(
                         if (searching) IconButton(onClick = { actions.query(""); focus.clearFocus() }) {
                             Icon(Icons.Default.Close, stringResource(R.string.store_home_clear_search))
                         } else {
-                            IconButton(
+                            SteamAccountAvatarButton(
+                                account = account,
                                 onClick = actions.account,
-                                modifier = Modifier.testTag("store_home_account")
-                                    .semantics { contentDescription = accountLabel }
-                            ) {
-                                if (account != null) {
-                                    SteamAvatarImage(
-                                        account = account,
-                                        size = 32.dp,
-                                        shape = CircleShape,
-                                        modifier = Modifier.clearAndSetSemantics { }
-                                    )
-                                } else {
-                                    Icon(Icons.Default.AccountCircle, contentDescription = null)
-                                }
-                            }
+                                modifier = Modifier.testTag("store_home_account"),
+                                description = accountLabel
+                            )
                         }
                     },
                     singleLine = true, shape = RoundedCornerShape(28.dp),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        focusedContainerColor = if (steamGlassAvailable()) Color.Transparent else MaterialTheme.colorScheme.surfaceContainerHigh,
+                        unfocusedContainerColor = if (steamGlassAvailable()) Color.Transparent else MaterialTheme.colorScheme.surfaceContainerHigh,
                         focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent
                     ),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -153,17 +151,10 @@ internal fun SteamStoreHomePage(
                     }
                 }
             }
-        },
-        floatingActionButton = {
-            if (!keyboardVisible) ExtendedFloatingActionButton(
-                onClick = actions.cart,
-                modifier = Modifier.navigationBarsPadding().steamDockActionClearance().testTag("store_home_cart"),
-                icon = { Icon(Icons.Default.ShoppingCart, null) },
-                text = { Text(stringResource(R.string.steam_store_cart_tab, state.cart.size)) }
-            )
         }
     ) { padding ->
-        SteamExpressivePullToRefresh(refreshing, actions.refresh, Modifier.fillMaxSize().padding(padding)) {
+        SteamGlassHost(Modifier.fillMaxSize().padding(padding), content = {
+        SteamExpressivePullToRefresh(refreshing, actions.refresh, Modifier.fillMaxSize()) {
             LazyColumn(
                 state = listState,
                 modifier = Modifier.fillMaxSize().testTag("store_home_list"),
@@ -215,6 +206,25 @@ internal fun SteamStoreHomePage(
                 }
             }
         }
+        }, overlay = {
+            // Inside the recorded content so liquid glass can refract the store underneath.
+            val glass = steamGlassAvailable()
+            if (!keyboardVisible) ExtendedFloatingActionButton(
+                onClick = actions.cart,
+                modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp)
+                    .navigationBarsPadding().steamDockActionClearance().testTag("store_home_cart")
+                    .then(if (glass) Modifier.steamGlassSurface(MaterialTheme.shapes.large) else Modifier),
+                containerColor = if (glass) Color.Transparent else MaterialTheme.colorScheme.primaryContainer,
+                contentColor = if (glass) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onPrimaryContainer,
+                elevation = if (glass) {
+                    FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
+                } else {
+                    FloatingActionButtonDefaults.elevation()
+                },
+                icon = { Icon(Icons.Default.ShoppingCart, null) },
+                text = { Text(stringResource(R.string.steam_store_cart_tab, state.cart.size)) }
+            )
+        })
     }
 }
 
@@ -228,7 +238,11 @@ private fun StoreHomeCategories(selected: SteamStoreBrowseFilter, searching: Boo
         if (reduceMotion) scroll.scrollToItem(index) else scroll.animateScrollToItem(index)
     }
     val indicatorColor = MaterialTheme.colorScheme.primary
-    LazyRow(state = scroll, modifier = modifier.height(48.dp).testTag("store_home_categories")) {
+    LazyRow(
+        state = scroll,
+        modifier = modifier.height(48.dp).testTag("store_home_categories")
+            .scrollEdgeFade(scroll.canScrollBackward, scroll.canScrollForward)
+    ) {
         items(filters, key = { it.name }) { filter ->
             val active = !searching && selected == filter
             Tab(
@@ -243,6 +257,22 @@ private fun StoreHomeCategories(selected: SteamStoreBrowseFilter, searching: Boo
         }
     }
 }
+
+/** Fades whichever edge still scrolls, so a clipped tab reads as "more" rather than truncated text. */
+private fun Modifier.scrollEdgeFade(start: Boolean, end: Boolean): Modifier =
+    graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+        .drawWithContent {
+            drawContent()
+            val fade = 24.dp.toPx().coerceAtMost(size.width / 4f)
+            if (start) drawRect(
+                Brush.horizontalGradient(listOf(Color.Transparent, Color.Black), startX = 0f, endX = fade),
+                size = Size(fade, size.height), blendMode = BlendMode.DstIn
+            )
+            if (end) drawRect(
+                Brush.horizontalGradient(listOf(Color.Black, Color.Transparent), startX = size.width - fade, endX = size.width),
+                topLeft = Offset(size.width - fade, 0f), size = Size(fade, size.height), blendMode = BlendMode.DstIn
+            )
+        }
 
 @Composable
 private fun storeHomeCategoryLabel(filter: SteamStoreBrowseFilter): String = stringResource(when (filter) {

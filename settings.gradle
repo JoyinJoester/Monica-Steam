@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 rootProject.name = "MonicaSteam"
 include ':app'
 include ':mdbx-engine'
+include ':telegram-chat-ui'

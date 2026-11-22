@@ -1,0 +1,67 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "acac942382d7be139870ed1fd77909c055c31c3083abc02dd24b609edc8f8cd9",
+    "normalizedSha256": "319225a6b13229b87f6594b3adcf9ddc766fc7a7c3c27afa890d1bf497ad9c44"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "0be649d87f0c24da84d06698297183af2f963ddaab6877acf6e47d2c8b01736b",
+    "normalizedSha256": "10b2acdd30dfbf9bc9e9867005ef7737beefa03a3d0c3a96aef1789fd89ccac6"
+  },
+  {
+    "file": "build03.txt",
+    "rawSha256": "bbc03c5abe534814ab431560e1f5b9e9b91690c94ad79b8dbeaa866d9fa6b452",
+    "normalizedSha256": "78ff7a94e5df304fb0d0676b3b2321f2616980cda4074b181b0bf91295e48f31"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "9e2da12d6d140816514a0748bb7932997d5adb4d63cb03b8d4be91af1e8b0afb",
+    "normalizedSha256": "9e2da12d6d140816514a0748bb7932997d5adb4d63cb03b8d4be91af1e8b0afb"
+  },
+  {
+    "file": "device02.txt",
+    "rawSha256": "57f9209cb40001457446d6e28317034721bd05e5f25b92434a1e389cbb9fb012",
+    "normalizedSha256": "57f9209cb40001457446d6e28317034721bd05e5f25b92434a1e389cbb9fb012"
+  },
+  {
+    "file": "device03.txt",
+    "rawSha256": "1a337aa2fb91214066c152e259c5c9949aec94ec43a79d9a1ef3b0fefc8ea052",
+    "normalizedSha256": "1a337aa2fb91214066c152e259c5c9949aec94ec43a79d9a1ef3b0fefc8ea052"
+  },
+  {
+    "file": "device04.txt",
+    "rawSha256": "87d09a2b601e9bf1e5d0ecbf3b1cd42ae69e8d80400fc84bbafccdb73078c26e",
+    "normalizedSha256": "87d09a2b601e9bf1e5d0ecbf3b1cd42ae69e8d80400fc84bbafccdb73078c26e"
+  },
+  {
+    "file": "device-results.json",
+    "rawSha256": "f4ee3557dd03a17806f86103f8b05a9f923f204e61996ed81995f6b9acdf55db",
+    "normalizedSha256": "f4ee3557dd03a17806f86103f8b05a9f923f204e61996ed81995f6b9acdf55db"
+  },
+  {
+    "file": "source-hashes.json",
+    "rawSha256": "1498fea007a459cc29e234617153813e4da86ad7cc15533c4dedb60833c77c69",
+    "normalizedSha256": "1498fea007a459cc29e234617153813e4da86ad7cc15533c4dedb60833c77c69"
+  },
+  {
+    "file": "source-hashes-build01.json",
+    "rawSha256": "65ee7dc88fd5dae06606258c5f9725f8ad075b22e9549ab092ce3b0e4bc5619a",
+    "normalizedSha256": "65ee7dc88fd5dae06606258c5f9725f8ad075b22e9549ab092ce3b0e4bc5619a"
+  },
+  {
+    "file": "source-hashes-tested03.json",
+    "rawSha256": "69931df17ef4fc757b3748eb31ae9524cfea31fa3d7a7542979d3f25d2242002",
+    "normalizedSha256": "69931df17ef4fc757b3748eb31ae9524cfea31fa3d7a7542979d3f25d2242002"
+  },
+  {
+    "file": "apks.json",
+    "rawSha256": "5f1b0294428b9fbf8871a359d6759b5e93ad4c8fd580f780fd07d8a1fdd50224",
+    "normalizedSha256": "5f1b0294428b9fbf8871a359d6759b5e93ad4c8fd580f780fd07d8a1fdd50224"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "505fcfd1eb74c942d81bfa9d3d2bfaf0bf9fccabb74439b64e416a86263dabe1",
+    "normalizedSha256": "505fcfd1eb74c942d81bfa9d3d2bfaf0bf9fccabb74439b64e416a86263dabe1"
+  }
+]

@@ -1,0 +1,298 @@
+{
+  "restored": true,
+  "ownedPackagesRemoved": true,
+  "onlyStoppedIndex": 2,
+  "managerInfo": {
+    "0": {
+      "android_version": "15.0",
+      "created_timestamp": 1793811814685479,
+      "disk_size_bytes": 11360638068,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "0",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Android Device"
+    },
+    "1": {
+      "android_version": "15.0",
+      "created_timestamp": 1793856063204935,
+      "disk_size_bytes": 7428489312,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "1",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica OMK 325 Test"
+    },
+    "2": {
+      "android_version": "15.0",
+      "created_timestamp": 1794331605453974,
+      "disk_size_bytes": 10040459394,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "2",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica Release Upgrade Test"
+    }
+  },
+  "records": [
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "am",
+        "get-current-user"
+      ],
+      "exit": 0,
+      "output": "0\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "ime",
+        "set",
+        "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME"
+      ],
+      "exit": 0,
+      "output": "Input method com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME selected for user #0\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "ime",
+        "disable",
+        "takagi.ru.monica.steamapp.sheetdesign.test/takagi.ru.monica.steam.navigation.SteamSheetTestInputMethod"
+      ],
+      "exit": 0,
+      "output": "Input method takagi.ru.monica.steamapp.sheetdesign.test/takagi.ru.monica.steam.navigation.SteamSheetTestInputMethod: now disabled for user #0\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "wm",
+        "density",
+        "reset"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "put",
+        "secure",
+        "show_ime_with_hard_keyboard",
+        "0"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "put",
+        "global",
+        "animator_duration_scale",
+        "0.5"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "put",
+        "global",
+        "transition_animation_scale",
+        "0.5"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "put",
+        "global",
+        "window_animation_scale",
+        "0.5"
+      ],
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "uninstall",
+        "takagi.ru.monica.steamapp.sheetdesign.test"
+      ],
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "uninstall",
+        "takagi.ru.monica.steamapp.sheetdesign"
+      ],
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "pm",
+        "list",
+        "packages",
+        "takagi.ru.monica"
+      ],
+      "exit": 0,
+      "output": "package:takagi.ru.monica.bwsync326fd\r\npackage:takagi.ru.monica\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "wm",
+        "density"
+      ],
+      "exit": 0,
+      "output": "Physical density: 280\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "get",
+        "secure",
+        "show_ime_with_hard_keyboard"
+      ],
+      "exit": 0,
+      "output": "0\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "get",
+        "secure",
+        "default_input_method"
+      ],
+      "exit": 0,
+      "output": "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "animator_duration_scale"
+      ],
+      "exit": 0,
+      "output": "0.5\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "transition_animation_scale"
+      ],
+      "exit": 0,
+      "output": "0.5\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "window_animation_scale"
+      ],
+      "exit": 0,
+      "output": "0.5\r\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "control",
+        "-v",
+        "2",
+        "shutdown"
+      ],
+      "exit": 0,
+      "output": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "info",
+        "-v",
+        "all"
+      ],
+      "exit": 0,
+      "output": "{\n  \"0\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793811814685479,\n    \"disk_size_bytes\": 11360638068,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"0\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Android Device\"\n  },\n  \"1\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793856063204935,\n    \"disk_size_bytes\": 7428489312,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"1\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica OMK 325 Test\"\n  },\n  \"2\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1794331605453974,\n    \"disk_size_bytes\": 10040459394,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"2\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica Release Upgrade Test\"\n  }\n}\n"
+    }
+  ]
+}

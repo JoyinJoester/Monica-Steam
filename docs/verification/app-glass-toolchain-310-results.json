@@ -1,0 +1,2551 @@
+{
+  "version": "1.0.310",
+  "source_changes": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/TelegramSocialUiTest.kt",
+      "kind": "body-change",
+      "sha256": "ecc0b85ded4ffecb1a894300e5fe8ef36fe696044fbfc823d7202a7cecb7fa84"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamAppGlassUiTest.kt",
+      "kind": "new",
+      "sha256": "d25bf066a0b48ba6461d9c93a1aace1a7c891d1f5e3c31a21ba191039ffbcbd1"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamTelegramDesignUiTest.kt",
+      "kind": "body-change",
+      "sha256": "7c65a027ebac4a5e2a94f7d9a081a6d3ad884346f10584d8bd9350dbbd629f09"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStoreDrawerDismissalTest.kt",
+      "kind": "body-change",
+      "sha256": "4bb6245e21e1ae2270c4b56669cb3254f941fb550968e58962f7b92700579938"
+    },
+    {
+      "path": "app/src/debug/java/takagi/ru/monica/steam/SteamTelegramDesignFixtureActivity.kt",
+      "kind": "body-change",
+      "sha256": "ddb674170ac85ee146363ecbad7260e6517e7c183cb11186a7e3cda559aa7447"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt",
+      "kind": "body-change",
+      "sha256": "1166a0cceeb50edd8aadbefb926ca5b70e1f63c40548ebe07795638d396472d6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/ui/AutofillPickerScreen.kt",
+      "kind": "imports-only",
+      "sha256": "0263114ae76f83e3dcfca03e109df4c8e7b0aa56134d3de20c2d4cb30ee7abdf"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/ui/components/PasswordFormComponents.kt",
+      "kind": "imports-only",
+      "sha256": "2e5fe830dc3d31bf1d75f21aae75ff07a983b4977ae80118a8799e4d973e2650"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt",
+      "kind": "body-change",
+      "sha256": "bce3198a0a7e4ae0dffa8454e46be58662229c2f5e98946928a02554ac63d17a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt",
+      "kind": "body-change",
+      "sha256": "b35d16c4ccc4510424169f47b7bda70ae5b65a94de00d714a551f5ef98433c98"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/MdbxVaultStore.kt",
+      "kind": "body-change",
+      "sha256": "334659ace97aa987f0fcbeda478102ba7a8040ec5fd3c1c587fc517cf1a54fc3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/backup/share/SteamMaFileConsentScreen.kt",
+      "kind": "imports-only",
+      "sha256": "bb6730f228a64fa274369fa3bbbe84fb60d90c44dbe138ee355b76115505f736"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/backup/ui/SteamMaFileTransferScreen.kt",
+      "kind": "imports-only",
+      "sha256": "4c597f8c63c4a73567e7a811ac8877db90d376f8043756339fa8eecc668037dc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/community/ui/SteamCommunityScreen.kt",
+      "kind": "imports-only",
+      "sha256": "e15487f4c28030d7bd4378c868beb95ff0a43f7a4aad970b12755d51fd32e31c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/design/telegram/SteamTelegramControls.kt",
+      "kind": "body-change",
+      "sha256": "488c19eb798abf1117080e5fdf60270f9fc3004decc37d890eecc19f104047a6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/design/telegram/SteamTelegramGlass.kt",
+      "kind": "body-change",
+      "sha256": "fabbccccb30e298990edf8f18db3fe8e112840a84566cba8c6517dc1f301645d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/design/telegram/SteamTelegramMenu.kt",
+      "kind": "body-change",
+      "sha256": "79759bcf96304ff959bf3fe9371e474c113f9116c255fa45482d1e8e440fe350"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/foundation/media/SteamFullscreenImageViewer.kt",
+      "kind": "body-change",
+      "sha256": "1f87c946570ac76246ac6cf89fcbbd89ee546a67bf7198d8f6291dbea41afbb4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/foundation/media/SteamFullscreenImageViewerControls.kt",
+      "kind": "body-change",
+      "sha256": "7064007d665e8f3d78c630932fa76d05aecb554f2829f60ed74042ea66b33492"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountSwitcherSheet.kt",
+      "kind": "imports-only",
+      "sha256": "aae7587d481c5693302d363bae4cf9c120f67d31f11f853e036af629ff0e98d8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/actions/ui/SteamChatMessageActionMenu.kt",
+      "kind": "imports-only",
+      "sha256": "2c367af4ec6528e86c0bc33327be1ead54d122d079c844f78dd4307c3ce412f7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatHistorySearchChrome.kt",
+      "kind": "imports-only",
+      "sha256": "bfacca4e68373a5cc8ec740fd3467f32315d4f72bb48f1977896e20693a34d25"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatHistorySearchScreen.kt",
+      "kind": "imports-only",
+      "sha256": "ca16eed6325b02523cbb992b400a572a2e1e30602bf5d6e7666a9a793f7e4f2a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatInfoScreen.kt",
+      "kind": "imports-only",
+      "sha256": "d46a75b3cd922de1eda0d6baf1a21266a813ea1ed8d0eada2bd39b8ae76fa4f3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/ui/SteamChatWallpaperPicker.kt",
+      "kind": "imports-only",
+      "sha256": "364a847dafd9ee57d86b6b6d03725fb53149ec6c6982a02ba01d018541e539c2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatAttachmentSheet.kt",
+      "kind": "imports-only",
+      "sha256": "7759d8943ac22a7722ba9921e6c8a06eb5d91e5ebf173a8b465eb221568934a5"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMediaPickerControls.kt",
+      "kind": "imports-only",
+      "sha256": "99bb8538734b3e7c6db78cf6e8cd5371351c199f769408150408e07f9e844938"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMessageContent.kt",
+      "kind": "imports-only",
+      "sha256": "b8e1577752006935f11b146299fe5ec695104cc367c052354fe11bb81d202461"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramActionMenu.kt",
+      "kind": "body-change",
+      "sha256": "46910f249083ffbd6bd998c8fefc4660e1556da9b4123c8b211c199cd6cf6125"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatControls.kt",
+      "kind": "body-change",
+      "sha256": "a851a6b4187c9ea3501ca4321f807bfba12f8980f9e8b70ee54f05d30473e01c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatSurface.kt",
+      "kind": "body-change",
+      "sha256": "eedd563d9109711373a8887667b55ade4dfda1c4ec0de59e0523a24c8d63d569"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialUi.kt",
+      "kind": "imports-only",
+      "sha256": "88cdb029efed35c2c78442595ebdf43121f6e0fb5e3a82bcb44a39d6c5c8af6e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatFriendPicker.kt",
+      "kind": "imports-only",
+      "sha256": "a84a7b2e2e39c97baa82a6ad43fe0161c84b2690ab000c397d7334f52e9e5d86"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt",
+      "kind": "imports-only",
+      "sha256": "bca98d5e47ad8ef8b028df4a50514529437be6b46df21def7b34ac6518677757"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreenDialogs.kt",
+      "kind": "imports-only",
+      "sha256": "e68dc95cebf38791b5da459229888d2117b8721a7c1c0b827621ab9d3892f4c9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationDialogs.kt",
+      "kind": "imports-only",
+      "sha256": "cc3fd518e1849af61327fa10bdc704059f4f3113283beadceed8333580af8ccc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt",
+      "kind": "body-change",
+      "sha256": "023562c0525c3eb581a0aa3702eba99f4e463394526a508dfca668a3d750b08b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamThreadSearch.kt",
+      "kind": "imports-only",
+      "sha256": "13048b000c6d914d9443b5f7c04624faa74a3d007d0a26b84eee47e725faf5af"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupAdminScreen.kt",
+      "kind": "imports-only",
+      "sha256": "53692c7cc3e4961aaca338901d56f8f763588dbbe13b602b65ce09ce0f6686c5"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChannelManagement.kt",
+      "kind": "imports-only",
+      "sha256": "f53989f0693b893e885314baf88ee87f6e123f33cfbc2d808e23fc93ef1bf1f6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatDialogs.kt",
+      "kind": "body-change",
+      "sha256": "b5a057ee7037175ef1a259a351dc23301372e9195fc035d8da84e679b399696e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatList.kt",
+      "kind": "imports-only",
+      "sha256": "ee4ab8de62698c8a75a3b87af7f13f6a84debf4bf6de9d5a5aa2d131233d6de7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt",
+      "kind": "body-change",
+      "sha256": "d4ccdc3820ea54a2803ddf996f93e7aac38ba4f5578f0bdc47c346eba8cbce2e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "94e6aca6be4d1f38c525cb9cc35d13d4927159927f556c894b38b7ce422d28e6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "368c53e7652b35b7de9b77c9bb14caece1b4144d01418fa59258623acea2ac38"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendUiSupport.kt",
+      "kind": "imports-only",
+      "sha256": "b7220c3740b502d3aef3677cfacbf2bc09edc59b3f4bb6d99310baf6573816c2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/friends/voice/ui/SteamVoiceCallUi.kt",
+      "kind": "imports-only",
+      "sha256": "9e31f35e85f223e03c9bff1d8db27d8b2165f8e19c04e159b6b1129836929f89"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/health/ui/SteamHealthScreen.kt",
+      "kind": "imports-only",
+      "sha256": "65a7428a48440a6ffe794113aa881f0e896b26b155c24ea40108455237703bfe"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/inventory/ui/SteamInventoryMarketContent.kt",
+      "kind": "imports-only",
+      "sha256": "c0dae746e561ae4001459565f21fff9d5a8c6c38d5b101c535008954821f488c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/itad/ui/ItadSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "1ccb0708f9166ed0c4e42b8614e0c356c8103bb2090b9f9a58cb810399a1f240"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/library/analytics/ui/SteamPlayHeatMapCard.kt",
+      "kind": "imports-only",
+      "sha256": "22265f635ea99cf6d2771fcab8a0d2d9590a1d0077b86e5a36d5a8d48795046b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/library/screenshots/ui/SteamGameScreenshotsScreen.kt",
+      "kind": "body-change",
+      "sha256": "ad95edd2373726d1cb26ce21bb704e57ac40f0afe7ca9caf597de759cd23219d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementFilterSplitButton.kt",
+      "kind": "imports-only",
+      "sha256": "7eeecb4c847fd5388c1b38e141559b20b912aadad8cd6ef18156de90a2221451"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt",
+      "kind": "imports-only",
+      "sha256": "4b1bcf320a3d610b68e9d9957b476f8c6681daec92f5cc9a07679c56a9af1624"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/market/ui/SteamBatchSellSheet.kt",
+      "kind": "imports-only",
+      "sha256": "234124731cc828939d29615b0eb5ddeaafa215b8fd47d78dd4777e5f6b12f858"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/render/SteamLiquidGlassBackdrop.kt",
+      "kind": "body-change",
+      "sha256": "e41608ad43d4df31cd22ac589e77e6ed347304f4ee4fb258820394fee0f3a3e7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassComponents.kt",
+      "kind": "new",
+      "sha256": "8bcc29b1bebe178e112405eab3f2d925a2de60d4fbee3a599f0b07fcd468fe69"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassScaffold.kt",
+      "kind": "new",
+      "sha256": "74af1c042064dcb8f6f4d74f79312b00674a2658d54276a56386b11245fcfc51"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSurface.kt",
+      "kind": "body-change",
+      "sha256": "42ca2a10084f11e59e07969b77527243a644a358c61398c8f2621c9b631238c4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamAdaptiveNavigationRail.kt",
+      "kind": "body-change",
+      "sha256": "fed046d5b4a687e4c1a92b6a2ec3dd6ddb0a68198a533b4f135000a8d218a026"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/navigation/ui/SteamFixedBottomBar.kt",
+      "kind": "body-change",
+      "sha256": "6e1cc447af15e9b4d37de543201ff90abe18f375f59bd188cee4bd23d628c3ed"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/components/SteamHostsRulesSection.kt",
+      "kind": "body-change",
+      "sha256": "5116f926780d6b53c89275271dfb9932305dba2860ce868438e8d03e1544c030"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/components/SteamNetworkAutomaticScanCard.kt",
+      "kind": "body-change",
+      "sha256": "77d779e5df6ac7feb5afb36554569a1006d5483f9a8d6c1b069229118002eb9d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/components/SteamNetworkOverviewCard.kt",
+      "kind": "body-change",
+      "sha256": "a4b09009b81014a40558d1aa6532e7ec79182844ed91d48005f89ab2c269d896"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/SteamNetworkOptimizationAutoScreen.kt",
+      "kind": "imports-only",
+      "sha256": "55f48efff537bd8814b316f83a2e660164fba2ccba7db8715757f0de921c6df1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/SteamNetworkOptimizationSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "9dcb810e96e8cf1622ae372212b9e94933ccc1aa09aed2bc9209f7b186ab8990"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/network/optimization/ui/SteamNetworkResolverSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "9e71a2c2f9b966c42ac5c8ec8d71ee1140216b50455c749b18449de5b21e3cd5"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/notifications/settings/ui/SteamNotificationSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "220be9ea97a5e4dec914f857eb5e55d382153c7329af20fafb9b32b189e06323"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/notifications/ui/SteamNotificationsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b76d976678cf4b732962aaa129330380b3a5b3da2fe879a9447a895a9bee380f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/profile/viewer/ui/SteamProfileAchievementFilterSplitButton.kt",
+      "kind": "imports-only",
+      "sha256": "1c6ef0f4d4be4f582973427eb7879d60041324db4cf7c7c16c67baaf685b1280"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/quickaccess/SteamWidgetConfigureActivity.kt",
+      "kind": "imports-only",
+      "sha256": "683de691ba23339836f01d400b9ecf24c54e24e5e97333bac8d2598e0354cdd3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceContentFilters.kt",
+      "kind": "imports-only",
+      "sha256": "6b19c0a68f8a5c9580cdfc8c1285e6da24bc28a000d7f1dc4b4f5114873f6c2a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7288035f7009736c1d8d633437128375175c47bafd2fb5b91f4790d52448a6f7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/steamdb/ui/SteamDbSection.kt",
+      "kind": "imports-only",
+      "sha256": "9427b5214b1580ac3b6f1b0c27dc21d6cbae93a7e485e9799d32023226186e12"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/steamdb/ui/SteamDbSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "d3dc83814bfe56db2ac75dd7a03a871e61afa7c9db28351e291f77635bbe9515"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/bundle/ui/SteamStoreBundleSection.kt",
+      "kind": "imports-only",
+      "sha256": "8cab4c5df96aefe12d67afa4a57d877538e0526033e0b0fffd5273d1d3c5e781"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt",
+      "kind": "imports-only",
+      "sha256": "018d5b2f2eb258fe76bc9fb6a784c8febda5a2b8e9adfb0546c22c11911f8300"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/freebie/ui/SteamFreebieScreen.kt",
+      "kind": "imports-only",
+      "sha256": "cece725f658b635e0517b68e61bff10e12b050fc846608fa3895ad6e6df42c9e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/SteamStoreGiftPurchaseSplitButton.kt",
+      "kind": "imports-only",
+      "sha256": "0b9e724c7f5e8da4d0d75559fe0c93a26f422f1f04ef066f2a22ce148468e432"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/hints/ui/SteamStoreHintSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "de65e2e1bb42b849e8bf9ec607babc34b996666ba98c907cb5111f0f1c56f7b5"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/points/ui/SteamPointsRewardDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "ef2572f6c3c2c856343d75c21ddbe78e15cfacd17648655e214f311ee57a5f5f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/points/ui/SteamPointsShopScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b6dc1b701d3c54a02983513aec8239f39321f83b50f6a7ee61844e2787c54f6f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamNativeCartScreen.kt",
+      "kind": "imports-only",
+      "sha256": "20b0db9ed13502db5a06fa269a0f9faa4246bac17e794b17b1683432d1836b39"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt",
+      "kind": "imports-only",
+      "sha256": "68e98620463e4f6a05f7324c0301ebff6a5dea4900e30b9d932e9433161578cc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreHomePage.kt",
+      "kind": "body-change",
+      "sha256": "a7af6adf2400990e7d6b17cf1b86b0981c6a7e0ee1f76ed4c2c4d5b3061fc10e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreNavigationDrawer.kt",
+      "kind": "imports-only",
+      "sha256": "c82ca364d276a187d6a818581df3c1473c1aa82c20859120d517b6d3cd65675a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreRegionalPrices.kt",
+      "kind": "imports-only",
+      "sha256": "d20581ea3b12973b65854342207f3200d8c81a633385f8599e9b9cdfb1487958"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt",
+      "kind": "imports-only",
+      "sha256": "a5840f585a557f863377bfb3c7433d025a41bd748dd8f0fd3e290ef865c4c58c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/token/identity/ui/SteamIdentityInfoCard.kt",
+      "kind": "imports-only",
+      "sha256": "9b131a5bdaa88b9cb6ad1762886de024c26c6d4af593d6b0193ea35e01227010"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt",
+      "kind": "imports-only",
+      "sha256": "a07ff066554419ff6b3edf3b5adc14944dd5ead6341b0ffe65c999d6ebd32552"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopDownloadUi.kt",
+      "kind": "imports-only",
+      "sha256": "f69ddd31ebb9338ff6c011875ec23237e1a0d39e83b048506c0f79090f385124"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopDetail.kt",
+      "kind": "imports-only",
+      "sha256": "3ee09351cbeaa5b5d8705a84012cfe9eba3c24f62a6f43c0970686f83968ee66"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopManagementUi.kt",
+      "kind": "imports-only",
+      "sha256": "ba55e473abbce79c10cfb9824fb74983306cd389f9128e8d5ba6c953ed003a51"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopPresetUi.kt",
+      "kind": "imports-only",
+      "sha256": "b6845c962aabdc691d96dde968b78889cac398b1120f8542b1d5ce30c33fb967"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopScreen.kt",
+      "kind": "imports-only",
+      "sha256": "86f0d0a6486a06e3b8b83934e63d6dadf874e1c8209e62dfb58efa8403102bdc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopTaskProgressHost.kt",
+      "kind": "imports-only",
+      "sha256": "01577765dde87e615407ba6de1d7299c8927ffaab78a0fb6e462c84b5fef9f60"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/workshop/WorkshopFilters.kt",
+      "kind": "imports-only",
+      "sha256": "b3e0ff087106081a167f030e05846de4b8e4275f6769dc695cab3be84b3d2f72"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/common/selection/SelectionActionBar.kt",
+      "kind": "body-change",
+      "sha256": "1396e759a9c94323b86ff38f8f4bff2d535c8d814721f7a8ee6b9f9b9c290772"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/AppSelector.kt",
+      "kind": "imports-only",
+      "sha256": "1b6f8f59e06ea652a747e0b9e5131c01ac4fb46b545de4f8ddd0feea656cf8bc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/BankCardCard.kt",
+      "kind": "imports-only",
+      "sha256": "783d3aae074af4d6e8e5ef94d9f47bd5ffff06c7ff2b6233500e45fd45ab1a60"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/BillingAddressCard.kt",
+      "kind": "imports-only",
+      "sha256": "20ffec6f29f3340123c139b2b8d79e9ab9f94aa5e9f4d8bc4b2b367ab9f5f530"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/BitwardenFolderSelector.kt",
+      "kind": "imports-only",
+      "sha256": "29ca64ce3bad934f839cced14b5086e04f6579fe3857f1cdcf71fa1ac83538d1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/BottomSheetStability.kt",
+      "kind": "body-change",
+      "sha256": "4b41e3e28df99c2df57c172ea6b72d3ed2a8c13dfc604ca70b6cda24067949e2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/CardWalletAddTopBars.kt",
+      "kind": "imports-only",
+      "sha256": "a6280d59300b4ba00e8eb25e15b4ba87cf1847d96b60a6b3584e33cdd5b885f3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/CategoryEditDialog.kt",
+      "kind": "imports-only",
+      "sha256": "a2ec4ac512a4c48f0d6367b34308b26aa11048dab5f4e81f1d29a1a48b0e97ee"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/CommonNameSuggestionSheet.kt",
+      "kind": "imports-only",
+      "sha256": "14fc8d564211d23b7139df99df83bcbd391a472d9a4eda438c553517d2ccfa71"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/CreateCategoryDialog.kt",
+      "kind": "imports-only",
+      "sha256": "25943a48923298ccb9b014c345f2bbe8da9c829f681cd2d148d5dfb87f87b8cb"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/CustomFieldComponents.kt",
+      "kind": "imports-only",
+      "sha256": "b252066c16e39fac71e71523c9f9775f63fd95580fecfdcaec62b05a38a070bd"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/DocumentCard.kt",
+      "kind": "imports-only",
+      "sha256": "96b4c26eea6722137c65266d3a8824da72850659a81efc1843684b197a653b9f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/EntryTypeChip.kt",
+      "kind": "imports-only",
+      "sha256": "8c31324faa27d6ddef20dd0e37a065b580eeadce62852a54e390d7f96a798274"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/ExpressiveTopBar.kt",
+      "kind": "body-change",
+      "sha256": "ba8a2f4841ed9cc8890b5800a98b5ade457b0bb516fe0865868c54ca643dc198"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/ImageImportConfirmDialog.kt",
+      "kind": "imports-only",
+      "sha256": "d378a08e6cf74c580f9533e3fd25073bf3437f59fb37a7a071825dd795a0838a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/M3IdentityVerifyDialog.kt",
+      "kind": "imports-only",
+      "sha256": "179666fd269c3c45ec6dfcfdbf8c82e7a563eb4f414342917b6debf44dae6be7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/MasterPasswordDialog.kt",
+      "kind": "imports-only",
+      "sha256": "69874f84dbc4983ee52b5bdf93f19b38591afc8f4d4f5f745d74cf1f9fdde6da"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordDetailDialog.kt",
+      "kind": "imports-only",
+      "sha256": "a1a2dbbabb63785681c91afba4edb99cd7d98768010b9a7a7d7db415932119b3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordEntryPickerBottomSheet.kt",
+      "kind": "body-change",
+      "sha256": "2c20072debc0b7331620884c6a182ea3c3433acaf7587dcd555ea1b3dd72d597"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordFieldActionMenu.kt",
+      "kind": "imports-only",
+      "sha256": "df65f33cb02cb9a54f0e7811618d88f1f5db37f6e063f2589acc328e6828fa04"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PermissionHelpDialog.kt",
+      "kind": "imports-only",
+      "sha256": "b6f7f62c8458af8e7460499108298582d35eb38c2ed45d7820bb3e7aa21849be"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt",
+      "kind": "imports-only",
+      "sha256": "ea9bbfcf72389e77f318b471d29939ab9e1eee886ae8ac3df9febd1eed4fb771"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/TotpCodeCard.kt",
+      "kind": "imports-only",
+      "sha256": "8e12ea2359d38436f7cfd46afa05b79cb51df19ba8a26ad7c5f8863e910fadb2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/TroubleshootDialog.kt",
+      "kind": "imports-only",
+      "sha256": "ac7bbe16ed3e39e96912b0d0232c9e622f3ad3d11a588cfb0df7f6b4d5ea8898"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/UnifiedCategoryFilterBottomSheet.kt",
+      "kind": "imports-only",
+      "sha256": "e63df24eb965ce9894ef7a65ef79bf2bb1f5b7d2fa222a0c8c95693a097bc61d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/UnifiedCategoryFilterChipMenu.kt",
+      "kind": "imports-only",
+      "sha256": "44fc82ff2b9bcee97e14c495447e0145789e74a443d22109323490463dd1fcc2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/UnifiedMoveToCategoryBottomSheet.kt",
+      "kind": "imports-only",
+      "sha256": "7f72eda52542ab1ac0d9a186e912d98c1a99adcbc16067621db6499b14aba532"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/password/PasswordDisplayOptionsSheet.kt",
+      "kind": "imports-only",
+      "sha256": "42406d5264c76a7fa01ccf5b035a0c5b0123ca08cf4ab9a1d286f2644b5f1444"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/password/PasswordTopActionsMenu.kt",
+      "kind": "body-change",
+      "sha256": "65bf783d4228bff3ecce08c7975a068ccc0f7e096be3ef3fc3b8a577110795c0"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt",
+      "kind": "body-change",
+      "sha256": "1ae54580b03c64bfb3ab589cd9deb9e02ea211d0f719ac958a6d8f1ae66cb8cd"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt",
+      "kind": "imports-only",
+      "sha256": "9a084edda5ca64ec41f950b959a36b30c02b83707c6b8b6052653d883fb1d409"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt",
+      "kind": "body-change",
+      "sha256": "2cd633ca1f7b7fbc79391c0624b118fa3f9e5342a218b1d3066fd05d53cf37be"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditNoteScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b7298d914b5a2b99041655d17c1b114bdc4ec4c3a9bc306c266fb0286d82e84f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+      "kind": "body-change",
+      "sha256": "b6affe7396ad42c1097055992a5dde565ad37b5b8687b9521f6a2a1c5a342469"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditSshKeyScreen.kt",
+      "kind": "body-change",
+      "sha256": "0b89aa919b0c619e9e7f3227f05b664073987e658de90d58832eb1b3e14b7cd9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditTotpScreen.kt",
+      "kind": "body-change",
+      "sha256": "f5e4685ca780ccc5f6e4eb9245d22e21153aad977171261eb8efc44d2588f52c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditWifiScreen.kt",
+      "kind": "body-change",
+      "sha256": "0c872a69e77250a3367ebea42d87ecb089ee5cf7eed9861e091d66fe0d800e62"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AppLauncherIconSettingsContent.kt",
+      "kind": "imports-only",
+      "sha256": "aa673889a669c6e96b4462c8557a2a90b1c2cd4538abec3608dbc518ab59545e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillBlockedFieldsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "19e180c2bbca1285bf1cc443f533b1428dd9d0feb16580d8f8dcf647b0cb8617"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSaveBlockedTargetsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "66ebafe9b83e4927015f02abecbcbea69d81c1e975e94ef849fc4a814267948f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "cf10dc013dbb5fef35fdc8d2b571f4c3a763a2d5228b25c883861688ae00f105"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt",
+      "kind": "body-change",
+      "sha256": "32b5b9b66638fd89e99b5af218a4153c21ec8eefd6bcb67d29e70b5c86fc7e22"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BankCardDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "5c917b209996fb24d1b7ca4a651e787fb3da36d9ba6bfbad1dcd5434e0ee5bbb"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BarcodeDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "cfd4f13311d73cdd6cbf2ac10069fe19f7375b13682ffb0fb0d4313c7391c8d1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BillingAddressDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "83dd976145cbe0975de6d10db322f73f513ba097d79be463bd4048bd0cf47088"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/CardWalletScreen.kt",
+      "kind": "imports-only",
+      "sha256": "ab1bc86aa052a09d703be40e990e9f579a5017a3dc4fe346ae08cda7633037df"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ChangePasswordScreen.kt",
+      "kind": "imports-only",
+      "sha256": "a361aa4a74e1d52d6b1d61fb49820958b3c778ff5f7eb2faa9889074958c911f"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ColorSchemeSelectionScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7fbcffe14e4a37e1ecd6e2547562e7e0db716f15be626a735810328741c4661a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/CommonAccountTemplatesScreen.kt",
+      "kind": "imports-only",
+      "sha256": "bced02e22953ea98a94d5b17f4ccfda82fafc5924acd7d2febe2889c2901e758"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/CustomColorSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "943c34a640beb98a0435c30b3635af8b688ac5026126d1268b0ed105819da422"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineScreen.kt",
+      "kind": "imports-only",
+      "sha256": "1fe6a4840d6b33e1e86d1546197939227c0a7644e3b3dafeaf2dd1bb2e822385"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7575cb490236d501327c35d7e16e7dcfba912bbd4bbc22111f2d7eb5354f4a15"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DocumentDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b0b4977c86485a70bd052b3123b7c6b57404f5df0694e8c633840abb5afbe389"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt",
+      "kind": "imports-only",
+      "sha256": "2f3e287e64f2c72246fbb8d03a7086f123c221190a5b884a44c96fab3500db64"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "70af34e43895367a8ae2c4e3f21f0ed960cf4089e0b243f639fae39425aee400"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ForgotPasswordScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7c1807c01c2ff3c5fd66dcf1df91442d5c9f263f90a8d562e49576f1d9062a94"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorScreen.kt",
+      "kind": "imports-only",
+      "sha256": "162f0e7a5fefcedcf611aaacb50a66e3ebfbb6b80dfb4b05fdd13eee96955934"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/GeneratorSshKeySection.kt",
+      "kind": "body-change",
+      "sha256": "5a7c9a49afe7a1fe8496612723cb6815a43500ad74d4ab3c7714b456989533c2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ImportDataScreen.kt",
+      "kind": "imports-only",
+      "sha256": "10e2b20d200886a6094e21b4715ccf289bb08b7678c3f910d6ccdbced795a3b9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ImportDialogs.kt",
+      "kind": "imports-only",
+      "sha256": "659ff6f87982b7daaa1375bcf794946ebe00ef93e56114db2ab1398b64649aaa"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt",
+      "kind": "imports-only",
+      "sha256": "f392539f6bdead3755d28e76e06ec23371d1d3758297bf3b4538910b1f96ae4d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassGoogleDriveBrowser.kt",
+      "kind": "imports-only",
+      "sha256": "603439c51c0709e6cc0d7f75223a3200d14f5c82607c00bb119a2f9906fd877c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassOneDriveBrowser.kt",
+      "kind": "body-change",
+      "sha256": "3fe98007bad6599c668d1037416f000fd22b664c7d6d7bf3edebc62e84f53167"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassScreen.kt",
+      "kind": "body-change",
+      "sha256": "ee6a66bb2848338b55401a2c066d900c1dcaba34da1affbe25036f37a1627e27"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassWebDavBrowser.kt",
+      "kind": "body-change",
+      "sha256": "ace591e16370f07b2edfd70ab4ada20952351fb5aef79395295fb141fb745f14"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "d553f87b379ba83ca84e06109d87cb542b265b6cec13ad8a37bd32f9c642c2e2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxDashboardDetailPages.kt",
+      "kind": "imports-only",
+      "sha256": "131cd786dfde04807d3e09d8fc05929bfe6c335ba2c4b4771fab2df382ccb964"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxLocalCreateScreen.kt",
+      "kind": "imports-only",
+      "sha256": "0e208fd8fcbf843da147b466b8d4c8d19e3ee3f05aca513bc6b278b38f3a84f5"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxLocalOpenScreen.kt",
+      "kind": "imports-only",
+      "sha256": "13391c3b96b10a66c92134dfbbc60c24a9fb522bad8066f98dc50b35947acf2b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt",
+      "kind": "imports-only",
+      "sha256": "ed517db8664942a65ca2947976860f19af94d56eac9683ece7d504660de6efd4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxOneDriveCreateScreen.kt",
+      "kind": "imports-only",
+      "sha256": "0979e71f8e67b63fd0dd84f48f84ce856dcca8162ab1f0d85c7bb41f62f5bed9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxOneDriveOpenScreen.kt",
+      "kind": "imports-only",
+      "sha256": "38cf1533a5361f05a58a7582b684434f7e20a5d5d72a1cdbffb7c0aae027342a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxWebDavCreateScreen.kt",
+      "kind": "imports-only",
+      "sha256": "28a8eb1a501ad77c64e6367bb5e1ceec9d4bfec283d2d71d4ab2ec8855dfc931"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MdbxWebDavOpenScreen.kt",
+      "kind": "imports-only",
+      "sha256": "4bba76f454500c6c6aa5febbd9f2bc3b30de63c8a4c1c6e441cf06c86b800edb"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MonicaPlusScreen.kt",
+      "kind": "imports-only",
+      "sha256": "11cc5cbe2e47324a032585d23a3de41759bd13e143157181968a81f79efe3eec"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "476bb221c8efb11192afe2213383ca9348eac5f5a08a4a73fba718c6eeb54714"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/NoteDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7a3fe5fa8e5e5026f2630492b2950b5ea016fc53a914ca7abfee96438fed40b4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/NoteListScreen.kt",
+      "kind": "imports-only",
+      "sha256": "5a93b39a000fe93879c0609064733b46341a6dcbf74fe8cdf0440f270956613d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/OneDriveBackupScreen.kt",
+      "kind": "imports-only",
+      "sha256": "5350e9b369309b6e39d2ad838b23fd920943e77f9050ce8734fb104d43877ae9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt",
+      "kind": "imports-only",
+      "sha256": "747c19688bdbf82f88d0abe9262da7e5a07520376b47862cada1c91dd9c5aebb"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasskeyDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "87eeaf214937b3751c267daddbe10918c853aeaaae8f0ed8927ef92812566223"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasskeySettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b114d1a16787e384b8904d577ad2f66e003858e0e3e27081b375bdbbf3c4af69"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "ec3af110a54b90925bef2a813b7ed5d6a82369b77ebdcc4c2328322f235838e4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt",
+      "kind": "body-change",
+      "sha256": "e97541ff5dbe08e66e1f46fc5de950c0458a8bd44a058262b527028869be45e4"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordListScreen.kt",
+      "kind": "imports-only",
+      "sha256": "a911bce12f897ff368ee93622e66fa8855b604d9d04b942896dd4bf8ac6bba86"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PaymentScreen.kt",
+      "kind": "imports-only",
+      "sha256": "7ca20492023ea2dd41f1e1b523c0ab37222c0553a6cb1b0ea41df3244e06aa7b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PermissionManagementScreen.kt",
+      "kind": "imports-only",
+      "sha256": "fbd6e3021ee87d41d37f62df1a062704b917c8985fef70f75014dda115a9a9fc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b91c8bc70a761602a60e0bb1ff6a55e459ca500c40c69abb68e83d803af50ec8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ResetPasswordScreen.kt",
+      "kind": "imports-only",
+      "sha256": "e016bc199fefec6279f876a8c9ea809ae69616e296d3f7fd89c4067e7079937c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b37d63529670f6254ebefbb72b1b303a49ad183b782421c4eb9d542f5b1b86a8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SecurityQuestionScreen.kt",
+      "kind": "body-change",
+      "sha256": "739f859ec58a84a55da994f59edb3f6f9b5a3b722cfc0a93c745b5d9b167721b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SecurityQuestionsSetupScreen.kt",
+      "kind": "body-change",
+      "sha256": "42b904a30888ab007426b672ed1c75e540161245e478f7b64aae43ca00649777"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SecurityQuestionsVerificationScreen.kt",
+      "kind": "imports-only",
+      "sha256": "720fc45320411120d0bc63cbb3c2bf9a9e2433901d5f36387d280d56066dce4b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt",
+      "kind": "imports-only",
+      "sha256": "8f95c1030791c29355193db124db864022abbfcb428ea757f3ceef67beb7a46d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+      "kind": "imports-only",
+      "sha256": "8b8cf7d16d81a59057344f1428a296e470f9f3ba850d769b8119b4777806a7ed"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SshKeyDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "b6842ee5cf55f85e80332aa7b35aa8f512a79b5a95f0f5b060e6869a9943ca10"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SteamAvatarShapeSettingsContent.kt",
+      "kind": "imports-only",
+      "sha256": "b1c58b8fd08af38ab7f2f4163119b1414ef78f411add4bc6c59f117022766aee"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SteamDesignStyleScreen.kt",
+      "kind": "imports-only",
+      "sha256": "2f00f7610c2dadad4f392d8c3ebc7857fe5d607520a5f9cdebb632930921f135"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SupportAuthorScreen.kt",
+      "kind": "imports-only",
+      "sha256": "a82cc08bed25ff9fd9fd6475418d5900970ac460e60b0b3f6688111fbc30f801"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt",
+      "kind": "imports-only",
+      "sha256": "467eec0baccd48b81d7f2507456932aebee4935222d9d8e61fc2963d1f8c7ae1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/TimelineScreen.kt",
+      "kind": "imports-only",
+      "sha256": "13dbbbe5ccc50cb65ebee16a1d905a8f58a826a8736464b9dc6c2f209299b952"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/TotpListScreen.kt",
+      "kind": "imports-only",
+      "sha256": "09a0fc39d0fc36ecf53b8f9f016c2bef759d5f214d3875077544e1fc52971c25"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/WebDavBackupScreen.kt",
+      "kind": "imports-only",
+      "sha256": "37ed927aea5ddb20bc924a108ed8cc08bdfe6ca267ea97a39b0dd352779394da"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/WifiDetailScreen.kt",
+      "kind": "imports-only",
+      "sha256": "5bb9965979a157a6419754b3e16c9605cc8af406f8dccdb7ba15b267576e91f8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/BiometricAuthHelper.kt",
+      "kind": "body-change",
+      "sha256": "b284b6caad8f804ef82148ca8c7871c9e667d923d2e8ebd30773ca5dd4a6119d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/BiometricHelper.kt",
+      "kind": "body-change",
+      "sha256": "a9330ceb7e5dcea0f996c204242e71ba012f6f26611cc54a6de23caaf711604d"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/SteamMiniProfileBackgroundTest.kt",
+      "kind": "body-change",
+      "sha256": "7a8e3d05be710d2e5a590945e64c29d86f036a99291c75896fd8e047b7afa963"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/utils/MdbxSyncSidecarStoreTest.kt",
+      "kind": "body-change",
+      "sha256": "9073160a74cc4c9303b21082d4ba3dd1116ab68c7da6ad26f5e1af2555e7c577"
+    },
+    {
+      "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/KyantGlassShader.java",
+      "kind": "new",
+      "sha256": "b78787a74bb1a965b986d9dd8f8f0267f5e9e32dea8964c5add1d8fce34dce26"
+    },
+    {
+      "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramChatComposerView.java",
+      "kind": "body-change",
+      "sha256": "3c9c1458387a6c9b86b0fbb46626fe5dcc6e19432dd2db22d4cf57bc931b29ec"
+    },
+    {
+      "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramChatHeaderView.java",
+      "kind": "body-change",
+      "sha256": "2d02add6696a78674c44f4313e35a39cdc00a8cc6f069e6aa526837528ae8da2"
+    },
+    {
+      "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramGlassView.java",
+      "kind": "body-change",
+      "sha256": "cb8fc7accbbc2bdc54a6f26fe0f9714922d141f8de1e395c6cd8618a3b5034e1"
+    },
+    {
+      "path": "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramPopupLayout.java",
+      "kind": "body-change",
+      "sha256": "34e0dbac3e96516c20f3dade0b322cf2af19e5fcdea9c7980861d8ebe4a5a49d"
+    }
+  ],
+  "jvm": [
+    {
+      "stage": "jvm-01",
+      "tests": 103,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "stage": "final-05",
+      "tests": 94,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "stage": "final-06",
+      "tests": 94,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "stage": "final-07",
+      "tests": 94,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "builds": [
+    {
+      "stage": "baseline-01",
+      "exit": 1,
+      "seconds": 651.7935458002612,
+      "sha256": "59704204f8ac1db29b4d0b52e0174cb3342dc0e8ac6fc430bee636493f0a7c48"
+    },
+    {
+      "stage": "configure-01",
+      "exit": 1,
+      "seconds": 209.79986470006406,
+      "sha256": "3a727bc34440489a397e1687b00d5fc1199e721674ef680c1ef095efedd1a4bf"
+    },
+    {
+      "stage": "configure-02",
+      "exit": 0,
+      "seconds": 29.54751140018925,
+      "sha256": "7405e60c4b150e8aed13c95c3f4e4f923c092754b689a8e37c55aa36871c4e1d"
+    },
+    {
+      "stage": "final-01",
+      "exit": 1,
+      "seconds": 559.2329354998656,
+      "sha256": "150b84511404fa8c8f4e4c71cabe0339b5153b274b926e2111deeb7f39e6ebf3"
+    },
+    {
+      "stage": "final-02",
+      "exit": 1,
+      "seconds": 1047.3219061000273,
+      "sha256": "69c1caf495c1ff39af1400e762af37fba751d727d0a0dad0028353f7ddc58ddf"
+    },
+    {
+      "stage": "final-03",
+      "exit": 1,
+      "seconds": 132.9331670999527,
+      "sha256": "d97e8e6b001793756df960de21d61d383c1462f9f485823227cf5a4e92264878"
+    },
+    {
+      "stage": "final-04",
+      "exit": 1,
+      "seconds": 251.08419530000538,
+      "sha256": "59ee50461d4eee00157345f42dfccea7df7a6c658ac78434ab68494b505a0a90"
+    },
+    {
+      "stage": "final-05",
+      "exit": 0,
+      "seconds": 445.4141810000874,
+      "sha256": "6b4344db11b6063f125e0892c672be056e84109918c415ce2dee6fecdd4e4cb5"
+    },
+    {
+      "stage": "final-06",
+      "exit": 0,
+      "seconds": 127.00039069959894,
+      "sha256": "56991b8afcb1b531d54a2cf7365ceb7c45a1bc6081ffd0315b5184d9c21e12b8"
+    },
+    {
+      "stage": "final-07",
+      "exit": 0,
+      "seconds": 242.53787630004808,
+      "sha256": "8051d2cbc27d86a8a8e5ad4691397f532b71ce229db2f301a0cd66158d71a441"
+    },
+    {
+      "stage": "jvm-01",
+      "exit": 0,
+      "seconds": 40.17094449978322,
+      "sha256": "6d9d4d290cec4314ab66ac2d885374c6c7251bfc26375ad33cf36f1eb730d590"
+    },
+    {
+      "stage": "r8-01",
+      "exit": 1,
+      "seconds": 24.837790100369602,
+      "sha256": "632d86e2c5553c75097b6b07c6fbcb82a1ba86dc49fae5f666adb5e9650d47aa"
+    },
+    {
+      "stage": "r8-02",
+      "exit": 0,
+      "seconds": 919.3546278001741,
+      "sha256": "864cf349186b7d682a652361287e6f4b84ed76db145856d7e1878eaaaead05f5"
+    },
+    {
+      "stage": "tests-08",
+      "exit": 0,
+      "seconds": 113.88699980033562,
+      "sha256": "f432852aa88a0b32c4fb947fef1c438e3f9698419654f5ca4265a3088734c6ff"
+    }
+  ],
+  "devices": [
+    {
+      "stage": "api32-final01",
+      "complete_success": false,
+      "seconds": 18.822,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "filterIndicatorMovesBetweenExclusiveSelections",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": -2
+        }
+      ],
+      "sha256": "ddcba3facd7497f20d5351a46a60e39f06eee32359674ba8a0a40d6ca484ca20"
+    },
+    {
+      "stage": "api32-final02",
+      "complete_success": true,
+      "seconds": 47.742,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "filterIndicatorMovesBetweenExclusiveSelections",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": 0
+        }
+      ],
+      "sha256": "61f1897c270adaa26c660ccb47872aa8600aabc077d5dbdd20b3f60f6d399c75"
+    },
+    {
+      "stage": "api32-regression01",
+      "complete_success": false,
+      "seconds": 189.112,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "chatSearchKeepsHostPaletteAndSystemTextScale",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "unreadAndCategoriesAreMutuallyExclusive",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "realListToPopulatedThreadFrameSample",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "wallpaperMountCostSample",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "olderReadingAnchorSurvivesImeAndReopening",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "lightThemeNativeTitleAndLongHistoryRemainInteractive",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "directNativeEditorSendsKeepsImeAndRetries",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramChatUiTest",
+          "method": "rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "conversationFiltersOpenTheCorrectDetailAndMessageAction",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "embeddedInboxComposeSelectsAnExistingFriend",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "friendFiltersAndIncomingRequestKeepTheirCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "groupPreferencesAndMemberSearchPreserveNavigation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "officialEmojiPackDecodesAndNativePickerReturnsUnicode",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "inboxUnreadSearchPinsAndToolbarKeepNavigation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "telegramConversationLargeTextFitsAndAccessibilityUsesHostLocale",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "telegramInboxMenuSearchAndUnreadPreserveNavigation",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "nativePhotoGridSelectsOwnedMediaBeforeConfirming",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "telegramConversationNativeMenuKeepsTargetAndDeleteConfirmation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "originalDocumentCellsPreserveFolderAndFileCallbacks",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "method": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "method": "directSearchRetainsMessagesAndDraftInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "method": "gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+          "method": "groupSearchRetainsMessagesAndDraftInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "interruptedActionDismissesAndNavigatesExactlyOnce",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "disposingDrawerDuringCloseDoesNotRunStaleNavigation",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "swipeClosedRemovesWindowAndUnblocksHome",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "tapScrimRemovesWindowAndUnblocksHome",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "closeWhileOpeningRemovesTheDialogWindow",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "interruptedButtonCloseStillRemovesWindow",
+          "code": -2
+        }
+      ],
+      "sha256": "54385e0946a471e44c535d2262301d30b40ae79266b4fcd3030c237a0a0c287f"
+    },
+    {
+      "stage": "api32-final03",
+      "complete_success": true,
+      "seconds": 31.37,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.TelegramSocialUiTest",
+          "method": "telegramInboxMenuSearchAndUnreadPreserveNavigation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "interruptedActionDismissesAndNavigatesExactlyOnce",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "disposingDrawerDuringCloseDoesNotRunStaleNavigation",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "swipeClosedRemovesWindowAndUnblocksHome",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "tapScrimRemovesWindowAndUnblocksHome",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "closeWhileOpeningRemovesTheDialogWindow",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest",
+          "method": "interruptedButtonCloseStillRemovesWindow",
+          "code": 0
+        }
+      ],
+      "sha256": "31d11e1a8c1d14015250734bdb9a2417508d955380a97bfea3aed4f517030bb7"
+    },
+    {
+      "stage": "api35-final03",
+      "complete_success": false,
+      "seconds": 16.39,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "filterIndicatorMovesBetweenExclusiveSelections",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": -2
+        }
+      ],
+      "sha256": "023d169cae25ff061536d165ec8d96a5a6be79f133b1b9ce2fda50f2648dfe46"
+    },
+    {
+      "stage": "api35-final05",
+      "complete_success": false,
+      "seconds": null,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "filterIndicatorMovesBetweenExclusiveSelections",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "chatSearchKeepsHostPaletteAndSystemTextScale",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "unreadAndCategoriesAreMutuallyExclusive",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest",
+          "method": "wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+          "code": 0
+        }
+      ],
+      "sha256": "4a7c08277fd540974c5a9e7548c3f671619abe87f3a358c5b93d841cd50ff6e5"
+    },
+    {
+      "stage": "api35-final07",
+      "complete_success": false,
+      "seconds": null,
+      "methods": [],
+      "sha256": "f3ca40e0a3bf20eaf9ab861db129a85ecafc52160588fc2089c7bb0239bc1d94"
+    },
+    {
+      "stage": "api35-final08",
+      "complete_success": true,
+      "seconds": 57.541,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "filterIndicatorMovesBetweenExclusiveSelections",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "method": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest",
+          "method": "chatSearchKeepsHostPaletteAndSystemTextScale",
+          "code": 0
+        }
+      ],
+      "sha256": "ea66e75a95219bed42ea0fdf221e4b117f28c7cffdc9d5ec7b53f5498bb0a448"
+    }
+  ],
+  "api32_distinct_passing_methods": [
+    "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#directSearchRetainsMessagesAndDraftInBothThemes",
+    "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+    "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#groupSearchRetainsMessagesAndDraftInBothThemes",
+    "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+    "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#realListToPopulatedThreadFrameSample",
+    "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#unreadAndCategoriesAreMutuallyExclusive",
+    "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#wallpaperMountCostSample",
+    "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#lightThemeNativeTitleAndLongHistoryRemainInteractive",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#olderReadingAnchorSurvivesImeAndReopening",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+    "takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#conversationFiltersOpenTheCorrectDetailAndMessageAction",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#friendFiltersAndIncomingRequestKeepTheirCallbacks",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#groupPreferencesAndMemberSearchPreserveNavigation",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#inboxUnreadSearchPinsAndToolbarKeepNavigation",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#nativePhotoGridSelectsOwnedMediaBeforeConfirming",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#officialEmojiPackDecodesAndNativePickerReturnsUnicode",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#originalDocumentCellsPreserveFolderAndFileCallbacks",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramConversationLargeTextFitsAndAccessibilityUsesHostLocale",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramConversationNativeMenuKeepsTargetAndDeleteConfirmation",
+    "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramInboxMenuSearchAndUnreadPreserveNavigation",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterIndicatorMovesBetweenExclusiveSelections",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#popupSamplesCorrectScreenPositionAndReleasesSourceAfterDismissal",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sheetHandlePreservesExpandCollapseAndDismissVeto",
+    "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#chatSearchKeepsHostPaletteAndSystemTextScale",
+    "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+    "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#closeWhileOpeningRemovesTheDialogWindow",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#disposingDrawerDuringCloseDoesNotRunStaleNavigation",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#interruptedActionDismissesAndNavigatesExactlyOnce",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#interruptedButtonCloseStillRemovesWindow",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#swipeClosedRemovesWindowAndUnblocksHome",
+    "takagi.ru.monica.steam.store.SteamStoreDrawerDismissalTest#tapScrimRemovesWindowAndUnblocksHome"
+  ],
+  "apks": {
+    "apk-api32-final01": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "9ad8efc0229a289418809f63bcaf534661ba511e7f425fa01602274b447d5d0f",
+      "app-debug-androidTest.apk": "080c102d15fd5c1cb8daf2ad2e26d0fa098859b37182f561c8cf0e0ea6393862"
+    },
+    "apk-api32-final02": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "0cd7019b60b7c1c3a4bc6d6c63273070d4bab65c2fc42aeb5a8ab29b9c5354f3"
+    },
+    "apk-api32-final03": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "689a3855b571bb8a94809c3f90e5ed8b318ccfe017f3ce34929e9e3e33ce37f9"
+    },
+    "apk-api32-regression01": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "0cd7019b60b7c1c3a4bc6d6c63273070d4bab65c2fc42aeb5a8ab29b9c5354f3"
+    },
+    "apk-api35-final01": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "ab9291c695959f370ccca9e23ed1912a19cdbb15c2babafc45f78fea3c4d41cd",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api35-final02": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "ab9291c695959f370ccca9e23ed1912a19cdbb15c2babafc45f78fea3c4d41cd",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api35-final03": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "ab9291c695959f370ccca9e23ed1912a19cdbb15c2babafc45f78fea3c4d41cd",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api35-final04": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "9ad8efc0229a289418809f63bcaf534661ba511e7f425fa01602274b447d5d0f",
+      "app-debug-androidTest.apk": "080c102d15fd5c1cb8daf2ad2e26d0fa098859b37182f561c8cf0e0ea6393862"
+    },
+    "apk-api35-final05": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "689a3855b571bb8a94809c3f90e5ed8b318ccfe017f3ce34929e9e3e33ce37f9"
+    },
+    "apk-api35-final06": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "689a3855b571bb8a94809c3f90e5ed8b318ccfe017f3ce34929e9e3e33ce37f9"
+    },
+    "apk-api35-final07": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "689a3855b571bb8a94809c3f90e5ed8b318ccfe017f3ce34929e9e3e33ce37f9"
+    },
+    "apk-api35-first": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "4c271e20476ef8f911890cdc6d2a3286f1d909aba814dd4b7eb65cdf1fdeb6ca",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api36-final01": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "e167d6d92ae5f303eec5f846504089a0d87685973cdb18ad6e46b9ad2b7f6f82",
+      "app-debug-androidTest.apk": "689a3855b571bb8a94809c3f90e5ed8b318ccfe017f3ce34929e9e3e33ce37f9"
+    },
+    "apk-api36-first": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "4c271e20476ef8f911890cdc6d2a3286f1d909aba814dd4b7eb65cdf1fdeb6ca",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api36-second": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "4c271e20476ef8f911890cdc6d2a3286f1d909aba814dd4b7eb65cdf1fdeb6ca",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-api36-third": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110818-23.APK": "4c271e20476ef8f911890cdc6d2a3286f1d909aba814dd4b7eb65cdf1fdeb6ca",
+      "app-debug-androidTest.apk": "277366c1e534b18f0374c194a5d643ebc30ff2e54f2bb970964a7ce8f5a857de"
+    },
+    "apk-r8-02": {
+      "Monica-Steam-Android-x86_64-1.0.310-26110918-23.APK": "69155cc97079b6f55df90633df2b5bd772fedce94fdab0bfba04860c5de58dd8"
+    }
+  },
+  "runtime_dependencies": [
+    "MonicaSteam:app:unspecified",
+    "MonicaSteam:mdbx-engine:unspecified",
+    "MonicaSteam:telegram-chat-ui:unspecified",
+    "androidx.activity:activity-compose:1.9.3",
+    "androidx.activity:activity-ktx:1.9.3",
+    "androidx.activity:activity:1.9.3",
+    "androidx.annotation:annotation-experimental:1.5.0",
+    "androidx.annotation:annotation-jvm:1.9.1",
+    "androidx.annotation:annotation:1.9.1",
+    "androidx.appcompat:appcompat-resources:1.6.1",
+    "androidx.appcompat:appcompat:1.6.1",
+    "androidx.arch.core:core-common:2.2.0",
+    "androidx.arch.core:core-runtime:2.2.0",
+    "androidx.autofill:autofill:1.2.0-beta01",
+    "androidx.biometric:biometric:1.2.0-alpha05",
+    "androidx.browser:browser:1.7.0",
+    "androidx.camera.featurecombinationquery:featurecombinationquery:1.5.3",
+    "androidx.camera:camera-camera2:1.5.3",
+    "androidx.camera:camera-core:1.5.3",
+    "androidx.camera:camera-lifecycle:1.5.3",
+    "androidx.camera:camera-video:1.5.3",
+    "androidx.camera:camera-view:1.5.3",
+    "androidx.cardview:cardview:1.0.0",
+    "androidx.collection:collection-jvm:1.5.0",
+    "androidx.collection:collection-ktx:1.5.0",
+    "androidx.collection:collection:1.5.0",
+    "androidx.compose.animation:animation-android:1.12.1",
+    "androidx.compose.animation:animation-core-android:1.12.1",
+    "androidx.compose.animation:animation-core:1.12.1",
+    "androidx.compose.animation:animation-graphics-android:1.12.1",
+    "androidx.compose.animation:animation-graphics:1.12.1",
+    "androidx.compose.animation:animation:1.12.1",
+    "androidx.compose.foundation:foundation-android:1.12.1",
+    "androidx.compose.foundation:foundation-layout-android:1.12.1",
+    "androidx.compose.foundation:foundation-layout:1.12.1",
+    "androidx.compose.foundation:foundation:1.12.1",
+    "androidx.compose.material3:material3-android:1.5.0-rc01",
+    "androidx.compose.material3:material3-ripple-android:1.5.0-rc01",
+    "androidx.compose.material3:material3-ripple:1.5.0-rc01",
+    "androidx.compose.material3:material3-window-size-class-android:1.5.0-rc01",
+    "androidx.compose.material3:material3-window-size-class:1.5.0-rc01",
+    "androidx.compose.material3:material3:1.5.0-rc01",
+    "androidx.compose.material:material-icons-core-android:1.7.8",
+    "androidx.compose.material:material-icons-core:1.7.8",
+    "androidx.compose.material:material-icons-extended-android:1.7.8",
+    "androidx.compose.material:material-icons-extended:1.7.8",
+    "androidx.compose.material:material-ripple-android:1.12.1",
+    "androidx.compose.material:material-ripple:1.12.1",
+    "androidx.compose.runtime:runtime-android:1.12.1",
+    "androidx.compose.runtime:runtime-annotation-android:1.12.1",
+    "androidx.compose.runtime:runtime-annotation:1.12.1",
+    "androidx.compose.runtime:runtime-retain-android:1.12.1",
+    "androidx.compose.runtime:runtime-retain:1.12.1",
+    "androidx.compose.runtime:runtime-saveable-android:1.12.1",
+    "androidx.compose.runtime:runtime-saveable:1.12.1",
+    "androidx.compose.runtime:runtime:1.12.1",
+    "androidx.compose.ui:ui-android:1.12.1",
+    "androidx.compose.ui:ui-geometry-android:1.12.1",
+    "androidx.compose.ui:ui-geometry:1.12.1",
+    "androidx.compose.ui:ui-graphics-android:1.12.1",
+    "androidx.compose.ui:ui-graphics:1.12.1",
+    "androidx.compose.ui:ui-test-manifest:1.12.1",
+    "androidx.compose.ui:ui-text-android:1.12.1",
+    "androidx.compose.ui:ui-text:1.12.1",
+    "androidx.compose.ui:ui-tooling-android:1.12.1",
+    "androidx.compose.ui:ui-tooling-data-android:1.12.1",
+    "androidx.compose.ui:ui-tooling-data:1.12.1",
+    "androidx.compose.ui:ui-tooling-preview-android:1.12.1",
+    "androidx.compose.ui:ui-tooling-preview:1.12.1",
+    "androidx.compose.ui:ui-tooling:1.12.1",
+    "androidx.compose.ui:ui-unit-android:1.12.1",
+    "androidx.compose.ui:ui-unit:1.12.1",
+    "androidx.compose.ui:ui-util-android:1.12.1",
+    "androidx.compose.ui:ui-util:1.12.1",
+    "androidx.compose.ui:ui:1.12.1",
+    "androidx.compose:compose-bom:2026.09.00",
+    "androidx.concurrent:concurrent-futures-ktx:1.1.0",
+    "androidx.concurrent:concurrent-futures:1.1.0",
+    "androidx.constraintlayout:constraintlayout-solver:2.0.1",
+    "androidx.constraintlayout:constraintlayout:2.0.1",
+    "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
+    "androidx.core:core-ktx:1.16.0",
+    "androidx.core:core-splashscreen:1.0.1",
+    "androidx.core:core-viewtree:1.0.0",
+    "androidx.core:core:1.16.0",
+    "androidx.credentials:credentials-play-services-auth:1.3.0",
+    "androidx.credentials:credentials:1.3.0",
+    "androidx.cursoradapter:cursoradapter:1.0.0",
+    "androidx.customview:customview-poolingcontainer:1.0.0",
+    "androidx.customview:customview:1.1.0",
+    "androidx.datastore:datastore-core:1.0.0",
+    "androidx.datastore:datastore-preferences-core:1.0.0",
+    "androidx.datastore:datastore-preferences:1.0.0",
+    "androidx.datastore:datastore:1.0.0",
+    "androidx.documentfile:documentfile:1.0.1",
+    "androidx.drawerlayout:drawerlayout:1.1.1",
+    "androidx.dynamicanimation:dynamicanimation:1.0.0",
+    "androidx.emoji2:emoji2-views-helper:1.4.0",
+    "androidx.emoji2:emoji2:1.4.0",
+    "androidx.exifinterface:exifinterface:1.4.2",
+    "androidx.fragment:fragment-ktx:1.6.2",
+    "androidx.fragment:fragment:1.6.2",
+    "androidx.graphics:graphics-path:1.0.1",
+    "androidx.graphics:graphics-shapes-android:1.0.1",
+    "androidx.graphics:graphics-shapes:1.0.1",
+    "androidx.interpolator:interpolator:1.0.0",
+    "androidx.legacy:legacy-support-core-utils:1.0.0",
+    "androidx.lifecycle:lifecycle-common-java8:2.10.0",
+    "androidx.lifecycle:lifecycle-common-jvm:2.10.0",
+    "androidx.lifecycle:lifecycle-common:2.10.0",
+    "androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0",
+    "androidx.lifecycle:lifecycle-livedata-core:2.10.0",
+    "androidx.lifecycle:lifecycle-livedata:2.10.0",
+    "androidx.lifecycle:lifecycle-process:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime-android:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime-compose:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime-ktx:2.10.0",
+    "androidx.lifecycle:lifecycle-runtime:2.10.0",
+    "androidx.lifecycle:lifecycle-service:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-android:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.10.0",
+    "androidx.lifecycle:lifecycle-viewmodel:2.10.0",
+    "androidx.loader:loader:1.1.0",
+    "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0",
+    "androidx.navigation:navigation-common-ktx:2.8.9",
+    "androidx.navigation:navigation-common:2.8.9",
+    "androidx.navigation:navigation-compose:2.8.9",
+    "androidx.navigation:navigation-runtime-ktx:2.8.9",
+    "androidx.navigation:navigation-runtime:2.8.9",
+    "androidx.print:print:1.0.0",
+    "androidx.profileinstaller:profileinstaller:1.4.1",
+    "androidx.recyclerview:recyclerview:1.3.2",
+    "androidx.resourceinspection:resourceinspection-annotation:1.0.1",
+    "androidx.room:room-common-jvm:2.8.5",
+    "androidx.room:room-common:2.8.5",
+    "androidx.room:room-ktx:2.8.5",
+    "androidx.room:room-runtime-android:2.8.5",
+    "androidx.room:room-runtime:2.8.5",
+    "androidx.savedstate:savedstate-android:1.4.0",
+    "androidx.savedstate:savedstate-compose-android:1.4.0",
+    "androidx.savedstate:savedstate-compose:1.4.0",
+    "androidx.savedstate:savedstate-ktx:1.4.0",
+    "androidx.savedstate:savedstate:1.4.0",
+    "androidx.security:security-crypto:1.1.0-alpha06",
+    "androidx.sqlite:sqlite-android:2.6.2",
+    "androidx.sqlite:sqlite-framework-android:2.6.2",
+    "androidx.sqlite:sqlite-framework:2.6.2",
+    "androidx.sqlite:sqlite:2.6.2",
+    "androidx.startup:startup-runtime:1.1.1",
+    "androidx.tracing:tracing-ktx:1.2.0",
+    "androidx.tracing:tracing:1.2.0",
+    "androidx.transition:transition:1.2.0",
+    "androidx.vectordrawable:vectordrawable-animated:1.1.0",
+    "androidx.vectordrawable:vectordrawable:1.1.0",
+    "androidx.versionedparcelable:versionedparcelable:1.1.1",
+    "androidx.viewpager2:viewpager2:1.1.0-beta02",
+    "androidx.viewpager:viewpager:1.0.0",
+    "androidx.webkit:webkit:1.14.0",
+    "androidx.window:window-core-android:1.5.0",
+    "androidx.window:window-core:1.5.0",
+    "androidx.window:window:1.5.0",
+    "androidx.work:work-runtime-ktx:2.8.1",
+    "androidx.work:work-runtime:2.8.1",
+    "app.keemobile:kotpass:0.10.0",
+    "com.airbnb.android:lottie:6.6.2",
+    "com.caverock:androidsvg-aar:1.4",
+    "com.github.luben:zstd-jni:1.5.7-3",
+    "com.github.penfeizhou.android.animation:apng:3.0.5",
+    "com.github.penfeizhou.android.animation:frameanimation:3.0.5",
+    "com.github.stephenc.jcip:jcip-annotations:1.0-1",
+    "com.github.thegrizzlylabs:sardine-android:0.8",
+    "com.google.accompanist:accompanist-drawablepainter:0.32.0",
+    "com.google.accompanist:accompanist-permissions:0.32.0",
+    "com.google.android.datatransport:transport-api:2.2.1",
+    "com.google.android.datatransport:transport-backend-cct:2.3.3",
+    "com.google.android.datatransport:transport-runtime:2.2.6",
+    "com.google.android.gms:play-services-auth-api-phone:18.0.2",
+    "com.google.android.gms:play-services-auth-base:18.0.10",
+    "com.google.android.gms:play-services-auth:21.5.1",
+    "com.google.android.gms:play-services-base:18.5.0",
+    "com.google.android.gms:play-services-basement:18.9.0",
+    "com.google.android.gms:play-services-fido:21.0.0",
+    "com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1",
+    "com.google.android.gms:play-services-tasks:18.2.0",
+    "com.google.android.libraries.identity.googleid:googleid:1.1.0",
+    "com.google.android.material:material:1.11.0",
+    "com.google.android.odml:image:1.0.0-beta1",
+    "com.google.auto.value:auto-value-annotations:1.6.3",
+    "com.google.code.gson:gson:2.8.9",
+    "com.google.crypto.tink:tink-android:1.8.0",
+    "com.google.errorprone:error_prone_annotations:2.15.0",
+    "com.google.firebase:firebase-annotations:16.0.0",
+    "com.google.firebase:firebase-components:16.1.0",
+    "com.google.firebase:firebase-encoders-json:17.1.0",
+    "com.google.firebase:firebase-encoders:16.1.0",
+    "com.google.guava:listenablefuture:1.0",
+    "com.google.mlkit:barcode-scanning-common:17.0.0",
+    "com.google.mlkit:barcode-scanning:17.3.0",
+    "com.google.mlkit:common:18.11.0",
+    "com.google.mlkit:vision-common:17.3.0",
+    "com.google.mlkit:vision-interfaces:16.3.0",
+    "com.google.zxing:core:3.5.3",
+    "com.journeyapps:zxing-android-embedded:4.3.0",
+    "com.kizitonwose.calendar:compose:2.6.1",
+    "com.kizitonwose.calendar:core:2.6.1",
+    "com.kizitonwose.calendar:data:2.6.1",
+    "com.lambdapioneer.argon2kt:argon2kt:1.6.0",
+    "com.microsoft.device.display:display-mask:0.3.0",
+    "com.microsoft.identity.client:msal:8.3.2",
+    "com.microsoft.identity:common4j:24.2.0",
+    "com.microsoft.identity:common:24.2.0",
+    "com.nimbusds:nimbus-jose-jwt:10.0.2",
+    "com.squareup.moshi:moshi-adapters:1.15.1",
+    "com.squareup.moshi:moshi:1.15.2",
+    "com.squareup.okhttp3:okhttp-dnsoverhttps:4.12.0",
+    "com.squareup.okhttp3:okhttp:4.12.0",
+    "com.squareup.okio:okio-jvm:3.9.0",
+    "com.squareup.okio:okio:3.9.0",
+    "com.yubico.yubikit:android:2.5.0",
+    "com.yubico.yubikit:core:2.5.0",
+    "com.yubico.yubikit:piv:2.5.0",
+    "io.github.aakira:napier-android-debug:1.4.1",
+    "io.github.aakira:napier:1.4.1",
+    "io.github.kyant0:backdrop-android:2.0.1",
+    "io.github.kyant0:backdrop:2.0.1",
+    "io.github.kyant0:shapes-android:1.2.1",
+    "io.github.kyant0:shapes:1.2.1",
+    "io.opentelemetry:opentelemetry-api:1.18.0",
+    "io.opentelemetry:opentelemetry-context:1.18.0",
+    "io.opentelemetry:opentelemetry-extension-kotlin:1.18.0",
+    "javax.inject:javax.inject:1",
+    "net.java.dev.jna:jna:5.17.0",
+    "org.apache.commons:commons-lang3:3.5",
+    "org.apache.httpcomponents.core5:httpcore5:5.3",
+    "org.bouncycastle:bcprov-jdk18on:1.78.1",
+    "org.jetbrains.androidx.lifecycle:lifecycle-common:2.9.6",
+    "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose:2.9.6",
+    "org.jetbrains.androidx.lifecycle:lifecycle-runtime:2.9.6",
+    "org.jetbrains.androidx.savedstate:savedstate-compose:1.3.6",
+    "org.jetbrains.androidx.savedstate:savedstate:1.3.6",
+    "org.jetbrains.compose.animation:animation-android:1.12.0",
+    "org.jetbrains.compose.animation:animation-core-android:1.12.0",
+    "org.jetbrains.compose.animation:animation-core:1.12.0",
+    "org.jetbrains.compose.animation:animation:1.12.0",
+    "org.jetbrains.compose.foundation:foundation-android:1.12.0",
+    "org.jetbrains.compose.foundation:foundation-layout-android:1.12.0",
+    "org.jetbrains.compose.foundation:foundation-layout:1.12.0",
+    "org.jetbrains.compose.foundation:foundation:1.12.0",
+    "org.jetbrains.compose.runtime:runtime-android:1.12.0",
+    "org.jetbrains.compose.runtime:runtime-saveable-android:1.12.0",
+    "org.jetbrains.compose.runtime:runtime-saveable:1.12.0",
+    "org.jetbrains.compose.runtime:runtime:1.12.0",
+    "org.jetbrains.compose.ui:ui-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-geometry-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-geometry:1.12.0",
+    "org.jetbrains.compose.ui:ui-graphics-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-graphics:1.12.0",
+    "org.jetbrains.compose.ui:ui-text-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-text:1.12.0",
+    "org.jetbrains.compose.ui:ui-unit-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-unit:1.12.0",
+    "org.jetbrains.compose.ui:ui-util-android:1.12.0",
+    "org.jetbrains.compose.ui:ui-util:1.12.0",
+    "org.jetbrains.compose.ui:ui:1.12.0",
+    "org.jetbrains.kotlin:kotlin-bom:2.4.21",
+    "org.jetbrains.kotlin:kotlin-parcelize-runtime:2.4.21",
+    "org.jetbrains.kotlin:kotlin-stdlib-common:2.4.21",
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.4.21",
+    "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.21",
+    "org.jetbrains.kotlin:kotlin-stdlib:2.4.21",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.9.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0",
+    "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-bom:1.6.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0",
+    "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0",
+    "org.jetbrains:annotations:26.1.0",
+    "org.jsoup:jsoup:1.18.3",
+    "org.jspecify:jspecify:1.0.0",
+    "org.redundent:kotlin-xml-builder:1.9.1",
+    "org.simpleframework:simple-xml:2.7.1",
+    "org.slf4j:slf4j-api:2.0.9",
+    "org.tukaani:xz:1.10",
+    "sh.calvin.reorderable:reorderable-android-debug:3.0.0",
+    "sh.calvin.reorderable:reorderable:3.0.0",
+    "stax:stax-api:1.0.1",
+    "stax:stax:1.2.0",
+    "top.yukonga.miuix.kmp:miuix-blur-android:0.9.3",
+    "top.yukonga.miuix.kmp:miuix-shader-android:0.9.3",
+    "xpp3:xpp3:1.1.3.3"
+  ],
+  "r8_smoke": {
+    "startup": "passed",
+    "setup": "passed using isolated synthetic password",
+    "drawer_and_settings_navigation": "passed",
+    "style_switch": "passed",
+    "cold_style_selection": {
+      "M3E": false,
+      "Liquid Glass": true
+    },
+    "cold_pids": [
+      2462,
+      5523
+    ],
+    "crash_buffer": "",
+    "screenshots": "zero bytes under enabled screenshot protection; excluded from visual validation",
+    "fast_adb_input": "Two initial confirmation mismatches with observed dropped/reordered shell text; paced single-character input verified and setup completed; no input code changed"
+  },
+  "r8_artifacts": {
+    "configuration.txt": {
+      "bytes": 125400,
+      "sha256": "dc337889bd7198e19907cc94e8c2f56355b22841bf8feffd0bc25c962fd0c7fe"
+    },
+    "mapping.txt": {
+      "bytes": 220023669,
+      "sha256": "39d32f6d118846f0dec3be3deeef1ed609e163384118c999259dfa7286440aa3"
+    },
+    "resources.txt": {
+      "bytes": 969764,
+      "sha256": "2ab890ecf577cc1021b2141580782582bd3a3f2f4e0e630074923bc2d9c214f9"
+    },
+    "seeds.txt": {
+      "bytes": 3154532,
+      "sha256": "941d8c37f5be5c21438a1ca2a3dd9f2834e87cd0b951eda3e4669f2a429d002e"
+    },
+    "usage.txt": {
+      "bytes": 12543793,
+      "sha256": "dda62b3fc9e3ef370cff889b1d23a9af557fe8eac74d08cc1c32da34721c0c4f"
+    }
+  },
+  "cleanup": {
+    "cleanup-api32-r8": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass.r8"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "appglass"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "rm",
+          "-f",
+          "/sdcard/appglass-r8-window.xml"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ],
+    "cleanup-api32": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass.test"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "appglass"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ],
+    "cleanup-api35": [
+      {
+        "args": [
+          "shell",
+          "wm",
+          "set-letterbox-style",
+          "--isEducationEnabled",
+          "true"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "wm",
+          "get-letterbox-style"
+        ],
+        "exit": 0,
+        "output": "Corner radius: -1\nHorizontal position multiplier: 0.5\nVertical position multiplier: 0.5\nHorizontal position multiplier (book mode): 0.0\nVertical position multiplier (tabletop mode): 0.0\nHorizontal position multiplier for reachability: 0.5\nVertical position multiplier for reachability: 0.5\nAspect ratio: 1.333\nDefault min aspect ratio for unresizable apps: 0.0\nIs horizontal reachability enabled: true\nIs vertical reachability enabled: true\nIs automatic reachability in book mode enabled: false\nDefault position for horizontal reachability: LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_CENTER\nDefault position for vertical reachability: LETTERBOX_VERTICAL_REACHABILITY_POSITION_CENTER\nCurrent position for horizontal reachability:LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_CENTER\nCurrent position for vertical reachability:LETTERBOX_VERTICAL_REACHABILITY_POSITION_CENTER\nIs education enabled: true\nIs using split screen aspect ratio as aspect ratio for unresizable apps: true\nIs using display aspect ratio as aspect ratio for all letterboxed apps: false\n    Is activity \"refresh\" in camera compatibility treatment enabled: true\n    Refresh using \"stopped -> resumed\" cycle: true\nBackground type: LETTERBOX_BACKGROUND_SOLID_COLOR\n    Background color: ff000000\n    Wallpaper blur radius: 100\n    Wallpaper dark scrim alpha: 0.54\nIs letterboxing for translucent activities enabled: true\nIs the user aspect ratio settings enabled: true\nIs the fullscreen option in user aspect ratio settings enabled: true\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exit": 0,
+        "output": "Users:\n\tUserInfo{0:鏈轰富:4c13} running\n\tUserInfo{11:Paysage:410}\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exit": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass.test"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "appglass"
+        ],
+        "exit": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ],
+    "cleanup-api36-attempt": [
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "appglass"
+        ],
+        "exit": 0,
+        "output": "package:takagi.ru.monica.steamapp.appglass.test\npackage:takagi.ru.monica.steamapp.appglass\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass.test"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.appglass"
+        ],
+        "exit": 0,
+        "output": "Success\n"
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exit": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ]
+  },
+  "build_document_hashes": [
+    {
+      "path": "gradle/libs.versions.toml",
+      "sha256": "d3e911e8a8b0b98c791928452d0b4fc547af85b2ab76672c0b63a899211ea12a"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "30eb89628b2a1e7eb5a6ae2385a1eaf0798ac1abd55b8fb0ed5571388b21484c"
+    },
+    {
+      "path": "gradle.properties",
+      "sha256": "9f829e2747ba9f6e1a3989d84f85df791b60127bf9ee26ae199e5cf67a7040b1"
+    },
+    {
+      "path": "app/build.gradle",
+      "sha256": "cb8770fb7f086cdfcb5ea0b6f66f89bd4175976a791354f6cb61e72ac88cabe9"
+    },
+    {
+      "path": "telegram-chat-ui/build.gradle",
+      "sha256": "1e380d57da694721247d5aeced21a58657d4e1eb0ea31e8b149ab7a7ba983562"
+    },
+    {
+      "path": "mdbx-engine/build.gradle",
+      "sha256": "1db433f732227f81317502b04b70f97eed19de8c5d08fdcbd211c4d0e2a8d252"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e1fe9fcdde982cb6ba6b8e8902d294cbe854a46d2c7c35de1149c3894a16b140"
+    },
+    {
+      "path": "README_EN.md",
+      "sha256": "e6c704cd90df83ef7231be3214962f5984b4a15e059b5c5a8bc510d2c032c821"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "sha256": "8a7a60898ddf14d198063873dfe4b1c13c03552fe317380a61aa4fab46641d5f"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "11750927cac113c977a675db1489e5e4e6fcdf128076f15f0cb9ece2cb2d2ddd"
+    },
+    {
+      "path": "telegram-chat-ui/README.md",
+      "sha256": "530296db979be3c8a1044b736b87ddb955a40ae38553d859c8a168a5f4447330"
+    }
+  ],
+  "avd_configuration_checks": [
+    {
+      "path": "D:/AndroidSDK/codex-avd/issue-136-vault-navigation-20260914/config.ini",
+      "before": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+      "after": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+      "match": true
+    },
+    {
+      "path": "C:/Users/joyins/.android/avd/Monica_Issue136_API_32.ini",
+      "before": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205",
+      "after": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205",
+      "match": true
+    },
+    {
+      "path": "C:/Users/joyins/.android/avd/Pixel_Fold_API_35.ini",
+      "before": "d5ace926ff2144ce2a8072b9db38e8ff6bbd9368644c0d546e4484de48c8b93d",
+      "after": "d5ace926ff2144ce2a8072b9db38e8ff6bbd9368644c0d546e4484de48c8b93d",
+      "match": true
+    },
+    {
+      "path": "D:/Android/avd/Pixel_Fold_API_35.avd/config.ini",
+      "before": "d20f2ba03c5810ad0ea50d3c4aa58da798222add97b4da62f84571fd29925409",
+      "after": "d20f2ba03c5810ad0ea50d3c4aa58da798222add97b4da62f84571fd29925409",
+      "match": true
+    },
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_LiveUpdates_API_36_1_4K.ini",
+      "before": "a15a0ba7779fa5f9c19aadb839d2d8b8e054ddd704c6c4172b6eed1260a980dc",
+      "after": "a15a0ba7779fa5f9c19aadb839d2d8b8e054ddd704c6c4172b6eed1260a980dc",
+      "match": true
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\monica-live-updates-api36-1-standard-20260930\\config.ini",
+      "before": "2ee12f250ee1bc5660d4374f7829194790b9dcc2fd98551ee3d80ed2b9d35de5",
+      "after": "2ee12f250ee1bc5660d4374f7829194790b9dcc2fd98551ee3d80ed2b9d35de5",
+      "match": true
+    }
+  ],
+  "raw_evidence": {
+    "alert-adapter-files.json": "b6fb2b500c7f95c1563fb2c31991ad8ea20fc07deabbdb5178df7c23bedaeb5f",
+    "api32-sheet-window.txt": "8a32385ca1ca7ce928ce124a8205ac53e0492c5e05419536aec0e8e1c6300550",
+    "api35-boot-crash.txt": "9e24af58ab50a190baa11ee17669f47ab41c79fcb807db2644943f68c2db703c",
+    "api35-final01-crash.txt": "f430916d49b41453b343409c98ab7a1506e029b4719e6bab451239db1a4aa452",
+    "api35-final01-logcat.txt": "48c92fc36bf3548c8e8662e34b3efb6a1826a71d1bc74e3345671e819ac7c34b",
+    "api35-final04-system-crash.txt": "7f91af8196402e7f7c69bcc75bdc5f18d11abd25db1d3e42c9d977618d1d723c",
+    "api35-final07-crash.txt": "4e823a7c42d231174bcf7ed8664d09a8a69d57050a1c7c51125c0f0582515ae5",
+    "api35-final07-logcat.txt": "780ec60e6d0ab4d466e0f91417b50b2b15551cb2ea14e8f65697f4013b8f6751",
+    "api35-first-logcat.txt": "5d618f0c94829895ab4d1cbd0d49c3c05a564a5c9571517426826f1f69c3d916",
+    "api35-host-crash.json": "14d495c74d5e6e6735e5cd4b15aafa02e6844ee13d205c9945709ed91783c0fb",
+    "api35-letterbox-before.txt": "a00066e1972b148031fa7ee5483d5152ed7f19b00aea5b593183240203be4c5f",
+    "api35-startup-anr.txt": "dde50ef0f960caf7e1e3a1895f455c89e674854c48795123bb1829119b77c1c7",
+    "api36-directmem-crash.txt": "5a66686814e8649560d4ce14ed0fedab8750bee2e2c3c9cf72db36a0a868703b",
+    "api36-host-crash.txt": "d55c122c1cea5d8446c39a091707effb96a74b4066b444b8c026e4ec82d515d7",
+    "api36-install-logcat.txt": "876f0b129d3272427174859864a7f584b8508fa1324096a622922a374edd333d",
+    "api36-nodma-crash.txt": "db81d2c93ff3e764e9134774b08ad3ac3c40d6622f21ed848cc03751e8aace1d",
+    "api36-swiftshader-crash.txt": "4c4a94973b50e6fea14a3a4dfed46bfc28b5599172951f6dfd909102ddbbc803",
+    "api36-system-crash.txt": "d59fdb010e79dbba53e82343f65cdcf8ff0ab437a1fe6d9b19285505401fcca3",
+    "apk-api32-final01.json": "94febc9efd69dd9b64047b9c8ed4104d5a3eb9216c3be7628b367e7919c192de",
+    "apk-api32-final02.json": "f5a2c7bbbe0e238c243ff7868e38d57ceecec8d79ad189b23e0312dd3c91c7ed",
+    "apk-api32-final03.json": "38a5b44a2f7d9308c479c2fc1f9a0a025f9ad6111f509b1f44918fcf1304cb4a",
+    "apk-api32-regression01.json": "f5a2c7bbbe0e238c243ff7868e38d57ceecec8d79ad189b23e0312dd3c91c7ed",
+    "apk-api35-final01.json": "2b4c1580ddcd430c210ea2e8d635f87e5a98465b3ba468c126c4f73b9d3daea3",
+    "apk-api35-final02.json": "2b4c1580ddcd430c210ea2e8d635f87e5a98465b3ba468c126c4f73b9d3daea3",
+    "apk-api35-final03.json": "2b4c1580ddcd430c210ea2e8d635f87e5a98465b3ba468c126c4f73b9d3daea3",
+    "apk-api35-final04.json": "94febc9efd69dd9b64047b9c8ed4104d5a3eb9216c3be7628b367e7919c192de",
+    "apk-api35-final05.json": "38a5b44a2f7d9308c479c2fc1f9a0a025f9ad6111f509b1f44918fcf1304cb4a",
+    "apk-api35-final06.json": "38a5b44a2f7d9308c479c2fc1f9a0a025f9ad6111f509b1f44918fcf1304cb4a",
+    "apk-api35-final07.json": "38a5b44a2f7d9308c479c2fc1f9a0a025f9ad6111f509b1f44918fcf1304cb4a",
+    "apk-api35-first.json": "6de4ee8fe34e71e0663bc01b742f33b07ccdbe94db9abfecb2f12ba19f325944",
+    "apk-api36-final01.json": "38a5b44a2f7d9308c479c2fc1f9a0a025f9ad6111f509b1f44918fcf1304cb4a",
+    "apk-api36-first.json": "6de4ee8fe34e71e0663bc01b742f33b07ccdbe94db9abfecb2f12ba19f325944",
+    "apk-api36-second.json": "6de4ee8fe34e71e0663bc01b742f33b07ccdbe94db9abfecb2f12ba19f325944",
+    "apk-api36-third.json": "6de4ee8fe34e71e0663bc01b742f33b07ccdbe94db9abfecb2f12ba19f325944",
+    "apk-r8-02.json": "97a3796bfe55515d7349d1a4ac23bbb5b808ee822910e4b2500072f6df9adab1",
+    "avd-config-final.json": "c403ab9da7ca028ca34d10828cb933110a4fdf31a688987be1b603dcfe0d4ab9",
+    "avd-data-disks-final.json": "bbc28dcab523486abf38c65fba2e1ba3a1a6291e88f381858ea88eb0e19029cb",
+    "avd32-config-before.json": "5cf251f72c010ebeb46e1da14de4e34ed79d8357ad66486d85fadc24c0d2558f",
+    "avd35-config-before.json": "d6b4da2d213d32b8b650ef0046de001f6e060d999c8098c5330886f28f4ccb2e",
+    "avd36-config-before.json": "573a677d515fa289399e9c2c8802fe2ccd8a4d6068707ff77b1c84256809be63",
+    "build-baseline-01-cancel.txt": "f6e63ea36055e5ff8ae905d45e5f0d708f376ba16dec6d609753f15f008e128a",
+    "build-baseline-01.json": "fc33449faaed562f2ffd1c20905318bfc3c35d0c96ffafb143ee2e7076a130e7",
+    "build-baseline-01.txt": "59704204f8ac1db29b4d0b52e0174cb3342dc0e8ac6fc430bee636493f0a7c48",
+    "build-configure-01.json": "c5926da6caf448140f14a6ab795e37d1e86ce65bcb2c6fb17ae47c5263b75aa4",
+    "build-configure-01.txt": "3a727bc34440489a397e1687b00d5fc1199e721674ef680c1ef095efedd1a4bf",
+    "build-configure-02.json": "d67770e046ea04a0cc5eb7c7d59f9991573cb2cd2ad01d5b5073e7fc97f7e463",
+    "build-configure-02.txt": "7405e60c4b150e8aed13c95c3f4e4f923c092754b689a8e37c55aa36871c4e1d",
+    "build-document-source-hashes.json": "7885aa300195d33285d4d316be1342f3d44cc7ea962ebf95a8d8c0da8a49a8af",
+    "build-final-01.json": "bffd641df04ec8b5f8ab3d7b558f73c7936e5ac94f03359fcc169cf7595d7bfc",
+    "build-final-01.txt": "150b84511404fa8c8f4e4c71cabe0339b5153b274b926e2111deeb7f39e6ebf3",
+    "build-final-02.json": "614a992e5d445751fcaf56c273dbe362f179e2a6337c9fab7ec0994648f8c342",
+    "build-final-02.txt": "69c1caf495c1ff39af1400e762af37fba751d727d0a0dad0028353f7ddc58ddf",
+    "build-final-03.json": "2e53ca807abab4b51840fbfff0f20793d821b9fe2089d928b21e02edb3d5342a",
+    "build-final-03.txt": "d97e8e6b001793756df960de21d61d383c1462f9f485823227cf5a4e92264878",
+    "build-final-04.json": "cff33407dab1e1fe7ae242b7ae0fbf9d70b570f31ec53beefe068a7931b4dd30",
+    "build-final-04.txt": "59ee50461d4eee00157345f42dfccea7df7a6c658ac78434ab68494b505a0a90",
+    "build-final-05.json": "21a35b963cc5d7ebaad40ef40164655f0fc6df54290bdcb5c5d2d53a1d2d10cf",
+    "build-final-05.txt": "6b4344db11b6063f125e0892c672be056e84109918c415ce2dee6fecdd4e4cb5",
+    "build-final-06.json": "69efac41a8a1334362535fe00d7f839c33207742a477a12800fc8406ddec1d51",
+    "build-final-06.txt": "56991b8afcb1b531d54a2cf7365ceb7c45a1bc6081ffd0315b5184d9c21e12b8",
+    "build-final-07.json": "0d8d6d4a7e07aca8d982649fff4320b140dd998b48ac6499ec93eac5c131a97f",
+    "build-final-07.txt": "8051d2cbc27d86a8a8e5ad4691397f532b71ce229db2f301a0cd66158d71a441",
+    "build-jvm-01.json": "6321b4d0f484cd9614f4340271775d949d5f3fc54c4a14c426beb2a3a6adff18",
+    "build-jvm-01.txt": "6d9d4d290cec4314ab66ac2d885374c6c7251bfc26375ad33cf36f1eb730d590",
+    "build-r8-01.json": "4754e8bec865863f7aea760f3a9859c8bd7a2456aa13eccf363aa3a73895105f",
+    "build-r8-01.txt": "632d86e2c5553c75097b6b07c6fbcb82a1ba86dc49fae5f666adb5e9650d47aa",
+    "build-r8-02.json": "9f1ca9344f21c911b72e8f64dd0a0271192194f232df5dd64ad8c02d4166bc00",
+    "build-r8-02.txt": "864cf349186b7d682a652361287e6f4b84ed76db145856d7e1878eaaaead05f5",
+    "build-tests-08.json": "43fb0cf091ba1e48ab401dd98608f8b6755baba32d86988f8b386b079051acdc",
+    "build-tests-08.txt": "f432852aa88a0b32c4fb947fef1c438e3f9698419654f5ca4265a3088734c6ff",
+    "chat-frames-api32-final02.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "chat-frames-api32-final03.json": "5fe1ae3f1e09d5ef966fe28e2f014750530986045929b8b0cd89bf5bded9090b",
+    "chat-frames-api32-regression01.json": "5fe1ae3f1e09d5ef966fe28e2f014750530986045929b8b0cd89bf5bded9090b",
+    "chat-frames-api35-final01.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "chat-frames-api35-final02.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "chat-frames-api35-final03.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "chat-frames-api35-final05-afterboot.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "chat-frames-api35-final05.json": "998b30658b4e8aa8306b84ff4cf6e480c68e59f3418d97041959d5e62dd241e5",
+    "chat-frames-api35-final08.json": "3680d85d86f747ff590a2b3abc5047c09a9ac23204c3975930c2136b6e6802f3",
+    "cleanup-api32-r8.json": "e6fb2dfc23396c09a4a2eafbc65912358c15edc9573df0eef68e6bfd23cd9bf8",
+    "cleanup-api32.json": "d90fdfa3ad16eef01b514db2b3a1cc806fde9b1f0ee77a142a55094dc4d6bafc",
+    "cleanup-api35.json": "876e8176506ecf7587e0529837718d874eec837e5674bafe5444068f8a1eecaf",
+    "cleanup-api36-attempt.json": "12d15d640a68b27a7b1e44953918e02807416401cb45737d7b717f61a59fd26e",
+    "compile-final-02-threads.txt": "dbbff6890cfc0712340e786207cc7363663e3e34d169f481276199eb58e61d5f",
+    "component-adapter-files.json": "cb66c90791ab747d297245948f34deabcd5b74ad6e81e3e465dac81a345a29fe",
+    "device-api32-final01-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api32-final01.json": "a795873dd831780efa1fd8c141ad467ed73e1dc8ec6175dcd255ea57f8177658",
+    "device-api32-final01.txt": "ddcba3facd7497f20d5351a46a60e39f06eee32359674ba8a0a40d6ca484ca20",
+    "device-api32-final02-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api32-final02.json": "ec82031fb738a51b951710cf7fb0a8ae3ea0bcf967c4735b4116613c616f2b1c",
+    "device-api32-final02.txt": "61f1897c270adaa26c660ccb47872aa8600aabc077d5dbdd20b3f60f6d399c75",
+    "device-api32-final03-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api32-final03.json": "ca3c6c35c5ae4606958f75bffd7732d145d6184bc80d9e285946fe6888b7da85",
+    "device-api32-final03.txt": "31d11e1a8c1d14015250734bdb9a2417508d955380a97bfea3aed4f517030bb7",
+    "device-api32-regression01-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api32-regression01.json": "b09987f2c0636f0a2366d816e108703d9906f6a9ad9a2414829fec616a3097c6",
+    "device-api32-regression01.txt": "54385e0946a471e44c535d2262301d30b40ae79266b4fcd3030c237a0a0c287f",
+    "device-api32-sheet-diagnostic.txt": "2ab696e134599870dd0932eab1e34dbea7888f1c3e32486f514e46e8d3d58d61",
+    "device-api35-education.txt": "00bdcc7c82ed707ec80c5a7dee76f3046fb8fcaaf4b34fb8666803676162fd1d",
+    "device-api35-final01-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final01.json": "113f87168420f05e3f86083acc4722a323ee3b64c4296b19c7c87354f1ef8c01",
+    "device-api35-final01.txt": "a5597888688b70d2eb85efe33879829281595d866ac7784e9c5ea78b4e909a6a",
+    "device-api35-final02-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final02.json": "cb2c5787388830dd406b4fac1109009f6243aab318038ec64d3e1e0db7ed5369",
+    "device-api35-final02.txt": "d37aa3f73c1ebd649917ee731cc32d9f9f1d02bb7938fe2524c59fdee043a6fc",
+    "device-api35-final03-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final03.json": "60566eb6c7f5d10ba62d01d3af6de3cee0988d66214681423a81c45ffc39c810",
+    "device-api35-final03.txt": "023d169cae25ff061536d165ec8d96a5a6be79f133b1b9ce2fda50f2648dfe46",
+    "device-api35-final04-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final04.json": "89434d557c97bb4f68b0f248b3ac38fa2c910257fd876cd6a83a8c8119b5cddc",
+    "device-api35-final04.txt": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0",
+    "device-api35-final05-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final05.json": "203da52fa7328c38d7ae343e622f41f58abe3af11d5ff351b7e9bf3ab774ac39",
+    "device-api35-final05.txt": "4a7c08277fd540974c5a9e7548c3f671619abe87f3a358c5b93d841cd50ff6e5",
+    "device-api35-final06-commands.json": "613b47491ab7fb4e8d3c797431d09f1b989f197e9d0320b4981e714326366b22",
+    "device-api35-final07-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-final07.json": "7e070d6b2eb4bf9689ffd83cfe63d470063707c53d6c5ca71e207f756adec1cc",
+    "device-api35-final07.txt": "f3ca40e0a3bf20eaf9ab861db129a85ecafc52160588fc2089c7bb0239bc1d94",
+    "device-api35-final08.txt": "ea66e75a95219bed42ea0fdf221e4b117f28c7cffdc9d5ec7b53f5498bb0a448",
+    "device-api35-first-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api35-first.json": "13bb3f926773d58faad5050cc85fa7b1d9af548f4dc9da3edc314ac85ae539f0",
+    "device-api35-first.txt": "07573976bdccfc397cf1f9fd3ca92bc1ac71fff0a4ad5c29fc99aefb4d9c68a8",
+    "device-api36-final01-commands.json": "2640e425885784708ebb24afceb9cea69bbdf77cea0273fe0f674a28eebbf726",
+    "device-api36-second-commands.json": "6b75b9790fe9d0bc0698ef64d3bad78858a728dad1b67c0536653c6752a2501d",
+    "device-api36-third-commands.json": "520610631a801b9b19e6c79679e4100040704368a14ca5f0b4ac3d339e9fe7a8",
+    "device-api36-third.json": "8210cbd8f589f1daa74e2a54bfd444288be41f448c0ebbd900bb78b8d05fbcfd",
+    "device-api36-third.txt": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0",
+    "diff-check.json": "bfdedf06596faa2042b0fedd9653ec1023d2e96ed56dc40b607985bc8438c1d5",
+    "diff-check.txt": "6243504fe7d9bf43d80fcdf393eb3a6d1d477d97dee21f22185dac87d6c2fc8a",
+    "emulator32-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator32-final07-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator32-final07-out.txt": "edca363bc57dadacda420bc88b09d0f046f679034bc54edf0fb239d39e9288da",
+    "emulator32-final08-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator32-final08-out.txt": "9b79fab00481d1b631d2fbfae9892f29ab480782ea7279ef5bbe46f8603c4e43",
+    "emulator32-out.txt": "5c15918f7bcca7f56deef624d6fce0b9188dd71b35d1878c2fa03bb4e1315a1f",
+    "emulator32-r8-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator32-r8-out.txt": "95556d6308c98819c8c44a3e8b3c9a83418c63f67c908580cf9cd5154d274e32",
+    "emulator35-err.txt": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8",
+    "emulator35-final-err.txt": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8",
+    "emulator35-final-out.txt": "78566dd74ff6b4e01d2938ce9af1cb312d1f95d1eee6549fa827783baba9217e",
+    "emulator35-final06-err.txt": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8",
+    "emulator35-final06-out.txt": "9eb2a5b0e3623a5328b92868016852c9a37e249c0e90203c06dff1e5e4b08095",
+    "emulator35-final08-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator35-final08-out.txt": "d3ebffc5be72e98f9abe83207b9790d1112592d52ee19e10f20089ef2fb32433",
+    "emulator35-final09-err.txt": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8",
+    "emulator35-final09-out.txt": "8df252db9bddfe5021cc123a3129061a01c9a66e65c7f2f98d132f23db720dbd",
+    "emulator35-out.txt": "49caeea3ca33da26ef0829ee3a1327552ad19b8e26a1beb29580d80fc7d41a3d",
+    "emulator36-directmem-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-directmem-out.txt": "f1bd30e19f973ff38022843c0d60c774fd8999f1d43de94129bab9d0a4460d6c",
+    "emulator36-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-host-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-host-out.txt": "673205e83f4b7476878135def5a92794a599906728913e958375e236ecd2081b",
+    "emulator36-nodma-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-nodma-out.txt": "b1f5e6c1401247f8b6d6349ad415646b85dbcf9a2791fcc877567858b18ace32",
+    "emulator36-out.txt": "dd1ea51146c6d808e2d25e4535c4d1fe0f07b037a7d744eeca84284a5a0c1c1e",
+    "emulator36-second-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-second-out.txt": "e05d8983c7cb80d6a95e802463c391377527ff407a730aa2410e7412b712459a",
+    "emulator36-swiftshader-err.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emulator36-swiftshader-out.txt": "457b1d242e57aace52be20dee99fc5d29df9474b15b1753c0991238e69113b06",
+    "gradle-download-threads-02.txt": "2a1bddd0c6ca6ba008377ba5ae921739971896c775da03859820c6172243c9d9",
+    "gradle-download-threads.txt": "87dad4f26ba07140be8b520e3c89e2c19443a57b34dca9cef8a0a8c8bf821d90",
+    "main-build-completed.txt": "924bb5de479cfed0fab33f2d9d843195480245e8f4ab831345cb4fbfe3a804c2",
+    "r8-apk-badging.txt": "f5ca0991025bbff773906e372d044b13b2d28ce2af18476ab343534caea67d5a",
+    "r8-artifacts.json": "d2f342933fcb2802b50a3fe2151acabacca236e113021ba8de97950051aec677",
+    "r8-cold-restart.json": "abfe7794518b6ddc47a4dd33b80293c714100a693f146a8c750f1e2282649181",
+    "r8-crash-01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "r8-crash-final.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "r8-current-window-final.txt": "dfddd991644989f4970a5a9fef142b0aec0693e5b4b5a0ab8cf26fe8f01045d7",
+    "r8-exit-info-final.txt": "ca37df6aae98c5475cf60281778dd18a2152e343bf710bd60d0a3698bf73a4f6",
+    "r8-smoke-commands.json": "82c97c67ab8f7b0015f86ded231c2e48666f2a14981b90d2bd099de515914446",
+    "r8-smoke-result.json": "43719b50eaf94dbff9c5666e49b55529ddda71ded9e0dac40817cd99e6377e5f",
+    "r8-thread-sample.txt": "e478e69b67002709b6108e8ab42a74b4ecee9ba19df16fd2c796ab2a3361d95f",
+    "resolved-runtime.json": "0d5a768e3b659d8b560711f84d65c63343d3624dc1ad99e3ee5448ce5ba241c0",
+    "room-schema-comparison.json": "3039d9dea3d58ee789b2bb7be436676592cc6a1cc7235bbaad49b050243069d7",
+    "screenshots-api32-final02.json": "e939a8a6a2429e2a93a438c420dadf923939f37d9896bdba4181d8fb7e65b7a5",
+    "screenshots-api32-final03.json": "96617b5b5fbdcd8cc9ccbc4dbbb5738ce55d0956edc765b41cc407031043c5db",
+    "screenshots-api32-regression01.json": "cb978f25cb96385691f6fd7afdae74b1245084e3fd12c01e4366cdbf541b4475",
+    "screenshots-api35-final01.json": "6c5064ef0df3bc51ab1f2a99fdcac5f2349f9ce1b24c48e8f4a287350d38ea2e",
+    "screenshots-api35-final02.json": "d9a510ab08c13156b0f0f83ab9abeb77bf8d405aab7642d2d60da1f0a793a37a",
+    "screenshots-api35-final03.json": "6aebde16c44201e13d132e0aa39973d866a3cc8a808dbfd356e57f3bae2d7e5c",
+    "screenshots-api35-final05-afterboot.json": "890be510e901de6181b59fe3ef0aa2c73310929ccdce52b3ae65ea7e7d582917",
+    "screenshots-api35-final05.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "screenshots-api35-final08.json": "6159f37f1d0960575297653e36d8204ec6acdf8b868202b1feea78a4171539c6",
+    "sheet-adapter-files.json": "5a0fc345622b9cf9d5fce04914a079f554eaba94a9ef3dac3e5dba5ac02cb5bb",
+    "source-audit.json": "2db9ec64af232debe286824f1927f720cb4f64d2658a9e1ab875497f11db6458",
+    "source-changes.json": "3fec95191702b8dd1ef2b71ee12e639288890921291ea1fa25480f24ddcdb4fb",
+    "task-whitespace.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "yield-main-build.json": "e56348b1d36cccf79d47b55945181545263ddaa93358b6bf52323cca4a31c1ed",
+    "yield-main-build.txt": "d336a4416ca850ccf8262f79b85fc2ab4bb00fbb1fd8b365c3f259ce8579bc16"
+  }
+}

@@ -26,7 +26,7 @@ class MonicaSteamApplication : Application() {
         SteamNetworkResolverSettingsRuntime.initialize(this)
         applicationScope.launch {
             try {
-                SteamChatBackground.syncService(this@MonicaSteamApplication)
+                SteamChatBackground.syncNotifications(this@MonicaSteamApplication)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Throwable) {

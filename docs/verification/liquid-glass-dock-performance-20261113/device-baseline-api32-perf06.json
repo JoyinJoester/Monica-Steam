@@ -1,0 +1,21 @@
+{
+  "exit": 0,
+  "seconds": 59.31380280002486,
+  "serial": "emulator-5558",
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamDockPerformanceDeviceTest",
+    "-e",
+    "dockVariant",
+    "baseline",
+    "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

@@ -127,7 +127,7 @@ class SteamMiniProfileBackgroundTest {
 
     @Test
     fun diskCachePrunesOldestFilesAndHonorsProtectedMedia() {
-        val directory = createTempDir(prefix = "steam-mini-profile-")
+        val directory = kotlin.io.path.createTempDirectory("steam-mini-profile-").toFile()
         try {
             val oldest = File(directory, "old.mp4").apply {
                 writeBytes(ByteArray(8))

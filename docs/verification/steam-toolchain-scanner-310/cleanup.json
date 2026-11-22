@@ -1,0 +1,27 @@
+{
+  "pilotRemoved": true,
+  "originalSteamPackagesPresent": true,
+  "usersBefore": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n",
+  "usersAfter": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}\n",
+  "avdConfigHashesUnchanged": true,
+  "configHashes": [
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "before": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205",
+      "after": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205"
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "before": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+      "after": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c"
+    }
+  ],
+  "ownedEmulatorStopped": true,
+  "dataDiskPreserved": true,
+  "mumuUntouched": true,
+  "onlyOwnedPackagesRemoved": [
+    "takagi.ru.monica.steamapp.toolchainpilot",
+    "takagi.ru.monica.steamapp.toolchainpilot.releasetest",
+    "takagi.ru.monica.steamapp.toolchainpilot.test"
+  ]
+}

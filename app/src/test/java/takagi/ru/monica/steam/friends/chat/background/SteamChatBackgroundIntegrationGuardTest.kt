@@ -7,35 +7,30 @@ import org.junit.Test
 
 class SteamChatBackgroundIntegrationGuardTest {
     @Test
-    fun manifestDeclaresTheAndroid14SpecialUseForegroundService() {
+    fun manifestRemovesChatKeepaliveAndOnlyCleansUpOnUpgrade() {
         val manifest = projectFile("app/src/main/AndroidManifest.xml").readText()
-
-        assertTrue(manifest.contains("android.permission.FOREGROUND_SERVICE_SPECIAL_USE"))
-        assertTrue(manifest.contains(".steam.friends.chat.background.data.SteamChatBackgroundService"))
-        assertTrue(manifest.contains("android:foregroundServiceType=\"specialUse\""))
-        assertTrue(manifest.contains("android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"))
-        assertTrue(manifest.contains("persistent Steam CM connection"))
-        assertTrue(manifest.contains(".steam.friends.chat.background.data.SteamChatBackgroundReceiver"))
-        assertTrue(manifest.contains("android.intent.action.BOOT_COMPLETED"))
+        assertFalse(manifest.contains("SteamChatBackgroundService"))
+        assertFalse(manifest.contains("FOREGROUND_SERVICE_SPECIAL_USE"))
+        assertFalse(manifest.contains("PROPERTY_SPECIAL_USE_FGS_SUBTYPE"))
+        assertTrue(manifest.contains("SteamChatNotificationUpgradeReceiver"))
+        val receiver = manifest.substringAfter("SteamChatNotificationUpgradeReceiver").substringBefore("</receiver>")
+        assertTrue(receiver.contains("MY_PACKAGE_REPLACED"))
+        assertFalse(receiver.contains("BOOT_COMPLETED"))
+        assertTrue(manifest.contains("microphone|mediaPlayback"))
     }
 
     @Test
-    fun serviceUsesTheSelectedSourceHandleAndPersistentRealtimeGateway() {
-        val service = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundService.kt"
-        ).readText()
-        val sources = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/data/SteamAccountSourceRepository.kt"
-        ).readText()
-
-        assertTrue(service.contains("combine(sourceRepository.state)"))
-        assertTrue(service.contains("collectLatest"))
-        assertTrue(service.contains("sessionHandleForSource"))
-        assertTrue(service.contains("SteamFriendChatRealtimeService"))
-        assertTrue(service.contains("SteamChatNotificationPolicy.evaluate"))
-        assertTrue(service.contains("preferences.claimNotification"))
-        assertFalse(service.contains("loadAllSessionHandles"))
-        assertTrue(sources.contains("fun sessionHandleForSource("))
+    fun runtimeUsesSelectedSourceAndMonitorKeepsPolicyAndPersistentDedup() {
+        val runtime = projectFile("app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationRuntime.kt").readText()
+        val monitor = projectFile("app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationMonitor.kt").readText()
+        val sources = projectFile("app/src/main/java/takagi/ru/monica/steam/data/SteamAccountSourceRepository.kt").readText()
+        assertTrue(runtime.contains("combine(sourceRepository.state)"))
+        assertTrue(runtime.contains("sessionHandleForSource"))
+        assertTrue(runtime.contains("SteamFriendChatRealtimeService"))
+        assertFalse(runtime.contains("loadAllSessionHandles"))
+        assertTrue(monitor.contains("collectLatest"))
+        assertTrue(monitor.contains("SteamChatNotificationPolicy.evaluate"))
+        assertTrue(monitor.contains("preferences.claimNotification"))
         assertTrue(sources.contains("current.storageSource != source"))
         assertTrue(sources.contains("entryId = record.entryId"))
     }
@@ -48,6 +43,9 @@ class SteamChatBackgroundIntegrationGuardTest {
         val host = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSharedSettingsHost.kt"
         ).readText()
+        val settingsRouter = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
+        ).readText()
         val preferences = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundPreferences.kt"
         ).readText()
@@ -55,9 +53,9 @@ class SteamChatBackgroundIntegrationGuardTest {
         assertTrue(settings.contains("SettingsSection"))
         assertTrue(settings.contains("SettingsItemWithSwitch"))
         assertTrue(settings.contains("POST_NOTIFICATIONS"))
-        assertTrue(settings.contains("SteamChatBackgroundServiceController.start"))
+        assertTrue(settings.contains("SteamChatNotificationRuntime.start"))
         assertTrue(host.contains("additionalSettingsContent"))
-        assertTrue(host.contains("SteamNotificationSettingsEntry"))
+        assertTrue(settingsRouter.contains("SteamSettingsChild.NOTIFICATIONS -> SteamNotificationSettingsScreen("))
         assertTrue(preferences.contains("enabled = values[KEY_ENABLED] ?: false"))
         assertTrue(preferences.contains("preferencesDataStore"))
     }
@@ -81,9 +79,10 @@ class SteamChatBackgroundIntegrationGuardTest {
         assertTrue(publisher.contains("setPublicVersion(publicVersion)"))
         assertTrue(publisher.contains("openConversationPendingIntent"))
         assertTrue(publisher.contains("MESSAGE_CHANNEL_ID"))
-        assertTrue(publisher.contains("SERVICE_CHANNEL_ID"))
+        assertTrue(publisher.contains("retireLegacyConnectionNotifications"))
         assertTrue(publisher.contains("cancelConversation"))
-        assertTrue(publisher.contains("recentConversationMessages"))
+        assertTrue(publisher.contains("steamChatMessageNotificationAddress"))
+        assertTrue(publisher.contains("activeMessageNotifications"))
         assertTrue(publisher.contains("notificationManager.notify(address.tag, address.id"))
         assertTrue(contract.contains("handle.origin.entryId"))
         assertTrue(contract.contains("EXTRA_PARTNER_STEAM_ID"))
@@ -97,7 +96,7 @@ class SteamChatBackgroundIntegrationGuardTest {
     }
 
     @Test
-    fun applicationAndBootReceiverRestoreOnlyTheExplicitlyEnabledService() {
+    fun applicationRestoresOptInProcessListenerWithoutStartingAService() {
         val application = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamApplication.kt"
         ).readText()
@@ -105,14 +104,16 @@ class SteamChatBackgroundIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/SteamChatBackground.kt"
         ).readText()
         val controller = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatBackgroundServiceController.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/data/SteamChatNotificationRuntime.kt"
         ).readText()
 
-        assertTrue(application.contains("SteamChatBackground.syncService"))
+        assertTrue(application.contains("SteamChatBackground.syncNotifications"))
         assertFalse(application.contains("friends.chat.background.data."))
-        assertTrue(facade.contains("SteamChatBackgroundServiceController.sync"))
+        assertTrue(facade.contains("SteamChatNotificationRuntime.sync"))
         assertTrue(controller.contains("settings.first().enabled"))
-        assertTrue(controller.contains("ContextCompat.startForegroundService"))
+        assertFalse(controller.contains("startForegroundService"))
+        assertFalse(controller.contains("startService("))
+        assertTrue(controller.contains("scope.launch { monitor.run() }"))
         assertTrue(controller.contains("stopService"))
     }
 

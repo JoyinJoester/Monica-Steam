@@ -1,0 +1,9 @@
+{
+  "firstSwitchMs": 149,
+  "warmMinMs": 60,
+  "warmMaxMs": 87,
+  "frameP50Ms": 5.626,
+  "frameP95Ms": 18.294,
+  "frameMaxMs": 72.753,
+  "samples": 399
+}

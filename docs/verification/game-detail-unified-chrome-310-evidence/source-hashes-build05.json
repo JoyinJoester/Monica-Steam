@@ -1,0 +1,14 @@
+{
+  "RELEASE_NOTES.md": "a25e8dc80f3d767d248c20fc3eb68136a11d94a6216d1a86c7564a7d6d588d04",
+  "docs/releases/Monica-Steam-Unreleased.md": "75e8d54e44f5f49e9a426c051e703a1598371d148dfc31298aa1acefbc8c9931",
+  "app/src/test/java/takagi/ru/monica/steam/store/SteamStoreDetailInteractionGuardTest.kt": "b000cfe5b4ff005b070d6b5a2be35e885a9131aa9b26c7b42faa43ed47e9c6e3",
+  "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopScreen.kt": "500cbc1cacdc8eb49e2100b8b9a8d7224b7811dbde70439cae87568900df4903",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailTabs.kt": "fc6ca00bb346ed5825c8c63ab48047b6f682060e50870570b759f003a49b2896",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStatsContent.kt": "bbb8976087dd9911f07d27a92a77fb581fb168dc6720c41bab9378e3f7e75e69",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailActionToolbar.kt": "5a45f58b96ef6c64df58c5e5a659469380f05a037fc9a6d586f5fa5004d51963",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreDetailHeader.kt": "dc11a828ebf5ed9c386197202136d84a44fc96e0ec3aebba11f8d525acb74fe2",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "1400c85aa314212cf0cf1e0728a6d916e19d366f4c9b112ccfad0be37b448a25",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamGameDetailTabsUiTest.kt": "363eec18f701ac8f8b1bc981c005efa94fe166a0021873370d380cf20520dc89",
+  "app/src/androidTest/java/takagi/ru/monica/steam/workshop/WorkshopSelectionRenderer.java": "cc88cec6a576fce5e0d7b078be50144938eab8edf125f61f620bc8a4a1d97fd9",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailChrome.kt": "819f5e3f9d324edfda0c09436b1eb26932252fbc211589251bb4a01f8943438c"
+}

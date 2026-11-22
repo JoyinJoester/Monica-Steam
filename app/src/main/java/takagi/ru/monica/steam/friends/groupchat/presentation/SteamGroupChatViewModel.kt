@@ -1240,6 +1240,7 @@ internal fun Throwable.isTransientGroupChatCmFailure(): Boolean {
     var current: Throwable? = this
     while (current != null && visited.add(current)) {
         when (current) {
+            is takagi.ru.monica.steam.network.cm.SteamCmRequestOutcomeUnknownException -> return true
             is SocketTimeoutException,
             is ConnectException,
             is UnknownHostException -> return true

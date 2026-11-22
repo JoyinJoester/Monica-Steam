@@ -1,0 +1,92 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest:
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar(takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest):
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.619
+There was 1 failure:
+1) nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar(takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest)
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar$lambda$0$4(SteamTelegramDesignUiTest.kt:53)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.$r8$lambda$Pxbs0S5OAZDeVsGXr0rmOikLm0o(Unknown Source:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest.main$lambda$0(SteamTelegramDesignUiTest.kt:142)
+	at takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest$$ExternalSyntheticLambda13.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:462)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2296)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

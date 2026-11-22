@@ -1,0 +1,170 @@
+{
+  "steam_history_all": {
+    "": "All",
+    "ja": "すべて",
+    "zh": "全部",
+    "vi": "Tất cả",
+    "ru": "Все"
+  },
+  "steam_history_text": {
+    "": "Text",
+    "ja": "テキスト",
+    "zh": "文本",
+    "vi": "Văn bản",
+    "ru": "Текст"
+  },
+  "steam_history_media": {
+    "": "Media",
+    "ja": "メディア",
+    "zh": "媒体",
+    "vi": "Phương tiện",
+    "ru": "Медиа"
+  },
+  "steam_history_files": {
+    "": "Files",
+    "ja": "ファイル",
+    "zh": "文件",
+    "vi": "Tệp",
+    "ru": "Файлы"
+  },
+  "steam_history_links": {
+    "": "Links",
+    "ja": "リンク",
+    "zh": "链接",
+    "vi": "Liên kết",
+    "ru": "Ссылки"
+  },
+  "steam_history_invites": {
+    "": "Invitations",
+    "ja": "招待",
+    "zh": "邀请",
+    "vi": "Lời mời",
+    "ru": "Приглашения"
+  },
+  "steam_history_stickers": {
+    "": "Stickers",
+    "ja": "ステッカー",
+    "zh": "贴纸",
+    "vi": "Nhãn dán",
+    "ru": "Стикеры"
+  },
+  "steam_history_any_time": {
+    "": "Any time",
+    "ja": "全期間",
+    "zh": "全部时间",
+    "vi": "Mọi lúc",
+    "ru": "За всё время"
+  },
+  "steam_history_today": {
+    "": "Today",
+    "ja": "今日",
+    "zh": "今天",
+    "vi": "Hôm nay",
+    "ru": "Сегодня"
+  },
+  "steam_history_last_week": {
+    "": "Last 7 days",
+    "ja": "過去7日間",
+    "zh": "最近 7 天",
+    "vi": "7 ngày qua",
+    "ru": "Последние 7 дней"
+  },
+  "steam_history_last_month": {
+    "": "Last 30 days",
+    "ja": "過去30日間",
+    "zh": "最近 30 天",
+    "vi": "30 ngày qua",
+    "ru": "Последние 30 дней"
+  },
+  "steam_thread_search": {
+    "": "Search messages",
+    "ja": "メッセージを検索",
+    "zh": "搜索消息",
+    "vi": "Tìm tin nhắn",
+    "ru": "Поиск сообщений"
+  },
+  "steam_thread_search_filters": {
+    "": "Search filters",
+    "ja": "検索フィルター",
+    "zh": "搜索筛选",
+    "vi": "Bộ lọc tìm kiếm",
+    "ru": "Фильтры поиска"
+  },
+  "steam_thread_all_senders": {
+    "": "All senders",
+    "ja": "すべての送信者",
+    "zh": "全部发送者",
+    "vi": "Tất cả người gửi",
+    "ru": "Все отправители"
+  },
+  "steam_thread_older_match": {
+    "": "Older match",
+    "ja": "前の一致",
+    "zh": "上一条匹配消息",
+    "vi": "Kết quả cũ hơn",
+    "ru": "Предыдущее совпадение"
+  },
+  "steam_thread_newer_match": {
+    "": "Newer match",
+    "ja": "次の一致",
+    "zh": "下一条匹配消息",
+    "vi": "Kết quả mới hơn",
+    "ru": "Следующее совпадение"
+  },
+  "steam_thread_no_matches": {
+    "": "No matches",
+    "ja": "一致するメッセージはありません",
+    "zh": "没有匹配的消息",
+    "vi": "Không có kết quả",
+    "ru": "Совпадений нет"
+  },
+  "steam_thread_results_list": {
+    "": "Show results",
+    "ja": "結果を表示",
+    "zh": "以列表显示",
+    "vi": "Hiện kết quả",
+    "ru": "Показать результаты"
+  },
+  "steam_thread_shared_content": {
+    "": "Chat content",
+    "ja": "チャット内容",
+    "zh": "聊天内容",
+    "vi": "Nội dung trò chuyện",
+    "ru": "Содержимое чата"
+  },
+  "steam_thread_no_shared_content": {
+    "": "No chat content yet",
+    "ja": "チャット内容はまだありません",
+    "zh": "还没有聊天内容",
+    "vi": "Chưa có nội dung trò chuyện",
+    "ru": "В чате пока нет содержимого"
+  },
+  "steam_thread_open_shared_message": {
+    "": "Open message: %1$s",
+    "ja": "メッセージを開く: %1$s",
+    "zh": "打开消息：%1$s",
+    "vi": "Mở tin nhắn: %1$s",
+    "ru": "Открыть сообщение: %1$s"
+  },
+  "steam_chat_content_image": {
+    "": "Image",
+    "ja": "画像",
+    "zh": "图片",
+    "vi": "Ảnh",
+    "ru": "Изображение"
+  },
+  "steam_chat_content_video": {
+    "": "Video",
+    "ja": "動画",
+    "zh": "视频",
+    "vi": "Video",
+    "ru": "Видео"
+  },
+  "steam_chat_content_spoiler": {
+    "": "Spoiler",
+    "ja": "ネタバレ",
+    "zh": "剧透",
+    "vi": "Nội dung tiết lộ",
+    "ru": "Спойлер"
+  }
+}

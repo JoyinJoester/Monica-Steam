@@ -1,0 +1,7 @@
+# Reference audit
+
+User-supplied HeyBox game and stats screenshots were inspected. Adopt same-game navigation, media/price hierarchy and current-player identity, playtime, last-played and achievements. Do not reproduce ratings, friend rankings or rarity without a supported data source. The predecessor downloaded the official APK and installed it in MuMu; no additional login or account actions performed.
+
+Fluxdo shallow checkout: Lingyan000/fluxdo, HEAD 8cf5cf291f39b5a685c379c0eea14f479c594563, GPL-3.0. Source review only; no Flutter code copied. topic_card_layout.dart separates title/excerpt/author/time/category/stats and invalidates measured layout by width/theme/data. topic_list_update_banner.dart presents newly available topics as an explicit user action, disabled while loading. topic_detail_page.dart retains reading position and a distinct reply session, with notification-target post navigation. For Monica community: maintain feed position on refresh, keep author/game context above body and actions below, preserve position when returning from a post, and distinguish loading/empty/error. Forum-specific trust levels, Discourse endpoints and nested-post assumptions do not transfer to Steam. Community redesign beyond this reference audit is not part of the current game-detail implementation.
+
+Canvas project steam-game-detail-tabs-20261120 saved in ignored docs/design; actual store and stats pages reviewed and tab interaction exercised. Fixed invalid icon kind and text overflow in draft before implementation.

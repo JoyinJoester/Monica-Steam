@@ -1,0 +1,21 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt": "d871522e1a87fd6b4590f2cf7289254d12f2601eddeb389d07078043c972a8ba",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt": "1cbb009045db6cd46960da103732990e834c852008d8b7e80e48c28d705edb81",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt": null,
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatControls.kt": "3d0d003509c00b221a9c0e6f94dc132d9b08f2fbdb2481859b67ffc50317c871",
+  "telegram-chat-ui/src/main/java/com/monica/telegramchat/TelegramChatComposerView.java": "1cd91ccdf7bff18849125b373a51ab77d3e43d84f77812e542b8ac402b4b098b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "6cce4265be473c4fa1e218f8d18dd275b320cf6dfc9234221652a67bff7b36ba",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/TelegramChatUiTest.kt": "fa73c31af842add67656bfb336b356987fa2ec00c2fda990285efb79a3e5e7c3",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetDesignDeviceTest.kt": "c6dd3c1672f0474ab81f5f82a9a517a3386350c2b306a81594f189f70fc3e433",
+  "RELEASE_NOTES.md": "3301d75f8c110e08cf9d3b9c5a779bb1f4c6a1c618dca3090ef0a9f51d44fb1e",
+  "docs/releases/Monica-Steam-Unreleased.md": "89ca0fe1ca887ec1b4e137da54fc9d4a8a4be031be665e501a56cf069088b510",
+  "app/src/main/res/values/strings_chat_cards.xml": "d2b495812f2879f259a51c3b040cf698ede9924a37cd31f1a56eac440916b341",
+  "app/src/main/res/values-zh/strings_chat_cards.xml": "92a7c31182a4479962cbce9d118acf11d04ff029421851e4c8d300068df4b07d",
+  "app/src/main/res/values-ru/strings_chat_cards.xml": "221842ca964d9dba935af681cf790b299b7195524d3aa5cc56477c9f16cb6c05",
+  "app/src/main/res/values-ja/strings_chat_cards.xml": "d8efe7573f64669235fe00f24701673c92ecdb725e720a0575c35be0b9a62849",
+  "app/src/main/res/values-vi/strings_chat_cards.xml": "4ee1d05bd2ff1360d65b039a58048e1da408a4efb74d58b7c091f9a723cee508",
+  "app/src/debug/java/takagi/ru/monica/steam/SteamSheetImeFixtureActivity.kt": null,
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetImeDeviceTest.kt": null,
+  "app/src/debug/AndroidManifest.xml": "e8aa9fef96800cfd1b7f73e213a60211407be65d3c4b271e12c2caea8c9462ae",
+  "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt": "f58b6dbd073c1a51e0cb5146d1d634cf7e695e68d2d2229801e4d0adf0a6e800"
+}

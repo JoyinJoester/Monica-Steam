@@ -1,0 +1,41 @@
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.monica.telegramchat.TelegramGlassRenderingTest:
+INSTRUMENTATION_STATUS: test=kyantRefractionReusesEffectAndUpdatesResizedGeometry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:161)
+
+INSTRUMENTATION_STATUS: stream=
+Error in kyantRefractionReusesEffectAndUpdatesResizedGeometry(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:161)
+
+INSTRUMENTATION_STATUS: test=kyantRefractionReusesEffectAndUpdatesResizedGeometry
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.107
+There was 1 failure:
+1) kyantRefractionReusesEffectAndUpdatesResizedGeometry(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:161)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

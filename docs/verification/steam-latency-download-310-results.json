@@ -1,0 +1,172 @@
+{
+  "tests": 76,
+  "failed": 0,
+  "skipped": 0,
+  "sourceFiles": 18,
+  "baselinePaths": 2137,
+  "unrelatedBaselineChanges": [],
+  "apkSha256": {
+    "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26110718-16.APK": "af37d97418fa3c9a3957bc5809742b91f21a39fe07af0f242859d0c8808b1196",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "5b818db9b82abc57abb25ac0c8e08d7edaa1c2aaba00a0cbeb2fa7f405af5f69"
+  },
+  "sourceSha256": {
+    "app/src/androidTest/java/takagi/ru/monica/steam/workshop/WorkshopStageProgressUiTest.kt": "73b99365a1a97c8c31419fbf019974387f5470ae6b246185fb2d77a2c1d74f97",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/presentation/SteamChatStateUpdates.kt": "934b2b881a5d96ddef63c4341705464d442e7671247810c2a2b44b75b2c77a24",
+    "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/presentation/SteamGroupChatViewModel.kt": "db344cb413f315ffaf8b29d76c61d61d5b606ca29dbeb02173c947ba3502fdb9",
+    "app/src/main/java/takagi/ru/monica/steam/network/cm/SteamCmClient.kt": "a8b6771cc15b4e818cf22c67543b88504fd0ec2f139630053555975a38d884e8",
+    "app/src/main/java/takagi/ru/monica/steam/network/cm/SteamCmConnectionPool.kt": "45e4b688a78900ec490e4fa7470bdf6baf9cb38d8b90af47767ac261d9a42f66",
+    "app/src/main/java/takagi/ru/monica/steam/network/cm/SteamCmPersistentConnection.kt": "cb1c5cabbd6ef2427e24d8efca67ff439ab4a443b85b461e7e76ff5d331f9ace",
+    "app/src/main/java/takagi/ru/monica/steam/network/cm/SteamCmRealtimeSupervisor.kt": "b1f958d9691b0af0ea96a8ff639d5e2934d10faa0f5f1d42ff3fc71e9586557b",
+    "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopContentCodec.kt": "370843de5e1a27a01ec6313a96a198c977318269e02d2ea4ebbe7ede7a52ebf0",
+    "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopDownloadClient.kt": "7774ebfd3e9a9f3a7a2f692069eb61ff1eabbd617ba25acb96928b8189460f5e",
+    "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopDownloadProgress.kt": "777bb644f29b8aeca5ecba60251b58a37348851109232f885726dcb6a4b3e493",
+    "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopDownloadUi.kt": "4afa40562c9231e5263a3ad78de38d379fc7f0d237860496b4b5b42c2978768a",
+    "app/src/main/java/takagi/ru/monica/steam/workshop/download/WorkshopDownloadWorker.kt": "3cef1a1343b27a116cd487f50f15d19581009d85aa8399ffa2fbbde441bca263",
+    "app/src/main/res/values-zh/steam_workshop_progress.xml": "829f5ebfc62ecac7e5b2f4523b88a68abc9cf994ab5ecfcbbfb6a2f9619c9a9b",
+    "app/src/main/res/values/steam_workshop_progress.xml": "2f9364e2218993598b29d6f08a559fd6ac671e1d7658a9f815f36911848c8238",
+    "app/src/test/java/takagi/ru/monica/steam/network/cm/SteamCmConnectionReuseTest.kt": "e1a53240c6aa5c751d12c85980722b9906d09870e0bbd51a57c968c7cd1f411a",
+    "app/src/test/java/takagi/ru/monica/steam/network/cm/SteamCmDisconnectRecoveryTest.kt": "2c71500aa836ffce78b2206a827bf76eabf50c474e12928e92a6719ad0936932",
+    "app/src/test/java/takagi/ru/monica/steam/workshop/download/WorkshopContentDownloadTest.kt": "926f42c6fea8aa203ff84f0c19db9f885f710e2d0ac7d96dc3b735d297f2b720",
+    "app/src/test/java/takagi/ru/monica/steam/workshop/download/WorkshopProgressTest.kt": "95d47f0169e679c671bf38765a824ca28ec3f06365d781ae745de9987aedd2b5"
+  },
+  "suites": [
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.435"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.099"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.06"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.groupchat.data.SteamGroupChatRealtimeServiceTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.03"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.groupchat.presentation.SteamGroupChatViewModelTest",
+      "tests": "19",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.155"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.voice.data.SteamVoiceRealtimeServiceTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.013"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmClientEventRoutingTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.051"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmConnectionGuardTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.01"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmConnectionPoolConcurrencyTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.01"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmConnectionReuseTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.333"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmDisconnectRecoveryTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.024"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmPersistentConnectionTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.network.cm.SteamCmProtocolTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.004"
+    },
+    {
+      "name": "takagi.ru.monica.steam.workshop.download.WorkshopContentDownloadTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.271"
+    },
+    {
+      "name": "takagi.ru.monica.steam.workshop.download.WorkshopProgressTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.0"
+    }
+  ],
+  "device": {
+    "exitCode": 0,
+    "passed": true,
+    "tests": 7,
+    "elapsedSeconds": 6.357,
+    "platform": "MuMu",
+    "api": 35,
+    "user": 10,
+    "runnerSeconds": 3.575
+  },
+  "buildDuration": "6m 59s",
+  "versionName": "1.0.310",
+  "dailySeq": 16,
+  "limitations": [
+    "Synthetic CM and UI data; no real Steam latency measurement",
+    "Debug API35 x86_64 MuMu only",
+    "Export tested with private file DocumentFile; not a cloud provider or end-to-end download worker"
+  ]
+}

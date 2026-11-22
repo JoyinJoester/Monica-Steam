@@ -1,0 +1,16 @@
+{
+  "exitCode": 0,
+  "seconds": 75.31753620016389,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx4g -XX:+UseSerialGC -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261121-chat-badge\\device.gradle",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest"
+  ]
+}

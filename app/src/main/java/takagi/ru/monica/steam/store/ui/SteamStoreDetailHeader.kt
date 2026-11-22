@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.store.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,7 +53,7 @@ internal fun SteamStoreDetailTopBar(name: String, onBack: () -> Unit, onShare: (
 internal fun SteamStoreDetailHeader(detail: SteamStoreDetail, loading: Boolean,
     onRegionalPrices: () -> Unit, onImage: () -> Unit, modifier: Modifier = Modifier,
     steamDbRepository: SteamDbRepository = SteamDbRepository.shared,
-    tags: @Composable () -> Unit = {}) {
+    showGameName: Boolean = false, tags: @Composable () -> Unit = {}) {
     Column(modifier.fillMaxWidth().testTag("store_detail_header"), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         if (detail.headerImageUrl.isNotBlank()) {
             BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -61,6 +62,7 @@ internal fun SteamStoreDetailHeader(detail: SteamStoreDetail, loading: Boolean,
                     contentDescription = stringResource(R.string.steam_store_header_image_description))
             }
         }
+        if (showGameName) Text(detail.name, style = MaterialTheme.typography.titleLarge)
         val metadata = listOfNotNull(detail.releaseDate.takeIf(String::isNotBlank), "Windows".takeIf { detail.windows },
             "macOS".takeIf { detail.mac }, "Linux".takeIf { detail.linux })
         if (metadata.isNotEmpty()) Text(metadata.joinToString(" · "), style = MaterialTheme.typography.labelMedium,

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-14T14:43:54.063Z" hostname="JOYIN" time="0.068">
+  <properties/>
+  <testcase name="freeBrowseFilterCannotBeOverriddenByAdvancedPrice" classname="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" time="0.018"/>
+  <testcase name="catalogRowsKeepSteamTagIdsForCardLabels" classname="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" time="0.022"/>
+  <testcase name="filteredSearchUsesTheCrossRegionCatalogPath" classname="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" time="0.011"/>
+  <testcase name="combinedFiltersProduceStableOfficialSearchParameters" classname="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" time="0.0"/>
+  <testcase name="filteredCatalogCachesAreSeparatedInsideCurrentContentCacheVersion" classname="takagi.ru.monica.steam.store.SteamStoreFilterServiceTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

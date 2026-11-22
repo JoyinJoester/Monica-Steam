@@ -3,6 +3,7 @@ package takagi.ru.monica.steam.friends.chat.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatUiState
 import takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModel
 import takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModel
@@ -37,6 +38,9 @@ internal fun SteamChatThreadLifecycle(
                 )
             else -> richMediaViewModel.selectPartner(null)
         }
+    }
+    // Returning to a retained tab changes its callback even when the open thread is unchanged.
+    SideEffect {
         onThreadVisibilityChange(
             chatState.selectedPartnerSteamId != null || groupChatState.selectedChatId != null
         )

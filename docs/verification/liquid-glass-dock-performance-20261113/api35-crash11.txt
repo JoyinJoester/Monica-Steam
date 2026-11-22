@@ -1,0 +1,224 @@
+--------- beginning of crash
+11-13 14:12:55.467  1120  1123 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x10 in tid 1123 (Jit thread pool), pid 1120 (s.nexuslauncher)
+11-13 14:12:57.016  1295  1302 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x40 in tid 1302 (Jit thread pool), pid 1295 (putmethod.latin)
+11-13 14:12:57.554  1942  1942 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:12:57.554  1942  1942 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:12:57.554  1942  1942 F DEBUG   : Revision: '0'
+11-13 14:12:57.554  1942  1942 F DEBUG   : ABI: 'x86_64'
+11-13 14:12:57.554  1942  1942 F DEBUG   : Timestamp: 2026-11-13 14:12:55.682180600+0000
+11-13 14:12:57.554  1942  1942 F DEBUG   : Process uptime: 21s
+11-13 14:12:57.554  1942  1942 F DEBUG   : Page size: 16384 bytes
+11-13 14:12:57.554  1942  1942 F DEBUG   : Cmdline: com.google.android.apps.nexuslauncher
+11-13 14:12:57.554  1942  1942 F DEBUG   : pid: 1120, tid: 1123, name: Jit thread pool  >>> com.google.android.apps.nexuslauncher <<<
+11-13 14:12:57.554  1942  1942 F DEBUG   : uid: 10181
+11-13 14:12:57.554  1942  1942 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000010
+11-13 14:12:57.554  1942  1942 F DEBUG   : Cause: null pointer dereference
+11-13 14:12:57.554  1942  1942 F DEBUG   :     rax 0000000000000000  rbx 00000000fffffffe  rcx 0000000000000020  rdx 0000000000000005
+11-13 14:12:57.554  1942  1942 F DEBUG   :     r8  0000760dd56e4d10  r9  0000000000000020  r10 0000760f74639da8  r11 0000760f6cf0d5f8
+11-13 14:12:57.554  1942  1942 F DEBUG   :     r12 0000000000000020  r13 0000762be218f780  r14 0000760be218f7c0  r15 0000000000000000
+11-13 14:12:57.555  1942  1942 F DEBUG   :     rdi 0000760be218f7c0  rsi 0000760f74a98b62
+11-13 14:12:57.555  1942  1942 F DEBUG   :     rbp 0000000000000005  rsp 0000760c7ce1f390  rip 0000760caf69d1c4
+11-13 14:12:57.555  1942  1942 F DEBUG   : 17 total frames
+11-13 14:12:57.555  1942  1942 F DEBUG   : backtrace:
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #00 pc 00000000008551c4  /apex/com.android.art/lib64/libart.so (art::mirror::Class::FindClassMethod(art::ObjPtr<art::mirror::DexCache>, unsigned int, art::PointerSize)+3876) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #01 pc 00000000005b1638  /apex/com.android.art/lib64/libart.so (art::ClassLinker::FindResolvedMethod(art::ObjPtr<art::mirror::Class>, art::ObjPtr<art::mirror::DexCache>, art::ObjPtr<art::mirror::ClassLoader>, unsigned int)+72) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #02 pc 0000000000328bc9  /apex/com.android.art/lib64/libart.so (art::ArtMethod* art::ClassLinker::ResolveMethod<(art::ClassLinker::ResolveMode)1>(unsigned int, art::Handle<art::mirror::DexCache>, art::Handle<art::mirror::ClassLoader>, art::ArtMethod*, art::InvokeType)+793) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #03 pc 0000000000310697  /apex/com.android.art/lib64/libart.so (art::ResolveMethod(unsigned short, art::ArtMethod*, art::DexCompilationUnit const&, art::InvokeType*, art::MethodReference*, unsigned short*, bool*) (.__uniq.59137621359481006979276989308835157028)+807) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #04 pc 000000000030e497  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::BuildInvoke(art::Instruction const&, unsigned int, unsigned int, art::InstructionOperands const&)+407) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #05 pc 0000000000309dc9  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::ProcessDexInstruction(art::Instruction const&, unsigned int)+5561) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #06 pc 0000000000307e36  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::Build()+3494) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #07 pc 00000000002cb430  /apex/com.android.art/lib64/libart.so (art::HGraphBuilder::BuildGraph()+656) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #08 pc 0000000000373d40  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::TryCompile(art::ArenaAllocator*, art::ArenaStack*, art::DexCompilationUnit const&, art::ArtMethod*, art::CompilationKind, art::VariableSizedHandleScope*) const+3520) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.555  1942  1942 F DEBUG   :       #09 pc 0000000000378656  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::JitCompile(art::Thread*, art::jit::JitCodeCache*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind, art::jit::JitLogger*)+1542) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.557  1942  1942 F DEBUG   :       #10 pc 00000000002b58b8  /apex/com.android.art/lib64/libart.so (art::jit::JitCompiler::CompileMethod(art::Thread*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind)+712) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.558  1942  1942 F DEBUG   :       #11 pc 000000000071aff1  /apex/com.android.art/lib64/libart.so (art::jit::Jit::CompileMethodInternal(art::ArtMethod*, art::Thread*, art::CompilationKind, bool)+1025) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.558  1942  1942 F DEBUG   :       #12 pc 0000000000728534  /apex/com.android.art/lib64/libart.so (art::jit::JitCompileTask::Run(art::Thread*)+644) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.559  1942  1942 F DEBUG   :       #13 pc 00000000009de7fd  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+317) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.560  1942  1942 F DEBUG   :       #14 pc 00000000009de1d8  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+152) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:57.561  1942  1942 F DEBUG   :       #15 pc 000000000006d62a  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+58) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:12:57.565  1942  1942 F DEBUG   :       #16 pc 0000000000060348  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+56) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:12:58.758  2063  2063 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:12:58.759  2063  2063 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:12:58.759  2063  2063 F DEBUG   : Revision: '0'
+11-13 14:12:58.760  2063  2063 F DEBUG   : ABI: 'x86_64'
+11-13 14:12:58.760  2063  2063 F DEBUG   : Timestamp: 2026-11-13 14:12:58.023190900+0000
+11-13 14:12:58.760  2063  2063 F DEBUG   : Process uptime: 17s
+11-13 14:12:58.761  2063  2063 F DEBUG   : Page size: 16384 bytes
+11-13 14:12:58.762  2063  2063 F DEBUG   : Cmdline: com.google.android.inputmethod.latin
+11-13 14:12:58.765  2063  2063 F DEBUG   : pid: 1295, tid: 1302, name: Jit thread pool  >>> com.google.android.inputmethod.latin <<<
+11-13 14:12:58.766  2063  2063 F DEBUG   : uid: 10165
+11-13 14:12:58.766  2063  2063 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000040
+11-13 14:12:58.766  2063  2063 F DEBUG   : Cause: null pointer dereference
+11-13 14:12:58.766  2063  2063 F DEBUG   :     rax 0000760cc56cc200  rbx 0000760be213a840  rcx 0000000000000000  rdx 0000760e35723760
+11-13 14:12:58.766  2063  2063 F DEBUG   :     r8  0000000000000000  r9  0000000000000000  r10 3c1f000000018002  r11 0000000000000000
+11-13 14:12:58.766  2063  2063 F DEBUG   :     r12 0000760e35723760  r13 0000000000000000  r14 0000760cafc55160  r15 0000760d35705ee0
+11-13 14:12:58.767  2063  2063 F DEBUG   :     rdi 0000760cc56cc070  rsi 0000000000000000
+11-13 14:12:58.767  2063  2063 F DEBUG   :     rbp 0000000000000001  rsp 0000760c23ba0700  rip 0000760caf562f9b
+11-13 14:12:58.767  2063  2063 F DEBUG   : 6 total frames
+11-13 14:12:58.767  2063  2063 F DEBUG   : backtrace:
+11-13 14:12:58.767  2063  2063 F DEBUG   :       #00 pc 000000000071af9b  /apex/com.android.art/lib64/libart.so (art::jit::Jit::CompileMethodInternal(art::ArtMethod*, art::Thread*, art::CompilationKind, bool)+939) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:58.768  2063  2063 F DEBUG   :       #01 pc 0000000000728534  /apex/com.android.art/lib64/libart.so (art::jit::JitCompileTask::Run(art::Thread*)+644) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:58.768  2063  2063 F DEBUG   :       #02 pc 00000000009de7fd  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+317) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:58.769  2063  2063 F DEBUG   :       #03 pc 00000000009de1d8  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+152) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:12:58.770  2063  2063 F DEBUG   :       #04 pc 000000000006d62a  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+58) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:12:58.770  2063  2063 F DEBUG   :       #05 pc 0000000000060348  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+56) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:13:15.381  1434  1440 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x10 in tid 1440 (Jit thread pool), pid 1434 (hbox:interactor)
+11-13 14:13:21.455  2463  2468 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0xc in tid 2468 (HeapTaskDaemon), pid 2463 (oid.apps.photos)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: FATAL EXCEPTION: ptz-ui-4-LOCAL_MEDIA_SYNC_SCHEDULING
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: Process: com.google.android.apps.photos, PID: 2463
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.String.concat(java.lang.String)' on a null object reference
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at _1391.d(PG:19)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at uvk.a(PG:33)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at uvi.call(PG:139)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at apbg.call(PG:3)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at apcb.call(PG:9)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at apbs.run(PG:55)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1012)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	at apbb.run(PG:6)
+11-13 14:13:21.720  2463  2663 E AndroidRuntime: 	Suppressed: bcyf: [bcsj{Cancelling}@6473a72, apbl@64ecec3]
+11-13 14:13:21.831  2967  2967 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:13:21.836  2967  2967 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:13:21.836  2967  2967 F DEBUG   : Revision: '0'
+11-13 14:13:21.836  2967  2967 F DEBUG   : ABI: 'x86_64'
+11-13 14:13:21.836  2967  2967 F DEBUG   : Timestamp: 2026-11-13 14:13:17.836914600+0000
+11-13 14:13:21.837  2967  2967 F DEBUG   : Process uptime: 34s
+11-13 14:13:21.837  2967  2967 F DEBUG   : Page size: 16384 bytes
+11-13 14:13:21.837  2967  2967 F DEBUG   : Cmdline: com.google.android.googlequicksearchbox:interactor
+11-13 14:13:21.837  2967  2967 F DEBUG   : pid: 1434, tid: 1440, name: Jit thread pool  >>> com.google.android.googlequicksearchbox:interactor <<<
+11-13 14:13:21.840  2967  2967 F DEBUG   : uid: 10144
+11-13 14:13:21.842  2967  2967 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000010
+11-13 14:13:21.842  2967  2967 F DEBUG   : Cause: null pointer dereference
+11-13 14:13:21.842  2967  2967 F DEBUG   :     rax 0000000000000000  rbx 0000000000000000  rcx 000000001415b3b9  rdx 0000760be213c000
+11-13 14:13:21.844  2967  2967 F DEBUG   :     r8  0000000000000010  r9  0000000000010001  r10 6ec6000000010001  r11 0000000000000003
+11-13 14:13:21.844  2967  2967 F DEBUG   :     r12 0000760be213c000  r13 0000760be20f4000  r14 00000000000014ed  r15 0000000014679a20
+11-13 14:13:21.844  2967  2967 F DEBUG   :     rdi 0000000014337288  rsi 0000000014337288
+11-13 14:13:21.844  2967  2967 F DEBUG   :     rbp 0000760e75723040  rsp 0000760c7ce1f040  rip 0000760caf4218e2
+11-13 14:13:21.844  2967  2967 F DEBUG   : 23 total frames
+11-13 14:13:21.844  2967  2967 F DEBUG   : backtrace:
+11-13 14:13:21.844  2967  2967 F DEBUG   :       #00 pc 00000000005d98e2  /apex/com.android.art/lib64/libart.so (art::mirror::Class::DescriptorHash()+114) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.845  2967  2967 F DEBUG   :       #01 pc 00000000005d96eb  /apex/com.android.art/lib64/libart.so (art::ClassTable::InsertWithHash(art::ObjPtr<art::mirror::Class>, unsigned long)+379) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.848  2967  2967 F DEBUG   :       #02 pc 0000000000588d60  /apex/com.android.art/lib64/libart.so (art::ClassLinker::InsertClass(char const*, art::ObjPtr<art::mirror::Class>, unsigned long)+240) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.853  2967  2967 F DEBUG   :       #03 pc 000000000058b293  /apex/com.android.art/lib64/libart.so (art::ClassLinker::DefineClass(art::Thread*, char const*, unsigned long, art::Handle<art::mirror::ClassLoader>, art::DexFile const&, art::dex::ClassDef const&)+1059) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.853  2967  2967 F DEBUG   :       #04 pc 000000000058a953  /apex/com.android.art/lib64/libart.so (art::ClassLinker::FindClassInBaseDexClassLoaderClassPath(art::Thread*, char const*, unsigned long, art::Handle<art::mirror::ClassLoader>, art::ObjPtr<art::mirror::Class>*)+1235) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.853  2967  2967 F DEBUG   :       #05 pc 0000000000589f2f  /apex/com.android.art/lib64/libart.so (art::ClassLinker::FindClassInBaseDexClassLoader(art::Thread*, char const*, unsigned long, art::Handle<art::mirror::ClassLoader>, art::ObjPtr<art::mirror::Class>*)+1423) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #06 pc 000000000058bdf1  /apex/com.android.art/lib64/libart.so (art::ClassLinker::FindClass(art::Thread*, char const*, art::Handle<art::mirror::ClassLoader>)+977) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #07 pc 000000000057600a  /apex/com.android.art/lib64/libart.so (art::ClassLinker::DoResolveType(art::dex::TypeIndex, art::Handle<art::mirror::DexCache>, art::Handle<art::mirror::ClassLoader>)+170) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #08 pc 0000000000328a9d  /apex/com.android.art/lib64/libart.so (art::ArtMethod* art::ClassLinker::ResolveMethod<(art::ClassLinker::ResolveMode)1>(unsigned int, art::Handle<art::mirror::DexCache>, art::Handle<art::mirror::ClassLoader>, art::ArtMethod*, art::InvokeType)+493) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #09 pc 0000000000310697  /apex/com.android.art/lib64/libart.so (art::ResolveMethod(unsigned short, art::ArtMethod*, art::DexCompilationUnit const&, art::InvokeType*, art::MethodReference*, unsigned short*, bool*) (.__uniq.59137621359481006979276989308835157028)+807) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #10 pc 000000000030e497  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::BuildInvoke(art::Instruction const&, unsigned int, unsigned int, art::InstructionOperands const&)+407) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #11 pc 0000000000309dc9  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::ProcessDexInstruction(art::Instruction const&, unsigned int)+5561) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #12 pc 0000000000307e36  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::Build()+3494) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #13 pc 00000000002cb430  /apex/com.android.art/lib64/libart.so (art::HGraphBuilder::BuildGraph()+656) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.854  2967  2967 F DEBUG   :       #14 pc 0000000000373d40  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::TryCompile(art::ArenaAllocator*, art::ArenaStack*, art::DexCompilationUnit const&, art::ArtMethod*, art::CompilationKind, art::VariableSizedHandleScope*) const+3520) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #15 pc 0000000000378656  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::JitCompile(art::Thread*, art::jit::JitCodeCache*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind, art::jit::JitLogger*)+1542) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #16 pc 00000000002b58b8  /apex/com.android.art/lib64/libart.so (art::jit::JitCompiler::CompileMethod(art::Thread*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind)+712) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #17 pc 000000000071aff1  /apex/com.android.art/lib64/libart.so (art::jit::Jit::CompileMethodInternal(art::ArtMethod*, art::Thread*, art::CompilationKind, bool)+1025) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #18 pc 0000000000728534  /apex/com.android.art/lib64/libart.so (art::jit::JitCompileTask::Run(art::Thread*)+644) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #19 pc 00000000009de7fd  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+317) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #20 pc 00000000009de1d8  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+152) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #21 pc 000000000006d62a  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+58) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:13:21.937  2967  2967 F DEBUG   :       #22 pc 0000000000060348  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+56) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:17:17.481  1327  1342 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 1342 (FinalizerDaemon), pid 1327 (.apps.wellbeing)
+11-13 14:17:21.727  4678  4678 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:17:21.727  4678  4678 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:17:21.727  4678  4678 F DEBUG   : Revision: '0'
+11-13 14:17:21.727  4678  4678 F DEBUG   : ABI: 'x86_64'
+11-13 14:17:21.727  4678  4678 F DEBUG   : Timestamp: 2026-11-13 14:17:20.095173400+0000
+11-13 14:17:21.768  4678  4678 F DEBUG   : Process uptime: 278s
+11-13 14:17:21.768  4678  4678 F DEBUG   : Page size: 16384 bytes
+11-13 14:17:21.809  4678  4678 F DEBUG   : Cmdline: com.google.android.apps.wellbeing
+11-13 14:17:21.810  4678  4678 F DEBUG   : pid: 1327, tid: 1342, name: FinalizerDaemon  >>> com.google.android.apps.wellbeing <<<
+11-13 14:17:21.810  4678  4678 F DEBUG   : uid: 10133
+11-13 14:17:21.845  4678  4678 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000000
+11-13 14:17:21.846  4678  4678 F DEBUG   : Cause: null pointer dereference
+11-13 14:17:21.970  4678  4678 F DEBUG   :     rax 0000000020000006  rbx 00000000703eb1f0  rcx 0000000020000000  rdx 0000000000050822
+11-13 14:17:21.971  4678  4678 F DEBUG   :     r8  0000760c23a84328  r9  0000000000000020  r10 000000007039cd38  r11 0000000000000010
+11-13 14:17:21.971  4678  4678 F DEBUG   :     r12 0000000014209be8  r13 00000000703bcad8  r14 00000000703bd6c0  r15 0000000014208b58
+11-13 14:17:21.971  4678  4678 F DEBUG   :     rdi 0000760be20163c0  rsi 0000000014209b80
+11-13 14:17:21.972  4678  4678 F DEBUG   :     rbp 0000000014209b80  rsp 0000760c23a84568  rip 0000000000000000
+11-13 14:17:21.972  4678  4678 F DEBUG   : 12 total frames
+11-13 14:17:21.972  4678  4678 F DEBUG   : backtrace:
+11-13 14:17:22.059  4678  4678 F DEBUG   :       #00 pc 0000000000000000  <unknown>
+11-13 14:17:22.060  4678  4678 F DEBUG   :       #01 pc 0000000000047563  /system/framework/x86_64/boot-core-libart.oat (java.lang.Daemons$FinalizerDaemon.doFinalize+339) (BuildId: 2745a90d2047b0ef078df0f659dab52c701a4608)
+11-13 14:17:22.064  4678  4678 F DEBUG   :       #02 pc 0000000000000db8  <unknown>
+11-13 14:17:22.069  4678  4678 F DEBUG   :       #03 pc 000000000004782d  /system/framework/x86_64/boot-core-libart.oat (java.lang.Daemons$FinalizerDaemon.processReference+429) (BuildId: 2745a90d2047b0ef078df0f659dab52c701a4608)
+11-13 14:17:22.070  4678  4678 F DEBUG   :       #04 pc 0000000000209be7  [anon:dalvik-main space]
+11-13 14:17:22.081  4678  4678 F DEBUG   :       #05 pc 00000000000479a5  /system/framework/x86_64/boot-core-libart.oat (java.lang.Daemons$FinalizerDaemon.runInternal+293) (BuildId: 2745a90d2047b0ef078df0f659dab52c701a4608)
+11-13 14:17:22.091  4678  4678 F DEBUG   :       #06 pc 0000010000000000  <unknown>
+11-13 14:17:22.100  4678  4678 F DEBUG   :       #07 pc 0000000000023b58  /system/framework/x86_64/boot-core-libart.oat (java.lang.Daemons$Daemon.run+120) (BuildId: 2745a90d2047b0ef078df0f659dab52c701a4608)
+11-13 14:17:22.100  4678  4678 F DEBUG   :       #08 pc 0000000000008bc7  [anon:scudo:primary]
+11-13 14:17:22.100  4678  4678 F DEBUG   :       #09 pc 000000000015c3ba  /system/framework/x86_64/boot.oat (java.lang.Thread.run+74) (BuildId: 68b5d9df423be4ebd4a6c38087fc90e635afb135)
+11-13 14:17:22.100  4678  4678 F DEBUG   :       #10 pc 0000000000100707  [anon:stack_and_tls:1342]
+11-13 14:17:22.100  4678  4678 F DEBUG   :       #11 pc 0000000000212154  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+756) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:07.974  4361  4376 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x40 in tid 4376 (Jit thread pool), pid 4361 (eamapp.dockperf)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: FATAL EXCEPTION: Primes-nativecrash-sidecar
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: Process: com.google.android.inputmethod.latin, PID: 4362
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: java.lang.NoSuchFieldError: No instance field a of type Ljava/lang/Object; in class Lorq; or its superclasses (declaration of 'orq' appears in /product/app/LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk!classes2.dex)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at sdy.a(PG:5)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at nlu.get(PG:219)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at scr.get(PG:14)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at com.google.android.libraries.performance.primes.metrics.crash.NativeCrashHandlerImpl.b(PG:461)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at npa.run(PG:5)
+11-13 14:18:08.693  4362  4688 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1012)
+11-13 14:18:08.716  4362  4395 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x40 in tid 4395 (Jit thread pool), pid 4362 (putmethod.latin)
+11-13 14:18:10.292  5538  5538 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:18:10.295  5538  5538 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:18:10.295  5538  5538 F DEBUG   : Revision: '0'
+11-13 14:18:10.295  5538  5538 F DEBUG   : ABI: 'x86_64'
+11-13 14:18:10.299  5538  5538 F DEBUG   : Timestamp: 2026-11-13 14:18:08.734501300+0000
+11-13 14:18:10.302  5538  5538 F DEBUG   : Process uptime: 55s
+11-13 14:18:10.302  5538  5538 F DEBUG   : Page size: 16384 bytes
+11-13 14:18:10.303  5538  5538 F DEBUG   : Cmdline: takagi.ru.monica.steamapp.dockperf
+11-13 14:18:10.304  5538  5538 F DEBUG   : pid: 4361, tid: 4376, name: Jit thread pool  >>> takagi.ru.monica.steamapp.dockperf <<<
+11-13 14:18:10.311  5538  5538 F DEBUG   : uid: 10228
+11-13 14:18:10.315  5538  5538 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000040
+11-13 14:18:10.315  5538  5538 F DEBUG   : Cause: null pointer dereference
+11-13 14:18:10.320  5538  5538 F DEBUG   :     rax 0000760be23c83d0  rbx 0000000000000000  rcx e4ef5a772cf1803b  rdx 0000000014143a98
+11-13 14:18:10.321  5538  5538 F DEBUG   :     r8  0000760be23c83d0  r9  0000000000000002  r10 0000000000000b00  r11 0000760f51b187d0
+11-13 14:18:10.321  5538  5538 F DEBUG   :     r12 0000000000000002  r13 0000760cafc54698  r14 0000000014273728  r15 0000760be22a3010
+11-13 14:18:10.321  5538  5538 F DEBUG   :     rdi 00000000140fcba0  rsi 0000000000000002
+11-13 14:18:10.321  5538  5538 F DEBUG   :     rbp 0000000014143a98  rsp 0000760c23ca3560  rip 0000760caf170cd1
+11-13 14:18:10.321  5538  5538 F DEBUG   : 15 total frames
+11-13 14:18:10.321  5538  5538 F DEBUG   : backtrace:
+11-13 14:18:10.321  5538  5538 F DEBUG   :       #00 pc 0000000000328cd1  /apex/com.android.art/lib64/libart.so (art::ArtMethod* art::ClassLinker::ResolveMethod<(art::ClassLinker::ResolveMode)1>(unsigned int, art::Handle<art::mirror::DexCache>, art::Handle<art::mirror::ClassLoader>, art::ArtMethod*, art::InvokeType)+1057) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.341  5538  5538 F DEBUG   :       #01 pc 0000000000310697  /apex/com.android.art/lib64/libart.so (art::ResolveMethod(unsigned short, art::ArtMethod*, art::DexCompilationUnit const&, art::InvokeType*, art::MethodReference*, unsigned short*, bool*) (.__uniq.59137621359481006979276989308835157028)+807) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.341  5538  5538 F DEBUG   :       #02 pc 000000000030e497  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::BuildInvoke(art::Instruction const&, unsigned int, unsigned int, art::InstructionOperands const&)+407) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.341  5538  5538 F DEBUG   :       #03 pc 0000000000309dc9  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::ProcessDexInstruction(art::Instruction const&, unsigned int)+5561) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.342  5538  5538 F DEBUG   :       #04 pc 0000000000307e36  /apex/com.android.art/lib64/libart.so (art::HInstructionBuilder::Build()+3494) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #05 pc 00000000002cb430  /apex/com.android.art/lib64/libart.so (art::HGraphBuilder::BuildGraph()+656) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #06 pc 0000000000373d40  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::TryCompile(art::ArenaAllocator*, art::ArenaStack*, art::DexCompilationUnit const&, art::ArtMethod*, art::CompilationKind, art::VariableSizedHandleScope*) const+3520) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #07 pc 0000000000378656  /apex/com.android.art/lib64/libart.so (art::OptimizingCompiler::JitCompile(art::Thread*, art::jit::JitCodeCache*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind, art::jit::JitLogger*)+1542) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #08 pc 00000000002b58b8  /apex/com.android.art/lib64/libart.so (art::jit::JitCompiler::CompileMethod(art::Thread*, art::jit::JitMemoryRegion*, art::ArtMethod*, art::CompilationKind)+712) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #09 pc 000000000071aff1  /apex/com.android.art/lib64/libart.so (art::jit::Jit::CompileMethodInternal(art::ArtMethod*, art::Thread*, art::CompilationKind, bool)+1025) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.351  5538  5538 F DEBUG   :       #10 pc 0000000000728534  /apex/com.android.art/lib64/libart.so (art::jit::JitCompileTask::Run(art::Thread*)+644) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.367  5538  5538 F DEBUG   :       #11 pc 00000000009de7fd  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+317) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.367  5538  5538 F DEBUG   :       #12 pc 00000000009de1d8  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+152) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:10.367  5538  5538 F DEBUG   :       #13 pc 000000000006d62a  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+58) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:18:10.367  5538  5538 F DEBUG   :       #14 pc 0000000000060348  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+56) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:18:12.294  5555  5555 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-13 14:18:12.294  5555  5555 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_x86_64/emu64xa16k:15/AE3A.240806.043/12960925:userdebug/dev-keys'
+11-13 14:18:12.294  5555  5555 F DEBUG   : Revision: '0'
+11-13 14:18:12.294  5555  5555 F DEBUG   : ABI: 'x86_64'
+11-13 14:18:12.294  5555  5555 F DEBUG   : Timestamp: 2026-11-13 14:18:10.549845000+0000
+11-13 14:18:12.294  5555  5555 F DEBUG   : Process uptime: 56s
+11-13 14:18:12.294  5555  5555 F DEBUG   : Page size: 16384 bytes
+11-13 14:18:12.294  5555  5555 F DEBUG   : Cmdline: com.google.android.inputmethod.latin
+11-13 14:18:12.295  5555  5555 F DEBUG   : pid: 4362, tid: 4395, name: Jit thread pool  >>> com.google.android.inputmethod.latin <<<
+11-13 14:18:12.295  5555  5555 F DEBUG   : uid: 10165
+11-13 14:18:12.295  5555  5555 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000040
+11-13 14:18:12.295  5555  5555 F DEBUG   : Cause: null pointer dereference
+11-13 14:18:12.295  5555  5555 F DEBUG   :     rax 0000760cc56cc200  rbx 0000760be236a4f8  rcx 0000000000000000  rdx 0000760e35723760
+11-13 14:18:12.295  5555  5555 F DEBUG   :     r8  0000000000000000  r9  0000000000000000  r10 12e1000000018002  r11 0000000000000000
+11-13 14:18:12.295  5555  5555 F DEBUG   :     r12 0000760e35723760  r13 0000000000000000  r14 0000760cafc55160  r15 0000760d35705ee0
+11-13 14:18:12.296  5555  5555 F DEBUG   :     rdi 0000760cc56cc070  rsi 0000000000000000
+11-13 14:18:12.296  5555  5555 F DEBUG   :     rbp 0000000000000001  rsp 0000760c23ba0700  rip 0000760caf562f9b
+11-13 14:18:12.301  5555  5555 F DEBUG   : 6 total frames
+11-13 14:18:12.304  5555  5555 F DEBUG   : backtrace:
+11-13 14:18:12.307  5555  5555 F DEBUG   :       #00 pc 000000000071af9b  /apex/com.android.art/lib64/libart.so (art::jit::Jit::CompileMethodInternal(art::ArtMethod*, art::Thread*, art::CompilationKind, bool)+939) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:12.310  5555  5555 F DEBUG   :       #01 pc 0000000000728534  /apex/com.android.art/lib64/libart.so (art::jit::JitCompileTask::Run(art::Thread*)+644) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:12.312  5555  5555 F DEBUG   :       #02 pc 00000000009de7fd  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+317) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:12.315  5555  5555 F DEBUG   :       #03 pc 00000000009de1d8  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+152) (BuildId: e4a3c6c284a8b17d09fd84d661cf181b)
+11-13 14:18:12.315  5555  5555 F DEBUG   :       #04 pc 000000000006d62a  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+58) (BuildId: eb58b4d427279994f00c0e1818477e4f)
+11-13 14:18:12.319  5555  5555 F DEBUG   :       #05 pc 0000000000060348  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+56) (BuildId: eb58b4d427279994f00c0e1818477e4f)

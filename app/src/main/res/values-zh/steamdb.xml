@@ -33,5 +33,5 @@
     <string name="steamdb_unknown_region">史低查询需要可识别的商店地区和币种。</string>
     <string name="steamdb_free">免费游戏，无需查询史低</string>
     <string name="steamdb_open">打开 SteamDB</string>
-    <string name="steamdb_attribution">数据来自 Steam / SteamDB。Monica Steam 为独立应用，功能参考 Millennium（MIT）。</string>
+    <string name="steamdb_attribution">数据来自 Steam / SteamDB。Monica Steam 为独立应用，功能参考 SteamNova（原 Millennium，MIT）：https://github.com/GoodJoe-2049/Steam-Nova</string>
 </resources>

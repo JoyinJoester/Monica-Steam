@@ -133,4 +133,23 @@ class SteamChatAttachmentUploadResponseParserTest {
         }
         assertTrue(insecureUrl.message.orEmpty().contains("invalid attachment URL"))
     }
+    @Test
+    fun serviceUnavailableAndSessionConflictAreNotFileRejections() {
+        val unavailable = assertThrows(SteamChatUploadException::class.java) {
+            parser.parseBegin("""{"success":20,"message":"Service unavailable"}""")
+        }
+        assertEquals(SteamChatUploadFailure.SERVICE, unavailable.failure)
+        org.junit.Assert.assertFalse(unavailable.isAuthenticationFailure)
+        assertEquals("Service unavailable", unavailable.message)
+        assertEquals(SteamChatUploadFailure.SERVICE, parser.parseFailure("""{"success":20}""")?.failure)
+
+        val sessionConflict = assertThrows(SteamChatUploadException::class.java) {
+            parser.parseCommit("""{"success":1,"result":{"success":50,"message":"Logged in elsewhere"}}""")
+        }
+        assertEquals(SteamChatUploadFailure.AUTHENTICATION, sessionConflict.failure)
+        assertTrue(sessionConflict.isAuthenticationFailure)
+        assertEquals("Logged in elsewhere", sessionConflict.message)
+        assertEquals(SteamChatUploadFailure.AUTHENTICATION, parser.parseFailure("""{"success":50}""")?.failure)
+    }
+
 }

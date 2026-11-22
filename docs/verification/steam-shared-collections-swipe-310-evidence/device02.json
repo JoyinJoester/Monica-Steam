@@ -1,0 +1,22 @@
+{
+  "main": "f55828a2710d6abf15d9c6599be9b7169f4a625da39721d60f5c07241b46f1b0",
+  "test": "f6756c64a9836023c94e2cb43f11cb8d415edfbc98b76f9cb0b89e07c4f58047",
+  "exitCode": 0,
+  "seconds": 47.695737500092946,
+  "args": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "127.0.0.1:16416",
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.library.collections.SteamCollectionsUiTest",
+    "takagi.ru.monica.steamapp.sharedcollections.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

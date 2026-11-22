@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoom
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoomType
-import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
+import takagi.ru.monica.steam.foundation.ui.SteamListChoiceChip as MonicaExpressiveFilterChip
 
 /** Monica Android's horizontal quick-filter pattern for Steam channels. */
 @Composable

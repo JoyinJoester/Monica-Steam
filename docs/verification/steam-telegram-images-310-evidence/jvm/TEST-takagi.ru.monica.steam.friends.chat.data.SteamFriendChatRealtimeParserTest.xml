@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:56.540Z" hostname="JOYIN" time="0.014">
+  <properties/>
+  <testcase name="localEchoUsesTheActiveAccountAsSender" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.004"/>
+  <testcase name="fallsBackToPlainMessageAndIgnoresUnrelatedOrMalformedEvents" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.003"/>
+  <testcase name="parsesRealtimeReactionChanges" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.003"/>
+  <testcase name="parsesTypingConversationExitAndAckEvents" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.003"/>
+  <testcase name="preservesSteamEmoteEntriesAsActionMessages" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.0"/>
+  <testcase name="parsesVersionIndependentIncomingMessagesAndPreservesBbcode" classname="takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

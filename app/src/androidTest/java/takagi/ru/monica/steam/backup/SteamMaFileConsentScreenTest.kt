@@ -1,6 +1,6 @@
 package takagi.ru.monica.steam.backup
 
-import androidx.activity.ComponentActivity
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -21,7 +21,7 @@ import takagi.ru.monica.steam.backup.share.SteamMaFileConsentScreen
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class SteamMaFileConsentScreenTest {
-    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
 
     @Test fun selectionNeverConfirmsAndExplicitConfirmationIsRequired() {
         var confirmations = 0

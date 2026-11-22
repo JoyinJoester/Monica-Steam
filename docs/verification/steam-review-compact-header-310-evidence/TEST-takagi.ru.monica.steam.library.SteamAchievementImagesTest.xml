@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.SteamAchievementImagesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-21T04:06:37.764Z" hostname="JOYIN" time="0.11">
+  <properties/>
+  <testcase name="relativeDefinitionsResolveAgainstTheCorrectGame" classname="takagi.ru.monica.steam.library.SteamAchievementImagesTest" time="0.092"/>
+  <testcase name="completedImagesPreferNormalAndHaveAGrayFallback" classname="takagi.ru.monica.steam.library.SteamAchievementImagesTest" time="0.001"/>
+  <testcase name="authorNavigationRequiresARealIndividualSteamId" classname="takagi.ru.monica.steam.library.SteamAchievementImagesTest" time="0.006"/>
+  <testcase name="unknownHostsTraversalAndMalformedDefinitionsDoNotLoad" classname="takagi.ru.monica.steam.library.SteamAchievementImagesTest" time="0.002"/>
+  <testcase name="missingGrayImageUsesTheActualNormalAchievementImage" classname="takagi.ru.monica.steam.library.SteamAchievementImagesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

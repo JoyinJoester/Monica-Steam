@@ -1,0 +1,20 @@
+{
+  "exit": 0,
+  "seconds": 16.0880971000297,
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamChatTabEntryFrameTest#measureActualWrappersAndDock",
+    "-e",
+    "pageVariant",
+    "candidate",
+    "takagi.ru.monica.steamapp.chatentry.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

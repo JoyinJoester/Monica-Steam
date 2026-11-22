@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_title">Чаты</string>
+    <string name="steam_chat_search_hint">Поиск чатов и друзей</string>
+    <string name="steam_chat_unread_count">Непрочитано: %1$d</string>
+    <string name="steam_switch_account">Сменить аккаунт Steam</string>
+    <string name="steam_chat_options">Параметры чата</string>
+    <string name="steam_chat_create_group">Создать групповой чат</string>
+    <string name="steam_chat_search">Поиск чатов</string>
+    <string name="steam_chat_close_search">Закрыть поиск</string>
+    <string name="steam_chat_filter_all">Все</string>
+    <string name="steam_chat_filter_direct">Личные</string>
+    <string name="steam_chat_filter_group">Группы</string>
+    <string name="steam_chat_filter_pinned">Закреплённые</string>
+    <string name="steam_chat_filter_archived">Архив</string>
+    <string name="steam_chat_unread">Непрочитанные</string>
+    <string name="steam_chat_no_unread">Нет непрочитанных чатов</string>
+    <string name="steam_chat_no_conversations">Чатов пока нет</string>
+    <string name="steam_chat_no_archived">В архиве пока пусто</string>
+    <string name="steam_chat_no_pinned">Нет закреплённых чатов</string>
+    <string name="steam_chat_no_messages">Нет сообщений</string>
+    <string name="steam_chat_new_chat">Новый чат</string>
+    <string name="steam_contacts_search_hint">Поиск контактов</string>
+    <string name="steam_friends_refresh">Обновить контакты</string>
+    <string name="steam_chat_pin">Закрепить</string>
+    <string name="steam_chat_unpin">Открепить</string>
+    <string name="steam_chat_archive">В архив</string>
+    <string name="steam_chat_unarchive">Вернуть из архива</string>
+    <string name="steam_chat_delete">Удалить чат</string>
+    <string name="steam_chat_delete_title">Удалить этот чат?</string>
+    <string name="steam_chat_delete_keep_messages">Сохранить сообщения</string>
+    <string name="steam_chat_delete_keep_messages_hint">Чат будет скрыт только из этого списка. Сообщения останутся в аккаунте.</string>
+    <string name="steam_chat_delete_with_messages">Удалить сообщения</string>
+    <string name="steam_chat_delete_with_messages_hint">Также удаляет сообщения, сохранённые в кэше этого устройства.</string>
+    <string name="steam_chat_delete_title_many">Удалить чаты (%1$d)?</string>
+    <string name="steam_chat_delete_cancel">Отмена</string>
+    <string name="steam_chat_selection_count">Выбрано: %1$d</string>
+    <string name="steam_chat_selection_cancel">Отменить выбор</string>
+    <string name="steam_chat_selection_hint">Смахните чат вправо, чтобы выбрать несколько</string>
+</resources>

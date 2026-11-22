@@ -10,9 +10,11 @@ internal fun buildSteamPointsShopQuery(
     category: SteamPointsShopCategory,
     language: String,
     count: Int,
-    cursor: String?
+    cursor: String?,
+    appId: Int? = null
 ): SteamProtoWriter {
     val query = SteamProtoWriter().apply {
+        appId?.let { require(it > 0); writeVarint(1, it.toLong()) }
         if (category.communityItemClasses.isNotEmpty()) {
             writePackedVarints(3, category.communityItemClasses.map(Int::toLong))
         }

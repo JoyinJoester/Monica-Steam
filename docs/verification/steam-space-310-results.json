@@ -1,0 +1,478 @@
+{
+  "date": "2026-11-07",
+  "feature": "Steam Space with collapsing playing-friends header",
+  "version": "1.0.310 / 26110718-15 / debug x86_64",
+  "jvm": {
+    "suites": [
+      {
+        "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.098
+      },
+      {
+        "suite": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.033
+      },
+      {
+        "suite": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.117
+      },
+      {
+        "suite": "takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 1.325
+      },
+      {
+        "suite": "takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 0.059
+      }
+    ],
+    "totals": {
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.632
+    }
+  },
+  "device": {
+    "tests": 25,
+    "passed": 25,
+    "seconds": 47.644,
+    "cases": [
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "loginEmptyAndNetworkStatesRemainDistinct",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "backDismissesSheetFirstAndAccountSwitchRevokesIt",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "originalActivityAndSensitiveMediaUseReadOnlyActions",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+        "test": "expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "stopClearsAndStartReloadsSameAccountWithoutSourceChange",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "removingAndRemountingThePageRevokesThenReloadsWithoutAnActivityRestart",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+        "test": "accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+        "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+        "test": "emptySelectionDisablesMutationsAndCloseBackAndFilterCancelSelection",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+        "test": "selectingOneThousandChatsPreservesAllFiveFullSizeActionsAt320DpAndLargeType",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+        "test": "deleteRequiresConfirmationAndCancelPreservesTheSelection",
+        "code": 0,
+        "failure": null
+      },
+      {
+        "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+        "test": "floatingBarKeepsFiltersAndRowsStableAboveDockInBothThemesAndLargeType",
+        "code": 0,
+        "failure": null
+      }
+    ],
+    "runnerCompleted": true
+  },
+  "deviceHistory": [
+    {
+      "run": "mumu-01",
+      "tests": 22,
+      "passed": 20,
+      "seconds": "52.76",
+      "failed": [
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+          "test": "chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Timed out: search query visible"
+        },
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+          "test": "firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Timed out: updated account committed"
+        }
+      ]
+    },
+    {
+      "run": "mumu-02",
+      "tests": 25,
+      "passed": 20,
+      "seconds": 65.005,
+      "failed": [
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+          "test": "largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+          "code": -2,
+          "failure": "java.lang.AssertionError"
+        },
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceUiTest",
+          "test": "headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Heading text is hidden in the compact strip"
+        },
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+          "test": "firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Timed out: first activation"
+        },
+        {
+          "class": "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest",
+          "test": "accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Timed out: initial data"
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatFloatingSelectionTest",
+          "test": "selectAllUsesCurrentSearchResultsAndDispatchesOnlyThosePinAndArchiveCallbacks",
+          "code": -2,
+          "failure": "java.lang.AssertionError: Floating selection did not reach the expected mounted state"
+        }
+      ]
+    },
+    {
+      "run": "mumu-03-diagnostic",
+      "tests": 3,
+      "passed": 3,
+      "seconds": 3.582,
+      "failed": []
+    },
+    {
+      "run": "mumu-04",
+      "tests": 25,
+      "passed": 25,
+      "seconds": 47.596,
+      "failed": []
+    },
+    {
+      "run": "mumu-05",
+      "tests": 25,
+      "passed": 25,
+      "seconds": 47.644,
+      "failed": []
+    }
+  ],
+  "buildHistory": [
+    {
+      "run": "01",
+      "seconds": 979,
+      "result": "success, 60 JVM pass"
+    },
+    {
+      "run": "02",
+      "seconds": 964,
+      "result": "main/test APK built, 59/60 JVM pass; teardown dispatcher race"
+    },
+    {
+      "run": "03",
+      "seconds": 506,
+      "result": "main/test/JVM success, 70 pass"
+    },
+    {
+      "run": "04",
+      "seconds": 64,
+      "result": "main/test success; debug portrait fixture and test observation fix only"
+    },
+    {
+      "run": "05",
+      "seconds": 59,
+      "result": "test-only success; stable screenshot wait only"
+    }
+  ],
+  "compiledResourceValues": 225,
+  "resourceLocales": [
+    "en",
+    "zh",
+    "ja",
+    "ru",
+    "vi"
+  ],
+  "sourceSha256": {
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceLifecycleUiTest.kt": "d275571f49fabfd2aa66bd4b1858e803ce294ff35d401e8219c7dca684c3fd3e",
+    "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt": "e87d335661de5f3ef4ed4f9c34bf8a45e2f09f8d2eee1aab18a825e0d87ac502",
+    "app/src/debug/AndroidManifest.xml": "7f5aeb0cb60c04f90cc360a97471872960e05f465413f8af7b2d6fcd1d1e0be7",
+    "app/src/debug/java/takagi/ru/monica/steam/SteamSpaceFixtureActivity.kt": "18db8623872f8fa1cbf026be91d994c2539e48cafbfeba10bc90dafaff9c4ed7",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatRootContent.kt": "22740756e706d63b0a531b1625656c24339c53528e20a50b0f3445344f150b67",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt": "90aa94b7151f1eb53980668fa5fd2b5fd84c5bf1e80e2c1456d402ae97d701b0",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamInboxUi.kt": "3f94e8f9f8441ee87565960eca09bac1886e748167d8488e7f21b81c91329a40",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceLinks.kt": "353ccec1428e6642feb959d2ce42b96228d35a6e9b8839aaf0fa672f26385078",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceParser.kt": "1c2e3d84336c0f15cd0fbbd28a2d43a9573c0b7c8f7932d24063567c4972f3fb",
+    "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceService.kt": "298fce3cffc34601c55451583bdf7ea4ae66ab3d7e8ec7fc19a3d69b22600a7d",
+    "app/src/main/java/takagi/ru/monica/steam/space/domain/SteamSpaceModels.kt": "8cef3c82379a7cd5c29337754c5754a9713100e787f8bbce6a649caa3a85e54a",
+    "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceUiState.kt": "054bbe67868c243bfdccb75fcab545ce7941cbca9cba8f6c556e5df400c8a1e2",
+    "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModel.kt": "279d5cbc4911b9c07f9f4495bf1968eec55361adcf3167adde7ac79fa9e20588",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceHeaderScrollBehavior.kt": "0f4a3d4ea513e4dbf2ceab014077d8dddf4a3a091dc522cca0886a2904310396",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpacePlayingHeader.kt": "3dfa82636e380daaacd499fc0009c9d31f1d402e0cbe9d6801c799f7b6aab051",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceRoute.kt": "709af5449808686cbfc55d7b929d193b36c3a4e1470efc12fc697e11d1de38b7",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt": "4133607538e9c0149625fd088c585e0bd20d2fd6584017ad8705398951c8b54d",
+    "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceSessionLifecycle.kt": "90919bf649b1611a935a82d3b7095f6198ee0301fd348d9e88c719a729a4d3d9",
+    "app/src/main/java/takagi/ru/monica/steam/token/ui/SteamScreen.kt": "0db594da408d579de780d6be220f4569cd3405310779f0c7b48be225d3e9f6e4",
+    "app/src/main/res/values-ja/steam_space_strings.xml": "0b5779d97a55b302274df0675322d9d994b02bcaf86de787153b17ca8c8215df",
+    "app/src/main/res/values-ru/steam_space_strings.xml": "3bc34eb074f4b28728748b2e8a2346ceed9dfd349e977339d93798b74d0170b8",
+    "app/src/main/res/values-vi/steam_space_strings.xml": "b458a0bf04379fc45abca151cbd1db6e1f06c976f372d3bc4dae9f99d9134509",
+    "app/src/main/res/values-zh/steam_space_strings.xml": "65dca80b22168ff816b3f0ac34cb582b05fb35a55302d79e3a668dd5b3dab6d3",
+    "app/src/main/res/values/steam_space_strings.xml": "d91ee7203a2e179a5e04647e85bc1632a9de3ab484a69c7179fca784f00a0775",
+    "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceServiceTest.kt": "7221735699e4333737a0023be2a4475cba6ef8b8a149e2938d46360d15629a60",
+    "app/src/test/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModelTest.kt": "ca31b6ea3a267809aed8c93aabd533106673d546016d58bcd9410ce75ec0a54e",
+    "app/src/test/java/takagi/ru/monica/steam/space/ui/SteamSpaceHeaderScrollBehaviorTest.kt": "0f50e457a87a2d4abb511420f2ca20d7f9476f3d86feaa59f1b9ff6998b2ee99"
+  },
+  "apkSha256": {
+    "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26110718-15.APK": "a48a436b9c78cf4cf879b4c4563941670d789b2159f8229cbc1eb5a87238bd50",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "87af87f7f4c0f0613775dd6e24b6ec81dfe78dfc677fd8014d66b3963ff0f411"
+  },
+  "nativeEvidenceArchiveSha256": "ce0af5a42798b57e09be9ab684174c6be732a088e869f9f8883efe2a0c5530fe",
+  "validationEnvironment": {
+    "emulator": "MuMu instance 0",
+    "api": 35,
+    "abi": "x86_64",
+    "testUser": 10,
+    "physicalResolution": "1080x1920",
+    "testDensity": 420,
+    "fontScales": [
+      1,
+      1.5
+    ],
+    "animations": "existing system scale 0.5; app reduced-motion branch tested"
+  },
+  "cleanup": {
+    "steps": [
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "code": 0,
+        "stdout": "0",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "code": 0,
+        "stdout": "Users:\n\tUserInfo{0:Owner:4c13} running\n\tUserInfo{10:Monica_SteamSpace_20261107_Test:414}",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "remove-user",
+          "10"
+        ],
+        "code": 0,
+        "stdout": "Success: removed user",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "code": 0,
+        "stdout": "Users:\n\tUserInfo{0:Owner:4c13} running",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "--user",
+          "0",
+          "takagi.ru.monica.steamapp.test"
+        ],
+        "code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "-u",
+          "takagi.ru.monica.steamapp.test"
+        ],
+        "code": 0,
+        "stdout": "package:takagi.ru.monica.steamapp.test",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "uninstall",
+          "takagi.ru.monica.steamapp.test"
+        ],
+        "code": 1,
+        "stdout": "Failure [not installed for 0]",
+        "stderr": ""
+      }
+    ],
+    "complete": true,
+    "restoredUser": 0,
+    "removedOwnUser": 10,
+    "remainingUsers": "Users:\n\tUserInfo{0:Owner:4c13} running",
+    "remainingPackages": "",
+    "density": "Physical density: 280",
+    "cleanupNotes": [
+      "Immediate first removal failed; second attempt after confirmed stopped succeeded.",
+      "User removal asynchronously removed packages. Extra adb uninstall returned not installed for 0 and pm uninstall --user all returned DELETE_FAILED_INTERNAL_ERROR; final pm list -u confirms both absent."
+    ]
+  },
+  "mumuStopped": true,
+  "limits": [
+    "Synthetic friends/CM responses only; no logged-in Steam account test.",
+    "Debug portrait fixture, no physical OEM/R8 validation.",
+    "Native screenshots are sampled frames, not an FPS benchmark.",
+    "Pagination follows official oldest-second-minus-one behavior; equal-second overflow can omit items."
+  ],
+  "status": "complete"
+}

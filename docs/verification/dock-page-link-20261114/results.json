@@ -1,0 +1,307 @@
+{
+  "scope": "Monica Steam Dock/page linkage; offline API35 x86_64 emulator only",
+  "sourceHashes": {
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt": "619b830fee1c9eced9e12605280bc7fa76abb5bf98df77d4c7c8b1b0f0166f68",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "b7e1520b40bdc9502303cedc57a7c13a97fd99e8c885ef34c86cae1927781d25",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt": "06d3f8136849b26282bc9c1496745fed794c473bb22b1409b588c8a228b9975b",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationEntries.kt": "74167d89762480e42d2efd64526a626eacbfecd03dc475272ee73a59874dcfa9",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedPageStateDeviceTest.kt": "55e22f6d060924cb073690f7fc101646f031f31e9f1e7ea5878a40c0a0d12960",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamRetainedNativeChatDeviceTest.kt": "3ece5de07c9af33a18640de62d079ecf56ad3b557eddc20b79697959f8d062a1",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamConversationEntriesDeviceTest.kt": "ddeada599d6d850783c988e5db327fca0687a51d7b0d515f0a6c21a9ae007cd2",
+    "app/src/main/jniLibs/arm64-v8a/libmonica_steam_android.so": "e906f6e12516356739200e7b82f3cba72cdfc0603bbaa45770474684378c5d79",
+    "app/src/main/jniLibs/armeabi-v7a/libmonica_steam_android.so": "37c74afcf7c10857bc7e7c55b7f1055dd55579cc6e5e8e8614831730adc61597",
+    "app/src/main/jniLibs/x86_64/libmonica_steam_android.so": "bf15a0bc25a5aabc0f387bb2446f910ebdd8354fc94a1c2fd2080e29b7c32aa2"
+  },
+  "production": {
+    "exit": 0,
+    "seconds": 592.9219127999968,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-dock-page-link\\production.gradle",
+      ":app:assembleDebug"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "1c20720cffe5e8ceab1d663b68000569ee890015fce8813ae9a40ea43e63ff04"
+    }
+  },
+  "fixtureBuild": {
+    "exit": 0,
+    "seconds": 32.1025511000189,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-dock-page-link\\isolation.gradle",
+      "-PdockFixture=true",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "bab89d977761cc27d3344f06e683137f1611ee26b2d5fb7de087c1f8995487b6",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "6c75148a98068dac3e0fb9bde320b36d8e2a11248c4b3f399c953ad3806d1591"
+    }
+  },
+  "deviceTests": 20,
+  "jvmTests": [
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+      "tests": 9
+    },
+    {
+      "name": "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest",
+      "tests": 2
+    },
+    {
+      "name": "takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest",
+      "tests": 2
+    }
+  ],
+  "measurements": {
+    "perf-b01": {
+      "api": 35,
+      "frames": 446,
+      "injectedUpdates": 313,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 47.074135,
+      "commitP95": 70.667729,
+      "totalP95": 47.436844,
+      "drawP95": 12.210486
+    },
+    "perf-quiet01": {
+      "api": 35,
+      "frames": 408,
+      "injectedUpdates": 0,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 33.504208,
+      "commitP95": 43.469579,
+      "totalP95": 26.647545,
+      "drawP95": 13.121326
+    },
+    "perf-nocapture01": {
+      "api": 35,
+      "frames": 583,
+      "injectedUpdates": 479,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 42.85091,
+      "commitP95": 79.50316,
+      "totalP95": 37.919909,
+      "drawP95": 11.246198
+    },
+    "perf-nochrome01": {
+      "api": 35,
+      "frames": 450,
+      "injectedUpdates": 335,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 50.181685,
+      "commitP95": 86.030917,
+      "totalP95": 47.726272,
+      "drawP95": 12.293147
+    },
+    "paired-b02": {
+      "api": 35,
+      "frames": 427,
+      "injectedUpdates": 300,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 50.090327,
+      "commitP95": 87.261707,
+      "totalP95": 46.774301,
+      "drawP95": 13.075185
+    },
+    "paired-c02": {
+      "api": 35,
+      "frames": 416,
+      "injectedUpdates": 299,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 0,
+      "commitMedian": 47.561884,
+      "commitP95": 72.389073,
+      "totalP95": 51.399925,
+      "drawP95": 13.393366
+    },
+    "paired-c03": {
+      "api": 35,
+      "frames": 417,
+      "injectedUpdates": 296,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 0,
+      "commitMedian": 46.405976,
+      "commitP95": 79.669734,
+      "totalP95": 54.939739,
+      "drawP95": 13.14592
+    },
+    "paired-b03": {
+      "api": 35,
+      "frames": 436,
+      "injectedUpdates": 319,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 57.901292,
+      "commitP95": 88.343554,
+      "totalP95": 52.918531,
+      "drawP95": 14.794991
+    },
+    "cached-c04": {
+      "api": 35,
+      "frames": 429,
+      "injectedUpdates": 322,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 0,
+      "commitMedian": 38.718825,
+      "commitP95": 52.883826,
+      "totalP95": 34.518682,
+      "drawP95": 12.394587
+    },
+    "cached-c05": {
+      "api": 35,
+      "frames": 445,
+      "injectedUpdates": 329,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 0,
+      "commitMedian": 38.326021,
+      "commitP95": 53.430216,
+      "totalP95": 34.523448,
+      "drawP95": 12.15386
+    },
+    "reverse-b04": {
+      "api": 35,
+      "frames": 434,
+      "injectedUpdates": 315,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 56.549746,
+      "commitP95": 75.738134,
+      "totalP95": 51.183473,
+      "drawP95": 13.838139
+    },
+    "reverse-b05": {
+      "api": 35,
+      "frames": 422,
+      "injectedUpdates": 305,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 1,
+      "commitMedian": 53.372564,
+      "commitP95": 97.916548,
+      "totalP95": 59.928155,
+      "drawP95": 14.393658
+    },
+    "restored-c06": {
+      "api": 35,
+      "frames": 452,
+      "injectedUpdates": 334,
+      "lostMetrics": 0,
+      "hiddenSubscriptions": 0,
+      "commitMedian": 46.876535,
+      "commitP95": 63.309564,
+      "totalP95": 36.87285,
+      "drawP95": 15.179989
+    }
+  },
+  "nativeByteIdentitySha": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d",
+  "nativeInputSha": "bf15a0bc25a5aabc0f387bb2446f910ebdd8354fc94a1c2fd2080e29b7c32aa2",
+  "nativeNote": "AGP stripDebugSymbols changes input bytes; fixture and production packaged ELF bytes are identical",
+  "productionRuntimeTested": false,
+  "cleaned": [
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "shell",
+        "am",
+        "get-current-user"
+      ],
+      "exit": 0,
+      "output": "0\r\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "info",
+        "-v",
+        "all"
+      ],
+      "exit": 0,
+      "output": "{\n  \"0\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793811814685479,\n    \"disk_size_bytes\": 11360638068,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"0\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Android Device\"\n  },\n  \"1\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793856063204935,\n    \"disk_size_bytes\": 7428489312,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"1\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica OMK 325 Test\"\n  },\n  \"2\": {\n    \"adb_host_ip\": \"127.0.0.1\",\n    \"adb_port\": 16448,\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1794331605453974,\n    \"disk_size_bytes\": 9664020902,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"2\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": true,\n    \"is_main\": false,\n    \"is_process_started\": true,\n    \"launch_err_code\": 0,\n    \"launch_err_msg\": \"\",\n    \"launch_time\": 3706397,\n    \"main_wnd\": \"05DA0E52\",\n    \"name\": \"Monica Release Upgrade Test\",\n    \"pid\": 33840,\n    \"player_state\": \"start_finished\",\n    \"render_wnd\": \"00591A80\",\n    \"vt_enabled\": true\n  }\n}\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "uninstall",
+        "--user",
+        "0",
+        "takagi.ru.monica.steamapp.pagelink.test"
+      ],
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "args": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16448",
+        "uninstall",
+        "--user",
+        "0",
+        "takagi.ru.monica.steamapp.pagelink"
+      ],
+      "exit": 0,
+      "output": "Success\r\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "api",
+        "-v",
+        "2",
+        "shutdown_player"
+      ],
+      "exit": 0,
+      "output": "current select player index: 2\r\nmain status changed: status=1 pid=0 privilege=0\r\nmain status changed: status=2 pid=0 privilege=0\r\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "info",
+        "-v",
+        "2"
+      ],
+      "exit": 0,
+      "output": "{\n  \"android_version\": \"15.0\",\n  \"created_timestamp\": 1794331605453974,\n  \"disk_size_bytes\": 10005855990,\n  \"error_code\": 0,\n  \"hyperv_enabled\": true,\n  \"index\": \"2\",\n  \"info_source\": \"rpc\",\n  \"is_android_started\": false,\n  \"is_main\": false,\n  \"is_process_started\": false,\n  \"name\": \"Monica Release Upgrade Test\"\n}\n"
+    },
+    {
+      "args": [
+        "E:/Program Files/Netease/MuMuPlayer/nx_main/MuMuManager.exe",
+        "info",
+        "-v",
+        "all"
+      ],
+      "exit": 0,
+      "output": "{\n  \"0\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793811814685479,\n    \"disk_size_bytes\": 11360638068,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"0\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Android Device\"\n  },\n  \"1\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1793856063204935,\n    \"disk_size_bytes\": 7428489312,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"1\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica OMK 325 Test\"\n  },\n  \"2\": {\n    \"android_version\": \"15.0\",\n    \"created_timestamp\": 1794331605453974,\n    \"disk_size_bytes\": 10005855990,\n    \"error_code\": 0,\n    \"hyperv_enabled\": true,\n    \"index\": \"2\",\n    \"info_source\": \"rpc\",\n    \"is_android_started\": false,\n    \"is_main\": false,\n    \"is_process_started\": false,\n    \"name\": \"Monica Release Upgrade Test\"\n  }\n}\n"
+    }
+  ],
+  "limitations": [
+    "synthetic state burst, no real account/network",
+    "remaining long frames; not a 60 FPS guarantee",
+    "host user programs were not stopped",
+    "GPU duration unsupported (0)",
+    "production R8 runtime and user physical device untested"
+  ]
+}

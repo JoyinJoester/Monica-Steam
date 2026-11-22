@@ -1,0 +1,35 @@
+{
+  "removedPackages": [
+    "takagi.ru.monica.steamapp.collectionspage.test",
+    "takagi.ru.monica.steamapp.collectionspage"
+  ],
+  "baselineMatches": {
+    "users": true,
+    "currentUser": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "packages": true,
+    "abi": true,
+    "sdk": true
+  },
+  "currentUser": "0",
+  "usersPreserved": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "size": "Physical size: 1080x1920",
+  "density": "Physical density: 280",
+  "font": "1.0",
+  "usedAvd": false,
+  "preexistingMumu0PidPreserved": 15892,
+  "shutdownResponse": {
+    "errcode": 0,
+    "errmsg": ""
+  },
+  "taskMumu1Stopped": true,
+  "taskMumu1DataDiskRetained": true,
+  "preexistingMumu0StillRunning": true
+}

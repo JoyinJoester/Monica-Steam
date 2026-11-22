@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_card_trade_link">Liên kết trao đổi</string>
+    <string name="steam_card_trade_offer">Đề nghị trao đổi</string>
+    <string name="steam_card_profile">Hồ sơ Steam</string>
+    <string name="steam_card_published_file">Workshop và nội dung cộng đồng</string>
+    <string name="steam_card_screenshot">Ảnh chụp hoặc tác phẩm</string>
+    <string name="steam_card_video">Video hoặc đoạn clip</string>
+    <string name="steam_card_guide">Hướng dẫn Steam</string>
+    <string name="steam_card_collection">Bộ sưu tập Workshop</string>
+    <string name="steam_card_bundle">Gói tổng hợp Steam</string>
+    <string name="steam_card_package">Gói Steam</string>
+    <string name="steam_card_broadcast">Phát sóng Steam</string>
+    <string name="steam_card_broadcast_request">Yêu cầu xem phát sóng</string>
+    <string name="steam_card_playtest">Lời mời Steam Playtest</string>
+    <string name="steam_card_remote_play">Lời mời Remote Play Together</string>
+    <string name="steam_card_gift">Thông báo quà tặng Steam</string>
+    <string name="steam_card_inventory">Vật phẩm trong kho</string>
+    <string name="steam_card_friend_request">Lời mời kết bạn</string>
+    <string name="steam_card_group">Lời mời nhóm hoặc trò chuyện</string>
+    <string name="steam_card_event">Sự kiện hoặc tin cộng đồng</string>
+    <string name="steam_card_comment">Thông báo bình luận</string>
+    <string name="steam_card_market">Chợ cộng đồng</string>
+    <string name="steam_card_effect">Hiệu ứng trò chuyện</string>
+    <string name="steam_card_unknown">Tin nhắn Steam</string>
+    <string name="steam_card_start_trade">Bắt đầu trao đổi</string>
+    <string name="steam_card_view_trade">Xem đề nghị trao đổi</string>
+    <string name="steam_card_watch">Xem phát sóng</string>
+    <string name="steam_card_view_group">Xem nhóm hoặc lời mời</string>
+    <string name="steam_card_view_profile">Xem hồ sơ</string>
+    <string name="steam_card_view_inventory">Xem vật phẩm</string>
+    <string name="steam_card_view_market">Xem trên Chợ</string>
+    <string name="steam_card_open_invite">Mở lời mời</string>
+    <string name="steam_card_open">Mở trong Steam</string>
+    <string name="steam_card_no_handler">Không có ứng dụng mở được liên kết này. Hãy cài ứng dụng Steam tương thích hoặc sao chép liên kết sang thiết bị khác.</string>
+    <string name="steam_card_offer_id">Đề nghị #%1$s</string>
+    <string name="steam_card_no_action">Tin nhắn này không có liên kết thao tác được hỗ trợ. Xem tin nhắn gốc để biết chi tiết.</string>
+    <string name="steam_card_copy_link">Sao chép liên kết</string>
+    <string name="steam_card_details">Tin nhắn gốc</string>
+    <string name="steam_chat_local_delete_title">Chỉ xóa tin nhắn trên thiết bị này?</string>
+    <string name="steam_chat_local_delete_description">Tin nhắn sẽ bị ẩn khỏi cuộc trò chuyện và lịch sử chia sẻ trên thiết bị này, kể cả sau khi làm mới hoặc mở lại. Thao tác này không thu hồi tin nhắn và không xóa bản sao trên Steam hay thiết bị khác.</string>
+    <string name="steam_chat_local_delete_failed">Không thể lưu trạng thái xóa tin nhắn trên thiết bị. Vui lòng thử lại.</string>
+    <string name="steam_chat_load_older_messages">Tải tin nhắn cũ hơn</string>
+    <string name="steam_chat_group_delete_title">Xóa tin nhắn nhóm này?</string>
+</resources>

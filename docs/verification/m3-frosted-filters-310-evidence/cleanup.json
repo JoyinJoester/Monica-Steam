@@ -1,0 +1,44 @@
+{
+  "removedPackages": {
+    "takagi.ru.monica.steamapp.frostfilters.test": "Success\n",
+    "takagi.ru.monica.steamapp.frostfilters": "Success\n"
+  },
+  "baselineChecks": {
+    "users": true,
+    "currentUser": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "packages": false,
+    "rotation": true
+  },
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "mumu0Modified": false,
+  "dataDiskOrConfigRemoved": false,
+  "stoppedConfirmed": true,
+  "shutdown": "Vendor shutdown stopped Android; residual task-owned shell PID93336 stuck stopping and was stopped after command-line verification",
+  "managerAfter": {
+    "android_version": "15.0",
+    "created_timestamp": 1793856063204935,
+    "disk_size_bytes": 8129986354,
+    "error_code": 0,
+    "hyperv_enabled": true,
+    "index": "1",
+    "info_source": "rpc",
+    "is_android_started": false,
+    "is_main": false,
+    "is_process_started": false,
+    "name": "Monica OMK 325 Test"
+  },
+  "originalPackagesPreserved": true,
+  "additionalPackagesPreserved": [
+    "package:com.android.chrome"
+  ],
+  "additionalPackageOrigin": "Not installed by this task; origin not determined",
+  "shortcutSettingsChanged": false
+}

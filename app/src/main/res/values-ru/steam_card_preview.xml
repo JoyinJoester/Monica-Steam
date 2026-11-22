@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_preview_open">Предпросмотр</string>
+    <string name="steam_preview_close">Закрыть предпросмотр</string>
+    <string name="steam_preview_message_actions">Действия с сообщением</string>
+    <string name="steam_space_publish">Опубликовать статус</string>
+    <string name="steam_space_event_details">Подробнее о событии</string>
+</resources>

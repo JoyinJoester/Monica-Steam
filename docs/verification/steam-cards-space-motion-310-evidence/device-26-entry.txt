@@ -1,0 +1,153 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest:
+INSTRUMENTATION_STATUS: test=inboxBottomBoundaryKeepsTheFilterBackdropAndRowsStationary
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inboxBottomBoundaryKeepsTheFilterBackdropAndRowsStationary
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadAndCategoriesAreMutuallyExclusive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realListToPopulatedThreadFrameSample
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realListToPopulatedThreadFrameSample
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wallpaperMountCostSample
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualDockSwitchesToPopulatedInboxWithoutRemountingNativeRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Mounted UI did not settle
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.await$lambda$1(SteamChatEntryRegressionTest.kt:64)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda35.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:55)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda36.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualDockSwitchesToPopulatedInboxWithoutRemountingNativeRows(takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest):
+java.lang.AssertionError: Mounted UI did not settle
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.await$lambda$1(SteamChatEntryRegressionTest.kt:64)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda35.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:55)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda36.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=actualDockSwitchesToPopulatedInboxWithoutRemountingNativeRows
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 24.173
+There was 1 failure:
+1) actualDockSwitchesToPopulatedInboxWithoutRemountingNativeRows(takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest)
+java.lang.AssertionError: Mounted UI did not settle
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.await$lambda$1(SteamChatEntryRegressionTest.kt:64)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda35.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest.main$lambda$0(SteamChatEntryRegressionTest.kt:55)
+	at takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest$$ExternalSyntheticLambda36.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

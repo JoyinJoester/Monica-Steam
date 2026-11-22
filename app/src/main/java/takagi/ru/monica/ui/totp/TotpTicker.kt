@@ -1,7 +1,7 @@
 package takagi.ru.monica.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +32,7 @@ private val secondTicker = tickerFlow(smooth = false).stateIn(
 
 @Composable
 fun rememberTotpTickerMillis(smooth: Boolean): Long {
-    val millis by (if (smooth) smoothTicker else secondTicker).collectAsState()
+    val millis by (if (smooth) smoothTicker else secondTicker).collectAsStateWithLifecycle()
     return millis
 }
 

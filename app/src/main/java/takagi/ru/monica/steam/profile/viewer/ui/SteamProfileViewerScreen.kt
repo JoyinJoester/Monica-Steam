@@ -2,7 +2,6 @@ package takagi.ru.monica.steam.profile.viewer.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,8 +21,7 @@ import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerTarget
 import takagi.ru.monica.steam.profile.viewer.presentation.SteamProfileViewerViewModel
 import takagi.ru.monica.ui.LocalReduceAnimations
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import takagi.ru.monica.utils.SettingsManager
 
 private sealed interface SteamProfileViewerDestination {
@@ -110,8 +108,7 @@ fun SteamProfileViewerScreen(
         targetState = destination,
         modifier = modifier.fillMaxSize(),
         transitionSpec = {
-            easyNotesScreenEnter(reduceAnimations)
-                .togetherWith(easyNotesScreenExit(reduceAnimations))
+            steamPageTransition(reduceAnimations, forward = targetState != SteamProfileViewerDestination.Overview)
         },
         contentKey = { animatedDestination -> animatedDestination },
         label = "SteamProfileViewerNavigation"
@@ -119,6 +116,7 @@ fun SteamProfileViewerScreen(
         when (animatedDestination) {
             SteamProfileViewerDestination.Overview -> {
                 SteamExpressivePullToRefresh(
+                    showIndicator = false,
                     refreshing = state.loading,
                     onRefresh = profileViewModel::refresh,
                     enabled = !state.loading,

@@ -1,0 +1,15 @@
+{
+  "before": {
+    "density": "Physical density: 280",
+    "font": "1.0"
+  },
+  "during": {
+    "density": "Physical density: 280\r\nOverride density: 480",
+    "font": "1.5"
+  },
+  "exitCode": 0,
+  "after": {
+    "density": "Physical density: 280",
+    "font": "1.0"
+  }
+}

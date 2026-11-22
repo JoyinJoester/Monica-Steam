@@ -1,0 +1,27 @@
+{
+  "exitCode": 0,
+  "seconds": 58.53771379997488,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx6g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261121-steam-chat-content\\device.gradle",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatContentMetadataTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoIntegrationGuardTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest"
+  ]
+}

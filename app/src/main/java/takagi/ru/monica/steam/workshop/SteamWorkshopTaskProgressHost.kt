@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.workshop
 
-import androidx.compose.material3.AlertDialog
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton

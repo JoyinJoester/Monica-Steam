@@ -1,0 +1,7 @@
+{
+  "path": "app/src/main/java/takagi/ru/monica/steam/workshop/SteamWorkshopScreen.kt",
+  "builtSha256": "500cbc1cacdc8eb49e2100b8b9a8d7224b7811dbde70439cae87568900df4903",
+  "finalSha256": "0f10dc6180dd1cfeb4fac8aa478801463ccb770f7baf2e5f3b9e948e366f305b",
+  "change": "remove spaces on one otherwise empty line",
+  "tokensUnchanged": true
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_achievement_sets">実績セット</string>
+    <string name="steam_achievement_sets_all">すべてのセット</string>
+    <string name="steam_achievement_set_base">本編</string>
+    <string name="steam_achievement_set_unnamed">セット %1$d</string>
+    <string name="steam_achievement_set_progress">%1$d / %2$d</string>
+    <string name="steam_achievement_set_complete">セット達成</string>
+    <string name="steam_achievement_set_unavailable">現在利用できません</string>
+    <string name="steam_achievement_set_archived">アーカイブ済み</string>
+    <string name="steam_achievement_set_dlc">DLC</string>
+    <string name="steam_achievement_hidden">非公開の実績</string>
+    <string name="steam_achievement_archived">アーカイブ済み · セット達成には含まれません</string>
+</resources>

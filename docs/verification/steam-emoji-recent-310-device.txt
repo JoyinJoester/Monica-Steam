@@ -1,0 +1,51 @@
+MuMu takeover, font scale 1.0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.TelegramSocialUiTest:
+INSTRUMENTATION_STATUS: test=officialEmojiPackDecodesAndNativePickerReturnsUnicode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=officialEmojiPackDecodesAndNativePickerReturnsUnicode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.298
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+MuMu takeover, font scale 1.5
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.TelegramSocialUiTest:
+INSTRUMENTATION_STATUS: test=officialEmojiPackDecodesAndNativePickerReturnsUnicode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.TelegramSocialUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=officialEmojiPackDecodesAndNativePickerReturnsUnicode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.577
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

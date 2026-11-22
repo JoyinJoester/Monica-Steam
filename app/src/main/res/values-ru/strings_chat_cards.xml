@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_card_trade_link">Ссылка на обмен</string>
+    <string name="steam_card_trade_offer">Предложение обмена</string>
+    <string name="steam_card_profile">Профиль Steam</string>
+    <string name="steam_card_published_file">Мастерская и контент сообщества</string>
+    <string name="steam_card_screenshot">Скриншот или иллюстрация</string>
+    <string name="steam_card_video">Видео или клип</string>
+    <string name="steam_card_guide">Руководство Steam</string>
+    <string name="steam_card_collection">Коллекция Мастерской</string>
+    <string name="steam_card_bundle">Комплект Steam</string>
+    <string name="steam_card_package">Набор Steam</string>
+    <string name="steam_card_broadcast">Трансляция Steam</string>
+    <string name="steam_card_broadcast_request">Запрос на просмотр трансляции</string>
+    <string name="steam_card_playtest">Приглашение в Steam Playtest</string>
+    <string name="steam_card_remote_play">Приглашение в Remote Play Together</string>
+    <string name="steam_card_gift">Уведомление о подарке Steam</string>
+    <string name="steam_card_inventory">Предмет инвентаря</string>
+    <string name="steam_card_friend_request">Приглашение в друзья</string>
+    <string name="steam_card_group">Приглашение в группу или чат</string>
+    <string name="steam_card_event">Событие или новости сообщества</string>
+    <string name="steam_card_comment">Уведомление о комментарии</string>
+    <string name="steam_card_market">Торговая площадка</string>
+    <string name="steam_card_effect">Эффект чата</string>
+    <string name="steam_card_unknown">Сообщение Steam</string>
+    <string name="steam_card_start_trade">Начать обмен</string>
+    <string name="steam_card_view_trade">Посмотреть предложение</string>
+    <string name="steam_card_watch">Смотреть трансляцию</string>
+    <string name="steam_card_view_group">Открыть группу или приглашение</string>
+    <string name="steam_card_view_profile">Посмотреть профиль</string>
+    <string name="steam_card_view_inventory">Посмотреть предмет</string>
+    <string name="steam_card_view_market">Открыть на площадке</string>
+    <string name="steam_card_open_invite">Открыть приглашение</string>
+    <string name="steam_card_open">Открыть в Steam</string>
+    <string name="steam_card_no_handler">Нет приложения для этой ссылки. Установите совместимое приложение Steam или скопируйте ссылку на другое устройство.</string>
+    <string name="steam_card_offer_id">Предложение №%1$s</string>
+    <string name="steam_card_no_action">В сообщении нет поддерживаемой ссылки. Подробности доступны в исходном сообщении.</string>
+    <string name="steam_card_copy_link">Копировать ссылку</string>
+    <string name="steam_card_details">Исходное сообщение</string>
+    <string name="steam_chat_local_delete_title">Удалить сообщение только на этом устройстве?</string>
+    <string name="steam_chat_local_delete_description">Сообщение будет скрыто в беседе и её общей истории на этом устройстве, в том числе после обновления или повторного открытия. Отправка не отменяется, а копии в Steam и на других устройствах не удаляются.</string>
+    <string name="steam_chat_local_delete_failed">Не удалось сохранить локальное удаление сообщения. Повторите попытку.</string>
+    <string name="steam_chat_load_older_messages">Загрузить более ранние сообщения</string>
+    <string name="steam_chat_group_delete_title">Удалить это сообщение группы?</string>
+</resources>

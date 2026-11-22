@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.SteamDockStyleTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-13T13:11:43.892Z" hostname="JOYIN" time="0.195">
+  <properties/>
+  <testcase name="newAndLegacyM3eConfigurationsUseFixedNavigation" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.049"/>
+  <testcase name="liquidGlassDefaultKeepsAllFiveTopLevelDestinations" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.003"/>
+  <testcase name="removedTelegramStoredValueFallsBackToM3e" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.001"/>
+  <testcase name="existingConfigurationConstructorsKeepBothStyleOrders" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.004"/>
+  <testcase name="retiredToolbarOrderMigratesWithoutOverwritingAnExistingFixedOrder" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.135"/>
+  <testcase name="fixedDefaultKeepsAllFiveTopLevelDestinations" classname="takagi.ru.monica.steam.navigation.SteamDockStyleTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

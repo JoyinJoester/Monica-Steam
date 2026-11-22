@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.072Z" hostname="JOYIN" time="0.012">
+  <properties/>
+  <testcase name="gameInviteFeatureKeepsDataDomainAndUiIndependent" classname="takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest" time="0.004"/>
+  <testcase name="gameInviteIsStandaloneAndDoesNotOfferAnUnsupportedMobileJoinAction" classname="takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest" time="0.002"/>
+  <testcase name="cardUsesStoreMetadataLargeTouchTargetsAndInternalStoreNavigation" classname="takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

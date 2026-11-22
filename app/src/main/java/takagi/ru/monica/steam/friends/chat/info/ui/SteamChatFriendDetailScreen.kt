@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.friends.chat.info.ui
 
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialTheme
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialTopBar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,32 +39,16 @@ internal fun SteamChatFriendDetailScreen(
     onChangeRelationship: (SteamFriendRelationshipAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    TelegramSocialTheme {
     Column(
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
             .navigationBarsPadding()
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back)
-                )
-            }
-            Text(
-                text = stringResource(R.string.steam_friend_details_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(Modifier.weight(1f))
-        }
+        TelegramSocialTopBar(
+            title = stringResource(R.string.steam_friend_details_title), onBack = onBack
+        )
         Box(Modifier.weight(1f)) {
             SteamFriendDetailScreen(
                 friend = friend,
@@ -71,5 +57,6 @@ internal fun SteamChatFriendDetailScreen(
                 onChangeRelationship = onChangeRelationship
             )
         }
+    }
     }
 }

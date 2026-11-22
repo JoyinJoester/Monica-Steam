@@ -1,0 +1,10 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotion.kt": "beb84f1aee338d5f13294ab60e48029057649ce2493d23facb12846738ed5358",
+  "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamListFilterRow.kt": "67ee5cb4ce7753fab560e673177f445d040366fed5f294e918573ce842ccc757",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "fc33beb60248416a4dae809e0106370b15f9dd07d679bdbf7ed03a7ab2753712",
+  "app/src/test/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotionTest.kt": "c7677c9d4a33c79172484cbbf79c28619a0d6ed88ac4a9ee37e7975c06d3961b",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "9582cfa16e6c69fd113d9d2ff7d9ed32b6d80b44cb70e5fcb680bb83a19dbf3b",
+  "RELEASE_NOTES.md": "20f2f571eed88d870b01bfa53c2087aba17150c696a996d8667651d02585d2a8",
+  "docs/releases/Monica-Steam-Unreleased.md": "041c718d936d87c6a384419598898cc5ab306bfa27df7b1e52c30de58f8e54d8",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamGlassSelectionTravelDeviceTest.kt": "155de08bb234880992606c7cc5fdd74d8cffb4148a4d46b5e8eb606cf0cdd7d4"
+}

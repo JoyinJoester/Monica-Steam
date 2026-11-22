@@ -1,0 +1,332 @@
+Monica-Steam-Android-armeabi-v7a-1.0.310-26110218-03.APK
+package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+
+sdkVersion:'26'
+
+targetSdkVersion:'34'
+
+uses-permission: name='android.permission.USE_BIOMETRIC'
+
+uses-permission: name='android.permission.HIDE_OVERLAY_WINDOWS'
+
+uses-permission: name='android.permission.USE_FINGERPRINT'
+
+uses-permission: name='android.permission.CAMERA'
+
+uses-permission: name='android.permission.RECORD_AUDIO'
+
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'
+
+uses-permission: name='android.permission.READ_MEDIA_IMAGES'
+
+uses-permission: name='android.permission.READ_MEDIA_VIDEO'
+
+uses-permission: name='android.permission.READ_MEDIA_VISUAL_USER_SELECTED'
+
+uses-permission: name='android.permission.MODIFY_AUDIO_SETTINGS'
+
+uses-permission: name='android.permission.INTERNET'
+
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+
+uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'
+
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'
+
+uses-permission: name='android.permission.VIBRATE'
+
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+
+uses-permission: name='android.permission.WAKE_LOCK'
+
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_SPECIAL_USE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MICROPHONE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+
+uses-permission: name='takagi.ru.monica.steamapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+
+application-label:'Monica Steam'
+
+application-label-ja:'Monica Steam'
+
+application-label-ru:'Monica Steam'
+
+application-label-vi:'Monica Steam'
+
+application-label-zh:'Monica Steam'
+
+application-icon-120:'res/BW.xml'
+
+application-icon-160:'res/BW.xml'
+
+application-icon-240:'res/BW.xml'
+
+application-icon-320:'res/BW.xml'
+
+application-icon-480:'res/BW.xml'
+
+application-icon-640:'res/BW.xml'
+
+application-icon-65534:'res/BW.xml'
+
+application-icon-65535:'res/BW.xml'
+
+application: label='Monica Steam' icon='res/BW.xml'
+
+uses-library-not-required:'androidx.window.extensions'
+
+uses-library-not-required:'androidx.window.sidecar'
+
+feature-group: label=''
+
+  uses-feature-not-required: name='android.hardware.camera'
+
+  uses-feature-not-required: name='android.hardware.camera.autofocus'
+
+  uses-feature-not-required: name='android.hardware.camera.flash'
+
+  uses-feature-not-required: name='android.hardware.camera.front'
+
+  uses-feature-not-required: name='android.hardware.nfc'
+
+  uses-feature-not-required: name='android.hardware.screen.landscape'
+
+  uses-feature-not-required: name='android.hardware.usb.host'
+
+  uses-feature-not-required: name='android.hardware.wifi'
+
+  uses-feature: name='android.hardware.faketouch'
+
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+
+  uses-feature: name='android.hardware.microphone'
+
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+
+provides-component:'app-widget'
+
+other-activities
+
+other-receivers
+
+other-services
+
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+
+supports-any-density: 'true'
+
+locales: '--_--' 'ja' 'ru' 'vi' 'zh'
+
+densities: '120' '160' '240' '320' '480' '640' '65534' '65535'
+
+native-code: 'armeabi-v7a'
+
+
+Verifies
+
+Verified using v1 scheme (JAR signing): false
+
+Verified using v2 scheme (APK Signature Scheme v2): true
+
+Verified using v3 scheme (APK Signature Scheme v3): false
+
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+
+Verified using v4 scheme (APK Signature Scheme v4): false
+
+Verified for SourceStamp: false
+
+Number of signers: 1
+
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+
+Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0
+
+Signer #1 certificate SHA-1 digest: 6db4c41982d788cc6b71b6730fcbd7d44377d401
+
+Signer #1 certificate MD5 digest: 8f0ea32085c3a5873dca15bcf33f771b
+
+Signer #1 key algorithm: RSA
+
+Signer #1 key size (bits): 2048
+
+Signer #1 public key SHA-256 digest: 3ed1473d5b5a4232032a05def473b53ece273331abdf2aa3a5b6c57b0d30ae8a
+
+Signer #1 public key SHA-1 digest: 2529624435c422f25224aaa4c0daa92cd0b25765
+
+Signer #1 public key MD5 digest: 4ea298712b8c0a7b04ce50228e0f9f74
+
+
+Monica-Steam-Android-arm64-v8a-1.0.310-26110218-03.APK
+package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+
+sdkVersion:'26'
+
+targetSdkVersion:'34'
+
+uses-permission: name='android.permission.USE_BIOMETRIC'
+
+uses-permission: name='android.permission.HIDE_OVERLAY_WINDOWS'
+
+uses-permission: name='android.permission.USE_FINGERPRINT'
+
+uses-permission: name='android.permission.CAMERA'
+
+uses-permission: name='android.permission.RECORD_AUDIO'
+
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'
+
+uses-permission: name='android.permission.READ_MEDIA_IMAGES'
+
+uses-permission: name='android.permission.READ_MEDIA_VIDEO'
+
+uses-permission: name='android.permission.READ_MEDIA_VISUAL_USER_SELECTED'
+
+uses-permission: name='android.permission.MODIFY_AUDIO_SETTINGS'
+
+uses-permission: name='android.permission.INTERNET'
+
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+
+uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'
+
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'
+
+uses-permission: name='android.permission.VIBRATE'
+
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+
+uses-permission: name='android.permission.WAKE_LOCK'
+
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_SPECIAL_USE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MICROPHONE'
+
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+
+uses-permission: name='takagi.ru.monica.steamapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+
+application-label:'Monica Steam'
+
+application-label-ja:'Monica Steam'
+
+application-label-ru:'Monica Steam'
+
+application-label-vi:'Monica Steam'
+
+application-label-zh:'Monica Steam'
+
+application-icon-120:'res/BW.xml'
+
+application-icon-160:'res/BW.xml'
+
+application-icon-240:'res/BW.xml'
+
+application-icon-320:'res/BW.xml'
+
+application-icon-480:'res/BW.xml'
+
+application-icon-640:'res/BW.xml'
+
+application-icon-65534:'res/BW.xml'
+
+application-icon-65535:'res/BW.xml'
+
+application: label='Monica Steam' icon='res/BW.xml'
+
+uses-library-not-required:'androidx.window.extensions'
+
+uses-library-not-required:'androidx.window.sidecar'
+
+feature-group: label=''
+
+  uses-feature-not-required: name='android.hardware.camera'
+
+  uses-feature-not-required: name='android.hardware.camera.autofocus'
+
+  uses-feature-not-required: name='android.hardware.camera.flash'
+
+  uses-feature-not-required: name='android.hardware.camera.front'
+
+  uses-feature-not-required: name='android.hardware.nfc'
+
+  uses-feature-not-required: name='android.hardware.screen.landscape'
+
+  uses-feature-not-required: name='android.hardware.usb.host'
+
+  uses-feature-not-required: name='android.hardware.wifi'
+
+  uses-feature: name='android.hardware.faketouch'
+
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+
+  uses-feature: name='android.hardware.microphone'
+
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+
+provides-component:'app-widget'
+
+other-activities
+
+other-receivers
+
+other-services
+
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+
+supports-any-density: 'true'
+
+locales: '--_--' 'ja' 'ru' 'vi' 'zh'
+
+densities: '120' '160' '240' '320' '480' '640' '65534' '65535'
+
+native-code: 'arm64-v8a'
+
+
+Verifies
+
+Verified using v1 scheme (JAR signing): false
+
+Verified using v2 scheme (APK Signature Scheme v2): true
+
+Verified using v3 scheme (APK Signature Scheme v3): false
+
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+
+Verified using v4 scheme (APK Signature Scheme v4): false
+
+Verified for SourceStamp: false
+
+Number of signers: 1
+
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+
+Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0
+
+Signer #1 certificate SHA-1 digest: 6db4c41982d788cc6b71b6730fcbd7d44377d401
+
+Signer #1 certificate MD5 digest: 8f0ea32085c3a5873dca15bcf33f771b
+
+Signer #1 key algorithm: RSA
+
+Signer #1 key size (bits): 2048
+
+Signer #1 public key SHA-256 digest: 3ed1473d5b5a4232032a05def473b53ece273331abdf2aa3a5b6c57b0d30ae8a
+
+Signer #1 public key SHA-1 digest: 2529624435c422f25224aaa4c0daa92cd0b25765
+
+Signer #1 public key MD5 digest: 4ea298712b8c0a7b04ce50228e0f9f74

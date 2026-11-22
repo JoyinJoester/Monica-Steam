@@ -14,11 +14,13 @@ interface SteamGroupChatCache {
     fun saveGroups(snapshot: SteamGroupChatGroupsSnapshot)
     fun loadThread(accountSteamId: String, groupId: String, chatId: String): SteamGroupChatThreadSnapshot?
     fun saveThread(snapshot: SteamGroupChatThreadSnapshot)
+    fun removeThread(accountSteamId: String, groupId: String, chatId: String)
 }
 
 class SteamGroupChatPreferencesCache(context: Context) : SteamGroupChatCache {
     private val preferences = context.applicationContext.getSharedPreferences("steam_group_chat_cache", Context.MODE_PRIVATE)
-    private val security = SecurityManager(context.applicationContext)
+    private val appContext = context.applicationContext
+    private val security by lazy { SecurityManager(appContext) }
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     override fun loadGroups(accountSteamId: String): SteamGroupChatGroupsSnapshot? =
@@ -67,6 +69,12 @@ class SteamGroupChatPreferencesCache(context: Context) : SteamGroupChatCache {
     private fun save(key: String, value: String) {
         runCatching {
             preferences.edit().putString(key, security.encryptDataLegacyCompat(value)).apply()
+        }
+    }
+
+    override fun removeThread(accountSteamId: String, groupId: String, chatId: String) {
+        runCatching {
+            preferences.edit().remove(key("thread|$accountSteamId|$groupId|$chatId")).apply()
         }
     }
 

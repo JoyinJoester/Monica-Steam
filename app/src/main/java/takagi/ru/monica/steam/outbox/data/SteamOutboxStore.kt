@@ -97,11 +97,11 @@ class SteamOutboxStore(
     companion object {
         fun from(context: Context): SteamOutboxStore {
             val appContext = context.applicationContext
-            val security = SecurityManager(appContext)
+            val security by lazy { SecurityManager(appContext) }
             return SteamOutboxStore(
                 dao = SteamDatabase.getDatabase(appContext).steamOutboxDao(),
-                protectPayload = security::encryptDataLegacyCompat,
-                revealPayload = security::decryptDataIfMonicaCiphertext
+                protectPayload = { security.encryptDataLegacyCompat(it) },
+                revealPayload = { security.decryptDataIfMonicaCiphertext(it) }
             )
         }
 

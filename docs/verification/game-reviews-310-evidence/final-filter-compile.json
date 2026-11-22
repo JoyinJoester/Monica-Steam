@@ -1,0 +1,7 @@
+{
+  "sourceSha256": "f5054085ba5473a59d887d50baacebdd12853162310cd1e69b95504fb57fe507",
+  "classSha256": "7927cca466a76f2a8dce3cab24bfde813432277c544d0ebf56d337dd5db15b70",
+  "oldInitialStateCaptureAbsent": true,
+  "build": "build-instrumentable02.txt",
+  "note": "Confirms rebuilt class; this is not a runtime ViewModel filter-failure assertion."
+}

@@ -1,0 +1,23 @@
+{
+  "build01.txt": "cacfc34184e9a58bfd957e21a8921dce0d89aabc612a4fdaeb89020cd184b875",
+  "build02.txt": "e4ed3cd38652d2154126e4b67ffc3f85e08b12350e42aee2100f3b3aaa17eab8",
+  "build03.txt": "e5fe1cbf16b658d560bf2cf88882f5b7a3ed9a925d4bf3e91487a6d4b8833ebc",
+  "cleanup.json": "7b1609950a29df21332c0e97fb70b4cef5c2b73354f4da90194b618a107feb73",
+  "cloud-core-unchanged.json": "ce1204e4dd20b8de8fd264895e335e6131595195d9e8aaa37fbc1764736db489",
+  "design-ignore.txt": "cc927a90bc9cd059ccb8a87512592c28f6974880c4762fd29b26fd46fbf0d8c7",
+  "device01.json": "a177c3a2aa141d18da75991f9d51b333e117fde72bd17b29d1ba45a900bd74ea",
+  "device01.txt": "0b2f0741965b90b46e57514abd5ef089b4f6757acc19ed53ca0d387273425677",
+  "device02.json": "f0d9884342e02a15a663bf4e042b661e333511300ff9e138d79553fd85d0b6a2",
+  "device02.txt": "702b2c6020f6b6d02adf616b9d4bc4def6ffe3ffc68c12b3b341c97d4dd77eb6",
+  "device03.json": "f4ea9f84135b65bcdc5222ae19a84dd8f033870ff3d0976a7cfa9bede32d25ae",
+  "device03.txt": "06ccc32cb79407e57d87d00fe7210174abe9a5c9acda46b646db74c53d059bf0",
+  "diff-check.txt": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+  "final-source-sha256.json": "af5f22e615d06ea9adf5702ae41c17b5fb76e585cd2e01a7efb7ca8db1e66500",
+  "jvm-results.json": "31c6d21ad613542b984447530fc32a6c8c33a92a72f4179fe2c59ea194600e49",
+  "large-system-display.json": "7e9de35bc806dfc1c7e9f3ac0438621f635358fba78060eb83084d93f67bc964",
+  "native-results.json": "dca963b1485d5b482ca19882fec035008a5fc49effa5ff5aa5d4c6d36039d05d",
+  "resource-audit.json": "4e53fb2b4e31577ed637f75b4f595b64549ab41cd76ace35b1545cfbddc1880c",
+  "TEST-takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest.xml": "b97a8254e5a551c3d1f53d633ec3e46aaec3d32bd1873dc37b37cf8781b0c913",
+  "TEST-takagi.ru.monica.steam.library.filter.domain.SteamLibraryMultiFilterTest.xml": "fca3df74dc2aec15328f6181a4865feff1c3b8a9999435a07ad7b07deac248ad",
+  "TEST-takagi.ru.monica.steam.library.SteamLibraryStateRaceTest.xml": "b7d062b06ed4239a415eb95061f8e8a373632c1b98423c44507423b0e0e0fb6a"
+}

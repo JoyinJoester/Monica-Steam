@@ -1,0 +1,717 @@
+{
+  "date": "2026-11-10",
+  "status": "source_fixed_debug_release_emulator_verified",
+  "builds": {
+    "jvm01": {
+      "exit": 0,
+      "seconds": 283.3368167000008,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=31",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-fingerprint-takeover\\isolation.gradle",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+        ":app:reportFingerprintDependencies"
+      ]
+    },
+    "device01": {
+      "exit": 0,
+      "seconds": 164.15103920000547,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=31",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-fingerprint-takeover\\isolation.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    "release01": {
+      "exit": 0,
+      "seconds": 473.94331349999993,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=31",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-fingerprint-takeover\\isolation.gradle",
+        ":app:assembleRelease"
+      ]
+    },
+    "debug02": {
+      "exit": 0,
+      "seconds": 80.14388459999464,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=31",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-fingerprint-takeover\\isolation.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest"
+      ]
+    },
+    "release02": {
+      "exit": 0,
+      "seconds": 216.7188685000001,
+      "args": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=31",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-fingerprint-takeover\\isolation.gradle",
+        ":app:assembleRelease"
+      ]
+    }
+  },
+  "jvm": [
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+      "tests": "9",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-10T07:43:41.815Z",
+      "hostname": "JOYIN",
+      "time": "0.114"
+    },
+    {
+      "name": "takagi.ru.monica.utils.FingerprintBiometricAvailabilityTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-10T07:43:42.129Z",
+      "hostname": "JOYIN",
+      "time": "4.025"
+    }
+  ],
+  "device_pass_invocations": 11,
+  "device_distinct_methods": 6,
+  "device_attempts": [
+    {
+      "label": "auth-cancel",
+      "seconds": 7.151720800000476,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptCancellationDoesNotAuthenticate",
+        "-e",
+        "helper",
+        "auth",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "shell",
+            "input",
+            "keyevent",
+            "4"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "auth-invalid",
+      "seconds": 10.223474200000055,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#unrecognizedFingerprintDoesNotAuthenticate",
+        "-e",
+        "helper",
+        "auth",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "emu",
+            "finger",
+            "touch",
+            "99"
+          ],
+          "exit": 0,
+          "output": "OK\n\n"
+        },
+        {
+          "args": [
+            "shell",
+            "input",
+            "keyevent",
+            "4"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "auth-success",
+      "seconds": 4.430051399991498,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptAuthenticates",
+        "-e",
+        "helper",
+        "auth",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": false
+    },
+    {
+      "label": "auth-success02",
+      "seconds": 8.531646899995394,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptAuthenticates",
+        "-e",
+        "helper",
+        "auth",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "emu",
+            "finger",
+            "touch",
+            "1"
+          ],
+          "exit": 0,
+          "output": "OK\n\n"
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "basic-cancel",
+      "seconds": 7.399619400006486,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptCancellationDoesNotAuthenticate",
+        "-e",
+        "helper",
+        "basic",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "shell",
+            "input",
+            "keyevent",
+            "4"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "basic-invalid",
+      "seconds": 10.20736620000389,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#unrecognizedFingerprintDoesNotAuthenticate",
+        "-e",
+        "helper",
+        "basic",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "emu",
+            "finger",
+            "touch",
+            "99"
+          ],
+          "exit": 0,
+          "output": "OK\n\n"
+        },
+        {
+          "args": [
+            "shell",
+            "input",
+            "keyevent",
+            "4"
+          ],
+          "exit": 0,
+          "output": ""
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "basic-success",
+      "seconds": 7.353722300002119,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#systemPromptAuthenticates",
+        "-e",
+        "helper",
+        "basic",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [
+        {
+          "args": [
+            "emu",
+            "finger",
+            "touch",
+            "1"
+          ],
+          "exit": 0,
+          "output": "OK\n\n"
+        }
+      ],
+      "runnerPass": true
+    },
+    {
+      "label": "empty-settings",
+      "seconds": 6.233975700000883,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsShowsRealStatusWithoutClearingSavedPreference",
+        "-e",
+        "expectedStatus",
+        "11",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": true
+    },
+    {
+      "label": "empty-status",
+      "seconds": 20.2902105999965,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#realSystemStatusMatchesBothHelpers",
+        "-e",
+        "expectedStatus",
+        "11",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": true
+    },
+    {
+      "label": "enrolled-settings",
+      "seconds": 6.239337099992554,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsShowsRealStatusWithoutClearingSavedPreference",
+        "-e",
+        "expectedStatus",
+        "0",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": true
+    },
+    {
+      "label": "enrolled-status",
+      "seconds": 5.647291599991149,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#realSystemStatusMatchesBothHelpers",
+        "-e",
+        "expectedStatus",
+        "0",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": true
+    },
+    {
+      "label": "enrollment-resume",
+      "seconds": 155.42293120000977,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsRefreshesAfterSystemEnrollmentWithoutRecreation",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": false
+    },
+    {
+      "label": "enrollment-resume02",
+      "seconds": 3.014961900000344,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsRefreshesAfterSystemEnrollmentWithoutRecreation",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": false
+    },
+    {
+      "label": "enrollment-resume03",
+      "seconds": 86.91065639999579,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsRefreshesAfterSystemEnrollmentWithoutRecreation",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": false
+    },
+    {
+      "label": "enrollment-resume04",
+      "seconds": 129.84572430000117,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "10",
+        "-w",
+        "-r",
+        "-e",
+        "fingerprintRegression",
+        "true",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.security.SteamFingerprintRegressionTest#settingsRefreshesAfterSystemEnrollmentWithoutRecreation",
+        "takagi.ru.monica.steamapp.fingerprinttest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "events": [],
+      "runnerPass": true
+    }
+  ],
+  "release_ui_checks": {
+    "initial_enabled_preference_visible": true,
+    "can_disable": true,
+    "actual_system_prompt": true,
+    "unrecognized_finger_rejected": true,
+    "cancel_keeps_disabled": true,
+    "successful_finger_enables": true,
+    "cold_start_prompt": true,
+    "cold_start_unrecognized_rejected": true,
+    "cancel_keeps_locked": true,
+    "password_fallback_enters_home": true,
+    "second_cold_start_prompt": true,
+    "fingerprint_enters_home": true,
+    "installed_release_not_debuggable": true
+  },
+  "release_pids": [
+    17293,
+    17570
+  ],
+  "source_sha256": {
+    "app/src/main/java/takagi/ru/monica/utils/FingerprintBiometricAvailability.kt": "b0fcdc8427ebf771103af0c77910ca3bc582fc551b90d89ebce3aeab2f6cb682",
+    "app/src/main/java/takagi/ru/monica/utils/BiometricHelper.kt": "a5447b98994b32503b2acd44674a90266619c9b63e5578a6246045e1f4542510",
+    "app/src/main/java/takagi/ru/monica/utils/BiometricAuthHelper.kt": "1523275bd3f2a38ba481d1ae68825cae6fb2d40b6bdc235b8d8ee0121a7aab06",
+    "app/src/main/java/takagi/ru/monica/utils/AppLauncherIconManager.kt": "92a3a955c7ae1289a23c2b1096b22662e82eb45b3bd26f853d118f706feb96d1",
+    "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt": "8093dc35c2193744208cdd0d68199ca4a583d4a8a12f8c7d5fc8f3b1b765580c",
+    "app/src/debug/AndroidManifest.xml": "e8aa9fef96800cfd1b7f73e213a60211407be65d3c4b271e12c2caea8c9462ae",
+    "app/src/debug/java/takagi/ru/monica/steam/SteamBiometricFixtureActivity.kt": "be06dfc0faad43a95f5d370683f708d1ce6a5a9ebc68aaf1958545bbb701a0a9",
+    "app/src/androidTest/java/takagi/ru/monica/steam/security/SteamFingerprintRegressionTest.kt": "618ca1cf90ca7e6474b6a5c347053e3a3bdae326d6cdcce97a2cb5b511b39653",
+    "app/src/test/java/takagi/ru/monica/utils/FingerprintBiometricAvailabilityTest.java": "70920a6855df7dde7379d095c270b8a0af01dce282d8fd1ae657af621ba9fb06",
+    "app/build.gradle": "ce64a3d817c5fa85cbb87286b7808d50daad0d2b030e9f042a87fc886647fb54",
+    "gradle/libs.versions.toml": "d0bd0fa2f531be6f4b77fea42a9f2490be7d25d7dbc0f5328a39214108dabbc2"
+  },
+  "artifacts": {
+    "app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111018-31.APK": {
+      "sha256": "4330b3a60e3c8300956a1c08aa2c0264a93328bc66d7828e95b28cd2eb635979",
+      "bytes": 88616344
+    },
+    "app\\build\\outputs\\apk\\release\\Monica-Steam-Android-x86_64-1.0.310-26111018-31.APK": {
+      "sha256": "d9d20536de397d972869e7ca18173d58fb7ee21df4a129b63e12259e9d547cba",
+      "bytes": 33145604
+    },
+    "app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": {
+      "sha256": "a8204352433f36a3148896bb57f7abd7168c065129091daed688e73e7af9a6fb",
+      "bytes": 1969171
+    },
+    "app\\build\\outputs\\mapping\\release\\mapping.txt": {
+      "sha256": "a66f21d76c3ae7fea713c57d9406ff28b5b267a2a4b6e943f7d294deb4924604",
+      "bytes": 217292085
+    }
+  },
+  "cleanup_config_hashes_unchanged": {
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": true,
+    "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": true,
+    "D:\\Android\\avd\\Pixel_Fold_API_35.avd\\config.ini": true,
+    "C:\\Users\\joyins\\.android\\avd\\Pixel_Fold_API_35.ini": true
+  },
+  "cleanup": {
+    "owned_api35_user10_removed": true,
+    "original_api35_users": [
+      0,
+      11
+    ],
+    "original_api32_users": [
+      0,
+      10,
+      11,
+      12,
+      14
+    ],
+    "both_self_started_emulators_stopped": true,
+    "isolated_packages_uninstalled": true,
+    "other_build_processes_untouched": true
+  },
+  "limitations": [
+    "API26/28 availability is Robolectric framework-shadow coverage only",
+    "No API29 device prompt or API36 user-phone validation",
+    "No real weak-only sensor or transient hardware-failure coverage",
+    "API35 x86_64 synthetic fingerprint only; no OEM/physical sensor/TEE/ARM64 validation",
+    "Isolated offline test application id and Debug certificate; no production-signed APK delivered",
+    "Screenshots were black and are not visual acceptance evidence",
+    "Four failed device attempts retained; successful calls span builds and retries, not one green suite"
+  ],
+  "latest_user_instruction": "No new builds or device tests while main chat works; only report and owned cleanup after instruction",
+  "commit_push_release_apk_delivery": false
+}

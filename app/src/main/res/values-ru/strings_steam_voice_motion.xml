@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_voice_status_connected">Голосовой чат · участников: %1$d</string>
+    <string name="steam_voice_status_waiting">Ожидание ответа</string>
+    <string name="steam_voice_status_reconnecting">Повторное подключение</string>
+    <string name="steam_voice_status_connecting">Подключение к голосовому чату</string>
+    <string name="steam_voice_status_members">Участников в голосовом чате: %1$d</string>
+    <string name="steam_voice_status_channel">Голосовой канал</string>
+    <string name="steam_voice_status_joined">Вы в голосовом чате</string>
+    <string name="steam_voice_status_empty">Пока никто не присоединился</string>
+</resources>

@@ -1,0 +1,466 @@
+{
+  "raw\\adb-after.txt": {
+    "rawSha256": "bbfcc7239a6f1be3544814ebdc6bcc9b66bf5b1f0b03baa3340808f19265a630",
+    "repositoryTextSha256": "e41d5f2ecb6faf9373cbb45bd122e3ace29a93782b0a8992ee6664096cde86b6"
+  },
+  "raw\\api32-users-after.txt": {
+    "rawSha256": "81bdd360c33c0d9aa150576463ec937787b71cad9dee9550572e34c8f92e5539",
+    "repositoryTextSha256": "81bdd360c33c0d9aa150576463ec937787b71cad9dee9550572e34c8f92e5539"
+  },
+  "raw\\api32-users-before.txt": {
+    "rawSha256": "81bdd360c33c0d9aa150576463ec937787b71cad9dee9550572e34c8f92e5539",
+    "repositoryTextSha256": "81bdd360c33c0d9aa150576463ec937787b71cad9dee9550572e34c8f92e5539"
+  },
+  "raw\\api35-config-after.json": {
+    "rawSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e",
+    "repositoryTextSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e"
+  },
+  "raw\\api35-config-before.json": {
+    "rawSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e",
+    "repositoryTextSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e"
+  },
+  "raw\\api35-config-final.json": {
+    "rawSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e",
+    "repositoryTextSha256": "2843592659c9c2555ee560cb68c7c7d20ef4bb9a4b2e5560dc24207b79c5348e"
+  },
+  "raw\\api35-crash11.txt": {
+    "rawSha256": "832576f5d671613516d62be961e145398210bc593ceaff7cba8be557ba91428f",
+    "repositoryTextSha256": "832576f5d671613516d62be961e145398210bc593ceaff7cba8be557ba91428f"
+  },
+  "raw\\api35-engine35-boot-crash.txt": {
+    "rawSha256": "b99314af68f17163b100327008ce018d591bcee3155e59dacdc6332e28c5821a",
+    "repositoryTextSha256": "b99314af68f17163b100327008ce018d591bcee3155e59dacdc6332e28c5821a"
+  },
+  "raw\\api35-engine35-users-after.txt": {
+    "rawSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173",
+    "repositoryTextSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173"
+  },
+  "raw\\api35-native11.txt": {
+    "rawSha256": "46fc3049be373b821037957fc92baa5f38f96c2d9f6f808ef50410cf66ef9a70",
+    "repositoryTextSha256": "46fc3049be373b821037957fc92baa5f38f96c2d9f6f808ef50410cf66ef9a70"
+  },
+  "raw\\api35-users-after.txt": {
+    "rawSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173",
+    "repositoryTextSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173"
+  },
+  "raw\\api35-users-before.txt": {
+    "rawSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173",
+    "repositoryTextSha256": "f4bb97ed5dfea807b291813ddfb0ae4cfc4c147d2cc40c020fbc37e307024173"
+  },
+  "raw\\api36-cleanup-boot-crash.txt": {
+    "rawSha256": "a770b9854c863b1918938f3ac12f62a0dce24904f35f6c21e84225ecaa8349a7",
+    "repositoryTextSha256": "a770b9854c863b1918938f3ac12f62a0dce24904f35f6c21e84225ecaa8349a7"
+  },
+  "raw\\api36-config-after.json": {
+    "rawSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36",
+    "repositoryTextSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36"
+  },
+  "raw\\api36-config-before.json": {
+    "rawSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36",
+    "repositoryTextSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36"
+  },
+  "raw\\api36-config-final.json": {
+    "rawSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36",
+    "repositoryTextSha256": "be33989873b84fa97a9f9c813b9bbc2f5a965f02b7dadf9794fe9eda4c1d4d36"
+  },
+  "raw\\api36-crash13.txt": {
+    "rawSha256": "39028904773229bafe286e17ec8f2013c2bf36e1cfcf3bda8d6ff3f9e8f6a5d3",
+    "repositoryTextSha256": "39028904773229bafe286e17ec8f2013c2bf36e1cfcf3bda8d6ff3f9e8f6a5d3"
+  },
+  "raw\\api36-crash14.txt": {
+    "rawSha256": "557990f749504feed114252d690f6d8dc5ca14a3746b9a5e6e34695714bfb8e2",
+    "repositoryTextSha256": "1d9b68782e50fbaf70f3e968bb407afe01d59de3212d2c296d359153d312b0d1"
+  },
+  "raw\\api36-host-boot-crash.txt": {
+    "rawSha256": "ea0630d1ad5773fbed29dfd8983fd4e8a1c49897779cbcb1eaade110b0ccae70",
+    "repositoryTextSha256": "ea0630d1ad5773fbed29dfd8983fd4e8a1c49897779cbcb1eaade110b0ccae70"
+  },
+  "raw\\api36-users-after.txt": {
+    "rawSha256": "ab9a754e3cf7d5fc60f328aefcb0e08d519abbb82e5313b9f5f429e6fb2df68d",
+    "repositoryTextSha256": "ab9a754e3cf7d5fc60f328aefcb0e08d519abbb82e5313b9f5f429e6fb2df68d"
+  },
+  "raw\\api36-users-before.txt": {
+    "rawSha256": "ab9a754e3cf7d5fc60f328aefcb0e08d519abbb82e5313b9f5f429e6fb2df68d",
+    "repositoryTextSha256": "ab9a754e3cf7d5fc60f328aefcb0e08d519abbb82e5313b9f5f429e6fb2df68d"
+  },
+  "raw\\build-fixture-comparison02.json": {
+    "rawSha256": "41e68e06ecb9f1b24b1553247a69f8fb9bf8abf9590fcc8dedfa2358512391d8",
+    "repositoryTextSha256": "67ca3b17cc82f2d0aaa521132a72dbe286e5c85a602c293cd11f867b99c0b1ed"
+  },
+  "raw\\build-fixture-comparison02.txt": {
+    "rawSha256": "5d2d3170538ade6bc5dde3609755d7ca025f3804dfdf460e169537f550ba69bc",
+    "repositoryTextSha256": "0226f667d23b5a080d4b4e88fbf79b948ce17a6a2b88120c62247724aba0767f"
+  },
+  "raw\\build-fixture-comparison03.json": {
+    "rawSha256": "df25bef8aad987e7bc6058fdd7da12bfe850490e51f29ce4b98a13393fdfcf83",
+    "repositoryTextSha256": "d7fddff2c73b4870d047f25ee27124e52118b8f861dc332313626790806634d0"
+  },
+  "raw\\build-fixture-comparison03.txt": {
+    "rawSha256": "db430cb3b8b19e0dcd6a3882df2a06da222c6d5873ae37af69506b36f25e628b",
+    "repositoryTextSha256": "702c433bf9365689ed0946f3f5af7e3420840755054ccfbd38a9c371bbe48000"
+  },
+  "raw\\build-fixture-comparison04.json": {
+    "rawSha256": "212a2411c76205bc200cfa485dc6e549a4f9ba51da52b564bfb44b303b1ec1da",
+    "repositoryTextSha256": "d3deda5736e210665bf4e214356478c514ac2febef02a667a8119fd371e9d88d"
+  },
+  "raw\\build-fixture-comparison04.txt": {
+    "rawSha256": "637d4c46acbe7ea5aa9b156551755349215b9b4cd7d668eb0401a7ac8a61e26e",
+    "repositoryTextSha256": "9192fcb59550dc572d32ab9228dc111b9f2542d80959414983a8b2d4f51715f9"
+  },
+  "raw\\build-fixture-comparison05.json": {
+    "rawSha256": "0dd2a70df318c27c2e3f851b0377102fd58ede29621f875c91b617d04b06d6d4",
+    "repositoryTextSha256": "b736716e578e306c1a81ab0be6b75c4ebad929715ce35bba25b3f08e58a9f91b"
+  },
+  "raw\\build-fixture-comparison05.txt": {
+    "rawSha256": "7c565b86e9b7bf5ddad8cf8c4df5af2ec9b2a7c76bba4599457faf48ae54f0f7",
+    "repositoryTextSha256": "e8ba8ced43caee0e27666ab104f2b69000ab2d3f1b1dcc729faf5e830b6de925"
+  },
+  "raw\\build-fixture01.json": {
+    "rawSha256": "10d0ed9328ba31f6f08f74cfaed4a8409b98c4ecd6345642a0e9a28266e32aee",
+    "repositoryTextSha256": "48963a1eed657b3a2416698d3dad159028e5157a3d0a5c753754626b0b50c6c3"
+  },
+  "raw\\build-fixture01.txt": {
+    "rawSha256": "bbebf95e1394dcb04d5f6dab724d0952b723df23ae156f227fd7e432340dda1c",
+    "repositoryTextSha256": "37c6565d972dc7bc51cfbd310815ef1fff3a573a23a1e5935bad127253688058"
+  },
+  "raw\\build-jvm02.json": {
+    "rawSha256": "ee445d51fb54a64a52047b439680474624e25cac5dac059493d33ba014a677b6",
+    "repositoryTextSha256": "d18fb9b312e1e1a4583230b91593f17788b676fd627c7a2aabdbb6e1cec518e7"
+  },
+  "raw\\build-jvm02.txt": {
+    "rawSha256": "3d0842b8699cffdb0ce4f33e43b88cab7171df6b3632776a550e4eee03654309",
+    "repositoryTextSha256": "ebe3060b488dfd85d5a6c8c1b4c1419ed71c6b2da57e575dd5e6b832671b4be7"
+  },
+  "raw\\build-optimized01.json": {
+    "rawSha256": "b5e3ce2c8737ac4c51e96921d48ba87aee18ddb649445405e928c8ce26135647",
+    "repositoryTextSha256": "32f2a44d5d578b342a9f41629dd0ac71ba5ec9134dc287588738c111c9cf778a"
+  },
+  "raw\\build-optimized01.txt": {
+    "rawSha256": "ce3f92cc47e661e9694001f0335e9ee7b1add18bd053896870d4113e1e31b4b7",
+    "repositoryTextSha256": "6d1bba2cb0300bbbe6026f22bae2cf0afb03f43fe57d3e5dfbbeb0b9db57e5c0"
+  },
+  "raw\\commands-baseline-api32-native08.json": {
+    "rawSha256": "9c1d7329b03255b8520a1e020f9398774ab23037a257146c28dfc207cc0744dc",
+    "repositoryTextSha256": "6ba928f637572ff9a92f990f26df8fdfd719eadcade735d7c4689677c4ec856c"
+  },
+  "raw\\commands-baseline-api32-native09.json": {
+    "rawSha256": "9aaac6910def19f7bca50f2956211e808c82c38c6e7825dde0eadf243d8829bf",
+    "repositoryTextSha256": "5c5a0b679b47339ec70c7412d70018a67892ee4f1442c675d2cd0d8106cef09b"
+  },
+  "raw\\commands-baseline-api32-perf06.json": {
+    "rawSha256": "8f2dfc365f49f0a735da7843770ae2be3343693b72fa5c49d3bb22ae29cf0aeb",
+    "repositoryTextSha256": "59ac99e41656eea88e617e19183f81a4c63fe5b4dd92103adfd88e9116305596"
+  },
+  "raw\\commands-baseline-api32-shadow03.json": {
+    "rawSha256": "91ff2a3f729d82851355031b0df3d80f9a5a90bc8546d230ada847d52c82695d",
+    "repositoryTextSha256": "2a5c79a65b9f493ce47fb611daf418400a422ad6b3f274bac79bcaef80da4368"
+  },
+  "raw\\commands-fixture-api32-core02.json": {
+    "rawSha256": "a429be5c722356d2a0544eb2b93995356ffa81d0be8edcfb8d01431fc54dca2d",
+    "repositoryTextSha256": "6be9997d28deae700829688ddcdf0302c045af920f50f63bc5602f0de5c5f521"
+  },
+  "raw\\commands-fixture-api32-core04.json": {
+    "rawSha256": "8f9f5216ab9c54aa675a2f8cdb97f5979bca3a95fc23a02083b53b78a8b96f74",
+    "repositoryTextSha256": "cf168d4fd94d7bd37bda31c579f83431e05b50b0fd65f016551ee65e085ee0b4"
+  },
+  "raw\\commands-optimized-api32-core01.json": {
+    "rawSha256": "f64f6ef7cdee87e1ec46ec7b4ffc530f6745b3443a7f3bf526b0313d7302346c",
+    "repositoryTextSha256": "8815803cc09e30dae39db6cc9e4c9c78c95762ee90e58ff5b20a486f47294ace"
+  },
+  "raw\\commands-optimized-api32-native07.json": {
+    "rawSha256": "ddfdc06f5f467ab824c047ff98e1b99f4bb0c0a32a7b7d6d73b1e6453eee9ae6",
+    "repositoryTextSha256": "b2a0f47bd7fb5388debfa4298acd38baaee5683774a40a8f37a16775489b6a0e"
+  },
+  "raw\\commands-optimized-api32-native10.json": {
+    "rawSha256": "cc175be23a2c8b276ecab0dbca3fcac6d078f1f4c1e2e129b7ce7010b9111c68",
+    "repositoryTextSha256": "70d14d5d7e03169096d8fa8335ff4749d8d57d670f63db39306a70847d5b14a7"
+  },
+  "raw\\commands-optimized-api32-perf05.json": {
+    "rawSha256": "96766d04c609a0e2fa6fadc22c37faff94bd784ae7f517144ec465206c825152",
+    "repositoryTextSha256": "71115673fd9fc920234ca38188d8f3fe5bad0f23aa0ed7d296c7a210b4a80a3b"
+  },
+  "raw\\commands-optimized-api35-core-native11.json": {
+    "rawSha256": "f2ea6306881d7452d6d85e8eafc5a72d85ad844cf790bee0916d8e65d3302c21",
+    "repositoryTextSha256": "f73c9bdf42a464c964c39bda6628caf87ce24537244c7b8480de42ba7154b616"
+  },
+  "raw\\commands-optimized-api36-core-native12.json": {
+    "rawSha256": "59b6910a7e37c6bbde9e5dcd6146ad7e3cf6b2d17025cecf3752cf2ed6759ba0",
+    "repositoryTextSha256": "274ef0c84ea44d115de6bdc0b85405216bfa0c353d584f42975bd760615fefcf"
+  },
+  "raw\\commands-optimized-api36-core-native13.json": {
+    "rawSha256": "f0f1c6cf54fc9c9961cb197c0efdb513d1fb093473292b9240e51f28547c5acd",
+    "repositoryTextSha256": "2af4373940b31fe805908201f717786f3f89df404abc7ea94821659cc50e7233"
+  },
+  "raw\\commands-optimized-api36-core-native14.json": {
+    "rawSha256": "402ad84ecda78966602dd3157acf12666e3757aacdbe54cc9d336b25551a3ccf",
+    "repositoryTextSha256": "f0020f2fc4368c5cea2998253f7f0d886644b6965e768310f605310abfc5c9fa"
+  },
+  "raw\\compiler-thread01.txt": {
+    "rawSha256": "f8375e4cee9db9119f6cf1b17f92bbbd1da2a8aa1e6a23b87a46d4da5586c986",
+    "repositoryTextSha256": "6bc44fa1cc7246707072501c38bfa71612e697ea58ffcba3c2a43e98538d2bfd"
+  },
+  "raw\\device-baseline-api32-native08.json": {
+    "rawSha256": "858624ac0b16df2fb72b888530dfd61096b7c209247cf46e7121d77af8a90ac0",
+    "repositoryTextSha256": "36fde01a79bf50beaff162238283addf23a19c809630b6f409ec2b93c3f74301"
+  },
+  "raw\\device-baseline-api32-native08.txt": {
+    "rawSha256": "a83a45c0bf657ce0e30eda7a73d21ebb9360e4ccea31975bbbdbe55f1c7a5d5e",
+    "repositoryTextSha256": "a83a45c0bf657ce0e30eda7a73d21ebb9360e4ccea31975bbbdbe55f1c7a5d5e"
+  },
+  "raw\\device-baseline-api32-native09.json": {
+    "rawSha256": "229cf2e6b04d0c458391f371c732323e0190a9e95800b7e901fb66c852129b65",
+    "repositoryTextSha256": "988801572f5721762d71aa95bca93387fdb8aa38590bad663b37a2611dab94ec"
+  },
+  "raw\\device-baseline-api32-native09.txt": {
+    "rawSha256": "28383845c383961c51f864be444ee2f39d636b025c403211d0c900f535818af7",
+    "repositoryTextSha256": "28383845c383961c51f864be444ee2f39d636b025c403211d0c900f535818af7"
+  },
+  "raw\\device-baseline-api32-perf06.json": {
+    "rawSha256": "71ffc6d3639d32c405dd7e5b6747f93c0e87a150e235c97733b51e0ed19e195e",
+    "repositoryTextSha256": "9fd01331fe139c5a288faf6de2040c563d10335e947fbc587807ad1d49bd9735"
+  },
+  "raw\\device-baseline-api32-perf06.txt": {
+    "rawSha256": "54cc480265d86ae8697b77ae0bd2d451f36582576bb85d8d28ac2f5e26872365",
+    "repositoryTextSha256": "a83b552099c07b6b85c42fa7b8b68c7013edc0facd6913f715303aae72dff4e7"
+  },
+  "raw\\device-baseline-api32-shadow03.json": {
+    "rawSha256": "d210b78366910be9c6575ebc9a2e6d0d2a0d38a8a53082fb46d8ff037d363e01",
+    "repositoryTextSha256": "15285186e01049a67a911d4af465d8807e746548e7b467db8cc5b7b6b07dc7e8"
+  },
+  "raw\\device-baseline-api32-shadow03.txt": {
+    "rawSha256": "1ce01f82ac2804c442cf4ee25723ca8a81828b2a78b26297bdda51a77d878e0c",
+    "repositoryTextSha256": "1ce01f82ac2804c442cf4ee25723ca8a81828b2a78b26297bdda51a77d878e0c"
+  },
+  "raw\\device-fixture-api32-core02.json": {
+    "rawSha256": "9fa96781eb7e224faaa086e244461e656d2805af57f656122962503e2f49e21e",
+    "repositoryTextSha256": "76f28f2ddccdacb16632c36bb3d74bc5aa4f421da2d8e330d8b8d75dc1aba656"
+  },
+  "raw\\device-fixture-api32-core02.txt": {
+    "rawSha256": "bea1dea41e20cb0e71a2b78bedf2ac7d5a0969cf45590151d9f8c6a163a172b1",
+    "repositoryTextSha256": "bea1dea41e20cb0e71a2b78bedf2ac7d5a0969cf45590151d9f8c6a163a172b1"
+  },
+  "raw\\device-fixture-api32-core04.json": {
+    "rawSha256": "2f35cbf89a49c0490dccadb71fe5eb0f15ad4d164b20ce83eff785a74d7b3885",
+    "repositoryTextSha256": "8aa08b98dec3dfece314e2a188340ecb50c7af077298f00f948c9b58182f3bc2"
+  },
+  "raw\\device-fixture-api32-core04.txt": {
+    "rawSha256": "d9825a2b0b2295e76a24ad0bfe4a09d4b7d6887e2d7919238f38dfaae8a6fff4",
+    "repositoryTextSha256": "d9825a2b0b2295e76a24ad0bfe4a09d4b7d6887e2d7919238f38dfaae8a6fff4"
+  },
+  "raw\\device-optimized-api32-core01.json": {
+    "rawSha256": "844125634681903d1659c50a58e50f588f25b1f60775f133968a86526fdb429d",
+    "repositoryTextSha256": "208af6b36d73c93a69816bea420d16cc1647a909132b8cc3890be325270a0faa"
+  },
+  "raw\\device-optimized-api32-core01.txt": {
+    "rawSha256": "f3ca40e0a3bf20eaf9ab861db129a85ecafc52160588fc2089c7bb0239bc1d94",
+    "repositoryTextSha256": "f3ca40e0a3bf20eaf9ab861db129a85ecafc52160588fc2089c7bb0239bc1d94"
+  },
+  "raw\\device-optimized-api32-native07.json": {
+    "rawSha256": "e500cbfd15cb1eecc0213b9de13de8125f5db99e3d79fb484f169827ec233fbc",
+    "repositoryTextSha256": "844ed7390d88ba1e293d7d6e7046ec43c9e45c5d3803e6029df4c3f0a6130b3c"
+  },
+  "raw\\device-optimized-api32-native07.txt": {
+    "rawSha256": "15eddc547d70b29be3db68d08263c7d75fc0d31d40c32119169f0e04b1c55535",
+    "repositoryTextSha256": "15eddc547d70b29be3db68d08263c7d75fc0d31d40c32119169f0e04b1c55535"
+  },
+  "raw\\device-optimized-api32-native10.json": {
+    "rawSha256": "4f14e6a9ba5d7f57988dc2427e147997466de78e04aa78ffd3afdb24280d1644",
+    "repositoryTextSha256": "a54d3a9db225f1f137ebbe6a57967c29244ae188bbbea3eacacd979799038595"
+  },
+  "raw\\device-optimized-api32-native10.txt": {
+    "rawSha256": "3fee32baa0515b486efc6cb61dde4bdc7db730328117262e0ca1a9fc5b5b928a",
+    "repositoryTextSha256": "3fee32baa0515b486efc6cb61dde4bdc7db730328117262e0ca1a9fc5b5b928a"
+  },
+  "raw\\device-optimized-api32-perf05.json": {
+    "rawSha256": "b5f2f76d8380b06452fce8b794eacf213b2b571a060578545b761f55d1eca892",
+    "repositoryTextSha256": "aafcb943bb7e5fcf1edb431653945b242d0f19b074a73c8bb69387d29524ed48"
+  },
+  "raw\\device-optimized-api32-perf05.txt": {
+    "rawSha256": "390d4d23ded03273c825ce22b2d5181f445d350f81e4bdb33131c918c2e66295",
+    "repositoryTextSha256": "390d4d23ded03273c825ce22b2d5181f445d350f81e4bdb33131c918c2e66295"
+  },
+  "raw\\device-optimized-api35-core-native11.json": {
+    "rawSha256": "7a4c81c4eaca8a108c45d9c3d8f934b254597a5cdaf09eb38c983cc58d23889b",
+    "repositoryTextSha256": "9bb161eb824977c89ca9d0b7b28b91c6ffb4b47d08bdf61e00c924c747e579df"
+  },
+  "raw\\device-optimized-api35-core-native11.txt": {
+    "rawSha256": "7ce37627687c0225c7c1e6b729f019afdf8ed70f5d11804f318b75b38d68dfbc",
+    "repositoryTextSha256": "7ce37627687c0225c7c1e6b729f019afdf8ed70f5d11804f318b75b38d68dfbc"
+  },
+  "raw\\device-optimized-api36-core-native13.json": {
+    "rawSha256": "fc96bcc1fa984a959edb856e5c82139a8fa011a5b458a511ab6d3a7334aaa187",
+    "repositoryTextSha256": "a8fcc29ebd66cf9becc6b32e4ccff345780cb8f6d3599b2a1d99e037ed166f11"
+  },
+  "raw\\device-optimized-api36-core-native13.txt": {
+    "rawSha256": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0",
+    "repositoryTextSha256": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0"
+  },
+  "raw\\device-optimized-api36-core-native14.json": {
+    "rawSha256": "14e076ea6bdbb3389b4627e58110a949ff839c4e78441ee9255ae064e1750f24",
+    "repositoryTextSha256": "9c25e2b6d6691004673a74521af7ff291d3ce297be32e8152c18c6644571985e"
+  },
+  "raw\\device-optimized-api36-core-native14.txt": {
+    "rawSha256": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0",
+    "repositoryTextSha256": "e4af49e1d82938aa8666a4c83abdd2b4c1450000da3ecb5b1079dbbcad783db0"
+  },
+  "raw\\emulator-api32-err.txt": {
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repositoryTextSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "raw\\emulator-api32-out.txt": {
+    "rawSha256": "60cc3812b6e899a788a0ab2effd95b9da25b13dab90b253c82cafb5bc29327d5",
+    "repositoryTextSha256": "8243df0b2161eb58922b87eedcdb112ccb1ed1f3443564c9272475a7c56eda48"
+  },
+  "raw\\emulator-api32-owned.json": {
+    "rawSha256": "e5e1363a047fa9bfc50f1c29772cf3369636a3a74be28db1afe6f11a0c070bc2",
+    "repositoryTextSha256": "e5e1363a047fa9bfc50f1c29772cf3369636a3a74be28db1afe6f11a0c070bc2"
+  },
+  "raw\\emulator-api35-engine35-err.txt": {
+    "rawSha256": "d3b2f52872c1662733821a5f2a69601ac00fc63dc4a0849d35599c163cf4d5e8",
+    "repositoryTextSha256": "d3b2f52872c1662733821a5f2a69601ac00fc63dc4a0849d35599c163cf4d5e8"
+  },
+  "raw\\emulator-api35-engine35-out.txt": {
+    "rawSha256": "6425de65510237d373feb38808090dbfa4be45764b151cf43d4e555314f41880",
+    "repositoryTextSha256": "d7bd300e0cc0d682522316d037a9f419990e2d46f3f82004cf3708238adbe144"
+  },
+  "raw\\emulator-api35-engine35-owned.json": {
+    "rawSha256": "297dec57a2cbb68d4876e826dc87e942ccf248f2e44ec9d1fb00c74a298c691b",
+    "repositoryTextSha256": "297dec57a2cbb68d4876e826dc87e942ccf248f2e44ec9d1fb00c74a298c691b"
+  },
+  "raw\\emulator-api35-err.txt": {
+    "rawSha256": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8",
+    "repositoryTextSha256": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8"
+  },
+  "raw\\emulator-api35-out.txt": {
+    "rawSha256": "8045caea89ea8ad32eb495cbb9521f68526043af761819496d9ec207c8a92e9e",
+    "repositoryTextSha256": "7cd75e0cf8788f3d577a7c45a0cd08a5ec77b191b3b8104574b50a131eb873bd"
+  },
+  "raw\\emulator-api35-owned.json": {
+    "rawSha256": "77ad2a98688d045a79b90786931c34fc8613adc4ad526c32346c2207c0918240",
+    "repositoryTextSha256": "77ad2a98688d045a79b90786931c34fc8613adc4ad526c32346c2207c0918240"
+  },
+  "raw\\emulator-api36-cleanup-err.txt": {
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repositoryTextSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "raw\\emulator-api36-cleanup-out.txt": {
+    "rawSha256": "e9006e1aaeabfd5255b3c419ff061b3e4a882a3d0324af61f58eafca18bba296",
+    "repositoryTextSha256": "d107b6e921451fbe7633f3852744d49e4377cf4c01a336fe2197ad73b86fa346"
+  },
+  "raw\\emulator-api36-cleanup-owned.json": {
+    "rawSha256": "24d22fecedbc6866c5281a71f55292785972a5e726bb382123a8c087c953cded",
+    "repositoryTextSha256": "24d22fecedbc6866c5281a71f55292785972a5e726bb382123a8c087c953cded"
+  },
+  "raw\\emulator-api36-err.txt": {
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repositoryTextSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "raw\\emulator-api36-host-err.txt": {
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repositoryTextSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "raw\\emulator-api36-host-out.txt": {
+    "rawSha256": "e3c725cc24bf49bb34b9e5bf92d76b09d8e555408a2eaf5b7b775a6ef69e294e",
+    "repositoryTextSha256": "97bf7fafbc2553a3ec4ad4db0ce69f73ea6f89dbf656b6f75b2eda7c16485f19"
+  },
+  "raw\\emulator-api36-host-owned.json": {
+    "rawSha256": "7053bd573fdbfce5a9f4f050846c584d1af5080e7c504163bbfc76e69010aec8",
+    "repositoryTextSha256": "7053bd573fdbfce5a9f4f050846c584d1af5080e7c504163bbfc76e69010aec8"
+  },
+  "raw\\emulator-api36-out.txt": {
+    "rawSha256": "82d695009dce5b36bf95cb81c805b6a5a7ec0d96619dbb2a38f0a01398e22db7",
+    "repositoryTextSha256": "29c57701bf2e6d2eb4d694cf6f02e7d2d9080709b56714af1b5c1f03d4446885"
+  },
+  "raw\\emulator-api36-owned.json": {
+    "rawSha256": "c7b0962c24c9d2fffe6a64901ec3d6d095efa0afaa8f720de37df1bb09c6290b",
+    "repositoryTextSha256": "c7b0962c24c9d2fffe6a64901ec3d6d095efa0afaa8f720de37df1bb09c6290b"
+  },
+  "raw\\emulator-api36-swiftshader-err.txt": {
+    "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repositoryTextSha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  "raw\\emulator-api36-swiftshader-out.txt": {
+    "rawSha256": "8b2f17471834c2cdbf10a007f9f50be851ec0be36a32fc060259d7c72cb9a6eb",
+    "repositoryTextSha256": "99dff7cdd6a7cf0ce1128ae407c4708372a15635889d2d09220832c05db8e0d8"
+  },
+  "raw\\emulator-api36-swiftshader-owned.json": {
+    "rawSha256": "cb9a80cb474d459ccb9de77c5e9824ebd48cb27e078218fdc06acba040b5a92c",
+    "repositoryTextSha256": "cb9a80cb474d459ccb9de77c5e9824ebd48cb27e078218fdc06acba040b5a92c"
+  },
+  "raw\\final-audit.json": {
+    "rawSha256": "af8561664531a4f9dfb66e5accb5417889b34da62fbd768b3e488a1c129dfa45",
+    "repositoryTextSha256": "af8561664531a4f9dfb66e5accb5417889b34da62fbd768b3e488a1c129dfa45"
+  },
+  "raw\\optimized-api32-crash01.txt": {
+    "rawSha256": "7d55fff30088480391ea88d57418f2a86897f2fe6d2ab0341fef17346730ece0",
+    "repositoryTextSha256": "7d55fff30088480391ea88d57418f2a86897f2fe6d2ab0341fef17346730ece0"
+  },
+  "raw\\processes-after.json": {
+    "rawSha256": "c222a38007f5ba81baba440910ecd7167da591dee3beed7f10fe186ac98396b8",
+    "repositoryTextSha256": "c222a38007f5ba81baba440910ecd7167da591dee3beed7f10fe186ac98396b8"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest.xml": {
+    "rawSha256": "cc30b2a0fe0e4ece6a457d03cf03da1e41c525fec62e2dcd5302472cf7c3f951",
+    "repositoryTextSha256": "cc30b2a0fe0e4ece6a457d03cf03da1e41c525fec62e2dcd5302472cf7c3f951"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamDockColdSwitchPerformanceGuardTest.xml": {
+    "rawSha256": "d86d415169fc05d07cdc9d99fa918f878ff23d51751d62ee09113075a495cee9",
+    "repositoryTextSha256": "d86d415169fc05d07cdc9d99fa918f878ff23d51751d62ee09113075a495cee9"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamDockStyleTest.xml": {
+    "rawSha256": "94ca7ea27edb303c5673959185901b883d03466165b984471143c8a2fbbe153b",
+    "repositoryTextSha256": "94ca7ea27edb303c5673959185901b883d03466165b984471143c8a2fbbe153b"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamDockTabTest.xml": {
+    "rawSha256": "11aeeedc6c5d32225100203546fc5f94041d8298e640fbe694d66a3c77fd20b4",
+    "repositoryTextSha256": "11aeeedc6c5d32225100203546fc5f94041d8298e640fbe694d66a3c77fd20b4"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamEssentialsFloatingToolbarGuardTest.xml": {
+    "rawSha256": "7d2bd6b78e6c9a8ede4528b602dd31011e8808b99796db9535c94dc8bf9231ce",
+    "repositoryTextSha256": "7d2bd6b78e6c9a8ede4528b602dd31011e8808b99796db9535c94dc8bf9231ce"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamFixedBottomBarGuardTest.xml": {
+    "rawSha256": "f232a0ee106e71e0ed356fb7f892f5882e9219207ec6985f32d7d226ef1e1ccd",
+    "repositoryTextSha256": "f232a0ee106e71e0ed356fb7f892f5882e9219207ec6985f32d7d226ef1e1ccd"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamFloatingDockGuardTest.xml": {
+    "rawSha256": "6fffe408eed97f9e3480450099e0e44b1e558b5024b2c3821b956931558bb6aa",
+    "repositoryTextSha256": "6fffe408eed97f9e3480450099e0e44b1e558b5024b2c3821b956931558bb6aa"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest.xml": {
+    "rawSha256": "d8c94666cdd029419f2f857569353e8ad7b66e9384820bf703ee4e2631174a1d",
+    "repositoryTextSha256": "d8c94666cdd029419f2f857569353e8ad7b66e9384820bf703ee4e2631174a1d"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamLiquidGlassWebViewCompatibilityTest.xml": {
+    "rawSha256": "f084566a64366dab04e288ba2f5c2f2ebf2e5b6ab1b0741e7d2ba2eae4070f11",
+    "repositoryTextSha256": "f084566a64366dab04e288ba2f5c2f2ebf2e5b6ab1b0741e7d2ba2eae4070f11"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamPredictiveBackGuardTest.xml": {
+    "rawSha256": "cf7fa32c8840bd5ea99d857de474726d2f9cc6544a263f00ee73e8eb93b23e83",
+    "repositoryTextSha256": "cf7fa32c8840bd5ea99d857de474726d2f9cc6544a263f00ee73e8eb93b23e83"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.SteamReducedMotionIntegrationGuardTest.xml": {
+    "rawSha256": "80c0ec644336519f650b8b16defd3e498a89d84182b2403b1cb589c3858097e5",
+    "repositoryTextSha256": "80c0ec644336519f650b8b16defd3e498a89d84182b2403b1cb589c3858097e5"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.ui.SteamAdaptiveLayoutTest.xml": {
+    "rawSha256": "c20f51f3f481db78f91137d660c141a9a965e185589380019de3b36877831087",
+    "repositoryTextSha256": "c20f51f3f481db78f91137d660c141a9a965e185589380019de3b36877831087"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.ui.SteamBottomSafeAreaGuardTest.xml": {
+    "rawSha256": "8e447080499ba117cc847e6dd4434c48e82fd04d0b5c14bbd760548e2ecf629d",
+    "repositoryTextSha256": "8e447080499ba117cc847e6dd4434c48e82fd04d0b5c14bbd760548e2ecf629d"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.ui.SteamDockContentClearanceGuardTest.xml": {
+    "rawSha256": "4b3720ca4d8c81489ef51e11968eece8a8e2b4a17c0ab0a09bed75225620f93b",
+    "repositoryTextSha256": "4b3720ca4d8c81489ef51e11968eece8a8e2b4a17c0ab0a09bed75225620f93b"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.navigation.ui.SteamWindowChromeInsetsTest.xml": {
+    "rawSha256": "0a9e2ca2b55f57d623cc2eaa5bd56636ff242d55eac091c0fb29e4609fb9d548",
+    "repositoryTextSha256": "0a9e2ca2b55f57d623cc2eaa5bd56636ff242d55eac091c0fb29e4609fb9d548"
+  },
+  "raw\\jvm-jvm02\\TEST-takagi.ru.monica.steam.store.SteamStoreLiquidGlassBackdropTest.xml": {
+    "rawSha256": "218576369249ef55485ca734059b0d1f1d27f2a969e548a11dde3639574a1b1e",
+    "repositoryTextSha256": "218576369249ef55485ca734059b0d1f1d27f2a969e548a11dde3639574a1b1e"
+  }
+}

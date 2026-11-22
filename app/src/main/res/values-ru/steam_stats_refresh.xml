@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_stats_friends">Время игры друзей</string>
+    <string name="steam_game_stats_you">Вы</string>
+    <string name="steam_game_stats_friend_average">Среднее у друзей</string>
+    <string name="steam_game_stats_readable_friends">По %1$d друзьям с открытым временем игры</string>
+    <string name="steam_game_stats_no_friend_times">Нет доступных данных о времени игры друзей</string>
+    <string name="steam_game_stats_badges">Значки игры</string>
+    <string name="steam_game_stats_no_badges">Нет значков или коллекционных карточек</string>
+    <string name="steam_game_stats_card_owned">Есть</string>
+    <string name="steam_game_stats_card_missing">Нет</string>
+    <string name="steam_game_stats_no_points">Для этой игры нет предметов за очки</string>
+    <string name="steam_game_stats_points_cost">%1$d очков</string>
+    <string name="steam_game_stats_view_all">Показать все</string>
+    <string name="steam_game_stats_section_unavailable">Не удалось загрузить. Обновите или откройте Steam.</string>
+</resources>

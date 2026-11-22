@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -16,11 +16,15 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
+import takagi.ru.monica.steam.navigation.SteamDockStyle
+import takagi.ru.monica.steam.navigation.liquidglass.ui.LocalSteamDesignStyle
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassHost
 import takagi.ru.monica.steam.store.ui.SteamStoreHomeActions
 import takagi.ru.monica.steam.store.ui.SteamStoreNavigationDrawer
 
 class SteamStoreDrawerDismissalTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
     private lateinit var drawer: DrawerState
     private lateinit var scope: CoroutineScope
     private var dismissals = 0
@@ -33,8 +37,10 @@ class SteamStoreDrawerDismissalTest {
             MaterialTheme {
                 drawer = rememberDrawerState(DrawerValue.Closed)
                 scope = rememberCoroutineScope()
-                Box(Modifier.fillMaxSize()) {
+                CompositionLocalProvider(LocalSteamDesignStyle provides SteamDockStyle.LIQUID_GLASS) {
+                SteamGlassHost(Modifier.fillMaxSize(), content = {
                     Button(onClick = { hostClicks++ }, modifier = Modifier.testTag("host")) { Text("Home") }
+                }, overlay = {
                     if (visible) SteamStoreNavigationDrawer(
                         refreshing = false,
                         actions = SteamStoreHomeActions(
@@ -47,6 +53,7 @@ class SteamStoreDrawerDismissalTest {
                         drawer = drawer,
                         onDismiss = { dismissals++; visible = false }
                     )
+                })
                 }
             }
         }

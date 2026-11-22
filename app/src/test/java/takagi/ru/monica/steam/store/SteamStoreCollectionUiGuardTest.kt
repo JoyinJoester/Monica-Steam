@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SteamStoreCollectionUiGuardTest {
     @Test
-    fun cartAndWishlistListsReserveSpaceAboveFloatingDock() {
+    fun cartAndWishlistUseTheirOwnBottomBarAndSuppressTheGlobalDock() {
         val collection = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamNativeCartScreen.kt"
         ).readText()
@@ -22,8 +22,15 @@ class SteamStoreCollectionUiGuardTest {
 
         assertTrue(tokens.contains("CollectionBottomSpacing = 16.dp"))
         assertTrue(activity.contains("LocalSteamDockContentClearance provides"))
-        assertTrue(collection.contains("LocalSteamDockContentClearance.current"))
-        assertTrue(collection.contains("steamDockActionClearance"))
+        val store = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt").readText()
+        assertTrue(store.contains("reportCollectionVisibility(state.cartOpen)"))
+        assertTrue(store.contains("onDispose { reportCollectionVisibility(false) }"))
+        assertTrue(activity.contains("!(currentPage == MonicaSteamPage.STORE && isStoreCollectionOpen)"))
+        assertFalse(collection.contains("LocalSteamDockContentClearance.current"))
+        assertTrue(collection.contains("modifier = Modifier.steamWindowBottomPadding()"))
+        assertTrue(collection.contains(".padding(padding)"))
+        assertTrue(collection.contains("if (liquid) Modifier.padding(horizontal = 12.dp, vertical = 8.dp)"))
+        assertTrue(collection.contains("color = if (liquid) Color.Transparent else surface"))
         assertEquals(
             1,
             Regex("bottom = SteamStoreLayoutTokens\\.CollectionBottomSpacing")

@@ -1,0 +1,69 @@
+[
+  {
+    "args": [
+      "shell",
+      "input",
+      "keyevent",
+      "KEYCODE_WAKEUP"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "wm",
+      "dismiss-keyguard"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "args": [
+      "shell",
+      "rm",
+      "-f",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames-native.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dispatch.json",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-large-reduced.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-large.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-normal.png",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-large.png"
+    ],
+    "exit": 1,
+    "output": "rm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/frames-native.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dispatch.json: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/dock-large-reduced.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-baseline-large.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-normal.png: Permission denied\nrm: /sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance/native-optimized-large.png: Permission denied\n"
+  },
+  {
+    "args": [
+      "shell",
+      "pm",
+      "clear",
+      "--user",
+      "0",
+      "takagi.ru.monica.steamapp.dockperf"
+    ],
+    "exit": 0,
+    "output": "Success\n"
+  },
+  {
+    "args": [
+      "pull",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\captures-optimized-api36-core-native14"
+    ],
+    "exit": 1,
+    "output": "adb: error: failed to stat remote object '/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-performance': Permission denied\n"
+  },
+  {
+    "args": [
+      "pull",
+      "/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-shadow-validation",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-dock-performance\\raw\\shadow-optimized-api36-core-native14"
+    ],
+    "exit": 1,
+    "output": "adb: error: failed to stat remote object '/sdcard/Android/data/takagi.ru.monica.steamapp.dockperf/files/dock-shadow-validation': Permission denied\n"
+  }
+]

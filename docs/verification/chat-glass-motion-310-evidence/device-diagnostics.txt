@@ -1,0 +1,101 @@
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+com.monica.telegramchat.TelegramGlassRenderingTest:
+INSTRUMENTATION_STATUS: test=sixPillsShareOneCaptureAndRefreshLivePixels
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Every pill updates to green
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:100)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sixPillsShareOneCaptureAndRefreshLivePixels(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Every pill updates to green
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:100)
+
+INSTRUMENTATION_STATUS: test=sixPillsShareOneCaptureAndRefreshLivePixels
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=kyantRefractionReusesEffectAndUpdatesResizedGeometry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:136)
+
+INSTRUMENTATION_STATUS: stream=
+Error in kyantRefractionReusesEffectAndUpdatesResizedGeometry(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:136)
+
+INSTRUMENTATION_STATUS: test=kyantRefractionReusesEffectAndUpdatesResizedGeometry
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=movingPillAndReplacingSourceKeepCorrectPixels
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+INSTRUMENTATION_STATUS: stream=
+Error in movingPillAndReplacingSourceKeepCorrectPixels(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+INSTRUMENTATION_STATUS: test=movingPillAndReplacingSourceKeepCorrectPixels
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.43
+There were 3 failures:
+1) sixPillsShareOneCaptureAndRefreshLivePixels(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Every pill updates to green
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:100)
+2) kyantRefractionReusesEffectAndUpdatesResizedGeometry(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Runtime refraction renders the actual source
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.kyantRefractionReusesEffectAndUpdatesResizedGeometry(TelegramGlassRenderingTest.java:136)
+3) movingPillAndReplacingSourceKeepCorrectPixels(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+FAILURES!!!
+Tests run: 3,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

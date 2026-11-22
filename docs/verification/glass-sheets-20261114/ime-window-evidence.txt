@@ -1,0 +1,55 @@
+Sogou while isolated synthetic sheet field was focused (4 seconds after test dispatch):
+u0 InputMethod}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=55fde54 InputMethod)/@0xa160943 - animation-leash of insets_animation)/@0x3ea9ac8
+        mControlTarget=Window{8fe641c u0 takagi.ru.monica.steamapp.sheetdesign/takagi.ru.monica.steam.SteamSheetImeFixtureActivity}
+        mImeShowing=true        showImePostLayout not scheduled, mImeRequester=null
+
+      InsetsSourceProvider
+        mSource=InsetsSource id=c2370006 type=tappableElement frame=[0,0][1080,72] visible=true flags= sideHint=TOP boundingRects=null
+        mSourceFrame=Rect(0, 0 - 1080, 72)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWindowContainer=Window{ea91112 u0 StatusBar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=c2370005 type=mandatorySystemGestures frame=[0,0][1080,72] visible=true flags= sideHint=TOP boundingRects=null
+        mSourceFrame=Rect(0, 0 - 1080, 72)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWindowContainer=Window{ea91112 u0 StatusBar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=c2370000 type=statusBars frame=[0,0][1080,72] visible=true flags= sideHint=TOP boundingRects=null
+        mSourceFrame=Rect(0, 0 - 1080, 72)
+        mControl=InsetsSourceControl mId=c2370000 mType=statusBars mLeash=Surface(name=Surface(name=ea91112 StatusBar)/@0x81eb8a3 - animation-leash of insets_animation)/@0x4bd0761 mInitiallyVisible=true mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=72, right=0, bottom=0} mSkipAnimationOnce=false mImeS
+
+mCurId=com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME
+mInputShown=true
+mServedView=androidx.compose.ui.platform.AndroidComposeView{ab9b525 VFED..... .F...... 0,0-1080,1920 aid=1073741825}
+mServedInputConnection=RemoteInputConnectionImpl{connection=androidx.compose.ui.text.input.NullableInputConnectionWrapperApi34@191cea0 mDeactivateRequested=false mServedView=androidx.compose.ui.platform.AndroidComposeView{ab9b525 VFED..... .F...... 0,0-1080,1920 aid=1073741825}}
+mIsInputViewShown=true mStatusIcon=0
+contentTopInsets=0 visibleTopInsets=0 touchableInsets=2 touchableRegion=SkRegion()
+
+Native11: disabled action container, real keyboard and Back order passed; Text and role-only sibling stay enabled:
+android.widget.FrameLayout enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.widget.FrameLayout enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.widget.FrameLayout enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.view.ViewGroup enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 0 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 0 - 1080, 261) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 261 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(0, 261 - 1080, 1920) text=null
+android.view.View enabled=true visible=true bounds=Rect(468, 261 - 612, 405) text=null
+android.view.View enabled=true visible=true bounds=Rect(492, 327 - 588, 339) text=null
+android.widget.TextView enabled=true visible=true bounds=Rect(90, 423 - 810, 519) text=Share Steam card
+android.view.View enabled=true visible=true bounds=Rect(846, 393 - 990, 537) text=null
+android.view.View enabled=true visible=true bounds=Rect(882, 429 - 954, 501) text=null
+android.widget.Button enabled=true visible=true bounds=Rect(846, 393 - 990, 537) text=null
+android.widget.ScrollView enabled=true visible=true bounds=Rect(30, 585 - 1050, 1041) text=null
+android.widget.TextView enabled=true visible=true bounds=Rect(78, 585 - 1002, 765) text=Paste a trade, game, lobby, Remote Play, profile, inventory, Workshop, broadcast, group or community link.
+android.widget.EditText enabled=true visible=true bounds=Rect(78, 813 - 1002, 1041) text=javascript:synthetic
+android.widget.TextView enabled=true visible=true bounds=Rect(126, 837 - 307, 885) text=Steam link
+android.view.View enabled=true visible=true bounds=Rect(126, 885 - 954, 957) text=null
+android.widget.TextView enabled=true visible=true bounds=Rect(126, 993 - 676, 1041) text=Enter one supported Steam link.
+android.widget.TextView enabled=true visible=true bounds=Rect(78, 1077 - 1002, 1173) text=Add to the draft, then add a note and press Send when ready.
+android.view.View enabled=false visible=true bounds=Rect(78, 1197 - 1002, 1365) text=null
+android.widget.TextView enabled=true visible=true bounds=Rect(426, 1251 - 655, 1311) text=Add to draft
+android.widget.Button enabled=true visible=true bounds=Rect(78, 1197 - 1002, 1365) text=null

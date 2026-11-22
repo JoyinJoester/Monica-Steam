@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_history_all">全部</string>
+    <string name="steam_history_text">文本</string>
+    <string name="steam_history_media">媒体</string>
+    <string name="steam_history_files">文件</string>
+    <string name="steam_history_links">链接</string>
+    <string name="steam_history_invites">邀请</string>
+    <string name="steam_history_stickers">贴纸</string>
+    <string name="steam_history_any_time">全部时间</string>
+    <string name="steam_history_today">今天</string>
+    <string name="steam_history_last_week">最近 7 天</string>
+    <string name="steam_history_last_month">最近 30 天</string>
+    <string name="steam_thread_search">搜索消息</string>
+    <string name="steam_thread_search_filters">搜索筛选</string>
+    <string name="steam_thread_all_senders">全部发送者</string>
+    <string name="steam_thread_older_match">上一条匹配消息</string>
+    <string name="steam_thread_newer_match">下一条匹配消息</string>
+    <string name="steam_thread_no_matches">没有匹配的消息</string>
+    <string name="steam_thread_results_list">以列表显示</string>
+    <string name="steam_thread_shared_content">聊天内容</string>
+    <string name="steam_thread_no_shared_content">还没有聊天内容</string>
+    <string name="steam_thread_open_shared_message">打开消息：%1$s</string>
+    <string name="steam_chat_content_image">图片</string>
+    <string name="steam_chat_content_video">视频</string>
+    <string name="steam_chat_content_spoiler">剧透</string>
+</resources>

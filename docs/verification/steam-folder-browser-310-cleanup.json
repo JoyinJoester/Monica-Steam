@@ -1,0 +1,22 @@
+{
+  "uninstalled": [
+    "takagi.ru.monica.steamapp.folderbrowser.test",
+    "takagi.ru.monica.steamapp.folderbrowser"
+  ],
+  "originalUserAndPackageSetMatch": true,
+  "settingsMatch": true,
+  "retainedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "size": "1080x1920",
+  "density": 280,
+  "fontScale": 1.0,
+  "currentUser": 0,
+  "taskStartedInstance": 1,
+  "taskStartedInstanceStopped": true,
+  "originalInstance0Pid": 15892,
+  "originalInstance0StillRunning": true
+}

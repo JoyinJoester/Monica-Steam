@@ -72,7 +72,7 @@ import takagi.ru.monica.steam.trade.steamTradeOfferLazyKey
 import takagi.ru.monica.steam.navigation.ui.LocalSteamDockContentClearance
 import takagi.ru.monica.steam.token.presentation.SteamTradeOffersUiState
 import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle
-import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
+import takagi.ru.monica.steam.foundation.ui.SteamListChoiceChip as MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 
 private enum class TradeOfferFilter {

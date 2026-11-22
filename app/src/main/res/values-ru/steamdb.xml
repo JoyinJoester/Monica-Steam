@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steamdb_attribution">Данные предоставлены Steam / SteamDB. Monica Steam — независимое приложение. Реализация основана на идеях SteamNova (ранее Millennium, MIT): https://github.com/GoodJoe-2049/Steam-Nova</string>
+</resources>

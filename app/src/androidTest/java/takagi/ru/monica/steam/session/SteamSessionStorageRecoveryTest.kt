@@ -14,7 +14,7 @@ import takagi.ru.monica.steam.session.domain.*
 class SteamSessionStorageRecoveryTest {
     @Test fun reLoginWrittenThroughAccountRepositoryReplacesCachedSessionForAStaleHandle() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        check(context.packageName.endsWith(".recoverytest"))
+        check(context.packageName in setOf("takagi.ru.monica.steam.recoverytest", "takagi.ru.monica.steamapp.toolchainpilot"))
         val dao = SteamDatabase.getDatabase(context).steamAccountDao()
         val accounts = SteamAccountRepository(dao, SecurityManager(context))
         val previousSelection = dao.getSelected()?.id

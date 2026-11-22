@@ -54,4 +54,19 @@ class SteamDockStyleTest {
             SteamDockTab.STORE, SteamDockTab.CHAT)
         assertEquals(fixed, resolveFixedDockOrder(stored = fixed, legacyOrder = legacy))
     }
+
+    @Test
+    fun existingConfigurationConstructorsKeepBothStyleOrders() {
+        val fixed = SteamDockTab.FIXED_DEFAULT_ORDER.reversed()
+        val glass = listOf(SteamDockTab.TOKEN, SteamDockTab.SETTINGS, SteamDockTab.CHAT,
+            SteamDockTab.STORE, SteamDockTab.LIBRARY)
+        val config = SteamDockConfiguration(SteamDockStyle.LIQUID_GLASS, glass, fixed)
+        assertEquals(glass, config.liquidGlassOrder)
+        assertEquals(fixed, config.fixedOrder)
+    }
+
+    @Test
+    fun removedTelegramStoredValueFallsBackToM3e() {
+        assertEquals(SteamDockStyle.FIXED, SteamDockStyle.fromStoredValue("TELEGRAM"))
+    }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-18T18:16:57.680Z" hostname="JOYIN" time="0.064">
+  <properties/>
+  <testcase name="credentialRotationKeepsCatalogAndRepeatedRefreshDoesNotDuplicateRequests" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.027"/>
+  <testcase name="diskCatalogAppearsBeforeSessionResolutionAndIsThenUpdated" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.005"/>
+  <testcase name="switchingAccountsDoesNotShowOrPersistALateOldResponse" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.013"/>
+  <testcase name="cacheReadAndWriteFailuresDoNotDiscardNetworkResults" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.005"/>
+  <testcase name="confirmedEmptyCatalogReplacesOldAssetsAndSurvivesLaterFailure" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.004"/>
+  <testcase name="firstLoadFailureWithoutCacheStillAllowsExplicitRetry" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.004"/>
+  <testcase name="reopeningUsesMemoryImmediatelyAndOfflineRefreshKeepsIt" classname="takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

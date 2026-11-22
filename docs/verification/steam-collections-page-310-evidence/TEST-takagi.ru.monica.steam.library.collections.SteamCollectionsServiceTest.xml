@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-20T17:03:28.729Z" hostname="JOYIN" time="0.15">
+  <properties/>
+  <testcase name="renameUploadsExactlyOneEntryWithCurrentVersionsAndMonotonicFixedTimestamp" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.12"/>
+  <testcase name="readonlyCollectionCannotBeMutated" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="accountChangedAfterFreshReadPreventsUpload" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="createAndDeleteKeepOtherEntries" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.006"/>
+  <testcase name="duplicateKeysAndScalarFieldsAreRejected" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.001"/>
+  <testcase name="unrelatedChangeDoesNotPreventTargetEdit" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.001"/>
+  <testcase name="editsOnlySpecifiedMembersAndPreservesUnknownData" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.001"/>
+  <testcase name="lostWriteOrUnreadableReadbackIsUnknownWithoutReplay" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.003"/>
+  <testcase name="noOpDoesNotUpload" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.001"/>
+  <testcase name="invalidNamesAndTimestampOverflowDoNotUpload" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="parsesMembershipAndPreservesRawEntry" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.0"/>
+  <testcase name="explicitRejectedWriteKeepsActionableError" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="dynamicAndMalformedAreReadonlyAndDeletedIsExcluded" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.003"/>
+  <testcase name="accountChangedAtFinalGuardPreventsUpload" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="preflightTargetChangeRefusesWrite" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.001"/>
+  <testcase name="timeoutAfterServerApplyIsReconciledWithoutReplay" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.002"/>
+  <testcase name="filtersAllUnfiledAndNamedCollections" classname="takagi.ru.monica.steam.library.collections.SteamCollectionsServiceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

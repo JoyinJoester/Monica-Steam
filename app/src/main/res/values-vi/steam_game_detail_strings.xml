@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_tab_store">Cửa hàng</string>
+    <string name="steam_game_tab_stats">Thống kê cá nhân</string>
+    <string name="steam_game_stats_sign_in">Đăng nhập để xem lịch sử chơi và thành tích</string>
+    <string name="steam_game_stats_unknown">Chưa có dữ liệu</string>
+    <string name="steam_game_stats_cached">Dữ liệu đã lưu có thể chưa được cập nhật</string>
+    <string name="steam_game_stats_last_played">Chơi gần nhất</string>
+    <string name="steam_game_stats_no_activity">Không có dữ liệu thời gian chơi cho tài khoản này.</string>
+    <string name="steam_game_stats_game_data">Dữ liệu trò chơi</string>
+    <string name="steam_game_stats_screenshots">Ảnh chụp</string>
+    <string name="steam_game_stats_workshop">Workshop</string>
+    <string name="steam_game_stats_all">Tất cả</string>
+    <string name="steam_game_stats_completed">Đã mở khóa</string>
+    <string name="steam_game_stats_incomplete">Chưa mở khóa</string>
+    <string name="steam_game_stats_hours">%1$.1f giờ</string>
+</resources>

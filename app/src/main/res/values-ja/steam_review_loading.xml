@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_reviews_unavailable">レビューを読み込めませんでした。もう一度お試しください。</string>
+    <string name="steam_store_reviews_empty">条件に一致するレビューはありません。</string>
+    <string name="steam_store_reviews_retry">再試行</string>
+</resources>

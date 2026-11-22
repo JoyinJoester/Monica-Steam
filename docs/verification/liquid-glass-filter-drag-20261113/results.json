@@ -1,0 +1,409 @@
+{
+  "scope": "Conversation filter drag selection only; generic reusable row",
+  "fixtureBuild": {
+    "exit": 0,
+    "seconds": 63.03991699998733,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-liquid-filter-drag\\isolation.gradle",
+      "-PdockFixture=true",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.*",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "79e1b8c502031d75b02cbbc0850ff785a919aaab2503882bae5aa66fc1cf41d9",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "56c34df3cacabb91284dd845cd48a533159ec44e1798bbd112d813e109fd0f11"
+    }
+  },
+  "productionBuild": {
+    "exit": 0,
+    "seconds": 597.1319424000103,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261113-liquid-filter-drag\\production.gradle",
+      ":app:assembleDebug"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "c856a51775d7a4fd29c77192da340db0233be324415d48723425a5f731596393"
+    }
+  },
+  "productionPackage": "package: name='takagi.ru.monica.steamapp' versionCode='18' versionName='1.0.310' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+  "productionNonDebuggable": true,
+  "productionMappingSha256": "74e517bc20ee33f1db721d0331934113e75621be0cbfbcc59248df4a23148c43",
+  "jvm": {
+    "tests": 62,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "devices": {
+    "api32-final06": {
+      "exit": 0,
+      "seconds": 39.93110650003655,
+      "serial": "emulator-5558",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingOtherOptionsScrollsWithoutChangingFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eRetainsClickSelectionAndScrollOnlyDragging",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged"
+      ],
+      "failed": [],
+      "runnerSeconds": 35.011,
+      "okCount": 12
+    },
+    "api35-final06": {
+      "exit": 0,
+      "seconds": 26.381177100003697,
+      "serial": "127.0.0.1:16384",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingOtherOptionsScrollsWithoutChangingFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eRetainsClickSelectionAndScrollOnlyDragging",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged"
+      ],
+      "failed": [],
+      "runnerSeconds": 23.854,
+      "okCount": 12
+    },
+    "api32-regression06": {
+      "exit": 0,
+      "seconds": 23.586024799966253,
+      "serial": "emulator-5558",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterIndicatorMovesBetweenExclusiveSelections,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterAndPickerBarsSampleLiveBackgroundInBothStyles,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#disposalCancelsMotionAndCannotPublishLateSelection",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#newSelectionSuppressesPendingDragCallbackAndSettles",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#reducedMotionAndOverscrollReturnToValidDestination",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterIndicatorMovesBetweenExclusiveSelections",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft"
+      ],
+      "failed": [],
+      "runnerSeconds": 19.903,
+      "okCount": 9
+    },
+    "api35-regression06": {
+      "exit": 0,
+      "seconds": 15.363807799993083,
+      "serial": "127.0.0.1:16384",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest,takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterIndicatorMovesBetweenExclusiveSelections,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterAndPickerBarsSampleLiveBackgroundInBothStyles,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#disposalCancelsMotionAndCannotPublishLateSelection",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#newSelectionSuppressesPendingDragCallbackAndSettles",
+        "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest#reducedMotionAndOverscrollReturnToValidDestination",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#cachedMaskRespondsToAlphaColorOffsetAndSize",
+        "takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest#mutableGenericOutlineDoesNotReuseOldPath",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterAndPickerBarsSampleLiveBackgroundInBothStyles",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#filterIndicatorMovesBetweenExclusiveSelections",
+        "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft"
+      ],
+      "failed": [],
+      "runnerSeconds": 12.963,
+      "okCount": 9
+    },
+    "api32-expanded04": {
+      "exit": 0,
+      "seconds": 73.13980529998662,
+      "serial": "emulator-5558",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eRetainsClickSelectionAndScrollOnlyDragging",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged"
+      ],
+      "failed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingOtherOptionsScrollsWithoutChangingFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount"
+      ],
+      "runnerSeconds": 64.108,
+      "okCount": null
+    },
+    "api35-expanded04": {
+      "exit": 0,
+      "seconds": 30.81773399998201,
+      "serial": "127.0.0.1:16384",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eRetainsClickSelectionAndScrollOnlyDragging",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged"
+      ],
+      "failed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingOtherOptionsScrollsWithoutChangingFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount"
+      ],
+      "runnerSeconds": 27.87,
+      "okCount": null
+    },
+    "api35-expanded05": {
+      "exit": 0,
+      "seconds": 24.437067900027614,
+      "serial": "127.0.0.1:16384",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingOtherOptionsScrollsWithoutChangingFilter",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eRetainsClickSelectionAndScrollOnlyDragging",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged"
+      ],
+      "failed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter"
+      ],
+      "runnerSeconds": 22.194,
+      "okCount": null
+    },
+    "baseline-api32-drag01": {
+      "exit": 0,
+      "seconds": 7.264816600014456,
+      "serial": "emulator-5558",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "-e",
+        "dockVariant",
+        "baseline",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [],
+      "failed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce"
+      ],
+      "runnerSeconds": 3.232,
+      "okCount": null
+    },
+    "optimized-api32-drag02": {
+      "exit": 0,
+      "seconds": 7.870760500023607,
+      "serial": "emulator-5558",
+      "args": [
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+        "takagi.ru.monica.steamapp.dockperf.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "passed": [
+        "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce"
+      ],
+      "failed": [],
+      "runnerSeconds": 3.535,
+      "okCount": 1
+    }
+  },
+  "checkpoint": {
+    "apks": {
+      "main.apk": "79e1b8c502031d75b02cbbc0850ff785a919aaab2503882bae5aa66fc1cf41d9",
+      "test.apk": "56c34df3cacabb91284dd845cd48a533159ec44e1798bbd112d813e109fd0f11"
+    },
+    "sources": {
+      "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotion.kt": "12ed7bd164877ce98b4319182bf092123926aa4e770761c447b0c15d3a0996c1",
+      "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "a39f3d77bf7e3851f0595fba3cd3c9919f9e169d167788770ed30df73e88bc37",
+      "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt": "0e8209952dff54079c38cbb3b285015a4a73116587439ec961d869da2ba290e5",
+      "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "482b4d23575484ce20f28c64e84135a97b50e457047f7a52ecc217f03bce956b"
+    }
+  },
+  "cleanup": {
+    "api32UsersUnchanged": true,
+    "api35UsersUnchangedDuringCleanup": true,
+    "api35CurrentUser": 13,
+    "packagesUninstalledFromTestUsers": true,
+    "publicAvdStopRequested": true,
+    "configHashes": {
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+      "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205"
+    },
+    "configAndRegistrationUnchangedDuringCleanup": true,
+    "dataDisksPreserved": [
+      "userdata-qemu.img",
+      "userdata-qemu.img.qcow2",
+      "userdata.img"
+    ]
+  },
+  "syntheticImages": {
+    "api32": {
+      "before.png": "68cb8f0e2c8a2eaa8a1129bc52109c97f422c8e7575a75bc05a0f0defa78dc33",
+      "cancelled.png": "a105d075bd36f5ce3f9f9fbfbf526777e24a27ec21dba43aa8ee30d056204407",
+      "dragging.png": "2c24e8d3c019d49dc198a149542f1ee5e1ba96e3c9397ba4789f409312e224a5",
+      "edge-archived.png": "090883b81221a37c3b74aa3c1183167ac4f659f1aa9ab244763a2da22aed1b9c",
+      "large-reduced.png": "e3fd3f965dcff8ce823f37bee9fd58be31f897b9b1191d81a0419a03f01cb0ba",
+      "rtl.png": "858d3f8f7c6c3fa55e05d31163dabae872e9a566b18ed18d7b41f615d15b1ead",
+      "settled.png": "e92306bd17aeda2684ebead941d0b41814cafe11ce65b9a042079408a43fa28e"
+    },
+    "api35": {
+      "before.png": "43cbc3194cbc8191978ba7535c0023dbf261b825033b32bbc04d38b2bb93d60a",
+      "cancelled.png": "1894ab2579a429d9da1778e6d0d2806f566b6492009435df6ee4adc00d10ffee",
+      "dragging.png": "3ab74498a69ea9cc59ba21ddae06eb7b8aed45c2121c2c0243627515ab608aba",
+      "edge-archived.png": "8163c5932cec7a023e41143f30a8eb0b9cbf7589108cd5c3ebebd78de121751a",
+      "large-reduced.png": "c90c963bc6ea06a8a7652ee7c8165542cf7456a38697cddd4ff24fcbbce39dc6",
+      "rtl.png": "d0c56e4db4623bcd604e4893ef84500aaa6ca6cd16f7d7be18091c4024f6e70a",
+      "settled.png": "1a65eb4799cd27cb956024dbba77b8d6a9d90021993b927c5e62ab3dba31135f"
+    }
+  },
+  "limits": [
+    "x86_64, synthetic Compose component fixture; API35 device identity not verified",
+    "Native pointer injection with controlled Compose test clock; no full authenticated inbox test",
+    "No R8 runtime instrumentation, ARM64/OEM certification, or new performance benchmark",
+    "Canvas rest frame visually checked; later design frames not individually inspected"
+  ],
+  "noCommitPushReleaseOrApkDelivery": true
+}

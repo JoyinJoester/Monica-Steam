@@ -1,0 +1,279 @@
+{
+  "distinctPassed": 43,
+  "batches": [
+    {
+      "stage": "device01",
+      "tests": 7,
+      "passed": 7,
+      "runnerSeconds": 20.876,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "inboxPhysicalTapTravelsInsteadOfOnlyZooming",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "reducedMotionSelectsWithoutIntermediateTravel",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "defaultListFilterPhysicalTapTravels",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "gameDetailPhysicalTapTravels",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "richPickerPhysicalTapTravels",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "cancelledUnselectedPressReturnsWithoutJumpOrCallback",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest",
+          "method": "rtlFilterTravelsAlongPhysicalCoordinates",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "stage": "device02-regression",
+      "tests": 36,
+      "passed": 36,
+      "runnerSeconds": 61.705,
+      "cases": [
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "rtlDragUsesPhysicalMeasuredSlots",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "m3eLargeFontKeepsOneRowAndScrollsToEveryFilter",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "draggingAnUnselectedOptionCommitsTheReleasedFilter",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "verticalParentScrollingKeepsTheFilterUnchanged",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "quickTapOnUnselectedGlassExpandsAfterImmediateSelection",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "m3eIgnoresDragAndSupportsClickSelection",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "themeChangeCancelsHeldGlassSelection",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "quickTapOnSelectedGlassStillPlaysFullExpansion",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "leavingTheFilterCancelsLateSelectionAndCanRemount",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "badgeReflowRevokesAnInProgressDrag",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "edgeScrollReachesOffscreenArchivedFilter",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "cancelledDragRestoresCommittedFilter",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "heldLensHasVisibleGlassRimOnFlatDarkChatBackground",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "reducedMotionQuickTapSelectsWithoutExpansion",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "m3eFrostBlursLiveBackgroundInDarkTheme",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest",
+          "method": "m3eFrostBlursLiveBackgroundInLightTheme",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "nativeEmojiPagesSearchResetRefreshAndCloseRemainUsable",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "unsupportedEffectsRetainOpaqueNativeFallbackAndClickableTabs",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "nativePanelAlsoRendersHeldLensAndRebound",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "lightPanelBlursNativeSourceAndRetainsTransparency",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "holdMagnifiesLabelAndRimThenRebounds",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "darkPanelBlursNativeSourceAndRetainsTransparency",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "reducedMotionLargeFontRtlStillDragsAndCloses",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.chat.SteamRichPickerGlassDeviceTest",
+          "method": "draggingAnyCategoryCommitsOnlyOnReleaseAndCancelRestores",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest",
+          "method": "reducedMotionAndOverscrollReturnToValidDestination",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest",
+          "method": "highFrequencyDragPublishesImmediatelyWithoutPerEventJobs",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest",
+          "method": "disposalCancelsMotionAndCannotPublishLateSelection",
+          "code": 0,
+          "passed": true
+        },
+        {
+          "className": "takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest",
+          "method": "newSelectionSuppressesPendingDragCallbackAndSettles",
+          "code": 0,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

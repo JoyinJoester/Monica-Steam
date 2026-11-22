@@ -1,0 +1,63 @@
+{
+  "version": "1.0.311",
+  "versionCode": 18,
+  "productionBuild": "build01",
+  "finalTestBuild": "test-build03",
+  "baseline": {
+    "stage": "baseline-device04",
+    "expectedFailures": 2,
+    "finalTestsAgainstOldMain": true
+  },
+  "final": {
+    "stage": "device03",
+    "passed": 4,
+    "failed": 0
+  },
+  "distinctPassingMethods": {
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#m3DarkSelectedCountsRemainVisible": "device03",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#mediaImageIsRealVideoIsTypedAndSpoilerStaysCovered": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#dragCommitsOnReleaseCancelRestoresAndRowsOpenOriginalMessages": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#rtlReducedMotionDragStillCommitsAndCancels": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#titlesAndMediaTypesResolveInAllSupportedLanguages": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#glassTitleGapMediaGridAndHeldLensRender": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#m3LightLargeSelectedCountsRemainVisible": "device03",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#compactFiltersKeepLastCategoryReachableOnNarrowLargeText": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#rtlReducedMotionEmptyStateUsesChatContentTitle": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#m3eLightLargeTextKeepsGapRowsAndIndependentScroll": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#inboxPhysicalTapTravelsInsteadOfOnlyZooming": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#cancelledUnselectedHoldKeepsDockOriginWithoutCallback": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#reducedMotionSelectsWithoutIntermediateTravel": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#defaultListFilterPhysicalTapTravels": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#gameDetailPhysicalTapTravels": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#richPickerPhysicalTapTravels": "device02",
+    "takagi.ru.monica.steam.navigation.SteamGlassSelectionTravelDeviceTest#rtlFilterTravelsAlongPhysicalCoordinates": "device02",
+    "takagi.ru.monica.steam.navigation.SteamDockSharedSelectionDeviceTest#actualDockAndSelectorHaveMatchingTravelScaleAndReleaseFrames": "device02",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased": "device03",
+    "takagi.ru.monica.steam.chat.SteamChatContentUiTest#glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased": "device03"
+  },
+  "unchangedProductionApkAcrossRetries": true,
+  "mainSha256": "961bb1c2a3854437a8f944b055ee1fd577fe33431dabca434b942b08f8aba9f7",
+  "testSha256": "c5cd859919c44d2f7a2c54161bc8986ab0bf60cbb4f9713594c29ac936edc40e",
+  "cleanup": {
+    "baselineChecks": {
+      "current": true,
+      "size": true,
+      "density": true,
+      "font": true,
+      "userIdentitiesAndFlagsRetained": true,
+      "originalPackagesRetained": true,
+      "taskPackagesAbsent": true
+    },
+    "taskPackagesUninstalled": true,
+    "taskStartedInstanceStopped": false,
+    "preExistingMuMu0Preserved": true,
+    "configurationAndDataDiskRetained": true,
+    "userRuntimeRunningFlagsChanged": false
+  },
+  "device": "Existing MuMu0 / Android35 / x86_64",
+  "imagesLocalOnly": true,
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

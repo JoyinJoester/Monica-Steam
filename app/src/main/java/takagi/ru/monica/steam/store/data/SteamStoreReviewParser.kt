@@ -23,6 +23,9 @@ object SteamStoreReviewParser {
 
     fun parsePage(payload: String): SteamReviewPage {
         val root = json.parseToJsonElement(payload).jsonObject
+        check(root.int("success") == 1 && root.array("reviews") != null) {
+            "Steam reviews response is unavailable"
+        }
         val summary = root.obj("query_summary")?.toSummary()
         val items = root.array("reviews").orEmpty().mapNotNull { element ->
             val review = element as? JsonObject ?: return@mapNotNull null
@@ -55,7 +58,7 @@ object SteamStoreReviewParser {
         return SteamReviewPage(
             summary = summary,
             items = items,
-            nextCursor = root.string("cursor")?.takeIf(String::isNotBlank)
+            nextCursor = root.string("cursor")?.takeIf { it.isNotBlank() && items.isNotEmpty() }
         )
     }
 

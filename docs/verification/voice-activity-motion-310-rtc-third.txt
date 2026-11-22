@@ -1,0 +1,41 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest:
+INSTRUMENTATION_STATUS: test=productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: {"ok":false,"error":"Error: No attributed inbound RTC level: {\"localPeak\":0.4499954222235786,\"remotePeak\":0,\"iceA\":\"connected\",\"iceB\":\"connected\",\"stats\":[{\"id\":\"IT01A1281925082\",\"timestamp\":1795153655318.085,\"type\":\"inbound-rtp\",\"ssrc\":1281925082,\"kind\":\"audio\",\"trackId\":\"DEPRECATED_TI2\",\"transportId\":\"T01\",\"codecId\":\"CIT01_111_minptime=10;useinbandfec=1\",\"mediaType\":\"audio\",\"jitter\":0.011,\"packetsLost\":0,\"trackIdentifier\":\"f40990ba-ce69-4bf4-bf83-e819f039e7bd\",\"mid\":\"0\",\"remoteId\":\"ROA1281925082\",\"packetsReceived\":440,\"packetsDiscarded\":0,\"fecPacketsReceived\":0,\"fecPacketsDiscarded\":0,\"bytesReceived\":33362,\"headerBytesReceived\":12412,\"lastPacketReceivedTimestamp\":1795153655314,\"jitterBufferDelay\":18940.8,\"jitterBufferTargetDelay\":17740.8,\"jitterBufferMinimumDelay\":17587.2,\"jitterBufferEmittedCount\":417600,\"totalSamplesReceived\":422400,\"concealedSamples\":3840,\"silentConcealedSamples\":2280,\"concealmentEvents\":1,\"insertedSamplesForDeceleration\":1962,\"removedSamplesForAcceleration\":218,\"audioLevel\":0,\"totalAudioEnergy\":0,\"totalSamplesDuration\":8.799999999999857}]}\n    at check (https://localhost/:58:81)\n    at https://localhost/:91:21"}
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest.productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly(SteamVoiceAudioMeterWebViewTest.kt:113)
+
+INSTRUMENTATION_STATUS: stream=
+Error in productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly(takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest):
+java.lang.AssertionError: {"ok":false,"error":"Error: No attributed inbound RTC level: {\"localPeak\":0.4499954222235786,\"remotePeak\":0,\"iceA\":\"connected\",\"iceB\":\"connected\",\"stats\":[{\"id\":\"IT01A1281925082\",\"timestamp\":1795153655318.085,\"type\":\"inbound-rtp\",\"ssrc\":1281925082,\"kind\":\"audio\",\"trackId\":\"DEPRECATED_TI2\",\"transportId\":\"T01\",\"codecId\":\"CIT01_111_minptime=10;useinbandfec=1\",\"mediaType\":\"audio\",\"jitter\":0.011,\"packetsLost\":0,\"trackIdentifier\":\"f40990ba-ce69-4bf4-bf83-e819f039e7bd\",\"mid\":\"0\",\"remoteId\":\"ROA1281925082\",\"packetsReceived\":440,\"packetsDiscarded\":0,\"fecPacketsReceived\":0,\"fecPacketsDiscarded\":0,\"bytesReceived\":33362,\"headerBytesReceived\":12412,\"lastPacketReceivedTimestamp\":1795153655314,\"jitterBufferDelay\":18940.8,\"jitterBufferTargetDelay\":17740.8,\"jitterBufferMinimumDelay\":17587.2,\"jitterBufferEmittedCount\":417600,\"totalSamplesReceived\":422400,\"concealedSamples\":3840,\"silentConcealedSamples\":2280,\"concealmentEvents\":1,\"insertedSamplesForDeceleration\":1962,\"removedSamplesForAcceleration\":218,\"audioLevel\":0,\"totalAudioEnergy\":0,\"totalSamplesDuration\":8.799999999999857}]}\n    at check (https://localhost/:58:81)\n    at https://localhost/:91:21"}
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest.productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly(SteamVoiceAudioMeterWebViewTest.kt:113)
+
+INSTRUMENTATION_STATUS: test=productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.683
+There was 1 failure:
+1) productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly(takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest)
+java.lang.AssertionError: {"ok":false,"error":"Error: No attributed inbound RTC level: {\"localPeak\":0.4499954222235786,\"remotePeak\":0,\"iceA\":\"connected\",\"iceB\":\"connected\",\"stats\":[{\"id\":\"IT01A1281925082\",\"timestamp\":1795153655318.085,\"type\":\"inbound-rtp\",\"ssrc\":1281925082,\"kind\":\"audio\",\"trackId\":\"DEPRECATED_TI2\",\"transportId\":\"T01\",\"codecId\":\"CIT01_111_minptime=10;useinbandfec=1\",\"mediaType\":\"audio\",\"jitter\":0.011,\"packetsLost\":0,\"trackIdentifier\":\"f40990ba-ce69-4bf4-bf83-e819f039e7bd\",\"mid\":\"0\",\"remoteId\":\"ROA1281925082\",\"packetsReceived\":440,\"packetsDiscarded\":0,\"fecPacketsReceived\":0,\"fecPacketsDiscarded\":0,\"bytesReceived\":33362,\"headerBytesReceived\":12412,\"lastPacketReceivedTimestamp\":1795153655314,\"jitterBufferDelay\":18940.8,\"jitterBufferTargetDelay\":17740.8,\"jitterBufferMinimumDelay\":17587.2,\"jitterBufferEmittedCount\":417600,\"totalSamplesReceived\":422400,\"concealedSamples\":3840,\"silentConcealedSamples\":2280,\"concealmentEvents\":1,\"insertedSamplesForDeceleration\":1962,\"removedSamplesForAcceleration\":218,\"audioLevel\":0,\"totalAudioEnergy\":0,\"totalSamplesDuration\":8.799999999999857}]}\n    at check (https://localhost/:58:81)\n    at https://localhost/:91:21"}
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamVoiceAudioMeterWebViewTest.productionSamplerReadsRealLocalAndRemoteAudioAndStopsCleanly(SteamVoiceAudioMeterWebViewTest.kt:113)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

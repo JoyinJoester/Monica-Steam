@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.freebie.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshActionIcon
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +32,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -121,16 +122,14 @@ internal fun SteamFreebieScreen(
                         onClick = { viewModel.load(force = true) },
                         enabled = !state.loading
                     ) {
-                        Icon(
-                            Icons.Default.Refresh,
-                            contentDescription = stringResource(R.string.refresh)
-                        )
+                        SteamRefreshActionIcon(state.loading, Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
                 }
             )
         }
     ) { padding ->
         SteamExpressivePullToRefresh(
+            showIndicator = false,
             refreshing = state.loading,
             onRefresh = { viewModel.load(force = true) },
             modifier = Modifier.fillMaxSize().padding(padding)

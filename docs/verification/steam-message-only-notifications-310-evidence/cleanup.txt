@@ -1,0 +1,21 @@
+Users:
+	UserInfo{0:Owner:4c13} running
+	UserInfo{10:Monica_KMP_Migration_20261108:1030}
+	UserInfo{11:Monica_Harmony_Bridge_20261111:1030}
+	UserInfo{12:Monica_Harmony_Return_20261112:1030}
+	UserInfo{14:Monica_Steam_MessageNotifications_20261119:410} running
+Failure [not installed for 0]
+Failure [not installed for 0]
+0
+Success: removed user
+Users:
+	UserInfo{0:Owner:4c13} running
+	UserInfo{10:Monica_KMP_Migration_20261108:1030}
+	UserInfo{11:Monica_Harmony_Bridge_20261111:1030}
+	UserInfo{12:Monica_Harmony_Return_20261112:1030}
+List of devices attached
+127.0.0.1:16384	device
+
+Failure [DELETE_FAILED_INTERNAL_ERROR]
+Failure [DELETE_FAILED_INTERNAL_ERROR]
+instrumentation:takagi.ru.monica.steamapp.janktest.test/androidx.test.runner.AndroidJUnitRunner (target=takagi.ru.monica.steamapp.janktest)

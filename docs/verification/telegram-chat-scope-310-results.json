@@ -1,0 +1,414 @@
+{
+  "version": "1.0.310",
+  "version_code": 18,
+  "scope": "chat_only",
+  "frozen_paths": 2325,
+  "changed_since_freeze": [],
+  "apks": [
+    {
+      "file": "Monica-Steam-Android-x86_64-1.0.310-26110818-20.APK",
+      "sha256": "60b3fc733c3098181751e0c7b872c9cf5178a9e6958232085947257a2b9fe68b"
+    },
+    {
+      "file": "app-debug-androidTest.apk",
+      "sha256": "2b0620e0cabb4cf9361b7292757cf17224b48d2118d1cb17a2142a14efb1e334"
+    }
+  ],
+  "limits": [
+    "MuMu API35 x86_64 Debug and synthetic data only; no true account or remote chat upload",
+    "Representative production controls and fixtures; not complete authenticated Activity navigation",
+    "Legacy message composer/header typography retains prior limitations; not full Telegram parity",
+    "No physical-device, OEM, performance benchmark or R8 acceptance"
+  ],
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apk_delivered": false,
+  "final_build": {
+    "stage": "takeover-final-chat-only-02",
+    "exit": 0,
+    "seconds": 615.7082491000183,
+    "arguments": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=20",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "takagi.ru.monica.steam.navigation.*",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.ui.*",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.richmedia.*",
+      "--tests",
+      "takagi.ru.monica.steam.friends.chat.telegram.*",
+      "--tests",
+      "takagi.ru.monica.steam.space.*",
+      "--tests",
+      "takagi.ru.monica.ui.SteamStandaloneNavigationGuardTest"
+    ]
+  },
+  "final_jvm": {
+    "tests": 257,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "final_device": {
+    "file": "device-chat-only-04.txt",
+    "ok": true,
+    "seconds": 53.32,
+    "methods": [
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#nativeSearchPreservesComposingSelectionAndSubmitsThroughSharedTopBar",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#glassBlursActualSiblingContentAndRefreshesWithoutSelfCapture",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamTelegramDesignUiTest#chatSearchKeepsHostPaletteAndSystemTextScale",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamDockPreferencesDeviceTest#removedTelegramStyleFallsBackAfterReopenWithoutChangingExistingOrders",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamDockSettingsUiTest#fixedNavigationPageShowsCustomOrderAndAllFiveDestinations",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamDockSettingsUiTest#designStyleOffersOnlyTwoChoicesAndSwitchesBetweenThem",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.navigation.SteamDockSettingsUiTest#bottomNavigationPageOnlyOrdersTheCurrentStyle",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#olderReadingAnchorSurvivesImeAndReopening",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#lightThemeNativeTitleAndLongHistoryRemainInteractive",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramChatUiTest#rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.SteamChatAttachmentPolicyDeviceTest#actualPngStillPassesInspectionWithSizeAndDimensions",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.SteamChatAttachmentPolicyDeviceTest#forgedPendingAttachmentIsRejectedBeforeAnyNetworkRequest",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.SteamChatAttachmentPolicyDeviceTest#actualUploaderRejectsZipSelectionBeforeOpeningMissingFile",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#conversationFiltersOpenTheCorrectDetailAndMessageAction",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#embeddedInboxComposeSelectsAnExistingFriend",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#friendFiltersAndIncomingRequestKeepTheirCallbacks",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#groupPreferencesAndMemberSearchPreserveNavigation",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#officialEmojiPackDecodesAndNativePickerReturnsUnicode",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#inboxUnreadSearchPinsAndToolbarKeepNavigation",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramConversationLargeTextFitsAndAccessibilityUsesHostLocale",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramInboxMenuSearchAndUnreadPreserveNavigation",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#nativePhotoGridSelectsOwnedMediaBeforeConfirming",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#telegramConversationNativeMenuKeepsTargetAndDeleteConfirmation",
+        "status": 0
+      },
+      {
+        "method": "takagi.ru.monica.steam.chat.TelegramSocialUiTest#originalDocumentCellsPreserveFolderAndFileCallbacks",
+        "status": 0
+      }
+    ]
+  },
+  "cleanup": {
+    "guest_removed": 10,
+    "owned_name": "Monica_Telegram_Style_20261107",
+    "restored_user": 0,
+    "users_after": "Users:\n\tUserInfo{0:Owner:4c13} running\n",
+    "density_after": "Physical density: 280\n",
+    "density_reset_retry": "First reset during user switch was followed by restored override420; repeated after Owner transition and verified physical280 with no override.",
+    "owner_monica_packages": "",
+    "instance0": {
+      "android_version": "15.0",
+      "created_timestamp": 1793811814685479,
+      "disk_size_bytes": 5812602476,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "0",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Android Device"
+    },
+    "instance1_readonly": {
+      "android_version": "15.0",
+      "created_timestamp": 1793856063204935,
+      "disk_size_bytes": 7428489312,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "1",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica OMK 325 Test"
+    },
+    "public_avd_used": false,
+    "disks_retained": true
+  },
+  "resource_audit": {
+    "global_telegram_references": [],
+    "resource_keys": 55,
+    "resource_values": 275,
+    "resource_errors": [],
+    "activity_matches_task_start": true,
+    "shared_settings_match_head": {
+      "app/src/main/java/takagi/ru/monica/ui/screens/SettingsGroup.kt": true,
+      "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": true
+    }
+  },
+  "historical_builds": [
+    {
+      "stage": "takeover-final-01",
+      "exit": 1,
+      "seconds": 500.1180965001695,
+      "arguments": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=20",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.telegram.*",
+        "--tests",
+        "takagi.ru.monica.steam.space.*",
+        "--tests",
+        "takagi.ru.monica.ui.SteamStandaloneNavigationGuardTest"
+      ]
+    },
+    {
+      "stage": "takeover-final-02",
+      "exit": 0,
+      "seconds": 670.5970157999545,
+      "arguments": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=20",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.telegram.*",
+        "--tests",
+        "takagi.ru.monica.steam.space.*",
+        "--tests",
+        "takagi.ru.monica.ui.SteamStandaloneNavigationGuardTest"
+      ]
+    },
+    {
+      "stage": "takeover-final-03",
+      "exit": 130,
+      "interrupted": true,
+      "reason": "User rejected app-wide Telegram design; compilation stopped before scope rollback. Not a verification result."
+    },
+    {
+      "stage": "takeover-final-chat-only-01",
+      "exit": 0,
+      "seconds": 782.1694590002298,
+      "arguments": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=20",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.telegram.*",
+        "--tests",
+        "takagi.ru.monica.steam.space.*",
+        "--tests",
+        "takagi.ru.monica.ui.SteamStandaloneNavigationGuardTest"
+      ]
+    },
+    {
+      "stage": "takeover-final-chat-only-02",
+      "exit": 0,
+      "seconds": 615.7082491000183,
+      "arguments": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=20",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "takagi.ru.monica.steam.navigation.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.ui.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.richmedia.*",
+        "--tests",
+        "takagi.ru.monica.steam.friends.chat.telegram.*",
+        "--tests",
+        "takagi.ru.monica.steam.space.*",
+        "--tests",
+        "takagi.ru.monica.ui.SteamStandaloneNavigationGuardTest"
+      ]
+    },
+    {
+      "stage": "takeover-main-01",
+      "exit": 0,
+      "seconds": 527.2733903997578,
+      "arguments": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx10g -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=20",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261107-telegram-design-style\\verify.gradle",
+        ":app:assembleDebug"
+      ]
+    }
+  ],
+  "historical_device_batches": [
+    {
+      "file": "device-01.txt",
+      "ok": false,
+      "seconds": 64.543,
+      "passed": 15,
+      "tests": 28
+    },
+    {
+      "file": "device-02.txt",
+      "ok": false,
+      "seconds": 62.741,
+      "passed": 25,
+      "tests": 28
+    },
+    {
+      "file": "device-chat-only-02.txt",
+      "ok": false,
+      "seconds": 105.365,
+      "passed": 21,
+      "tests": 27
+    },
+    {
+      "file": "device-chat-only-03.txt",
+      "ok": false,
+      "seconds": 82.242,
+      "passed": 22,
+      "tests": 27
+    },
+    {
+      "file": "device-chat-only-04.txt",
+      "ok": true,
+      "seconds": 53.32,
+      "passed": 27,
+      "tests": 27
+    }
+  ],
+  "canvas_live_preview": false
+}

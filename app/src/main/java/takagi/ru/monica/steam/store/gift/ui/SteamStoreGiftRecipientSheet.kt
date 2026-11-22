@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.gift.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
@@ -76,56 +81,20 @@ internal fun SteamStoreGiftRecipientSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.84f)
-                .navigationBarsPadding()
+
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
-                Surface(
-                    modifier = Modifier.size(52.dp),
-                    shape = RoundedCornerShape(18.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(Icons.Default.CardGiftcard, contentDescription = null)
+            SteamSheetHeader(
+                title = stringResource(R.string.steam_store_gift_choose_friend),
+                subtitle = state.pendingItem?.name.orEmpty(), onDismiss = onDismiss,
+                actions = {
+                    IconButton(onClick = onRefresh, enabled = !state.loading && !state.refreshing) {
+                        Icon(Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
                 }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.steam_store_gift_choose_friend),
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontFamily = GoogleSansFlexFontFamily,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    Text(
-                        text = state.pendingItem?.name.orEmpty(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-                IconButton(onClick = onRefresh, enabled = !state.loading && !state.refreshing) {
-                    Icon(
-                        Icons.Default.Refresh,
-                        contentDescription = stringResource(R.string.steam_store_gift_refresh)
-                    )
-                }
-            }
-
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp),
-                singleLine = true,
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                placeholder = { Text(stringResource(R.string.steam_store_gift_search_hint)) },
-                shape = RoundedCornerShape(18.dp)
             )
+            SteamSheetSearchField(query, { query = it }, stringResource(R.string.steam_store_gift_search_hint),
+                Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
 
             Surface(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
@@ -171,7 +140,7 @@ internal fun SteamStoreGiftRecipientSheet(
 
             when {
                 state.loading && state.friends.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -179,10 +148,10 @@ internal fun SteamStoreGiftRecipientSheet(
                 state.failure != null && state.friends.isEmpty() -> SteamStoreGiftFailureState(
                     failure = state.failure,
                     onRetry = onRefresh,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxWidth().weight(1f)
                 )
                 friends.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -194,11 +163,12 @@ internal fun SteamStoreGiftRecipientSheet(
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxWidth().weight(1f),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(friends, key = SteamFriend::steamId) { friend ->
+                    itemsIndexed(friends, key = { _, friend -> friend.steamId }) { index, friend ->
                         SteamStoreGiftFriendRow(
                             friend = friend,
+                            shape = steamSheetRowShape(index, friends.size),
                             selected = friend.steamId == selectedSteamId,
                             onClick = { onSelect(friend) }
                         )
@@ -211,17 +181,18 @@ internal fun SteamStoreGiftRecipientSheet(
 @Composable
 private fun SteamStoreGiftFriendRow(
     friend: SteamFriend,
+    shape: androidx.compose.ui.graphics.Shape,
     selected: Boolean,
     onClick: () -> Unit
 ) {
     Surface(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp),
-        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 80.dp).semantics { this.selected = selected },
+        shape = shape,
         color = if (selected) {
-            MaterialTheme.colorScheme.primaryContainer
+            MaterialTheme.colorScheme.secondaryContainer
         } else {
-            MaterialTheme.colorScheme.surfaceContainerLow
+            steamSheetGroupColor()
         }
     ) {
         Row(

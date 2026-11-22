@@ -62,7 +62,7 @@ class SteamAlertIntegrationGuardTest {
         assertTrue(settings.contains("setDevicesEnabled"))
         assertTrue(settings.contains("setWishlistDiscountsEnabled"))
         assertTrue(settings.contains("setLoginRequestsEnabled"))
-        assertTrue(settings.contains("SteamChatBackgroundServiceController"))
+        assertTrue(settings.contains("SteamChatNotificationRuntime"))
         assertTrue(settings.contains("SteamAlertScheduler.sync(context)"))
     }
 

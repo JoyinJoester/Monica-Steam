@@ -1,0 +1,55 @@
+{
+  "release": {
+    "apkSha256": "3733c0e22a5b851fc875369c8eddfa8af5da64e039384d80c0748b2d1281b140",
+    "classes": {
+      "Loc4;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": [
+          "Ldq7;",
+          "Lkotlinx/coroutines/CoroutineExceptionHandler;"
+        ]
+      },
+      "Ldq7;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": []
+      },
+      "Lkotlinx/coroutines/CoroutineExceptionHandler;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": [
+          "Llt1;"
+        ]
+      },
+      "Llt1;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": [
+          "Lnt1;"
+        ]
+      },
+      "Lnt1;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": []
+      }
+    }
+  },
+  "inprocessHarness": {
+    "apkSha256": "339de4cbf0f067ddc4b27d8e2a52068fb77864ac8d7d9cc9ce0badaf85be243f",
+    "classes": {
+      "Lkotlinx/coroutines/CoroutineExceptionHandler;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": [
+          "Lkotlin/coroutines/CoroutineContext$Element;"
+        ]
+      },
+      "Lkotlin/coroutines/CoroutineContext$Element;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": [
+          "Lkotlin/coroutines/CoroutineContext;"
+        ]
+      },
+      "Lkotlin/coroutines/CoroutineContext;": {
+        "super": "Ljava/lang/Object;",
+        "interfaces": []
+      }
+    }
+  }
+}

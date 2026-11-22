@@ -1,0 +1,16 @@
+{
+  "exit": 0,
+  "seconds": 71.94950579991564,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx3g -XX:ActiveProcessorCount=2 -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261109-chat-menu-height\\test.gradle",
+    ":telegram-chat-ui:assembleDebugAndroidTest"
+  ],
+  "apkSha256": "d01a586a05af3e3eaa53f97dfda442b09885e8dfb65b8ad619041377a49ffb57"
+}

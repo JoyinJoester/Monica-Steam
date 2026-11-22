@@ -1,0 +1,253 @@
+{
+  "status": "complete",
+  "version": "1.0.310",
+  "published": false,
+  "device": {
+    "model": "Reused MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "user": 13,
+    "syntheticOnly": true
+  },
+  "finalBuild": {
+    "log": "build-21-final.txt",
+    "seconds": 29,
+    "dailySeq": "18",
+    "apkHashes": {
+      "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26111918-18.APK": "df0d301d91f8592705614adfa76ef65712d90c7e5bdef443ed3681d149890d38",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "31bc1c0409e80a0a091159baa12650431b0ae13bbdd8fcbee51e726017721354"
+    }
+  },
+  "finalTestBuild": {
+    "log": "build-28-capture.txt",
+    "seconds": 28,
+    "change": "Fixture layout/frame waiting and diagnostic output only; production unchanged."
+  },
+  "jvm": {
+    "tests": 339,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 3.682,
+    "failedMethods": []
+  },
+  "fullProjectJvmAttempt": {
+    "tests": 2101,
+    "failures": 25,
+    "errors": 0,
+    "skipped": 8,
+    "seconds": 17.693,
+    "failedMethods": [
+      "takagi.ru.monica.steam.architecture.SteamModuleArchitectureGuardTest.documentedFeatureAndSharedModulesExist",
+      "takagi.ru.monica.steam.architecture.SteamModuleArchitectureGuardTest.storeUsesLayeredPackagesAndNamedSlicesWithoutRootImplementations",
+      "takagi.ru.monica.steam.backup.SteamStandaloneDataBoundaryTest.standaloneSettingsExposeFullThemeSelection",
+      "takagi.ru.monica.steam.backup.SteamStandaloneDataBoundaryTest.standaloneMdbxRouteSupportsLocalAndWebDav",
+      "takagi.ru.monica.steam.data.SteamAccountSourceSessionGuardTest.sessionWritesAcceptAnExplicitOriginAndReloadMdbxAfterSourceSwitch",
+      "takagi.ru.monica.steam.friends.ui.SteamFriendsIntegrationGuardTest.friendsRemainASecondaryRouteWithM3ExpressiveNavigation",
+      "takagi.ru.monica.steam.friends.ui.SteamFriendsIntegrationGuardTest.addFriendUsesTheFriendsFabAndTheHoistedSteamTopBar",
+      "takagi.ru.monica.steam.library.SteamLibraryIntegrationGuardTest.productionNavigationContainsLibraryAndAchievementStates",
+      "takagi.ru.monica.steam.library.SteamLibraryIntegrationGuardTest.accountDataUsesPlainCompactCardsAndGoogleSansFlex",
+      "takagi.ru.monica.steam.settings.SteamPlusPaymentFlowRegressionGuardTest.steamPaymentPageUsesDockSafeModifier",
+      "takagi.ru.monica.steam.settings.SteamSettingsScrollStateGuardTest.settingsRootOwnsScrollStateAcrossChildPageNavigation",
+      "takagi.ru.monica.steam.settings.SteamSettingsVersionLabelGuardTest.settingsVersionFollowsBuildConfigInsteadOfAStaleLiteral",
+      "takagi.ru.monica.steam.SteamAccountSwitcherIntegrationGuardTest.publicAccountSwitchersExposeTheExistingAddAccountFlow",
+      "takagi.ru.monica.steam.SteamBoundaryGuardTest.steamPageUsesMonicaTopBarAndLocalizedMenuInsteadOfWideTabs",
+      "takagi.ru.monica.steam.SteamBoundaryGuardTest.steamMdbxSourceUsesMaFileEntriesWithoutLocalRoomImport",
+      "takagi.ru.monica.steam.store.gift.SteamStoreGiftUiGuardTest.purchaseActionsUseAnExpressiveSplitButtonAndNativeFriendPicker",
+      "takagi.ru.monica.steam.store.SteamStoreCollectionUiGuardTest.cartAndWishlistListsReserveSpaceAboveFloatingDock",
+      "takagi.ru.monica.steam.store.SteamStoreDetailInteractionGuardTest.screenshotsOpenTheDedicatedFullscreenViewer",
+      "takagi.ru.monica.steam.token.identity.ui.SteamIdentityInfoCardGuardTest.friendAndProfileDetailsReuseTheSameIdentityDisclosure",
+      "takagi.ru.monica.steam.ui.SteamSettingsChildPagesTest.sharedSettingsSupportsCompactHomeAndDedicatedChildModes",
+      "takagi.ru.monica.ui.MonicaSteamMotionParityTest.activitySharesMotionForDockAndSecondaryPages",
+      "takagi.ru.monica.ui.MonicaSteamMotionParityTest.navigationUsesConfiguredDockOrderAndDistinctPageKeys",
+      "takagi.ru.monica.utils.ClipboardUtilsTest.shouldNotClearDelayedClipboardWhenUserCopiedSomethingElse",
+      "takagi.ru.monica.utils.ClipboardUtilsTest.shouldClearDelayedClipboardWhenCopiedCredentialIsStillCurrent",
+      "takagi.ru.monica.utils.ClipboardUtilsTest.shouldClearDelayedClipboardWhenAndroidCannotVerifyBackgroundClipboard"
+    ]
+  },
+  "instrumentation": {
+    "logs": [
+      "device-23-final.txt",
+      "device-27-entry.txt",
+      "device-28-capture.txt"
+    ],
+    "differentMethodsPassed": 84,
+    "allPassedInSingleBatch": false,
+    "fullBatch": {
+      "tests": 84,
+      "failures": 1,
+      "seconds": 177.902
+    },
+    "entryRetest": {
+      "tests": 6,
+      "failures": 0,
+      "seconds": 21.344
+    },
+    "captureRetest": {
+      "tests": 1,
+      "failures": 0,
+      "seconds": 2.018
+    },
+    "methods": [
+      "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest#changingPreviewScopeImmediatelyDropsTheOldCard",
+      "takagi.ru.monica.steam.chat.SteamCardPreviewBlurDeviceTest#nativeBackgroundHasActualGaussianBlurAndRestoresAfterClosing",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#actualComposerSendsCardOnlyThroughExistingSendButton",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#gameInvitationKeepsSteamActionSeparateFromStore",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassDarkThreadAndShare",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassLightThreadAndShare",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#localDeleteRequiresConfirmationAndCancelKeepsMessage",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#longPressLiftsTheActualChatCardAndBackRestoresTheThread",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eDarkThreadAndShare",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eLightThreadAndShare",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#tradeOfferOpenAndCopyUseExactParsedOffer",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedCardRetainsOriginalMessageWithoutActionButton",
+      "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#continuedDraggingAtBothListEdgesKeepsViewportAndTopBlurInSync",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#directSearchRetainsMessagesAndDraftInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#gaussianRadiusAndTintFadeTowardsContentFromBothEdges",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#groupSearchRetainsMessagesAndDraftInBothThemes",
+      "takagi.ru.monica.steam.chat.SteamChatChromeUiTest#sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#actualDockSwitchesToPopulatedInboxWithoutRemountingNativeRows",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#inboxBottomBoundaryKeepsTheFilterBackdropAndRowsStationary",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#realListToPopulatedThreadFrameSample",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#unreadAndCategoriesAreMutuallyExclusive",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#wallpaperMountCostSample",
+      "takagi.ru.monica.steam.chat.SteamChatEntryRegressionTest#wallpaperSharesBoundedMaskAndAppliesCurrentBoundsAndTheme",
+      "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest#actualThumbnailFliesIntoViewerAndReturnsBeforeDismissal",
+      "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest#differentGalleryPageFadesInsteadOfReturningToTheWrongThumbnail",
+      "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest#dismissDuringEntryRemovesOnlyTheViewerAndAllowsReopening",
+      "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest#reducedMotionOpensAndClosesWithoutImageFlight",
+      "takagi.ru.monica.steam.navigation.SteamImageViewerMotionTest#unmountedThumbnailFallsBackToFadeAndViewerDisposalRestoresAnchor",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#badgeReflowRevokesAnInProgressDrag",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsHeldPointerAndCanDragAfterReturn",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsPendingReleaseAndCanDragAfterReturn",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancelledDragRestoresCommittedFilter",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cancellingADragFromAnUnselectedOptionRestoresTheCommittedFilter",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggedBlockMovesBeforeReleaseWithoutFilteringTheList",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingAnUnselectedOptionCommitsTheReleasedFilter",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#draggingSelectedGlassBlockCommitsUnreadExactlyOnce",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#edgeScrollReachesOffscreenArchivedFilter",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#externalSelectionCannotBeOverwrittenByReleasedOldGesture",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#holdingGlassExpandsBeyondTheSlotAndReleaseRestoresIt",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#largeFontBadgeAndReducedMotionStillSelectCorrectSlot",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#leavingTheFilterCancelsLateSelectionAndCanRemount",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eIgnoresDragAndSupportsClickSelection",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#m3eLargeFontShowsEveryFilterWithoutHorizontalScrolling",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#themeChangeCancelsHeldGlassSelection",
+      "takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged",
+      "takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest#hiddenChatStopsCollectingAndDisplaysLatestInboxOnReturn",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#backgroundDropsInactivePageBeforeResume",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#cachedNativeViewsDoNotReceiveTouchesOrRemainInAccessibilityTree",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#dialogFocusKeepsCurrentPageAndProgrammaticNavigationClosesItsWindow",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#platformViewModeEvictsInactivePageWithoutRemountingCurrentPage",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#sameFrameNavigationAndBackgroundCannotRestoreInactivePage",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#switchingTabsReleasesNativeEditorFocusAndRoutesKeysToCurrentPage",
+      "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest#visitedPagesKeepDraftAndOnlyCurrentPageReceivesBack",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#backDismissesSheetFirstAndAccountSwitchRevokesIt",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#contentFilters_hideOnlyAchievementsAndRestoreAll",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#gameActivityPreservesNamesAndMissingAppIds",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#loginEmptyAndNetworkStatesRemainDistinct",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#originalActivityAndSensitiveMediaUseReadOnlyActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#publishingRequiresExplicitClickAndKeepsTheCurrentFeedInBothSizes",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+      "takagi.ru.monica.steam.store.SteamNativeCartDesignDeviceTest#glassLarge",
+      "takagi.ru.monica.steam.store.SteamNativeCartDesignDeviceTest#glassNormal",
+      "takagi.ru.monica.steam.store.SteamNativeCartDesignDeviceTest#m3eLarge",
+      "takagi.ru.monica.steam.store.SteamNativeCartDesignDeviceTest#m3eNormal",
+      "takagi.ru.monica.steam.store.SteamNativeCartDesignDeviceTest#unresolvedPackageCannotCheckout"
+    ]
+  },
+  "previousBatches": {
+    "device09": {
+      "tests": 82,
+      "failures": 3
+    },
+    "device14": {
+      "tests": 24,
+      "failures": 4
+    },
+    "device18": {
+      "tests": 3,
+      "failures": 1
+    },
+    "device19": {
+      "tests": 84,
+      "failures": 0,
+      "seconds": 173.983
+    },
+    "device21": {
+      "tests": 84,
+      "failures": 42
+    },
+    "device22": {
+      "tests": 1,
+      "failures": 0,
+      "seconds": 2.006
+    }
+  },
+  "compiledStrings": 25,
+  "supportedLanguageGroups": 5,
+  "inboxBoundaryPixels": "held=0.0 released=0.0",
+  "dockInboxTiming": {
+    "firstSwitchMs": 149,
+    "warmMinMs": 60,
+    "warmMaxMs": 87,
+    "frameP50Ms": 5.626,
+    "frameP95Ms": 18.294,
+    "frameMaxMs": 72.753,
+    "samples": 399
+  },
+  "reference": {
+    "url": "https://github.com/1molchuan/CFluxDo",
+    "commit": "e5b8ea9ee43cd64469760fa99b99ed0c4e2f772e",
+    "license": "GPL-3.0"
+  },
+  "limits": [
+    "Synthetic Debug API35/x86_64 only; no user account, physical device, OEM or R8 validation.",
+    "No real Steam update posted or payment made; publishing entry tested as explicit routing callback plus source/session-policy review.",
+    "Dock timing uses 40 synthetic real inbox rows; other tabs are fixture placeholders; long frames remain.",
+    "Full-project JVM attempt was not green: 25 failures and 8 skipped; four obsolete task-related source assertions were subsequently updated and passed in the 339-test scope.",
+    "Intermediate main-18 APK was replaced by the final build using the same sequence; its old SHA is recorded, but no separate copy was retained."
+  ],
+  "committed": false,
+  "pushed": false,
+  "apkDelivered": false,
+  "cleanup": {
+    "restoredUser": 0,
+    "removedTaskUser": 13,
+    "retainedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "preexistingMuMuRetainedRunning": true,
+    "firstRemovalFailed": true,
+    "retryAfterConfirmedStoppedSucceeded": true,
+    "originalAvdUntouched": true
+  },
+  "audit": {
+    "frozenTaskPaths": 51,
+    "compiledResourceValues": 25,
+    "whitespaceCheckedTextFiles": 147,
+    "diffCheckPassed": true
+  }
+}

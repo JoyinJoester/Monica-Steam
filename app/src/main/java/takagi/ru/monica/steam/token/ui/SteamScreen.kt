@@ -1,8 +1,13 @@
 package takagi.ru.monica.steam.token.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshActionIcon
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassFloatingActionButton as FloatingActionButton
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -17,7 +22,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -52,8 +56,6 @@ import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -76,18 +78,14 @@ import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.VerifiedUser
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -95,18 +93,19 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,7 +113,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalContext
@@ -134,7 +132,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -143,12 +140,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.fragment.app.FragmentActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.net.HttpURLConnection
-import java.net.URL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
@@ -225,15 +219,14 @@ import takagi.ru.monica.ui.common.pull.rememberPullToSearchState
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
-import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
+import takagi.ru.monica.steam.foundation.ui.SteamListChoiceChip as MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.TotpCodeCard
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
 import takagi.ru.monica.ui.components.UnifiedProgressBar
 import takagi.ru.monica.ui.gestures.SwipeActions
 import takagi.ru.monica.ui.haptic.rememberHapticFeedback
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import takagi.ru.monica.ui.password.MonicaTopActionsDropdownMenu
 import takagi.ru.monica.ui.rememberTotpTickerMillis
 import takagi.ru.monica.util.TotpDataResolver
@@ -392,6 +385,9 @@ fun SteamScreen(
     onPlatformViewVisibilityChanged: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
+    val pageLifecycle = LocalLifecycleOwner.current.lifecycle
+    val pageState by pageLifecycle.currentStateFlow.collectAsState()
+    val pageActive = pageState.isAtLeast(Lifecycle.State.STARTED)
     val reduceAnimations = LocalReduceAnimations.current
     val focusManager = LocalFocusManager.current
     val activity = context as? FragmentActivity
@@ -408,7 +404,7 @@ fun SteamScreen(
     }
     val mdbxDatabasesState by passwordDatabase.localMdbxDatabaseDao()
         .getAllDatabases()
-        .collectAsState(initial = null)
+        .collectAsStateWithLifecycle(initialValue = null)
     val mdbxDatabases = mdbxDatabasesState.orEmpty().filter { database ->
         database.sourceTypeEnum == MdbxSourceType.LOCAL_INTERNAL ||
             database.sourceTypeEnum == MdbxSourceType.LOCAL_EXTERNAL ||
@@ -417,9 +413,10 @@ fun SteamScreen(
     }
     val mdbxDatabasesLoaded = mdbxDatabasesState != null
     val settingsManager = remember { SettingsManager(context.applicationContext) }
-    val appSettings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
-    val uiState by viewModel.uiState.collectAsState()
-    val chatUiState by chatViewModel.uiState.collectAsState()
+    val appSettings by settingsManager.settingsFlow.collectAsStateWithLifecycle(initialValue = AppSettings())
+    var contactsRefreshing by remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val chatUiState by chatViewModel.uiState.collectAsStateWithLifecycle()
     var selectedSection by rememberSaveable { mutableStateOf(SteamSection.CODE) }
     val storedSelectedAccount = uiState.accounts.firstOrNull { it.id == uiState.selectedAccountId }
     val tokenAccounts = remember(uiState.accounts) {
@@ -458,8 +455,8 @@ fun SteamScreen(
     var showStorageSourceMenu by remember { mutableStateOf(false) }
     var showAddAccountDialog by remember { mutableStateOf(false) }
     var showOfficialAddFriend by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(openNotificationsOnEntry) {
-        if (openNotificationsOnEntry) {
+    LaunchedEffect(openNotificationsOnEntry, pageActive) {
+        if (openNotificationsOnEntry && pageActive) {
             selectedSection = SteamSection.NOTIFICATIONS
             steamSearchQuery = ""
             isSteamSearchExpanded = false
@@ -765,14 +762,15 @@ fun SteamScreen(
         }
     }
 
-    LaunchedEffect(openAddAccountOnEntry) {
-        if (openAddAccountOnEntry) {
+    LaunchedEffect(openAddAccountOnEntry, pageActive) {
+        if (openAddAccountOnEntry && pageActive) {
             showAddAccountDialog = true
             onAddAccountEntryConsumed()
         }
     }
 
-    LaunchedEffect(pendingSteamQrResult, pendingSteamQrAccountId, uiState.accounts, selectedAccount?.id) {
+    LaunchedEffect(pendingSteamQrResult, pendingSteamQrAccountId, uiState.accounts, selectedAccount?.id, pageActive) {
+        if (!pageActive) return@LaunchedEffect
         val qr = pendingSteamQrResult?.trim().orEmpty()
         if (qr.isNotBlank()) {
             val targetAccount = uiState.accounts.firstOrNull { it.id == pendingSteamQrAccountId }
@@ -796,7 +794,8 @@ fun SteamScreen(
         }
     }
 
-    LaunchedEffect(uiState.message) {
+    LaunchedEffect(uiState.message, pageActive) {
+        if (!pageActive) return@LaunchedEffect
         uiState.message?.let { message ->
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             if (message == context.getString(R.string.steam_account_rebind_done)) {
@@ -809,8 +808,10 @@ fun SteamScreen(
     LaunchedEffect(
         uiState.inventoryMarket.lastActionResult,
         sellItemStack,
-        batchSellStacks
+        batchSellStacks,
+        pageActive
     ) {
+        if (!pageActive) return@LaunchedEffect
         val result = uiState.inventoryMarket.lastActionResult ?: return@LaunchedEffect
         if (result.action == SteamMarketActionType.CANCEL_LISTING) {
             if (result.affectedCount > 0) {
@@ -865,7 +866,8 @@ fun SteamScreen(
         }
     }
 
-    LaunchedEffect(selectedAccount?.id, selectedAccount?.canApproveLogins, uiState.pendingLogins) {
+    LaunchedEffect(selectedAccount?.id, selectedAccount?.canApproveLogins, uiState.pendingLogins, pageActive) {
+        if (!pageActive) return@LaunchedEffect
         val activeIds = uiState.pendingLogins.map { it.clientId }.toSet()
         val promptedActiveIds = autoPromptedLoginClientIds.intersect(activeIds)
         if (promptedActiveIds != autoPromptedLoginClientIds) {
@@ -1750,8 +1752,7 @@ fun SteamScreen(
                     else -> SteamTopBarMode.Root
                 },
                 transitionSpec = {
-                    easyNotesScreenEnter(reduceAnimations)
-                        .togetherWith(easyNotesScreenExit(reduceAnimations))
+                    steamPageTransition(reduceAnimations)
                 },
                 label = "SteamTopBarNavigation"
             ) { topBarMode ->
@@ -1785,7 +1786,17 @@ fun SteamScreen(
                         onOpenOfficialAddFriend = { showOfficialAddFriend = true }
                     )
                     SteamTopBarMode.Root -> SteamRootTopBar(
-                        title = stringResource(R.string.nav_steam),
+                        refreshing = uiState.loading || when (selectedSection) {
+                            SteamSection.CONFIRMATIONS -> uiState.confirmationsRefreshing
+                            SteamSection.NOTIFICATIONS -> uiState.notifications.loading
+                            SteamSection.FRIENDS -> contactsRefreshing
+                            SteamSection.TRADE_OFFERS -> uiState.tradeOffers.loading
+                            SteamSection.INVENTORY -> uiState.inventoryMarket.inventoryLoading
+                            SteamSection.MARKET -> uiState.inventoryMarket.listingsLoading
+                            else -> false
+                        },
+                        // Matches the Dock label of this page.
+                        title = stringResource(R.string.steam_dock_token),
                         searchQuery = steamSearchQuery,
                         onSearchQueryChange = { query ->
                             steamSearchQuery = query
@@ -1925,8 +1936,7 @@ fun SteamScreen(
                     .fillMaxSize()
                     .padding(contentPadding),
                 transitionSpec = {
-                    easyNotesScreenEnter(reduceAnimations)
-                        .togetherWith(easyNotesScreenExit(reduceAnimations))
+                    steamPageTransition(reduceAnimations)
                 },
                 label = "SteamDetailNavigation"
             ) { animatedDetailAccountId ->
@@ -2078,7 +2088,7 @@ fun SteamScreen(
                                 onRequestResponse = ::requestProtectedConfirmationAction
                             )
                             SteamSection.FRIENDS -> SteamFriendsScreen(
-                                searchQuery = steamSearchQuery,
+                                onRefreshingChanged = { contactsRefreshing = it },                                searchQuery = steamSearchQuery,
                                 refreshRequest = friendsRefreshRequest,
                                 selectedFriendId = selectedFriendId,
                                 onSelectedFriendIdChange = { friendId ->
@@ -2105,6 +2115,7 @@ fun SteamScreen(
                                 modifier = Modifier.fillMaxSize()
                             )
                             SteamSection.CHAT -> SteamChatScreen(
+                                onAddSteamAccount = { showAddAccountDialog = true },
                                 searchQuery = steamSearchQuery,
                                 refreshRequest = chatRefreshRequest,
                                 requestedPartnerSteamId = requestedChatPartnerSteamId,
@@ -2234,18 +2245,6 @@ fun SteamScreen(
                 }
             }
 
-            if (uiState.loading) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxWidth()
-                        .padding(
-                            start = 16.dp,
-                            top = contentPadding.calculateTopPadding(),
-                            end = 16.dp
-                        )
-                )
-            }
 
         }
     }
@@ -2254,6 +2253,7 @@ fun SteamScreen(
 
 @Composable
 private fun SteamRootTopBar(
+    refreshing: Boolean,
     title: String,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
@@ -2305,11 +2305,7 @@ private fun SteamRootTopBar(
                             }
                         }
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = stringResource(R.string.more_options),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        SteamRefreshActionIcon(refreshing, Icons.Default.MoreVert, stringResource(R.string.more_options))
                     }
                 }
                 topActionsMenu()
@@ -3679,6 +3675,7 @@ private fun SteamConfirmationsContent(
 
     Box(modifier = Modifier.fillMaxSize()) {
         SteamExpressivePullToRefresh(
+            showIndicator = false,
             refreshing = confirmationsRefreshing,
             onRefresh = onRefresh,
             enabled = account?.canUseConfirmations == true,
@@ -4879,25 +4876,11 @@ private fun SteamEmptyAccountContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        takagi.ru.monica.steam.foundation.ui.SteamEmptyState(
+            icon = Icons.Default.VerifiedUser,
+            title = stringResource(R.string.steam_empty_title),
+            message = stringResource(R.string.steam_empty_message)
         ) {
-            Icon(
-                imageVector = Icons.Default.VerifiedUser,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = stringResource(R.string.steam_empty_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold
-            )
-            Text(
-                text = stringResource(R.string.steam_empty_message),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
             Button(onClick = onAddAccount) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
@@ -5294,7 +5277,7 @@ private fun SteamQrLoginImportDialog(
     val passwordDatabase = remember(context) { PasswordDatabase.getDatabase(context) }
     val legacyTotpItems by passwordDatabase.secureItemDao()
         .getActiveItemsByType(ItemType.TOTP)
-        .collectAsState(initial = emptyList())
+        .collectAsStateWithLifecycle(initialValue = emptyList())
     var challengeCode by remember { mutableStateOf("") }
     var showMonicaCodePicker by remember { mutableStateOf(false) }
     var sessionOnly by rememberSaveable { mutableStateOf(true) }
@@ -5910,7 +5893,7 @@ internal fun SteamLoginImportDialog(
     val passwordDatabase = remember(context) { PasswordDatabase.getDatabase(context) }
     val legacyTotpItems by passwordDatabase.secureItemDao()
         .getActiveItemsByType(ItemType.TOTP)
-        .collectAsState(initial = emptyList())
+        .collectAsStateWithLifecycle(initialValue = emptyList())
     var loginName by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var loginDisplayName by remember { mutableStateOf("") }

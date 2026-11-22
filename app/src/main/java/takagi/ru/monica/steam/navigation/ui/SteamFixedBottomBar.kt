@@ -8,6 +8,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import takagi.ru.monica.steam.navigation.liquidglass.ui.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.steam.navigation.SteamDockTab
@@ -23,10 +26,12 @@ internal fun SteamFixedBottomBar(
     onSelected: (SteamDockTab) -> Unit
 ) {
     val windowInsets = rememberSteamWindowBottomInsets()
+    val glass = steamGlassAvailable()
     NavigationBar(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().then(if (glass) Modifier.steamGlassSurface(
+            RectangleShape, MaterialTheme.colorScheme.surface, SteamGlassRole.TOOLBAR) else Modifier),
         tonalElevation = 0.dp,
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = if (glass) Color.Transparent else MaterialTheme.colorScheme.surface,
         windowInsets = windowInsets
     ) {
         SteamDockTab.completeFixedOrder(order).forEach { tab ->

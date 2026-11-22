@@ -1,0 +1,3 @@
+rimPixels=1544
+centralTextPixels=371
+restingTextPixels=234

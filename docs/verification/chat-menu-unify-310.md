@@ -1,0 +1,13 @@
+# Chat and library overflow unification — 1.0.310
+
+2026-11-21. Chat inbox and contacts previously used SteamTelegramMenu, a separate native text-only popup. They now use SteamActionOverflowMenu, extracted from the existing library overflow. The shared implementation owns the anchor, refreshing glyph, MonicaTopActionsDropdownMenu surface, icon/text rows, enabled state and dismissal. Library action order and callbacks remain unchanged. Inbox supplies Space/DynamicFeed, new group/GroupAdd and refresh/Refresh; contacts supplies its existing group, refresh, chats and account actions with icons. Inbox clears focus before running an action. Refresh disables only its duplicate command.
+
+The shared surface continues to select the existing M3E frosted or liquid-glass rendering and popup motion. This task changes inbox/contacts page menus; native conversation-thread action menus remain separate. Existing localized labels are reused. The prior library Collections relocation remains present.
+
+Editable Canvas and actual single-page preview were inspected locally. Native final dark M3E and liquid-glass captures use the real header and popup with a backdrop host and synthetic chat rows. All images and editable design files remain only in ignored docs/design/20261121-chat-menu-unify; no user screenshot or account content is copied into the repository.
+
+Debug main/instrumentation build01 succeeded in 3m24s (204.514s driver). Existing MuMu0/API35/x86_64 was reused with isolated .chatmenu packages. device01 passed 3/4: both styles' chat action/disabled-refresh check, library refresh menu and real morph/reduced-motion assertions passed. The Space round-trip driver failed to locate the new Compose popup because it intersected a display-coordinate target against a root-relative visible rectangle. Only the test coordinate conversion was corrected using getLocalVisibleRect plus the root's screen origin; native injected taps and all navigation/search/account assertions remain.
+
+Instrumentation-only testbuild02 succeeded in 33s. Final device02 passed all four tests, runner 6.833s. The main APK is the same as device01; receipts and both APK hashes are recorded in the evidence directory. Final native screenshots for both styles were inspected. This is synthetic emulator verification, not authenticated live chat or physical/OEM/R8 validation; contacts routing is covered by shared-component/source review rather than a dedicated device case.
+
+Scoped diff check and source SHA-256 verification passed. Both task packages were removed; original users/packages, font/display settings and pre-existing MuMu0/data disk remain. Version stays 1.0.310/code18. No commit, push, release or APK delivery.

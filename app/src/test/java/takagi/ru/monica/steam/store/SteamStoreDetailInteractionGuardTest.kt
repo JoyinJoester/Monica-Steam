@@ -41,7 +41,7 @@ class SteamStoreDetailInteractionGuardTest {
         assertTrue(sharedViewerSource.contains("rememberPagerState("))
         assertTrue(sharedViewerSource.contains("initialPage = initialIndex.coerceIn"))
         assertTrue(sharedViewerSource.contains("pagerState.animateScrollToPage"))
-        assertTrue(sharedViewerSource.contains("background(Color.Black)"))
+        assertTrue(sharedViewerSource.contains("drawRect(Color.Black, alpha = progress.value)"))
         assertTrue(sharedViewerSource.contains("SteamImageDownloader("))
         assertTrue(sharedPageSource.contains("ContentScale.Fit"))
         assertTrue(sharedPageSource.contains("canPan = { scale > 1f }"))
@@ -80,7 +80,7 @@ class SteamStoreDetailInteractionGuardTest {
         assertTrue(detail.contains("onReviews = { if (hasReviews) scrollToSection(reviewSectionIndex) else onOpenOfficialReviews() }"))
         assertTrue(detail.contains("onOfficial = onOpenOfficial"))
         assertTrue(detail.contains("bottom = dockContentClearance + 24.dp"))
-        assertFalse(detail.contains("SteamStoreDetailActionToolbar("))
+        assertTrue(detail.contains("SteamStoreDetailActionToolbar(purchase, onOpenOfficial, reviews, onShare)"))
     }
 
     @Test
@@ -122,7 +122,9 @@ class SteamStoreDetailInteractionGuardTest {
         assertTrue(reviewList.contains("Modifier.fillMaxWidth().heightIn(min = 48.dp)"))
         assertTrue(reviewList.contains("onOpenAuthor"))
         assertTrue(reviewList.contains("review.authorSteamId"))
-        assertTrue(reviewList.contains("R.string.steam_store_review_view_author"))
+        val authorHeader = projectFile("app/src/main/java/takagi/ru/monica/steam/store/ui/SteamReviewAuthor.kt").readText()
+        assertTrue(reviewList.contains("SteamReviewAuthor(review.authorSteamId, onOpenAuthor"))
+        assertTrue(authorHeader.contains("R.string.steam_store_review_view_author"))
     }
 
     @Test

@@ -1,0 +1,10 @@
+11-21 12:37:08.821  4911  5003 I System.out: PICKER_LENS rim=727 textHeld=393 textRest=366 drift=Offset(-0.5, 0.0)
+11-21 12:37:10.136  4911  5003 I System.out: PICKER_GAUSSIAN dark=false contrast=6 blackWhiteDelta=101.85380116959064
+11-21 12:37:11.259  4911  5003 I System.out: PICKER_LENS rim=1450 textHeld=394 textRest=366 drift=Offset(-0.5, 0.0)
+11-21 12:37:12.483  4911  5003 I System.out: PICKER_GAUSSIAN dark=true contrast=9 blackWhiteDelta=132.85380116959064
+11-21 12:38:48.299  8334  8449 I System.out: PICKER_LENS rim=727 textHeld=393 textRest=366 drift=Offset(-0.5, 0.0)
+11-21 12:38:48.300  8334  8449 I System.out: PICKER_GLYPH rest=54.0x22.0 held=65.0x24.0
+11-21 12:38:49.677  8334  8449 I System.out: PICKER_GAUSSIAN dark=false contrast=6 blackWhiteDelta=101.85380116959064
+11-21 12:38:50.845  8334  8449 I System.out: PICKER_LENS rim=1450 textHeld=394 textRest=366 drift=Offset(-0.5, 0.0)
+11-21 12:38:50.845  8334  8449 I System.out: PICKER_GLYPH rest=54.0x22.0 held=65.0x24.0
+11-21 12:38:52.233  8334  8449 I System.out: PICKER_GAUSSIAN dark=true contrast=9 blackWhiteDelta=132.85380116959064

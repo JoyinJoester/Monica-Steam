@@ -1,0 +1,24 @@
+Users:
+	UserInfo{0:Owner:4c13} running
+	UserInfo{10:Monica_KMP_Migration_20261108:1030}
+	UserInfo{11:Monica_Harmony_Bridge_20261111:1030}
+	UserInfo{12:Monica_Harmony_Return_20261112:1030}
+	UserInfo{13:Monica_Steam_CardPreview_1118:410} running
+Success
+Success
+First remove-user attempt failed: could not remove user id 13; retaining failure and checking stopped state before retry.
+Users:
+	UserInfo{0:Owner:4c13} running
+	UserInfo{10:Monica_KMP_Migration_20261108:1030}
+	UserInfo{11:Monica_Harmony_Bridge_20261111:1030}
+	UserInfo{12:Monica_Harmony_Return_20261112:1030}
+	UserInfo{13:Monica_Steam_CardPreview_1118:410}
+User is not started: 13
+Success: removed user
+Users:
+	UserInfo{0:Owner:4c13} running
+	UserInfo{10:Monica_KMP_Migration_20261108:1030}
+	UserInfo{11:Monica_Harmony_Bridge_20261111:1030}
+	UserInfo{12:Monica_Harmony_Return_20261112:1030}
+0
+device

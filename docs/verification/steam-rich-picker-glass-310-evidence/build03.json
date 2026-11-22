@@ -1,0 +1,23 @@
+{
+  "exitCode": 0,
+  "seconds": 62.95544930000324,
+  "args": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+    "--no-daemon",
+    "--max-workers=1",
+    "--console=plain",
+    "-Dorg.gradle.jvmargs=-Xmx6g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "-I",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261121-steam-rich-picker-glass\\device.gradle",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+    "--tests",
+    "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest"
+  ]
+}

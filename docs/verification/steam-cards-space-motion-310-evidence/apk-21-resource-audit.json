@@ -1,0 +1,127 @@
+[
+  {
+    "config": "",
+    "key": "steam_preview_open",
+    "value": "Preview"
+  },
+  {
+    "config": "",
+    "key": "steam_preview_close",
+    "value": "Close preview"
+  },
+  {
+    "config": "",
+    "key": "steam_preview_message_actions",
+    "value": "Message actions"
+  },
+  {
+    "config": "",
+    "key": "steam_space_publish",
+    "value": "Post an update"
+  },
+  {
+    "config": "",
+    "key": "steam_space_event_details",
+    "value": "More activity details"
+  },
+  {
+    "config": "zh",
+    "key": "steam_preview_open",
+    "value": "预览"
+  },
+  {
+    "config": "zh",
+    "key": "steam_preview_close",
+    "value": "关闭预览"
+  },
+  {
+    "config": "zh",
+    "key": "steam_preview_message_actions",
+    "value": "消息操作"
+  },
+  {
+    "config": "zh",
+    "key": "steam_space_publish",
+    "value": "发布动态"
+  },
+  {
+    "config": "zh",
+    "key": "steam_space_event_details",
+    "value": "查看更多动态详情"
+  },
+  {
+    "config": "ja",
+    "key": "steam_preview_open",
+    "value": "プレビュー"
+  },
+  {
+    "config": "ja",
+    "key": "steam_preview_close",
+    "value": "プレビューを閉じる"
+  },
+  {
+    "config": "ja",
+    "key": "steam_preview_message_actions",
+    "value": "メッセージの操作"
+  },
+  {
+    "config": "ja",
+    "key": "steam_space_publish",
+    "value": "近況を投稿"
+  },
+  {
+    "config": "ja",
+    "key": "steam_space_event_details",
+    "value": "アクティビティの詳細"
+  },
+  {
+    "config": "ru",
+    "key": "steam_preview_open",
+    "value": "Предпросмотр"
+  },
+  {
+    "config": "ru",
+    "key": "steam_preview_close",
+    "value": "Закрыть предпросмотр"
+  },
+  {
+    "config": "ru",
+    "key": "steam_preview_message_actions",
+    "value": "Действия с сообщением"
+  },
+  {
+    "config": "ru",
+    "key": "steam_space_publish",
+    "value": "Опубликовать статус"
+  },
+  {
+    "config": "ru",
+    "key": "steam_space_event_details",
+    "value": "Подробнее о событии"
+  },
+  {
+    "config": "vi",
+    "key": "steam_preview_open",
+    "value": "Xem trước"
+  },
+  {
+    "config": "vi",
+    "key": "steam_preview_close",
+    "value": "Đóng bản xem trước"
+  },
+  {
+    "config": "vi",
+    "key": "steam_preview_message_actions",
+    "value": "Thao tác với tin nhắn"
+  },
+  {
+    "config": "vi",
+    "key": "steam_space_publish",
+    "value": "Đăng trạng thái"
+  },
+  {
+    "config": "vi",
+    "key": "steam_space_event_details",
+    "value": "Xem thêm chi tiết hoạt động"
+  }
+]

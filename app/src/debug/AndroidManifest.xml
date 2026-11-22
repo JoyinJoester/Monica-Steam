@@ -3,6 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application>
+        <activity android:name="takagi.ru.monica.steam.SteamChineseComposeFixtureActivity"
+            android:screenOrientation="portrait" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="takagi.ru.monica.steam.SteamBiometricFixtureActivity"
+            android:exported="false" />
+        <activity android:name="takagi.ru.monica.steam.SteamComposeFixtureActivity"
+            android:screenOrientation="portrait" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="takagi.ru.monica.steam.SteamTelegramDesignFixtureActivity"
+            android:screenOrientation="portrait" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="takagi.ru.monica.steam.SteamSpaceFixtureActivity"
+            android:screenOrientation="portrait" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="takagi.ru.monica.steam.TelegramSocialFixtureActivity"
+            android:screenOrientation="portrait" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="takagi.ru.monica.steam.TelegramChatFixtureActivity"
+            android:exported="false" android:windowSoftInputMode="adjustResize" />
         <activity android:name="androidx.activity.ComponentActivity" tools:node="remove" />
         <activity android:name="androidx.compose.ui.tooling.PreviewActivity" tools:node="remove" />
     </application>

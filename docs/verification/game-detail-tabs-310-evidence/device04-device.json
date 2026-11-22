@@ -1,0 +1,18 @@
+{
+  "args": [
+    "D:/AndroidSDK/platform-tools/adb.exe",
+    "-s",
+    "127.0.0.1:16384",
+    "shell",
+    "am",
+    "instrument",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.store.SteamGameDetailTabsUiTest,takagi.ru.monica.steam.store.SteamStoreDetailPricesUiTest",
+    "takagi.ru.monica.steamapp.gamedetail.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "exit": 0,
+  "seconds": 20.641541699995287
+}

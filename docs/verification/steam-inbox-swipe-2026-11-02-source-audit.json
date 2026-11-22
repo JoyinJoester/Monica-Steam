@@ -1,0 +1,32 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationSwipeActions.kt",
+    "sha256": "ddbcd7b69159c444b7d44b366e07aaa1bc34c20e15a96227e699b364a0f4710f",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationRow.kt",
+    "sha256": "0dc4819307c3abcfd1ee91daecae4359399f0b44ec84cf3b5450e16b8e42d82b",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationList.kt",
+    "sha256": "7eff31f294d31788e8e305ba3053a51d18b33300be495caf2ef13f5356fb5872",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramNativeSocial.kt",
+    "sha256": "9b287731191626992265dda95fe98f6d5ebc5338f1b33ae37cae1a1121184d66",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamInboxSwipeUiTest.kt",
+    "sha256": "9c7fe5d4ab80db73eae6e638e40288f10f43904bf252ec33419268c3ea653f95",
+    "whitespaceAndConflictCheck": "passed"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamGroupAvatarUiTest.kt",
+    "sha256": "e5ab1cb674b38f3e88a566691c13c9c112fb78a2e7410bced6e110267263bcc0",
+    "whitespaceAndConflictCheck": "passed"
+  }
+]

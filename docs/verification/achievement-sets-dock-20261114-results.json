@@ -1,0 +1,362 @@
+{
+  "version": "1.0.310",
+  "published": false,
+  "committed": false,
+  "apkDelivered": false,
+  "rustTests": 116,
+  "latestJvm": {
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "deviceUniqueMethods": 11,
+  "deviceFunctionalMethods": 10,
+  "production": {
+    "exit": 0,
+    "seconds": 720.308875799994,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-achievement-sets-glass\\production.gradle",
+      ":app:assembleDebug"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "ec7bdd647a6c378b839087fc4f65b438a8a87699aaac53182be441292e826d99"
+    }
+  },
+  "performance": {
+    "final25": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 25,
+        "compositions": 0,
+        "effectBuilds": 36,
+        "frames": 142,
+        "medianMs": 18.072085,
+        "p95Ms": 34.898439,
+        "p99Ms": 35.083312,
+        "over16_67Ms": 85,
+        "drawMedianMs": 2.418287,
+        "drawP95Ms": 3.679355,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 155,
+        "compositions": 0,
+        "effectBuilds": 252,
+        "frames": 807,
+        "medianMs": 6.302514,
+        "p95Ms": 13.214882,
+        "p99Ms": 18.037589,
+        "over16_67Ms": 36,
+        "drawMedianMs": 1.079639,
+        "drawP95Ms": 1.904574,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 239,
+        "compositions": 0,
+        "effectBuilds": 572,
+        "frames": 380,
+        "medianMs": 5.463693,
+        "p95Ms": 12.868223,
+        "p99Ms": 18.205343,
+        "over16_67Ms": 17,
+        "drawMedianMs": 0.833365,
+        "drawP95Ms": 1.576083,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "final26": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 36,
+        "frames": 143,
+        "medianMs": 17.910307,
+        "p95Ms": 18.424597,
+        "p99Ms": 24.719737,
+        "over16_67Ms": 87,
+        "drawMedianMs": 2.203301,
+        "drawP95Ms": 3.279656,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 252,
+        "frames": 809,
+        "medianMs": 6.252483,
+        "p95Ms": 8.996239,
+        "p99Ms": 13.445962,
+        "over16_67Ms": 0,
+        "drawMedianMs": 1.089943,
+        "drawP95Ms": 1.735125,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 572,
+        "frames": 381,
+        "medianMs": 5.384049,
+        "p95Ms": 9.870753,
+        "p99Ms": 12.152331,
+        "over16_67Ms": 0,
+        "drawMedianMs": 0.819834,
+        "drawP95Ms": 1.44709,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "final27": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 25,
+        "compositions": 0,
+        "effectBuilds": 36,
+        "frames": 143,
+        "medianMs": 18.209186,
+        "p95Ms": 34.969812,
+        "p99Ms": 35.192115,
+        "over16_67Ms": 85,
+        "drawMedianMs": 2.416001,
+        "drawP95Ms": 3.874204,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 155,
+        "compositions": 0,
+        "effectBuilds": 252,
+        "frames": 810,
+        "medianMs": 6.550409,
+        "p95Ms": 10.796501,
+        "p99Ms": 18.072476,
+        "over16_67Ms": 18,
+        "drawMedianMs": 1.191409,
+        "drawP95Ms": 1.902616,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 239,
+        "compositions": 0,
+        "effectBuilds": 572,
+        "frames": 382,
+        "medianMs": 5.76075,
+        "p95Ms": 10.296122,
+        "p99Ms": 14.850668,
+        "over16_67Ms": 0,
+        "drawMedianMs": 0.881897,
+        "drawP95Ms": 1.833682,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "final28": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 32,
+        "frames": 139,
+        "medianMs": 34.686026,
+        "p95Ms": 36.248648,
+        "p99Ms": 51.605872,
+        "over16_67Ms": 129,
+        "drawMedianMs": 2.960265,
+        "drawP95Ms": 5.991376,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 246,
+        "frames": 802,
+        "medianMs": 14.774039,
+        "p95Ms": 21.632281,
+        "p99Ms": 35.535195,
+        "over16_67Ms": 397,
+        "drawMedianMs": 1.568525,
+        "drawP95Ms": 3.187137,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 564,
+        "frames": 374,
+        "medianMs": 5.660079,
+        "p95Ms": 19.100735,
+        "p99Ms": 23.186517,
+        "over16_67Ms": 101,
+        "drawMedianMs": 0.907706,
+        "drawP95Ms": 2.134415,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "audit29": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 21,
+        "compositions": 0,
+        "effectBuilds": 32,
+        "frames": 137,
+        "medianMs": 18.069366,
+        "p95Ms": 35.175583,
+        "p99Ms": 52.656575,
+        "over16_67Ms": 79,
+        "drawMedianMs": 2.768945,
+        "drawP95Ms": 7.17365,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 155,
+        "compositions": 0,
+        "effectBuilds": 248,
+        "frames": 804,
+        "medianMs": 6.552127,
+        "p95Ms": 15.491776,
+        "p99Ms": 18.408909,
+        "over16_67Ms": 37,
+        "drawMedianMs": 1.175811,
+        "drawP95Ms": 2.272473,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 239,
+        "compositions": 0,
+        "effectBuilds": 568,
+        "frames": 372,
+        "medianMs": 5.387455,
+        "p95Ms": 9.276453,
+        "p99Ms": 12.12174,
+        "over16_67Ms": 0,
+        "drawMedianMs": 0.825442,
+        "drawP95Ms": 1.55756,
+        "droppedMetricCallbacks": 0
+      }
+    },
+    "audit30": {
+      "cold": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 36,
+        "frames": 143,
+        "medianMs": 17.861917,
+        "p95Ms": 34.737879,
+        "p99Ms": 35.012953,
+        "over16_67Ms": 85,
+        "drawMedianMs": 2.19713,
+        "drawP95Ms": 3.201113,
+        "droppedMetricCallbacks": 0
+      },
+      "drag": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 252,
+        "frames": 810,
+        "medianMs": 5.762369,
+        "p95Ms": 10.297608,
+        "p99Ms": 17.904393,
+        "over16_67Ms": 19,
+        "drawMedianMs": 1.041742,
+        "drawP95Ms": 1.786522,
+        "droppedMetricCallbacks": 0
+      },
+      "click": {
+        "indicatorBufferDimensionChanges": 0,
+        "compositions": 0,
+        "effectBuilds": 572,
+        "frames": 380,
+        "medianMs": 5.163278,
+        "p95Ms": 9.709773,
+        "p99Ms": 13.062171,
+        "over16_67Ms": 0,
+        "drawMedianMs": 0.798869,
+        "drawP95Ms": 1.656786,
+        "droppedMetricCallbacks": 0
+      }
+    }
+  },
+  "stableTextureDimensionChanges": {
+    "originalDrag": 155,
+    "originalClick": 239,
+    "finalDrag": 0,
+    "finalClick": 0
+  },
+  "shaderIdentityPixelsEqual": true,
+  "positiveRefractionPreserved": true,
+  "sourceHashes": {
+    "rust/monica-steam-core/src/achievement.rs": "b4e092ea52d9550682628de95c41c5ab1a355657eb7fbfa1470107365db4dbdd",
+    "rust/monica-steam-android/src/library_bridge.rs": "66f766c22d532acb8819549395e2eb5709156702ec51fd874ee3e13b7a829c7c",
+    "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryModels.kt": "b4e7f9f9fa10f35623656c30cd79b73950a3b2c41dce7d62ff114d18fa527423",
+    "app/src/main/java/takagi/ru/monica/steam/library/SteamGameLibraryService.kt": "02dfca82851979ae9c71f166baa9a084d4c9e7fdb447fdbf2007f2c64ca90b0a",
+    "app/src/main/java/takagi/ru/monica/steam/library/RustAchievementDetailsParser.kt": "d6e29e99385522c26a6e3cfdb4f8b2b71c5446d1e30b1c5e6092a6d137ee8f3d",
+    "app/src/main/java/takagi/ru/monica/steam/library/SteamAchievementSetsParser.kt": "ddd21848fb6c16bdf31ad484adbf73f5e34cddc094353c9b7f60416ca28bb175",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "efc7b1c52b34a3d6f8f4f5c9bf18358cd5dcfc5bf41b814a369f9c45338e3ba9",
+    "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementSetSelector.kt": "d19510ddf78066e4526b4822abd9d1322e23475eaa72af0bb3714d0bd32e1aeb",
+    "app/src/main/java/takagi/ru/monica/steam/profile/viewer/domain/SteamProfileViewerModels.kt": "f2a7e54b47e01804c874d815a523189fc2ee7d856317a2416cb7e5adf043b5c0",
+    "app/src/main/java/takagi/ru/monica/steam/profile/viewer/ui/SteamProfileAchievementComparison.kt": "53c630ad7513201a5301ee0a565694b28a7e07c91fac61fe034e04dad983416a",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/render/LiquidGlassLens.kt": "f9e6aa5188ce5fbb209fff85b270c47900c483959a065141b11b4e6edc291c3d",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamLiquidGlassDock.kt": "9cde7d24dc2e1ed2cf6d74dd82f142e39ca180328da2b1a0ba9bb00b172ff86d",
+    "app/src/main/res/values/strings_achievement_sets.xml": "6f866e758e76c93aa35032b725eaf51908722a4329904ba2c9cc0410a8f29431",
+    "app/src/main/res/values-zh/strings_achievement_sets.xml": "436113c8ceb19c5862557aaafcb42fe1efd6ce4bdcc70066d5ef4caa6f49ccb1",
+    "app/src/test/java/takagi/ru/monica/steam/library/SteamAchievementSetsTest.kt": "c4d127e6759245b8e982e70634104e44815835d677e560567aae67e028697aa7",
+    "app/src/androidTest/java/takagi/ru/monica/steam/library/SteamAchievementSetsDeviceTest.kt": "c22ea7c18a30492ed598dcfaa78e2a8857df3ccf7ce7cd924aadc91924a947d8",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/LiquidGlassLensDeviceTest.kt": "d2ea92dae7a744f4141097df6674abb6183f741ff4003c13f5d7abeec5bbfc87",
+    "app/src/main/jniLibs/arm64-v8a/libmonica_steam_android.so": "e906f6e12516356739200e7b82f3cba72cdfc0603bbaa45770474684378c5d79",
+    "app/src/main/jniLibs/armeabi-v7a/libmonica_steam_android.so": "37c74afcf7c10857bc7e7c55b7f1055dd55579cc6e5e8e8614831730adc61597",
+    "app/src/main/jniLibs/x86_64/libmonica_steam_android.so": "bf15a0bc25a5aabc0f387bb2446f910ebdd8354fc94a1c2fd2080e29b7c32aa2"
+  },
+  "performanceFullyResolved": false,
+  "scope": "Synthetic fixtures, MuMu API35 x86_64; no physical phone acceptance",
+  "productionAudit": {
+    "package": "takagi.ru.monica.steamapp",
+    "version": "1.0.310",
+    "debuggable": false,
+    "minifyWithR8": true,
+    "apkSha256": "ec7bdd647a6c378b839087fc4f65b438a8a87699aaac53182be441292e826d99",
+    "resourceNamesVerified": [
+      "steam_achievement_archived",
+      "steam_achievement_hidden",
+      "steam_achievement_set_archived",
+      "steam_achievement_set_base",
+      "steam_achievement_set_complete",
+      "steam_achievement_set_dlc",
+      "steam_achievement_set_progress",
+      "steam_achievement_set_unavailable",
+      "steam_achievement_set_unnamed",
+      "steam_achievement_sets",
+      "steam_achievement_sets_all"
+    ],
+    "deviceTestedNativeExactlyMatchesProduction": true,
+    "packagedNativeSha256": "61873cf04e7a5f092f68dd1d81019ccff7c0620f09f96543f3cee28d9345c95d"
+  },
+  "cleanup": {
+    "onlyOwnedPackages": [
+      {
+        "package": "takagi.ru.monica.steamapp.setglass.test",
+        "exit": 0,
+        "output": "Success\r\n"
+      },
+      {
+        "package": "takagi.ru.monica.steamapp.setglass",
+        "exit": 0,
+        "output": "Success\r\n"
+      }
+    ],
+    "shutdownRequested": {
+      "errcode": 0,
+      "errmsg": ""
+    },
+    "stoppedVerified": true,
+    "sharedAvdTouched": false,
+    "sharedAdbStopped": false,
+    "dataDisksPreserved": true,
+    "stoppedIndices": [
+      0,
+      2
+    ]
+  }
+}

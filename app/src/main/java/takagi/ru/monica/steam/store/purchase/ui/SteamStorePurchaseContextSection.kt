@@ -47,7 +47,9 @@ fun SteamStorePurchaseContextSection(
     contextFailure: SteamStorePurchaseContextFailure?,
     selectedPackageId: Int?,
     onSelectPackage: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showPackageOptions: Boolean = true,
+    showPackageHeading: Boolean = true
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         steamStoreOwnershipStatusForDisplay(detail, context)?.let {
@@ -58,12 +60,13 @@ fun SteamStorePurchaseContextSection(
                 failure = contextFailure
             )
         }
-        if (detail.packageOptions.isNotEmpty()) {
+        if (showPackageOptions && detail.packageOptions.isNotEmpty()) {
             PackageOptionsCard(
                 options = detail.packageOptions,
                 currency = detail.currency,
                 selectedPackageId = selectedPackageId,
-                onSelectPackage = onSelectPackage
+                onSelectPackage = onSelectPackage,
+                showHeading = showPackageHeading
             )
         }
     }
@@ -134,13 +137,14 @@ private fun PackageOptionsCard(
     options: List<SteamStorePackageOption>,
     currency: String,
     selectedPackageId: Int?,
-    onSelectPackage: (Int) -> Unit
+    onSelectPackage: (Int) -> Unit,
+    showHeading: Boolean
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text(
+        if (showHeading) Text(
             stringResource(R.string.steam_store_package_options),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.SemiBold

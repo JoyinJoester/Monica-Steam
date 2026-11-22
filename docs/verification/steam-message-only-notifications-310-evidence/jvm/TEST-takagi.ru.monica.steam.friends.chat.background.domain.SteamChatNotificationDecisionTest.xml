@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:32:44.199Z" hostname="JOYIN" time="0.026">
+  <properties/>
+  <testcase name="filtersOutgoingLocalEchoAndMalformedServerMessages" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.006"/>
+  <testcase name="sourceAccountKeyParticipatesInDeduplicationIdentity" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.012"/>
+  <testcase name="acceptsOneServerConfirmedIncomingPartnerMessage" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.001"/>
+  <testcase name="requestRetainsExactStorageOriginAndAllowsMdbxRuntimeIds" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.001"/>
+  <testcase name="rejectsAClaimedPartnerThatDoesNotMatchTheSender" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.0"/>
+  <testcase name="producesUsefulRichMediaPreviewsWithoutRawBbcode" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.005"/>
+  <testcase name="requestRejectsAnInvalidMdbxDatabaseId" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.0"/>
+  <testcase name="malformedRichMediaRemainsReadable" classname="takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,39 @@
+[
+  {
+    "appId": 815370,
+    "http": 200,
+    "success": true,
+    "name": "绿色地狱",
+    "returnedId": 815370
+  },
+  {
+    "appId": 1091500,
+    "http": 200,
+    "success": true,
+    "name": "赛博朋克 2077",
+    "returnedId": 1091500
+  },
+  {
+    "url": "https://raw.githubusercontent.com/SteamDatabase/Protobufs/master/steam/steammessages_player.steamclient.proto",
+    "http": 200,
+    "excerpts": [
+      "message CPlayer_PostStatusToFriends_Request {\n\toptional uint32 appid = 1;\n\toptional string status_text = 2;\n}",
+      "message CPlayer_PostStatusToFriends_Response {\n}",
+      "message CPlayer_GetPostedStatus_Request {\n\toptional uint64 steamid = 1;\n\toptional uint64 postid = 2;\n}",
+      "message CPlayer_GetPostedStatus_Response {\n\toptional uint32 accountid = 1;\n\toptional uint64 postid = 2;\n\toptional string status_text = 3;\n\toptional bool deleted = 4;\n\toptional uint32 appid = 5;\n}",
+      "message CPlayer_DeletePostedStatus_Request {\n\toptional uint64 postid = 1;\n}",
+      "message CPlayer_DeletePostedStatus_Response {\n}",
+      "message CPlayer_PostStatusToFriends_Request {",
+      "message CPlayer_PostStatusToFriends_Response {",
+      "message CPlayer_GetPostedStatus_Request {",
+      "message CPlayer_GetPostedStatus_Response {",
+      "\trpc PostStatusToFriends (.CPlayer_PostStatusToFriends_Request) returns (.CPlayer_PostStatusToFriends_Response);",
+      "\trpc GetPostedStatus (.CPlayer_GetPostedStatus_Request) returns (.CPlayer_GetPostedStatus_Response);"
+    ]
+  },
+  {
+    "http": 200,
+    "bytes": 0,
+    "prefixHex": ""
+  }
+]

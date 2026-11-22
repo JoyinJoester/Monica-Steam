@@ -1,0 +1,17 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModels.kt": "25190e7aedbd3c4ce93ab41bad528ce30ab773cf69eaf185ab156519f616bfd0",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatAttachmentContent.kt": "30910a9ccf7664f57cfb9080f70611e023ddcc2e76cbe01e630e7e900d4a52a8",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRemoteImage.kt": "e4566a7fb2d277f84d48f0e493099bc3a2ed8889601f7fa3a24df2cfcd95a180",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatMessageBubble.kt": "e9c6703170642eb5b816666a45942ae9c22de74bac526fa5f23c431c87994692",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatDeliveryMetadata.kt": "2af1707c1dfbe195c39b09c8341bad5ece78207d1dce6dffc158e588243ade8c",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatMediaViewerIntegrationTest.kt": "c1ff36490bbd2a414df6840e4cbaa0a258bd62adec25cc5fc35a1c9e27f861b5",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatIntegrationGuardTest.kt": "1b81e6f0c08c0d4ee73810e7408487bce1933a9579aadb224d2b6fb82eebbd58",
+  "README.md": "96241f8bc3e5e9acf5fb8d040054a42666f58fb29bee14d8c3412f3503731fda",
+  "README_EN.md": "556beebf120ebe2063be89921683dfcacaaedca3425fb52ac1cb63cbb36e4033",
+  "RELEASE_NOTES.md": "a7af1b827618a112ec7559ecdbf235ee7c48a5f0cb12f02695e473c10c79d8a3",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatImageLayout.kt": "6b6a8b8d743eb1ac4c4218adfc1da2cf0adfba3be97aecb07b9861c69dc83471",
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatImageMessage.kt": "40c6cd8a972d4485dfec76afc62514b43b0d5eb74e7c6b6ed70a90c7c9b38412",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatImageLayoutTest.kt": "1f07b071c89a8492ac87c0a03abd7d03ed2ae8ab24f37384de6d395243fbe830",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatImageMessageParserTest.kt": "82869ac22404cb452314753351c464cd83f517a2a0021a807261b6d4a6e166ea",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatImageMessageUiTest.kt": "df9d37ce24df014f869618503a47d0af66e5e6eae2e66de3e6b0c0cfc85a6e19"
+}

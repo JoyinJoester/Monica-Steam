@@ -1,9 +1,13 @@
 package takagi.ru.monica.steam.friends.groupchat.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,14 +19,11 @@ import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -39,7 +40,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import takagi.ru.monica.R
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialDivider
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramSocialSection
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoom
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatRoomType
 import takagi.ru.monica.steam.friends.groupchat.domain.SteamGroupChatSummary
@@ -64,81 +68,77 @@ internal fun SteamGroupChannelManagement(
     var renameRoom by remember { mutableStateOf<SteamGroupChatRoom?>(null) }
     var deleteRoom by remember { mutableStateOf<SteamGroupChatRoom?>(null) }
 
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(18.dp),
-        color = MaterialTheme.colorScheme.surfaceContainer
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text("频道", style = MaterialTheme.typography.titleMedium)
-                    Text(
-                        "文字和语音频道遵循 Steam 官方权限",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                if (canEdit) {
-                    OutlinedButton(
-                        onClick = { showCreate = true },
-                        enabled = !actionLoading
-                    ) {
-                        Icon(Icons.Default.Add, null, Modifier.size(18.dp))
-                        Text("创建", Modifier.padding(start = 6.dp))
-                    }
-                }
+    TelegramSocialSection("频道", modifier = modifier) {
+        Text(
+            "文字和语音频道遵循 Steam 官方权限",
+            modifier = Modifier.padding(start = 21.dp, end = 21.dp, bottom = 4.dp),
+            fontSize = 13.sp,
+            lineHeight = 18.sp,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        val rooms = group.rooms
+            .sortedWith(compareBy<SteamGroupChatRoom> { it.sortOrder }.thenBy { it.chatId })
+        if (rooms.isEmpty()) {
+            Text(
+                "Steam 尚未返回频道",
+                modifier = Modifier.padding(start = 21.dp, end = 21.dp, top = 8.dp, bottom = 8.dp),
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            rooms.forEachIndexed { index, room ->
+                val localVoiceRoom = voiceState.isActive &&
+                    voiceState.target?.type == SteamVoiceTargetType.GROUP &&
+                    voiceState.target?.groupId == group.groupId &&
+                    voiceState.target?.chatId == room.chatId
+                val localVoiceMemberCount = if (localVoiceRoom) {
+                    (voiceState.participants.map { it.steamId } + voiceState.accountSteamId)
+                        .filter(String::isNotBlank)
+                        .distinct()
+                        .size
+                } else 0
+                ChannelManagementRow(
+                    room = room,
+                    canEdit = canEdit,
+                    actionLoading = actionLoading,
+                    canMoveUp = index > 0,
+                    canMoveDown = index < rooms.lastIndex,
+                    voiceJoined = localVoiceRoom,
+                    voiceConnecting = localVoiceRoom && !voiceState.isConnected,
+                    voiceBusy = voiceState.isActive && !localVoiceRoom,
+                    voiceMemberCount = maxOf(
+                        room.voiceMemberSteamIds.size,
+                        localVoiceMemberCount
+                    ),
+                    onRename = { renameRoom = room },
+                    onDelete = { deleteRoom = room },
+                    onMoveUp = {
+                        val moveAfter = rooms.getOrNull(index - 2)
+                        onReorder(room.chatId, moveAfter?.chatId)
+                    },
+                    onMoveDown = { onReorder(room.chatId, rooms.getOrNull(index + 1)?.chatId) },
+                    onJoinVoice = { onJoinVoice(room.chatId) },
+                    onLeaveVoice = onLeaveVoice
+                )
+                // No divider under the last row unless the create action follows it.
+                if (index < rooms.lastIndex || canEdit) TelegramSocialDivider(59)
             }
-            if (group.rooms.isEmpty()) {
-                Text("Steam 尚未返回频道", color = MaterialTheme.colorScheme.onSurfaceVariant)
-            } else {
-                group.rooms
-                    .sortedWith(compareBy<SteamGroupChatRoom> { it.sortOrder }.thenBy { it.chatId })
-                    .forEachIndexed { index, room ->
-                        val localVoiceRoom = voiceState.isActive &&
-                            voiceState.target?.type == SteamVoiceTargetType.GROUP &&
-                            voiceState.target?.groupId == group.groupId &&
-                            voiceState.target?.chatId == room.chatId
-                        val localVoiceMemberCount = if (localVoiceRoom) {
-                            (voiceState.participants.map { it.steamId } + voiceState.accountSteamId)
-                                .filter(String::isNotBlank)
-                                .distinct()
-                                .size
-                        } else 0
-                        ChannelManagementRow(
-                            room = room,
-                            canEdit = canEdit,
-                            actionLoading = actionLoading,
-                            canMoveUp = index > 0,
-                            canMoveDown = index < group.rooms.lastIndex,
-                            voiceJoined = localVoiceRoom,
-                            voiceConnecting = localVoiceRoom && !voiceState.isConnected,
-                            voiceBusy = voiceState.isActive && !localVoiceRoom,
-                            voiceMemberCount = maxOf(
-                                room.voiceMemberSteamIds.size,
-                                localVoiceMemberCount
-                            ),
-                            onRename = { renameRoom = room },
-                            onDelete = { deleteRoom = room },
-                            onMoveUp = {
-                                val moveAfter = group.rooms
-                                    .sortedWith(compareBy<SteamGroupChatRoom> { it.sortOrder }.thenBy { it.chatId })
-                                    .getOrNull(index - 2)
-                                onReorder(room.chatId, moveAfter?.chatId)
-                            },
-                            onMoveDown = {
-                                val next = group.rooms
-                                    .sortedWith(compareBy<SteamGroupChatRoom> { it.sortOrder }.thenBy { it.chatId })
-                                    .getOrNull(index + 1)
-                                onReorder(room.chatId, next?.chatId)
-                            },
-                            onJoinVoice = { onJoinVoice(room.chatId) },
-                            onLeaveVoice = onLeaveVoice
-                        )
-                    }
+        }
+        if (canEdit) {
+            Row(
+                Modifier.fillMaxWidth()
+                    .clickable(enabled = !actionLoading) { showCreate = true }
+                    .heightIn(min = 52.dp)
+                    .padding(horizontal = 21.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.Add, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Text(
+                    "创建频道",
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }
@@ -205,65 +205,76 @@ private fun ChannelManagementRow(
     onJoinVoice: () -> Unit,
     onLeaveVoice: () -> Unit
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(Modifier.padding(horizontal = 10.dp, vertical = 8.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(room.type.icon, null, tint = MaterialTheme.colorScheme.primary)
-                Column(Modifier.weight(1f).padding(start = 10.dp)) {
-                    Text(room.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(
-                        if (room.type == SteamGroupChatRoomType.VOICE) "语音频道" else "文字频道",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                if (canEdit) {
-                    IconButton(onClick = onMoveUp, enabled = canMoveUp && !actionLoading) {
-                        Icon(Icons.Default.ArrowUpward, "上移")
-                    }
-                    IconButton(onClick = onMoveDown, enabled = canMoveDown && !actionLoading) {
-                        Icon(Icons.Default.ArrowDownward, "下移")
-                    }
-                    IconButton(onClick = onRename, enabled = !actionLoading) {
-                        Icon(Icons.Default.Edit, "重命名")
-                    }
-                    IconButton(
-                        onClick = onDelete,
-                        enabled = !actionLoading,
-                        modifier = Modifier.size(40.dp)
-                    ) { Icon(Icons.Default.DeleteOutline, "删除") }
-                }
-            }
-            if (room.type == SteamGroupChatRoomType.VOICE) {
-                FilterChip(
-                    selected = voiceJoined,
-                    onClick = if (voiceJoined) onLeaveVoice else onJoinVoice,
-                    enabled = !actionLoading && !voiceConnecting && (!voiceBusy || voiceJoined),
-                    label = {
-                        Text(
-                            when {
-                                voiceConnecting -> "正在加入"
-                                voiceJoined -> "退出语音"
-                                voiceBusy -> "已有进行中的通话"
-                                voiceMemberCount > 0 -> "加入语音 · $voiceMemberCount 人"
-                                else -> "加入语音"
-                            }
-                        )
-                    },
-                    leadingIcon = {
-                        if (voiceConnecting) {
-                            CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                        } else {
-                            Icon(Icons.Default.Phone, null)
-                        }
-                    }
+    Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier.fillMaxWidth().heightIn(min = 58.dp).padding(start = 21.dp, end = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                room.type.icon, null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(22.dp)
+            )
+            Column(Modifier.weight(1f).padding(start = 15.dp, top = 8.dp, bottom = 8.dp)) {
+                Text(room.name, fontSize = 16.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    if (room.type == SteamGroupChatRoomType.VOICE) "语音频道" else "文字频道",
+                    fontSize = 13.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+            if (canEdit) {
+                ChannelAction(Icons.Default.ArrowUpward, "上移", canMoveUp && !actionLoading, onMoveUp)
+                ChannelAction(Icons.Default.ArrowDownward, "下移", canMoveDown && !actionLoading, onMoveDown)
+                ChannelAction(Icons.Default.Edit, "重命名", !actionLoading, onRename)
+                ChannelAction(Icons.Default.DeleteOutline, "删除", !actionLoading, onDelete)
+            }
         }
+        if (room.type == SteamGroupChatRoomType.VOICE) {
+            val label = when {
+                voiceConnecting -> "正在加入"
+                voiceJoined -> "退出语音"
+                voiceBusy -> "已有进行中的通话"
+                voiceMemberCount > 0 -> "加入语音 · $voiceMemberCount 人"
+                else -> "加入语音"
+            }
+            Surface(
+                onClick = if (voiceJoined) onLeaveVoice else onJoinVoice,
+                enabled = !actionLoading && !voiceConnecting && (!voiceBusy || voiceJoined),
+                shape = RoundedCornerShape(50),
+                color = MaterialTheme.colorScheme.primary.copy(alpha = .14f),
+                modifier = Modifier.padding(start = 58.dp, bottom = 10.dp)
+            ) {
+                Row(
+                    Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    if (voiceConnecting) {
+                        CircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
+                    } else {
+                        Icon(
+                            Icons.Default.Phone, null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(15.dp)
+                        )
+                    }
+                    Text(label, fontSize = 13.sp, color = MaterialTheme.colorScheme.primary)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChannelAction(
+    icon: ImageVector,
+    description: String,
+    enabled: Boolean,
+    onClick: () -> Unit
+) {
+    IconButton(onClick = onClick, enabled = enabled, modifier = Modifier.size(32.dp)) {
+        Icon(icon, description, modifier = Modifier.size(18.dp))
     }
 }
 

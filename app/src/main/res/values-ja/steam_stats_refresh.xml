@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_game_stats_friends">フレンドのプレイ時間</string>
+    <string name="steam_game_stats_you">自分</string>
+    <string name="steam_game_stats_friend_average">フレンドの平均</string>
+    <string name="steam_game_stats_readable_friends">プレイ時間が公開されているフレンド %1$d 人の平均</string>
+    <string name="steam_game_stats_no_friend_times">公開されたフレンドのプレイ時間はありません</string>
+    <string name="steam_game_stats_badges">ゲームバッジ</string>
+    <string name="steam_game_stats_no_badges">バッジやトレーディングカードはありません</string>
+    <string name="steam_game_stats_card_owned">所有済み</string>
+    <string name="steam_game_stats_card_missing">未所有</string>
+    <string name="steam_game_stats_no_points">このゲームのポイントアイテムはありません</string>
+    <string name="steam_game_stats_points_cost">%1$d ポイント</string>
+    <string name="steam_game_stats_view_all">すべて表示</string>
+    <string name="steam_game_stats_section_unavailable">読み込めません。更新するか Steam で確認してください。</string>
+</resources>

@@ -1,0 +1,16 @@
+{
+  "taskPackagesUninstalled": true,
+  "preExistingMuMu0Preserved": true,
+  "muMuPID": 15892,
+  "currentUserDisplayFontRetained": true,
+  "strictBaselineComparisonPassed": false,
+  "externalCleanupObserved": {
+    "removedUser13": true,
+    "removedPackage": [
+      "package:takagi.ru.monica.adaptivereleasemain20261119"
+    ],
+    "evidence": "20261121-biometric-rebind-guide/cleanup.json",
+    "evidenceSHA256": "cf0ca3bdc9ad5720f97e70fb33f62a51a74b379336e676fbe6f25bce96e8ff53"
+  },
+  "note": "The strict cleanup assertion failed after both owned packages were successfully uninstalled. Read-only reconciliation matched the two differences to the concurrent biometric guide cleanup. No other user/package was modified or recreated by this task."
+}

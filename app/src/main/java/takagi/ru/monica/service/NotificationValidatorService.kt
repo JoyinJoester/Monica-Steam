@@ -23,7 +23,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.collectLatest
-import takagi.ru.monica.MainActivity
+import takagi.ru.monica.MonicaSteamActivity
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.ItemType
@@ -241,7 +241,7 @@ class NotificationValidatorService : Service() {
     }
 
     private suspend fun updateNotification(title: String, code: String, remaining: Int) {
-        val notificationIntent = Intent(this@NotificationValidatorService, MainActivity::class.java)
+        val notificationIntent = Intent(this@NotificationValidatorService, MonicaSteamActivity::class.java)
         val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         } else {

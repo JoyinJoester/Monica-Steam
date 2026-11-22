@@ -1,0 +1,102 @@
+[
+  {
+    "file": "jvm-before.txt",
+    "rawSha256": "04cb57c1d0ae1a469d2baea3cc75837ca8ddedd7dbbe49e43149b55119f023d3",
+    "normalizedSha256": "4db42ca6018c75756acbf68299b8f163fce28e0fb1097041bedfcbe3a2febaac"
+  },
+  {
+    "file": "jvm-before.json",
+    "rawSha256": "fd19fb71cf55721cecb30a8c3abd9f7d17135383a1b45380997080e715194523",
+    "normalizedSha256": "fd19fb71cf55721cecb30a8c3abd9f7d17135383a1b45380997080e715194523"
+  },
+  {
+    "file": "build01.txt",
+    "rawSha256": "bddc1f6c256bc391d0b1f5ff651420bed9b9cdd47c47e76ead354643e96f9236",
+    "normalizedSha256": "923f14aa9a2aef7fb931c0a030b533467732a6f9d42ff3fbb8979fc160c08628"
+  },
+  {
+    "file": "build01.json",
+    "rawSha256": "3a4c0eb43ce7cb00b7d9234449ae0a727b155e8f2b6d3e39635be938cb40ba27",
+    "normalizedSha256": "3a4c0eb43ce7cb00b7d9234449ae0a727b155e8f2b6d3e39635be938cb40ba27"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "54ba853c613efe0df558681a66b4f9bc15c11af1112915aa67dee455497c126d",
+    "normalizedSha256": "c2ff8722b5280f82bfafa61cea66409ac70cd576cf779ae538b5f09a40133fba"
+  },
+  {
+    "file": "build02.json",
+    "rawSha256": "48318799dea8bdeeca23a33e22a342720690b8f7ed1cbc9f9354f9da08f58137",
+    "normalizedSha256": "48318799dea8bdeeca23a33e22a342720690b8f7ed1cbc9f9354f9da08f58137"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "d7f1156d25b58a692075b659423d00fa64795e922c2278623876c4dc30099459",
+    "normalizedSha256": "d7f1156d25b58a692075b659423d00fa64795e922c2278623876c4dc30099459"
+  },
+  {
+    "file": "device01.json",
+    "rawSha256": "5750cf6ce681c3c40ef2a7a0e959af0a93af3a49cdcdaff6e6ac2d3b7de6ace8",
+    "normalizedSha256": "5750cf6ce681c3c40ef2a7a0e959af0a93af3a49cdcdaff6e6ac2d3b7de6ace8"
+  },
+  {
+    "file": "device02-regression.txt",
+    "rawSha256": "89fda878810f87338a2edb99cda9eeed7bfa14489ffba026f1e7bd4514c829f4",
+    "normalizedSha256": "89fda878810f87338a2edb99cda9eeed7bfa14489ffba026f1e7bd4514c829f4"
+  },
+  {
+    "file": "device02-regression.json",
+    "rawSha256": "b599b59639655e557ade0a7fe1b162c2b13e83753c0cca6dd1c5e6d934a933c0",
+    "normalizedSha256": "b599b59639655e557ade0a7fe1b162c2b13e83753c0cca6dd1c5e6d934a933c0"
+  },
+  {
+    "file": "device-results.json",
+    "rawSha256": "2f78279df140776082dac03c03dbd9202e23dd9b3adb182163398c1d158e4a0f",
+    "normalizedSha256": "2f78279df140776082dac03c03dbd9202e23dd9b3adb182163398c1d158e4a0f"
+  },
+  {
+    "file": "jvm-final-summary.json",
+    "rawSha256": "55c773f315140bbfd35b53118a5d1cd5e1838e26b851a4d46c93f92fb268d021",
+    "normalizedSha256": "55c773f315140bbfd35b53118a5d1cd5e1838e26b851a4d46c93f92fb268d021"
+  },
+  {
+    "file": "source-hashes-final.json",
+    "rawSha256": "4cf35a9f2d91a05a6ab744c5ddfbdb2780649992237856748756a8d5e227500d",
+    "normalizedSha256": "4cf35a9f2d91a05a6ab744c5ddfbdb2780649992237856748756a8d5e227500d"
+  },
+  {
+    "file": "shared-caller-audit.json",
+    "rawSha256": "7d6a9924afd3b1cc5e417c088c5694f083f0fbd0060257bccfbddcc428a11bd7",
+    "normalizedSha256": "7d6a9924afd3b1cc5e417c088c5694f083f0fbd0060257bccfbddcc428a11bd7"
+  },
+  {
+    "file": "native-image-hashes.json",
+    "rawSha256": "53243c3fe682c30ad3a8e9bd1c1a60155f4453f32ac56d4a773b321af5d7bfbf",
+    "normalizedSha256": "53243c3fe682c30ad3a8e9bd1c1a60155f4453f32ac56d4a773b321af5d7bfbf"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "dbf8b60338f080c13372cb84b09ed63d63a86098ac0d51ff995cd4137a8c9620",
+    "normalizedSha256": "dbf8b60338f080c13372cb84b09ed63d63a86098ac0d51ff995cd4137a8c9620"
+  },
+  {
+    "file": "before-TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest.xml",
+    "rawSha256": "c45c2a37328c14cf10f9ea9198df5bb0f99655f209cc4c5ed5f66a92f9f3e801",
+    "normalizedSha256": "c45c2a37328c14cf10f9ea9198df5bb0f99655f209cc4c5ed5f66a92f9f3e801"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassDockMotionTest.xml",
+    "rawSha256": "949eb1f87764baf364764c40d07e99d5e8c02f1dfc5e5316324540358186b86d",
+    "normalizedSha256": "949eb1f87764baf364764c40d07e99d5e8c02f1dfc5e5316324540358186b86d"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest.xml",
+    "rawSha256": "42564f29a49435891a18a34e68d569c020f9c30a57878769fb2472f96b716a99",
+    "normalizedSha256": "42564f29a49435891a18a34e68d569c020f9c30a57878769fb2472f96b716a99"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest.xml",
+    "rawSha256": "fcd32e561baf2050c17002dfb9c0f19f2e70a45f0779f0f6e1c762ecb772e4e8",
+    "normalizedSha256": "fcd32e561baf2050c17002dfb9c0f19f2e70a45f0779f0f6e1c762ecb772e4e8"
+  }
+]

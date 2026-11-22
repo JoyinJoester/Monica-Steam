@@ -1,5 +1,6 @@
 package takagi.ru.monica.steam.friends.chat.richmedia.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassDropdownMenu as DropdownMenu
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -20,7 +21,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,11 +43,12 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 
-internal enum class RichPickerPage(val labelRes: Int) {
-    EMOJI(R.string.steam_chat_rich_picker_emoji),
-    EMOTICON(R.string.steam_chat_rich_picker_emoticons),
-    STICKER(R.string.steam_chat_rich_picker_stickers),
-    EFFECT(R.string.steam_chat_rich_picker_effects)
+/** [labelRes] is the long split-button label, [tabLabelRes] the short bottom-pill tab. */
+internal enum class RichPickerPage(val labelRes: Int, val tabLabelRes: Int) {
+    EMOJI(R.string.steam_chat_rich_picker_emoji, R.string.steam_chat_rich_picker_tab_emoji),
+    EMOTICON(R.string.steam_chat_rich_picker_emoticons, R.string.steam_chat_rich_picker_tab_steam),
+    STICKER(R.string.steam_chat_rich_picker_stickers, R.string.steam_chat_rich_picker_tab_stickers),
+    EFFECT(R.string.steam_chat_rich_picker_effects, R.string.steam_chat_rich_picker_tab_effects)
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

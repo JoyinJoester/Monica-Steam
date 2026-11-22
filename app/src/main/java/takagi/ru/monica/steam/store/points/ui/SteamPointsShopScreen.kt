@@ -1,13 +1,12 @@
 package takagi.ru.monica.steam.store.points.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshIconButton
+import takagi.ru.monica.steam.foundation.ui.SteamListFilterChip as FilterChip
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.activity.compose.BackHandler
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,11 +36,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -78,29 +75,26 @@ internal fun SteamPointsShopScreen(
     onBack: () -> Unit,
     onOpenOfficial: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SteamPointsShopViewModel = viewModel(
-        factory = SteamPointsShopViewModel.factory(LocalContext.current)
+    appId: Int? = null,
+    initialItem: SteamPointsShopItem? = null,
+    viewModel: SteamPointsShopViewModel = viewModel(key = "steam-points-${appId ?: 0}",
+        factory = SteamPointsShopViewModel.factory(LocalContext.current, appId)
     )
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dockClearance = LocalSteamDockContentClearance.current
-    var selectedItem by remember { mutableStateOf<SteamPointsShopItem?>(null) }
+    var selectedItem by remember(appId, initialItem?.definitionId, account?.id) { mutableStateOf(initialItem) }
     LaunchedEffect(account?.id, account?.accessToken, account?.steamLoginSecure) {
         viewModel.attachAccount(account)
     }
 
+    val reduceAnimations = takagi.ru.monica.ui.LocalReduceAnimations.current
     BackHandler(enabled = selectedItem != null) { selectedItem = null }
     AnimatedContent(
         targetState = selectedItem,
         modifier = modifier,
         transitionSpec = {
-            if (targetState != null) {
-                (slideInHorizontally(tween(300)) { it } + fadeIn(tween(220))) togetherWith
-                    (slideOutHorizontally(tween(220)) { -it / 4 } + fadeOut(tween(160)))
-            } else {
-                (slideInHorizontally(tween(260)) { -it / 4 } + fadeIn(tween(200))) togetherWith
-                    (slideOutHorizontally(tween(220)) { it } + fadeOut(tween(160)))
-            }
+            steamPageTransition(reduceAnimations, forward = targetState != null)
         },
         label = "SteamPointsRewardDetail"
     ) { detailItem ->
@@ -126,6 +120,7 @@ internal fun SteamPointsShopScreen(
                     onSearchExpandedChange = {},
                     modifier = Modifier.statusBarsPadding(),
                     collapsedTitleEndPadding = 72.dp,
+                    actions = { SteamRefreshIconButton(state.loading, { viewModel.load(force = true) }) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
@@ -138,6 +133,7 @@ internal fun SteamPointsShopScreen(
             }
         ) { padding ->
             SteamExpressivePullToRefresh(
+                showIndicator = false,
                 refreshing = state.loading,
                 onRefresh = { viewModel.load(force = true) },
                 modifier = Modifier.fillMaxSize().padding(padding)

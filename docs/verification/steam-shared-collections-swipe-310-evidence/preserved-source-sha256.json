@@ -1,0 +1,15 @@
+{
+  "app/src/main/java/takagi/ru/monica/ui/folders/MonicaFolderBrowserPage.kt": "55cc4c8f3007bf1e4d594ba129b76d008e1389548a5a1e5a60f30e3ea1123f51",
+  "app/src/test/java/takagi/ru/monica/steam/store/SteamStoreDetailInteractionGuardTest.kt": "f829bdbfb2670af996dd10a31b938fb3d8618463d680eafb80a86e66957603d2",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStatsContent.kt": "2bbc9513b7f46cf3b6b18237b94fec1e6c7cfdbfd7fca3b7b8c64c9a91d0c667",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreReviewList.kt": "bf59d4b37ff7e6df7012b7d18b627c111b1f5017aa3071b0a671dbfa2714e01b",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "f7d62c42e2c2e75270303c09f1573dc3845d04c9ac8e27efdd4a739deadb0dee",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "fa079687ff69c83bf5106579af3611cdaefdf49d65b9960567d46188c46e52cb",
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamAchievementImages.kt": "8d4f4f2784839f211db27392c9f1bc6ad0b6ee38fe7e95d3c9b58731dae3b5a3",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamReviewAuthor.kt": "33eaf6405b9000791d7e94f65ac44338dd7c6342307c3ff70b3a2b3317368a00",
+  "app/src/test/java/takagi/ru/monica/steam/library/SteamAchievementImagesTest.kt": "79d189b29e9aea4fb696f8fd51fa03e5165858de0b5f2753bdcfcf091f3c1e12",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamReviewAuthorIconsUiTest.kt": "2fe0c497ceaf7d9e363e17532b8f219ce936a07e305cb6feec0ad057a7cf7f18",
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollections.kt": "c32f729aa014d728350986ef367f9612d006512f919fa7e07327815e46eef999",
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollectionsService.kt": "f055bc7bc53190f39e885291c0142c66aefa59b1544c5d66775194e95996fc2b",
+  "app/src/main/java/takagi/ru/monica/ui/common/selection/SelectionActionBar.kt": "1396e759a9c94323b86ff38f8f4bff2d535c8d814721f7a8ee6b9f9b9c290772"
+}

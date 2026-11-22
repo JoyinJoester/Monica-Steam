@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.friends.chat.actions.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
@@ -19,12 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.DeleteOutline
-import androidx.compose.material.icons.filled.EmojiEmotions
-import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -58,6 +55,8 @@ import takagi.ru.monica.steam.friends.chat.richmedia.ui.RichPickerPage
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRichPickerPageSplitButton
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImage
 import takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatRemoteImageMode
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramActionMenu
+import takagi.ru.monica.steam.friends.chat.telegram.TelegramMenuAction
 
 @Composable
 fun SteamChatMessageActionMenu(
@@ -69,26 +68,17 @@ fun SteamChatMessageActionMenu(
     onReport: () -> Unit,
     onDelete: (() -> Unit)? = null
 ) {
-    MessageAnchoredPopup(onDismiss) {
-        Surface(
-            modifier = Modifier.width(220.dp),
-            shape = RoundedCornerShape(24.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            tonalElevation = 6.dp,
-            shadowElevation = 8.dp
-        ) {
-            Column(Modifier.padding(vertical = 8.dp)) {
-                if (canReact) {
-                    ActionRow(Icons.Default.EmojiEmotions, R.string.steam_chat_action_react, onOpenReactions)
-                }
-                ActionRow(Icons.Default.ContentCopy, R.string.steam_chat_action_copy, onCopy)
-                onDelete?.let { ActionRow(Icons.Default.DeleteOutline, R.string.steam_chat_action_delete, it) }
-                if (canReport) {
-                    ActionRow(Icons.Default.Flag, R.string.steam_chat_action_report, onReport)
-                }
-            }
-        }
+    val actions = buildList {
+        if (canReact) add(TelegramMenuAction(stringResource(R.string.steam_chat_action_react),
+            com.monica.telegramchat.R.drawable.telegram_msg_reactions, onOpenReactions))
+        add(TelegramMenuAction(stringResource(R.string.steam_chat_action_copy),
+            com.monica.telegramchat.R.drawable.telegram_msg_copy, onCopy))
+        if (onDelete != null) add(TelegramMenuAction(stringResource(R.string.delete),
+            com.monica.telegramchat.R.drawable.telegram_msg_delete, onDelete))
+        if (canReport) add(TelegramMenuAction(stringResource(R.string.steam_chat_action_report),
+            com.monica.telegramchat.R.drawable.telegram_msg_report, onReport))
     }
+    TelegramActionMenu(actions, onDismiss)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -247,31 +237,6 @@ private fun StickerReactionGrid(
                     mode = SteamChatRemoteImageMode.STICKER
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun ActionRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: Int,
-    onClick: () -> Unit
-) {
-    val haptics = LocalHapticFeedback.current
-    Surface(
-        onClick = {
-            haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
-            onClick()
-        },
-        color = androidx.compose.ui.graphics.Color.Transparent
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(icon, contentDescription = null)
-            Text(stringResource(label), style = MaterialTheme.typography.labelLarge)
         }
     }
 }

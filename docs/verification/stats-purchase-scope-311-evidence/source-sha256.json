@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGameDetailTabs.kt": "719834929c6154df4c9d63f121d4084b31cfee3342ad0aed76f7657e0b1ede36",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePurchaseBar.kt": "f0712d472108def0fd8576bd6a3f44514e6914c7bfa75b08d49c53ba70231011",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamStoreScreen.kt": "647e34a566012f4b36a2300a0fd7f4690df1dd95dd283e4f45c797fdc261692d",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamGameDetailTabsUiTest.kt": "060b077d3a1d3a0f50c684de968ae4a50871db21a705dbf9cef7fc5368291534",
+  "app/src/androidTest/java/takagi/ru/monica/steam/store/SteamStoreDetailPricesUiTest.kt": "445192a77bc5a7ac8936a4db1abaefd4b7d0e233e46eb3ba20765fd5728d8002",
+  "RELEASE_NOTES.md": "d69f70509c328a4befc6d27557ca79dbded72142c23db5b2af24490c09949f63",
+  "docs/releases/Monica-Steam-Unreleased.md": "5bffde45a230636851f1f39490b36b2ba1f92e6a1202576e452294b897c85559"
+}

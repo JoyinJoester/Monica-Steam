@@ -1,0 +1,137 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "a77426df1e939ad4c030cca6a7e51fd3a58fd573459267601a59b95d29190031",
+    "normalizedSha256": "383fa2bb93fe01597ed6561ba314f1a71f78caecfd783df001be386b27d2b07c"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "b269c3f6a620f156a1519f43e384bbd983e57944d4963a83e6f49fb4212ae92b",
+    "normalizedSha256": "50d4cd61f02a0da16e8eb8697cc1a320bd369e3394fa108993fb38795e0f3e11"
+  },
+  {
+    "file": "build03.txt",
+    "rawSha256": "3abc59e5c009dce355e4cce30307f5aa030ea8bded70bd52c6e311a8ba872bbc",
+    "normalizedSha256": "62b563e9c7a6cc879bcfcb79f43db2f7d44539738d8fee4fdecd105d131e345b"
+  },
+  {
+    "file": "build04.txt",
+    "rawSha256": "52938b2af01eace1d9a8911bd86fe9d8eb3cb80348aa7b001e157b5221ac75c1",
+    "normalizedSha256": "4299c1665f736f7a35c003eabc7b8d2fd531563de14708d596924b3c5e2bdc59"
+  },
+  {
+    "file": "device01-summary.json",
+    "rawSha256": "28bf6430e675c26338c35a861993a8e06614f9d24bd1a787394eb8195e7e08c5",
+    "normalizedSha256": "28bf6430e675c26338c35a861993a8e06614f9d24bd1a787394eb8195e7e08c5"
+  },
+  {
+    "file": "device02-focused-summary.json",
+    "rawSha256": "4472452e1219cfb5ccf3466e4a23f828d8736738bcc3a6b37e72c2967d3f5830",
+    "normalizedSha256": "4472452e1219cfb5ccf3466e4a23f828d8736738bcc3a6b37e72c2967d3f5830"
+  },
+  {
+    "file": "device02-focused.json",
+    "rawSha256": "139414cd350989aef8cf9df98619e6ea2e7aaee5b6e744fe6883c1d60c48c2c0",
+    "normalizedSha256": "139414cd350989aef8cf9df98619e6ea2e7aaee5b6e744fe6883c1d60c48c2c0"
+  },
+  {
+    "file": "device01.json",
+    "rawSha256": "e63b924e0610da53ce802a9805d1c68e08447ca29f36e2596f4808284e6930dc",
+    "normalizedSha256": "e63b924e0610da53ce802a9805d1c68e08447ca29f36e2596f4808284e6930dc"
+  },
+  {
+    "file": "device01-source-sha256.json",
+    "rawSha256": "21b8a179839ed56cd43e164ce412c902a3db94203d2821b1984814ff08033552",
+    "normalizedSha256": "21b8a179839ed56cd43e164ce412c902a3db94203d2821b1984814ff08033552"
+  },
+  {
+    "file": "removed-resources.json",
+    "rawSha256": "58c6bd4a4f8e5309911e50a7c088c395404fb65484a4e92ebaa2631d9adf89a2",
+    "normalizedSha256": "58c6bd4a4f8e5309911e50a7c088c395404fb65484a4e92ebaa2631d9adf89a2"
+  },
+  {
+    "file": "device03-summary.json",
+    "rawSha256": "438c343599bdaa5dca1f16ce600c03a7098c60b5391ba23a7897c9eeaaddee13",
+    "normalizedSha256": "438c343599bdaa5dca1f16ce600c03a7098c60b5391ba23a7897c9eeaaddee13"
+  },
+  {
+    "file": "device03.json",
+    "rawSha256": "882c97291d5bb5b45912733f84a21a785ed2bdece2d6e4950967ba9910fe69fd",
+    "normalizedSha256": "882c97291d5bb5b45912733f84a21a785ed2bdece2d6e4950967ba9910fe69fd"
+  },
+  {
+    "file": "device04-focused.txt",
+    "rawSha256": "cbbf3dd80004e4e4b35dff2a83dfd47ce7ef5e6667437f2562a0ac8af0345676",
+    "normalizedSha256": "cbbf3dd80004e4e4b35dff2a83dfd47ce7ef5e6667437f2562a0ac8af0345676"
+  },
+  {
+    "file": "device04-focused.json",
+    "rawSha256": "1f3ad8be7bc686376170c91bb9f3b492e91a9f9f562b6b5002c6e70897160fdb",
+    "normalizedSha256": "1f3ad8be7bc686376170c91bb9f3b492e91a9f9f562b6b5002c6e70897160fdb"
+  },
+  {
+    "file": "final-device-passed-methods.json",
+    "rawSha256": "60e073279a93eeec124355a31c710942a7dfe9172047b276931553dc9002ec68",
+    "normalizedSha256": "60e073279a93eeec124355a31c710942a7dfe9172047b276931553dc9002ec68"
+  },
+  {
+    "file": "build01-source-sha256.json",
+    "rawSha256": "4b5fd394cb672fd97ded27b31b4112fe774e0543902dd8c0bbd51325da147a3f",
+    "normalizedSha256": "4b5fd394cb672fd97ded27b31b4112fe774e0543902dd8c0bbd51325da147a3f"
+  },
+  {
+    "file": "source-sha256.json",
+    "rawSha256": "75d47cfba1ea2b30ea00695a9e35101ec60a055a892d3b74ca7ff3fde8f060b2",
+    "normalizedSha256": "75d47cfba1ea2b30ea00695a9e35101ec60a055a892d3b74ca7ff3fde8f060b2"
+  },
+  {
+    "file": "preserved-source-sha256.json",
+    "rawSha256": "1a6dfcbd9f57a2bf5c40e1911f79fc2de8f96042de891e8f7048b9ea3cd79db8",
+    "normalizedSha256": "1a6dfcbd9f57a2bf5c40e1911f79fc2de8f96042de891e8f7048b9ea3cd79db8"
+  },
+  {
+    "file": "changes.json",
+    "rawSha256": "3980e978c07b557ca56696419683e3fe2170fc8273a09d339fc52622dcdeef8e",
+    "normalizedSha256": "3980e978c07b557ca56696419683e3fe2170fc8273a09d339fc52622dcdeef8e"
+  },
+  {
+    "file": "jvm-results.json",
+    "rawSha256": "78dc8608695e323d99a762a07115bb0ee9bf85374c47f3605fe001f5561c2fb1",
+    "normalizedSha256": "78dc8608695e323d99a762a07115bb0ee9bf85374c47f3605fe001f5561c2fb1"
+  },
+  {
+    "file": "cleanup.json",
+    "rawSha256": "ab3342c342d61f5b005684024bceeaf23a1ebc5904a8b64a5f43279e672d705c",
+    "normalizedSha256": "ab3342c342d61f5b005684024bceeaf23a1ebc5904a8b64a5f43279e672d705c"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest.xml",
+    "rawSha256": "b6baf8ddda2443de27e7f65b6d337a515be521b4604b146857c37d1483477ef0",
+    "normalizedSha256": "b6baf8ddda2443de27e7f65b6d337a515be521b4604b146857c37d1483477ef0"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest.xml",
+    "rawSha256": "3150c74073483ed31e7796d30f32b86c80b7da33ec5928dbbc02b9da312bdbfc",
+    "normalizedSha256": "3150c74073483ed31e7796d30f32b86c80b7da33ec5928dbbc02b9da312bdbfc"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.share.domain.SteamStoreGameShareTest.xml",
+    "rawSha256": "b9020b3eb81ee4199359333372880b530240c891776c043fc7797e428b485832",
+    "normalizedSha256": "b9020b3eb81ee4199359333372880b530240c891776c043fc7797e428b485832"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest.xml",
+    "rawSha256": "380ca08b731663c515fe1ca83425efeec9f1e207fd7c3174be4e7fcde2b2303f",
+    "normalizedSha256": "380ca08b731663c515fe1ca83425efeec9f1e207fd7c3174be4e7fcde2b2303f"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest.xml",
+    "rawSha256": "c61a6d1bc944a2520683ec01abe56b3f0bee4a3657a82fe7bd0ce670ecf7e458",
+    "normalizedSha256": "c61a6d1bc944a2520683ec01abe56b3f0bee4a3657a82fe7bd0ce670ecf7e458"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.share.domain.SteamStoreGameShareTest.xml",
+    "rawSha256": "5cd89bff457a9bc21a5463bf9b2339ce6b277f08beb5a3740a4ab22e2dc655b7",
+    "normalizedSha256": "5cd89bff457a9bc21a5463bf9b2339ce6b277f08beb5a3740a4ab22e2dc655b7"
+  }
+]

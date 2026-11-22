@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.refresh.SteamPullToRefreshGuardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-13T18:17:28.640Z" hostname="JOYIN" time="0.008">
+  <properties/>
+  <testcase name="refreshIsOnlyAddedToNetworkBackedPagesWithRealRefreshHandlers" classname="takagi.ru.monica.steam.refresh.SteamPullToRefreshGuardTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

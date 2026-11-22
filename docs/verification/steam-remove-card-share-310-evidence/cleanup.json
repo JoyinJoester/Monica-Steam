@@ -1,0 +1,18 @@
+{
+  "baselineChecks": {
+    "current": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "userIdentitiesAndFlagsRetained": true,
+    "originalPackagesRetained": true,
+    "taskPackagesAbsent": true
+  },
+  "taskPackagesUninstalled": true,
+  "taskStartedInstanceStopped": true,
+  "preExistingMuMu0Preserved": true,
+  "configurationAndDataDiskRetained": true,
+  "userRunningFlagsChangedDuringSession": true,
+  "firstCleanupComparisonRejectedRunningFlags": true,
+  "userIdentitiesVerifiedSeparately": true
+}

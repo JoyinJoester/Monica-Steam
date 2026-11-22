@@ -1,0 +1,29 @@
+# Steam Space activity categories — 1.0.310
+
+## Behavior
+
+Steam Space displays Steam UserNews activity, including acquired games (type 3) and user-authored status posts (type 16). These were already supported by the service and the requested filter flags. Acquired games may include purchases, gifts, free acquisitions or activations; the UI uses “新增游戏” rather than claiming a purchase. Status bodies are read with actor/post identity checks; deleted statuses are excluded. The service still caps status enrichment at eight requests per page and its existing time budget; other entries retain partial-content indications and Steam source links.
+
+The toolbar's “显示内容” sheet lets users independently show or hide achievements, acquired games, text statuses, screenshots, videos, reviews, wishlists, first plays, announcements and other activity. Every category is visible by default. Choices are local app-wide display preferences shared by Steam accounts; they contain enum names only, with no account or activity data. Disk access runs on IO. Filtering does not request a new feed or modify the complete encrypted cache, page cursor or server ordering. “全部显示” restores the original categories, and an all-filtered loaded page remains distinct from a genuinely empty feed, retaining pagination. A failed preference save keeps the session's current choices and offers a separate Retry action without resetting them.
+
+New activity stores an app-ID-to-name mapping. Each game keeps either its resolved name or a localized ID fallback even if only some names were returned. Legacy cached titles remain readable with every game ID available. The mapping participates in cache copy isolation and size bounds.
+
+Device regression also exposed a fast-cache cancellation race. If a cache load finished inline, its outer assignment could overwrite the network job started by that same load. Leaving the page then cancelled the completed cache job instead of the pending transport. The cache job is now created lazily, installed as the current handle, then started. Generation checks and existing cancellation boundaries remain in place. A deterministic JVM fixture makes the cache dispatch complete inline and sends the following transport to a real IO worker; the original implementation fails the interruption assertion.
+
+## Validation
+
+Initial builds 01 (9m 57s) and 02 (9m 23s) produced main/test packages and passed all 85 then-current JVM checks. MuMu batch 01 ran 25 methods in 103.691s with two failures: the new filter test pressed a second Back after sheet semantics left the viewport but before the dialog returned input focus, and an existing lifecycle test did not observe transport interruption on Stop. Batch 02 repeated those two methods with identical packages: the Back test failed again, while the lifecycle test passed (11.550s).
+
+The Back fixture now waits for Activity window focus before the second Back, retaining its page-return and reopening assertions. The cancellation failure led to the production race described above. Against the exact build-02 ViewModel bytes, the new deterministic JVM test failed at “leaving interrupts the retained network job” (Gradle 1m 27s). Its source and the existing device three-second interruption assertion remain unchanged for the fix. These earlier failures are preserved and are not reported as passing batches.
+
+Final build 03 completed in 7m 11s with Debug main/test packages and all 86 JVM tests passing, including the unchanged deterministic cancellation test (0.018s). MuMu instance 0, Android 15/API 35 x86_64, then passed the complete 25-method device batch in 47.179s. The batch covers actual filter switches, save disabling, restore-all, preserving hidden choices on retry, all-filtered pagination, large-font access to the last category, mixed resolved/missing game names, real preference-store recreation, encrypted cache restoration and account isolation, and Activity stop/start/remount behavior. No production source changed after the final build.
+
+All 30 frozen source/resource/test paths matched after testing. Fourteen new resource keys and the revised end-of-list label are present in all five supported configurations. Final native screenshots were inspected for the normal filter sheet, dark 1.5x-font scrolled controls and mixed game names. The dark sheet's top screenshot catches an entrance-animation frame and is not treated as a settled layout; the scrolled frame verifies its final geometry. Canvas previews and screenshots remain local only.
+
+Only task-owned synthetic guests were removed. Owner user 0 and physical density 280 were restored, MuMu instance 0 was stopped because this task started it, and instance 1 was untouched. Final counts, exact package/source hashes, method names and cleanup receipts are in `steam-space-filters-310-results.json`; all three device runner transcripts accompany this report. Source freezes, raw logs (including earlier failures) and public-source research remain under `.codex-tasks/20261107-steam-space-filters/` and `.codex-tasks/20261107-steam-space/public-source-evidence/`.
+
+## Limits and handling
+
+Protocol evidence comes from the public Steam client and protobuf definitions mirrored by SteamDatabase/SteamTracking. This change uses synthetic fixtures, not a live Steam account. Steam privacy, service availability and its activity selection determine which real items can be read. This is not a complete transaction history or purchase ledger.
+
+Five resource configurations are maintained: English, Chinese, Japanese, Russian and Vietnamese. Editable M3E Canvas sketches and actual device screenshots remain in local ignored `docs/design/steam-space-filters-20261107/`; images are not committed or embedded in this report. No commit, push, release or APK delivery is part of this task.

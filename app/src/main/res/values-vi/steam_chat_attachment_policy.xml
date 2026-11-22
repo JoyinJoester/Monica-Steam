@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_attachment_file_summary">Ảnh và video · tối đa 30 MiB</string>
+    <string name="steam_chat_attachment_unsupported_type">Trò chuyện Steam chỉ nhận ảnh và video JPG, JPEG, PNG, GIF, WebP, AVIF, WebM, MPG, MPEG, MP4 hoặc OGV. Không thể gửi ZIP, PDF và các tệp khác tại đây.</string>
+    <string name="steam_chat_attachment_invalid_size">Hãy chọn ảnh hoặc video không rỗng và có dung lượng tối đa 30 MiB.</string>
+    <string name="steam_chat_attachment_limited_account">Tài khoản Steam bị hạn chế này không thể tải tệp đính kèm lên. Hãy gỡ bỏ hạn chế tài khoản trước.</string>
+    <string name="steam_chat_attachment_session_expired">Phiên Steam đã hết hạn. Hãy làm mới phiên tài khoản rồi thử lại.</string>
+    <string name="steam_chat_attachment_rejected">Steam đã từ chối tệp đính kèm này. Hãy kiểm tra định dạng và dung lượng hoặc chọn ảnh hay video khác.</string>
+    <string name="steam_chat_attachment_service_failed">Dịch vụ tệp đính kèm của Steam không thể hoàn tất việc tải lên. Vui lòng thử lại sau.</string>
+</resources>

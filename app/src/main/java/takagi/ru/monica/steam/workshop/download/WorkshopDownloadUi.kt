@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.workshop.download
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassAlertDialog as AlertDialog
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassTopAppBar as TopAppBar
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import android.content.Intent
 import android.net.Uri
 import android.provider.DocumentsContract
@@ -166,12 +170,8 @@ internal fun WorkshopDownloadsScreen(rows: List<WorkshopDownloadRow>, onBack: ()
                             }
                         }
                         if (row.active) {
-                            val done = row.work?.progress?.getLong("done", 0) ?: 0
-                            val total = row.work?.progress?.getLong("total", 0) ?: 0
-                            if (total > 0) {
-                                LinearProgressIndicator(progress = { (done.toFloat() / total).coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
-                                Text("${Formatter.formatShortFileSize(context, done)} / ${Formatter.formatShortFileSize(context, total)}",
-                                    style = MaterialTheme.typography.labelSmall)
+                            if (row.work?.state == WorkInfo.State.RUNNING) {
+                                WorkshopStageProgress(WorkshopDownloadProgress.fromData(row.work.progress))
                             } else LinearProgressIndicator(Modifier.fillMaxWidth())
                         }
                     }
@@ -183,11 +183,8 @@ internal fun WorkshopDownloadsScreen(rows: List<WorkshopDownloadRow>, onBack: ()
 
 internal fun downloadStatus(row: WorkshopDownloadRow): Int = when {
     row.completed -> R.string.wallpaper_saved
-    row.work?.state == WorkInfo.State.RUNNING -> when (row.work.progress.getString("phase")) {
-        "saving" -> R.string.wallpaper_saving
-        "downloading" -> R.string.wallpaper_downloading
-        else -> R.string.wallpaper_resolving
-    }
+    row.work?.state == WorkInfo.State.RUNNING ->
+        WorkshopDownloadStage.fromKey(row.work.progress.getString("phase")).label
     row.active -> R.string.wallpaper_waiting
     row.work?.state == WorkInfo.State.CANCELLED -> R.string.wallpaper_cancelled
     else -> when (row.record.failure) {
@@ -198,5 +195,35 @@ internal fun downloadStatus(row: WorkshopDownloadRow): Int = when {
         "invalid" -> R.string.wallpaper_error_invalid
         "network" -> R.string.wallpaper_error_network
         else -> R.string.wallpaper_interrupted
+    }
+}
+
+@Composable
+internal fun WorkshopStageProgress(progress: WorkshopDownloadProgress) {
+    val context = LocalContext.current
+    val labels = listOf(R.string.workshop_stage_prepare, R.string.workshop_stage_download,
+        R.string.workshop_stage_check, R.string.workshop_stage_save)
+    Column(Modifier.fillMaxWidth().testTag("workshop_stage_progress"), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            labels.forEachIndexed { index, label ->
+                val active = index == progress.stage.step
+                val color = if (index <= progress.stage.step) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onSurfaceVariant
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Surface(Modifier.fillMaxWidth().height(3.dp), color = if (index <= progress.stage.step)
+                        color else MaterialTheme.colorScheme.surfaceContainerHighest, shape = RoundedCornerShape(2.dp)) {}
+                    Text(stringResource(label), style = if (active) MaterialTheme.typography.labelMedium
+                        else MaterialTheme.typography.labelSmall, color = color)
+                }
+            }
+        }
+        val fraction = progress.fraction
+        if (fraction == null) LinearProgressIndicator(Modifier.fillMaxWidth().testTag("workshop_stage_bar"))
+        else {
+            LinearProgressIndicator(progress = { fraction }, modifier = Modifier.fillMaxWidth().testTag("workshop_stage_bar"))
+            Text(if (progress.countsFiles) stringResource(R.string.workshop_progress_files, progress.done, progress.total)
+                else "${Formatter.formatShortFileSize(context, progress.done)} / ${Formatter.formatShortFileSize(context, progress.total)}",
+                style = MaterialTheme.typography.labelSmall, modifier = Modifier.testTag("workshop_stage_counts"))
+        }
     }
 }

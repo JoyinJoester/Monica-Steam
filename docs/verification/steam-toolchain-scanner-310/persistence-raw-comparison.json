@@ -1,0 +1,22 @@
+[
+  {
+    "file": "shared_prefs/monica_secure_prefs.xml",
+    "beforeSha256": "d0c279e7590b81851b4a1ce72760ddb1e9938f642b4e826935e6742d13efcea4",
+    "afterSha256": "a532aa480ddc6befa04a57ca94440f4d4db1a94809acbc52159bb5d354299050",
+    "byteEqual": false,
+    "keysEqual": true,
+    "changedValueCount": 2
+  },
+  {
+    "file": "files/datastore/settings.preferences_pb",
+    "beforeSha256": "e681a404a1f0134a7c3195493b3a1c9a086badef46ea926b9ce70a541af40a0c",
+    "afterSha256": "e681a404a1f0134a7c3195493b3a1c9a086badef46ea926b9ce70a541af40a0c",
+    "byteEqual": true
+  },
+  {
+    "file": "files/datastore/monica_steam_dock.preferences_pb",
+    "beforeSha256": "3712f95efce3b674c57c76b5aef6c54b0c6686ad4340b190f1ae50406e0df292",
+    "afterSha256": "3712f95efce3b674c57c76b5aef6c54b0c6686ad4340b190f1ae50406e0df292",
+    "byteEqual": true
+  }
+]

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_dock_style_title">Стиль панели</string>
+    <string name="steam_dock_style_description">По умолчанию используется M3E. В обоих стилях доступны магазин, библиотека игр, чат, токены и настройки.</string>
+    <string name="steam_dock_style_liquid_glass">Жидкое стекло</string>
+    <string name="steam_dock_style_fixed">M3E</string>
+    <string name="steam_design_style_title">Стиль оформления</string>
+    <string name="steam_design_style_description">Оба стиля используют выбранные цвета и параметры отображения. Стиль можно сменить в любое время.</string>
+    <string name="steam_design_style_m3e_description">Material 3 Expressive: фиксированная панель навигации, тональные блоки и стандартные плавающие кнопки</string>
+    <string name="steam_design_style_liquid_glass_description">Плавающая стеклянная навигация; плавающие элементы чата и магазина также используют стекло</string>
+    <string name="steam_design_style_order_hint">Порядок разделов меняется в разделе «Навигация и анимация › Нижняя навигация».</string>
+    <string name="steam_design_style_preview">Предпросмотр</string>
+    <string name="steam_design_style_glass_unsupported">На этом устройстве вместо стеклянного эффекта используется полупрозрачный фон.</string>
+</resources>

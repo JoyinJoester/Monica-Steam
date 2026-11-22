@@ -1,0 +1,42 @@
+[
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatContentMetadataTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.082"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest",
+    "tests": "14",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.017"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.013"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoIntegrationGuardTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.035"
+  },
+  {
+    "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+    "tests": "29",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.037"
+  }
+]

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2026-11-21T05:41:16.888Z" hostname="JOYIN" time="0.065">
+  <properties/>
+  <testcase name="missingSessionNeverStartsACmRequest" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.007"/>
+  <testcase name="mediaIsBatchedAndSensitivityIsPreservedWithoutExecutingContent" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.017"/>
+  <testcase name="repeatedAndPackedAppsDoNotTreatNonSteamGameIdAsAnApp" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="fullPageUsesOldestServerTimeAndBindsCursorToAccount" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.012"/>
+  <testcase name="truncatedWrongWireAndOversizedResponsesAreNotEmptySuccess" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="sourceAndImageUrlsRejectCredentialRedirectAndHostConfusion" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.0"/>
+  <testcase name="changedStatusIdentityIsPartialAndDeletedStatusIsOmitted" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.004"/>
+  <testcase name="unknownEventsPreserveServerTimeAndDoNotTurnIntoGameActivity" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="enrichmentNetworkFailureIsPartialButAuthenticationAndCancellationEscape" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="officialWireContractUsesFixedNewsIdsButVarintStatusIdentity" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.0"/>
+  <testcase name="invalidTimeAndActorAreNotInventedAndStillMarkPartial" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.0"/>
+  <testcase name="expiredEnrichmentBudgetMakesNoFurtherRequests" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="singleGameActivityKeepsAllIdsWhenOnlySomeNamesResolve" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="aMixedHistoryResponseOutsideRequestedTimeIsRejectedBeforeEnrichment" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <testcase name="boundedStatusEnrichmentKeepsUnloadedEventsAsPartial" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.004"/>
+  <testcase name="achievementTextComesOnlyFromMatchingAppAndNamedDisplayData" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="duplicateRowsCollapseButDifferentPublishedFilesRemainDistinct" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.0"/>
+  <testcase name="gameNamesAreReadInOneBatchAndUnrelatedOrFailedIdsAreIgnored" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.002"/>
+  <testcase name="privateDeletedBannedOrMisattributedMediaNeverReleasesPreview" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.003"/>
+  <testcase name="achievementIconAcceptsCdnUrlsAndConfinesFilenamesToTheirGame" classname="takagi.ru.monica.steam.space.data.SteamSpaceServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

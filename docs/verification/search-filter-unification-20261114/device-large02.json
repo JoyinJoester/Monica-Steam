@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "seconds": 6.815995300014038,
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamSearchUnificationDeviceTest#storeLargeDarkChoicesWrapAndTagsRemainReadable,takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryLiquidLight,takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryFallbackLargeText",
+    "takagi.ru.monica.steamapp.searchfilters.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

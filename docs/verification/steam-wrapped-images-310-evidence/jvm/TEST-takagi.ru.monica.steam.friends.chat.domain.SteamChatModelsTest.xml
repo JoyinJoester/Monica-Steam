@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.064Z" hostname="JOYIN" time="0.003">
+  <properties/>
+  <testcase name="pendingLocalEchoAndServerHistoryEntryReconcileByContentAndTime" classname="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" time="0.002"/>
+  <testcase name="repeatedIdenticalMessagesMatchDistinctLocalEchoesInOrder" classname="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" time="0.001"/>
+  <testcase name="mergingHistoryPagesRemovesDuplicatesAndKeepsChronologicalOrder" classname="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" time="0.0"/>
+  <testcase name="steamAccountIdConvertsToIndividualSteamId64" classname="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" time="0.0"/>
+  <testcase name="confirmedClientMessageAndSyncedHistoryEntryDoNotDuplicate" classname="takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

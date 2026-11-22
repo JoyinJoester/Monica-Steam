@@ -1,0 +1,14 @@
+[
+  {
+    "file": "main.apk",
+    "sha256": "3fa60689b9c3f0a4abf0403df5a28a0faef5847efafc54a738a68067eaf63de5",
+    "exit": 0,
+    "output": "Performing Streamed Install\r\nSuccess: streamed 87396140 bytes\r\nSuccess\r\n"
+  },
+  {
+    "file": "test.apk",
+    "sha256": "1f20e629fb4ae1a38b0cf3a85d58aab22a498c813552c336a10a482c72c95432",
+    "exit": 0,
+    "output": "Performing Streamed Install\r\nSuccess: streamed 2340240 bytes\r\nSuccess\r\n"
+  }
+]

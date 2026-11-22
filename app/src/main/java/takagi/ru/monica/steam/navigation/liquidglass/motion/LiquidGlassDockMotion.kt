@@ -5,16 +5,19 @@
  */
 package takagi.ru.monica.steam.navigation.liquidglass.motion
 
+import android.os.SystemClock
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.AnimationState
+import androidx.compose.animation.core.animateTo
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.MutatorMutex
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitHorizontalTouchSlopOrCancellation
 import androidx.compose.foundation.gestures.horizontalDrag
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,8 +35,8 @@ import androidx.compose.ui.util.fastCoerceIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -80,7 +83,8 @@ internal class LiquidGlassDockMotionState internal constructor(
     private val scope: CoroutineScope,
     private val onIndexChanged: (Int) -> Unit,
     reduceMotion: Boolean,
-    private val dragSpec: LiquidGlassDockDragSpec = LiquidGlassDockDragSpec()
+    private val dragSpec: LiquidGlassDockDragSpec = LiquidGlassDockDragSpec(),
+    private val awaitReleaseFrame: suspend () -> Unit = { awaitFrame() }
 ) {
     private val reducedMotionAnimationSpec: AnimationSpec<Float> =
         tween<Float>(durationMillis = REDUCED_MOTION_DURATION_MILLIS)
@@ -99,16 +103,6 @@ internal class LiquidGlassDockMotionState internal constructor(
     } else {
         spring(1f, 1000f, 0.001f)
     }
-    private val scaleXAnimationSpec = if (reduceMotion) {
-        reducedMotionAnimationSpec
-    } else {
-        spring(0.6f, 250f, 0.001f)
-    }
-    private val scaleYAnimationSpec = if (reduceMotion) {
-        reducedMotionAnimationSpec
-    } else {
-        spring(0.7f, 250f, 0.001f)
-    }
     private val offsetSnapAnimationSpec = if (reduceMotion) {
         reducedMotionAnimationSpec
     } else {
@@ -116,29 +110,33 @@ internal class LiquidGlassDockMotionState internal constructor(
     }
 
     private val valueAnimation = Animatable(initialIndex.toFloat(), 0.001f)
-    private val velocityAnimation = Animatable(0f, 5f)
+    private val velocityAnimation = AnimationState(0f)
     private val pressProgressAnimation = Animatable(0f, 0.001f)
-    private val scaleXAnimation = Animatable(1f, 0.001f)
-    private val scaleYAnimation = Animatable(1f, 0.001f)
     private val offsetAnimation = Animatable(0f)
-    private val mutatorMutex = MutatorMutex()
     private val deformationVelocityTracker = VelocityTracker()
+
+    // Pointer events publish directly to the draw/layer readers. Animatables are
+    // used only after release, rather than launching snapTo jobs for every event.
+    private var position by mutableFloatStateOf(initialIndex.toFloat())
+    private var panelOffset by mutableFloatStateOf(0f)
+    private var deformationVelocityTarget by mutableFloatStateOf(0f)
 
     private var motionGeneration = 0
     private var valueJob: Job? = null
     private var velocityJob: Job? = null
+    private var pressJob: Job? = null
     private var releaseJob: Job? = null
     private var offsetJob: Job? = null
     private var desiredValue = initialIndex.toFloat()
+    private var pressRequested = false
+    private var disposed = false
 
-    val value: Float get() = valueAnimation.value
-    val targetValue: Float get() = valueAnimation.targetValue
+    val value: Float get() = position
+    val targetValue: Float get() = targetIndex.toFloat()
     val deformationVelocityItemsPerSecond: Float get() = velocityAnimation.value
     val pressProgress: Float get() = pressProgressAnimation.value
-    val scaleX: Float get() = scaleXAnimation.value
-    val scaleY: Float get() = scaleYAnimation.value
-    val dragOffset: Float get() = offsetAnimation.value
-    val isRunning: Boolean get() = valueAnimation.isRunning
+    val dragOffset: Float get() = panelOffset
+    val isRunning: Boolean get() = valueJob?.isActive == true
 
     var velocityPxPerSecond by mutableFloatStateOf(0f)
         private set
@@ -155,76 +153,102 @@ internal class LiquidGlassDockMotionState internal constructor(
     }
 
     private fun press() {
-        deformationVelocityTracker.resetTracking()
+        if (pressRequested) return
+        pressRequested = true
         releaseJob?.cancel()
-        releaseJob = scope.launch {
-            launch { pressProgressAnimation.animateTo(1f, pressProgressAnimationSpec) }
-            launch { scaleXAnimation.animateTo(KERNEL_SU_PRESSED_SCALE, scaleXAnimationSpec) }
-            launch { scaleYAnimation.animateTo(KERNEL_SU_PRESSED_SCALE, scaleYAnimationSpec) }
+        pressJob?.cancel()
+        pressJob = scope.launch {
+            pressProgressAnimation.animateTo(1f, pressProgressAnimationSpec)
         }
     }
 
     private fun release(onSettled: (() -> Unit)? = null) {
+        pressRequested = false
         releaseJob?.cancel()
         releaseJob = scope.launch {
-            awaitFrame()
-            if (value != targetValue) {
-                val threshold = ((itemCount - 1).toFloat() * 0.025f).coerceAtLeast(0.001f)
-                snapshotFlow { valueAnimation.value }
-                    .filter { abs(it - valueAnimation.targetValue) < threshold }
-                    .first()
-            }
+            awaitReleaseFrame()
+            val threshold = ((itemCount - 1).toFloat() * 0.025f).coerceAtLeast(0.001f)
+            snapshotFlow { abs(value - targetValue) < threshold }.first { it }
             onSettled?.invoke()
-            launch { pressProgressAnimation.animateTo(0f, pressProgressAnimationSpec) }
-            launch { scaleXAnimation.animateTo(1f, scaleXAnimationSpec) }
-            launch { scaleYAnimation.animateTo(1f, scaleYAnimationSpec) }
+            pressJob?.cancel()
+            pressJob = scope.launch {
+                pressProgressAnimation.animateTo(0f, pressProgressAnimationSpec)
+            }
         }
     }
 
-    private fun updateDeformationVelocity(position: Float) {
+    private fun updateDeformationVelocity(position: Float, eventTimeMillis: Long) {
         val valueRange = (itemCount - 1).toFloat().coerceAtLeast(1f)
         deformationVelocityTracker.addPosition(
-            System.currentTimeMillis(),
+            eventTimeMillis,
             Offset(position, 0f)
         )
-        val targetVelocity = deformationVelocityTracker.calculateVelocity().x / valueRange
+        deformationVelocityTarget = deformationVelocityTracker.calculateVelocity().x / valueRange
+    }
+
+    private fun startDeformationVelocityLoop() {
+        if (velocityJob?.isActive == true) return
         velocityJob = scope.launch {
-            velocityAnimation.animateTo(targetVelocity, velocityAnimationSpec)
+            var continuingAnimation = false
+            while (isActive) {
+                val target = deformationVelocityTarget
+                var retargeted = false
+                velocityAnimation.animateTo(
+                    targetValue = target,
+                    animationSpec = velocityAnimationSpec,
+                    sequentialAnimation = continuingAnimation
+                ) {
+                    // Read the latest target at a frame boundary. Pointer events
+                    // neither allocate jobs nor repeatedly cancel a coroutine.
+                    if (deformationVelocityTarget != target) {
+                        retargeted = true
+                        cancelAnimation()
+                    }
+                }
+                continuingAnimation = retargeted
+                if (!retargeted) {
+                    // An idle Dock has no running frame loop. Start a fresh clock
+                    // after this wait so a long pause cannot fast-forward a spring.
+                    snapshotFlow { deformationVelocityTarget }.first { it != target }
+                }
+            }
         }
     }
 
     private fun animateToValue(value: Float, onSettled: (() -> Unit)? = null) {
-        scope.launch {
-            mutatorMutex.mutate {
-                press()
-                val nextTarget = value.fastCoerceIn(0f, (itemCount - 1).toFloat())
-                targetIndex = nextTarget.roundToInt().coerceIn(0, itemCount - 1)
-                valueJob?.cancel()
-                valueJob = launch { valueAnimation.animateTo(nextTarget, valueAnimationSpec) }
-                if (deformationVelocityItemsPerSecond != 0f) {
-                    velocityJob?.cancel()
-                    velocityJob = launch { velocityAnimation.animateTo(0f, velocityAnimationSpec) }
-                }
-                release(onSettled)
+        val nextTarget = value.fastCoerceIn(0f, (itemCount - 1).toFloat())
+        val startPosition = position
+        val initialVelocity = if (valueAnimation.isRunning) valueAnimation.velocity else 0f
+        targetIndex = nextTarget.roundToInt().coerceIn(0, itemCount - 1)
+        valueJob?.cancel()
+        valueJob = scope.launch {
+            valueAnimation.snapTo(startPosition)
+            valueAnimation.animateTo(nextTarget, valueAnimationSpec, initialVelocity) {
+                position = this.value
             }
         }
+        deformationVelocityTarget = 0f
+        press()
+        release(onSettled)
     }
 
     fun onDrag(
         dragAmountPx: Float,
         itemWidthPx: Float,
-        gestureVelocityPxPerSecond: Float = 0f
+        gestureVelocityPxPerSecond: Float = 0f,
+        eventTimeMillis: Long = SystemClock.uptimeMillis()
     ) {
-        if (itemWidthPx <= 0f || itemCount <= 0) return
+        if (disposed || itemWidthPx <= 0f || itemCount <= 0) return
         if (!isDragging) {
             isDragging = true
             startNewMotion()
             valueJob?.cancel()
             offsetJob?.cancel()
-            desiredValue = valueAnimation.value
+            desiredValue = position
             velocityPxPerSecond = 0f
-            velocityJob?.cancel()
-            velocityJob = scope.launch { velocityAnimation.snapTo(0f) }
+            deformationVelocityTracker.resetTracking()
+            deformationVelocityTarget = 0f
+            startDeformationVelocityLoop()
             press()
         }
         velocityPxPerSecond = gestureVelocityPxPerSecond
@@ -240,29 +264,22 @@ internal class LiquidGlassDockMotionState internal constructor(
             (itemCount - 1).toFloat() + dragSpec.overscrollLimitItems
         )
 
-        val clampedValue = desiredValue.fastCoerceIn(0f, (itemCount - 1).toFloat())
-        valueJob?.cancel()
-        valueJob = scope.launch {
-            valueAnimation.snapTo(clampedValue)
-            updateDeformationVelocity(clampedValue)
-        }
-
-        offsetJob?.cancel()
-        offsetJob = scope.launch {
-            offsetAnimation.snapTo(offsetAnimation.value + dragAmountPx)
-        }
+        position = desiredValue.fastCoerceIn(0f, (itemCount - 1).toFloat())
+        panelOffset += dragAmountPx
+        updateDeformationVelocity(position, eventTimeMillis)
     }
 
     fun setPressed(pressed: Boolean) {
+        if (disposed) return
         if (pressed) {
             press()
-        } else if (!isDragging) {
+        } else if (!isDragging && pressRequested) {
             release()
         }
     }
 
     fun onDragEnd(velocityX: Float, itemWidthPx: Float) {
-        if (itemWidthPx <= 0f || itemCount <= 0) return
+        if (disposed || !isDragging || itemWidthPx <= 0f || itemCount <= 0) return
         isDragging = false
         val generation = motionGeneration
         velocityPxPerSecond = velocityX
@@ -282,20 +299,23 @@ internal class LiquidGlassDockMotionState internal constructor(
             }
         }
         offsetJob?.cancel()
+        val startOffset = panelOffset
         offsetJob = scope.launch {
-            offsetAnimation.animateTo(0f, offsetSnapAnimationSpec)
+            offsetAnimation.snapTo(startOffset)
+            offsetAnimation.animateTo(0f, offsetSnapAnimationSpec) {
+                panelOffset = value
+            }
         }
     }
 
     fun updateIndex(index: Int) {
-        if (isDragging || itemCount <= 0) return
+        if (disposed || isDragging || itemCount <= 0) return
         val safeIndex = index.coerceIn(0, itemCount - 1)
         if (
             safeIndex == targetIndex &&
             (
                 isRunning ||
-                    abs(value - safeIndex.toFloat()) < 0.005f ||
-                    abs(targetValue - safeIndex.toFloat()) < 0.005f
+                    abs(value - safeIndex.toFloat()) < 0.005f
                 )
         ) {
             return
@@ -306,9 +326,33 @@ internal class LiquidGlassDockMotionState internal constructor(
         velocityPxPerSecond = 0f
         animateToValue(safeIndex.toFloat())
     }
+
+    internal fun revokePendingSelection() { startNewMotion() }
+
+    /** Revoke a measured selector gesture without publishing its old drag destination. */
+    fun cancelInteractionTo(index: Int) {
+        if (disposed || itemCount <= 0) return
+        startNewMotion()
+        isDragging = false
+        releaseJob?.cancel()
+        offsetJob?.cancel()
+        panelOffset = 0f
+        velocityPxPerSecond = 0f
+        desiredValue = index.coerceIn(0, itemCount - 1).toFloat()
+        animateToValue(desiredValue)
+    }
+
+    fun dispose() {
+        disposed = true
+        startNewMotion()
+        valueJob?.cancel()
+        velocityJob?.cancel()
+        pressJob?.cancel()
+        releaseJob?.cancel()
+        offsetJob?.cancel()
+    }
 }
 
-private const val KERNEL_SU_PRESSED_SCALE = 78f / 56f
 private const val REDUCED_MOTION_DURATION_MILLIS = 120
 
 @Composable
@@ -320,7 +364,7 @@ internal fun rememberLiquidGlassDockMotionState(
 ): LiquidGlassDockMotionState {
     val scope = rememberCoroutineScope()
     val currentOnIndexChanged by rememberUpdatedState(onIndexChanged)
-    return remember(itemCount, reduceMotion) {
+    val state = remember(itemCount, reduceMotion) {
         LiquidGlassDockMotionState(
             initialIndex = initialIndex,
             itemCount = itemCount,
@@ -329,6 +373,10 @@ internal fun rememberLiquidGlassDockMotionState(
             reduceMotion = reduceMotion
         )
     }
+    DisposableEffect(state) {
+        onDispose { state.dispose() }
+    }
+    return state
 }
 
 internal fun Modifier.liquidGlassDockHorizontalDrag(
@@ -343,7 +391,7 @@ internal fun Modifier.liquidGlassDockHorizontalDrag(
 
         val dragStart = awaitHorizontalTouchSlopOrCancellation(down.id) { change, over ->
             change.consume()
-            motionState.onDrag(over, itemWidthPx)
+            motionState.onDrag(over, itemWidthPx, eventTimeMillis = change.uptimeMillis)
         }
 
         if (dragStart != null) {
@@ -357,7 +405,8 @@ internal fun Modifier.liquidGlassDockHorizontalDrag(
                     motionState.onDrag(
                         dragAmountPx = dragAmount,
                         itemWidthPx = itemWidthPx,
-                        gestureVelocityPxPerSecond = velocityTracker.calculateVelocity().x
+                        gestureVelocityPxPerSecond = velocityTracker.calculateVelocity().x,
+                        eventTimeMillis = change.uptimeMillis
                     )
                 }
             } catch (_: Exception) {

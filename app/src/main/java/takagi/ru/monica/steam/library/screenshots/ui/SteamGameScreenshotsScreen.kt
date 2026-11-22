@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.library.screenshots.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshActionIcon
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +34,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -55,6 +56,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.foundation.media.SteamFullscreenImageViewer
+import takagi.ru.monica.steam.foundation.media.steamImageThumbnail
 import takagi.ru.monica.steam.foundation.media.SteamImageViewerStrings
 import takagi.ru.monica.steam.foundation.ui.SteamExpressivePullToRefresh
 import takagi.ru.monica.steam.foundation.ui.loadSteamRemoteImage
@@ -129,16 +131,14 @@ internal fun SteamGameScreenshotsScreen(
                         onClick = screenshotsViewModel::refresh,
                         enabled = !state.loading && !state.refreshing && !state.loadingMore
                     ) {
-                        Icon(
-                            Icons.Default.Refresh,
-                            contentDescription = stringResource(R.string.refresh)
-                        )
+                        SteamRefreshActionIcon(state.loading || state.refreshing, Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
                 }
             )
         }
     ) { padding ->
         SteamExpressivePullToRefresh(
+            showIndicator = false,
             refreshing = state.refreshing,
             onRefresh = screenshotsViewModel::refresh,
             modifier = Modifier
@@ -257,6 +257,7 @@ internal fun SteamGameScreenshotsScreen(
     }
 }
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SteamGameScreenshotCard(
     screenshot: SteamGameScreenshot,
@@ -304,7 +305,7 @@ private fun SteamGameScreenshotCard(
                         R.string.steam_store_screenshot_description,
                         index + 1
                     ),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().steamImageThumbnail(screenshot.imageUrl, thumbnail.image, ContentScale.Crop),
                     contentScale = ContentScale.Crop
                 )
             }

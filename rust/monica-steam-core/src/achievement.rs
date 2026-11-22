@@ -13,6 +13,9 @@ pub struct AchievementDetail {
     pub unlock_time_seconds: Option<i64>,
     pub icon_url: Option<String>,
     pub locked_icon_url: Option<String>,
+    pub group_id: u32,
+    pub archived: bool,
+    pub hidden: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -84,6 +87,9 @@ pub fn parse_achievement_details(
                 unlock_time_seconds: status.and_then(|value| value.unlock_time_seconds),
                 icon_url: last_optional_non_blank_string(&definition, 4),
                 locked_icon_url: last_optional_non_blank_string(&definition, 5),
+                group_id: last_field(&definition, 11).map(kotlin_as_long).unwrap_or(0) as u32,
+                archived: last_field(&definition, 12).is_some_and(|f| kotlin_as_long(f) != 0),
+                hidden: last_field(&definition, 6).is_some_and(|f| kotlin_as_long(f) != 0),
             })
         }) else {
             continue;
@@ -244,6 +250,20 @@ mod tests {
             writer.write_varint(3, unlock_time).unwrap();
         }
         writer
+    }
+
+    #[test]
+    fn latest_schema_preserves_unsigned_group_archive_and_hidden_flags() {
+        let mut item = definition(42, "ARCHIVED", "Old", "Retained");
+        item.write_varint(11, 0xffff_ffff).unwrap();
+        item.write_bool(12, true).unwrap();
+        item.write_bool(6, true).unwrap();
+        let mut response = ProtoWriter::new();
+        response.write_message(1, &item).unwrap();
+        let parsed = parse_achievement_details(response.as_bytes(), &[]).unwrap();
+        assert_eq!(parsed[0].group_id, u32::MAX);
+        assert!(parsed[0].archived);
+        assert!(parsed[0].hidden);
     }
 
     #[test]

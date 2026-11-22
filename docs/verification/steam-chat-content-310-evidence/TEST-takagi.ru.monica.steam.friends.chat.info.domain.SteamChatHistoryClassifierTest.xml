@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-21T05:09:54.603Z" hostname="JOYIN" time="0.017">
+  <properties/>
+  <testcase name="archiveAttachmentIsFile" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="itemPreviewDropsContentHashImageNames" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="shortcutCategoriesSkipTheGenericBuckets" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.0"/>
+  <testcase name="itemPreviewDropsTheBbcodeEnvelope" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.0"/>
+  <testcase name="searchMatchesSenderUrlAndPreview" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="videoAttachmentIsMedia" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="plainTextIsText" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.002"/>
+  <testcase name="tradeOfferNotificationIsInvite" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="archivesHaveNoThumbnail" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="storeShareLineIsLink" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.003"/>
+  <testcase name="lobbyInviteIsInvite" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="imageAttachmentIsMedia" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.001"/>
+  <testcase name="stickerCommandIsSticker" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.0"/>
+  <testcase name="textCarryingALinkBecomesLink" classname="takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

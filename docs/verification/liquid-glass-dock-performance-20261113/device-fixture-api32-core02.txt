@@ -1,0 +1,117 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest:
+INSTRUMENTATION_STATUS: test=reducedMotionAndOverscrollReturnToValidDestination
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reducedMotionAndOverscrollReturnToValidDestination
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=highFrequencyDragPublishesImmediatelyWithoutPerEventJobs
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=highFrequencyDragPublishesImmediatelyWithoutPerEventJobs
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disposalCancelsMotionAndCannotPublishLateSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disposalCancelsMotionAndCannotPublishLateSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=newSelectionSuppressesPendingDragCallbackAndSettles
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassDockMotionDeviceTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=newSelectionSuppressesPendingDragCallbackAndSettles
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest:
+INSTRUMENTATION_STATUS: test=cachedMaskRespondsToAlphaColorOffsetAndSize
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(LiquidGlassInnerShadowDeviceTest.kt:66)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedMaskRespondsToAlphaColorOffsetAndSize(takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest):
+java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(LiquidGlassInnerShadowDeviceTest.kt:66)
+
+INSTRUMENTATION_STATUS: test=cachedMaskRespondsToAlphaColorOffsetAndSize
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mutableGenericOutlineDoesNotReuseOldPath
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mutableGenericOutlineDoesNotReuseOldPath
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 18.049
+There was 1 failure:
+1) cachedMaskRespondsToAlphaColorOffsetAndSize(takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest)
+java.lang.AssertionError: Reusing the mask restores identical pixels expected:<0> but was:<6375303>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:647)
+	at takagi.ru.monica.steam.navigation.LiquidGlassInnerShadowDeviceTest.cachedMaskRespondsToAlphaColorOffsetAndSize(LiquidGlassInnerShadowDeviceTest.kt:66)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

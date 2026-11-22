@@ -1,0 +1,416 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatCardsUiTest:
+INSTRUMENTATION_STATUS: test=unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeFontOpenGraphProfileStillHasReachableDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.largeFontOpenGraphProfileStillHasReachableDetails(SteamChatCardsUiTest.kt:409)
+
+INSTRUMENTATION_STATUS: stream=
+Error in largeFontOpenGraphProfileStillHasReachableDetails(takagi.ru.monica.steam.chat.SteamChatCardsUiTest):
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.largeFontOpenGraphProfileStillHasReachableDetails(SteamChatCardsUiTest.kt:409)
+
+INSTRUMENTATION_STATUS: test=largeFontOpenGraphProfileStillHasReachableDetails
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=choosingCardOnlyAddsDraftAfterExplicitAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=choosingCardOnlyAddsDraftAfterExplicitAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sentOpenGraphProfileIsACardInM3eThread
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInM3eThread(SteamChatCardsUiTest.kt:406)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sentOpenGraphProfileIsACardInM3eThread(takagi.ru.monica.steam.chat.SteamChatCardsUiTest):
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInM3eThread(SteamChatCardsUiTest.kt:406)
+
+INSTRUMENTATION_STATUS: test=sentOpenGraphProfileIsACardInM3eThread
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=receivedOpenGraphProfileUsesTheSameParser
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.receivedOpenGraphProfileUsesTheSameParser(SteamChatCardsUiTest.kt:408)
+
+INSTRUMENTATION_STATUS: stream=
+Error in receivedOpenGraphProfileUsesTheSameParser(takagi.ru.monica.steam.chat.SteamChatCardsUiTest):
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.receivedOpenGraphProfileUsesTheSameParser(SteamChatCardsUiTest.kt:408)
+
+INSTRUMENTATION_STATUS: test=receivedOpenGraphProfileUsesTheSameParser
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualComposerSendsCardOnlyThroughExistingSendButton
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualComposerSendsCardOnlyThroughExistingSendButton
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localDeleteRequiresConfirmationAndCancelKeepsMessage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localDeleteRequiresConfirmationAndCancelKeepsMessage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=m3eDarkThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=m3eDarkThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=personalProfileShortcutSendsOnlyTheLinkAndServerEchoBecomesACard
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=personalProfileShortcutSendsOnlyTheLinkAndServerEchoBecomesACard
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localDeleteMarkersSurviveStoreReopenAndStayInTheirConversation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=tradeOfferOpenAndCopyUseExactParsedOffer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=tradeOfferOpenAndCopyUseExactParsedOffer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=glassDarkThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=glassDarkThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=m3eLightThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=m3eLightThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sentOpenGraphProfileIsACardInGlassThread
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInGlassThread(SteamChatCardsUiTest.kt:407)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sentOpenGraphProfileIsACardInGlassThread(takagi.ru.monica.steam.chat.SteamChatCardsUiTest):
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInGlassThread(SteamChatCardsUiTest.kt:407)
+
+INSTRUMENTATION_STATUS: test=sentOpenGraphProfileIsACardInGlassThread
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=switchingConversationDoesNotReuseUnconfirmedLink
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=switchingConversationDoesNotReuseUnconfirmedLink
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unsupportedCardRetainsOriginalMessageWithoutActionButton
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unsupportedCardRetainsOriginalMessageWithoutActionButton
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=longPressLiftsTheActualChatCardAndBackRestoresTheThread
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=longPressLiftsTheActualChatCardAndBackRestoresTheThread
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeFontCanReachDraftActionAfterMyProfileShortcut
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeFontCanReachDraftActionAfterMyProfileShortcut
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=glassLightThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=glassLightThreadAndShare
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=gameInvitationKeepsSteamActionSeparateFromStore
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=gameInvitationKeepsSteamActionSeparateFromStore
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatCardsUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=22
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 31.721
+There were 4 failures:
+1) largeFontOpenGraphProfileStillHasReachableDetails(takagi.ru.monica.steam.chat.SteamChatCardsUiTest)
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.largeFontOpenGraphProfileStillHasReachableDetails(SteamChatCardsUiTest.kt:409)
+2) sentOpenGraphProfileIsACardInM3eThread(takagi.ru.monica.steam.chat.SteamChatCardsUiTest)
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInM3eThread(SteamChatCardsUiTest.kt:406)
+3) receivedOpenGraphProfileUsesTheSameParser(takagi.ru.monica.steam.chat.SteamChatCardsUiTest)
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.receivedOpenGraphProfileUsesTheSameParser(SteamChatCardsUiTest.kt:408)
+4) sentOpenGraphProfileIsACardInGlassThread(takagi.ru.monica.steam.chat.SteamChatCardsUiTest)
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Steam Community :: Synthetic Profile' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:380)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile(SteamChatCardsUiTest.kt:398)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.verifyOpenGraphProfile$default(SteamChatCardsUiTest.kt:375)
+	at takagi.ru.monica.steam.chat.SteamChatCardsUiTest.sentOpenGraphProfileIsACardInGlassThread(SteamChatCardsUiTest.kt:407)
+
+FAILURES!!!
+Tests run: 22,  Failures: 4
+
+
+INSTRUMENTATION_CODE: -1

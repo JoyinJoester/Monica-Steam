@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_dock_style_title">Dock style</string>
+    <string name="steam_dock_style_description">M3E is the default. Both styles include Store, Game Library, Chat, Tokens and Settings.</string>
+    <string name="steam_dock_style_liquid_glass">Liquid Glass</string>
+    <string name="steam_dock_style_fixed">M3E</string>
+    <string name="steam_design_style_title">Design style</string>
+    <string name="steam_design_style_description">Both styles follow your selected colors and display settings. You can switch at any time.</string>
+    <string name="steam_design_style_m3e_description">Material 3 Expressive: fixed navigation bar, tonal containers, and standard floating buttons</string>
+    <string name="steam_design_style_liquid_glass_description">Floating glass navigation; floating controls in Chat and Store use glass</string>
+    <string name="steam_design_style_order_hint">Reorder destinations in Navigation &amp; motion › Bottom navigation.</string>
+    <string name="steam_design_style_preview">Preview</string>
+    <string name="steam_design_style_glass_unsupported">This device uses translucent surfaces instead of live glass.</string>
+</resources>

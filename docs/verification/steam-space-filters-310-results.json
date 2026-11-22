@@ -1,0 +1,293 @@
+{
+  "version": "1.0.310",
+  "version_code": 18,
+  "daily_sequence": 19,
+  "build": {
+    "stage": "03",
+    "success": true,
+    "duration": "7m 11s"
+  },
+  "jvm": {
+    "totals": {
+      "tests": 86,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": [
+      {
+        "name": "takagi.ru.monica.steam.space.data.SteamSpaceFeedCacheTest",
+        "tests": "17",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.105"
+      },
+      {
+        "name": "takagi.ru.monica.steam.space.data.SteamSpaceServiceTest",
+        "tests": "20",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.141"
+      },
+      {
+        "name": "takagi.ru.monica.steam.space.presentation.SteamSpaceContentSettingsViewModelTest",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.019"
+      },
+      {
+        "name": "takagi.ru.monica.steam.space.presentation.SteamSpaceViewModelTest",
+        "tests": "33",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "3.1"
+      },
+      {
+        "name": "takagi.ru.monica.steam.space.ui.SteamSpaceHeaderScrollBehaviorTest",
+        "tests": "10",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.063"
+      }
+    ]
+  },
+  "device": {
+    "emulator": "MuMu instance 0",
+    "android_api": 35,
+    "abi": "x86_64",
+    "synthetic_only": true,
+    "tests": 25,
+    "failures": 0,
+    "seconds": 47.179,
+    "passed_methods": [
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#largeTextAndReducedMotionKeepContinuousDragAndAccessibleCompactTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#cachedPresenceIsMarkedAsLastKnownWhenRefreshFails",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialHeaderReleaseSettlesUsingRealFramesAndCanExpandAgain",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#gameActivityPreservesNamesAndMissingAppIds",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#loginEmptyAndNetworkStatesRemainDistinct",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#chatTopEntryOpensSpaceAndKeepsAccountAndSearchActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#backDismissesSheetFirstAndAccountSwitchRevokesIt",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#originalActivityAndSensitiveMediaUseReadOnlyActions",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#contentFilters_hideOnlyAchievementsAndRestoreAll",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#contentFilters_allHiddenRetainPaginationAndLargeFontControls",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#refreshAndPaginationFailuresKeepExistingActivityAndAllowRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#headerDragShrinksContinuouslyThenKeepsOnlyClickableAvatarsAtTheTop",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#partialFeedWithoutCursorNeverClaimsAllActivityWasShown",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#playingStripScrollsAndSheetUsesExactGameAndMessageTargets",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#updatedPresenceRevokesSheetWhenFriendStopsPlayingOrDisappears",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#lightNormalAndDarkLargeTextRenderActualFramesAndSheetControls",
+      "takagi.ru.monica.steam.space.SteamSpaceUiTest#expiredPaginationSessionOffersAccountLoginInsteadOfPageRetry",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#stopClearsVisibleStateAndStartRestoresCacheWithoutAnotherRequest",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#foregroundAccountChangeRefreshesOnceAndClearsTheOldFeed",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#stoppingInterruptsPendingPageAndResumeCanLoadAnotherAccount",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#firstActivationRefreshesOnceAndTokenUpdatesDoNotRefreshPresence",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#accountChangedWhileStoppedDoesNotStartUntilResumeAndUsesLatestAccount",
+      "takagi.ru.monica.steam.space.SteamSpaceLifecycleUiTest#removingAndRemountingThePageClearsVisibleStateThenRestoresCache",
+      "takagi.ru.monica.steam.space.SteamSpaceCacheDeviceTest#encryptedFeedSurvivesCacheRecreationWithoutPlaintextAndSeparatesAccounts",
+      "takagi.ru.monica.steam.space.SteamSpaceContentSettingsDeviceTest#categoriesPersistByNameAcrossStoreRecreationAndIgnoreUnknownFutureKinds"
+    ]
+  },
+  "earlier_runs": [
+    {
+      "stage": "build01",
+      "success": true,
+      "jvm_tests": 85,
+      "duration": "9m 57s"
+    },
+    {
+      "stage": "build02",
+      "success": true,
+      "jvm_tests": 85,
+      "duration": "9m 23s"
+    },
+    {
+      "stage": "device01",
+      "tests": 25,
+      "failures": 2,
+      "seconds": 103.691
+    },
+    {
+      "stage": "device02_same_apks",
+      "tests": 2,
+      "failures": 1,
+      "seconds": 11.55
+    },
+    {
+      "stage": "baseline_cancellation",
+      "tests": 1,
+      "expected_failures": 1,
+      "duration": "1m 27s"
+    }
+  ],
+  "source_paths_verified": 30,
+  "sources": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceCacheDeviceTest.kt",
+      "sha256": "02712344538917d59acd1d0dcdd1b405eba1f70e3131b4d9fad4913d03f800d5"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceContentSettingsDeviceTest.kt",
+      "sha256": "bf6a3ffd582a78c489eb2f2db861560ccb9f4a3d8c4d8f9877716b979935d88a"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceLifecycleUiTest.kt",
+      "sha256": "60fcc3bf94900d627994ffd0b702afee792fc13b6d6deb21c525b0682e431f62"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/space/SteamSpaceUiTest.kt",
+      "sha256": "f4866070b649fe2fe9eabad3eed226b44a521e57b278d74287fcaf78f347421a"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceContentSettings.kt",
+      "sha256": "e2178c6af66e965787187208cf8426a0207f21aa138d7a013e1c6d14510c0f37"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceFeedCache.kt",
+      "sha256": "e849d8fffb13f648c3f2774a9faf5c7340fd11ff3b457d0c25c153e4f14eef60"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceLinks.kt",
+      "sha256": "b2853cdfc9a8a4e140cca92f591d89793f10af4c78adfeac6fc701b470165ff7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceParser.kt",
+      "sha256": "ac4e02dc7513a39c4165dd8235df43810e1866b6fc1d7f5baff1d7efe029c6d8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceService.kt",
+      "sha256": "041edb26f59004190a627c4510aaeeb8f201eec1d115f3127b85447e6cdc2499"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/domain/SteamSpaceFeedCache.kt",
+      "sha256": "66bb228f8169018de64e719dff5489d8e88f4aad9dce74fe284dc0cfbe75e6a0"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/domain/SteamSpaceModels.kt",
+      "sha256": "1bab6e6785f23e0bcb034cd0b3b59274933535c7ce3ce443cd2184314592cb11"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceContentSettingsViewModel.kt",
+      "sha256": "63a095354dbf04f25baa95fcd3389533103aef6ac3a63a4262a5ac4b8db1b90c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceUiState.kt",
+      "sha256": "054bbe67868c243bfdccb75fcab545ce7941cbca9cba8f6c556e5df400c8a1e2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModel.kt",
+      "sha256": "c45919dd94f28637f33f343fc6aa9908b08df44b04d74f365f2250a0a5bb5ca6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceContentFilters.kt",
+      "sha256": "9b45d3d1bb6be4765fd2f0c99f2d14fff184139e64daede021268a16c7033cb1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceHeaderScrollBehavior.kt",
+      "sha256": "0f4a3d4ea513e4dbf2ceab014077d8dddf4a3a091dc522cca0886a2904310396"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpacePlayingHeader.kt",
+      "sha256": "3dfa82636e380daaacd499fc0009c9d31f1d402e0cbe9d6801c799f7b6aab051"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceRoute.kt",
+      "sha256": "748ae1833509c9daf79f0bf964481428164da7e208b39465b2ea95eac995634e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceScreen.kt",
+      "sha256": "81bee8ec56a6e6b1d02e6d80e27f0aad423b04541a1e243c5144ada0781c63b1"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/space/ui/SteamSpaceSessionLifecycle.kt",
+      "sha256": "90919bf649b1611a935a82d3b7095f6198ee0301fd348d9e88c719a729a4d3d9"
+    },
+    {
+      "path": "app/src/main/res/values/steam_space_strings.xml",
+      "sha256": "e40836a2fd247f179c8f188a9f4f0b441e82e8ced2fefe5c9c9b461b710e1bb7"
+    },
+    {
+      "path": "app/src/main/res/values-ja/steam_space_strings.xml",
+      "sha256": "cc147a6d9f2644ab0b31456e6aabae3fd92d11e9b18a599b8362f2de267d3f79"
+    },
+    {
+      "path": "app/src/main/res/values-ru/steam_space_strings.xml",
+      "sha256": "75e6acea69e3a41829b0067c0c8a1976eabf531e8bb2e568d49237e5d54c1de4"
+    },
+    {
+      "path": "app/src/main/res/values-vi/steam_space_strings.xml",
+      "sha256": "e3f15ce9d413113984adf2ce87ac274484e3141b059a33abdecb53007edfab41"
+    },
+    {
+      "path": "app/src/main/res/values-zh/steam_space_strings.xml",
+      "sha256": "499492d5ac7593ba4d462a52671e3cae0a8a8e5ab1aca12545a4db1e6d6c6ef0"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceFeedCacheTest.kt",
+      "sha256": "f7f969cc18bd60367a566fedcc7ed2fc2abe990f14113feba25d4dc715ac3297"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceServiceTest.kt",
+      "sha256": "16d9936953fced324980f7fbc91262baaeef9e43cec57eeb213ae467146aa002"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/space/presentation/SteamSpaceContentSettingsViewModelTest.kt",
+      "sha256": "79d18357037377d66a5b3b4fd0f5b58961c39b04933d6fdcec6847c51cb28675"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/space/presentation/SteamSpaceViewModelTest.kt",
+      "sha256": "8675e19413c1ca8a42e8cb99d7bc1d8f9eb12c51213b97717e7b1d818ac368e7"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/space/ui/SteamSpaceHeaderScrollBehaviorTest.kt",
+      "sha256": "0f50e457a87a2d4abb511420f2ca20d7f9476f3d86feaa59f1b9ff6998b2ee99"
+    }
+  ],
+  "apk_hashes": [
+    {
+      "path": "app/build/outputs/apk/debug/Monica-Steam-Android-x86_64-1.0.310-26110718-19.APK",
+      "sha256": "e4e457f1d42c379bf491e1c8615a8c9fe45288d0785cba7294c2724e0038744c"
+    },
+    {
+      "path": "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+      "sha256": "128950168aeabafe83be156674b8ee6da888d0ca907e6e9fdf46408728b2019d"
+    }
+  ],
+  "content_resource_keys_per_locale": 14,
+  "resource_locales": [
+    "en",
+    "zh",
+    "ja",
+    "ru",
+    "vi"
+  ],
+  "cleanup": {
+    "original_user": "0",
+    "users_before": "Users:\n\tUserInfo{0:Owner:4c13} running\n",
+    "density_before": "Physical density: 280\n",
+    "packages_before": "",
+    "guest_name": "Monica_Steam_Space_Filters_20261107",
+    "guest_id": "10",
+    "users_after": "Users:\n\tUserInfo{0:Owner:4c13} running\n",
+    "current_user_after": "0",
+    "density_after": "Physical density: 280\n",
+    "owner_packages_after": "",
+    "uninstalled_package_records_after": "package:takagi.ru.monica.steamapp\n",
+    "cleanup_complete": true
+  },
+  "limits": [
+    "Synthetic Steam data only; no authenticated live account",
+    "Debug x86_64 on MuMu API35; no physical device or R8 validation",
+    "Steam acquired-game events do not prove payment",
+    "Status enrichment retains existing request/time bounds"
+  ],
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apk_delivered": false
+}

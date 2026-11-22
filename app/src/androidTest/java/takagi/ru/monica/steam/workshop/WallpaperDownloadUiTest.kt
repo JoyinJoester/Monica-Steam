@@ -1,7 +1,7 @@
 package takagi.ru.monica.steam.workshop
 
 import android.graphics.Bitmap
-import androidx.activity.ComponentActivity
+import takagi.ru.monica.steam.SteamComposeFixtureActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
@@ -24,7 +24,7 @@ import takagi.ru.monica.steam.workshop.download.*
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class WallpaperDownloadUiTest {
-    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+    @get:Rule val compose = createAndroidComposeRule<SteamComposeFixtureActivity>()
     private val sample = WorkshopItem("3818900270", WALLPAPER_ENGINE_APP_ID, "荷塘观鱼 2.1完整版",
         preview = "https://images.steamusercontent.com/ugc/10528085922897224548/83065E9B4F24A0AA50E2070F839250F19FEE8D17/",
         size = 13212093)

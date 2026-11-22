@@ -33,9 +33,19 @@ class SteamChatGameInviteIntegrationGuardTest {
         ).readText()
 
         assertTrue(card.contains("SteamChatGameInviteMetadataRepository"))
-        assertTrue(card.contains("heightIn(min = 48.dp)"))
-        assertTrue(card.contains("surfaceContainerHigh"))
-        assertTrue(card.contains("FilledTonalButton"))
+        val shared = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichCard.kt"
+        ).readText()
+        assertTrue(card.contains("SteamChatRichCard("))
+        // The whole card and its overflow retain large targets after layout extraction.
+        assertTrue(shared.contains("widthIn(min = 210.dp"))
+        assertTrue(shared.contains("height = 44.dp"))
+        assertTrue(shared.contains("IconButton(onClick = show)"))
+        assertTrue(shared.contains("surfaceContainerHigh"))
+        assertTrue(shared.contains("combinedClickable("))
+        assertTrue(shared.contains("onLongClick = show"))
+        assertTrue(shared.contains("TelegramActionMenu("))
+        assertFalse(card.contains("FilledTonalButton"))
         assertTrue(card.contains("onOpenStoreApp"))
         assertTrue(activity.contains("onOpenStoreApp = { appId ->"))
         assertTrue(directThread.contains("onOpenStoreApp = onOpenStoreApp"))

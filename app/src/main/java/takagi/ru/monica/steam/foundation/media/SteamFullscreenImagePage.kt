@@ -19,6 +19,7 @@ import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +44,8 @@ import takagi.ru.monica.steam.profile.SteamRemoteImageCache
 internal fun SteamFullscreenImagePage(
     url: String,
     contentDescription: String,
-    loadFailedText: String
+    loadFailedText: String,
+    onZoomChanged: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
     val cache = remember(context) {
@@ -90,7 +92,8 @@ internal fun SteamFullscreenImagePage(
             }
             is FullscreenImageState.Loaded -> ZoomableSteamImage(
                 image = state.image,
-                contentDescription = contentDescription
+                contentDescription = contentDescription,
+                onZoomChanged = onZoomChanged
             )
         }
     }
@@ -99,10 +102,12 @@ internal fun SteamFullscreenImagePage(
 @Composable
 private fun ZoomableSteamImage(
     image: ImageBitmap,
-    contentDescription: String
+    contentDescription: String,
+    onZoomChanged: (Boolean) -> Unit
 ) {
     var scale by remember(image) { mutableFloatStateOf(1f) }
     var offset by remember(image) { mutableStateOf(Offset.Zero) }
+    SideEffect { onZoomChanged(scale > 1f) }
     val transformableState = rememberTransformableState { _, zoomChange, panChange, _ ->
         val nextScale = (scale * zoomChange).coerceIn(1f, 5f)
         scale = nextScale

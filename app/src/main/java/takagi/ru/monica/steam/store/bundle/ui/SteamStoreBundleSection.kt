@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.store.bundle.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +24,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +31,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -61,17 +64,8 @@ fun SteamStoreBundleSection(
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.SemiBold
         )
-        LazyRow(
-            contentPadding = PaddingValues(end = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(bundles, key = SteamStoreBundle::bundleId) { bundle ->
-                BundleCard(
-                    bundle = bundle,
-                    currency = currency,
-                    onClick = { selectedBundle = bundle }
-                )
-            }
+        bundles.forEach { bundle ->
+            BundleCard(bundle, currency, onClick = { selectedBundle = bundle })
         }
     }
 
@@ -101,46 +95,38 @@ private fun BundleCard(
     currency: String,
     onClick: () -> Unit
 ) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier.width(276.dp).heightIn(min = 190.dp),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
-        if (bundle.imageUrl.isNotBlank()) {
-            SteamStoreImage(
-                url = bundle.imageUrl,
-                modifier = Modifier.fillMaxWidth().aspectRatio(460f / 215f),
-                contentScale = ContentScale.Crop,
-                contentDescription = bundle.title
-            )
-        }
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = bundle.title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.steam_store_bundle_items, bundle.items.size),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                BundlePrice(bundle, currency)
+    Card(onClick = onClick, modifier = Modifier.fillMaxWidth().testTag("store_bundle_${bundle.bundleId}"),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
+        BundleArtwork(bundle)
+        Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(bundle.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
+                maxLines = 3, overflow = TextOverflow.Ellipsis)
+            val names = bundle.items.take(3).mapNotNull { it.name.takeIf(String::isNotBlank) }
+            if (names.isNotEmpty()) Text(names.joinToString(" · "), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.steam_store_bundle_items, bundle.items.size),
+                style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                androidx.compose.foundation.layout.Box(Modifier.weight(1f)) { BundlePrice(bundle, currency) }
+                Icon(Icons.AutoMirrored.Filled.ArrowForward,
+                    stringResource(R.string.steam_store_bundle_open_item), Modifier.padding(start = 8.dp))
             }
+        }
+    }
+}
+
+/** Included-game art reveals the combination; no unrelated cover is substituted. */
+@Composable
+private fun BundleArtwork(bundle: SteamStoreBundle) {
+    val images = bundle.items.mapNotNull { it.imageUrl.takeIf(String::isNotBlank) }.distinct().take(3)
+        .ifEmpty { listOfNotNull(bundle.imageUrl.takeIf(String::isNotBlank)) }
+    if (images.isEmpty()) return
+    Row(Modifier.fillMaxWidth().padding(8.dp).testTag("bundle_artwork_${bundle.bundleId}"),
+        horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        images.forEach { url ->
+            SteamStoreImage(url, Modifier.weight(1f).aspectRatio(460f / 215f).clip(RoundedCornerShape(16.dp)),
+                contentDescription = null)
         }
     }
 }
@@ -185,22 +171,19 @@ private fun BundleDetail(
     onOpenApp: (Int) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().heightIn(max = 680.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(max = 680.dp).testTag("bundle_detail_${bundle.bundleId}"),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                BundleArtwork(bundle)
                 Text(
                     text = bundle.title,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = stringResource(
                             R.string.steam_store_bundle_contents,
@@ -214,7 +197,7 @@ private fun BundleDetail(
                 Button(
                     onClick = onOpenBundle,
                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(24.dp)
                 ) {
                     Text(stringResource(R.string.steam_store_bundle_buy))
                 }
@@ -223,8 +206,8 @@ private fun BundleDetail(
         items(bundle.items, key = SteamStoreBundleItem::appId) { item ->
             Surface(
                 onClick = { onOpenApp(item.appId) },
-                modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp),
-                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 72.dp).testTag("bundle_item_${item.appId}"),
+                shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.surfaceContainerLow
             ) {
                 Row(
@@ -232,10 +215,10 @@ private fun BundleDetail(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SteamStoreImage(
+                    if (item.imageUrl.isNotBlank()) SteamStoreImage(
                         url = item.imageUrl,
-                        modifier = Modifier.width(112.dp).height(52.dp),
-                        contentDescription = item.name
+                        modifier = Modifier.width(88.dp).height(48.dp).clip(RoundedCornerShape(12.dp)),
+                        contentDescription = null
                     )
                     Text(
                         text = item.name.ifBlank { "App ${item.appId}" },

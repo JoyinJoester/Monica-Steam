@@ -1,0 +1,12 @@
+{
+  "apks": {
+    "main.apk": "79e1b8c502031d75b02cbbc0850ff785a919aaab2503882bae5aa66fc1cf41d9",
+    "test.apk": "56c34df3cacabb91284dd845cd48a533159ec44e1798bbd112d813e109fd0f11"
+  },
+  "sources": {
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotion.kt": "12ed7bd164877ce98b4319182bf092123926aa4e770761c447b0c15d3a0996c1",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "a39f3d77bf7e3851f0595fba3cd3c9919f9e169d167788770ed30df73e88bc37",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamConversationFilters.kt": "0e8209952dff54079c38cbb3b285015a4a73116587439ec961d869da2ba290e5",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "482b4d23575484ce20f28c64e84135a97b50e457047f7a52ecc217f03bce956b"
+  }
+}

@@ -14,18 +14,17 @@ class SteamChatReadingPositionIntegrationTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt"
         ).readText()
         val controller = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/position/ui/SteamChatReadingPositionUi.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramMessageList.kt"
         ).readText()
 
         listOf(direct, group).forEach { source ->
-            assertTrue(source.contains("rememberSteamChatReadingPosition("))
+            assertTrue(source.contains("rememberTelegramChatListState("))
             assertTrue(source.contains("SteamChatJumpToLatestButton("))
-            assertTrue(source.contains("SteamChatAutoScrollToLatestEffect("))
-            assertTrue(source.contains("readingUi.messagesBelow"))
-            assertTrue(source.contains("animateToLatestSteamChatMessage("))
+            assertTrue(source.contains("TelegramMessageList("))
+            assertTrue(source.contains("listState::jumpToLatest"))
         }
-        assertTrue(controller.contains("snapshotFlow"))
-        assertTrue(controller.contains("collectLatest"))
+        assertTrue(controller.contains("OnScrollListener"))
+        assertTrue(controller.contains("planTelegramListScroll("))
         assertTrue(controller.contains("SteamChatReadingPositionStore"))
         assertTrue(controller.contains("handledRequestedMessageId"))
         assertTrue(controller.contains("lastVisibleMessageId"))

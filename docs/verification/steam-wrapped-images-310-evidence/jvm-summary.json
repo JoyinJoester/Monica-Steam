@@ -1,0 +1,490 @@
+{
+  "summary": {
+    "tests": 304,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "takagi.ru.monica.steam.foundation.media.SteamImageDownloaderGuardTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.steam.foundation.media.SteamImageDownloadPolicyTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.039"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.actions.data.SteamChatMessageActionServiceTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.021"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.actions.ui.SteamChatMessageActionPositionTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.015"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationHistoryTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.019"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatBackgroundIntegrationGuardTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.026"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.background.SteamChatNotificationPresentationGuardTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamChatCacheTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.063"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamChatLocalDeletionTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.035"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeParserTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.007"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatRealtimeServiceTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.256"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.data.SteamFriendChatServiceTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.195"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.domain.SteamChatModelsTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.012"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.info.data.SteamChatInfoPreferencesStoreTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.info.data.SteamProfileBackgroundStoreTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.093"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.017"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.018"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.info.ui.SteamChatInfoIntegrationGuardTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.027"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatImeBottomAnchorPolicyTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.004"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatJumpToLatestPolicyTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.domain.SteamChatReadingPositionTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatImeBottomAnchorIntegrationGuardTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.007"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatJumpToLatestIntegrationGuardTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.position.ui.SteamChatReadingPositionIntegrationTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatOutboxCoordinatorTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.029"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeOutboxReconcilerTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeReducerTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatRealtimeViewModelTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.039"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatSendRecoveryTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatStateUpdatesTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.0"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.presentation.SteamChatViewModelTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.032"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentCallTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentTargetFieldsTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadProtocolTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatAttachmentUploadResponseParserTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.023"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.036"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogServiceTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.013"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest",
+      "tests": "19",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.014"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatGameInviteParserTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.026"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest",
+      "tests": "12",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.138"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest",
+      "tests": "12",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.011"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+      "tests": "29",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.013"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatCatalogLoadingTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.06"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.presentation.SteamChatRichMediaViewModelTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.058"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatImagePayloadTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatMediaViewerIntegrationTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.004"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.telegram.TelegramListScrollPolicyTest",
+      "tests": "11",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatEmoticonSizingTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatFriendPickerTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.004"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatIntegrationGuardTest",
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.079"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMediaRenderingRegressionTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamChatMenuPopupGuardTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.ui.SteamConversationListTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.018"
+    }
+  ]
+}

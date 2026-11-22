@@ -1,0 +1,195 @@
+INFO    | Android emulator version 35.2.10.0 (build_id 12414864) (CL:N/A)
+INFO    | Graphics backend: gfxstream
+emulator: INFO: Use user provided system path D:/AndroidSDK/system-images/android-35/google_apis_ps16k/x86_64
+INFO    | Duplicate loglines will be removed, if you wish to see each individual line launch with the -log-nofilter flag.
+INFO    | Increasing RAM size to 3072MB
+INFO    | IPv4 server found: 198.18.0.2
+INFO    | Ignore IPv6 address: 804d:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 804d:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 804d:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c055:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c055:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c055:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: b05b:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: b05b:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: b05b:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: a861:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: a861:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: a861:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c869:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c869:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: c869:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: e871:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: e871:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: e871:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9081:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9081:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9081:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9087:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9087:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 9087:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 788d:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 788d:6701:8000:0:c042:6701:8000:0
+INFO    | Ignore IPv6 address: 788d:6701:8000:0:c042:6701:8000:0
+INFO    | Storing crashdata in: C:\Users\joyins\AppData\Local\Temp\\AndroidEmulator\emu-crash-35.2.10.db, detection is enabled for process: 27796
+library_mode swiftshader_indirect gpu mode swiftshader_indirect
+INFO    | emuglConfig_get_vulkan_hardware_gpu: Using gpu 'NVIDIA GeForce RTX 4070 Laptop GPU' for vulkan support
+
+INFO    | Initializing hardware OpenGLES emulation support
+android_startOpenglesRenderer: gpu infoGPU #1
+  Make: 10de
+  Model: NVIDIA GeForce RTX 4070 Laptop GPU
+  Device ID: 2820
+I1113 22:33:53.026949   75312 HealthMonitor.cpp:279] HealthMonitor disabled.
+I1113 22:33:53.027163   75312 VulkanDispatch.cpp:78] initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+I1113 22:33:53.027522   75312 VulkanDispatch.cpp:47] Setting ICD filenames for the loader = C:\Users\joyins\AppData\Local\Android\Sdk\emulator\qemu\windows-x86_64\lib64\vulkan\vk_swiftshader_icd.json;C:\Users\joyins\AppData\Local\Android\Sdk\emulator\lib64\vulkan\vk_swiftshader_icd.json
+I1113 22:33:53.027712   75312 VulkanDispatch.cpp:137] Added library: vulkan-1.dll
+W1113 22:33:53.042411   75312 VkCommonOperations.cpp:1169] Selecting Vulkan device: NVIDIA GeForce RTX 4070 Laptop GPU, Version: 1.4.357
+I1113 22:33:53.165223   75312 VkCommonOperations.cpp:1531] Initializing VkEmulation features:
+I1113 22:33:53.165235   75312 VkCommonOperations.cpp:1532]     glInteropSupported: false
+I1113 22:33:53.165237   75312 VkCommonOperations.cpp:1533]     useDeferredCommands: true
+I1113 22:33:53.165238   75312 VkCommonOperations.cpp:1535]     createResourceWithRequirements: true
+I1113 22:33:53.165239   75312 VkCommonOperations.cpp:1536]     useVulkanComposition: false
+I1113 22:33:53.165240   75312 VkCommonOperations.cpp:1537]     useVulkanNativeSwapchain: false
+I1113 22:33:53.165241   75312 VkCommonOperations.cpp:1538]     enable guestRenderDoc: false
+I1113 22:33:53.165242   75312 VkCommonOperations.cpp:1539]     ASTC LDR emulation mode: 2
+I1113 22:33:53.165243   75312 VkCommonOperations.cpp:1540]     enable ETC2 emulation: true
+I1113 22:33:53.165244   75312 VkCommonOperations.cpp:1541]     enable Ycbcr emulation: false
+I1113 22:33:53.165245   75312 VkCommonOperations.cpp:1542]     guestVulkanOnly: false
+I1113 22:33:53.165589   75312 VkCommonOperations.cpp:1543]     useDedicatedAllocations: false
+I1113 22:33:53.166846   75312 FrameBuffer.cpp:522] Graphics Adapter Vendor Google (Google Inc.)
+I1113 22:33:53.166855   75312 FrameBuffer.cpp:523] Graphics Adapter Android Emulator OpenGL ES Translator (Google SwiftShader)
+I1113 22:33:53.166856   75312 FrameBuffer.cpp:524] Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)
+I1113 22:33:53.166857   75312 FrameBuffer.cpp:525] Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888
+I1113 22:33:53.166859   75312 FrameBuffer.cpp:526] Graphics Device Extensions N/A
+INFO    | Sending adb public key [QAAAAMeTJDIJwnZhSk9NNQjaswfzexUUDv/Qg8hNPS1w+dMh9EROU6emWrate8+3VP4JNiEiG+pDetheZmU1KK+3Ajh/jeYQQfdsN+K8H146qVrdxU9PbQ7HoHIz3ZxQDYe69csy7dY1JKxSzjMagkIBs0SFKwE9nWT5VPFBsAhIaf0XdFKupQ3l0C48HV8eNrEA0m3W+SYCX/PjANfmwYcoBPhC8h4u5ta2MgGy/xMbeN65deRrLN2AdofeLCIUVzazzGesTy1fhhcoAu1Q8o4CxMlqfKSfmebe8ZGT6ycDc+Bi/DRomuNoG7d/lT0LfJDaE/V8LN6qfTTyEoWbZ/eOe415JrSz8BVv6AdsbhaqHUc9szFFPT2eWvXg+QgSI7GwmwafP5X4bBPizCw4am2bZuU6EsxhioHPzmpi7Vx7mjLYpKTYX2dtUSU4QI8lam4kjLtmNkx7GgJ4XSh2FMX7c4ZdR9BFELmhoXIQwoOoPd7BLEPkfThEXQALU1/l5gTVsb2S3eQgS01gbCytIwJymw4Q/1tyJdGMG2qgtmwk7OAdYREPJAd5v2m07U18yZLB6eeAZdXGg2QQLJyD9uDjpY+EDA1pBEGctS8/LsY34+iKHV5SgkE692mgJe2g9nAFDUNzz/UCtcEQzFpP+QdEB5IP23/hO2J91rMtILYypkj8zSuffwEAAQA= @unknown]
+INFO    | Configuring second built-in display with width 1080 and height 2092 for pixel_fold device
+WHPX on Windows 10.0.27919 detected.
+Windows Hypervisor Platform accelerator is operational
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 0]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 2]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 3]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 4]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 5]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 6]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 7]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 8]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 9]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 13]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 15]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 16]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 23]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 24]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 0]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 2]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 3]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 4]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 5]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 6]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 7]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 8]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 9]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 13]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 15]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 16]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 23]
+host doesn't support requested feature: CPUID.80000001H:EDX [bit 24]
+INFO    | Monitoring duration of emulator setup.
+INFO    | Qemu slirp is disabled.
+I1113 22:33:53.584842   55724 FrameBuffer.cpp:2894] Setting display: 0 configuration to: 2208x1840, dpi: 420x420
+I1113 22:33:53.594733   55724 FrameBuffer.cpp:2907] setDisplayActiveConfig 0
+INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+INFO    | OpenGL Vendor=[Google (Google Inc.)]
+INFO    | OpenGL Renderer=[Android Emulator OpenGL ES Translator (Google SwiftShader)]
+INFO    | OpenGL Version=[OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1)]
+INFO    | Activated packet streamer for bluetooth emulation
+INFO    | Boot completed in 56772 ms
+INFO    | Increasing screen off timeout, logcat buffer size to 2M.
+INFO    | IPv4 server found: 198.18.0.2
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | IPv4 server found: 198.18.0.2
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | IPv4 server found: 198.18.0.2
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: d05a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1063:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 69:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: f86e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 1877:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: 387f:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e08e:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: e094:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Ignore IPv6 address: c89a:8ab1:8000:0:1050:8ab1:8000:0
+INFO    | Wait for emulator (pid 27796) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+WARNING | Not saving state: RAM not mapped as shared
+WARNING | Emulator client has not yet been configured.. Call configure me first!

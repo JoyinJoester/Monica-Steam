@@ -1,0 +1,22 @@
+{
+  "stage": "device01",
+  "failures": [
+    {
+      "test": "largeFontOpenGraphProfileStillHasReachableDetails",
+      "error": "java.lang.AssertionError: Assert failed: The component with TestTag = 'steam-card-preview' is not displayed!"
+    },
+    {
+      "test": "directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+      "error": "androidx.test.espresso.NoMatchingViewException: No views in hierarchy found matching: an instance of android.widget.TextView and view.getText() with or without transformation to match: is \"\u53d1\u8d77\u4ea4\u6613\""
+    },
+    {
+      "test": "sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+      "error": "androidx.test.espresso.NoMatchingViewException: No views in hierarchy found matching: (view.getContentDescription() a string starting with \"File,\" and (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle))"
+    },
+    {
+      "test": "directNativeEditorSendsKeepsImeAndRetries",
+      "error": "androidx.test.espresso.NoActivityResumedException: No activities found. Did you forget to launch the activity by calling getActivity() or startActivitySync or similar?"
+    }
+  ],
+  "fullLogRetainedLocally": true
+}

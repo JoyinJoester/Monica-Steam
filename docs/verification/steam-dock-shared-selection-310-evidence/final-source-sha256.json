@@ -1,0 +1,13 @@
+{
+  "app/src/test/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassDockGuardTest.kt": "d98bdec2bb46f0a844d71d7e19c005d79eacfe2c58d410dde01052201e9e4f7b",
+  "app/src/test/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotionTest.kt": "f3520bd6ddd9c233838af9cdcc85c1ef1aed58abbcc90d8a01c794b980eb2f6d",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassDockMotion.kt": "4757038a8b86f2f579bc463025e1e1599aa1d2a0eb1e00d2a75a69201f1226aa",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/motion/LiquidGlassSelectionMotion.kt": "544dafaa826be129ff7aeeb5f0d8de9c89464e38b244dd8f52ebcf950e9dc92e",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionLens.kt": "e748327d8a280ff252b7a2b171bab6f577c4e9984b478f62355c13377f1cecda",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassSelectionRow.kt": "27ffcf768bd57594726cbcaa89b939b0c8e60f73dd0be1ded81f617244d4fade",
+  "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamLiquidGlassDock.kt": "85da3ea70300176d946ca96a71d06926d522e41610c5fd504fb8281453efbaff",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamRichPickerGlassDeviceTest.kt": "f6ed84068889d49ee5e243008bbf5b71a5254252b98db48926dd2ae7db7ee4c0",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamGlassSelectionTravelDeviceTest.kt": "c3e9d4ca63cabbfed4cce324add4a79a933e9f8ebadb4c6dd494bdaf99df527f",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamLiquidGlassFilterDragTest.kt": "1395dbbb7230e6882c6f22403f037e815d0ea330faa9be2f53f34526e1daa579",
+  "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamDockSharedSelectionDeviceTest.kt": "cd82e15332ff254f69c0585ea16ad133d18ed3ac31239a3be3221dc106e0848b"
+}

@@ -14,12 +14,17 @@ class SteamBottomSafeAreaGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt"
         ).forEach { path ->
             val source = projectFile(path).readText()
-            assertTrue("$path must keep IME handling", source.contains(".imePadding()"))
-            assertTrue(
-                "$path must keep the composer above window navigation",
-                source.contains(".steamWindowBottomPadding(suppressWhenImeVisible = true)")
-            )
+            assertTrue("$path must use the shared Telegram chat scaffold", source.contains("TelegramChatScaffold("))
         }
+        // The scaffold owns the insets once for both chat types.
+        val scaffold = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatSurface.kt"
+        ).readText().substringAfter("internal fun TelegramChatScaffold(")
+        assertTrue("Chat scaffold must keep IME handling", scaffold.contains(".imePadding()"))
+        assertTrue(
+            "Chat scaffold must keep the composer above window navigation",
+            scaffold.contains(".steamWindowBottomPadding(suppressWhenImeVisible = true)")
+        )
     }
 
     @Test

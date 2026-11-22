@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_chat_attachment_file_summary">Images and videos · up to 30 MiB</string>
+    <string name="steam_chat_attachment_unsupported_type">Steam chat accepts images and videos only: JPG, JPEG, PNG, GIF, WebP, AVIF, WebM, MPG, MPEG, MP4 or OGV. ZIP, PDF and other files cannot be sent here.</string>
+    <string name="steam_chat_attachment_invalid_size">Choose a non-empty image or video no larger than 30 MiB.</string>
+    <string name="steam_chat_attachment_limited_account">This limited Steam account cannot upload attachments. Remove the account restrictions first.</string>
+    <string name="steam_chat_attachment_session_expired">Your Steam session has expired. Refresh the account session and try again.</string>
+    <string name="steam_chat_attachment_rejected">Steam rejected this attachment. Check its format and size, or choose another image or video.</string>
+    <string name="steam_chat_attachment_service_failed">The Steam attachment service could not complete this upload. Please try again later.</string>
+</resources>

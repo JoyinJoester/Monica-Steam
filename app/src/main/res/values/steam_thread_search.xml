@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_history_all">All</string>
+    <string name="steam_history_text">Text</string>
+    <string name="steam_history_media">Media</string>
+    <string name="steam_history_files">Files</string>
+    <string name="steam_history_links">Links</string>
+    <string name="steam_history_invites">Invitations</string>
+    <string name="steam_history_stickers">Stickers</string>
+    <string name="steam_history_any_time">Any time</string>
+    <string name="steam_history_today">Today</string>
+    <string name="steam_history_last_week">Last 7 days</string>
+    <string name="steam_history_last_month">Last 30 days</string>
+    <string name="steam_thread_search">Search messages</string>
+    <string name="steam_thread_search_filters">Search filters</string>
+    <string name="steam_thread_all_senders">All senders</string>
+    <string name="steam_thread_older_match">Older match</string>
+    <string name="steam_thread_newer_match">Newer match</string>
+    <string name="steam_thread_no_matches">No matches</string>
+    <string name="steam_thread_results_list">Show results</string>
+    <string name="steam_thread_shared_content">Chat content</string>
+    <string name="steam_thread_no_shared_content">No chat content yet</string>
+    <string name="steam_thread_open_shared_message">Open message: %1$s</string>
+    <string name="steam_chat_content_image">Image</string>
+    <string name="steam_chat_content_video">Video</string>
+    <string name="steam_chat_content_spoiler">Spoiler</string>
+</resources>

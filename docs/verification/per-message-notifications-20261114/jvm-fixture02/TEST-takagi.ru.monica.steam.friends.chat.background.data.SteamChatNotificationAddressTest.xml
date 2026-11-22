@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-14T15:39:48.706Z" hostname="JOYIN" time="0.062">
+  <properties/>
+  <testcase name="sameSecondMessagesAreSeparateAndReplaysKeepTheirAddress" classname="takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest" time="0.055"/>
+  <testcase name="sameConversationProducesAStableAddress" classname="takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest" time="0.001"/>
+  <testcase name="conversationPrefixIsExactOpaqueAndSourceIsolated" classname="takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest" time="0.005"/>
+  <testcase name="accountSourceIsolatedTagsPreventCrossAccountReplacement" classname="takagi.ru.monica.steam.friends.chat.background.data.SteamChatNotificationAddressTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

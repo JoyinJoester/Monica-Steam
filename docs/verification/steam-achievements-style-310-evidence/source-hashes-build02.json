@@ -1,0 +1,18 @@
+{
+  "RELEASE_NOTES.md": "1fcfaea7f9b4be8f2160e06e809fa11bd013c0733232c518d137e90e8c8c16d3",
+  "docs/releases/Monica-Steam-Unreleased.md": "f53834d23910c266ddd433e2565783c9abbd8066a8cbf6de3bfbf3691d34aa99",
+  "app/src/test/java/takagi/ru/monica/steam/library/SteamAchievementImagesTest.kt": "c5475b646fed050e885bd38f90153a6d4f0c84a431c8fd558f6f8e13c7e7808a",
+  "app/src/test/java/takagi/ru/monica/steam/space/data/SteamSpaceServiceTest.kt": "b88f6eda4eda18454c52e3c069f1ce3a0751648617f85c9d395dfbbe2416b181",
+  "app/src/main/java/takagi/ru/monica/steam/store/ui/SteamGamePersonalStatsContent.kt": "c117a12223997d9311390e33644b17ca44a85a628f09415079cb1c3964e1b660",
+  "app/src/main/java/takagi/ru/monica/steam/space/data/SteamSpaceLinks.kt": "62c739555caa5d889592647a9e4ff846eebcaf3cc0a65227c60be0a7b40fa9d7",
+  "app/src/main/java/takagi/ru/monica/steam/profile/viewer/ui/SteamProfileAchievementComparison.kt": "537eddc9c99ecb6c722435f48d2e98532b3286e5942a7a93bf36e14c4814c7fd",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementSetSelector.kt": "3a9225fe4046d09b83357f7e11dd0b3000c3d58c69909bb2913280017e0b9e02",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamLibraryScreen.kt": "32876044aa0da4148fdb3742ed4c5bff84ac6009cf8a42fa4af73ef777cf4b21",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/SteamAchievementSetsDeviceTest.kt": "21ecfa60463dc1408fe4db3a1c0348cf2c009e975c81c5dc406cd82f727222bb",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementItem.kt": "42a4497d655148291252531b5df40bbb59631717ad6bb45c7bfa2b229876824a",
+  "app/src/main/java/takagi/ru/monica/steam/library/ui/SteamAchievementStatusSelector.kt": "4ff6bcd96b3d9ff205879e3ff5f365ae096171f944c3e819778c189446413d7c",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/SteamAchievementStyleDeviceTest.kt": "d8735d28bf98825acce7b22a0b7ce3d01b9df13b86b488dbdef8ebfa97186713",
+  "app/src/main/res/values-ja/strings_achievement_sets.xml": "9b56e8aca25991968cce14f66216ebb51ac7484dacfe6f733af651e139799d16",
+  "app/src/main/res/values-vi/strings_achievement_sets.xml": "6a2a664e344702e3b93e2943d72d5ef596e58fb1992e9c89e5c28fad9ef87e20",
+  "app/src/main/res/values-ru/strings_achievement_sets.xml": "c227bde0eec2784a30115bd9429590454f8db9179a6f08fd9f8aa9ca2c8ec8b6"
+}

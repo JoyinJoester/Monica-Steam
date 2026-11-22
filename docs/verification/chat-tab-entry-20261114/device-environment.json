@@ -1,0 +1,7 @@
+{
+  "animator_duration_scale": "0.5",
+  "transition_animation_scale": "0.5",
+  "window_animation_scale": "0.5",
+  "density": "Physical density: 280",
+  "ime": "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME"
+}

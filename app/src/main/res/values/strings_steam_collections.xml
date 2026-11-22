@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_collections_title">Steam collections</string>
+    <string name="steam_collections_unfiled">Unfiled</string>
+    <string name="steam_collections_all">All games</string>
+    <string name="steam_collections_create">Create collection</string>
+    <string name="steam_collections_rename">Rename collection</string>
+    <string name="steam_collections_delete">Delete collection</string>
+    <string name="steam_collections_name">Collection name</string>
+    <string name="steam_collections_edit_games">Edit games</string>
+    <string name="steam_collections_actions">Collection actions</string>
+    <string name="steam_collections_refresh">Refresh collections</string>
+    <string name="steam_collections_count">%1$d games</string>
+    <string name="steam_collections_sync_hint">Organize your library on Steam. Collections are flat; a game can belong to several.</string>
+    <string name="steam_collections_dynamic">Dynamic collection · manage in desktop Steam</string>
+    <string name="steam_collections_readonly">Read-only collection · manage in desktop Steam</string>
+    <string name="steam_collections_delete_hint">Delete “%1$s” from Steam? Your games stay in your library.</string>
+    <string name="steam_collections_members_hint">Owned and family-shared games can be selected. Existing members outside this list are kept.</string>
+    <string name="steam_collections_search">Search games</string>
+    <string name="steam_collections_save">Save to Steam</string>
+    <string name="steam_collections_cancel">Cancel</string>
+    <string name="steam_collections_saving">Saving and checking Steam…</string>
+    <string name="steam_collections_loading">Loading Steam collections…</string>
+    <string name="steam_collections_saved">Saved and verified on Steam.</string>
+    <string name="steam_collections_error_login">Sign in again to access Steam collections.</string>
+    <string name="steam_collections_error_unavailable">Steam did not allow collection access for this session.</string>
+    <string name="steam_collections_error_conflict">This collection changed elsewhere. Close this editor, refresh, and review it again.</string>
+    <string name="steam_collections_error_unknown">The save result could not be verified. Close this editor and refresh before editing again.</string>
+    <string name="steam_collections_error_invalid">Check the collection name or data.</string>
+    <string name="steam_collections_error_network">Could not load Steam collections. Check your connection and refresh.</string>
+    <string name="steam_collections_search_folders">Search collections</string>
+    <string name="steam_collections_manage">Manage collections</string>
+    <string name="steam_collections_select_visible">Select all visible games</string>
+    <string name="steam_collections_clear_visible">Clear visible selection</string>
+    <string name="steam_collections_discard_title">Discard changes?</string>
+    <string name="steam_collections_discard_message">Your changes have not been saved to Steam.</string>
+    <string name="steam_collections_discard_confirm">Discard</string>
+    <string name="steam_collections_empty">No matching games or collections.</string>
+    <string name="steam_collections_folders">Folders</string>
+    <string name="steam_collections_games">Games</string>
+    <string name="steam_collections_sort_ascending">Name: A–Z</string>
+    <string name="steam_collections_sort_descending">Name: Z–A</string>
+    <string name="steam_collections_about">About game folders</string>
+    <string name="steam_collections_add_to">Add to folder</string>
+    <string name="steam_collections_remove_from">Remove from folder</string>
+    <string name="steam_collections_remove_hint">Remove %1$d games from “%2$s”? They stay in your Steam library.</string>
+</resources>

@@ -1,0 +1,28 @@
+{
+  "removed": {
+    "takagi.ru.monica.steamapp.sharedcollections.test": "Success",
+    "takagi.ru.monica.steamapp.sharedcollections": "Success"
+  },
+  "baselineChecks": {
+    "users": true,
+    "current": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "originalPackagesRetained": true,
+    "taskPackagesAbsent": true
+  },
+  "originalUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "realAccountUsed": false,
+  "packageSetExactlyMatchesBaseline": true,
+  "unrelatedAddedPackagesPreserved": [],
+  "shutdownExitCode": 0,
+  "shutdownOutput": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}",
+  "stoppedConfirmed": true,
+  "preExistingMuMu0Retained": true
+}

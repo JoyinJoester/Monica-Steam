@@ -1,5 +1,9 @@
 package takagi.ru.monica.steam.notifications.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamListFilterChip as FilterChip
+
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassModalBottomSheet as ModalBottomSheet
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -38,10 +42,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -123,6 +125,7 @@ fun SteamNotificationsScreen(
     val dockContentClearance = LocalSteamDockContentClearance.current
 
     SteamExpressivePullToRefresh(
+        showIndicator = false,
         refreshing = state.loading,
         onRefresh = onRefresh,
         enabled = account?.hasRealSteamId == true,

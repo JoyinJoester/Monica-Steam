@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-19T08:08:33.759Z" hostname="JOYIN" time="0.001">
+  <properties/>
+  <testcase name="groupEndsAtAnotherSenderOrServiceEvent" classname="takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest" time="0.001"/>
+  <testcase name="dateSeparatorBreaksEvenAOneSecondGroup" classname="takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest" time="0.0"/>
+  <testcase name="sameSenderGroupsAtTheFiveMinuteBoundaryButNotBeyondIt" classname="takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest" time="0.0"/>
+  <testcase name="absentNeighborStartsOrEndsAGroup" classname="takagi.ru.monica.steam.friends.chat.telegram.TelegramMessageGroupingTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

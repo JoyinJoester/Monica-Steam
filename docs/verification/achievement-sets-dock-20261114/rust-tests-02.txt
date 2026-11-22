@@ -1,0 +1,151 @@
+   Compiling monica-steam-core v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-core)
+warning: constant `STEAM_ID64_OFFSET` is never used
+ --> monica-steam-core\src\trade_offer.rs:4:7
+  |
+4 | const STEAM_ID64_OFFSET: i64 = 76_561_197_960_265_728;
+  |       ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: `monica-steam-core` (lib) generated 1 warning
+   Compiling monica-steam-android v0.1.0 (C:\Users\joyins\Desktop\Monica-all\Monica Steam\rust\monica-steam-android)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.14s
+     Running unittests src\lib.rs (target\debug\deps\monica_steam_android-475d64717f646bc9.exe)
+
+running 10 tests
+test auth_bridge::tests::authorized_devices_bridge_layout_is_stable ... ok
+test auth_bridge::tests::auth_session_bridges_have_stable_versions ... ok
+test trade_bridge::tests::trade_bridge_layout_is_stable ... ok
+test friend_bridge::tests::nickname_bridge_layout_is_stable ... ok
+test group_chat_bridge::tests::group_chat_history_bridge_layout_is_stable ... ok
+test library_bridge::tests::achievement_details_bridge_layout_is_stable ... ok
+test library_bridge::tests::store_bridge_layout_is_stable ... ok
+test group_chat_bridge::tests::group_summaries_bridge_layout_is_stable ... ok
+test family_bridge::tests::family_bridge_layout_is_stable ... ok
+test wishlist_bridge::tests::wishlist_bridge_layout_is_stable ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\monica_steam_core-eff303d1280e8a82.exe)
+
+running 106 tests
+test auth_session::tests::pending_client_ids_keep_source_order_and_packed_values ... ok
+test auth_session::tests::confirmation_success_matches_empty_and_boolean_fallback_rules ... ok
+test auth_session::tests::session_info_uses_last_duplicate_fields_like_kotlin_map ... ok
+test achievement::tests::blank_names_and_optional_icons_match_kotlin_fallback ... ok
+test achievement::tests::fixed32_unlock_time_matches_kotlin_special_case ... ok
+test achievement::tests::duplicate_status_uses_last_value ... ok
+test authorized_device::tests::malformed_nested_device_fails_the_native_parse_for_kotlin_fallback ... ok
+test achievement::tests::merges_definitions_with_user_status_in_definition_order ... ok
+test achievement::tests::latest_schema_preserves_unsigned_group_archive_and_hidden_flags ... ok
+test achievement::tests::malformed_nested_entries_are_skipped ... ok
+test authorized_device::tests::nested_maps_keep_last_duplicate_fields_while_requesting_token_keeps_first ... ok
+test authorized_device::tests::empty_nested_device_is_filtered_like_kotlin ... ok
+test chat::tests::messages_parse_reactions_dedupe_and_sort_like_kotlin ... ok
+test chat::tests::malformed_nested_entries_are_skipped_without_losing_the_page ... ok
+test achievement::tests::fixed64_unlock_time_is_zero_like_kotlin_as_long ... ok
+test chat::tests::sessions_match_kotlin_field_and_sort_semantics ... ok
+test cm::tests::cm_envelope_matches_kotlin_layout ... ok
+test cm::tests::empty_target_job_name_is_omitted ... ok
+test cm::tests::malformed_multi_is_rejected ... ok
+test cm::tests::web_logon_body_has_expected_fields ... ok
+test authorized_device::tests::parses_nested_devices_and_marks_requesting_token ... ok
+test cm::tests::decode_single_round_trip ... ok
+test family::tests::duplicate_owners_preserve_first_order_and_deduplicate ... ok
+test family::tests::first_duplicate_fields_and_first_duplicate_app_win ... ok
+test family::tests::last_played_preserves_unsigned_seconds_and_clamps_negative_values ... ok
+test family::tests::malformed_nested_app_is_skipped_and_top_level_error_propagates ... ok
+test family::tests::negative_playtime_clamps_and_blank_name_falls_back ... ok
+test family::tests::shared_apps_match_kotlin_fields_and_exclusions ... ok
+test family::tests::short_bytes_owner_becomes_zero_like_kotlin_fixed64_reader ... ok
+test friend_nickname::tests::malformed_nested_item_propagates_like_kotlin_parser ... ok
+test friend_nickname::tests::parses_nicknames_and_preserves_linked_map_duplicate_semantics ... ok
+test friend_nickname::tests::short_or_wrong_wire_account_ids_are_ignored_like_kotlin ... ok
+test cm::tests::decode_gzip_multi_message ... ok
+test group_chat::tests::blank_non_event_rows_are_skipped ... ok
+test group_chat::tests::malformed_nested_reaction_fails_before_duplicate_is_discarded ... ok
+test group_chat::tests::last_duplicate_message_fields_win_like_associate_by ... ok
+test group_chat::tests::keeps_blank_event_rows_for_kotlin_localization ... ok
+test group_chat::tests::parses_reactions_dedupes_and_sorts_like_kotlin ... ok
+test group_summary::tests::duplicate_fields_use_last_values_and_missing_default_uses_first_sorted_room ... ok
+test group_summary::tests::group_sort_is_stable_for_equal_recent_timestamps ... ok
+test group_summary::tests::lax_packed_member_decoder_keeps_partial_value_like_kotlin ... ok
+test group_summary::tests::malformed_user_state_top_level_still_fails_before_missing_summary ... ok
+test group_summary::tests::malformed_ack_is_delayed_until_after_group_id_validation ... ok
+test group_summary::tests::parses_rooms_acknowledgements_members_and_stable_sorting ... ok
+test group_summary::tests::wrong_wire_unsigned_id_becomes_zero_like_kotlin ... ok
+test group_summary::tests::raw_avatar_sources_are_preserved_for_kotlin_url_normalization ... ok
+test library::tests::achievement_progress_duplicate_app_keeps_first_position_and_last_value ... ok
+test library::tests::achievement_progress_matches_kotlin_completion_rules ... ok
+test library::tests::blank_name_and_negative_times_match_kotlin_fallback ... ok
+test library::tests::declared_count_mismatch_is_invalid ... ok
+test library::tests::empty_owned_games_response_is_invalid ... ok
+test library::tests::kotlin_as_long_does_not_treat_fixed_fields_as_varints ... ok
+test library::tests::malformed_nested_game_is_skipped_after_count_validation ... ok
+test library::tests::malformed_achievement_item_is_skipped ... ok
+test library::tests::malformed_store_item_is_skipped_but_nested_corruption_fails_batch ... ok
+test library::tests::nested_parse_uses_last_duplicate_field_like_kotlin_associate_by ... ok
+test library::tests::owned_games_match_kotlin_layout_and_order ... ok
+test library::tests::store_items_duplicate_app_keeps_first_position_and_last_value ... ok
+test library::tests::store_items_free_and_missing_original_match_kotlin ... ok
+test library::tests::store_items_parse_header_price_and_cloud_category ... ok
+test login_auth::tests::access_token_response_uses_last_duplicate_fields ... ok
+test login_auth::tests::credentials_request_matches_kotlin_field_shape ... ok
+test login_auth::tests::begin_credentials_uses_first_top_level_fields_and_keeps_challenge_order ... ok
+test login_auth::tests::fixed_request_id_matches_kotlin_bytes_property ... ok
+test login_auth::tests::poll_response_uses_last_duplicates_like_kotlin_parse ... ok
+test login_auth::tests::guard_poll_and_access_token_requests_keep_unsigned_bits ... ok
+test login_auth::tests::qr_request_matches_kotlin_field_shape ... ok
+test login_auth::tests::request_id_accepts_base64_urlsafe_hex_and_raw_fallback ... ok
+test ma_file::tests::account_id_override_matches_kotlin_conversion ... ok
+test ma_file::tests::filename_steamid_has_precedence_over_filename_account_fallback ... ok
+test ma_file::tests::real_steamid_original_json_is_preserved_byte_for_byte ... ok
+test ma_file::tests::otpauth_prefers_base32_and_steam_uri_prefers_base64 ... ok
+test ma_file::tests::parses_standard_mafile_aliases_and_nested_session ... ok
+test ma_file::tests::standard_base64_accepts_java_trailing_bits_before_base32_fallback ... ok
+test ma_file::tests::missing_steamid_generates_stable_local_id_and_enriches_json ... ok
+test proto::tests::borrowed_parser_points_into_the_original_buffer ... ok
+test ma_file::tests::session_only_login_allows_empty_secret_only_with_real_steamid ... ok
+test proto::tests::mixed_fields_round_trip_without_big_integer ... ok
+test tests::auth_code_matches_kotlin_reference_vector ... ok
+test proto::tests::malformed_payloads_fail_instead_of_reading_past_end ... ok
+test tests::confirmation_hash_matches_kotlin_reference_vectors ... ok
+test proto::tests::packed_varints_round_trip_signed_bit_patterns ... ok
+test proto::tests::unsigned_u64_max_matches_kotlin_varint_semantics ... ok
+test proto::tests::owned_and_borrowed_parsers_have_identical_wire_semantics ... ok
+test tests::invalid_secrets_fail_without_panicking ... ok
+test trade_offer::tests::malformed_nested_payload_returns_error_for_kotlin_fallback ... ok
+test trade_offer::tests::parses_descriptions_nested_assets_and_sorts_each_direction ... ok
+test tests::login_approval_signatures_match_kotlin_reference_vectors ... ok
+test trade_offer::tests::asset_description_falls_back_to_instance_zero ... ok
+test trade_offer::tests::duplicate_offer_fields_keep_first_but_nested_maps_keep_last ... ok
+test trade_offer::tests::partner_steam_id_offset_stays_within_kotlin_domain_model_range ... ok
+test two_factor::tests::finalize_request_and_response_match_kotlin_semantics ... ok
+test trade_offer::tests::zero_or_missing_offer_ids_are_filtered_like_kotlin ... ok
+test tests::remaining_seconds_uses_steam_period ... ok
+test two_factor::tests::add_authenticator_request_matches_kotlin_shape ... ok
+test two_factor::tests::replace_continue_parses_nested_authenticator_payload ... ok
+test two_factor::tests::replace_continue_request_trims_code ... ok
+test wishlist::tests::item_without_usable_app_id_is_filtered ... ok
+test two_factor::tests::add_response_preserves_last_duplicate_and_binary_fields ... ok
+test wishlist::tests::nested_maps_keep_last_fields_and_discount_is_clamped ... ok
+test workshop::tests::descending_scores_keep_lexicographic_id_ties ... ok
+test wishlist::tests::falls_back_to_store_app_id_default_name_and_header_asset ... ok
+test workshop::tests::preserves_signed_scores_unsigned_ids_and_stability ... ok
+test wishlist::tests::malformed_item_is_skipped_without_dropping_valid_items ... ok
+test wishlist::tests::parses_store_assets_purchase_and_localized_prices ... ok
+test workshop::tests::empty_and_invalid_lengths_are_bounded ... ok
+
+test result: ok. 106 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests monica_steam_android
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests monica_steam_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

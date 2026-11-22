@@ -1,0 +1,8 @@
+{
+  "menu-position-dark": "first=Rect(312, 495 - 402, 559)\nsecond=Rect(592, 604 - 682, 668)\nrowHeight=156",
+  "menu-position-light": "first=Rect(312, 495 - 402, 559)\nsecond=Rect(592, 604 - 682, 668)\nrowHeight=156",
+  "native-tap-ms": "18, 10, 4, 9, 11, 16, 36, 64",
+  "navigation-ms": "firstComposition=26\nsettled=119",
+  "preference-cancellation": "probe-b:false:true",
+  "preference-main-reads": "mainReads=0"
+}

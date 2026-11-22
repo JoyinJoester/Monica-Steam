@@ -1,0 +1,71 @@
+{
+  "tests": 90,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.gameinvite.domain.SteamChatGameInvitePresentationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.gameinvite.ui.SteamChatGameInviteIntegrationGuardTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatAttachmentPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatGameInviteParserTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageLayoutTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatImageMessageParserTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatOpenGraphCardParserTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

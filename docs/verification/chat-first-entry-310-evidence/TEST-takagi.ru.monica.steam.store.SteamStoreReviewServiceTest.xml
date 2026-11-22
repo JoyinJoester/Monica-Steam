@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreReviewServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-20T07:50:31.305Z" hostname="JOYIN" time="0.039">
+  <properties/>
+  <testcase name="totalFailureRemainsVisibleAndRetryCanRecover" classname="takagi.ru.monica.steam.store.SteamStoreReviewServiceTest" time="0.028"/>
+  <testcase name="reviewPageUsesOfficialCursorPagination" classname="takagi.ru.monica.steam.store.SteamStoreReviewServiceTest" time="0.003"/>
+  <testcase name="unavailablePageKeepsSummaryAndOffersAnExplicitRetryState" classname="takagi.ru.monica.steam.store.SteamStoreReviewServiceTest" time="0.006"/>
+  <testcase name="reviewPageAppliesSentimentAndTimeFiltersToSteamRequest" classname="takagi.ru.monica.steam.store.SteamStoreReviewServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

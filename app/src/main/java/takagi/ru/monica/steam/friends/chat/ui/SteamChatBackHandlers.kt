@@ -22,7 +22,7 @@ internal fun SteamChatBackHandlers(
     }
     BackHandler(enabled = subpage != null) {
         onSubpageChange(
-            if (subpage == SteamChatSubpage.SEARCH || subpage == SteamChatSubpage.ADMIN) {
+            if (subpage == SteamChatSubpage.ADMIN) {
                 SteamChatSubpage.INFO
             } else null
         )

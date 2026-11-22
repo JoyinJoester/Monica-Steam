@@ -1,0 +1,15 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollectionsScreen.kt": "0b3a9ca70baef1f4dded3b1f5b1f615fc0d591022df0f616bd8447b4f57b7343",
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt": "566ee36166bedd90842cf04bbb30e1bd42a8f27981fd76310d36a2ee06cf81a7",
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollectionLibraryMembership.kt": "68d343108d48668f2302866ab525f4b2adfacfa71c3aeccec0623fae147cac89",
+  "app/src/androidTest/java/takagi/ru/monica/steam/library/collections/SteamCollectionsUiTest.kt": "8af9006eed5d96dae1f0229c531a59e902665089dedbdd55916e5fa57bcd62c9",
+  "app/src/test/java/takagi/ru/monica/steam/library/collections/SteamCollectionLibraryMembershipTest.kt": "2a345ee2ca66da85d0a8fa7508886df11f16498e366dee1350915055478f710d",
+  "app/src/main/res/values/strings_steam_collections.xml": "46b62c45910707bdb638764523e27bc395a8e9e41303b9d605133be2a6936b19",
+  "app/src/main/res/values-zh/strings_steam_collections.xml": "dd3bc5ad99fc6d2b54597255ea98f440e23a447448a756d0d651882477d87576",
+  "app/src/main/res/values-ru/strings_steam_collections.xml": "4bca27daaea3dc402e1a532ad62d1e365a57ded32aa0576e773b8b15b8413242",
+  "app/src/main/res/values-ja/strings_steam_collections.xml": "c6046df39a1e4f64a15d0f918afadb3407dae6b3c6df4f4e327851cf066cd598",
+  "app/src/main/res/values-vi/strings_steam_collections.xml": "8110df7e46187de266719b8d1d2d6c44c6d641fcb18c52898a37ff8c2436fe78",
+  "RELEASE_NOTES.md": "2db227f2c2651c64c12605303e09c1535c198c7dd4807d21b8bc656fd497cfff",
+  "docs/releases/Monica-Steam-Unreleased.md": "51cbd260562b237fb055e1d2e8bd98b6b71c69bbc5bebd3000ed1c884c0cd894",
+  "app/src/main/java/takagi/ru/monica/ui/gestures/SwipeActions.kt": "b6bcedaedeb56947325fcca14fc596ceb88fbacf5dd68bf5e7549da8a579eb1a"
+}

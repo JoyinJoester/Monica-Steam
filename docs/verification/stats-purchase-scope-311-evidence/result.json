@@ -1,0 +1,42 @@
+{
+  "status": "complete",
+  "version": "1.0.311",
+  "versionCode": 18,
+  "buildSeconds": 124.16978540015407,
+  "deviceTests": 8,
+  "runnerSeconds": 26.888,
+  "api": 35,
+  "abi": "x86_64",
+  "sourcePaths": 7,
+  "apkSHA256": {
+    "main": "4191742946fdabd12ece3e9905e516b257a81fe620fc93fc8ae48badcaee2ed7",
+    "test": "a19fac71d343984155d48fd866a093c2d5f335ad29e424b82686eed03abe3561",
+    "exitCode": 0,
+    "seconds": 31.429596799891442
+  },
+  "cleanup": {
+    "baselineChecks": {
+      "current": true,
+      "size": true,
+      "density": true,
+      "font": true,
+      "userIdentitiesAndFlagsRetained": true,
+      "originalPackagesRetained": true,
+      "taskPackagesAbsent": true
+    },
+    "taskPackagesUninstalled": true,
+    "taskStartedInstanceStopped": false,
+    "preExistingMuMu0Preserved": true,
+    "configurationAndDataDiskRetained": true,
+    "userRuntimeRunningFlagsChanged": false
+  },
+  "visualInspection": [
+    "stats-no-purchase-glass",
+    "stats-no-purchase-m3e",
+    "owned-store-purchase-options"
+  ],
+  "limitations": [
+    "Synthetic emulator UI and callbacks; no live ownership request or purchase",
+    "No physical OEM or R8 verification"
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "device01": {
+    "total": 14,
+    "passed": 14,
+    "runnerSeconds": 20.061,
+    "cases": [
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "mediaImageIsRealVideoIsTypedAndSpoilerStaysCovered",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "dragCommitsOnReleaseCancelRestoresAndRowsOpenOriginalMessages",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionDragStillCommitsAndCancels",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "titlesAndMediaTypesResolveInAllSupportedLanguages",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "glassTitleGapMediaGridAndHeldLensRender",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "compactFiltersKeepLastCategoryReachableOnNarrowLargeText",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "rtlReducedMotionEmptyStateUsesChatContentTitle",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatContentUiTest",
+        "name": "m3eLightLargeTextKeepsGapRowsAndIndependentScroll",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "titleHasClearSpacingAndBothGlassSelectorsLift",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "setLabelsResolveInEverySupportedLanguage",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "legacyCachedUrlAndMissingGrayImageRenderInRtlReducedMotion",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "publicAimLabImageReallyDownloadsFromTheNewRoute",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "collectionAndCompletionComposeAndCancelRestores",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementStyleDeviceTest",
+        "name": "m3eLargeTextAndHiddenAchievementsStayReadableAndConcealed",
+        "passed": true
+      }
+    ]
+  },
+  "regression01": {
+    "total": 6,
+    "passed": 6,
+    "runnerSeconds": 31.239,
+    "cases": [
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "sharedMediaLivesAtTheEndOfPrivateAndGroupProfiles",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "directSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.chat.SteamChatChromeUiTest",
+        "name": "groupSearchRetainsMessagesAndDraftInBothThemes",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "name": "largeFontComparisonFiltersSetsAndConcealsLockedHiddenDetails",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "name": "nativeBridgePreservesMembershipArchiveAndHiddenFlags",
+        "passed": true
+      },
+      {
+        "className": "takagi.ru.monica.steam.library.SteamAchievementSetsDeviceTest",
+        "name": "realGameDetailCombinesCategoryAndStatusFilters",
+        "passed": true
+      }
+    ]
+  }
+}

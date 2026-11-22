@@ -1,0 +1,20 @@
+{
+  "exit": 0,
+  "seconds": 27.248961600009352,
+  "args": [
+    "shell",
+    "am",
+    "instrument",
+    "--user",
+    "0",
+    "-w",
+    "-r",
+    "-e",
+    "class",
+    "takagi.ru.monica.steam.navigation.SteamTabPageHostDeviceTest,takagi.ru.monica.steam.navigation.SteamRetainedNativeChatDeviceTest,takagi.ru.monica.steam.navigation.SteamRetainedPageStateDeviceTest,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsPendingReleaseAndCanDragAfterReturn,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#cachedPageCancelsHeldPointerAndCanDragAfterReturn,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#rtlDragUsesPhysicalMeasuredSlots,takagi.ru.monica.steam.navigation.SteamLiquidGlassFilterDragTest#verticalParentScrollingKeepsTheFilterUnchanged,takagi.ru.monica.steam.navigation.LiquidGlassLensDeviceTest,takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#materialsRefreshFromSiblingAndStyleSwitchPreservesDraft",
+    "-e",
+    "pageVariant",
+    "candidate",
+    "takagi.ru.monica.steamapp.chatentry.test/androidx.test.runner.AndroidJUnitRunner"
+  ]
+}

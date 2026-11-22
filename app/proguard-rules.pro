@@ -41,9 +41,19 @@
 -dontwarn androidx.camera.**
 
 # ML Kit
-# ML Kit's own consumer rules retain its manifest-discovered components.
+# Manifest component discovery instantiates these classes through reflection.
+# A class-only consumer keep rule does not preserve its implicit constructor
+# under current R8 optimization; keep exactly that construction contract.
+-keep,allowoptimization class * implements com.google.firebase.components.ComponentRegistrar {
+    public <init>();
+}
 -dontwarn com.google.mlkit.**
 -dontwarn com.google.android.gms.**
+
+# WorkManager also reflects no-argument InputMerger constructors by class name.
+-keep,allowoptimization class * extends androidx.work.InputMerger {
+    public <init>();
+}
 
 # ZXing
 -dontwarn com.google.zxing.**

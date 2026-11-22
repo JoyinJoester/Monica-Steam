@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_store_reviews_unavailable">Không thể tải đánh giá. Vui lòng thử lại.</string>
+    <string name="steam_store_reviews_empty">Không có đánh giá phù hợp với bộ lọc.</string>
+    <string name="steam_store_reviews_retry">Thử lại</string>
+</resources>

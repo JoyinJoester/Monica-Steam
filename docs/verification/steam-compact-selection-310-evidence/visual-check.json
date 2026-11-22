@@ -1,0 +1,16 @@
+{
+  "inspected": [
+    "members-light.png",
+    "members-dark-large.png",
+    "members-long-dark-large.png"
+  ],
+  "leftAlignmentConfirmed": true,
+  "contentWidthConfirmed": true,
+  "buttonsComplete": true,
+  "activityFontScales": [
+    1.0,
+    1.5
+  ],
+  "dockClearance": "existing reserved clearance unchanged; full production Dock not exercised",
+  "preview": "docs/design/20261121-steam-compact-selection/final-toolbar.png"
+}

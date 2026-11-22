@@ -50,6 +50,7 @@ internal class WorkshopDownloadClient(
     }
 
     suspend fun download(source: WorkshopDownloadSource, root: File, account: SteamAccount? = null,
+        stageProgress: suspend (WorkshopDownloadProgress) -> Unit = {},
         progress: suspend (Long, Long) -> Unit): List<File> {
         require(source.item.fileType == 0 && !source.item.banned)
         withContext(Dispatchers.IO) {
@@ -58,6 +59,11 @@ internal class WorkshopDownloadClient(
         }
         // Legacy UGC may expose both an hcontent handle and a real direct file URL.
         // That handle is not necessarily a SteamPipe manifest; prefer the usable URL.
+        suspend fun report(stage: WorkshopDownloadStage, done: Long = 0, total: Long = 0) {
+            stageProgress(WorkshopDownloadProgress(stage, done, total))
+            if (stage == WorkshopDownloadStage.DOWNLOADING) progress(done, total)
+        }
+        report(WorkshopDownloadStage.RESOLVING)
         val directUrl = source.fileUrl.toHttpUrlOrNull()?.takeIf(::allowedUrl)
         if (directUrl == null && source.manifest.toULongOrNull()?.let { it > 0uL } == true) {
             return sessionFactory(account).use { session ->
@@ -93,12 +99,15 @@ internal class WorkshopDownloadClient(
                         if (root.usableSpace < manifest.size + 32 * 1024 * 1024) throw WorkshopDownloadStorageUnavailable()
                     }
                     var done = 0L
-                    progress(done, manifest.size)
+                    report(WorkshopDownloadStage.DOWNLOADING, done, manifest.size)
                     val files = mutableListOf<File>()
                     for (entry in manifest.files) {
                         coroutineContext.ensureActive()
                         val target = WorkshopContentCodec.resolve(root, entry.path)
-                        if (!withContext(Dispatchers.IO) { WorkshopContentCodec.verified(target, entry.size, entry.sha) }) {
+                        if (!withContext(Dispatchers.IO) {
+                            val context = coroutineContext
+                            WorkshopContentCodec.verified(target, entry.size, entry.sha) { context.ensureActive() }
+                        }) {
                             withContext(Dispatchers.IO) { target.parentFile?.mkdirs() }
                             withContext(Dispatchers.IO) {
                                 target.outputStream().use { output ->
@@ -111,13 +120,22 @@ internal class WorkshopDownloadClient(
                                         }
                                         output.write(data)
                                         done += data.size
-                                        progress(done, manifest.size)
+                                        report(WorkshopDownloadStage.DOWNLOADING, done, manifest.size)
                                     }
                                 }
-                                check(WorkshopContentCodec.verified(target, entry.size, entry.sha)) { "File checksum failed" }
                             }
-                        } else { done += entry.size; progress(done, manifest.size) }
+                        } else { done += entry.size; report(WorkshopDownloadStage.DOWNLOADING, done, manifest.size) }
                         files += target
+                    }
+                    report(WorkshopDownloadStage.VERIFYING, 0, files.size.toLong())
+                    for ((index, entry) in manifest.files.withIndex()) {
+                        withContext(Dispatchers.IO) {
+                            val context = coroutineContext
+                            check(WorkshopContentCodec.verified(files[index], entry.size, entry.sha) {
+                                context.ensureActive()
+                            }) { "File checksum failed" }
+                        }
+                        report(WorkshopDownloadStage.VERIFYING, index + 1L, files.size.toLong())
                     }
                     files
                 } finally { key.fill(0) }
@@ -134,15 +152,17 @@ internal class WorkshopDownloadClient(
                 require(total in 1..(100L * 1024 * 1024 * 1024))
                 if (root.usableSpace < total + 32 * 1024 * 1024) throw WorkshopDownloadStorageUnavailable()
                 var done = 0L
+                report(WorkshopDownloadStage.DOWNLOADING, 0, total)
                 body.byteStream().use { input -> target.outputStream().use { out ->
                     val buffer = ByteArray(64 * 1024)
                     while (true) {
                         coroutineContext.ensureActive()
                         val n = input.read(buffer); if (n < 0) break
                         done += n; require(done <= total)
-                        out.write(buffer, 0, n); progress(done, total)
+                        out.write(buffer, 0, n); report(WorkshopDownloadStage.DOWNLOADING, done, total)
                     }
                 } }
+                report(WorkshopDownloadStage.CHECKING_SIZE)
                 require(done == total) { "Truncated Steam file" }
             }
         }

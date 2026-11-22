@@ -360,7 +360,12 @@ class SteamStoreService(
                 options = visiblePackageOptions,
                 countryCode = detail.priceCountryCode,
                 language = language
-            ),
+            ).map { option ->
+                val discount = purchasePage.discounts[option.packageId]
+                option.copy(discountEndEpochSeconds = discount?.takeIf {
+                    it.priceCents == option.priceCents && it.percent == option.discountPercent
+                }?.endEpochSeconds)
+            },
             relatedDlc = relatedContentService.fetch(
                 appIds = detail.dlcAppIds,
                 countryCode = detail.priceCountryCode.orEmpty(),

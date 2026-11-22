@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.SteamAchievementSetsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-21T05:41:16.816Z" hostname="JOYIN" time="0.063">
+  <properties/>
+  <testcase name="oldCacheAndLegacyResponseKeepUncategorizedBehavior" classname="takagi.ru.monica.steam.library.SteamAchievementSetsTest" time="0.056"/>
+  <testcase name="completedSetRemainsCompleteAndArchivedAchievementsDoNotIncreaseRequirement" classname="takagi.ru.monica.steam.library.SteamAchievementSetsTest" time="0.004"/>
+  <testcase name="parsesLatestGroupsAndServerCompletionWithUnsignedIds" classname="takagi.ru.monica.steam.library.SteamAchievementSetsTest" time="0.001"/>
+  <testcase name="membershipArchiveAndPrivateSetsSurviveFallbackParser" classname="takagi.ru.monica.steam.library.SteamAchievementSetsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

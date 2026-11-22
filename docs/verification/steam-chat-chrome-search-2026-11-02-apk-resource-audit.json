@@ -1,0 +1,14 @@
+[
+  {
+    "apk": "Monica-Steam-Android-armeabi-v7a-1.0.310-26110218-05.APK",
+    "keys": 21,
+    "compiledValues": 42,
+    "englishAndChineseValuesMatchSource": true
+  },
+  {
+    "apk": "Monica-Steam-Android-arm64-v8a-1.0.310-26110218-05.APK",
+    "keys": 21,
+    "compiledValues": 42,
+    "englishAndChineseValuesMatchSource": true
+  }
+]

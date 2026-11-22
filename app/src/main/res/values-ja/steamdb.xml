@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steamdb_attribution">データ提供元は Steam / SteamDB です。Monica Steam は独立したアプリです。SteamNova（旧 Millennium、MIT）を参考にしています：https://github.com/GoodJoe-2049/Steam-Nova</string>
+</resources>

@@ -1,5 +1,7 @@
 package takagi.ru.monica.steam.community.ui
 
+import takagi.ru.monica.steam.foundation.ui.SteamRefreshActionIcon
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassScaffold as Scaffold
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,7 +13,6 @@ import androidx.compose.material.icons.filled.SwitchAccount
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -167,16 +168,14 @@ fun SteamCommunityScreen(
                         enabled = selectedAccount?.hasRealSteamId == true &&
                             !state.loading && !state.refreshing
                     ) {
-                        Icon(
-                            Icons.Default.Refresh,
-                            contentDescription = stringResource(R.string.refresh)
-                        )
+                        SteamRefreshActionIcon(state.loading || state.refreshing, Icons.Default.Refresh, stringResource(R.string.refresh))
                     }
                 }
             )
         }
     ) { padding ->
         SteamExpressivePullToRefresh(
+            showIndicator = false,
             refreshing = state.loading || state.refreshing,
             onRefresh = {
                 accountSource.refreshCurrentSource()

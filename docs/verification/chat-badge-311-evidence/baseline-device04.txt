@@ -1,0 +1,89 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatContentUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.chat.SteamChatContentUiTest:
+INSTRUMENTATION_STATUS: test=glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatContentUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: badge-glass-dark-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:163)
+
+INSTRUMENTATION_STATUS: stream=
+Error in glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased(takagi.ru.monica.steam.chat.SteamChatContentUiTest):
+java.lang.AssertionError: badge-glass-dark-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:163)
+
+INSTRUMENTATION_STATUS: test=glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatContentUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.chat.SteamChatContentUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: badge-glass-light-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:164)
+
+INSTRUMENTATION_STATUS: stream=
+Error in glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased(takagi.ru.monica.steam.chat.SteamChatContentUiTest):
+java.lang.AssertionError: badge-glass-light-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:164)
+
+INSTRUMENTATION_STATUS: test=glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.633
+There were 2 failures:
+1) glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased(takagi.ru.monica.steam.chat.SteamChatContentUiTest)
+java.lang.AssertionError: badge-glass-dark-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassDarkSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:163)
+2) glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased(takagi.ru.monica.steam.chat.SteamChatContentUiTest)
+java.lang.AssertionError: badge-glass-light-4-rest: numeral must retain contrasting ink, actual=0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.assertBadgePixels(SteamChatContentUiTest.kt:143)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges(SteamChatContentUiTest.kt:151)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.verifySelectedBadges$default(SteamChatContentUiTest.kt:146)
+	at takagi.ru.monica.steam.chat.SteamChatContentUiTest.glassLightSelectedCountsRemainVisibleAtRestHeldAndReleased(SteamChatContentUiTest.kt:164)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

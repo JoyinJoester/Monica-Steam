@@ -1,44 +1,21 @@
 package takagi.ru.monica.steam.friends.chat.ui
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,18 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import java.text.DateFormat
-import java.util.Date
 import takagi.ru.monica.R
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatDeliveryState
 import takagi.ru.monica.steam.friends.chat.domain.SteamChatMessage
@@ -73,6 +44,9 @@ import takagi.ru.monica.steam.friends.chat.richmedia.ui.isSingleSteamEmoticonMes
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContent
 import takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichContentParser
 
+import takagi.ru.monica.steam.friends.chat.telegram.*
+import com.monica.telegramchat.TelegramMessageTextView
+
 @Composable
 internal fun SteamChatMessageBubble(
     message: SteamChatMessage,
@@ -83,15 +57,17 @@ internal fun SteamChatMessageBubble(
     onRetry: () -> Unit,
     onLongClick: () -> Unit,
     onOpenStoreApp: (Int) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDeleteMessage: (() -> Unit)? = null
 ) {
     val outgoing = message.isOutgoing(accountSteamId)
     val haptics = LocalHapticFeedback.current
     val retryLabel = stringResource(R.string.steam_chat_retry_send)
-    val bubbleShape = chatBubbleShape(outgoing, groupedWithPrevious, groupedWithNext)
+    val colors = telegramChatColors()
     val richContent = remember(message.body) { SteamChatRichContentParser.parse(message.body) }
     val standaloneCard = richContent is SteamChatRichContent.GameInvite ||
-        richContent is SteamChatRichContent.StoreGameShare
+        richContent is SteamChatRichContent.StoreGameShare ||
+        richContent is SteamChatRichContent.OfficialMessage
     val transparentMedia = richContent is SteamChatRichContent.Sticker ||
         (richContent is SteamChatRichContent.Attachment &&
             richContent.kind == SteamChatAttachmentKind.IMAGE) ||
@@ -111,16 +87,46 @@ internal fun SteamChatMessageBubble(
         Column(
             horizontalAlignment = if (outgoing) Alignment.End else Alignment.Start
         ) {
-            if (standaloneCard) {
+            val plainText = richContent.nativeTelegramText()
+            if (plainText != null && replyToMessage == null) {
+                TelegramTextMessage(
+                    content = plainText,
+                    timestamp = message.timestamp,
+                    outgoing = outgoing,
+                    delivery = when (message.deliveryState) {
+                        SteamChatDeliveryState.SENT -> TelegramMessageTextView.DELIVERY_SENT
+                        SteamChatDeliveryState.QUEUED, SteamChatDeliveryState.SENDING, SteamChatDeliveryState.VERIFYING -> TelegramMessageTextView.DELIVERY_PENDING
+                        else -> TelegramMessageTextView.DELIVERY_NONE
+                    },
+                    groupedWithPrevious = groupedWithPrevious,
+                    groupedWithNext = groupedWithNext,
+                    onLongClick = onLongClick,
+                    modifier = Modifier.widthIn(max = 324.dp)
+                )
+                if (outgoing && message.deliveryState in listOf(SteamChatDeliveryState.FAILED_RETRYABLE, SteamChatDeliveryState.FAILED_PERMANENT)) {
+                    DeliveryMetadata(message, outgoing, retryLabel, onRetry, Modifier.align(Alignment.End), showTime = false)
+                }
+            } else if (richContent is SteamChatRichContent.Attachment && richContent.kind == SteamChatAttachmentKind.IMAGE) {
+                Column(Modifier.widthIn(max = 324.dp)) {
+                    replyToMessage?.let { ReplyPreview(it) }
+                    takagi.ru.monica.steam.friends.chat.richmedia.ui.SteamChatImageMessage(
+                        content = richContent, outgoing = outgoing, groupedWithPrevious = groupedWithPrevious,
+                        groupedWithNext = groupedWithNext, onLongClick = onLongClick,
+                        metadata = { DeliveryMetadata(message, outgoing, retryLabel, onRetry,
+                            onMedia = richContent.caption.isBlank()) })
+                }
+            } else if (standaloneCard) {
                 Column(
                     modifier = Modifier
-                        .widthIn(max = 324.dp)
-                        .then(interactionModifier),
+                        .widthIn(max = 324.dp),
                     horizontalAlignment = if (outgoing) Alignment.End else Alignment.Start
                 ) {
                     replyToMessage?.let { ReplyPreview(it) }
                     SteamChatRichMessageContent(
                         body = message.body,
+                        messageSenderSteamId = message.senderSteamId,
+                        onLongClick = onLongClick,
+                        onDeleteMessage = onDeleteMessage,
                         onOpenStoreApp = onOpenStoreApp
                     )
                     DeliveryMetadata(
@@ -134,21 +140,12 @@ internal fun SteamChatMessageBubble(
                     )
                 }
             } else {
-                Surface(
-                    modifier = Modifier
-                        .widthIn(max = 324.dp)
-                        .then(interactionModifier),
-                    shape = bubbleShape,
-                    color = if (transparentMedia) Color.Transparent else if (outgoing) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.surfaceContainerHigh
-                    },
-                    contentColor = if (outgoing) {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.onSurface
-                    }
+                TelegramMessageSurface(
+                    outgoing = outgoing,
+                    groupedWithPrevious = groupedWithPrevious,
+                    groupedWithNext = groupedWithNext,
+                    modifier = Modifier.widthIn(max = 324.dp).then(interactionModifier),
+                    color = if (transparentMedia) Color.Transparent else if (outgoing) colors.outgoing else colors.incoming
                 ) {
                     if (transparentMedia) {
                         Box {
@@ -156,6 +153,7 @@ internal fun SteamChatMessageBubble(
                                 replyToMessage?.let { ReplyPreview(it) }
                                 SteamChatRichMessageContent(
                                     body = message.body,
+                                    messageSenderSteamId = message.senderSteamId,
                                     onOpenStoreApp = onOpenStoreApp
                                 )
                             }
@@ -187,6 +185,7 @@ internal fun SteamChatMessageBubble(
                         ) {
                             SteamChatRichMessageContent(
                                 body = message.body,
+                                messageSenderSteamId = message.senderSteamId,
                                 onOpenStoreApp = onOpenStoreApp,
                                 modifier = Modifier.weight(1f, fill = false)
                             )
@@ -288,132 +287,6 @@ private fun ReplyPreview(message: SteamChatMessage) {
             modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
             style = MaterialTheme.typography.labelMedium,
             maxLines = 2
-        )
-    }
-}
-
-@Composable
-private fun DeliveryMetadata(
-    message: SteamChatMessage,
-    outgoing: Boolean,
-    retryLabel: String,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val haptics = LocalHapticFeedback.current
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(message.timestamp * 1_000L)),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.End
-        )
-        if (outgoing) {
-            Spacer(Modifier.width(2.dp))
-            AnimatedContent(
-                targetState = message.deliveryState,
-                transitionSpec = {
-                    (fadeIn(spring(stiffness = Spring.StiffnessMedium)) +
-                        scaleIn(initialScale = 0.8f, animationSpec = spring()))
-                        .togetherWith(fadeOut() + scaleOut(targetScale = 0.8f))
-                        .using(SizeTransform(clip = false))
-                },
-                label = "SteamChatDelivery"
-            ) { delivery ->
-                when (delivery) {
-                    SteamChatDeliveryState.QUEUED,
-                    SteamChatDeliveryState.SENDING,
-                    SteamChatDeliveryState.VERIFYING -> AnimatedSendingClock(Modifier.size(15.dp))
-                    SteamChatDeliveryState.SENT -> Icon(
-                        Icons.Default.Done,
-                        contentDescription = stringResource(R.string.steam_chat_sent),
-                        modifier = Modifier.size(15.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    SteamChatDeliveryState.FAILED_RETRYABLE -> IconButton(
-                        onClick = {
-                            haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
-                            onRetry()
-                        },
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.ErrorOutline,
-                            contentDescription = retryLabel,
-                            modifier = Modifier.size(18.dp),
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
-                    SteamChatDeliveryState.FAILED_PERMANENT -> Icon(
-                        Icons.Default.ErrorOutline,
-                        contentDescription = retryLabel,
-                        modifier = Modifier.size(17.dp),
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun AnimatedSendingClock(modifier: Modifier = Modifier) {
-    val transition = rememberInfiniteTransition(label = "SteamChatSendingClock")
-    val rotation by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1_100, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "SteamChatSendingClockHand"
-    )
-    val color = MaterialTheme.colorScheme.onSurfaceVariant
-    val stroke = with(LocalDensity.current) { 1.35.dp.toPx() }
-    Canvas(modifier) {
-        val radius = size.minDimension / 2f - stroke
-        drawCircle(color = color, radius = radius, style = Stroke(stroke))
-        drawLine(
-            color = color,
-            start = center,
-            end = center.copy(y = center.y - radius * 0.48f),
-            strokeWidth = stroke,
-            cap = StrokeCap.Round
-        )
-        val radians = Math.toRadians((rotation - 90f).toDouble())
-        drawLine(
-            color = color,
-            start = center,
-            end = androidx.compose.ui.geometry.Offset(
-                x = center.x + kotlin.math.cos(radians).toFloat() * radius * 0.68f,
-                y = center.y + kotlin.math.sin(radians).toFloat() * radius * 0.68f
-            ),
-            strokeWidth = stroke,
-            cap = StrokeCap.Round
-        )
-    }
-}
-
-private fun chatBubbleShape(
-    outgoing: Boolean,
-    groupedWithPrevious: Boolean,
-    groupedWithNext: Boolean
-): RoundedCornerShape {
-    val large = 18.dp
-    val joined = 5.dp
-    return if (outgoing) {
-        RoundedCornerShape(
-            topStart = large,
-            topEnd = if (groupedWithPrevious) joined else large,
-            bottomStart = large,
-            bottomEnd = if (groupedWithNext) joined else large
-        )
-    } else {
-        RoundedCornerShape(
-            topStart = if (groupedWithPrevious) joined else large,
-            topEnd = large,
-            bottomStart = if (groupedWithNext) joined else large,
-            bottomEnd = large
         )
     }
 }

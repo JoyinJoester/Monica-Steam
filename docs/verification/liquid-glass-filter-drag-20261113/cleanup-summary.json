@@ -1,0 +1,17 @@
+{
+  "api32UsersUnchanged": true,
+  "api35UsersUnchangedDuringCleanup": true,
+  "api35CurrentUser": 13,
+  "packagesUninstalledFromTestUsers": true,
+  "publicAvdStopRequested": true,
+  "configHashes": {
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+    "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205"
+  },
+  "configAndRegistrationUnchangedDuringCleanup": true,
+  "dataDisksPreserved": [
+    "userdata-qemu.img",
+    "userdata-qemu.img.qcow2",
+    "userdata.img"
+  ]
+}

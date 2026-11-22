@@ -2,7 +2,6 @@ package takagi.ru.monica.steam.security
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,8 +28,7 @@ import takagi.ru.monica.ui.LocalReduceAnimations
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.security.lock.MainAppAccessState
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 import takagi.ru.monica.ui.screens.LoginScreen
 import takagi.ru.monica.ui.screens.ResetPasswordScreen
 import takagi.ru.monica.ui.screens.SecurityQuestionsVerificationScreen
@@ -167,8 +165,7 @@ fun SteamAppLockGate(
                 targetState = recoveryRoute,
                 modifier = Modifier.fillMaxSize(),
                 transitionSpec = {
-                    easyNotesScreenEnter(reduceAnimations)
-                        .togetherWith(easyNotesScreenExit(reduceAnimations))
+                    steamPageTransition(reduceAnimations, forward = targetState.ordinal > initialState.ordinal)
                 },
                 label = "MonicaSteamAuthentication"
             ) { route ->

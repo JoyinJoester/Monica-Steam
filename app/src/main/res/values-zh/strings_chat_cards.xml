@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_card_trade_link">交易链接</string>
+    <string name="steam_card_trade_offer">交易报价</string>
+    <string name="steam_card_profile">Steam 个人资料</string>
+    <string name="steam_card_published_file">创意工坊与社区内容</string>
+    <string name="steam_card_screenshot">截图与艺术作品</string>
+    <string name="steam_card_video">视频与片段</string>
+    <string name="steam_card_guide">Steam 指南</string>
+    <string name="steam_card_collection">创意工坊合集</string>
+    <string name="steam_card_bundle">Steam 捆绑包</string>
+    <string name="steam_card_package">Steam 套装</string>
+    <string name="steam_card_broadcast">Steam 直播</string>
+    <string name="steam_card_broadcast_request">直播观看请求</string>
+    <string name="steam_card_playtest">Steam 测试邀请</string>
+    <string name="steam_card_remote_play">远程同乐邀请</string>
+    <string name="steam_card_gift">Steam 礼物通知</string>
+    <string name="steam_card_inventory">库存物品</string>
+    <string name="steam_card_friend_request">好友邀请</string>
+    <string name="steam_card_group">群组与聊天邀请</string>
+    <string name="steam_card_event">社区活动与新闻</string>
+    <string name="steam_card_comment">评论通知</string>
+    <string name="steam_card_market">社区市场</string>
+    <string name="steam_card_effect">聊天特效</string>
+    <string name="steam_card_unknown">Steam 消息</string>
+    <string name="steam_card_start_trade">发起交易</string>
+    <string name="steam_card_view_trade">查看交易报价</string>
+    <string name="steam_card_watch">观看直播</string>
+    <string name="steam_card_view_group">查看群组或邀请</string>
+    <string name="steam_card_view_profile">查看个人资料</string>
+    <string name="steam_card_view_inventory">查看库存物品</string>
+    <string name="steam_card_view_market">在市场中查看</string>
+    <string name="steam_card_open_invite">打开邀请</string>
+    <string name="steam_card_open">在 Steam 中打开</string>
+    <string name="steam_card_no_handler">没有可打开此链接的应用。请安装兼容的 Steam 应用，或将链接复制到其他设备。</string>
+    <string name="steam_card_offer_id">报价 #%1$s</string>
+    <string name="steam_card_no_action">此消息没有支持的操作链接，可查看原文了解详情。</string>
+    <string name="steam_card_copy_link">复制链接</string>
+    <string name="steam_card_details">查看原文</string>
+    <string name="steam_chat_local_delete_title">仅在本机删除这条消息？</string>
+    <string name="steam_chat_local_delete_description">这条消息将在本机的会话和共享记录中隐藏，刷新或重新打开后仍保持隐藏。这不会撤回消息，也不会删除 Steam 或其他设备上的副本。</string>
+    <string name="steam_chat_local_delete_failed">未能保存本机消息删除状态，请重试。</string>
+    <string name="steam_chat_load_older_messages">加载更早的消息</string>
+    <string name="steam_chat_group_delete_title">删除这条群组消息？</string>
+</resources>

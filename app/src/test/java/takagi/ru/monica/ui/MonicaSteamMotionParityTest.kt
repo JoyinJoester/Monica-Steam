@@ -6,14 +6,14 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Source-level guard for the navigation contract shared with Monica Android.
+ * Source-level integration guard; native frame behavior lives in SteamAppGlassUiTest.
  *
  * The standalone app intentionally keeps its Steam-specific screens, but the
- * navigation motion must not grow a second set of timing and direction rules.
+ * Steam pages share one timing policy and keep their existing navigation callbacks.
  */
 class MonicaSteamMotionParityTest {
     @Test
-    fun activityUsesInstantDockSwitchAndEasyNotesForSecondaryPages() {
+    fun activitySharesMotionForDockAndSecondaryPages() {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
@@ -23,19 +23,22 @@ class MonicaSteamMotionParityTest {
         assertFalse(source.contains("CubicBezierEasing"))
         assertFalse(source.contains("slideInHorizontally"))
         assertFalse(source.contains("slideOutHorizontally"))
-        assertTrue(source.contains("EnterTransition.None"))
-        assertTrue(source.contains("ExitTransition.None"))
-        assertTrue(source.contains("initialState.isDockPage(dockStyle)"))
-        assertTrue(source.contains("targetState.isDockPage(dockStyle)"))
-        assertTrue(source.contains("easyNotesScreenEnter(settings.reduceAnimations)"))
-        assertTrue(source.contains("easyNotesScreenExit(settings.reduceAnimations)"))
+        assertTrue(source.contains("SteamTabPageHost("))
+        val host = projectFile("app/src/main/java/takagi/ru/monica/steam/navigation/SteamTabPageHost.kt").readText()
+        assertTrue(host.contains("contentKey = { it }"))
+        assertTrue(host.contains("for (page in pages) key(page)"))
+        assertFalse(source.contains("MONICA_STEAM_DOCK_CONTENT_KEY"))
+        assertTrue(source.contains("initialPage.isDockPage(dockStyle)"))
+        assertTrue(source.contains("targetPage.isDockPage(dockStyle)"))
+        assertTrue(source.contains("steamPageTransition(settings.reduceAnimations,"))
+
         assertTrue(source.contains("var pageHistory by rememberSaveable"))
         assertTrue(source.contains("fun navigateTo(page: MonicaSteamPage)"))
         assertTrue(source.contains("fun navigateBack()"))
     }
 
     @Test
-    fun settingsLibraryAndStoreUseTheSameEasyNotesPageTransition() {
+    fun settingsLibraryAndStoreUseTheSamePageTransition() {
         val settings = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MonicaSteamSettingsScreen.kt"
         ).readText()
@@ -49,25 +52,25 @@ class MonicaSteamMotionParityTest {
         assertTrue(settings.contains("targetState = child"))
         assertTrue(library.contains("targetState = libraryDestination"))
         assertTrue(store.contains("targetState = storeDestination"))
-        assertTrue(settings.contains("easyNotesScreenEnter(settings.reduceAnimations)"))
-        assertTrue(settings.contains("easyNotesScreenExit(settings.reduceAnimations)"))
+        assertTrue(settings.contains("steamPageTransition(settings.reduceAnimations,"))
+
         listOf(library, store).forEach { source ->
-            assertTrue(source.contains("easyNotesScreenEnter(reduceAnimations)"))
-            assertTrue(source.contains("easyNotesScreenExit(reduceAnimations)"))
+            assertTrue(source.contains("steamPageTransition(reduceAnimations,"))
+
         }
         assertTrue(settings.contains("targetState = child"))
     }
 
     @Test
-    fun navigationDoesNotAnimateDockToDockButDoesAnimateBackToParent() {
+    fun navigationUsesConfiguredDockOrderAndDistinctPageKeys() {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/MonicaSteamActivity.kt"
         ).readText()
-        assertTrue(source.contains("initialState.isDockPage(dockStyle)"))
-        assertTrue(source.contains("targetState.isDockPage(dockStyle)"))
-        assertTrue(source.contains("EnterTransition.None togetherWith ExitTransition.None"))
-        assertTrue(source.contains("easyNotesScreenEnter(settings.reduceAnimations)"))
-        assertTrue(source.contains("easyNotesScreenExit(settings.reduceAnimations)"))
+        assertTrue(source.contains("initialPage.isDockPage(dockStyle)"))
+        assertTrue(source.contains("targetPage.isDockPage(dockStyle)"))
+        assertTrue(source.contains("activeDockOrder.indexOf(targetPage.toDockTab())"))
+        assertTrue(source.contains("steamPageTransition(settings.reduceAnimations,"))
+
     }
 
     private fun projectFile(path: String): File {

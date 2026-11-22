@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_space_post_audience">向你的 Steam 好友分享文字动态。</string>
+    <string name="steam_space_post_text">想分享什么？</string>
+    <string name="steam_space_post_count">%1$d / %2$d 字符</string>
+    <string name="steam_space_post_prepare_failed">未能准备 Steam 会话，请重新登录或稍后重试。</string>
+    <string name="steam_space_post_unknown">Steam 尚未确认发布结果。请先到 Steam 查看动态，避免重复发布。</string>
+    <string name="steam_space_post_sending">正在发布…</string>
+    <string name="steam_space_post_check_web">在 Steam 确认</string>
+    <string name="steam_space_post_use_web">使用 Steam 网页</string>
+    <string name="steam_space_post_success">动态已发布</string>
+    <string name="steam_space_post_discard_title">离开草稿？</string>
+    <string name="steam_space_post_discard_body">尚未发布的文字将被丢弃。</string>
+    <string name="steam_space_post_discard_unknown">草稿将被丢弃。离开不会撤销 Steam 可能已经收到的动态。</string>
+    <string name="steam_space_post_discard">离开</string>
+    <string name="steam_space_post_keep_editing">留下</string>
+</resources>

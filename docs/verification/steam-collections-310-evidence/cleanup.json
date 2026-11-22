@@ -1,0 +1,18 @@
+{
+  "uninstalledOnlyTaskPackages": {
+    "takagi.ru.monica.steamapp.collections.test": true,
+    "takagi.ru.monica.steamapp.collections": true
+  },
+  "baselineChecks": {
+    "users": true,
+    "packages": true,
+    "currentUser": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "originalFileUnchanged": true
+  },
+  "stoppedInstance": 1,
+  "stoppedConfirmed": true,
+  "preexistingInstance0Preserved": true
+}

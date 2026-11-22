@@ -1,0 +1,14 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollections.kt": {
+    "baseline": "c32f729aa014d728350986ef367f9612d006512f919fa7e07327815e46eef999",
+    "current": "c32f729aa014d728350986ef367f9612d006512f919fa7e07327815e46eef999"
+  },
+  "app/src/main/java/takagi/ru/monica/steam/library/collections/SteamCollectionsService.kt": {
+    "baseline": "f055bc7bc53190f39e885291c0142c66aefa59b1544c5d66775194e95996fc2b",
+    "current": "f055bc7bc53190f39e885291c0142c66aefa59b1544c5d66775194e95996fc2b"
+  },
+  "app/src/main/java/takagi/ru/monica/steam/library/SteamLibraryViewModel.kt": {
+    "baseline": "d25751fb9c8d83d5ac71f1b384e991480953151af25a59b2957955faf1d341b7",
+    "current": "d25751fb9c8d83d5ac71f1b384e991480953151af25a59b2957955faf1d341b7"
+  }
+}

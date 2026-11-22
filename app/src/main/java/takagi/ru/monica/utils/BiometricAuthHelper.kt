@@ -1,9 +1,6 @@
 package takagi.ru.monica.utils
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.hardware.fingerprint.FingerprintManager
-import android.os.Build
 import android.util.Log
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -13,7 +10,7 @@ import takagi.ru.monica.R
 
 /**
  * 生物识别认证帮助类
- * 仅支持指纹识别，兼容各种第三方系统(HyperOS、OriginOS等)
+ * 在指纹设备上使用系统强生物认证，兼容各种第三方系统(HyperOS、OriginOS等)
  * 
  * 特别优化:
  * - vivo 设备屏下指纹支持
@@ -33,11 +30,7 @@ class BiometricAuthHelper(
      * 检查设备是否支持指纹识别（仅强认证）
      */
     fun isBiometricAvailable(): Boolean {
-        val biometricManager = BiometricManager.from(context)
-        if (!hasFingerprintHardware() || !hasEnrolledFingerprint()) {
-            return false
-        }
-        val result = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        val result = getBiometricStatusCode()
         
         // 记录 vivo 设备信息
         if (VivoFingerprintHelper.isVivoDevice()) {
@@ -58,11 +51,7 @@ class BiometricAuthHelper(
     }
 
     fun isStrongBiometricAvailable(): Boolean {
-        val biometricManager = BiometricManager.from(context)
-        return hasFingerprintHardware() &&
-            hasEnrolledFingerprint() &&
-            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) ==
-            BiometricManager.BIOMETRIC_SUCCESS
+        return getBiometricStatusCode() == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     fun isWeakBiometricOnly(): Boolean {
@@ -70,26 +59,19 @@ class BiometricAuthHelper(
     }
     
     /**
-     * 检查设备是否已注册指纹信息
+     * 检查指纹设备是否有可用的已注册强生物认证
      */
     fun isBiometricEnrolled(): Boolean {
-        val biometricManager = BiometricManager.from(context)
-        return hasEnrolledFingerprint() &&
-            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) ==
-            BiometricManager.BIOMETRIC_SUCCESS
+        return getBiometricStatusCode() == BiometricManager.BIOMETRIC_SUCCESS
     }
+
+    fun getBiometricStatusCode(): Int = fingerprintBiometricStatus(context)
     
     /**
      * 获取生物识别可用状态描述
      */
-    fun getBiometricStatusMessage(): String {
-        val biometricManager = BiometricManager.from(context)
-        val result = when {
-            !hasFingerprintHardware() -> BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
-            !hasEnrolledFingerprint() -> BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
-            else -> biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-        }
-        val baseMessage = when (result) {
+    fun getBiometricStatusMessage(status: Int = getBiometricStatusCode()): String {
+        val baseMessage = when (status) {
             BiometricManager.BIOMETRIC_SUCCESS -> 
                 context.getString(R.string.biometric_available)
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> 
@@ -200,16 +182,4 @@ class BiometricAuthHelper(
         biometricPrompt.authenticate(promptInfo)
     }
 
-    private fun hasFingerprintHardware(): Boolean {
-        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun hasEnrolledFingerprint(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return false
-        }
-        val fingerprintManager = context.getSystemService(FingerprintManager::class.java) ?: return false
-        return fingerprintManager.isHardwareDetected && fingerprintManager.hasEnrolledFingerprints()
-    }
 }

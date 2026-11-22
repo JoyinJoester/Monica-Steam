@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreFilterUiGuardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-14T08:01:07.066Z" hostname="JOYIN" time="0.009">
+  <properties/>
+  <testcase name="advancedFiltersUseProgressiveDisclosureAndAccessibleM3Controls" classname="takagi.ru.monica.steam.store.SteamStoreFilterUiGuardTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

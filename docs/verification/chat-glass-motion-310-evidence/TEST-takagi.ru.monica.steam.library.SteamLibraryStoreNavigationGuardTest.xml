@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.SteamLibraryStoreNavigationGuardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-09T04:40:54.604Z" hostname="JOYIN" time="0.017">
+  <properties/>
+  <testcase name="libraryGameDetailsExposeStoreNavigation" classname="takagi.ru.monica.steam.library.SteamLibraryStoreNavigationGuardTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,112 @@
+[
+  {
+    "file": "app/build.gradle",
+    "before": "cb8770fb7f086cdfcb5ea0b6f66f89bd4175976a791354f6cb61e72ac88cabe9",
+    "after": "21bf922c3f3052d00c5cb13eff9686824e3ff9c807b044e3b008718f35118aa6"
+  },
+  {
+    "file": "app/proguard-rules.pro",
+    "before": "9872359f1070f9ce388caaf308d48de62c19dd34564557cdd49df5340521d61a",
+    "after": "dfeea55006a2aad48e9e779eb64bc35f8fc2ea786e98980afc02a8aa34c4180c"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/backup/SteamMaFileConsentScreenTest.kt",
+    "before": "29436334be3c2ae5d3e902ef329d20862470289786832411e968d3db8d27f5e4",
+    "after": "44f866914008dd8d1f5ed7a72a66a0c86c3095ee38b6084d088fe45434e307c6"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/backup/SteamMaFileExportAuthenticationTest.kt",
+    "before": "4fea58424d6de3ba43168701a360111328b0c0f67a3c1b68668dbf8cc3201dae",
+    "after": "1decb0d569d3ab5193288f6dbac4a3586fec7c89a1aaeee2a07539d56ba63fc2"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/backup/SteamMaFileHandoffActivityTest.kt",
+    "before": "424ca5ac8e837863ebdad787dd1df0212a16c3cfc0709fe02764d29dafdb5790",
+    "after": "4513d6451a4e6d7b8fb0de8480a5983a86eb0122bb3d86e48ca09bae21e0265f"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/scanner/SteamScannerEntryTest.kt",
+    "before": "cf401ae53d92aed4b5c169eea5c4869b582df6681aff168ba5a0f1ff93d266b8",
+    "after": "06000bdd9dbf8d101a32da068dd89c93cd9327da3b8ebca835e55004ad5e6b3d"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/session/SteamSessionStorageRecoveryTest.kt",
+    "before": "e35c19e6fab889331c994a43c10830a2fd07e6fb61da4f06a348e6f832a16f27",
+    "after": "d24345f77a81d95f69dba8bc5d22e0f8b72da6a4e688888b8bd66401b08c3835"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/session/SteamTemporaryAccountStorageTest.kt",
+    "before": "f389af80b3654a14e4bf8ff45dacc08d346385055e69186e88269c925d7f5342",
+    "after": "3935be3d21d7918758f9e5f284a7edcc6dff9ec75c19e0741f901ff717a73204"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/session/SteamTemporaryLoginUiTest.kt",
+    "before": "d4a304cd998877e4573cef09542450f94e87c12d559b424e778f394a38f83dda",
+    "after": "1744b37661ae99b2baee13798c8741fdf5fda8e9f4843302eb97d1e3a3ebf826"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/workshop/SteamWorkshopBackgroundTest.kt",
+    "before": "be3bbd2060ed1683bceb1266df94356b28da46f486c05c0f56d60016016571e7",
+    "after": "f3febf7b069bc2a5a3456737aa25775239cef3e498bb85ad3da5bb3ef89ad579"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/workshop/WallpaperDownloadUiTest.kt",
+    "before": "bd7b4c475a222ae83c26f9469db5f2730a7964c7e93edda4a8d6c03dd673653c",
+    "after": "68568aa6045a65dd585b1104b5962e9471b73ba30340faaa20841a34398fc7a5"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/steam/workshop/WorkshopStageProgressUiTest.kt",
+    "before": "73b99365a1a97c8c31419fbf019974387f5470ae6b246185fb2d77a2c1d74f97",
+    "after": "46de489e76724e9fb2378aa2bcdde9b76b2de12f2e15c3f482a773122de3184c"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/bitwarden/sync/BitwardenSyncNotificationHelper.kt",
+    "before": "709c79e118b38ce83ec26fff3ee1640f399a820677f6c29206d3c8eb8e6f4af6",
+    "after": "c532d0963b623ba668289fd7362db4659a87b02a4ab8363b30acb1b2be3a9034"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/service/NotificationValidatorService.kt",
+    "before": "60a682f5ac6597f85cf4e771d5fccdccf6c51d81579d2847bb3c9c99501c3701",
+    "after": "390a54a958f388166fad022bf51afbc10241ee5d4577634bff837b4f2b0bf67f"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/ui/password/PasswordBatchDeleteNotificationHelper.kt",
+    "before": "b67071474a961cd3e21706f42119dc71e1deee2fe6e1a5df891f303713d8c308",
+    "after": "0f8d107de6d7e54cb4caddcf7376bb3c351a02a19bd0ab6028e09dbc45f9815a"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/ui/password/PasswordBatchTransferNotificationHelper.kt",
+    "before": "07f8025af2ebb9ae850bf84e24f84184382131f0f981f0f97313304ec2f08ede",
+    "after": "1bddacf038e6713a8161aadff811003db989020d5179d14d0ea3840426434df5"
+  },
+  {
+    "file": "build.gradle",
+    "before": "60e0ea15a9c9e1c0678e8bf6a4c5be45ff88e5150db37f7a6f5167e252305e37",
+    "after": "9081b49b4cfd2daa4029b9ad121363349b660b55eeeb12fdd5713d094256a339"
+  },
+  {
+    "file": "gradle.properties",
+    "before": "9f829e2747ba9f6e1a3989d84f85df791b60127bf9ee26ae199e5cf67a7040b1",
+    "after": "42228b26e910b5140b1a108aac5c4067de3d76d7457c4a3c4b7e5c4dfc8bf1ca"
+  },
+  {
+    "file": "gradle/libs.versions.toml",
+    "before": "d3e911e8a8b0b98c791928452d0b4fc547af85b2ab76672c0b63a899211ea12a",
+    "after": "2e8daec12c632bd268732d19544f5476473ed51582dbabb2b213147f7273b5dc"
+  },
+  {
+    "file": "gradle/wrapper/gradle-wrapper.properties",
+    "before": "30eb89628b2a1e7eb5a6ae2385a1eaf0798ac1abd55b8fb0ed5571388b21484c",
+    "after": "589435d89f85dc29036fe362d364b955a351c619660827d4fb5cf7405b0a6294"
+  },
+  {
+    "file": "mdbx-engine/build.gradle",
+    "before": "1db433f732227f81317502b04b70f97eed19de8c5d08fdcbd211c4d0e2a8d252",
+    "after": "68d4988e8688ae02aad820e9786779356a50e43be18d0c8ff1497ec417b5d78e"
+  },
+  {
+    "file": "telegram-chat-ui/build.gradle",
+    "before": "1e380d57da694721247d5aeced21a58657d4e1eb0ea31e8b149ab7a7ba983562",
+    "after": "c778590d40d53d438dbb65a16d9ed319f0976874da1982ff0495cefba9ae9e19"
+  }
+]

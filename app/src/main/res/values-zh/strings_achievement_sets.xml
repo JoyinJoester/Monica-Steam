@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_achievement_sets">成就集合</string>
+    <string name="steam_achievement_sets_all">全部集合</string>
+    <string name="steam_achievement_set_base">游戏本体</string>
+    <string name="steam_achievement_set_unnamed">集合 %1$d</string>
+    <string name="steam_achievement_set_progress">%1$d / %2$d</string>
+    <string name="steam_achievement_set_complete">集合已完成</string>
+    <string name="steam_achievement_set_unavailable">目前无法完成</string>
+    <string name="steam_achievement_set_archived">已归档</string>
+    <string name="steam_achievement_set_dlc">DLC</string>
+    <string name="steam_achievement_hidden">隐藏成就</string>
+    <string name="steam_achievement_archived">已归档 · 不计入集合完成条件</string>
+</resources>

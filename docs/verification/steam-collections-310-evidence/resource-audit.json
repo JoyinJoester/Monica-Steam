@@ -1,0 +1,12 @@
+{
+  "locales": [
+    "values",
+    "values-ja",
+    "values-ru",
+    "values-vi",
+    "values-zh"
+  ],
+  "keysPerLocale": 28,
+  "values": 140,
+  "keysAndFormatSpecifiersMatch": true
+}

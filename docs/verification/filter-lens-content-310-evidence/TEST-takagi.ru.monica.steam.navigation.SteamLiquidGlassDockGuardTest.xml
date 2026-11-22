@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-20T10:28:45.787Z" hostname="JOYIN" time="0.038">
+  <properties/>
+  <testcase name="activityUsesOnlyFixedAndLiquidGlassCompositionPaths" classname="takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest" time="0.029"/>
+  <testcase name="rendererKeepsTheBiliPaiKernelSuMaterialAndMotionConstants" classname="takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest" time="0.002"/>
+  <testcase name="hiddenIndicatorCaptureUsesAnIsolatedNonZeroAlphaLayer" classname="takagi.ru.monica.steam.navigation.SteamLiquidGlassDockGuardTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

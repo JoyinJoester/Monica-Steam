@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_space_post_audience">Chia sẻ trạng thái bằng văn bản với bạn bè trên Steam.</string>
+    <string name="steam_space_post_text">Bạn muốn chia sẻ điều gì?</string>
+    <string name="steam_space_post_count">%1$d / %2$d ký tự</string>
+    <string name="steam_space_post_prepare_failed">Không thể chuẩn bị phiên Steam. Hãy đăng nhập lại hoặc thử sau.</string>
+    <string name="steam_space_post_unknown">Steam chưa xác nhận kết quả. Hãy kiểm tra hoạt động trên Steam trước khi đăng lại để tránh trùng lặp.</string>
+    <string name="steam_space_post_sending">Đang đăng…</string>
+    <string name="steam_space_post_check_web">Kiểm tra trên Steam</string>
+    <string name="steam_space_post_use_web">Dùng trang web Steam</string>
+    <string name="steam_space_post_success">Đã đăng hoạt động</string>
+    <string name="steam_space_post_discard_title">Rời bản nháp?</string>
+    <string name="steam_space_post_discard_body">Văn bản chưa đăng sẽ bị bỏ.</string>
+    <string name="steam_space_post_discard_unknown">Bản nháp sẽ bị bỏ. Việc rời trang không hủy bài đăng mà Steam có thể đã nhận.</string>
+    <string name="steam_space_post_discard">Rời</string>
+    <string name="steam_space_post_keep_editing">Ở lại</string>
+</resources>

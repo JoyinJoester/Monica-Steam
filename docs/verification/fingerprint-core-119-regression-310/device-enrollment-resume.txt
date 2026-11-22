@@ -1,0 +1,58 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.security.SteamFingerprintRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.steam.security.SteamFingerprintRegressionTest:
+INSTRUMENTATION_STATUS: test=settingsRefreshesAfterSystemEnrollmentWithoutRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: fingerprintPhase=enroll-in-system-settings
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.steam.security.SteamFingerprintRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<RESUMED> but was:<CREATED>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation$lambda$0(SteamFingerprintRegressionTest.kt:129)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.withSettings(SteamFingerprintRegressionTest.kt:150)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation(SteamFingerprintRegressionTest.kt:111)
+
+INSTRUMENTATION_STATUS: stream=
+Error in settingsRefreshesAfterSystemEnrollmentWithoutRecreation(takagi.ru.monica.steam.security.SteamFingerprintRegressionTest):
+java.lang.AssertionError: expected:<RESUMED> but was:<CREATED>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation$lambda$0(SteamFingerprintRegressionTest.kt:129)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.withSettings(SteamFingerprintRegressionTest.kt:150)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation(SteamFingerprintRegressionTest.kt:111)
+
+INSTRUMENTATION_STATUS: test=settingsRefreshesAfterSystemEnrollmentWithoutRecreation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 152.81
+There was 1 failure:
+1) settingsRefreshesAfterSystemEnrollmentWithoutRecreation(takagi.ru.monica.steam.security.SteamFingerprintRegressionTest)
+java.lang.AssertionError: expected:<RESUMED> but was:<CREATED>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation$lambda$0(SteamFingerprintRegressionTest.kt:129)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest$$ExternalSyntheticLambda9.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.withSettings(SteamFingerprintRegressionTest.kt:150)
+	at takagi.ru.monica.steam.security.SteamFingerprintRegressionTest.settingsRefreshesAfterSystemEnrollmentWithoutRecreation(SteamFingerprintRegressionTest.kt:111)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,351 @@
+{
+  "date": "2026-11-10",
+  "scope": "Isolated offline x86_64 Debug UI; release R8 compilation only",
+  "jvm": {
+    "tests": 81,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "jvm_classes": [
+    "takagi.ru.monica.steam.friends.chat.background.domain.SteamChatNotificationDecisionTest",
+    "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryClassifierTest",
+    "takagi.ru.monica.steam.friends.chat.info.domain.SteamChatHistoryQueryTest",
+    "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest",
+    "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatGameInviteParserTest",
+    "takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatRichMediaModelsTest"
+  ],
+  "builds": [
+    {
+      "exit": 1,
+      "seconds": 212.68400039999688,
+      "command": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=32",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-chat-cards\\isolation.gradle",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*SteamChatCardsTest",
+        "--tests",
+        "*SteamChatRichMediaModelsTest",
+        "--tests",
+        "*SteamChatGameInviteParserTest",
+        "--tests",
+        "*SteamChatHistoryClassifierTest",
+        "--tests",
+        "*SteamChatHistoryQueryTest",
+        "--tests",
+        "*SteamChatNotificationDecisionTest"
+      ],
+      "label": "debug01"
+    },
+    {
+      "exit": 0,
+      "seconds": 25.839278400002513,
+      "command": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=32",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-chat-cards\\isolation.gradle",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*SteamChatCardsTest",
+        "--tests",
+        "*SteamChatRichMediaModelsTest",
+        "--tests",
+        "*SteamChatGameInviteParserTest",
+        "--tests",
+        "*SteamChatHistoryClassifierTest",
+        "--tests",
+        "*SteamChatHistoryQueryTest",
+        "--tests",
+        "*SteamChatNotificationDecisionTest"
+      ],
+      "label": "debug02"
+    },
+    {
+      "exit": 0,
+      "seconds": 29.30888940001023,
+      "command": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=32",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-chat-cards\\isolation.gradle",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "label": "debug03"
+    },
+    {
+      "exit": 0,
+      "seconds": 25.29895540000871,
+      "command": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=32",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-chat-cards\\isolation.gradle",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "label": "debug04"
+    },
+    {
+      "exit": 0,
+      "seconds": 236.3911902999971,
+      "command": [
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+        "--no-daemon",
+        "--max-workers=1",
+        "--console=plain",
+        "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=4 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+        "-Pkotlin.compiler.execution.strategy=in-process",
+        "-PdailySeq=32",
+        "-I",
+        "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261110-chat-cards\\isolation.gradle",
+        ":app:assembleRelease"
+      ],
+      "label": "release01"
+    }
+  ],
+  "device_runs": [
+    {
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "takagi.ru.monica.steamapp.chatcardstest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "exit": 0,
+      "passed": true,
+      "seconds": 18.766761899998528,
+      "label": "cards01",
+      "passed_methods": [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#actualComposerSendsCardOnlyThroughExistingSendButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedCardRetainsOriginalMessageWithoutActionButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut"
+      ],
+      "failed_methods": [],
+      "runner_seconds": 15.373
+    },
+    {
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest,takagi.ru.monica.steam.chat.TelegramChatUiTest",
+        "takagi.ru.monica.steamapp.chatcardstest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "exit": 0,
+      "passed": false,
+      "seconds": 72.93204309999419,
+      "label": "cards02",
+      "passed_methods": [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#actualComposerSendsCardOnlyThroughExistingSendButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#tradeOfferOpenAndCopyUseExactParsedOffer",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedCardRetainsOriginalMessageWithoutActionButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#gameInvitationKeepsSteamActionSeparateFromStore",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#olderReadingAnchorSurvivesImeAndReopening",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#sourceAttachmentPanelAndCancelableDocumentProviderPreserveDraft",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#lightThemeNativeTitleAndLongHistoryRemainInteractive",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#directNativeEditorSendsKeepsImeAndRetries",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#groupNativeEditorPreservesDraftThroughPanelsAndChannelNavigation",
+        "takagi.ru.monica.steam.chat.TelegramChatUiTest#rapidDraftChangesSettleOriginalSendAnimationWithoutDuplicateActions"
+      ],
+      "failed_methods": [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eDarkThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassDarkThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eLightThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassLightThreadAndShare"
+      ],
+      "runner_seconds": 68.018
+    },
+    {
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5558",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+        "takagi.ru.monica.steamapp.chatcardstest.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "exit": 0,
+      "passed": true,
+      "seconds": 54.034025500004645,
+      "label": "cards03",
+      "passed_methods": [
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#directTradeOpensOnlyCurrentPartnerFormWithoutAddingOrSending",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#actualComposerSendsCardOnlyThroughExistingSendButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eDarkThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#tradeOfferOpenAndCopyUseExactParsedOffer",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassDarkThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#m3eLightThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedCardRetainsOriginalMessageWithoutActionButton",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#glassLightThreadAndShare",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#gameInvitationKeepsSteamActionSeparateFromStore",
+        "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unavailableExternalHandlerIsContainedAndInvalidCommandsAreIgnored"
+      ],
+      "failed_methods": [],
+      "runner_seconds": 46.11
+    }
+  ],
+  "distinct_device_methods_with_pass": 20,
+  "first_combined_device_batch_all_green": false,
+  "production_unchanged_during_runtime": {
+    "production_unchanged_since_first_build": true,
+    "changed_tests": [
+      "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModelsTest.kt",
+      "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt"
+    ]
+  },
+  "artifacts": [
+    {
+      "variant": "debug",
+      "package": "takagi.ru.monica.steamapp.chatcardstest",
+      "path": "app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111018-32.APK",
+      "sha256": "d3ba734b4984084f920d8e39aaaa75c2eae326f78da979ef2222cea04ce8d406",
+      "bytes": 86523845,
+      "internet": false
+    },
+    {
+      "variant": "androidTest/debug",
+      "package": "takagi.ru.monica.steamapp.chatcardstest.test",
+      "path": "app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "sha256": "bf88924a655d2360eed77a42009d6084713c73b3a0ad28ee3254c2ad0358e0e8",
+      "bytes": 2251116,
+      "internet": false
+    },
+    {
+      "variant": "release",
+      "package": "takagi.ru.monica.steamapp.chatcardstest",
+      "path": "app\\build\\outputs\\apk\\release\\Monica-Steam-Android-x86_64-1.0.310-26111018-32.APK",
+      "sha256": "cae86ffc2a3344d8201742df5c8d833c80ef57e3e8bfc81b1d8b1d4d9ab84ec5",
+      "bytes": 33178044,
+      "internet": false
+    }
+  ],
+  "source_sha256": {
+    "app/src/main/java/takagi/ru/monica/steam/friends/groupchat/ui/SteamGroupChatThread.kt": "ce8803d10f29d6fbf8b2bc7f05ed1ae77948ea8f22e3d9a54d002aeac5a90c0e",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt": "35202ffb476391399b981bd6bdbd3a64a664bd810467a01c664998cab1138bab",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatMessageBubble.kt": "80c24290e121f2e29f9484579d62412093c2ddd8f657e69d57fb885e73c5542f",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatThread.kt": "d907d9139fe574de824c7e2fc7f72d661bee5098dc3116c19f68ab5b5a7e5e30",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatOfficialMessages.kt": "d1f21801590632290ccbbfec2ca36e4c1f42afa1b8ec0a30b50e2efc54a571ce",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModels.kt": "7a68da40ecfb8578e6bf37ae73ec30429b34338869d6c7ac57adb22605cc4489",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMessageContent.kt": "98a9899767ad1c8faf2346ceebd061f8eb0a1f23a1158882e3894816489e69b4",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/info/domain/SteamChatHistoryCategories.kt": "009fa9a1f0c70d6eab45dd255aa58796d7065572cedde1d89dad1bcf31bbe472",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/gameinvite/ui/SteamChatGameInviteCard.kt": "10ac97f69bfcfe0b82896f91251092d83bc0db67cf525ae7126f8b11838e4217",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/background/domain/SteamChatNotificationDecision.kt": "b36aa924fbaaf5285f52004bf2f9974b247d572765522019216b870d921aa8b4",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModelsTest.kt": "2048650fa7037e6518b7457187f7f9e5a3813357d2bc35962fc754f604fd05ed",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatCardLinks.kt": "2b52302215a201a33d6640ce8aa3217d208e1feb7165eed0405ca5601d99f711",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamOfficialMessageContent.kt": "5bb6f705a66122d805f1735e17851aeffdcfc9330201f7ea574415e844eb0fbe",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt": "b299942e5419d5cc127f39a8aff4f8dd86667d8690b3df6e64718decd3d182eb",
+    "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatCardsTest.kt": "0281d9fb1c06a93291bb55c5a37bebecbc03e47b1d4f1026419a4bf9ba6547ff",
+    "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "f98d414d5212570b6dfef3464851280ab46662d933a43b5e8e09f98dbb1fd30e",
+    "app/src/main/res/values/strings_chat_cards.xml": "892857fba90daed92ab2e0622aeea866cde38daeed19a8adfd965b4ab51be1d0",
+    "app/src/main/res/values-zh/strings_chat_cards.xml": "4fcd13f1c30aa225764a74e9e692c89e21b27b02bd2e7cb2c1e5703e9879263c",
+    "app/src/main/res/values-ja/strings_chat_cards.xml": "4368600829b377592844d56ec5609d458c9365e42ce86dc231fdeb3eb44b3a38",
+    "app/src/main/res/values-ru/strings_chat_cards.xml": "760b681eb4c3d1e8e675cf289e24bdb15c0c3d55f20e0e21f6d82b2b3fcd4778",
+    "app/src/main/res/values-vi/strings_chat_cards.xml": "6a355c695df9205878c841903e9c8f58f3e6a377a51e985cbbf996357a6a866e"
+  },
+  "cleanup": {
+    "uninstall": {
+      "takagi.ru.monica.steamapp.chatcardstest.test": "Success",
+      "takagi.ru.monica.steamapp.chatcardstest": "Success"
+    },
+    "after": {
+      "users": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{14:Monica_BwDetailCrash_Test:414}",
+      "current": "0",
+      "packages": "package:com.monica.telegramchat.test\npackage:takagi.ru.monica.fdroid\npackage:dev.nesso\npackage:keepass2android.keepass2android\npackage:takagi.joyin.github.etoile.test\npackage:takagi.ru.monica.auth\npackage:takagi.ru.monica.test\npackage:takagi.ru.monica\npackage:takagi.ru.monica.mdbx.engine.test\npackage:takagi.ru.monica.fdroid.test\npackage:takagi.ru.monica.steamapp.test\npackage:takagi.ru.monica.contentexperiment\npackage:com.kunzisoft.keepass.libre\npackage:takagi.ru.monica.steam.recoverytest.test\npackage:takagi.joyin.github.etoile\npackage:takagi.ru.monica.steamapp\npackage:takagi.ru.monica.contentexperiment.test\npackage:takagi.ru.monica.steam.recoverytest",
+      "animations": "null"
+    },
+    "original_users_preserved": true,
+    "original_packages_preserved": true,
+    "foreground_restored": true,
+    "animations_unchanged": true,
+    "stop": "OK: killing emulator, bye bye\n\nOK"
+  },
+  "avd_configs": [
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "sha256": "8f0c0d7feba171733fcd008de8245d8fd2b6f967feff6220413cf77e050d2205",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "sha256": "98610cf3e4844b79bbc80e952f04e784b859c559bf35c31a805e14fe7edc644c",
+      "unchanged": true
+    }
+  ],
+  "native_capture_count": 12,
+  "native_capture_review": "12-image contact sheet; original light thread and dark glass share sheet",
+  "limitations": [
+    "No live Steam accounts, message delivery, trade execution or gift redemption",
+    "No physical phone/OEM or API33+ AGSL shader verification in this card task",
+    "No minified on-device interaction",
+    "Remote images/metadata and actual external client interoperability not exercised"
+  ],
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apk_delivered": false
+}

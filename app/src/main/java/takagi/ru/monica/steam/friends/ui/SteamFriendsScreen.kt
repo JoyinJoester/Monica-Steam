@@ -1,15 +1,14 @@
 package takagi.ru.monica.steam.friends.ui
 
+import takagi.ru.monica.steam.navigation.liquidglass.ui.SteamGlassFloatingActionButton as FloatingActionButton
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PersonAdd
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -38,8 +37,7 @@ import takagi.ru.monica.steam.profile.viewer.domain.SteamProfileViewerTarget
 import takagi.ru.monica.steam.profile.viewer.ui.SteamProfileViewerScreen
 import takagi.ru.monica.steam.token.presentation.SteamViewModel
 import takagi.ru.monica.ui.LocalReduceAnimations
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
+import takagi.ru.monica.steam.navigation.steamPageTransition
 
 private sealed interface SteamFriendsDestination {
     data object List : SteamFriendsDestination
@@ -57,7 +55,8 @@ fun SteamFriendsScreen(
     addFriendOpen: Boolean,
     onAddFriendOpenChange: (Boolean) -> Unit,
     onStartChat: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRefreshingChanged: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
     val reduceAnimations = LocalReduceAnimations.current
@@ -69,6 +68,9 @@ fun SteamFriendsScreen(
     )
     val steamState by steamViewModel.uiState.collectAsState()
     val state by friendsViewModel.uiState.collectAsState()
+    val reportRefreshing by androidx.compose.runtime.rememberUpdatedState(onRefreshingChanged)
+    LaunchedEffect(state.loading, state.refreshing) { reportRefreshing(state.loading || state.refreshing) }
+    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { reportRefreshing(false) } }
     val sessionAccounts = remember(steamState.accounts) {
         steamState.accounts.filter { it.hasAuthenticatedSession }
     }
@@ -151,14 +153,14 @@ fun SteamFriendsScreen(
             targetState = destination,
             modifier = Modifier.fillMaxSize(),
             transitionSpec = {
-                easyNotesScreenEnter(reduceAnimations)
-                    .togetherWith(easyNotesScreenExit(reduceAnimations))
+                steamPageTransition(reduceAnimations, forward = targetState != SteamFriendsDestination.List)
             },
             label = "SteamFriendsNavigation"
         ) { animatedDestination ->
             when (animatedDestination) {
                 SteamFriendsDestination.List -> {
                     SteamExpressivePullToRefresh(
+                        showIndicator = false,
                         refreshing = state.loading || state.refreshing,
                         onRefresh = friendsViewModel::refresh,
                         enabled = selectedAccount?.hasRealSteamId == true,
@@ -172,6 +174,7 @@ fun SteamFriendsScreen(
                             onOpenFriend = { onSelectedFriendIdChange(it.steamId) },
                             onRespondToInvite = friendsViewModel::respondToInvite,
                             onRetry = friendsViewModel::refresh,
+                            onAddFriend = { onAddFriendOpenChange(true) },
                             modifier = Modifier.fillMaxSize()
                         )
                     }

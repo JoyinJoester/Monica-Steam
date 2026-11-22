@@ -1,0 +1,31 @@
+{
+  "selfStartedMuMuIndex": 2,
+  "serial": "127.0.0.1:16448",
+  "originalDensity": "Physical density: 280; no override",
+  "testDensity": 480,
+  "originalShowImeWithHardKeyboard": "0",
+  "originalIme": "com.sohu.inputmethod.sogou.chuizi/com.sohu.inputmethod.sogou.SogouIME",
+  "managerInfo": {
+    "adb_host_ip": "127.0.0.1",
+    "adb_port": 16448,
+    "android_version": "15.0",
+    "created_timestamp": 1794331605453974,
+    "disk_size_bytes": 10005855990,
+    "error_code": 0,
+    "hyperv_enabled": true,
+    "index": "2",
+    "info_source": "rpc",
+    "is_android_started": true,
+    "is_main": false,
+    "is_process_started": true,
+    "launch_err_code": 0,
+    "launch_err_msg": "",
+    "launch_time": 808064,
+    "main_wnd": "02ED0234",
+    "name": "Monica Release Upgrade Test",
+    "pid": 58296,
+    "player_state": "start_finished",
+    "render_wnd": "00321A66",
+    "vt_enabled": true
+  }
+}

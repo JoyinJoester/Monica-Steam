@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 import takagi.ru.monica.steam.friends.domain.SteamPersonaState
 import takagi.ru.monica.steam.community.domain.SteamCommunityBadge
 import takagi.ru.monica.steam.library.SteamAchievement
+import takagi.ru.monica.steam.library.SteamAchievementSet
 import takagi.ru.monica.steam.library.SteamGame
 import takagi.ru.monica.steam.library.SteamGameAchievements
 
@@ -169,7 +170,10 @@ data class SteamAchievementComparisonEntry(
     val viewerAchieved: Boolean,
     val targetAchieved: Boolean,
     val viewerUnlockTimeSeconds: Long?,
-    val targetUnlockTimeSeconds: Long?
+    val targetUnlockTimeSeconds: Long?,
+    val groupId: Long = 0L,
+    val archived: Boolean = false,
+    val hidden: Boolean = false
 ) {
     val state: SteamAchievementComparisonState
         get() = when {
@@ -187,7 +191,8 @@ data class SteamAchievementComparison(
     val appId: Int,
     val gameName: String,
     val achievements: List<SteamAchievementComparisonEntry>,
-    val fetchedAt: Long
+    val fetchedAt: Long,
+    val targetSets: List<SteamAchievementSet> = emptyList()
 ) {
     val viewerCompleted: Int get() = achievements.count(SteamAchievementComparisonEntry::viewerAchieved)
     val targetCompleted: Int get() = achievements.count(SteamAchievementComparisonEntry::targetAchieved)
@@ -246,7 +251,10 @@ internal fun buildSteamAchievementComparison(
             viewerAchieved = viewerAchievement?.achieved == true,
             targetAchieved = targetAchievement?.achieved == true,
             viewerUnlockTimeSeconds = viewerAchievement?.unlockTimeSeconds,
-            targetUnlockTimeSeconds = targetAchievement?.unlockTimeSeconds
+            targetUnlockTimeSeconds = targetAchievement?.unlockTimeSeconds,
+            groupId = definition?.groupId ?: 0L,
+            archived = definition?.archived == true,
+            hidden = definition?.hidden == true
         )
     }
     return SteamAchievementComparison(
@@ -255,6 +263,7 @@ internal fun buildSteamAchievementComparison(
         appId = target.appId,
         gameName = target.gameName.ifBlank { viewer.gameName },
         achievements = entries,
+        targetSets = target.selectableSets,
         fetchedAt = fetchedAt
     )
 }

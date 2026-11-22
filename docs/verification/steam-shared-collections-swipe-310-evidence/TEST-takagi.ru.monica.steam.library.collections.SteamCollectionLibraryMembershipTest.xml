@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.library.collections.SteamCollectionLibraryMembershipTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-21T02:45:01.684Z" hostname="JOYIN" time="0.156">
+  <properties/>
+  <testcase name="anotherAccountsLibraryDoesNotAuthorizeMembershipChanges" classname="takagi.ru.monica.steam.library.collections.SteamCollectionLibraryMembershipTest" time="0.059"/>
+  <testcase name="unavailableExistingMembersArePreservedWhenSharedGameIsAddedOrRemoved" classname="takagi.ru.monica.steam.library.collections.SteamCollectionLibraryMembershipTest" time="0.09"/>
+  <testcase name="anUnknownGameRejectsTheWholeRequestedChange" classname="takagi.ru.monica.steam.library.collections.SteamCollectionLibraryMembershipTest" time="0.0"/>
+  <testcase name="ownedAndSharedGamesCanBeFiledTogether" classname="takagi.ru.monica.steam.library.collections.SteamCollectionLibraryMembershipTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

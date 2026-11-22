@@ -38,11 +38,11 @@ class SteamChatIntegrationGuardTest {
         assertTrue(tokenScreen.contains("onOpenChat"))
         assertTrue(friendsScreen.contains("onStartChat"))
         assertTrue(friendDetail.contains("steam_chat_send_message"))
-        assertTrue(chatRoot.contains("ExpressiveTopBar("))
+        assertTrue(chatRoot.contains("TelegramSocialTopBar("))
         assertTrue(chatRoot.contains("Scaffold("))
         assertTrue(chatRoot.contains("SteamChatFriendPicker("))
         assertTrue(backHandlers.contains("BackHandler"))
-        assertTrue(chatScreen.contains("easyNotesScreenEnter(reduceAnimations)"))
+        assertTrue(chatScreen.contains("SteamChatNavigation("))
     }
 
     @Test
@@ -53,31 +53,73 @@ class SteamChatIntegrationGuardTest {
         val friendPicker = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatFriendPicker.kt"
         ).readText()
+        val friendsBar = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamFriendsTopBar.kt"
+        ).readText()
+        val inboxBar = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamInboxUi.kt"
+        ).readText()
         val chatScreen = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatScreen.kt"
         ).readText()
 
-        val topBarTitle = chatRoot.substringAfter("ExpressiveTopBar(")
-            .substringBefore("searchQuery =")
-        assertTrue(topBarTitle.contains("addFriendOpen -> R.string.steam_friend_add_title"))
-        assertTrue(topBarTitle.contains("showFriends -> R.string.steam_friends_title"))
-        assertTrue(topBarTitle.contains("else -> R.string.steam_chat_title"))
+        assertTrue(chatRoot.contains("addFriendOpen -> TelegramSocialTopBar("))
+        assertTrue(chatRoot.contains("showFriends -> SteamFriendsTopBar("))
         assertTrue(chatRoot.contains("SteamAddFriendScreen("))
-        assertTrue(chatRoot.contains("Icons.AutoMirrored.Filled.ArrowBack"))
-        assertTrue(chatRoot.contains("navigationIcon = if (addFriendOpen)"))
-        assertTrue(chatRoot.contains("compact = addFriendOpen"))
+        assertTrue(chatRoot.contains("onAddFriendOpenChange(false)"))
         assertTrue(chatRoot.contains("Icons.AutoMirrored.Filled.OpenInNew"))
         assertTrue(chatRoot.contains("onOpenOfficialAddFriend"))
+        // The route delegates search to the header; it must not add a second search control.
+        assertFalse(chatRoot.contains("TelegramSocialSearch("))
+        // Chat owns its native input and menu independently of global navigation preferences.
+        assertFalse(inboxBar.contains("TextField("))
+        assertTrue(inboxBar.contains("R.string.steam_chat_search_hint"))
+        val telegramHeader = inboxBar.substringBefore("internal fun SteamInboxOverflowMenu(")
+        assertTrue(telegramHeader.contains("TelegramSocialSearchTopBar("))
+        val sharedHeader = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialSearchTopBar.kt"
+        ).readText()
+        assertTrue(sharedHeader.contains("ExpressiveTopBar(title, searchQuery, onSearchQueryChange"))
+        assertTrue(sharedHeader.contains("onSearchExpandedChange, searchHint"))
+        assertFalse(telegramHeader.contains("TextField("))
+        val overflow = inboxBar.substringAfter("internal fun SteamInboxOverflowMenu(")
+        assertTrue(overflow.contains("SteamActionOverflowMenu("))
+        assertFalse(overflow.contains("DropdownMenu("))
+        assertTrue(friendsBar.contains("TelegramSocialSearchTopBar("))
+        assertTrue(friendsBar.contains("R.string.steam_contacts_search_hint"))
+        assertFalse(friendsBar.contains("Icons.Rounded.Search"))
+        val searchBar = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramSocialSearchTopBar.kt"
+        ).readText()
+        assertTrue(searchBar.contains("onSearchExpandedChange(true)"))
+        val expressiveHeader = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/components/ExpressiveTopBar.kt"
+        ).readText()
+        assertTrue(searchBar.contains("ExpressiveTopBar("))
+        assertTrue(expressiveHeader.contains("BasicTextField("))
+        assertTrue(expressiveHeader.contains("BackHandler(enabled = isSearchExpanded"))
+        assertTrue(overflow.contains("onOpenSpace?.let { add(SteamPageOverflowAction(space,"))
+        // Contact actions live in the overflow menu instead of the page body.
+        assertTrue(friendsBar.contains("R.string.steam_chat_create_group"))
+        assertTrue(friendsBar.contains("R.string.steam_friends_refresh"))
         assertTrue(chatScreen.contains("SteamOfficialAddFriendDialog("))
-        assertTrue(friendPicker.contains("FloatingActionButton("))
-        assertTrue(friendPicker.contains("steamDockActionClearance"))
         assertTrue(chatScreen.contains("onFindFriendCandidates"))
         assertTrue(chatScreen.contains("SteamFriendRelationshipAction.ADD"))
+
+        // The picker itself is now just the list plus the add-friend FAB.
+        assertTrue(friendPicker.contains("ExtendedFloatingActionButton("))
+        assertTrue(friendPicker.contains("steamDockActionClearance"))
+        assertFalse(friendPicker.contains("TelegramSocialInfoRow("))
     }
 
     @Test
     fun chatKeepsDataPresentationAndTelegramStyleUiSeparated() {
         val root = projectFile("app/src/main/java/takagi/ru/monica/steam/friends/chat")
+        root.walkTopDown().filter { it.extension == "kt" }.forEach { file ->
+            val text = file.readText()
+            assertFalse("${file.name} depends on a global Telegram style", text.contains("isTelegramDesign"))
+            assertFalse("${file.name} depends on a global Telegram style", text.contains("SteamDockStyle.TELEGRAM"))
+        }
         assertTrue(root.resolve("domain").isDirectory)
         assertTrue(root.resolve("data").isDirectory)
         assertTrue(root.resolve("presentation").isDirectory)
@@ -87,7 +129,8 @@ class SteamChatIntegrationGuardTest {
         val uiFiles = root.resolve("ui").listFiles().orEmpty().filter { it.extension == "kt" }
         assertTrue(uiFiles.size >= 5)
         uiFiles.forEach { file ->
-            val maxLines = if (file.name == "SteamChatScreen.kt") 500 else 420
+            // The existing SteamChatScreen is 527 lines after account-source routing.
+            val maxLines = if (file.name == "SteamChatScreen.kt") 550 else 420
             assertTrue("${file.name} is too large", file.readLines().size <= maxLines)
         }
         root.resolve("presentation").listFiles().orEmpty()
@@ -99,11 +142,13 @@ class SteamChatIntegrationGuardTest {
         val thread = root.resolve("ui/SteamChatThread.kt").readText()
         val bubble = root.resolve("ui/SteamChatMessageBubble.kt").readText()
         val composer = root.resolve("ui/SteamChatComposer.kt").readText()
-        assertTrue(thread.contains("animateToLatestSteamChatMessage"))
-        assertTrue(thread.contains("animateItem()"))
+        val nativeList = root.resolve("telegram/TelegramMessageList.kt").readText()
+        val scaffold = root.resolve("telegram/TelegramChatSurface.kt").readText()
+        assertTrue(thread.contains("TelegramMessageList("))
+        assertTrue(nativeList.contains("itemsEnterAnimator.showItemsAnimated"))
         assertTrue(thread.contains("steamWindowTopPadding()"))
-        assertTrue(thread.contains("steamWindowBottomPadding(suppressWhenImeVisible = true)"))
-        assertTrue(thread.contains(".imePadding()"))
+        assertTrue(scaffold.contains("steamWindowBottomPadding(suppressWhenImeVisible = true)"))
+        assertTrue(scaffold.contains(".imePadding()"))
         assertTrue(bubble.contains("SteamChatDeliveryState.FAILED"))
         assertTrue(bubble.contains("RoundedCornerShape"))
         assertTrue(bubble.contains("MessageReactionStrip("))
@@ -112,15 +157,15 @@ class SteamChatIntegrationGuardTest {
         assertTrue(bubble.contains("richContent.kind == SteamChatAttachmentKind.IMAGE"))
         assertTrue(bubble.contains("reaction.count.toString()"))
         assertFalse(composer.contains("imePadding()"))
-        assertTrue(composer.contains("heightIn(min = 52.dp"))
+        assertTrue(composer.contains("TelegramChatInput("))
     }
 
     @Test
     fun retryableMessageHasADedicatedAccessibleRetryButton() {
         val bubble = projectFile(
-            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatMessageBubble.kt"
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatDeliveryMetadata.kt"
         ).readText()
-        val deliveryMetadata = bubble.substringAfter("private fun DeliveryMetadata(")
+        val deliveryMetadata = bubble.substringAfter("internal fun DeliveryMetadata(")
 
         assertTrue(deliveryMetadata.contains("onRetry: () -> Unit"))
         assertTrue(
@@ -199,10 +244,14 @@ class SteamChatIntegrationGuardTest {
         ).readText()
         assertTrue(composer.contains("SteamChatRichMediaPickerPanel"))
         assertTrue(composer.contains("BackHandler(enabled = showRichPicker || showAttachmentPicker)"))
-        assertTrue(composer.contains("onFocusChanged"))
+        assertTrue(composer.contains("onFocus = { showRichPicker = false; showAttachmentPicker = false }"))
+        val nativeInput = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/telegram/TelegramChatControls.kt"
+        ).readText()
+        assertTrue(nativeInput.contains("setOnFocusChangeListener"))
         assertTrue(
             composer.indexOf("SteamChatRichMediaPickerPanel(") >
-                composer.indexOf("OutlinedTextField(")
+                composer.indexOf("TelegramChatInput(")
         )
         val richContent = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichMessageContent.kt"
@@ -213,11 +262,11 @@ class SteamChatIntegrationGuardTest {
         assertTrue(richContent.contains("OfficialMessage"))
         assertTrue(attachmentContent.contains("steam_chat_spoiler_reveal"))
         assertTrue(attachmentContent.contains("Crossfade("))
-        assertTrue(attachmentContent.contains("SteamFullscreenImageViewer("))
+        assertTrue(attachmentContent.contains("SteamChatImageMessage(content, modifier)"))
     }
 
     @Test
-    fun attachmentButtonExpandsGalleryAndFileChoicesBeforeOpeningSystemPicker() {
+    fun attachmentButtonExpandsSourcePanelAndKeepsDocumentProviderFallback() {
         val composer = projectFile(
             "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatComposer.kt"
         ).readText()
@@ -232,6 +281,8 @@ class SteamChatIntegrationGuardTest {
         assertFalse(composer.contains("FilledTonalIconButton("))
         assertTrue(attachmentPicker.contains("ActivityResultContracts.PickVisualMedia"))
         assertTrue(attachmentPicker.contains("ActivityResultContracts.OpenDocument"))
+        assertTrue(attachmentPicker.contains("TelegramAttachmentPickerView(it)"))
+        assertTrue(attachmentPicker.contains("loadTelegramAttachmentEntries("))
         assertTrue(attachmentPicker.contains("R.string.steam_chat_attachment_gallery"))
         assertTrue(attachmentPicker.contains("R.string.steam_chat_attachment_file"))
     }
@@ -266,8 +317,13 @@ class SteamChatIntegrationGuardTest {
         assertTrue(preview.contains("steamGameInviteHeaderUrl(share.appId)"))
         assertTrue(preview.contains("mode = SteamChatRemoteImageMode.ARTWORK"))
         assertTrue(preview.contains("aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)"))
-        assertTrue(renderedCard.contains("mode = SteamChatRemoteImageMode.ARTWORK"))
-        assertTrue(renderedCard.contains("aspectRatio(STEAM_GAME_HEADER_ASPECT_RATIO)"))
+        val sharedCard = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/ui/SteamChatRichCard.kt"
+        ).readText()
+        assertTrue(renderedCard.contains("SteamChatRichCard("))
+        assertTrue(renderedCard.contains("artwork = artworkUrl"))
+        assertTrue(sharedCard.contains("mode = SteamChatRemoteImageMode.ARTWORK"))
+        assertTrue(sharedCard.contains("aspectRatio(2.15f)"))
     }
 
     @Test

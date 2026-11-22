@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T17:03:55.089Z" hostname="JOYIN" time="0.022">
+  <properties/>
+  <testcase name="temporaryCatalogIsMemoryOnlyAndSeparateFromSavedAccount" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" time="0.008"/>
+  <testcase name="corruptAndOversizedEntriesAreMissesButAnEmptyCatalogIsValid" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" time="0.007"/>
+  <testcase name="memoryPeekNeverReadsDiskAndCatalogsStayAccountScoped" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" time="0.002"/>
+  <testcase name="olderDiskReadCannotOverwriteAConcurrentRefresh" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" time="0.002"/>
+  <testcase name="newCacheInstanceRestoresAllOwnedAssetsWithoutPersistingCredentials" classname="takagi.ru.monica.steam.friends.chat.richmedia.data.SteamChatCatalogCacheTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

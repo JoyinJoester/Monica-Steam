@@ -1,0 +1,2 @@
+docs/design/20261121-steam-collections-page/canvas.json
+docs/design/20261121-steam-collections-page/canvas-preview.png

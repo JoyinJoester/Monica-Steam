@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="steam_dock_style_title">Dock 样式</string>
+    <string name="steam_dock_style_description">默认使用 M3E；两种风格均显示商店、游戏库、聊天、令牌和设置。</string>
+    <string name="steam_dock_style_liquid_glass">液态玻璃</string>
+    <string name="steam_dock_style_fixed">M3E</string>
+    <string name="steam_design_style_title">设计风格</string>
+    <string name="steam_design_style_description">两种风格都遵循已选配色与显示设置，可随时切换。</string>
+    <string name="steam_design_style_m3e_description">Material 3 Expressive：固定底部导航栏、色调容器与标准悬浮按钮</string>
+    <string name="steam_design_style_liquid_glass_description">悬浮玻璃底栏；聊天、商店等悬浮控件使用玻璃材质</string>
+    <string name="steam_design_style_order_hint">底栏顺序在“导航与动效 › 底部导航栏”中调整。</string>
+    <string name="steam_design_style_preview">预览</string>
+    <string name="steam_design_style_glass_unsupported">此设备将使用半透明背景代替实时玻璃效果。</string>
+</resources>

@@ -1,0 +1,38 @@
+{
+  "removedPackages": {
+    "takagi.ru.monica.steamapp.detailchrome.test": "Success\n",
+    "takagi.ru.monica.steamapp.detailchrome": "Success\n"
+  },
+  "baselineChecks": {
+    "users": true,
+    "currentUser": true,
+    "size": true,
+    "density": true,
+    "font": true,
+    "packages": true,
+    "rotation": true
+  },
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "mumu0Modified": false,
+  "dataDiskOrConfigRemoved": false,
+  "shutdown": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}\n",
+  "stoppedConfirmed": true,
+  "managerAfter": {
+    "android_version": "15.0",
+    "created_timestamp": 1793856063204935,
+    "disk_size_bytes": 7827996133,
+    "error_code": 900,
+    "hyperv_enabled": true,
+    "index": "1",
+    "info_source": "rpc",
+    "is_android_started": false,
+    "is_main": false,
+    "is_process_started": false,
+    "name": "Monica OMK 325 Test"
+  }
+}

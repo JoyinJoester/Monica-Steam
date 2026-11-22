@@ -1,0 +1,71 @@
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+com.monica.telegramchat.TelegramGlassRenderingTest:
+INSTRUMENTATION_STATUS: test=sixPillsShareOneCaptureAndRefreshLivePixels
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Six glass pills must not redraw the source six times: 13
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:98)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sixPillsShareOneCaptureAndRefreshLivePixels(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Six glass pills must not redraw the source six times: 13
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:98)
+
+INSTRUMENTATION_STATUS: test=sixPillsShareOneCaptureAndRefreshLivePixels
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=movingPillAndReplacingSourceKeepCorrectPixels
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.monica.telegramchat.TelegramGlassRenderingTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+INSTRUMENTATION_STATUS: stream=
+Error in movingPillAndReplacingSourceKeepCorrectPixels(com.monica.telegramchat.TelegramGlassRenderingTest):
+java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+INSTRUMENTATION_STATUS: test=movingPillAndReplacingSourceKeepCorrectPixels
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 7.516
+There were 2 failures:
+1) sixPillsShareOneCaptureAndRefreshLivePixels(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Six glass pills must not redraw the source six times: 13
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.sixPillsShareOneCaptureAndRefreshLivePixels(TelegramGlassRenderingTest.java:98)
+2) movingPillAndReplacingSourceKeepCorrectPixels(com.monica.telegramchat.TelegramGlassRenderingTest)
+java.lang.AssertionError: Moving the pill samples its new screen position
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.monica.telegramchat.TelegramGlassRenderingTest.movingPillAndReplacingSourceKeepCorrectPixels(TelegramGlassRenderingTest.java:112)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

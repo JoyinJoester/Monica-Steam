@@ -1,0 +1,12 @@
+[
+  {
+    "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26112018-22.APK",
+    "sha256": "499b29ca7825f551242c3766216553260bc0bb54b5ca8645ae0cfeb4e9d9a61e",
+    "bytes": 68317016
+  },
+  {
+    "path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "sha256": "6a7fcdb062db04d0e743a93d4ef6aac4826b607d90cacd50d8165630414b8fdf",
+    "bytes": 1622682
+  }
+]

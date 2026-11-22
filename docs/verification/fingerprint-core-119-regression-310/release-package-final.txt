@@ -1,0 +1,292 @@
+Activity Resolver Table:
+  Schemes:
+      monica:
+        3efa18f takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.MonicaSteamActivity filter ce965fa
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "monica"
+          Authority: "workshop": -1
+          Path: "PatternMatcher{PREFIX: /v1/}"
+      msauth:
+        6303387 takagi.ru.monica.steamapp.fingerprinttest/com.microsoft.identity.client.BrowserTabActivity filter 3a342b4
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "msauth"
+          Authority: "takagi.ru.monica.steamapp": -1
+          Path: "PatternMatcher{LITERAL: /FwPDMDAjg96+0gxjMKKmnQS/dQA=}"
+      http:
+        3efa18f takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.MonicaSteamActivity filter 3db8c1c
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "http"
+          Scheme: "https"
+          Authority: "s.team": -1
+          Authority: "steamcommunity.com": -1
+          Authority: "store.steampowered.com": -1
+      https:
+        3efa18f takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.MonicaSteamActivity filter 3db8c1c
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "http"
+          Scheme: "https"
+          Authority: "s.team": -1
+          Authority: "steamcommunity.com": -1
+          Authority: "store.steampowered.com": -1
+      steam:
+        3efa18f takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.MonicaSteamActivity filter 2d36025
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "steam"
+          Authority: "openurl": -1
+
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        5cec7ab takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.ClassicVisibleLauncherAlias filter 3234e08
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+        9fed9a1 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.ModernVisibleLauncherAlias filter b57e7c6
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.intent.action.BOOT_COMPLETED:
+        5881bd9 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundReceiver filter 646299e
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+        f559c95 takagi.ru.monica.steamapp.fingerprinttest/androidx.work.impl.background.systemalarm.RescheduleReceiver filter d6741aa
+          Action: "android.intent.action.BOOT_COMPLETED"
+      android.appwidget.action.APPWIDGET_UPDATE:
+        60e6edd takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.quickaccess.SteamAccountStatsWidgetProvider filter 5daba52
+          Action: "android.appwidget.action.APPWIDGET_UPDATE"
+        528123 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.quickaccess.SteamRecentGamesWidgetProvider filter a8bd620
+          Action: "android.appwidget.action.APPWIDGET_UPDATE"
+      androidx.work.diagnostics.REQUEST_DIAGNOSTICS:
+        e74f19b takagi.ru.monica.steamapp.fingerprinttest/androidx.work.impl.diagnostics.DiagnosticsReceiver filter 24a4938
+          Action: "androidx.work.diagnostics.REQUEST_DIAGNOSTICS"
+      android.intent.action.MY_PACKAGE_REPLACED:
+        5881bd9 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.friends.chat.background.data.SteamChatBackgroundReceiver filter 646299e
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+        ac20c7f takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.receiver.LauncherEntryRepairReceiver filter da8344c
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+
+Domain verification status:
+    User all:
+      Verification link handling allowed: true
+      Selection state:
+        Disabled:
+          s.team
+          steamcommunity.com
+          store.steampowered.com
+
+Permissions:
+  Permission [takagi.ru.monica.steamapp.fingerprinttest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (132a139):
+    sourcePackage=takagi.ru.monica.steamapp.fingerprinttest
+    uid=10228 gids=[] type=0 prot=signature
+    perm=PermissionInfo{5eefb9a takagi.ru.monica.steamapp.fingerprinttest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  takagi.ru.monica.steamapp.fingerprinttest/androidx.core.content.FileProvider:
+    Provider{a863ccb takagi.ru.monica.steamapp.fingerprinttest/androidx.core.content.FileProvider}
+  takagi.ru.monica.steamapp.fingerprinttest/com.google.mlkit.common.internal.MlKitInitProvider:
+    Provider{1afeca8 takagi.ru.monica.steamapp.fingerprinttest/com.google.mlkit.common.internal.MlKitInitProvider}
+  takagi.ru.monica.steamapp.fingerprinttest/androidx.startup.InitializationProvider:
+    Provider{3f323c1 takagi.ru.monica.steamapp.fingerprinttest/androidx.startup.InitializationProvider}
+  takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.backup.share.SteamMaFileShareProvider:
+    Provider{bb13766 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.backup.share.SteamMaFileShareProvider}
+
+ContentProvider Authorities:
+  [takagi.ru.monica.steamapp.fingerprinttest.fileprovider]:
+    Provider{a863ccb takagi.ru.monica.steamapp.fingerprinttest/androidx.core.content.FileProvider}
+      applicationInfo=ApplicationInfo{ac4337e takagi.ru.monica.steamapp.fingerprinttest}
+  [takagi.ru.monica.steamapp.fingerprinttest.mafile-handoff]:
+    Provider{bb13766 takagi.ru.monica.steamapp.fingerprinttest/takagi.ru.monica.steam.backup.share.SteamMaFileShareProvider}
+      applicationInfo=ApplicationInfo{eae80df takagi.ru.monica.steamapp.fingerprinttest}
+  [takagi.ru.monica.steamapp.fingerprinttest.androidx-startup]:
+    Provider{3f323c1 takagi.ru.monica.steamapp.fingerprinttest/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{70b012c takagi.ru.monica.steamapp.fingerprinttest}
+  [takagi.ru.monica.steamapp.fingerprinttest.mlkitinitprovider]:
+    Provider{1afeca8 takagi.ru.monica.steamapp.fingerprinttest/com.google.mlkit.common.internal.MlKitInitProvider}
+      applicationInfo=ApplicationInfo{e1317f5 takagi.ru.monica.steamapp.fingerprinttest}
+
+Key Set Manager:
+  [takagi.ru.monica.steamapp.fingerprinttest]
+      Signing KeySets: 59
+
+Packages:
+  Package [takagi.ru.monica.steamapp.fingerprinttest] (2641f44):
+    appId=10228
+    pkg=Package{79f7a43 takagi.ru.monica.steamapp.fingerprinttest}
+    codePath=/data/app/~~wqKlnnAlJZWuJK24AnsjAw==/takagi.ru.monica.steamapp.fingerprinttest-SinLD36gLG84qboT1M21lg==
+    resourcePath=/data/app/~~wqKlnnAlJZWuJK24AnsjAw==/takagi.ru.monica.steamapp.fingerprinttest-SinLD36gLG84qboT1M21lg==
+    legacyNativeLibraryDir=/data/app/~~wqKlnnAlJZWuJK24AnsjAw==/takagi.ru.monica.steamapp.fingerprinttest-SinLD36gLG84qboT1M21lg==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=x86_64
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=18 minSdk=26 targetSdk=34
+    minExtensionVersions=[]
+    versionName=1.0.310
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    queriesPackages=[com.valvesoftware.android.steam.community, com.azure.authenticator, com.microsoft.identity.testuserapp, com.microsoft.windowsintune.companyportal, com.microsoft.mockauthapp, com.microsoft.mockcp, com.microsoft.mockltw, com.microsoft.appmanager]
+    queriesIntents=[Intent { act=android.intent.action.VIEW cat=[android.intent.category.BROWSABLE] dat=https:/... }, Intent { act=android.support.customtabs.action.CustomTabsService }]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    usesLibraryFiles:
+      /system_ext/framework/androidx.window.extensions.jar
+      /system_ext/framework/androidx.window.sidecar.jar
+    timeStamp=2026-11-10 07:51:25
+    lastUpdateTime=2026-11-10 07:51:25
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{8f9a8c0 version:2, signatures:[f4013557], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      takagi.ru.monica.steamapp.fingerprinttest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.MODIFY_AUDIO_SETTINGS
+      android.permission.FOREGROUND_SERVICE
+      android.permission.READ_MEDIA_VISUAL_USER_SELECTED
+      android.permission.RECEIVE_BOOT_COMPLETED
+      android.permission.FOREGROUND_SERVICE_SPECIAL_USE
+      takagi.ru.monica.steamapp.fingerprinttest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+      android.permission.HIDE_OVERLAY_WINDOWS
+      android.permission.READ_MEDIA_IMAGES
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.CAMERA
+      android.permission.READ_MEDIA_VIDEO
+      android.permission.USE_FINGERPRINT
+      android.permission.FOREGROUND_SERVICE_MICROPHONE
+      android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK
+      android.permission.VIBRATE
+      android.permission.USE_BIOMETRIC
+      android.permission.REQUEST_INSTALL_PACKAGES
+      android.permission.RECORD_AUDIO
+      android.permission.WAKE_LOCK
+    install permissions:
+      android.permission.MODIFY_AUDIO_SETTINGS: granted=true
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.RECEIVE_BOOT_COMPLETED: granted=true
+      android.permission.FOREGROUND_SERVICE_SPECIAL_USE: granted=true
+      takagi.ru.monica.steamapp.fingerprinttest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.HIDE_OVERLAY_WINDOWS: granted=true
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.USE_FINGERPRINT: granted=true
+      android.permission.FOREGROUND_SERVICE_MICROPHONE: granted=true
+      android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.USE_BIOMETRIC: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=0 deDataInode=0 installed=false hidden=false suspended=false distractionFlags=0 stopped=true notLaunched=true enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=null
+      firstInstallTime=2026-11-10 07:41:12
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/EmulationPixelFold/EmulationPixelFoldOverlay.apk
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-ZZ0L.frro
+        /data/resource-cache/com.android.systemui-accent-LO69.frro
+        /data/resource-cache/com.android.systemui-dynamic-jZSE.frro
+      legacy overlay paths:
+        /product/overlay/EmulationPixelFold/EmulationPixelFoldOverlay.apk
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      runtime permissions:
+    User 10: ceDataInode=279153 deDataInode=115399 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/10/takagi.ru.monica.steamapp.fingerprinttest
+      firstInstallTime=2026-11-10 07:36:06
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_VISUAL_USER_SELECTED: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_IMAGES: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_VIDEO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+      disabledComponents:
+        takagi.ru.monica.ClassicVisibleLauncherAlias
+      enabledComponents:
+        takagi.ru.monica.ModernVisibleLauncherAlias
+        takagi.ru.monica.MonicaSteamActivity
+    User 11: ceDataInode=0 deDataInode=0 installed=false hidden=false suspended=false distractionFlags=0 stopped=true notLaunched=true enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=null
+      firstInstallTime=1970-01-01 00:00:00
+      uninstallReason=0
+      runtime permissions:
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+    takagi.ru.monica.steamapp.fingerprinttest:
+      takagi.ru.monica.steamapp.fingerprinttest.test
+    takagi.ru.monica.steamapp.fingerprinttest.test:
+      takagi.ru.monica.steamapp.fingerprinttest
+  queries via component:
+    com.google.android.as:
+      takagi.ru.monica.steamapp.fingerprinttest
+    com.google.android.settings.intelligence:
+      takagi.ru.monica.steamapp.fingerprinttest
+    com.google.android.apps.messaging:
+      takagi.ru.monica.steamapp.fingerprinttest
+    takagi.ru.monica:
+      takagi.ru.monica.steamapp.fingerprinttest
+    takagi.ru.monica.fdroid:
+      takagi.ru.monica.steamapp.fingerprinttest
+    takagi.ru.monica.steamapp.fingerprinttest:
+      com.google.android.apps.docs
+      com.android.chrome
+  queryable via interaction:
+    User 0:
+    User 10:
+      [com.android.server.telecom,com.android.inputdevices,com.android.providers.settings,com.android.DeviceAsWebcam,com.android.emulator.multidisplay,android,com.android.dynsystem,com.android.settings,com.android.localtransport,com.android.location.fused,com.android.keychain]:
+        takagi.ru.monica.steamapp.fingerprinttest
+      [com.google.android.gsf,com.google.android.gms]:
+        takagi.ru.monica.steamapp.fingerprinttest
+      com.google.android.inputmethod.latin:
+        takagi.ru.monica.steamapp.fingerprinttest
+    User 11:
+  queryable via uses-library:
+
+Dexopt state:
+  [takagi.ru.monica.steamapp.fingerprinttest]
+    path: /data/app/~~wqKlnnAlJZWuJK24AnsjAw==/takagi.ru.monica.steamapp.fingerprinttest-SinLD36gLG84qboT1M21lg==/base.apk
+      x86_64: [status=verify] [reason=install] [primary-abi]
+        [location is /data/app/~~wqKlnnAlJZWuJK24AnsjAw==/takagi.ru.monica.steamapp.fingerprinttest-SinLD36gLG84qboT1M21lg==/oat/x86_64/base.odex]
+
+Compiler stats:
+  [takagi.ru.monica.steamapp.fingerprinttest]
+     base.apk - 829

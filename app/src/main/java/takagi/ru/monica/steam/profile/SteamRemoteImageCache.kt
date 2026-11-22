@@ -35,26 +35,25 @@ class SteamRemoteImageCache private constructor(context: Context) {
         read(File(directory, "${imageCacheKey(url)}.img"))
     }
 
-    suspend fun load(url: String): Bitmap? {
-        if (!isAllowedSteamImageUrl(url)) return null
-        return downloadSlots.withPermit {
-            withContext(Dispatchers.IO) {
-                directory.mkdirs()
-                val key = imageCacheKey(url)
-                val lock = locks.getOrPut(key) { Mutex() }
-                lock.withLock {
-                    val destination = File(directory, "$key.img")
-                    read(destination)?.let { bitmap ->
-                        destination.setLastModified(System.currentTimeMillis())
-                        return@withContext bitmap
-                    }
-                    destination.delete()
-                    if (!download(url, destination)) return@withContext null
-                    val bitmap = read(destination)
-                    if (bitmap == null) destination.delete()
-                    pruneLock.withLock { prune(protectedPath = destination.absolutePath) }
-                    bitmap
+    suspend fun load(url: String): Bitmap? = withContext(Dispatchers.IO) {
+        // URL parsing is part of image preparation, including cache hits on page re-entry.
+        if (!isAllowedSteamImageUrl(url)) return@withContext null
+        downloadSlots.withPermit {
+            directory.mkdirs()
+            val key = imageCacheKey(url)
+            val lock = locks.getOrPut(key) { Mutex() }
+            lock.withLock {
+                val destination = File(directory, "$key.img")
+                read(destination)?.let { bitmap ->
+                    destination.setLastModified(System.currentTimeMillis())
+                    return@withContext bitmap
                 }
+                destination.delete()
+                if (!download(url, destination)) return@withContext null
+                val bitmap = read(destination)
+                if (bitmap == null) destination.delete()
+                pruneLock.withLock { prune(protectedPath = destination.absolutePath) }
+                bitmap
             }
         }
     }

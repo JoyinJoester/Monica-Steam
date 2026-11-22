@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamStoreReviewTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-21T01:21:44.380Z" hostname="JOYIN" time="0.036">
+  <properties/>
+  <testcase name="reviewPagesMergeWithoutDuplicatingRecommendations" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.0"/>
+  <testcase name="parsesNativeReviewBodiesAuthorMetadataAndCursor" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.003"/>
+  <testcase name="oldDetailCacheRemainsCompatibleAndCachedReviewsSurvivePartialRefresh" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.018"/>
+  <testcase name="parsesLifetimeSummaryAndRecentHistogramSeparately" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.0"/>
+  <testcase name="scoreBandsAndUiRemainCompactAndSemantic" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.004"/>
+  <testcase name="rejectsFailureAndMissingReviewPayloads" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.0"/>
+  <testcase name="successfulEmptyPageEndsPaginationAndDoesNotResurrectCachedRows" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.002"/>
+  <testcase name="nativeReviewContentIsTheLastStoreDetailSection" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.003"/>
+  <testcase name="storeWebsiteAndReviewFiltersExposeRealClickActions" classname="takagi.ru.monica.steam.store.SteamStoreReviewTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

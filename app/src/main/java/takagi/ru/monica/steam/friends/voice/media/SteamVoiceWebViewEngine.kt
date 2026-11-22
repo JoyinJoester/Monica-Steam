@@ -23,6 +23,7 @@ internal interface SteamVoiceWebViewCallbacks {
     fun onLocalOffer(descriptionJson: String)
     fun onLocalAnswer(descriptionJson: String)
     fun onIceStateChanged(state: String)
+    fun onAudioLevels(stats: String)
     fun onMediaStats(stats: String)
     fun onDiagnostic(message: String)
     fun onEngineTerminated(message: String)
@@ -45,6 +46,8 @@ internal class SteamVoiceWebViewEngine(
     private var stopping = false
     private var microphoneMuted = false
     private var outputMuted = false
+    @Volatile private var audioMeterEnabled = false
+    @Volatile private var audioMeterRevision = 0L
 
     @SuppressLint("SetJavaScriptEnabled")
     fun start() {
@@ -142,9 +145,13 @@ internal class SteamVoiceWebViewEngine(
         }
     }
 
-    fun setRemoteDescription(descriptionJson: String) = evaluate(
-        "window.monicaVoice && window.monicaVoice.setRemoteDescription(${JSONObject.quote(descriptionJson)})"
-    )
+    fun setRemoteDescription(descriptionJson: String, meterEnabled: Boolean = audioMeterEnabled,
+        meterRevision: Long = audioMeterRevision) {
+        audioMeterEnabled = meterEnabled
+        audioMeterRevision = meterRevision
+        evaluate("window.monicaVoice && window.monicaVoice.setRemoteDescription(" +
+            "${JSONObject.quote(descriptionJson)}, $meterEnabled, $meterRevision)")
+    }
 
     fun setMicrophoneMuted(muted: Boolean) {
         microphoneMuted = muted
@@ -154,6 +161,12 @@ internal class SteamVoiceWebViewEngine(
     fun setOutputMuted(muted: Boolean) {
         outputMuted = muted
         evaluate("window.monicaVoice && window.monicaVoice.setOutputMuted(${muted})")
+    }
+
+    fun configureAudioMeter(enabled: Boolean, revision: Long) {
+        audioMeterEnabled = enabled
+        audioMeterRevision = revision
+        evaluate("window.monicaVoice && window.monicaVoice.configureAudioMeter($enabled, $revision)")
     }
 
     fun stop() {
@@ -176,27 +189,45 @@ internal class SteamVoiceWebViewEngine(
         mainHandler.post { webView?.evaluateJavascript(script, null) }
     }
 
+    private fun dispatch(action: () -> Unit) {
+        mainHandler.post { if (started && !stopping) action() }
+    }
+
     private inner class Bridge {
         @android.webkit.JavascriptInterface
-        fun onLocalMediaReady() = callbacks.onLocalMediaReady()
+        fun onLocalMediaReady() = dispatch { callbacks.onLocalMediaReady() }
 
         @android.webkit.JavascriptInterface
-        fun onLocalOffer(descriptionJson: String) = callbacks.onLocalOffer(descriptionJson)
+        fun onLocalOffer(descriptionJson: String) = dispatch { callbacks.onLocalOffer(descriptionJson) }
 
         @android.webkit.JavascriptInterface
-        fun onLocalAnswer(descriptionJson: String) = callbacks.onLocalAnswer(descriptionJson)
+        fun onLocalAnswer(descriptionJson: String) = dispatch { callbacks.onLocalAnswer(descriptionJson) }
 
         @android.webkit.JavascriptInterface
-        fun onIceStateChanged(state: String) = callbacks.onIceStateChanged(state)
+        fun onIceStateChanged(state: String) = dispatch { callbacks.onIceStateChanged(state) }
 
         @android.webkit.JavascriptInterface
-        fun onMediaStats(stats: String) = callbacks.onMediaStats(stats)
+        fun onMediaStats(stats: String) = dispatch { callbacks.onMediaStats(stats) }
 
         @android.webkit.JavascriptInterface
-        fun onDiagnostic(message: String) = callbacks.onDiagnostic(message)
+        fun onDiagnostic(message: String) = dispatch { callbacks.onDiagnostic(message) }
 
         @android.webkit.JavascriptInterface
-        fun onFailure(message: String) = callbacks.onFailure(message)
+        fun onFailure(message: String) = dispatch { callbacks.onFailure(message) }
+
+        @android.webkit.JavascriptInterface
+        fun onAudioLevels(stats: String) {
+            val receivedAt = android.os.SystemClock.elapsedRealtime()
+            dispatch {
+                if (android.os.SystemClock.elapsedRealtime() - receivedAt < 600) callbacks.onAudioLevels(stats)
+            }
+        }
+
+        @android.webkit.JavascriptInterface
+        fun isAudioMeterEnabled(): Boolean = audioMeterEnabled
+
+        @android.webkit.JavascriptInterface
+        fun audioMeterRevision(): Long = audioMeterRevision
 
         @android.webkit.JavascriptInterface
         fun isMicrophoneMuted(): Boolean = microphoneMuted
@@ -211,15 +242,20 @@ internal class SteamVoiceWebViewEngine(
         val HTML = """
             <!doctype html><meta name="viewport" content="width=device-width">
             <script>
+            ${SteamVoiceAudioMeterScript.source}
             (() => {
               let pc = null;
               let stream = null;
               let statsTimer = null;
               let descriptionChain = Promise.resolve();
+              let descriptionsPending = 0, meterWanted = false, meterRevision = 0;
               let microphoneMuted = false;
               let outputMuted = false;
               let microphonePermission = "unknown";
               const bridge = () => window.MonicaVoiceBridge;
+              const audioMeter = createMonicaVoiceAudioMeter(
+                () => pc, () => stream && stream.getAudioTracks()[0],
+                () => ({microphoneMuted, outputMuted}), raw => bridge().onAudioLevels(raw));
               const fail = (e) => bridge().onFailure(String(e && e.message || e));
               const diagnostic = (message) => bridge().onDiagnostic(String(message));
               const reportIce = () => {
@@ -337,9 +373,14 @@ internal class SteamVoiceWebViewEngine(
                     await pc.setLocalDescription(offer);
                     bridge().onLocalOffer(JSON.stringify(pc.localDescription));
                     statsTimer = window.setInterval(reportMedia, 5000);
+                    audioMeter.setRevision(Number(bridge().audioMeterRevision()));
+                    audioMeter.setEnabled(bridge().isAudioMeterEnabled());
                   } catch (e) { fail(e); }
                 },
-                setRemoteDescription(raw) {
+                setRemoteDescription(raw, wanted, revision) {
+                  descriptionsPending++;
+                  meterWanted = wanted; meterRevision = revision;
+                  audioMeter.setEnabled(false);
                   descriptionChain = descriptionChain.then(async () => {
                     if (!pc) return;
                     const description = typeof raw === "string" ? JSON.parse(raw) : raw;
@@ -349,7 +390,13 @@ internal class SteamVoiceWebViewEngine(
                       await pc.setLocalDescription(answer);
                       bridge().onLocalAnswer(JSON.stringify(pc.localDescription));
                     }
-                  }).catch(e => fail(e));
+                  }).catch(e => fail(e)).finally(() => {
+                    descriptionsPending--;
+                    if (pc && descriptionsPending === 0) {
+                      audioMeter.setRevision(meterRevision);
+                      audioMeter.setEnabled(meterWanted);
+                    }
+                  });
                   return descriptionChain;
                 },
                 setMicrophoneMuted(muted) {
@@ -360,7 +407,13 @@ internal class SteamVoiceWebViewEngine(
                   outputMuted = !!muted;
                   document.querySelectorAll("audio[data-monica-remote='1']").forEach(a => a.muted = outputMuted);
                 },
+                configureAudioMeter(enabled, revision) {
+                  meterWanted = enabled; meterRevision = revision;
+                  audioMeter.setRevision(revision);
+                  audioMeter.setEnabled(enabled && descriptionsPending === 0);
+                },
                 stop() {
+                  audioMeter.stop();
                   if (statsTimer) window.clearInterval(statsTimer);
                   if (pc) { try { pc.close(); } catch (e) {} }
                   if (stream) stream.getTracks().forEach(t => t.stop());

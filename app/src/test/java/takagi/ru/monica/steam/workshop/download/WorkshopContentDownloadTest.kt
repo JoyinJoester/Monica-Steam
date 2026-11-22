@@ -145,13 +145,18 @@ class WorkshopContentDownloadTest {
         val dir = Files.createTempDirectory("wallpaper-fixture").toFile()
         try {
             val progress = mutableListOf<Long>()
+            val stages = mutableListOf<WorkshopDownloadProgress>()
             val source = WorkshopDownloadSource(WorkshopItem("123",appId,"Test"),manifestId,"","")
-            val files = client.download(source, dir) { done, _ -> progress += done }
+            val files = client.download(source, dir, stageProgress = { stages += it }) { done, _ -> progress += done }
             assertEquals("sub/project.json", files.single().relativeTo(dir).invariantSeparatorsPath)
             assertArrayEquals(original, files.single().readBytes())
             assertEquals(original.size.toLong(), progress.last())
             assertTrue(urls.all { it.startsWith("https://cdn.steamcontent.com/") && !it.contains("?") })
             assertTrue(session.closed)
+            assertEquals(listOf(WorkshopDownloadStage.RESOLVING, WorkshopDownloadStage.DOWNLOADING,
+                WorkshopDownloadStage.VERIFYING), stages.map { it.stage }.distinct())
+            assertEquals(WorkshopDownloadProgress(WorkshopDownloadStage.VERIFYING, 1, 1), stages.last())
+            assertEquals(0L, stages.first { it.stage == WorkshopDownloadStage.VERIFYING }.done)
         } finally { dir.deleteRecursively() }
     }
 
@@ -225,9 +230,46 @@ class WorkshopContentDownloadTest {
         try {
             val source=WorkshopDownloadSource(WorkshopItem("123",appId,"Test",size=original.size.toLong()),
                 manifestId,"https://cdn.steamusercontent.com/original","sub/original.mp4")
-            val files=client.download(source,root) {_,_->}
+            val stages = mutableListOf<WorkshopDownloadStage>()
+            val files=client.download(source,root,stageProgress={ stages += it.stage }) {_,_->}
             assertEquals("original.mp4",files.single().name)
             assertArrayEquals(original,files.single().readBytes())
+            assertEquals(listOf(WorkshopDownloadStage.RESOLVING, WorkshopDownloadStage.DOWNLOADING,
+                WorkshopDownloadStage.CHECKING_SIZE), stages.distinct())
+        } finally { root.deleteRecursively() }
+    }
+
+    @Test fun finalChecksumRejectsDamagedStagingWithoutReportingVerified() = runBlocking {
+        val session = Session()
+        val root = Files.createTempDirectory("workshop-final-check").toFile()
+        val stages = mutableListOf<WorkshopDownloadProgress>()
+        try {
+            val client = WorkshopDownloadClient({ session }, { url, _ ->
+                if (url.encodedPath.contains("/manifest/")) manifest("project.json") else encrypted
+            })
+            try {
+                client.download(WorkshopDownloadSource(WorkshopItem("123",appId,"Test"),manifestId,"",""), root,
+                    stageProgress = {
+                        stages += it
+                        if (it.stage == WorkshopDownloadStage.VERIFYING && it.done == 0L) {
+                            java.io.File(root,"project.json").writeBytes(ByteArray(original.size))
+                        }
+                    }) { _, _ -> }
+                fail("A damaged file must not reach saving")
+            } catch (_: IllegalStateException) { }
+            assertEquals(WorkshopDownloadProgress(WorkshopDownloadStage.VERIFYING, 0, 1), stages.last())
+            assertTrue(session.closed)
+        } finally { root.deleteRecursively() }
+    }
+
+    @Test fun checksumReadObservesCancellationAndPreservesTheFile() {
+        val root = Files.createTempDirectory("workshop-check-cancel").toFile()
+        try {
+            val file = java.io.File(root,"original").apply { writeBytes(original) }
+            assertThrows(CancellationException::class.java) {
+                WorkshopContentCodec.verified(file, original.size.toLong(), sha) { throw CancellationException("stop") }
+            }
+            assertArrayEquals(original, file.readBytes())
         } finally { root.deleteRecursively() }
     }
 }

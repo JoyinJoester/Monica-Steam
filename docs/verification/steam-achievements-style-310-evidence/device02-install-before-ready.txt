@@ -1,0 +1,1 @@
+Installation was requested while MuMu resume session was still running. adb returned: device '127.0.0.1:16416' not found. No instrumentation started. Resume completed with PID 60784; retry uses stage device03 without source changes.

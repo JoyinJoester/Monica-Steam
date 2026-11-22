@@ -1,0 +1,9 @@
+{
+  "users": "Users:\n\tUserInfo{0:Owner:4c13} running\n\tUserInfo{10:Monica_KMP_Migration_20261108:1030}\n\tUserInfo{11:Monica_Harmony_Bridge_20261111:1030}\n\tUserInfo{12:Monica_Harmony_Return_20261112:1030}\n\tUserInfo{14:Monica_KMP_PC_Visual_20261120:410} running\n",
+  "currentUser": "14\n",
+  "size": "Physical size: 1080x1920\n",
+  "density": "Physical density: 280\n",
+  "font": "1.0\n",
+  "packages": "package:takagi.ru.monica.steamapp.janktest\npackage:com.monicapass.kmp\npackage:com.max.xiaoheihe\npackage:me.weishu.kernelsu\npackage:takagi.ru.monica.steamapp.janktest.test\npackage:takagi.ru.monica\n",
+  "rotation": "lock 0\n"
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.steam.store.SteamPointsShopProtocolTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-21T12:06:58.838Z" hostname="JOYIN" time="0.012">
+  <properties/>
+  <testcase name="parsesAuthenticatedPointsBalance" classname="takagi.ru.monica.steam.store.SteamPointsShopProtocolTest" time="0.0"/>
+  <testcase name="mediaUrlUsesCurrentCommunityAssetsCdnAndKeepsAbsoluteUrls" classname="takagi.ru.monica.steam.store.SteamPointsShopProtocolTest" time="0.006"/>
+  <testcase name="queryUsesOfficialCategoryLanguageAndPagingFields" classname="takagi.ru.monica.steam.store.SteamPointsShopProtocolTest" time="0.001"/>
+  <testcase name="parsesRewardDefinitionAndCursor" classname="takagi.ru.monica.steam.store.SteamPointsShopProtocolTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,19 @@
+--------- beginning of crash
+11-13 13:09:18.025   210   210 F libc    : crash_dump helper failed to exec, or was killed
+11-13 13:09:18.128   217   217 F libc    : crash_dump helper failed to exec, or was killed
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: FATAL EXCEPTION: main
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: Process: takagi.ru.monica.steamapp.dockperf, PID: 3220
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/tracing/Trace;
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at androidx.test.runner.AndroidJUnitRunner.onCreate(r8-map-id-53a6dd9cf3afeaa64aa10e9e617821c31b828e5e0eb908efe9a45e0ac2998114:26)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6754)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.app.ActivityThread.access$1500(ActivityThread.java:256)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2091)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:201)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:288)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7870)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: androidx.tracing.Trace
+11-13 13:10:11.118  3220  3220 E AndroidRuntime: 	... 11 more

@@ -1,0 +1,1 @@
+After MuMu resume, the first adb install returned device offline before instrumentation. No native test started. Reconnect reported device, then device03 ran.

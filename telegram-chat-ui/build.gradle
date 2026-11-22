@@ -1,0 +1,28 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    namespace 'com.monica.telegramchat'
+    compileSdk 37
+    defaultConfig {
+        minSdk 26
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    androidResources { noCompress += 'pack' }
+}
+
+dependencies {
+    implementation "androidx.core:core:${libs.versions.coreKtx.get()}"
+    implementation 'androidx.annotation:annotation:1.9.1'
+    api 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'com.caverock:androidsvg-aar:1.4'
+    implementation 'com.airbnb.android:lottie:6.6.2'
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+}

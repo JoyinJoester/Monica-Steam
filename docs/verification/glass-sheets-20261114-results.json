@@ -1,0 +1,641 @@
+{
+  "date": "2026-11-14",
+  "complete": true,
+  "sourceSha256": {
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamGlassComponents.kt": "92f45dfc977ffa6a162b629c2595ac902af49ebb1e1c56a257b3d08db18145f9",
+    "app/src/main/java/takagi/ru/monica/steam/library/filter/ui/SteamLibraryFilterSheet.kt": "41c852cf3e78e139537c0c0dd2ecdf51e139ea743bcfdff76310498880f1b290",
+    "app/src/main/java/takagi/ru/monica/steam/store/filters/ui/SteamStoreAdvancedFilterSheet.kt": "f86cef674ed265242ff8f1ca3298a5155940df1042a2d2421f20c9b0417e296f",
+    "app/src/main/java/takagi/ru/monica/steam/foundation/ui/SteamAccountSwitcherSheet.kt": "99774a83699d3389dac716f26bbeb0180f2685ba85eca103dcebc7de5cbc8279",
+    "app/src/main/java/takagi/ru/monica/steam/friends/ui/SteamFriendUiSupport.kt": "d063f4e619967b4bad71dc56a9e1cb8923dd70c4d96e9f2648ee671081551546",
+    "app/src/main/java/takagi/ru/monica/steam/store/share/ui/SteamStoreGameShareSheet.kt": "3ddd7adc311b792322ffc5b5d424197fa066483465a5acf274f72181a18bf148",
+    "app/src/main/java/takagi/ru/monica/steam/store/gift/ui/SteamStoreGiftRecipientSheet.kt": "84b76798782022261cf782385a1d056cf38286200bd556cac59d4bfc51e86e21",
+    "app/src/main/java/takagi/ru/monica/steam/friends/chat/ui/SteamChatCardShareSheet.kt": "90f8572b3781b449f7a5c0bd5474c6ab12ffc1dd0734fc6884e244382d30233f",
+    "app/src/main/java/takagi/ru/monica/steam/navigation/liquidglass/ui/SteamSheetContent.kt": "e2fc5ffb099bfbe4ba8ee0c12aab6ebe018ea2afce888f42502ee55d2d9223a2",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetDesignDeviceTest.kt": "2259a4edc6bb1825eaaca2b4a0356407c3efd943c6ff15401d9f2d0938091387",
+    "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatCardsUiTest.kt": "45aef5a31c4e72e64d32367d9263f3fe2af9138345f1947cd24b48d25ff00eed",
+    "app/src/debug/java/takagi/ru/monica/steam/SteamSheetImeFixtureActivity.kt": "209334d2dea4f4b4220b59b4ee944af05433976f62f054ac13bfb94f09073881",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetImeDeviceTest.kt": "b8b3a402b007293879c514e1e86d97d5716cf9671bfe60578e4e87e5a975da7d",
+    "app/src/debug/AndroidManifest.xml": "8f4610f8f2c459d737d044e49b81aab1b2860acf19d31f337babcda4aa212352",
+    "app/src/test/java/takagi/ru/monica/steam/store/SteamStoreFilterUiGuardTest.kt": "b34bdcca3a8a1a22f895d9b1f553856b062f28eadf0e1ef4a37e922d166f21c7",
+    "app/src/test/java/takagi/ru/monica/steam/library/filter/ui/SteamLibraryFilterUiGuardTest.kt": "2296bc427b47965dfe0613ec56c5568c881e8293866454c2e81dee706273a94d",
+    "app/src/androidTest/AndroidManifest.xml": "d8441a97f566b6cfcb1e32e5bd1697384501e7ec15752b2c0eb193ac61a26b36",
+    "app/src/androidTest/res/xml/sheet_test_input_method.xml": "615cd6ff7af49ebb96d7678e238b49b425e4585ae950c8a0a511f0c38aff2c5a",
+    "app/src/androidTest/java/takagi/ru/monica/steam/navigation/SteamSheetTestInputMethod.java": "e08505c3ee840b51703de1d400487860f4fdc873cebbb87ac44e702b25f0e086"
+  },
+  "productionBuild": {
+    "exit": 0,
+    "seconds": 604.0391527999891,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-glass-sheets-design\\production.gradle",
+      ":app:assembleDebug"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "4a754f1a83af2ea908f044d2ac40974ecd14a46868a354efe4b5149b367106eb"
+    }
+  },
+  "documentSha256": {
+    "docs/releases/Monica-Steam-Unreleased.md": "c77ddfdef35faecd0999940fe7e627ff2b97b63a4dd20ea466373c135208c5b8",
+    "docs/verification/glass-sheets-20261114.md": "68fea5a12c2ee0978a63a4e8d37a7e0b9a9511e397c5a3c3860467982390147e"
+  },
+  "imeWindowEvidenceSha256": "746d249728fa3adc95afc2059a6cc81ccb30678244c5d031afe5db4c9c304aa8",
+  "productionMetadata": {
+    "version": 3,
+    "artifactType": {
+      "type": "APK",
+      "kind": "Directory"
+    },
+    "applicationId": "takagi.ru.monica.steamapp",
+    "variantName": "debug",
+    "elements": [
+      {
+        "type": "SINGLE",
+        "filters": [],
+        "attributes": [],
+        "versionCode": 18,
+        "versionName": "1.0.310",
+        "outputFile": "Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK"
+      }
+    ],
+    "elementType": "File",
+    "baselineProfiles": [
+      {
+        "minApi": 28,
+        "maxApi": 30,
+        "baselineProfiles": [
+          "baselineProfiles/1/Monica-Steam-Android-x86_64-1.0.310-26111418-45.dm"
+        ]
+      },
+      {
+        "minApi": 31,
+        "maxApi": 2147483647,
+        "baselineProfiles": [
+          "baselineProfiles/0/Monica-Steam-Android-x86_64-1.0.310-26111418-45.dm"
+        ]
+      }
+    ],
+    "minSdkVersionForDexing": 26
+  },
+  "r8MappingSha256": "bdb8c4bfea6fbcd426dbd7913749515f13d172dec091f479bd89b07eedfa8ab9",
+  "jvm": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "device": [
+    {
+      "stage": "install07",
+      "runnerSeconds": 43.473,
+      "passed": 25,
+      "failed": 1,
+      "records": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryLiquidLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "storeFilterKeepsPendingChoicesUntilApply",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "sharingM3eDark",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "switcherScrollsAndAddAccountRemainsReachable",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "sharingLiquidDarkLargeText",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "friendAccountPickerVirtualizesAndReachesLastAccount",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryLiquidDark",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "invalidDraftImeAndBackDoNotAddAnything",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "draftLiquidLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "draftM3eLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryM3eLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryResetAndScrollKeepDraftUnapplied",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "sharingM3eLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "giftSelectionKeepsValidationNoteAndSelectedState",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "draftLiquidDarkLargeText",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryM3eDarkLargeText",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "draftM3eDark",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryFallbackLargeText",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "sharingLiquidLight",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetImeDeviceTest",
+          "test": "realKeyboardKeepsInvalidDraftActionAboveImeAndBackClosesInOrder",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "sheetHandlePreservesExpandCollapseAndDismissVeto",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest",
+          "test": "scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "test": "unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "test": "choosingCardOnlyAddsDraftAfterExplicitAction",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "test": "switchingConversationDoesNotReuseUnconfirmedLink",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.chat.SteamChatCardsUiTest",
+          "test": "largeFontCanReachDraftActionAfterMyProfileShortcut",
+          "code": 0
+        }
+      ]
+    },
+    {
+      "stage": "native11",
+      "runnerSeconds": 2.345,
+      "passed": 1,
+      "failed": 0,
+      "records": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetImeDeviceTest",
+          "test": "realKeyboardKeepsInvalidDraftActionAboveImeAndBackClosesInOrder",
+          "code": 0
+        }
+      ]
+    },
+    {
+      "stage": "small11",
+      "runnerSeconds": 7.371,
+      "passed": 4,
+      "failed": 0,
+      "records": [
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "storeFilterKeepsPendingChoicesUntilApply",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "switcherScrollsAndAddAccountRemainsReachable",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "sharingLiquidDarkLargeText",
+          "code": 0
+        },
+        {
+          "class": "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest",
+          "test": "libraryLiquidDark",
+          "code": 0
+        }
+      ]
+    }
+  ],
+  "distinctPassingMethods": [
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#choosingCardOnlyAddsDraftAfterExplicitAction",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#largeFontCanReachDraftActionAfterMyProfileShortcut",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#switchingConversationDoesNotReuseUnconfirmedLink",
+    "takagi.ru.monica.steam.chat.SteamChatCardsUiTest#unsupportedLinkCannotBeAddedAndGroupHasNoTradeTarget",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#scaffoldToolbarFabSheetAndDialogKeepActionsInBothThemes",
+    "takagi.ru.monica.steam.navigation.SteamAppGlassUiTest#sheetHandlePreservesExpandCollapseAndDismissVeto",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#draftLiquidDarkLargeText",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#draftLiquidLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#draftM3eDark",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#draftM3eLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#friendAccountPickerVirtualizesAndReachesLastAccount",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#giftSelectionKeepsValidationNoteAndSelectedState",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#invalidDraftImeAndBackDoNotAddAnything",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryFallbackLargeText",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryLiquidDark",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryLiquidLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryM3eDarkLargeText",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryM3eLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#libraryResetAndScrollKeepDraftUnapplied",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#sharingLiquidDarkLargeText",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#sharingLiquidLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#sharingM3eDark",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#sharingM3eLight",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#storeFilterKeepsPendingChoicesUntilApply",
+    "takagi.ru.monica.steam.navigation.SteamSheetDesignDeviceTest#switcherScrollsAndAddAccountRemainsReachable",
+    "takagi.ru.monica.steam.navigation.SteamSheetImeDeviceTest#realKeyboardKeepsInvalidDraftActionAboveImeAndBackClosesInOrder"
+  ],
+  "sameMainApkForRegularAndNativeIme": true,
+  "nativeIme": "test-APK-only Java InputMethodService",
+  "fixtureBuild11": {
+    "exit": 0,
+    "seconds": 32.03664340003161,
+    "args": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\gradlew.bat",
+      "--no-daemon",
+      "--max-workers=1",
+      "--console=plain",
+      "-Dorg.gradle.jvmargs=-Xmx5g -XX:ActiveProcessorCount=2 -XX:+UseParallelGC -Dfile.encoding=UTF-8",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "-PdailySeq=45",
+      "-I",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\.codex-tasks\\20261114-glass-sheets-design\\isolation.gradle",
+      "-PdockFixture=true",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\debug\\Monica-Steam-Android-x86_64-1.0.310-26111418-45.APK": "e31586fc77e5ad8a1da9b6dabece41796c5762ad26c122445c05869e1c64102d",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica Steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "f120a617e1c921e54a96f746537561cc200335c9a4a23ad096e8c30d31b11ede"
+    }
+  },
+  "limits": [
+    "API35/x86_64 isolated unminified Debug runtime",
+    "360dp plus four320dp/reduced-motion methods",
+    "fontScale1/1.5; portrait only",
+    "synthetic data; no real accounts or OEM IME validation",
+    "seven content sheets; remaining specialized contents not redesigned",
+    "canonical ID R8/shrink Debug built, not installed or runtime-tested"
+  ],
+  "cleanup": {
+    "restored": true,
+    "onlyStoppedIndex": 2,
+    "ownedPackagesRemoved": true
+  },
+  "ignoredDesignFiles": 45,
+  "imageSha256": {
+    "docs/design/glass-sheets-20261114/accounts-large.png": "302a43888fee859f721918ccba1e79555324e90ee6c3b192e1750fbc5201d0e5",
+    "docs/design/glass-sheets-20261114/canvas-account.png": "040ec7f9ef7dc9c1aeca80e9ad265a4b079b963db4c362b9a65031afc947e193",
+    "docs/design/glass-sheets-20261114/canvas-final.png": "1de48a0ff71fda46746e91b7e1a4defe030dc7a277064b82cda97de7f97fa062",
+    "docs/design/glass-sheets-20261114/canvas-preview.png": "46aa42bf664d65503e7e3c97dce63fe9ed9a1547e5eaa933ca3866054f6fe7d2",
+    "docs/design/glass-sheets-20261114/canvas-single.png": "e933ef33e40bd33a3996eb01beecadad5727e4aa1164353b2d87bc4b91f5c104",
+    "docs/design/glass-sheets-20261114/draft-false-false-false.png": "60eecf76c5bfc34b117ca135129ece14a15303bb14d713f39d7c55cdee175fd1",
+    "docs/design/glass-sheets-20261114/draft-false-true-false.png": "5d847e64be7cbbeb69da0fb4a223ed2c4c4b864db3b06e2d64c2401c8e7ecbba",
+    "docs/design/glass-sheets-20261114/draft-ime-invalid.png": "b801b232edbde1caf0d3922098e86af998532f8f281a1e4510c789fc4ad80539",
+    "docs/design/glass-sheets-20261114/draft-true-false-false.png": "d00500b3e032377c5a7ecd9e99cf11d4dbeb3dc60b8bce9573cb49ed05e99500",
+    "docs/design/glass-sheets-20261114/draft-true-true-true.png": "60a42be4efb1919924c3192060c65a0d249b0abddd7dc6b804d01ee850f8cadb",
+    "docs/design/glass-sheets-20261114/gift-large.png": "3a71f325da4fd6267e14d6ac93e19ca9ba77d04cf2985352d7e66b8d087d1ca7",
+    "docs/design/glass-sheets-20261114/library-false-false-false-true.png": "e1b15bc2a9198935437caf976324330c2699162121182cec17671e1170587655",
+    "docs/design/glass-sheets-20261114/library-false-true-false-true.png": "407b27b908a0f3670bdd9d6a8f143c12eb854ed15c53896500731932c9383357",
+    "docs/design/glass-sheets-20261114/library-false-true-true-false.png": "8dc5da815ffaff6898e5eef304126fd854292fe487557f36f8d8ffd54aabfeda",
+    "docs/design/glass-sheets-20261114/library-true-false-true-true.png": "34f126ef6858ade5035a44eb814492fc5e703f9c41857023953c8aa435b66043",
+    "docs/design/glass-sheets-20261114/library-true-true-false-true.png": "0ea9a6814436f10d47c318b904978961e0ccdb3fff527e812a257b761b1ead07",
+    "docs/design/glass-sheets-20261114/native-preview.png": "de90fc72d2b8d7d8d53e777da9018d08b4f5fb146b5a0662f29b59a68bce129c",
+    "docs/design/glass-sheets-20261114/platform-ime-request.png": "1f1e91680b8de0c27b54c52d0ee02fef2df426ce0a64014b5c3bdb4759599514",
+    "docs/design/glass-sheets-20261114/platform-ime.png": "caf083c6b6d215622c7be1fab73c9527f00b1f92e332acbe48784c18f441e75f",
+    "docs/design/glass-sheets-20261114/share-false-false-false.png": "fd011e549a9c2aa446773ed5b5f1fa7116e9013d61ec30d2b416ecc817868e65",
+    "docs/design/glass-sheets-20261114/share-false-true-false.png": "b0579c8d3bb4f14f13d8b2c080e33274d276b02cb506f0f2a1c77be3bbac9c42",
+    "docs/design/glass-sheets-20261114/share-true-false-false.png": "7f8dd9c8ddaa7405c5af6a03fe6e1d1dc163a01e8655fe2d0c79ed235283a888",
+    "docs/design/glass-sheets-20261114/share-true-true-true.png": "7c94748eacd997510d4312c75c99d3d0c298e67084128ed6fa1b038ded337bc8",
+    "docs/design/glass-sheets-20261114/store-filters-large.png": "5439d15620b89b7c50d6917b8d86519fcba2a68b95106540008033a8b4d30f02",
+    "docs/design/glass-sheets-20261114/verified-360dp/accounts-large.png": "d8507e74b2f13562a1f0ecd81ec8c1b8c3f7175627c44651c39921fef97b3201",
+    "docs/design/glass-sheets-20261114/verified-360dp/draft-false-false-false.png": "60eecf76c5bfc34b117ca135129ece14a15303bb14d713f39d7c55cdee175fd1",
+    "docs/design/glass-sheets-20261114/verified-360dp/draft-false-true-false.png": "5d847e64be7cbbeb69da0fb4a223ed2c4c4b864db3b06e2d64c2401c8e7ecbba",
+    "docs/design/glass-sheets-20261114/verified-360dp/draft-ime-invalid.png": "b801b232edbde1caf0d3922098e86af998532f8f281a1e4510c789fc4ad80539",
+    "docs/design/glass-sheets-20261114/verified-360dp/draft-true-false-false.png": "d00500b3e032377c5a7ecd9e99cf11d4dbeb3dc60b8bce9573cb49ed05e99500",
+    "docs/design/glass-sheets-20261114/verified-360dp/draft-true-true-true.png": "60a42be4efb1919924c3192060c65a0d249b0abddd7dc6b804d01ee850f8cadb",
+    "docs/design/glass-sheets-20261114/verified-360dp/gift-large.png": "3a71f325da4fd6267e14d6ac93e19ca9ba77d04cf2985352d7e66b8d087d1ca7",
+    "docs/design/glass-sheets-20261114/verified-360dp/library-false-false-false-true.png": "e1b15bc2a9198935437caf976324330c2699162121182cec17671e1170587655",
+    "docs/design/glass-sheets-20261114/verified-360dp/library-false-true-false-true.png": "407b27b908a0f3670bdd9d6a8f143c12eb854ed15c53896500731932c9383357",
+    "docs/design/glass-sheets-20261114/verified-360dp/library-false-true-true-false.png": "8dc5da815ffaff6898e5eef304126fd854292fe487557f36f8d8ffd54aabfeda",
+    "docs/design/glass-sheets-20261114/verified-360dp/library-true-false-true-true.png": "34f126ef6858ade5035a44eb814492fc5e703f9c41857023953c8aa435b66043",
+    "docs/design/glass-sheets-20261114/verified-360dp/library-true-true-false-true.png": "66c0897ac36bb1414c194cf6988b2364cffca1170e11cc5c1d775e5dca078559",
+    "docs/design/glass-sheets-20261114/verified-360dp/platform-ime-request.png": "1f1e91680b8de0c27b54c52d0ee02fef2df426ce0a64014b5c3bdb4759599514",
+    "docs/design/glass-sheets-20261114/verified-360dp/platform-ime.png": "caf083c6b6d215622c7be1fab73c9527f00b1f92e332acbe48784c18f441e75f",
+    "docs/design/glass-sheets-20261114/verified-360dp/share-false-false-false.png": "fd011e549a9c2aa446773ed5b5f1fa7116e9013d61ec30d2b416ecc817868e65",
+    "docs/design/glass-sheets-20261114/verified-360dp/share-false-true-false.png": "b0579c8d3bb4f14f13d8b2c080e33274d276b02cb506f0f2a1c77be3bbac9c42",
+    "docs/design/glass-sheets-20261114/verified-360dp/share-true-false-false.png": "7f8dd9c8ddaa7405c5af6a03fe6e1d1dc163a01e8655fe2d0c79ed235283a888",
+    "docs/design/glass-sheets-20261114/verified-360dp/share-true-true-true.png": "cd4f4ede7799e5fe83be4178c0932f9333071ee2e947cefccd71ce658619c290",
+    "docs/design/glass-sheets-20261114/verified-360dp/store-filters-large.png": "6c36d94ac4d7a4653b5692ecb532cfc85dc63dd5896a22ed9efd4b7b709eed49"
+  },
+  "evidence": {
+    "docs/verification/glass-sheets-20261114/build-fixture01.json": {
+      "rawSha256": "f5b924ccee5d8808d420616303afe6e21d2a8c1d9048ceeca2ca150e509ec163",
+      "textSha256": "c43c60321b25af28ea15ab4ef5cb376794b57ed9c795f83a9397c9f2f5f05b0f"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture01.txt": {
+      "rawSha256": "5a359ae574592fb1c60ac34a77af9fc0eac59d0c43d9cea6a8d277037ddb520a",
+      "textSha256": "21184a9cab74aa82736349d4a1c9f78f52411ee29ccdf9116080ceb2fc587fd1"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture02.json": {
+      "rawSha256": "32a8ba0d7263647f2cc403b8b3808b15dc975b1c87fd0f066bfbb0b1daeee8f6",
+      "textSha256": "88063229d1ebf3d67300ca50ae9f1de1ad246d0901136e8c5cff5a2097f6a326"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture02.txt": {
+      "rawSha256": "93215bf4277d2f62772d486783113faaed5615d1553a43c08914e44df1ca91d1",
+      "textSha256": "a686d530f504d84a0f93a8c0abd89a014d9f5e8655634a26f47d6ffaf496f49d"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture03.json": {
+      "rawSha256": "94f64d9f23096478d38a18926284630bcb72f5dedfc22ab6a05835aac01f754b",
+      "textSha256": "686b4c0e08962f71465cbd8463209e8995aeaf4c36fe7d736495b43d7b779513"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture03.txt": {
+      "rawSha256": "59382b3ed7e64bf01f5a7526f8db7b9389a792c68982f4b46f36ea58a66c5271",
+      "textSha256": "25d710cea3ded7bafa34a063d003f0e4d36d05843ca8fe569db214341bfb6072"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture04.json": {
+      "rawSha256": "29207a19100bd64fdcffd18e7f3d8207224d7e2a5199e26974c0b2cda6f391e2",
+      "textSha256": "3e693109f8645679e399ba3d70b83c47ad7d450f84fdc4345692edc0c9f112c4"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture04.txt": {
+      "rawSha256": "0b2eed044e313465decb734d666bb846e617765560f77e243e7c3391308a4007",
+      "textSha256": "a7ba4361dc67d77775a6a9613dc327256128fbd5bc2bac7a214145d85020dd49"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture05.json": {
+      "rawSha256": "ebee1db642a09fe74ad3b1f5079176fd8a2b538f07ef94331a9cd7bf8b9cff88",
+      "textSha256": "d5e04d0b76d51d493e0504bdaef44c8354c14cbda9018cfdea4299962c9d82eb"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture05.txt": {
+      "rawSha256": "0be3aa778217b79ede2f7e34deb40a23e7e71909fac0b3ebe05e0014ceb0ce6d",
+      "textSha256": "3e25fd27643f44379d23361bc7b1e4bc71c4d6414031f6eecb27d92815d05c0f"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture06.json": {
+      "rawSha256": "56419329f33e9b453bc06c6347b1e5dd3f1f0d85feb0521785ab40ad9189eb42",
+      "textSha256": "f1ddb8bad66f90c321d052d6529eaa1df085c41cd413f404d86be1dd975f5fd3"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture06.txt": {
+      "rawSha256": "d3e325cb5cc71b8f1104814e834619c2b4addabc10b8078fe15cac39482422f6",
+      "textSha256": "2a63a7f2fb3ec13a82e361d40b5bd1c27fd3b508d86de873da4ece402ecdcfba"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture07.json": {
+      "rawSha256": "e4771c7154ed99f085fd0a4f5633bc6423c85e4da9a780054efa010be7549b15",
+      "textSha256": "aa9d2831452b037e5ac6938ccb6d181c9b88c8b54c4017aa13def3ee58cbcd3d"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture07.txt": {
+      "rawSha256": "6400bdb83fc398099f22a38e8fcb93911b05c09f60fa80790afbedc920bef343",
+      "textSha256": "c23533c7874f53330f5ef3ad08c95a97ada24449e681ac16753020ec18667582"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture08.json": {
+      "rawSha256": "829c8a6744830854fea6446058d795f64572a1fea60ea4a16d3177fb26ad31bb",
+      "textSha256": "4d225918391d55d797bb79ba22a747eebf3936463ffeb23a0bbe3fcf764d4e73"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture08.txt": {
+      "rawSha256": "a6de52c22b44b9d18f8eb2e376bb70b1d3165da6480a2c5b0d28e8243b3ed7b7",
+      "textSha256": "04a2032bc6ef25862a35532736fafec1d89ef87b2257d8cdeb32ca3685b1175c"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture09.json": {
+      "rawSha256": "32abd59c6adffe4d27fd42ba8e250820f9625d722466d4dfa5410e51ea840cf4",
+      "textSha256": "bf4cb21d1d64edc10d6997c3dfa56a8f793506a14f7ea7a6ea786bb7909dfd6e"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture09.txt": {
+      "rawSha256": "3b3c1be85b8b0c59b02aa941e1294e477167de1e322cb23abdf1f5b40f4173dd",
+      "textSha256": "5cc901c047574cda41031785cef71dc6a017544c97cc86616414b7b2937de439"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture10.json": {
+      "rawSha256": "68e20fbad5c877fe4d94cdca20a2f51a5afc32c6efc19bd7b7587084b7e281c9",
+      "textSha256": "386b8076960ce73ab4c6c0ffd3af180174209227c25b03ba942f3bcc3738d5d1"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture10.txt": {
+      "rawSha256": "dcef7f72162b602c4a466a8bc4d7f5d76759d9d447823f7b0f7f2c7b5e438a87",
+      "textSha256": "38bbe8e24d302e673549b3ecce48662223a47d7a209de284b204a9c3e79508c9"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture11.json": {
+      "rawSha256": "e23ee424334deba879b92794c83e59425dfda699379f20cf739165dcef0c94e2",
+      "textSha256": "95cab3d5ebda43e2d7c1eb22a624f9a579c165f837ad87955a064752e9dd7e61"
+    },
+    "docs/verification/glass-sheets-20261114/build-fixture11.txt": {
+      "rawSha256": "6b06df61619fec57c6b3adfec1551c3a35417004f0caed1807e144a60e8e2028",
+      "textSha256": "5cc5681e5af7d4b244b984bb2604998c55553787af39edb5b45fe7b9b4942f49"
+    },
+    "docs/verification/glass-sheets-20261114/build-production01.json": {
+      "rawSha256": "4b1d7c50bb098807c71cb458a23ee3dc3dd10e1da855644ae73d5b4daa7d34c5",
+      "textSha256": "d13cb06a3971ec77d2bf256f5753654cda764a62e61b77c7c256419b1f78b302"
+    },
+    "docs/verification/glass-sheets-20261114/build-production01.txt": {
+      "rawSha256": "40d09bcaff7d2d59218d1c3d71cbe31ba79c40d3f51199b645925fb0844e5aa3",
+      "textSha256": "189acef1b68e71a21c50c628245d5ce423cf6faa17625928e2e7a78acb3dfa56"
+    },
+    "docs/verification/glass-sheets-20261114/cleanup.json": {
+      "rawSha256": "ad8d3d9679f2273122c80b241bb14322aeae4672f7f144f2df2216933920e9a1",
+      "textSha256": "370742f252f5a505017d0df92438bd1d9e5f7aa71fb38a62a6b8070ebaea2dbf"
+    },
+    "docs/verification/glass-sheets-20261114/device-environment.json": {
+      "rawSha256": "a804037334b9dfcc92fbddc8a3c6a4c5ad6de08d3819ff0ce3437fcba2149e27",
+      "textSha256": "9c9481889902a78474e371320c432f27ea34165a1790c531d96db84182eb2e1e"
+    },
+    "docs/verification/glass-sheets-20261114/device-install03.json": {
+      "rawSha256": "8eabd4366b78868cb2de82a91465a5345ef4f6f25f325de62a7a357e53681ddf",
+      "textSha256": "17daa82540e1f822d8556f40f7e424c99222566b283b00b0da31637d3adf631b"
+    },
+    "docs/verification/glass-sheets-20261114/device-install03.txt": {
+      "rawSha256": "f23dafd7bd277cc6c02a6b4f49079eef74352e8a7829c660b698aba3c2d54d0d",
+      "textSha256": "f23dafd7bd277cc6c02a6b4f49079eef74352e8a7829c660b698aba3c2d54d0d"
+    },
+    "docs/verification/glass-sheets-20261114/device-install04.json": {
+      "rawSha256": "9e483c8a8ff1d5b55d313c341e20bb4a62ca84666a17c5bbf4ed4e4ed12ec085",
+      "textSha256": "28ff359a2a6ed43804616ebef9f71204142f407ca3742d6002f0d9940ad97fe9"
+    },
+    "docs/verification/glass-sheets-20261114/device-install04.txt": {
+      "rawSha256": "efcb8b6905e6775aab5b0798ff70401f46d79a7767bc0e99eaac10cbab36ae43",
+      "textSha256": "efcb8b6905e6775aab5b0798ff70401f46d79a7767bc0e99eaac10cbab36ae43"
+    },
+    "docs/verification/glass-sheets-20261114/device-install06.json": {
+      "rawSha256": "b0a0a6963950975c5410f51ae963fbc4a7f39de8649ede69537d4c42e1e8b4ed",
+      "textSha256": "a0f6f4577084d37cebd7e681408345fbc5510df80ab3af362fb1fc50882784b4"
+    },
+    "docs/verification/glass-sheets-20261114/device-install06.txt": {
+      "rawSha256": "96d7344b7cbcb75062cd4e4a3566cf5dca3cbab9c5fc62a03163e2ffe0cb6b65",
+      "textSha256": "96d7344b7cbcb75062cd4e4a3566cf5dca3cbab9c5fc62a03163e2ffe0cb6b65"
+    },
+    "docs/verification/glass-sheets-20261114/device-install07.json": {
+      "rawSha256": "c93afdda9f9c93a84c7e8808b72dae10e0f00fff7e9ed54e4ecbd86fd53d4298",
+      "textSha256": "b19508c484dfdbb2b3a16aa6dcfcdacc2a3ee79ec32b5d07a59d6a5e7738ebe1"
+    },
+    "docs/verification/glass-sheets-20261114/device-install07.txt": {
+      "rawSha256": "d058c2c34fce4b8d2c8343d5203922912469a28a537e643a76839852137ec52f",
+      "textSha256": "d058c2c34fce4b8d2c8343d5203922912469a28a537e643a76839852137ec52f"
+    },
+    "docs/verification/glass-sheets-20261114/device-native06.json": {
+      "rawSha256": "28bbc040f9a9dbef35695e56cbb6f1d08332fc7204182edfbf4c47b8ea7194d6",
+      "textSha256": "8c83661629da266f0fc766ae0c302fa640a277e948e6a7abe3ca6fc8daa94c67"
+    },
+    "docs/verification/glass-sheets-20261114/device-native06.txt": {
+      "rawSha256": "9d6fbff070b1239ea2e0fe94674c64d1cdcc19fab53d44341e589a16e5d75a2c",
+      "textSha256": "9d6fbff070b1239ea2e0fe94674c64d1cdcc19fab53d44341e589a16e5d75a2c"
+    },
+    "docs/verification/glass-sheets-20261114/device-native08.json": {
+      "rawSha256": "577e2d52cb542686aaa0c572ae729f3f294946d6d115d737977c8528ada9ca50",
+      "textSha256": "803271b9f5ea7dcad52732610168cb924a11223cadd4b7ef9a3fedd25b1643d5"
+    },
+    "docs/verification/glass-sheets-20261114/device-native08.txt": {
+      "rawSha256": "e3c546fce972e0b1394b3f1b290c283a053b8998070b63a43a6b0dd7b845c279",
+      "textSha256": "e3c546fce972e0b1394b3f1b290c283a053b8998070b63a43a6b0dd7b845c279"
+    },
+    "docs/verification/glass-sheets-20261114/device-native09.json": {
+      "rawSha256": "a9fdca322fad56d0395fef87358cff5f2eeeb18db78f7c63d61e226047b73909",
+      "textSha256": "50daedf8e7c46c4e3f508afb2a2cb3e9fde114d4f2eb2c380db49dbc0cf08205"
+    },
+    "docs/verification/glass-sheets-20261114/device-native09.txt": {
+      "rawSha256": "3bdc9a3b99169d9d917a7c950a24738dd56a93c437e835a6d2c96b83b4d244fa",
+      "textSha256": "3bdc9a3b99169d9d917a7c950a24738dd56a93c437e835a6d2c96b83b4d244fa"
+    },
+    "docs/verification/glass-sheets-20261114/device-native10.json": {
+      "rawSha256": "9ae45a78648db5051d5400c5ee647239e7e0f8cde7e7e7dc2659424d113f2111",
+      "textSha256": "27e736e73ba92c26930101f248421cc8c471ca0edd8c63689bd902a0eb9c81dd"
+    },
+    "docs/verification/glass-sheets-20261114/device-native10.txt": {
+      "rawSha256": "1bbff5d29879cc29a93aeeb7ea7f2873274d96a946653b8204c2f6ff23e9c831",
+      "textSha256": "1bbff5d29879cc29a93aeeb7ea7f2873274d96a946653b8204c2f6ff23e9c831"
+    },
+    "docs/verification/glass-sheets-20261114/device-native11.json": {
+      "rawSha256": "fe38ec40b273c333f97506d2bc86aa2ef8934ef909e04694abd9a93adb6435e8",
+      "textSha256": "84e20c18e284a4f0671e4e383fcca45b2b1960e71ec040b63722655dbb9d7a12"
+    },
+    "docs/verification/glass-sheets-20261114/device-native11.txt": {
+      "rawSha256": "e7f5afbff7df53439c38904ba9eaef38324c582013178d7afb0ad4cfdef825a9",
+      "textSha256": "e7f5afbff7df53439c38904ba9eaef38324c582013178d7afb0ad4cfdef825a9"
+    },
+    "docs/verification/glass-sheets-20261114/device-small11.json": {
+      "rawSha256": "7d792d1f6bbf38a55530046da006b6afe90d58ad7817d6669a25069623b1ac40",
+      "textSha256": "278cce0056cdbff18b9341b1ccae85b05c8a56ebefb62cec5e8fc09785886bf9"
+    },
+    "docs/verification/glass-sheets-20261114/device-small11.txt": {
+      "rawSha256": "11558200ab9081b9bb23ef2c71b7e7b03c68c759c8a7903b9b501a3edc1e3e21",
+      "textSha256": "11558200ab9081b9bb23ef2c71b7e7b03c68c759c8a7903b9b501a3edc1e3e21"
+    },
+    "docs/verification/glass-sheets-20261114/original-animation-settings.json": {
+      "rawSha256": "86663c14cd61a7d14ffe8e06db47a706844578c581d8519072cf2d7bacaac779",
+      "textSha256": "3d3f91de94999366057c0c061ca8b1f33a12c53724832a15542ffee7efdc52b3"
+    },
+    "docs/verification/glass-sheets-20261114/scope.json": {
+      "rawSha256": "09445c4543ee36e6c4c276eddf705c9f90f7c6a07bb83f7bc7440ee2265401de",
+      "textSha256": "cf77969f6597b6fd7ef96bd0d039dc882ad9bf67c6e2b2efe66cb43ce64f18ac"
+    },
+    "docs/verification/glass-sheets-20261114/sheet-call-inventory.json": {
+      "rawSha256": "68d5e276e485f4157223f833e7846011e920bda74f991c7a72ceef850f4225a6",
+      "textSha256": "fa07d986cf6aa91ebb4fb92508214cab69c2894f7c2aa893c550c686ec67b075"
+    },
+    "docs/verification/glass-sheets-20261114/sources-final.json": {
+      "rawSha256": "7fab69d1f937616e503519a1a9f63f63748c73688b585f819866a7f1d2c846c2",
+      "textSha256": "f82208dba2f6ed7754db5bf391945075b02764929bdbb7113dd54e149b007cc3"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture03.json": {
+      "rawSha256": "0dacf1705bb613fadedc8f47c8dcc5d2c23b778109fa58ddea78abd8a9e9915c",
+      "textSha256": "e48ed0ee87d0ff4dcf6c4e825157bd982aa66cc749d54cff24b6419c6000ad60"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture04.json": {
+      "rawSha256": "a365fca81c5a0642c6ebec40176a76c58fe476a4041c5e7dbfb021de9ff30e34",
+      "textSha256": "6397351c21b025a759967646a7a2f861e561486b859a040f63eb9b5be370fbab"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture06.json": {
+      "rawSha256": "8b1671ed7bd5cdb13ea44f5fdda0a6d6a6237ab7a2e3683bd2933b4d29f0ff9f",
+      "textSha256": "a72b647b1b72d8e2524e6a23a2852c68a90dada216eba37dda853641a81a353b"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture08.json": {
+      "rawSha256": "fa70b689860f7e85bd8a7f754ead4ad38a64e75a58aadcbf707f33fa97c9fec4",
+      "textSha256": "eec7d63df77659b354da848fc9a7bf8420ac8418a91b8a9184c5d2eb564e8f0a"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture09.json": {
+      "rawSha256": "2939297315533ec1cdc39115cd4a54c9f9d14b1d218fc5352e16b5c080d7a9f8",
+      "textSha256": "e18f901b05c1ff827660c7de93e0dd9d413b3de4986689d1dd13351bc1014f9d"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture10.json": {
+      "rawSha256": "aa2594e276f1972b95335a7663c349299f74826b2fc578d151fbed12078c6e23",
+      "textSha256": "5cf148970f755ba72460baeef4ddbd79d6e0e5a95f9e6684d3c4f9f9f06d2cf0"
+    },
+    "docs/verification/glass-sheets-20261114/sources-fixture11.json": {
+      "rawSha256": "ebda1e7eb9c879640b4c625d5b98023a90ad79a20756af6dd6740af8a9dcceb9",
+      "textSha256": "ae5e37c95ead89611428b26726beafc114d9b723a23ed5e877467311b5a139e5"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.friends.chat.richmedia.domain.SteamChatCardsTest.xml": {
+      "rawSha256": "8f181ce85530ce4e873c9c4d92555c2c8664adbd5265ccd36f311ffd144ba2ee",
+      "textSha256": "8f181ce85530ce4e873c9c4d92555c2c8664adbd5265ccd36f311ffd144ba2ee"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.library.filter.data.SteamLibraryFilterPreferencesTest.xml": {
+      "rawSha256": "4fd6d60fee987a6429043b3c0961f01fc915de1c75ed8bdc92c672c184a2c23b",
+      "textSha256": "4fd6d60fee987a6429043b3c0961f01fc915de1c75ed8bdc92c672c184a2c23b"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.library.filter.ui.SteamLibraryFilterUiGuardTest.xml": {
+      "rawSha256": "2d00dd40f05f891414fd9a89eddb525d09926c10275d2448350e0c422eb18ed2",
+      "textSha256": "2d00dd40f05f891414fd9a89eddb525d09926c10275d2448350e0c422eb18ed2"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.store.SteamStoreFilterMetadataTest.xml": {
+      "rawSha256": "e3ed6fdc1511fa2955392beb5c84bb55a3ae7a8671292418af9b9b80add428cd",
+      "textSha256": "e3ed6fdc1511fa2955392beb5c84bb55a3ae7a8671292418af9b9b80add428cd"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.store.SteamStoreFilterServiceTest.xml": {
+      "rawSha256": "7d9bc039de005773b072430034e909758d6366ad89ac4c844c6fc24e2d573252",
+      "textSha256": "7d9bc039de005773b072430034e909758d6366ad89ac4c844c6fc24e2d573252"
+    },
+    "docs/verification/glass-sheets-20261114/TEST-takagi.ru.monica.steam.store.SteamStoreFilterUiGuardTest.xml": {
+      "rawSha256": "5c6b7a87a0e301ec283b91f189ab29efdaf665d9a2c27c059f4bd82177a5fb87",
+      "textSha256": "5c6b7a87a0e301ec283b91f189ab29efdaf665d9a2c27c059f4bd82177a5fb87"
+    }
+  },
+  "scopedDiffCheck": true,
+  "noCommitPushReleaseOrApkDelivery": true
+}

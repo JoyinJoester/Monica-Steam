@@ -1,0 +1,1 @@
+/data/local/tmp/monica-steam-jank-20261114.trace: 1 file pulled, 0 skipped.

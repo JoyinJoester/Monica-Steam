@@ -1,20 +1,23 @@
 package takagi.ru.monica.steam.friends.chat.ui
 
+import androidx.compose.runtime.CompositionLocalProvider
+import takagi.ru.monica.steam.friends.voice.ui.LocalSteamVoiceAudioLevels
+import takagi.ru.monica.steam.friends.voice.ui.LocalSteamVoiceFriends
+
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -45,9 +48,8 @@ import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationPref
 import takagi.ru.monica.steam.friends.chat.info.domain.SteamChatConversationType
 import takagi.ru.monica.steam.friends.voice.presentation.SteamVoiceCallRuntime
 import takagi.ru.monica.steam.store.share.domain.SteamStoreGameShare
-import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
-import takagi.ru.monica.ui.navigation.easyNotesScreenExit
 import takagi.ru.monica.steam.navigation.ui.rememberSteamAdaptiveLayout
+import takagi.ru.monica.steam.space.ui.SteamSpaceRoute
 
 @Composable
 fun SteamChatScreen(
@@ -72,7 +74,9 @@ fun SteamChatScreen(
     val accountSourceRepository = remember(context) {
         SteamAccountSourceRepository.get(context)
     }
-    val accountSourceState by accountSourceRepository.state.collectAsState()
+    // Retained tabs stay composed at CREATED; their UI must stop collecting too.
+    // ViewModels keep background messaging alive and publish the latest state on return.
+    val accountSourceState by accountSourceRepository.state.collectAsStateWithLifecycle()
     val friendsViewModel: SteamFriendsViewModel = viewModel(
         factory = remember(context) { SteamFriendsViewModel.factory(context) }
     )
@@ -88,12 +92,12 @@ fun SteamChatScreen(
     val messageActionViewModel: SteamChatMessageActionViewModel = viewModel(
         factory = remember(context) { SteamChatMessageActionViewModel.factory(context) }
     )
-    val friendsState by friendsViewModel.uiState.collectAsState()
-    val chatState by chatViewModel.uiState.collectAsState()
-    val groupChatState by groupChatViewModel.state.collectAsState()
-    val richMediaState by richMediaViewModel.uiState.collectAsState()
+    val friendsState by friendsViewModel.uiState.collectAsStateWithLifecycle()
+    val chatState by chatViewModel.uiState.collectAsStateWithLifecycle()
+    val groupChatState by groupChatViewModel.state.collectAsStateWithLifecycle()
+    val richMediaState by richMediaViewModel.uiState.collectAsStateWithLifecycle()
     val voiceRuntime = remember(context) { SteamVoiceCallRuntime.get(context) }
-    val voiceState by voiceRuntime.state.collectAsState()
+    val voiceState by voiceRuntime.state.collectAsStateWithLifecycle()
     var pendingVoiceAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     val microphonePermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -119,6 +123,7 @@ fun SteamChatScreen(
     val selectedAccount = sessionAccounts.firstOrNull {
         it.id == storedSelectedAccount?.id
     } ?: sessionAccounts.firstOrNull()
+    var showSpace by rememberSaveable(selectedAccount?.id, selectedAccount?.steamId) { mutableStateOf(false) }
     val selectedFriend = friendsState.snapshot?.friends?.firstOrNull {
         it.steamId == chatState.selectedPartnerSteamId
     }
@@ -133,8 +138,7 @@ fun SteamChatScreen(
     var showInviteFriend by rememberSaveable { mutableStateOf(false) }
     var initialGroupInvitees by remember { mutableStateOf(emptySet<String>()) }
     var subpage by remember { mutableStateOf<SteamChatSubpage?>(null) }
-    var targetMessageId by remember { mutableStateOf<String?>(null) }
-    var conversationPreferences by remember { mutableStateOf(SteamChatConversationPreferences()) }
+    val jump = remember { SteamChatJumpRequest() }
     val currentConversationId = when {
         chatState.selectedPartnerSteamId != null -> SteamChatConversationId(
             accountSteamId = chatState.accountSteamId,
@@ -148,32 +152,22 @@ fun SteamChatScreen(
         )
         else -> null
     }
+    val conversationPreferencesState = rememberSteamChatConversationPreferences(infoPreferencesStore, currentConversationId)
+    var conversationPreferences by conversationPreferencesState
+    // The thread opens immediately; an early info request waits for its editable preferences,
+    // so the user cannot overwrite stored settings with temporary defaults during the read.
+    val visibleSubpage = subpage.takeUnless { it == SteamChatSubpage.INFO && !conversationPreferencesState.loaded }
+    var conversationFlagsRevision by remember { mutableIntStateOf(0) }
     LaunchedEffect(currentConversationId) {
-        conversationPreferences = currentConversationId?.let(infoPreferencesStore::load)
-            ?: SteamChatConversationPreferences()
         subpage = null
-        targetMessageId = null
+        jump.clear()
     }
-    val pinnedDirectIds = remember(chatState.sessions, conversationPreferences, chatState.accountSteamId) {
-        chatState.sessions?.sessions.orEmpty().mapNotNull { session ->
-            val id = SteamChatConversationId(
-                chatState.accountSteamId,
-                SteamChatConversationType.DIRECT,
-                session.partnerSteamId
-            )
-            session.partnerSteamId.takeIf { infoPreferencesStore.load(id).pinned }
-        }.toSet()
-    }
-    val pinnedGroupIds = remember(groupChatState.groups, conversationPreferences, groupChatState.accountSteamId) {
-        groupChatState.groups.mapNotNull { group ->
-            val id = SteamChatConversationId(
-                groupChatState.accountSteamId,
-                SteamChatConversationType.GROUP,
-                group.groupId
-            )
-            group.groupId.takeIf { infoPreferencesStore.load(id).pinned }
-        }.toSet()
-    }
+    val localConversations = rememberSteamConversationLocalState(
+        store = infoPreferencesStore,
+        chatState = chatState,
+        groupState = groupChatState,
+        refreshKey = conversationFlagsRevision
+    )
     val effectiveSearchQuery = if (standalone) standaloneSearchQuery else searchQuery
     LaunchedEffect(accountSourceState.selectedAccountId, selectedAccount?.id) {
         if (selectedAccount != null && selectedAccount.id != accountSourceState.selectedAccountId) {
@@ -259,6 +253,7 @@ fun SteamChatScreen(
     LaunchedEffect(requestedPartnerSteamId, selectedAccount?.id) {
         val partner = requestedPartnerSteamId?.takeIf(String::isNotBlank) ?: return@LaunchedEffect
         if (selectedAccount != null) {
+            showSpace = false
             showFriends = false
             addFriendOpen = false
             chatViewModel.openThread(partner)
@@ -359,8 +354,8 @@ fun SteamChatScreen(
             groupChatState = groupChatState,
             voiceState = voiceState,
             effectiveSearchQuery = effectiveSearchQuery,
-            pinnedDirectIds = pinnedDirectIds,
-            pinnedGroupIds = pinnedGroupIds,
+            conversationFlags = localConversations.flags,
+            conversationActions = localConversations.actions,
             onStandaloneSearchQueryChange = { standaloneSearchQuery = it },
             onSearchExpandedChange = { expanded ->
                 searchExpanded = expanded
@@ -410,7 +405,15 @@ fun SteamChatScreen(
             onToggleVoiceMicrophone = voiceRuntime::toggleMicrophone,
             onToggleVoiceOutput = voiceRuntime::toggleOutput,
             onSelectVoiceAudioRoute = voiceRuntime::selectAudioRoute,
-            modifier = targetModifier
+            modifier = targetModifier,
+            onOpenSpace = {
+                showFriends = false
+                addFriendOpen = false
+                subpage = null
+                chatViewModel.closeThread()
+                groupChatViewModel.closeRoom()
+                showSpace = true
+            }
         )
     }
 
@@ -431,7 +434,10 @@ fun SteamChatScreen(
             richMediaState = richMediaState,
             voiceState = voiceState,
             conversationPreferences = conversationPreferences,
-            targetMessageId = targetMessageId,
+            targetMessageId = jump.messageId,
+            targetMessageNonce = jump.nonce,
+            highlightMessageId = jump.highlightId,
+            onHighlightConsumed = jump::consumeHighlight,
             gameShareDraft = requestedGameShare.takeIf {
                 partnerSteamId == requestedGameSharePartnerSteamId
             },
@@ -442,18 +448,27 @@ fun SteamChatScreen(
             messageActionViewModel = messageActionViewModel,
             voiceRuntime = voiceRuntime,
             runVoiceAction = ::runVoiceAction,
-            onSubpageChange = { subpage = it },
+            // Opening any subpage drops a pending jump so the thread does not re-scroll to an old
+            // hit when the user comes back to it later.
+            onSubpageChange = { next ->
+                subpage = next
+                if (next != null) jump.clear()
+            },
             onCreateGroupFromFriend = { steamId ->
                 initialGroupInvitees = setOf(steamId)
                 showCreateGroup = true
             },
             onInviteFriend = { showInviteFriend = true },
             onPreferencesChange = { updated ->
+                val flagsChanged = conversationPreferences.pinned != updated.pinned ||
+                    conversationPreferences.archived != updated.archived ||
+                    conversationPreferences.hiddenAt != updated.hiddenAt
                 conversationPreferences = updated
                 currentConversationId?.let { infoPreferencesStore.save(it, updated) }
+                if (flagsChanged) conversationFlagsRevision++
             },
             onOpenTargetMessage = { messageId ->
-                targetMessageId = messageId
+                jump.request(messageId)
                 subpage = null
             },
             onConsumeGameShareDraft = onConsumeRequestedGameShare,
@@ -462,14 +477,28 @@ fun SteamChatScreen(
         )
     }
 
-    AnimatedContent(
-        targetState = Triple(chatState.selectedPartnerSteamId, groupChatState.selectedChatId, subpage),
-        modifier = modifier.fillMaxSize(),
-        transitionSpec = {
-            easyNotesScreenEnter(reduceAnimations)
-                .togetherWith(easyNotesScreenExit(reduceAnimations))
+    CompositionLocalProvider(
+        LocalSteamVoiceAudioLevels provides voiceRuntime.audioLevels,
+        LocalSteamVoiceFriends provides (friendsState.snapshot?.friends.orEmpty().associateBy { it.steamId })
+    ) {
+    if (showSpace) SteamSpaceRoute(
+        account = selectedAccount,
+        friendsState = friendsState,
+        onRefreshFriends = friendsViewModel::refresh,
+        onBack = { showSpace = false },
+        onOpenGame = onOpenStoreApp,
+        onManageAccounts = onAddSteamAccount,
+        onPlatformViewVisibilityChanged = onPlatformViewVisibilityChanged,
+        onMessage = { steamId ->
+            showSpace = false
+            groupChatViewModel.closeRoom()
+            chatViewModel.openThread(steamId)
         },
-        label = "SteamChatNavigation"
+        modifier = modifier
+    ) else SteamChatNavigation(
+        targetState = Triple(chatState.selectedPartnerSteamId, groupChatState.selectedChatId, visibleSubpage),
+        modifier = modifier.fillMaxSize(),
+        reduceAnimations = reduceAnimations
     ) { (partnerSteamId, groupRoomId, currentSubpage) ->
         if (partnerSteamId == null && groupRoomId == null) {
             renderConversationList(Modifier.fillMaxSize())
@@ -493,6 +522,8 @@ fun SteamChatScreen(
                 )
             }
         }
+    }
+
     }
 
     SteamChatScreenDialogs(

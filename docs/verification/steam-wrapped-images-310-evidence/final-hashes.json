@@ -1,0 +1,8 @@
+{
+  "app/src/main/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatRichMediaModels.kt": "890cc14d1185637b6d8fbf4622839e9bffc35512340d33377787bb28c0c12940",
+  "app/src/test/java/takagi/ru/monica/steam/friends/chat/richmedia/domain/SteamChatImageMessageParserTest.kt": "8bded462a13bd580ec59d477f6bcbf37a082899910e86b423172e187a02ecc24",
+  "app/src/androidTest/java/takagi/ru/monica/steam/chat/SteamChatImageMessageUiTest.kt": "085284b1b8590860fcef97f3c3099e21f7b8fd55b0beb3a6ad735d45184d559b",
+  "README.md": "c0983fb84049b86349d906add2675be7a83f02765af751cf2cdde339cd3c13a8",
+  "README_EN.md": "073f82760a422c6429703a541db3d4f4e5d4095c26e2d54665f5471130197acc",
+  "RELEASE_NOTES.md": "475b09656206e1b6f10afc5e055fbd63dbcdc7e6b0c53bb2f40fa1c70ce8c31a"
+}

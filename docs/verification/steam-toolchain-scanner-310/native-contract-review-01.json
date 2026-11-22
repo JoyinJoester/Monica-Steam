@@ -1,0 +1,64 @@
+{
+  "buildExitCode": 0,
+  "buildDurationSeconds": 144.55,
+  "originalFilesUnchanged": true,
+  "originalCheckStatus": "failed",
+  "originalCheckExplanation": "The first checker applied 16 KiB LOAD alignment to all three ABIs, including 32-bit ARM; Cargo itself exited successfully. Preserve original failure result.",
+  "jniContracts": [
+    {
+      "abi": "arm64-v8a",
+      "expectedCount": 20,
+      "actualCount": 20,
+      "missing": [],
+      "unexpected": [],
+      "alignmentBytes": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "abi": "armeabi-v7a",
+      "expectedCount": 20,
+      "actualCount": 20,
+      "missing": [],
+      "unexpected": [],
+      "alignmentBytes": [
+        4096,
+        4096,
+        4096,
+        4096
+      ]
+    },
+    {
+      "abi": "x86_64",
+      "expectedCount": 20,
+      "actualCount": 20,
+      "missing": [],
+      "unexpected": [],
+      "alignmentBytes": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    }
+  ],
+  "pageSizeReference": {
+    "url": "https://developer.android.com/guide/practices/page-sizes",
+    "excerpts": [
+      " Support different pixel densities Multiple APK support \u2348 Support different languages and cultures Support different platform versions Filters on Google Play \u2348 64-bit Support Support 16 KB page sizes Build AI experiences Get started Get started Hello, world! Adaptive apps Compose for UI AI-powered IDE Monetization with Play \u2197\ufe0f Developer Verification Registered App Stores Optimize by form factor Phones, tablets, foldables Android for Cars Android TV Android XR Googlebook ChromeOS Wear OS Build by category Games Camera & media Social & messaging Health & fitness Productivity ",
+      "ure your app works correctly on the latest versions of Android, all\napps targeting Android 15 (API level 35) and higher must support 16\u00a0KB\nmemory page sizes on 64-bit devices on Google Play. Starting February 1, 2027,\nif your app updates don't support 16\u00a0KB memory page sizes,\nyou won't be able to release these updates. Figure 1. Google Play Console compatibility warning. Benefits and performance gains Devices configured with 16\u00a0KB page sizes use slightly more memory on\naverage, but also gain various performance improvements for both the system and\napps: Lower app launch tim",
+      "ent.sh script to a file. Run the script on your app's APK file: check_elf_alignment.sh APK_NAME .apk The script outputs either ALIGNED or UNALIGNED for all the arm64-v8a shared libraries. If any arm64-v8a or x86_64 shared libraries are UNALIGNED , you'll need\nto update the packaging for those libraries , then recompile your\napp and retest by following the steps in this section. Use command-line tools directly Follow these steps to check the alignment of ELF segments using command-line\ntools directly: Make sure both Android SDK Build-Tools version 35.0.0 or higher and the\nAn",
+      "ript on your app's APK file: check_elf_alignment.sh APK_NAME .apk The script outputs either ALIGNED or UNALIGNED for all the arm64-v8a shared libraries. If any arm64-v8a or x86_64 shared libraries are UNALIGNED , you'll need\nto update the packaging for those libraries , then recompile your\napp and retest by following the steps in this section. Use command-line tools directly Follow these steps to check the alignment of ELF segments using command-line\ntools directly: Make sure both Android SDK Build-Tools version 35.0.0 or higher and the\nAndroid NDK are installed using the S",
+      "app's APK file: check_elf_alignment.sh APK_NAME .apk The script outputs either ALIGNED or UNALIGNED for all the arm64-v8a shared libraries. If any arm64-v8a or x86_64 shared libraries are UNALIGNED , you'll need\nto update the packaging for those libraries , then recompile your\napp and retest by following the steps in this section. Use command-line tools directly Follow these steps to check the alignment of ELF segments using command-line\ntools directly: Make sure both Android SDK Build-Tools version 35.0.0 or higher and the\nAndroid NDK are installed using the SDK Manager in",
+      "nalyzer . Run the following command on each\nshared object file: Linux or macOS SDK_ROOT_LOCATION /Android/sdk/ndk/ NDK_VERSION /toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump -p SHARED_OBJECT_FILE .so | grep LOAD Windows (PowerShell) SDK_ROOT_LOCATION \\Android\\sdk\\ndk\\ NDK_VERSION \\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-objdump.exe -p SHARED_OBJECT_FILE .so | Select-String -Pattern \"LOAD\" Where SDK_ROOT_LOCATION is the path to the\ndirectory where you've installed the Android SDK, SHARED_OBJECT_FILE is the name of the shared object\nfile that you're checkin",
+      "4/bin/llvm-objdump -p SHARED_OBJECT_FILE .so | grep LOAD Windows (PowerShell) SDK_ROOT_LOCATION \\Android\\sdk\\ndk\\ NDK_VERSION \\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-objdump.exe -p SHARED_OBJECT_FILE .so | Select-String -Pattern \"LOAD\" Where SDK_ROOT_LOCATION is the path to the\ndirectory where you've installed the Android SDK, SHARED_OBJECT_FILE is the name of the shared object\nfile that you're checking, and NDK_VERSION is the\nversion of the Android NDK that you have installed (for example, 28.0.12433566 ). The output will look something like the following for eac",
+      "to automate the process,\nfollow these steps: Step 1: Inspect the program headers Run the following command on each shared object file (on Linux, replace darwin-x86_64 with linux-x86_64 ): Linux or macOS SDK_ROOT_LOCATION /Android/sdk/ndk/ NDK_VERSION /toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf -Wl SHARED_OBJECT_FILE .so | grep 'LOAD\\|RELRO\\|Type' Windows (PowerShell) SDK_ROOT_LOCATION \\Android\\sdk\\ndk\\ NDK_VERSION \\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-readelf.exe -Wl SHARED_OBJECT_FILE .so | Select-String -Pattern 'LOAD|RELRO|Type' The GNU_RELRO str"
+    ]
+  },
+  "all64BitArtifacts16KiBAligned": true,
+  "allJniExportsMatch": true,
+  "deviceOrPackageValidation": false
+}

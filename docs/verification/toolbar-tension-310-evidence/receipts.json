@@ -1,0 +1,92 @@
+[
+  {
+    "file": "build01.txt",
+    "rawSha256": "603b6b37fb545c3e475c27c5a8ce03bc337370cef48af5084d4cd58ad589b29f",
+    "normalizedSha256": "72fb4056a6a35f0df24064746a92e64d5934d19f8dfa27a6f87dcae286efe22f"
+  },
+  {
+    "file": "build02.txt",
+    "rawSha256": "2dfe8a68ad8ac6d5e61752ab620863d6db9a152fa60fe6e409251e403b435064",
+    "normalizedSha256": "a73fdc5683551ee3d9a00c4d2e12a55943679ee76ea816d514a54a7c2bc72998"
+  },
+  {
+    "file": "build03.txt",
+    "rawSha256": "1a51a7d06c38f48e153a21a80a996e8f4fa9d1dbec8e9b93b45ef6af4a1836a6",
+    "normalizedSha256": "2233bbc9928ba2050009a418190bf622a7706b80bba1f5e6b1ea02c960f24621"
+  },
+  {
+    "file": "build04.txt",
+    "rawSha256": "036c2cf4cff1f06b65d82dbef6cb9ed27292d9fc9ba63d959d236a5de20660b5",
+    "normalizedSha256": "08e127f1590c44e98176556065fd4aa5392ea87b8ce51840434019a846a4c783"
+  },
+  {
+    "file": "build05.txt",
+    "rawSha256": "f595d3aa45ee7d2a2e574461b684a2f58f79974e8609866dc70ae7ad8bf5d560",
+    "normalizedSha256": "68fd94b238a911d0bafcfa265de5e7942854ba1e64f2667169e743da77665ea1"
+  },
+  {
+    "file": "device01.txt",
+    "rawSha256": "1b1eafdd50a4ec4d70ed8cad915c25f4a5c97c4a7213e82dd1955ef8032b2cbe",
+    "normalizedSha256": "1b1eafdd50a4ec4d70ed8cad915c25f4a5c97c4a7213e82dd1955ef8032b2cbe"
+  },
+  {
+    "file": "device02.txt",
+    "rawSha256": "dea6dc76e3cc34e08475615049b84cbab0b1a73943107ff3b99b486f4745b5ad",
+    "normalizedSha256": "dea6dc76e3cc34e08475615049b84cbab0b1a73943107ff3b99b486f4745b5ad"
+  },
+  {
+    "file": "device03.txt",
+    "rawSha256": "efc9a0af3ce1452f621f1ff84ae39fff507302f6e0798ca7e329ff6490d83533",
+    "normalizedSha256": "efc9a0af3ce1452f621f1ff84ae39fff507302f6e0798ca7e329ff6490d83533"
+  },
+  {
+    "file": "mumu01.txt",
+    "rawSha256": "ec2cf7c72c0eac637fb4faa5d34b4cfcb0988618981e7c03cdd11c1a006582cd",
+    "normalizedSha256": "ec2cf7c72c0eac637fb4faa5d34b4cfcb0988618981e7c03cdd11c1a006582cd"
+  },
+  {
+    "file": "mumu02.txt",
+    "rawSha256": "01413852beeec1a3b482e95c418bc0eec1a571f6d4f509246decff61141912c3",
+    "normalizedSha256": "01413852beeec1a3b482e95c418bc0eec1a571f6d4f509246decff61141912c3"
+  },
+  {
+    "file": "mumu03.txt",
+    "rawSha256": "0f3b977a0871b8623315df0f7cf6f40bb1648ffa87d4c697d2254c1f1a65527a",
+    "normalizedSha256": "0f3b977a0871b8623315df0f7cf6f40bb1648ffa87d4c697d2254c1f1a65527a"
+  },
+  {
+    "file": "source-hashes-build01.json",
+    "rawSha256": "928f081e33063dd27eb48443f45df51be726187fc2800e696b6d2e843f636fce",
+    "normalizedSha256": "928f081e33063dd27eb48443f45df51be726187fc2800e696b6d2e843f636fce"
+  },
+  {
+    "file": "source-hashes-build02.json",
+    "rawSha256": "7685399b7ceb56ae07e9fe1906e41831af1f539bfe6c2305d3e7ee32df0a9a0e",
+    "normalizedSha256": "7685399b7ceb56ae07e9fe1906e41831af1f539bfe6c2305d3e7ee32df0a9a0e"
+  },
+  {
+    "file": "source-hashes-final.json",
+    "rawSha256": "305795ff543d45e4f09773ef8bca777ca7ac9c687c39a79cdc8880957b117d13",
+    "normalizedSha256": "305795ff543d45e4f09773ef8bca777ca7ac9c687c39a79cdc8880957b117d13"
+  },
+  {
+    "file": "mumu03.json",
+    "rawSha256": "906f1018ab14a047d6830c960b27b5e82535e86a1fcb69b991208b598d948dd6",
+    "normalizedSha256": "906f1018ab14a047d6830c960b27b5e82535e86a1fcb69b991208b598d948dd6"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.navigation.liquidglass.motion.LiquidGlassSelectionMotionTest.xml",
+    "rawSha256": "f9d4dc482cc8ec9c96093b8335d91aeda90bb34a6ce2e3148da7b97da1fb2f50",
+    "normalizedSha256": "f9d4dc482cc8ec9c96093b8335d91aeda90bb34a6ce2e3148da7b97da1fb2f50"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.ui.SteamStoreDetailActionToolbarTest.xml",
+    "rawSha256": "9da38226fdcd47ac5ff46814f0feed3b5b3eec2d687e25553f9cd37a3c8aef8a",
+    "normalizedSha256": "9da38226fdcd47ac5ff46814f0feed3b5b3eec2d687e25553f9cd37a3c8aef8a"
+  },
+  {
+    "file": "TEST-takagi.ru.monica.steam.store.ui.SteamToolbarTensionTest.xml",
+    "rawSha256": "078de9e3e44c7e01b1fd4ef3f1b3c6092bd22903b68ec97e7f98a8c2b7815e8c",
+    "normalizedSha256": "078de9e3e44c7e01b1fd4ef3f1b3c6092bd22903b68ec97e7f98a8c2b7815e8c"
+  }
+]
