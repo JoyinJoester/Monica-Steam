@@ -44,7 +44,7 @@ The payload is one UTF-8 JSON maFile, at most 1 MiB (1,048,576 bytes). Existing 
 
 The transport writes no plaintext file, clipboard item, broadcast or secret-bearing Intent extra. Sender-owned byte arrays are cleared on cancellation, expiration, write completion and failure. Receivers must enforce a size limit, parse UTF-8/JSON defensively and clear working byte arrays. Managed strings and the receiver's preview/imported data are not guaranteed to be erased; this is not a zero-copy or root-resistant channel.
 
-Millennium opens the existing preview after receipt. Its existing **Import** action is still required and retains its documented account replacement/restoration behavior. This shortcut does not automatically import, restore, subscribe or sign in.
+[SteamNova (formerly Millennium)](https://github.com/GoodJoe-2049/Steam-Nova) opens the existing preview after receipt. Its existing **Import** action is still required and retains its documented account replacement/restoration behavior. This shortcut does not automatically import, restore, subscribe or sign in.
 
 ## Compatibility checks
 
